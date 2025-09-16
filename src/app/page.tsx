@@ -41,7 +41,10 @@ const calculateDuration = (dateRange: string): string => {
   const endDate = parseDate(endStr);
 
   const diffTime = endDate.getTime() - startDate.getTime();
-  const diffMonths = diffTime / (1000 * 60 * 60 * 24 * 30.44);
+  let diffMonths = diffTime / (1000 * 60 * 60 * 24 * 30.44);
+
+  // Add 1 month to include the starting month
+  // diffMonths += 1;
 
   if (diffMonths < 12) {
     return `${Math.round(diffMonths)} months`;
@@ -54,6 +57,7 @@ const calculateDuration = (dateRange: string): string => {
     return `${years} year${years > 1 ? 's' : ''}, ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
   }
 };
+
 
 const TimelineExperienceCard = ({
   role,
@@ -144,14 +148,18 @@ const Hero = () => (
         className="mb-8"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.8 }}
+        transition={{ delay: 0.1, duration: 0.8 }}
       >
-        <div className="w-24 h-24 sm:w-32 sm:h-32 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
-          <User size={48} className="text-white sm:w-16 sm:h-16" />
+        <div className="w-24 h-24 sm:w-40 sm:h-40 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white/30 shadow-lg">
+          <img
+            src="/headshot.jpeg"
+            alt="Samuel X.J. Zhang"
+            className="w-full h-full object-cover"
+          />
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Samuel X.J. Zhang</h1>
         <p className="text-lg sm:text-xl text-blue-100 mb-6">
-          Product Manager • AI Engineer • Digital Consultant
+          Product Manager • AI Engineer • Digital Consultant • Analytical Chemist
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 text-blue-100 text-sm sm:text-base">
           <div className="flex items-center space-x-2">
@@ -160,7 +168,7 @@ const Hero = () => (
           </div>
           <div className="flex items-center space-x-2">
             <Phone size={16} />
-            <span>07502 118207</span>
+            <span>+44 7502 118207</span>
           </div>
           <div className="flex items-center space-x-2">
             <Mail size={16} />
@@ -176,8 +184,8 @@ const Hero = () => (
         transition={{ delay: 0.5, duration: 0.8 }}
       >
         Innovative technologist with {calculatePfizerExperience()} years at Pfizer leading digital transformation initiatives.
-        Currently pursuing MSc in AI Applications at Imperial College London, combining deep technical expertise
-        with proven product management skills to drive meaningful business impact.
+        Currently pursuing MSc in AI Applications and Innovation at Imperial College London, combining deep technical expertise
+        with proven product management skills to drive meaningful and measurable business impact.
       </motion.p>
     </div>
   </motion.section>
@@ -309,10 +317,12 @@ export default function Home() {
       institution: "Imperial College London",
       date: "Sep 2025 – Sep 2026",
       details: [
+        "Delivered through I-X flagship initiative combining Computing, Engineering, Mathematics, and Business departments",
         "Entrepreneurship-focused curriculum with AI venture development and business case creation",
-        "Leading cross-functional teams in developing AI software products with comprehensive business cases",
-        "Partnership opportunities with Imperial Business School for real-world AI product development"
-      ]
+        "Working with cross-multidisciplinary teams developing AI solutions with comprehensive business cases and investor pitch presentations",
+        "Industry partnership opportunities for real-world AI product development through internships (May 2026 – Sept 2026)"
+      ],
+      achievements: ["Python", "Deep Learning", "Machine Learning","Innovation Management", "ML for Climate Change", "Generative Modelling", "AI in Medical Imaging"]
     },
     {
       title: "BSc Chemistry with Biomedicine with Placement",
@@ -320,53 +330,57 @@ export default function Home() {
       date: "Sept 2021 – May 2025",
       details: [
         "Final Project: Designed innovative drug discovery solutions using computational modeling (SwissDock and AlphaFold 3)",
-        "Core Modules: Computational Chemistry, Physical Chemistry, Computational Structural Biology",
-        "Student Representative (2021-2023); Department Representative (2023)"
+        "Core Modules: Computational Chemistry, Physical Chemistry, Organic Chemistry, Analytical Chemistry, Computational Structural Biology, Inorganic Chemistry",
+        "Chemistry Department Student Representative (2021-2023); Natural Mathematical and Engineering Sciences (NMES) Department Representative (2023)",
+        "Created Coding Series: Coding and programming initiative for department of NMES (Sep 2022 – Apr 2025)",
+        "Industrial Placement @ Pfizer Sandwich (Sept 2023 – Sept 2024)"
       ],
-      achievements: ["1st Class Honours", "Royal Society of Chemistry Accreditation"]
+      achievements: ["1st Class Honours (78%)", "Royal Society of Chemistry Accreditation", "Associate of King's College", "Coding Series"]
     }
   ];
 
   const experience = [
     {
-      role: "Web Application Developer (Part-time)",
+      role: "Web Application Developer, Product Owner (Contract)",
       company: "Pfizer",
       date: "Oct 2024 – Present",
       location: "London, Remote",
       achievements: [
-        "Maintain and develop new features for the GROWMAT system",
+        "Maintain and develop new features for the Pfizer Groton Resource Workload Management and Analytics Tool (GROWMAT)",
+        "Product owner and fullstack developer, laying out roadmap, prioritising, developing, A/B testing GROWMAT to satisfy new requirements",
         "Maintain end-user documentation and communicate with Pfizer point of contact",
         "Collaborate with part-time colleague and Pfizer manager for bug fixes and feature implementation"
       ]
     },
     {
-      role: "Data Analyst in Analytical R&D Informatics",
+      role: "Data Analyst in Analytical R&D Department (Placement)",
       company: "Pfizer",
       date: "Nov 2023 – Aug 2024",
       location: "Sandwich, UK",
       achievements: [
-        "Led development of GROWMAT - mission-critical workflow management system impacting 40+ employees across 4+ teams",
-        "Architected full-stack solution using Next.js, Julia, PostgreSQL, and Spotfire with real-time visualizations",
+        "Led development of GROWMAT - mission-critical workflow management system impacting an entire department",
+        "Facilitating all preclinical drugs testing for whole of Pfizer",
+        "Architected full-stack solution using Next.js, Julia, PostgreSQL, and Spotfire with real-time visualisations, dockerised",
         "Implemented robust backend with concurrency protection and 3-tier disaster recovery",
         "Created comprehensive documentation and training materials ensuring long-term sustainability"
       ]
     },
     {
-      role: "Data Analyst in Analytical R&D Development Analytics",
+      role: "Data Analyst in Analytical R&D Department (Placement)",
       company: "Pfizer",
       date: "Sep 2023 – Nov 2023",
       location: "Sandwich, UK",
       achievements: [
-        "Developed API solubility modeling tool using PC-SAFT theory to reduce manual testing for drug product",
+        "Developed Active Pharmaceutical Ingredients (API) solubility modeling tool using PC-SAFT theory to reduce manual testing for drug product",
         "Implemented solution using open-source fluid-thermodynamic modeling packages",
-        "Applied computational thermodynamics and scientific programming expertise",
+        "Applied computational thermodynamics, scientific programming, and machine learning principals such as Differential Evolution, Evolutionary Centers Algorithm with Julia",
         "Demonstrated understanding of API R&D processes and pharmaceutical analytical methods"
       ]
     },
     {
-      role: "STEM Outreach Officer & Coding Series Tutor",
+      role: "STEM Outreach Officer & Coding Series Founder (Societies & Initiatives)",
       company: "King's College London Chemistry Society",
-      date: "Sep 2022 – Present",
+      date: "Sep 2022 – Apr 2025",
       location: "London, UK",
       achievements: [
         "Founded and led development of >20 hours computational skills course for chemistry department",
@@ -376,31 +390,31 @@ export default function Home() {
       ]
     },
     {
-      role: "Research Fellowship",
+      role: "Royal Society of Chemistry Research Bursary (Research Internship)",
       company: "King's College London",
-      date: "Jun 2023 – Jul 2023",
+      date: "May 2023 – Jul 2023",
       location: "London, UK",
       achievements: [
         "Conducted interdisciplinary research on biological membrane organization and protein-lipid co-assembly",
-        "Applied molecular dynamics simulations using GROMACS on HPC systems",
+        "Applied molecular dynamics simulations using GROMACS on King's supercomputer",
         "Developed self-hosted, GPU-accelerated infrastructure, reducing simulation time by 70%",
         "Investigated protein folding mechanisms during synthesis and interactions with lipid bilayers"
       ]
     },
     {
-      role: "Research Fellowship",
+      role: "King's Undergraduate Research Fellowship (Research Internship)",
       company: "King's College London",
       date: "Jun 2022 – Jul 2022",
       location: "London, UK",
       achievements: [
-        "Conducted molecular recognition research through The King's Research Fellowship (KRUF)",
+        "Conducted molecular recognition research through The King's Research Fellowship (KURF)",
         "Investigated structural determination of odorant exaltanone using chirped-pulse broadband microwave spectroscopy",
-        "Optimized data analysis pipelines using Excel and MATLAB, improving efficiency by 40%",
+        "Optimised data analysis pipelines using Excel and MATLAB, improving efficiency by 40%",
         "Received King's College London Research Experience Award (2022)"
       ]
     },
     {
-      role: "Human Resources Manager",
+      role: "Personal Assistance to Commander, Personnels Serviceman (National Service)",
       company: "Singapore Civil Defence Force (SCDF)",
       date: "Jul 2019 – Jul 2021",
       location: "Singapore",
@@ -408,36 +422,36 @@ export default function Home() {
         "Served dual role as Commander's Personal Assistant and HR Personnel Officer",
         "Managed welfare and HR operations for 1,000+ frontline workers",
         "Developed predictive models for COVID-19 transmission using MATLAB",
-        "Automated HR operations through Excel VBA and Access integration, reducing response time by 300%",
-        "Received Service Excellence Award and promotion to Sergeant rank"
+        "Automated and revolutionised HR operations through Excel VBA and Access integration, reducing response time by 300%",
+        "Received Service Excellence Award and promotion to Sergeant"
       ]
     }
   ];
 
   const skillCategories = [
     {
-      title: "Programming & Development",
+      title: "Programming & Technical",
       icon: Code,
       color: "bg-blue-500",
-      skills: ["Python", "JavaScript", "TypeScript", "Julia", "React", "Next.js", "Node.js", "Docker"]
+      skills: ["Python", "JavaScript", "TypeScript", "Julia", "React", "Next.js", "Node.js", "Docker", "Bash", "Unix Systems", "MS Office Full Suite", "Networking"]
     },
     {
       title: "Data & Analytics",
       icon: Database,
       color: "bg-green-500",
-      skills: ["PostgreSQL", "SQL", "Power BI", "Spotfire", "MATLAB", "Excel", "Statistical Analysis", "Data Visualization"]
+      skills: ["PostgreSQL", "SQL", "Power BI", "Spotfire", "MATLAB", "Excel", "Statistical Analysis", "Data Visualisation", "Pandas", "Data Engineering"]
     },
     {
       title: "AI & Machine Learning",
       icon: Brain,
       color: "bg-purple-500",
-      skills: ["Machine Learning", "Deep Learning", "AI Applications", "Predictive Analytics", "Computational Modeling", "GROMACS"]
+      skills: ["Machine Learning", "Deep Learning", "Heuristic Algorisms", "Predictive Analytics", "Computational Modeling", "GROMACS", "Scikit-Learn", "Pytorch", "Bayesian Statistics"]
     },
     {
       title: "Product & Business",
       icon: Briefcase,
       color: "bg-orange-500",
-      skills: ["Product Strategy", "Agile Methodologies", "Stakeholder Management", "User Research", "Go-to-Market", "KPI Definition"]
+      skills: ["Product Strategy", "Agile Methodologies", "Stakeholder Management", "User Research", "Go-to-Market", "KPI Definition", "Jira", "Kanban", "A/B Testing", "Roadmap"]
     }
   ];
 
@@ -482,7 +496,7 @@ export default function Home() {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Professional Experience Timeline</h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Professional and Research Experience Timeline</h2>
             <p className="text-lg sm:text-xl text-gray-600">Journey across roles with detailed timelines and impactful achievements</p>
           </motion.div>
 

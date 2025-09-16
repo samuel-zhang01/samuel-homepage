@@ -369,13 +369,13 @@ const ProjectsPage = () => {
 
         {/* Category Filter */}
         <div className="flex justify-center mb-12">
-          <div className="bg-white rounded-xl p-2 shadow-lg border border-gray-200">
-            <div className="flex space-x-2">
+          <div className="bg-white rounded-xl p-2 shadow-lg border border-gray-200 w-full max-w-md sm:max-w-none sm:w-auto">
+            <div className="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 sm:gap-0">
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-3 sm:px-6 py-2 rounded-lg font-medium transition-all text-sm sm:text-base ${
                     selectedCategory === category
                       ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
@@ -513,7 +513,7 @@ const ProjectsPage = () => {
                   <Phone className="text-green-600" size={24} />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
-                <p className="text-gray-600 text-sm">07502 118207</p>
+                <p className="text-gray-600 text-sm">+44 7502 118207</p>
               </motion.a>
 
               <motion.a
