@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import {
   GraduationCap,
   Briefcase,
@@ -126,7 +127,7 @@ const TimelineExperienceCard = ({
             {achievements.map((achievement: string, idx: number) => (
               <li key={idx} className="flex items-start space-x-2">
                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
-                <span>{achievement}</span>
+                <span dangerouslySetInnerHTML={{ __html: achievement.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}></span>
               </li>
             ))}
           </ul>
@@ -223,7 +224,7 @@ const EducationCard = ({
           {details.map((detail: string, index: number) => (
             <li key={index} className="flex items-start space-x-2">
               <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
-              <span>{detail}</span>
+              <span dangerouslySetInnerHTML={{ __html: detail.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}></span>
             </li>
           ))}
         </ul>
@@ -242,49 +243,19 @@ const EducationCard = ({
 );
 
 
-const SkillCategory = ({
-  title,
-  icon: Icon,
-  skills,
-  color
-}: {
-  title: string;
-  icon: React.ElementType;
-  skills: string[];
-  color: string;
-}) => (
-  <motion.div
-    className="bg-white rounded-xl p-6 shadow-lg border border-gray-100"
-    whileHover={{ scale: 1.02 }}
-    transition={{ duration: 0.3 }}
-  >
-    <div className="flex items-center space-x-3 mb-4">
-      <div className={`p-3 ${color} rounded-lg`}>
-        <Icon className="text-white" size={24} />
-      </div>
-      <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-    </div>
-    <div className="flex flex-wrap gap-2">
-      {skills.map((skill: string, index: number) => (
-        <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-gray-200 transition-colors">
-          {skill}
-        </span>
-      ))}
-    </div>
-  </motion.div>
-);
 
 export default function Home() {
+  const router = useRouter();
+
   const education = [
     {
       title: "MSc Artificial Intelligence Applications and Innovation",
       institution: "Imperial College London",
       date: "Sep 2025 – Sep 2026",
       details: [
-        "Delivered through I-X flagship initiative combining Computing, Engineering, Mathematics, and Business departments",
-        "Entrepreneurship-focused curriculum with AI venture development and business case creation",
-        "Working with cross-multidisciplinary teams developing AI solutions with comprehensive business cases and investor pitch presentations",
-        "Industry partnership opportunities for real-world AI product development through internships (May 2026 – Sept 2026)"
+        "Delivered through I-X flagship initiative combining **Computing**, **Engineering**, **Mathematics**, and **Business** departments",
+        "**Entrepreneurship-focused** curriculum with **AI venture** module working with **cross-multidisciplinary** teams developing AI solutions with comprehensive business cases and **investor pitch** presentations",
+        "**Industry partnership** opportunities for real-world **AI product** development through internships (May 2026 – Sept 2026)"
       ],
       achievements: ["Python", "Deep Learning", "Machine Learning","Innovation Management", "ML for Climate Change", "Generative Modelling", "AI in Medical Imaging"]
     },
@@ -293,10 +264,10 @@ export default function Home() {
       institution: "King's College London",
       date: "Sept 2021 – May 2025",
       details: [
-        "Final Project: Designed innovative drug discovery solutions using computational modeling (SwissDock and AlphaFold 3)",
+        "Final Project: Designed innovative **drug discovery solutions** using **computational modeling** (SwissDock and AlphaFold 3)",
         "Core Modules: Computational Chemistry, Physical Chemistry, Organic Chemistry, Analytical Chemistry, Computational Structural Biology, Inorganic Chemistry",
-        "Chemistry Department Student Representative (2021-2023); Natural Mathematical and Engineering Sciences (NMES) Department Representative (2023)",
-        "Created Coding Series: Coding and programming initiative for department of NMES (Sep 2022 – Apr 2025)",
+        "**Created** Coding Series: **Coding and programming initiative** for department of  Natural Mathematical and Engineering Sciences  (NMES) (Sep 2022 – Apr 2025)",
+        "Chemistry Department Student Representative (2021-2023), NMES Department Representative (2023)",
         "Industrial Placement @ Pfizer Sandwich (Sept 2023 – Sept 2024)"
       ],
       achievements: ["1st Class Honours (78%)", "Royal Society of Chemistry Accreditation", "Associate of King's College", "Coding Series"]
@@ -310,35 +281,23 @@ export default function Home() {
       date: "Oct 2024 – Present",
       location: "London, Remote",
       achievements: [
-        "Maintain and develop new features for the Pfizer Groton Resource Workload Management and Analytics Tool (GROWMAT)",
-        "Product owner and fullstack developer, laying out roadmap, prioritising, developing, A/B testing GROWMAT to satisfy new requirements",
-        "Maintain end-user documentation and communicate with Pfizer point of contact",
-        "Collaborate with part-time colleague and Pfizer manager for bug fixes and feature implementation"
+        "**Product owner** and **fullstack developer** for **GROWMAT** - Pfizer's mission-critical workflow management system",
+        "Develop **roadmap**, prioritize features, conduct **A/B testing** to satisfy evolving requirements",
+        "Maintain comprehensive **end-user documentation** and stakeholder communication",
+        "Lead collaborative development with team and Pfizer management for continuous improvement"
       ]
     },
     {
-      role: "Data Analyst in Analytical R&D Department (Placement)",
+      role: "Data Analyst Undergraduate in Analytical R&D Informatics Team (Placement)",
       company: "Pfizer",
-      date: "Nov 2023 – Aug 2024",
+      date: "Sep 2023 – Sep 2024",
       location: "Sandwich, UK",
       achievements: [
-        "Led development of GROWMAT - mission-critical workflow management system impacting an entire department",
-        "Facilitating all preclinical drugs testing for whole of Pfizer",
-        "Architected full-stack solution using Next.js, Julia, PostgreSQL, and Spotfire with real-time visualisations, dockerised",
-        "Implemented robust backend with concurrency protection and 3-tier disaster recovery",
-        "Created comprehensive documentation and training materials ensuring long-term sustainability"
-      ]
-    },
-    {
-      role: "Data Analyst in Analytical R&D Department (Placement)",
-      company: "Pfizer",
-      date: "Sep 2023 – Nov 2023",
-      location: "Sandwich, UK",
-      achievements: [
-        "Developed Active Pharmaceutical Ingredients (API) solubility modeling tool using PC-SAFT theory to reduce manual testing for drug product",
-        "Implemented solution using open-source fluid-thermodynamic modeling packages",
-        "Applied computational thermodynamics, scientific programming, and machine learning principals such as Differential Evolution, Evolutionary Centers Algorithm with Julia",
-        "Demonstrated understanding of API R&D processes and pharmaceutical analytical methods"
+        "**Led development** of **GROWMAT** - department-wide workflow management system facilitating **all preclinical drug testing** for Pfizer",
+        "**Architected full-stack solution** using **Next.js**, **Julia**, **PostgreSQL**, and **Spotfire** with real-time visualisations, deployed with **Docker**",
+        "Developed Active Pharmaceutical Ingredients **solubility modeling tool** using **PC-SAFT theory** and **machine learning** (Differential Evolution, Evolutionary Centers Algorithm)",
+        "Implemented **robust backend** with concurrency protection and **3-tier disaster recovery**",
+        "Created comprehensive **documentation and training materials** ensuring long-term sustainability"
       ]
     },
     {
@@ -347,10 +306,10 @@ export default function Home() {
       date: "Sep 2022 – Apr 2025",
       location: "London, UK",
       achievements: [
-        "Founded and led development of >20 hours computational skills course for chemistry department",
-        "Designed and delivered curriculum covering Excel, Python, data analysis, and scientific computing",
-        "Trained 80+ students across 20 sessions, receiving 90% positive feedback",
-        "Secured departmental and Royal Society sponsorship for continued support"
+        "**Founded** and led development of **>20 hours** computational skills course for chemistry department",
+        "Designed curriculum covering **Excel**, **Python**, **data analysis**, and **scientific computing**",
+        "**Trained 80+ students** across 20 sessions, receiving **90% positive feedback**",
+        "Secured departmental and **Royal Society Endorsement** for continued support"
       ]
     },
     {
@@ -359,10 +318,10 @@ export default function Home() {
       date: "May 2023 – Jul 2023",
       location: "London, UK",
       achievements: [
-        "Conducted interdisciplinary research on biological membrane organization and protein-lipid co-assembly",
-        "Applied molecular dynamics simulations using GROMACS on King's supercomputer",
-        "Developed self-hosted, GPU-accelerated infrastructure, reducing simulation time by 70%",
-        "Investigated protein folding mechanisms during synthesis and interactions with lipid bilayers"
+        "Conducted **interdisciplinary research** on biological membrane organisation and **protein-lipid co-assembly**",
+        "Applied **molecular dynamics simulations** using **GROMACS** on King's supercomputer",
+        "Developed **self-hosted, GPU-accelerated infrastructure**, reducing simulation time by **70%**",
+        "Investigated **protein folding mechanisms** during synthesis and lipid bilayer interactions"
       ]
     },
     {
@@ -371,53 +330,27 @@ export default function Home() {
       date: "Jun 2022 – Jul 2022",
       location: "London, UK",
       achievements: [
-        "Conducted molecular recognition research through The King's Research Fellowship (KURF)",
-        "Investigated structural determination of odorant exaltanone using chirped-pulse broadband microwave spectroscopy",
-        "Optimised data analysis pipelines using Excel and MATLAB, improving efficiency by 40%",
-        "Received King's College London Research Experience Award (2022)"
+        "Conducted **molecular recognition research** through The King's Undergraduate **Research Fellowship** (KURF)",
+        "Investigated structural determination of odorant compounds using chirped-pulse broadband **rotational microwave spectroscopy**",
+        "Optimised **data analysis pipelines** using **Excel** and **MATLAB**, improving efficiency by **40%**",
+        "Received King's College London **Research Experience Award** (2022)"
       ]
     },
     {
-      role: "Personal Assistance to Commander, Personnels Serviceman (National Service)",
+      role: "Personal Assistance to Commander, Personnel Serviceman (National Service)",
       company: "Singapore Civil Defence Force (SCDF)",
       date: "Jul 2019 – Jul 2021",
       location: "Singapore",
       achievements: [
-        "Served dual role as Commander's Personal Assistant and HR Personnel Officer",
-        "Managed welfare and HR operations for 1,000+ frontline workers",
-        "Developed predictive models for COVID-19 transmission using MATLAB",
-        "Automated and revolutionised HR operations through Excel VBA and Access integration, reducing response time by 300%",
-        "Received Service Excellence Award and promotion to Sergeant"
+        "Served **dual role** as **Commander's Personal Assistant** and **HR Personnel Officer**",
+        "Managed welfare and HR operations for **1,000+ frontline workers**",
+        "Developed **predictive models** for **COVID-19 transmission** using **MATLAB**",
+        "**Automated and revolutionised** HR operations through Excel, VBA, and MS Access integration, reducing response time by **300%**",
+        "Received **Service Excellence Award** and promotion to **Sergeant**"
       ]
     }
   ];
 
-  const skillCategories = [
-    {
-      title: "Programming & Technical",
-      icon: Code,
-      color: "bg-blue-500",
-      skills: ["Python", "JavaScript", "TypeScript", "Julia", "React", "Next.js", "Node.js", "Docker", "Bash", "Unix Systems", "MS Office Full Suite", "Networking"]
-    },
-    {
-      title: "Data & Analytics",
-      icon: Database,
-      color: "bg-green-500",
-      skills: ["PostgreSQL", "SQL", "Power BI", "Spotfire", "MATLAB", "Excel", "Statistical Analysis", "Data Visualisation", "Pandas", "Data Engineering"]
-    },
-    {
-      title: "AI & Machine Learning",
-      icon: Brain,
-      color: "bg-purple-500",
-      skills: ["Machine Learning", "Deep Learning", "Heuristic Algorisms", "Predictive Analytics", "Computational Modeling", "GROMACS", "Scikit-Learn", "Pytorch", "Bayesian Statistics"]
-    },
-    {
-      title: "Product & Business",
-      icon: Briefcase,
-      color: "bg-orange-500",
-      skills: ["Product Strategy", "Agile Methodologies", "Stakeholder Management", "User Research", "Go-to-Market", "KPI Definition", "Jira", "Kanban", "A/B Testing", "Roadmap"]
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden w-full">
@@ -481,31 +414,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section className="py-12 sm:py-16 px-4 bg-gray-50 w-full">
-        <div className="max-w-6xl mx-auto w-full">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Technical Skills</h2>
-            <p className="text-lg sm:text-xl text-gray-600">Comprehensive expertise across technology and business domains</p>
-          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {skillCategories.map((category, index) => (
-              <motion.div
-                key={index}
-                initial={{ y: 30, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-              >
-                <SkillCategory {...category} />
-              </motion.div>
-            ))}
-          </div>
+      {/* Call to Action */}
+      <section className="py-8 px-4 bg-white w-full">
+        <div className="max-w-4xl mx-auto text-center w-full">
+          <p className="text-lg text-gray-700 mb-4">
+            View my {""}
+            <motion.button
+              onClick={() => {
+                router.push('/skills');
+              }}
+              className="relative inline-flex items-center px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-full shadow-lg cursor-pointer border-2 border-transparent hover:border-blue-300"
+              animate={{
+                scale: [1, 1.05, 1],
+                rotate: [0, 0.5, -0.5, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileHover={{
+                scale: 1.15,
+                rotate: 0,
+                background: "linear-gradient(to right, #7c3aed, #2563eb)",
+                boxShadow: "0 0 30px rgba(59, 130, 246, 0.8)"
+              }}
+              whileTap={{
+                scale: 0.9,
+                rotate: 0
+              }}
+              style={{
+                filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.4))"
+              }}
+            >
+              <span className="relative z-10 text-lg">✨ Skillsets ✨</span>
+            </motion.button>
+          </p>
         </div>
       </section>
 

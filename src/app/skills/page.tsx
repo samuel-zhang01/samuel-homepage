@@ -249,27 +249,27 @@ const SkillsPage = () => {
     return (
       <motion.div
         className="relative bg-white rounded-2xl p-8 shadow-lg border border-gray-100 cursor-pointer group overflow-hidden"
-        whileHover={{ y: -8 }}
-        transition={{ duration: 0.3 }}
+        whileHover={{
+          y: -8,
+          boxShadow: "0 12px 24px rgba(0,0,0,0.08)"
+        }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         onClick={() => setSelectedSkill(skill)}
       >
-        {/* Background gradient overlay */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${skill.bgGradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
-        ></div>
-
         <div className="relative z-10">
           <div className="flex items-center space-x-4 mb-6">
-            <div
+            <motion.div
               className={`p-4 bg-gradient-to-br ${skill.bgGradient} rounded-xl`}
+              whileHover={{ rotate: 5, scale: 1.1 }}
+              transition={{ duration: 0.3 }}
             >
               <Icon className="text-white" size={32} />
-            </div>
+            </motion.div>
             <div>
               <h3 className="text-2xl font-bold text-gray-900">
                 {skill.title}
               </h3>
-              <p className="text-gray-600">Click to explore</p>
+              <p className="text-gray-600">Professional expertise</p>
             </div>
           </div>
 
@@ -277,29 +277,28 @@ const SkillsPage = () => {
             {skill.description}
           </p>
 
-          <div className="flex items-center justify-between">
-            <div className="flex flex-wrap gap-2">
-              {skill.keyStrengths.slice(0, 3).map((strength, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
-                >
-                  {strength}
-                </span>
-              ))}
-              {skill.keyStrengths.length > 3 && (
-                <span className="px-3 py-1 bg-gray-200 text-gray-600 text-sm rounded-full">
-                  +{skill.keyStrengths.length - 3} more
-                </span>
-              )}
-            </div>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {skill.keyStrengths.slice(0, 3).map((strength, index) => (
+              <motion.span
+                key={index}
+                className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
+                whileHover={{ scale: 1.05 }}
+              >
+                {strength}
+              </motion.span>
+            ))}
+            {skill.keyStrengths.length > 3 && (
+              <span className="px-3 py-1 bg-gray-200 text-gray-600 text-sm rounded-full">
+                +{skill.keyStrengths.length - 3} more
+              </span>
+            )}
+          </div>
 
-            <motion.div
-              className={`p-2 ${skill.color} group-hover:translate-x-1 transition-transform`}
-              whileHover={{ scale: 1.1 }}
-            >
-              <ChevronRight size={20} />
-            </motion.div>
+          <div className="flex justify-end">
+            <p className="text-gray-500 text-sm flex items-center space-x-1">
+              <span>Click to learn more</span>
+              <ChevronRight size={14} />
+            </p>
           </div>
         </div>
       </motion.div>
@@ -520,12 +519,33 @@ const SkillsPage = () => {
               next project or organization.
             </p>
             <motion.button
-              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="relative inline-flex items-center px-8 py-3 bg-white text-blue-600 font-bold rounded-full shadow-lg cursor-pointer border-2 border-transparent hover:border-blue-300"
+              animate={{
+                scale: [1, 1.05, 1],
+                rotate: [0, 0.5, -0.5, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileHover={{
+                scale: 1.15,
+                rotate: 0,
+                background: "white",
+                color: "#2563eb",
+                boxShadow: "0 0 30px rgba(59, 130, 246, 0.8)"
+              }}
+              whileTap={{
+                scale: 0.9,
+                rotate: 0
+              }}
+              style={{
+                filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.4))"
+              }}
               onClick={() => (window.location.href = "/projects")}
             >
-              View Projects & Contact
+              <span className="relative z-10 text-lg">✨ View Projects & Contact ✨</span>
             </motion.button>
           </div>
         </motion.div>
