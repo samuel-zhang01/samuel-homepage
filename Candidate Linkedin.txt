@@ -1,0 +1,276 @@
+I'll reorganize the information from your document into a comprehensive overview combining your CV and LinkedIn details. Here's a streamlined, professional presentation of your experience and qualifications:
+SAMUEL ZHANG
+Contact: 07502 118207 | sam.xiaojian.zhang@outlook.com | linkedin.com/in/samuel-xj-zhang/ | London, Flexible to relocate
+EDUCATION
+King's College London | London, UK
+B.Sc. in Chemistry with Biomedicine with Placement (Sept 2021 – Sept 2025)
+
+MSc in AI Applications and Innovation at Imperial College London this October! 🎓
+
+From my previous experience at Pfizer, I've been fascinated by how AI is changing everything from healthcare to climate research, and this program feels like the perfect chance to actually dive in and learn how to build solutions that matter. What drew me in is how it combines the technical side (machine learning, deep learning) with real business applications and entrepreneurship.
+
+The fact that Imperial was just ranked #1 in the UK for research impact and has more "world-leading" research than any other university definitely didn't hurt in my decision. The program is run through their flagship I-X initiative, bringing together their top departments in Computing, Engineering, Math, and Business with access to some seriously cool labs like the Dyson Robotics Lab.
+
+But honestly, what I'm most excited about is working on actual AI projects with a small cohort of people who are just as curious about this stuff as I am. Being able to nerd out with likeminded people with in an environment that cherrishes innovation and entrepreneurship. Plus there's the option to do an industry internship, which could be a game-changer for my career.
+
+Looking forward to meeting people who are thinking about the same big questions around AI and innovation. If you're working in this space, would love to connect and share ideas.
+
+12 months of intensive learning, building real solutions, and hopefully making some great connections along the way!
+
+1st Class honours (with Royal Society of Chemistry Accreditation)
+Core Modules: Computational Chemistry, Physical Chemistry, Computational Structural Biology
+Final Project: Engineered Novel Drug Target Designs Utilising SwissDock and AlphaFold 3
+Activities: King's College London Chemistry Society, KCL Brass Band, KCL Synthetic Biology Society
+Roles: Student Representative (2021-2023); Department Representative (2023)
+Additional Experience: Multiple research projects in digital chemistry applications, developed skills in chemical informatics and data analysis, experience in synthetic chemistry and protein expression techniques
+
+Shanghai Community International School | Shanghai, China
+International Baccalaureate (2009 – 2018)
+
+Completed IBDP and obtained high school diploma
+Subjects: Biology HL, Chemistry HL, Mandarin B HL, Mathematics SL, Economics SL, and English A SL
+Achievement: Valedictorian (2019)
+
+PROFESSIONAL EXPERIENCE
+Pfizer 2.5 years
+Web Application Developer (Part-time) | London, Remote
+Oct 2024 - Present (6 months)
+
+Maintain and develop new features for the GROWMAT system I developed at Pfizer
+Maintain end-user documentation and communicate with a Pfizer point of contact
+Collaborate with a part-time colleague and Pfizer manager for bug fixes and feature implementation
+
+Data Analyst in Analytical R&D Informatics Team (Data Engineering) | Sandwich, UK
+Nov 2023 - Aug 2024
+
+Led development of GROWMAT - a mission-critical workflow management system for Pfizer Groton's GMP Analytics, impacting 40+ employees across 4+ teams
+Architected full-stack solution using Next.js, Julia, PostgreSQL, and Spotfire, featuring real-time visualizations and workload forecasting
+Implemented robust backend with concurrency protection and 3-tier disaster recovery
+Created comprehensive documentation and training materials ensuring long-term sustainability
+Delivered project within 10-month timeframe at Pfizer's Sandwich, UK site
+
+Data Analyst in Analytical R&D Development Analytics (Scientific Programming) | Sandwich, UK
+Sep 2023 - Nov 2023 (3 months)
+
+Developed API solubility modeling tool using PC-SAFT theory to reduce manual testing for drug product
+Implemented solution using open-source fluid-thermodynamic modeling packages
+Applied experience in computational thermodynamics and scientific programming
+Demonstrated understanding of API R&D processes and pharmaceutical industry analytical methods
+Project scope interrupted after 3 months due to organizational restructuring
+
+King's College London Chemistry Society
+STEM Outreach Officer, Coding Series Tutor (Part-time) | London, UK
+Sep 2022 - Present (2 years 7 months)
+
+Founded and led development of >20 hours computational skills course for chemistry department for 2 years
+Designed and delivered curriculum covering Excel, Python, data analysis, and scientific computing
+Designed and coordinated STEM outreach activities to enhance student engagement in chemistry department
+Organized industry and research speaker series to provide career insights and networking opportunities
+Facilitated intercollegiate chemistry competitions to promote teamwork and academic excellence
+Created support platform for academic guidance, ethics education, and professional development
+Mentored peers in pursuing extracurricular opportunities and developing intellectual curiosity
+Trained 80+ students across 20 sessions, receiving 90% positive feedback
+Secured departmental and Royal Society sponsorship for continued support
+
+King's College London
+Research Fellowship (Internship) | London, UK
+Jun 2023 - Jul 2023 (2 months)
+
+Conducted interdisciplinary research on biological membrane organization and protein-lipid co-assembly
+Investigated protein folding mechanisms during synthesis and interactions with lipid bilayers
+Applied chemistry principles to understand self-assembly of biological systems
+Focused on membrane proteins' role in cellular transport and communication
+Completed 2-month fellowship at King's College London's research facilities
+Conducted molecular dynamics simulations using GROMACS on HPC systems, optimizing computational workflows
+Developed a self-hosted, GPU-accelerated infrastructure, reducing simulation time by 70%
+
+Research Fellowship (Contract) | London, UK
+Jun 2022 - Jul 2022 (2 months)
+
+Conducted molecular recognition research through The King's Research Fellowship (KRUF)
+Investigated structural determination of the odorant exaltanone to understand chiral odorant-receptor interactions
+Utilized chirped-pulse broadband microwave rotational spectroscopy equipment
+Worked alongside Prof Maria Sanz and PhD researchers to analyze chemical interactions
+Optimized data analysis pipelines using Excel and MATLAB, improving efficiency by 40%
+Presented research at undergraduate symposium and prepared manuscript for publication
+Received King's College London Research Experience Award (2022)
+
+Singapore Civil Defence Force (SCDF)
+Human Resources Manager (Contract) | Singapore
+Jul 2019 - Jul 2021 (2 years 1 month)
+
+Served dual role as Commander's Personal Assistant and HR Personnel Officer
+Managed welfare and HR operations for 1,000+ frontline workers
+Developed predictive models for COVID-19 transmission using MATLAB
+Automated HR operations through Excel VBA and Access integration, reducing disaster response recall attendance process time by 300%
+Implemented peer mental health program initiative, improving team productivity and morale
+Handled high-priority tasks requiring urgent execution and problem-solving
+Maintained disciplinary standards and service integrity
+Earned SCDF 1st Division HQ Wall of Fame recognition from Commander
+Received Service Excellence Award and promotion to Sergeant rank
+Received personal recommendation letter from direct supervisor
+
+SKILLS
+Industry Knowledge
+
+Full-Stack Development
+Web Application Design & Web-based Systems
+Data Engineering & Data Pipelines
+Data Validation & Analysis
+Software Documentation & Development
+Scientific Programming
+Thermodynamic Modeling
+Operations & Personnel Management
+
+Tools & Technologies
+
+Languages: Julia, Python, JavaScript, VBA, React, Next.js
+Databases: PostgreSQL, SQL
+Platforms: AWS, Docker, Nginx, Linux
+Visualization: Spotfire, Power BI
+Project Management: Jira, Kanban, Agile Methodologies
+Microsoft: Office Full Suite, Excel
+Other: GitHub, Adobe Lightroom
+
+Technical Skills
+
+Data Science & Machine Learning
+Data Visualization & Statistical Analysis
+Modeling & Structural Biology
+Laboratory Skills & Molecular Dynamics
+Physical Chemistry & Molecular Modeling
+Active Pharmaceutical Ingredients
+
+Interpersonal Skills
+
+Problem Solving & Analytical Thinking
+Leadership & Teamwork
+Communication & Public Speaking
+Tutoring & Lesson Planning
+Event Planning & Organizational Leadership
+Research & Human Resources Management
+Digital Photography & Computer Hardware
+
+Languages
+
+English (Fluent)
+Chinese (Mandarin, Fluent)
+
+AWARDS & ACHIEVEMENTS
+
+King's College London Research Experience Award (2022)
+SCDF Service Excellence Award & 1st Division HQ Wall of Fame (2021)
+Shanghai Community International School Valedictorian (2019)
+
+
+Opensource contributions to GitHub
+HomeAutomationStack
+A stack running on Raspberry Pi 5 that allows me to remotely control all my home automation system from remotely turning on the oven to showing historical CO₂ data.
+
+Private domain name via Cloudflare DNS
+Web based remote desktop and SSL through Guacamole with 2FA for windows and linux.
+Private VPN through OpenVPN
+32TB of NAS through SynologyNAS
+Mass storage of all my photos with facial recognition and location map
+Wireless air quality monitoring of temperature, humidity, pressure and CO₂ concentration via Aranet4 air quality monitor with Raspberry Pi 5.
+PostgreSQL database with 2 tier disaster recovery plan.
+
+Samuel X.J. Zhang
+07502 118207 | sam.xiaojian.zhang@outlook.com | linkedin.com/in/samuel-xj-zhang/ | London, Flexible to relocate
+EDUCATION
+King’s College London London, UK
+BSc in Chemistry with Biomedicine with Placement Sept 2021 – Sept 2025
+• 1st Class (with Royal Society of Chemistry Accreditation)text=’<keywords>Python, SQL, data analysis, data science, financial markets, data sources, data processing, data collection, data cleansing, AWS, Airflow, equities, futures, options, financial instruments, systematic trading, data monitoring, database management, vendor management, compliance, legal processes, data infrastructure, global capital markets, predictive modeling, research infrastructure, attention to detail, communication skills, organization skills, interpersonal skills, prioritization, multitasking, problem-solving, judgment, finance industry, portfolio management, data delivery, FTP, wiki maintenance, documentation, team coordination, process implementation, error detection, scalable solutions, reliability
+• Relevant Modules: Computational Chemistry, Physical Chemistry, Computational Structural Biology, Organic Chemistry
+• Final Project: Engineered Novel Drug Target Designs Utilising SwissDock and AlphaFold 3
+• Applied comprehensive hazard assessment methodologies in organic chemistry laboratory work, developing practical expe-
+rience in identifying, evaluating, and mitigating chemical reaction risks
+PROFESSIONAL EXPERIENCE
+Pfizer Sandwich, UK
+Digital Scientist, Department of Analytical Research and Development Sept 2023 – Present
+• Led project inception by identifying critical business inefficiencies, assembling a cross-functional team, and successfully
+pitched solutions to senior management, demonstrating strong analytical and communication skills
+• Conducted comprehensive risk assessments and validation testing, identifying potential failure modes and implementing
+mitigation strategies in a regulated environment
+• Built a real-time visualisation dashboard with a 3-tier disaster recovery system, showcasing ability to design systems with
+robust safety features
+• Developed predictive models for pharmaceutical applications, translating complex data into actionable insights for strategic
+decision-making
+• Produced comprehensive technical documentation and guides, ensuring knowledge transfer and application of procedures
+Singapore Civil Defence Force (SCDF) Singapore
+Human Resources NSF July 2019 – July 2021
+• Developed predictive risk assessment models using MATLAB, simulating multiple scenarios to identify high-risk patterns
+and guide resource planning and emergency response protocols
+• Implemented statistical risk analysis techniques to quantify uncertainty in predictions, enabling evidence-based decision-
+making with clear understanding of confidence intervals and risk factors
+• Automated operations for 1,000+ frontline responders, demonstrating ability to streamline workflows and improve efficiency
+• Received the Service Excellence Award and promoted to Sergeant for outstanding contributions to safety and risk manage-
+ment initiatives
+OTHER EXPERIENCE
+Department of Chemistry, King’s College London London, UK
+Coding Series Founder and Lecturer Jan 2023 – Present
+• Launched and led a department-wide programming initiative, designing a curriculum covering Excel, Python, data analysis,
+and scientific computing.
+• Delivered clear, accessible lectures to diverse audiences, translating complex technical concepts to audience with varying
+backgrounds
+• Designed and implemented technical curriculum, demonstrating ability to organise and structure complex information
+Royal Society of Chemistry, King’s College London London, UK
+Intern Researcher May 2023 – July 2023
+• Conducted molecular dynamics simulations using GROMACS, developing skills in computational modelling
+• Optimised computational workflows, showing ability to improve process efficiency while maintaining quality
+RELEVANT SKILLS & QUALIFICATIONS
+• Risk Analysis: Experience in conducting risk assessments from work experience and chemistry, validation testing, and de-
+veloping predictive models for critical applications; applied COSHH and hazard management principles in organic synthesis
+to identify, assess, and mitigate potential reaction hazards, ensuring safe laboratory practices
+• Technical Communication: Strong report writing, documentation, and presentation skills with experience communicating
+complex concepts to diverse audiences
+• Quantitative Analysis: Proficient in statistical analysis, data modelling, and interpretation with practical application in risk
+scenarios
+• Project Management: Workflow optimisation, cross-functional collaboration, and project lifecycle management
+• Technical Skills: MATLAB, Python, Data Analysis & Validation, MS Office Suite, Technical Documentation
+• Languages: English, Chinese (Mandarin)
+• Awards: King’s College London Research Experience Award (2022), SCDF Service Excellence Award & 1st Division HQ
+Wall of Fame (2021)
+
+
+
+Some other information about me (please only view role specific information)
+
+Question 1: What excites you most about working in Digital Consulting, and how does this align with your own goals?
+
+"What really gets me excited is solving problems with digital tools and apply it in sectors that needs me the most. I was a placement digital chemist in Pfizer initially, redundancy, it me realised that Pfizer’s biggest bottleneck at that time was workflow management being an outdated 15 years excel spreadsheet .   When I built GROWMAT at Pfizer, to bring full stack development software for workload management and analytics tool to a dated regulatory space, I watched 80+ colleagues go from wasting hundreds of hours on manual work to focusing on what they're actually good at.
+
+That moment when you see technology genuinely make someone's job better, it hits different - that's what I'm after.  and subsequently hired on for contract work as a product owner
+
+ I thrive in the idea pitching, market research, making MVPs, talking to stateholders environment, development environment, project management. It bings me genuine joy to advice people on what has worked for me in the pst 
+
+
+Question 2: How will you ensure efficient time management between work commitments and studying?
+"I've actually been juggling work and study for the past year and a half at Pfizer while finishing my degree, so I've got some experience with this. The key for me has been finding where they overlap rather than treating them as separate things.
+
+What's exciting is that my Masters in AI Applications and Innovation at Imperial is designed around real business applications. There's this module called AI Ventures where we build actual AI products and pitch them to venture capitalists - that's exactly the mindset I need for consulting clients about their digital strategy. When I'm learning about AI implementation challenges in class, I can directly apply that to helping RSM clients understand what actually works versus what's just hype.
+
+The program connects with Imperial's startup-heavy environment, so I'm constantly thinking about how technology creates business value. 
+
+I'm a bit of a tech enthusiast - I'll stay up late coding just for fun anyway, so studying feels less like extra work and more like feeding my curiosity. My approach is pretty simple: I block out dedicated study time like any important meeting, I use weekends for deeper learning, and honestly, when you're genuinely excited about what you're studying, it doesn't feel like a chore.
+The technical skills I'm learning will make me better at my day job, and the consulting work will give me real context for my studies. It's not about managing competing priorities - it's about making sure everything builds on everything else."
+
+Question 3: Would you describe yourself as someone who enjoys being given a lot of responsibility, and why?
+
+"Yes, definitely. But not because I want to be in charge of everything - more because for me, it usually means I can take ownership and responsibility of my own decisions and actions.Im never afraid to ask for help and never ashamed to admit my fault. I am here to learn and contribute. 
+
+The GROWMAT project is probably the best example. I saw this inefficient process that was frustrating everyone, and instead of just complaining about it, I got the chance to actually do something. Convincing senior director, building a team, managing the technical development - all of that came with immense pressure, 2am coding sessions late meetings with the US time. But after wards, I cannot be more proud of myself for pushing though, seeing what I can achieve. We never know our true potential if we aren’t risk takers. 
+
+Same thing happened in Singapore at the Civil Defence Force. Managing operations readiness for simulated national emergencies over a thousand people during COVID was intense, frightening even. Being trusted by my commander, obtaining service excellence reward, made it all worth it
+
+What I've learned is that responsibility isn't just about being accountable when things go wrong, its also about being trusted to help clients make the right call, not just present options and let someone else decide." 
+
+And if you dont take the chance, make mistakes, disappoint people, mess up a few times, how are you going to learn to be better? 
+
+Question 4: How do you feel about incorporating new technologies How might your role benefit from digital enhancements?
+From my perspective, new technology should solve real problems, not create new ones. At Pfizer, I didn't build GROWMAT because I thought we needed more software - I built it because people were wasting hours every day on manual tasks. Same principle applies here.
+
+What excites me about digital approach is that you're using technology to help consultants be better consultants, not to replace them. Take something like the AI-powered tax platform you launched - that's not about cutting jobs, it's about letting tax professionals focus on strategy instead of data entry.
+
+In my role, I see digital tools helping in two main ways. First, better data analysis means I can spot patterns and insights faster, which means better recommendations for clients. Second, automation of routine tasks means more time for the interesting work - understanding client challenges, developing solutions, actually helping businesses transform.
+The key is making sure any new technology actually improves outcomes for clients. RSM's track record suggests you get this - you're using AI to deliver better results, not just because it's trendy."

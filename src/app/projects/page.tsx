@@ -565,7 +565,7 @@ const ProjectsPage = () => {
                   className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all flex items-center space-x-2"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => window.open('/cv-samuel-zhang.pdf', '_blank')}
+                  onClick={() => window.open('/CVtemplateProduct.pdf', '_blank')}
                 >
                   <Download size={16} />
                   <span>Download CV</span>
