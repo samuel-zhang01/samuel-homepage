@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import {
-  User,
   GraduationCap,
   Briefcase,
   Code,
@@ -15,6 +14,7 @@ import {
   Calendar,
   Clock
 } from "lucide-react";
+import Image from "next/image";
 
 const calculatePfizerExperience = (): string => {
   const startDate = new Date('2023-09-01');
@@ -41,7 +41,7 @@ const calculateDuration = (dateRange: string): string => {
   const endDate = parseDate(endStr);
 
   const diffTime = endDate.getTime() - startDate.getTime();
-  let diffMonths = diffTime / (1000 * 60 * 60 * 24 * 30.44);
+  const diffMonths = diffTime / (1000 * 60 * 60 * 24 * 30.44);
 
   // Add 1 month to include the starting month
   // diffMonths += 1;
@@ -151,9 +151,11 @@ const Hero = () => (
         transition={{ delay: 0.1, duration: 0.8 }}
       >
         <div className="w-24 h-24 sm:w-40 sm:h-40 rounded-full mx-auto mb-6 overflow-hidden border-4 border-white/30 shadow-lg">
-          <img
+          <Image
             src="/headshot.jpeg"
             alt="Samuel X.J. Zhang"
+            width={160}
+            height={160}
             className="w-full h-full object-cover"
           />
         </div>
@@ -239,44 +241,6 @@ const EducationCard = ({
   </motion.div>
 );
 
-const ExperienceCard = ({
-  role,
-  company,
-  date,
-  location,
-  achievements
-}: {
-  role: string;
-  company: string;
-  date: string;
-  location: string;
-  achievements: string[];
-}) => (
-  <motion.div
-    className="bg-white rounded-xl p-6 shadow-lg border border-gray-100"
-    whileHover={{ y: -5 }}
-    transition={{ duration: 0.3 }}
-  >
-    <div className="flex items-start space-x-4">
-      <div className="p-3 bg-purple-100 rounded-lg">
-        <Briefcase className="text-purple-600" size={24} />
-      </div>
-      <div className="flex-1">
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">{role}</h3>
-        <p className="text-purple-600 font-medium mb-1">{company}</p>
-        <p className="text-gray-600 text-sm mb-3">{date} • {location}</p>
-        <ul className="text-gray-700 space-y-2 text-sm">
-          {achievements.map((achievement: string, index: number) => (
-            <li key={index} className="flex items-start space-x-2">
-              <span className="w-1.5 h-1.5 bg-purple-600 rounded-full mt-2 flex-shrink-0"></span>
-              <span>{achievement}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </motion.div>
-);
 
 const SkillCategory = ({
   title,
