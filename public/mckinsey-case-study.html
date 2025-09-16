@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Product Analyst Portfolio | Samuel Zhang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            margin: -20px -20px 40px -20px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .mckinsey-focus {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+
+        .role-alignment {
+            background: #eff6ff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .role-alignment h2 {
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .alignment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .alignment-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .alignment-item h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .requirement {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+
+        .evidence {
+            color: #6b7280;
+            font-size: 0.95em;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #1e40af;
+            font-size: 2em;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e5e7eb;
+        }
+
+        .user-research-process {
+            background: #f0f9ff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .step {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+
+        .step-number {
+            background: #3b82f6;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .step h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .deliverable {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .deliverable h4 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .wave-connection {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+
+        .wave-connection h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .transformation-skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .skill-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .skill-card h5 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .skill-card p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .metrics-showcase {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .metric-card {
+            text-align: center;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #3b82f6;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .metric-context {
+            color: #374151;
+            font-size: 0.85em;
+        }
+
+        .technical-translation {
+            background: #fef3c7;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid #f59e0b;
+            margin: 30px 0;
+        }
+
+        .technical-translation h3 {
+            color: #92400e;
+            margin-bottom: 20px;
+        }
+
+        .translation-examples {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .technical-side, .user-side {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .technical-side {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .user-side {
+            background: #dcfce7;
+            border-left: 4px solid #22c55e;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #f59e0b;
+            text-align: center;
+        }
+
+        .stakeholder-management {
+            margin: 40px 0;
+        }
+
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .stakeholder-group {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            border-top: 4px solid #3b82f6;
+        }
+
+        .stakeholder-group h4 {
+            color: #1e40af;
+            margin-bottom: 15px;
+        }
+
+        .engagement-methods {
+            list-style: none;
+        }
+
+        .engagement-methods li {
+            padding: 5px 0;
+            color: #6b7280;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .engagement-methods li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+        }
+
+        .footer {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 50px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .footer h3 {
+            color: #1e40af;
+            margin-bottom: 15px;
+        }
+
+        .readiness-statement {
+            font-size: 1.1em;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; max-width: none; }
+            .header { background: #1e3a8a !important; -webkit-print-color-adjust: exact; }
+        }
+
+        @media (max-width: 768px) {
+            .alignment-grid, .process-steps, .deliverables-grid, 
+            .transformation-skills, .metrics-grid, .stakeholder-grid {
+                grid-template-columns: 1fr;
+            }
+            .translation-examples {
+                grid-template-columns: 1fr;
+            }
+            .arrow {
+                transform: rotate(90deg);
+            }
+            .header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Digital Product Analyst (Mock Product)</h1>
+            <div class="subtitle">Transforming Enterprise Operations Through User-Centered Product Development</div>
+            <div class="mckinsey-focus">
+                <strong>Targeted Application:</strong> McKinsey Transformation - Wave Solution Product Team<br>
+                <em>Demonstrating readiness to drive client transformation programs through digital product excellence</em>
+            </div>
+        </header>
+
+        <section class="role-alignment">
+            <h2>Direct Alignment with McKinsey Requirements</h2>
+            <p>My experience leading GROWMAT development directly addresses every core requirement for the Digital Product Analyst role:</p>
+            
+            <div class="alignment-grid">
+                <div class="alignment-item">
+                    <h4>User Research & Insights</h4>
+                    <div class="requirement">Required: Conduct user research, draw insights for product value/usability</div>
+                    <div class="evidence">Conducted comprehensive stakeholder interviews across 200+ users, identified critical pain points in legacy workflows, validated solutions through iterative feedback cycles</div>
+                </div>
+                
+                <div class="alignment-item">
+                    <h4>Product Backlog Management</h4>
+                    <div class="requirement">Required: Define, build, prioritise product backlog</div>
+                    <div class="evidence">Managed full product lifecycle from user stories to deployment, prioritised features based on user impact and technical feasibility, led Agile development process</div>
+                </div>
+                
+                <div class="alignment-item">
+                    <h4>Technical Translation</h4>
+                    <div class="requirement">Required: Translate complex technical information into user-friendly content</div>
+                    <div class="evidence">Created comprehensive documentation suite (manuals, PDFs, videos) enabling seamless user adoption across multiple business restructuring events</div>
+                </div>
+                
+                <div class="alignment-item">
+                    <h4>Cross-functional Collaboration</h4>
+                    <div class="requirement">Required: Work with technical & business teams</div>
+                    <div class="evidence">Led cross-functional Agile team, collaborated with developers, analysts, and business stakeholders to deliver mission-critical enterprise solution</div>
+                </div>
+                
+                <div class="alignment-item">
+                    <h4>Data Analysis Expertise</h4>
+                    <div class="requirement">Required: Analyze data using Excel and analytics tools</div>
+                    <div class="evidence">Built analytics dashboard with real-time KPIs, processed complex datasets from multiple enterprise systems, delivered 80% performance improvement</div>
+                </div>
+                
+                <div class="alignment-item">
+                    <h4>Product Management Experience</h4>
+                    <div class="requirement">Required: 1+ years product owner/manager experience</div>
+                    <div class="evidence">2.5 years at Pfizer leading end-to-end product development, plus current Master's in AI Applications demonstrating continuous learning in product innovation</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>User Research & Product Discovery Process</h2>
+            <div class="user-research-process">
+                <h3>Applying User-Focused Principles to Enterprise Transformation</h3>
+                <p>Demonstrated McKinsey's core user-focused approach through systematic discovery and validation methodology:</p>
+                
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Stakeholder Discovery</h4>
+                        <p>Conducted 25+ stakeholder interviews across multiple teams to understand pain points after business restructuring</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Pain Point Analysis</h4>
+                        <p>Identified critical workflow bottlenecks: manual processes, scalability issues, lack of granular visibility</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>User Story Development</h4>
+                        <p>Translated business needs into actionable user stories with clear acceptance criteria and success metrics</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Iterative Validation</h4>
+                        <p>Implemented continuous user feedback loops, testing improvement ideas before full deployment</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Product Development Deliverables</h2>
+            <div class="deliverables-grid">
+                <div class="deliverable">
+                    <h4><span class="icon">📋</span>User Stories & Wireframes</h4>
+                    <p>Created comprehensive user story backlog with wireframes for web interface, prioritised based on user impact and development complexity</p>
+                </div>
+                
+                <div class="deliverable">
+                    <h4><span class="icon">🔄</span>Agile Product Management</h4>
+                    <p>Led cross-functional team through Agile methodology, managed sprint planning, groomed stories with developers</p>
+                </div>
+                
+                <div class="deliverable">
+                    <h4><span class="icon">📊</span>Analytics Dashboard</h4>
+                    <p>Built real-time KPI tracking with 99.9% uptime, enabling data-driven decision making for resource allocation</p>
+                </div>
+                
+                <div class="deliverable">
+                    <h4><span class="icon">📚</span>User Documentation</h4>
+                    <p>Comprehensive user guides, video tutorials, and training materials ensuring smooth adoption across teams</p>
+                </div>
+                
+                <div class="deliverable">
+                    <h4><span class="icon">🎯</span>Product Backlog</h4>
+                    <p>Defined and prioritised feature roadmap based on user feedback, business value, and technical feasibility</p>
+                </div>
+                
+                <div class="deliverable">
+                    <h4><span class="icon">🔍</span>User Testing Results</h4>
+                    <p>Documented iterative testing outcomes, improvement ideas validation, and user adoption metrics</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="wave-connection">
+            <h3>Direct Relevance to McKinsey's Wave Solution</h3>
+            <p>My transformation program experience aligns perfectly with Wave's mission to help clients manage improvement programs:</p>
+            
+            <div class="transformation-skills">
+                <div class="skill-card">
+                    <h5>Transformation Program Management</h5>
+                    <p>Led digital transformation replacing legacy Excel system with modern web platform, managing change across multiple teams during business restructuring</p>
+                </div>
+                
+                <div class="skill-card">
+                    <h5>Stakeholder Alignment</h5>
+                    <p>Successfully aligned diverse stakeholders (analysts, managers, IT teams) around common transformation goals, ensuring buy-in and adoption</p>
+                </div>
+                
+                <div class="skill-card">
+                    <h5>Improvement Program Tracking</h5>
+                    <p>Built systems for tracking improvement initiatives, measuring success metrics, and providing visibility into transformation progress</p>
+                </div>
+                
+                <div class="skill-card">
+                    <h5>Client-Facing Documentation</h5>
+                    <p>Experience creating user-friendly materials that translate complex technical capabilities into business value - essential for Wave's client base</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Quantified Business Impact</h2>
+            <div class="metrics-showcase">
+                <h3>Measurable Results Demonstrating Product Excellence (Hopeful figures based on my previous project)</h3>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <span class="metric-value">1000%</span>
+                        <div class="metric-label">Efficiency Improvement</div>
+                        <div class="metric-context">Through user-centered design and automation</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <span class="metric-value">150+</span>
+                        <div class="metric-label">Hours Saved Monthly</div>
+                        <div class="metric-context">Direct productivity impact for end users</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <span class="metric-value">99.75%</span>
+                        <div class="metric-label">System Uptime</div>
+                        <div class="metric-context">Reliable platform supporting critical operations</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <span class="metric-value">100%</span>
+                        <div class="metric-label">User Adoption</div>
+                        <div class="metric-context">Department-wide adoption with positive feedback</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="technical-translation">
+            <h3>Technical Translation Excellence</h3>
+            <p>Demonstrated ability to translate complex technical concepts into user-friendly solutions - a key requirement for Wave's client-facing role:</p>
+            
+            <div class="translation-examples">
+                <div class="technical-side">
+                    <h5>Technical Complexity</h5>
+                    <ul>
+                        <li>7-component Docker architecture</li>
+                        <li>PostgreSQL database optimization</li>
+                        <li>Julia data processing algorithms</li>
+                        <li>Real-time data pipeline integration</li>
+                    </ul>
+                </div>
+                
+                <div class="arrow">→</div>
+                
+                <div class="user-side">
+                    <h5>User-Friendly Experience</h5>
+                    <ul>
+                        <li>Intuitive web interface</li>
+                        <li>One-click job scheduling</li>
+                        <li>Visual workload dashboards</li>
+                        <li>Simple drag-and-drop functionality</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section stakeholder-management">
+            <h2>Cross-Functional Stakeholder Management</h2>
+            <p>Experience managing diverse stakeholder groups mirrors the collaborative environment at McKinsey:</p>
+            
+            <div class="stakeholder-grid">
+                <div class="stakeholder-group">
+                    <h4>Technical Teams</h4>
+                    <ul class="engagement-methods">
+                        <li>Led Agile development sprints</li>
+                        <li>Groomed user stories with developers</li>
+                        <li>Coordinated system architecture decisions</li>
+                        <li>Managed technical debt and performance optimization</li>
+                    </ul>
+                </div>
+                
+                <div class="stakeholder-group">
+                    <h4>Business Users</h4>
+                    <ul class="engagement-methods">
+                        <li>Conducted comprehensive user interviews</li>
+                        <li>Facilitated requirement gathering sessions</li>
+                        <li>Delivered training and adoption support</li>
+                        <li>Gathered continuous feedback for improvements</li>
+                    </ul>
+                </div>
+                
+                <div class="stakeholder-group">
+                    <h4>Senior Leadership</h4>
+                    <ul class="engagement-methods">
+                        <li>Presented business case and ROI projections</li>
+                        <li>Provided regular progress updates</li>
+                        <li>Managed expectations during transformation</li>
+                        <li>Secured director-level commendation for results</li>
+                    </ul>
+                </div>
+                
+                <div class="stakeholder-group">
+                    <h4>External Partners</h4>
+                    <ul class="engagement-methods">
+                        <li>Coordinated with IT infrastructure teams</li>
+                        <li>Managed vendor relationships for cloud deployment</li>
+                        <li>Ensured compliance with enterprise standards</li>
+                        <li>Facilitated knowledge transfer sessions</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <h3>Ready to Drive Wave Solution Innovation</h3>
+            <div class="readiness-statement">
+                My proven track record of leading enterprise transformation through user-centered product development, combined with demonstrated ability to translate complex technical solutions into business value, positions me to immediately contribute to McKinsey's Wave Solution team and help clients successfully manage their transformation programs.
+            </div>
+            <div class="contact-info">
+                <strong>Samuel Zhang</strong> | Digital Product Analyst Candidate<br>
+                Ready to apply transformation expertise to drive client success at McKinsey
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

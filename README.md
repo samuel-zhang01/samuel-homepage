@@ -1,36 +1,206 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Samuel Zhang - Interactive Portfolio
 
-## Getting Started
+A modern, responsive portfolio website showcasing expertise in Product Management, AI/ML Engineering, Digital Consultancy, Analytical Chemistry, and Finance.
 
-First, run the development server:
+## 🚀 Features
+
+- **Interactive Skills Showcase**: Detailed modal views for each skill area with achievements and technologies
+- **Comprehensive Project Portfolio**: Professional, research, and personal projects with filtering
+- **Modern UI/UX**: Built with Next.js 15, TypeScript, and Tailwind CSS
+- **Smooth Animations**: Framer Motion for engaging user interactions
+- **Mobile Responsive**: Optimized for all device sizes
+- **SEO Optimized**: Proper metadata and semantic HTML
+
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 15 with TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Deployment**: Docker with Docker Compose
+
+## 📦 Quick Start with Docker
+
+### Prerequisites
+- Docker
+- Docker Compose
+
+### One-Command Deployment
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+./deploy.sh
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This script will:
+1. Build the Next.js application
+2. Create the Docker image
+3. Start the container on port 1111
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Manual Docker Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Build and start the application
+docker-compose up -d --build
 
-## Learn More
+# View logs
+docker-compose logs -f
 
-To learn more about Next.js, take a look at the following resources:
+# Stop the application
+docker-compose down
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Restart the application
+docker-compose restart
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Access the Application
+- **Local**: http://localhost:1111
+- **Production**: Replace `localhost` with your server's IP/domain
 
-## Deploy on Vercel
+## 🔧 Development Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Install Dependencies
+```bash
+npm install
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Run Development Server
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Build for Production
+```bash
+npm run build
+npm start
+```
+
+## 📁 Project Structure
+
+```
+samuel-homepage/
+├── src/
+│   ├── app/
+│   │   ├── page.tsx           # About/CV page
+│   │   ├── skills/page.tsx    # Interactive skills showcase
+│   │   ├── projects/page.tsx  # Projects and contact
+│   │   └── layout.tsx         # Root layout with navigation
+│   └── components/
+│       └── Navigation.tsx     # Navigation component
+├── docker-compose.yml         # Docker Compose configuration
+├── Dockerfile                 # Docker image definition
+├── deploy.sh                  # Deployment script
+└── next.config.js            # Next.js configuration
+```
+
+## 🌟 Key Pages
+
+### 1. About/CV (Homepage)
+- Professional summary and contact information
+- Education details (Imperial College London, King's College London)
+- Professional experience (Pfizer, Singapore Civil Defence Force)
+- Technical skills categorization
+
+### 2. Skills Showcase
+- **Product Manager**: GROWMAT development, user research, cross-functional leadership
+- **ML Engineer**: AI applications, computational modeling, predictive analytics
+- **Digital Consultancy**: Digital transformation, process optimization, change management
+- **Analytical Chemist**: Pharmaceutical analysis, computational chemistry, drug discovery
+- **Finance**: Financial modeling, ROI analysis, resource planning
+
+### 3. Projects & Contact
+- Featured projects with detailed descriptions and achievements
+- Personal interests and hobbies
+- Comprehensive contact information
+- "Why hire me" value proposition
+
+## 🚀 Deployment Options
+
+### Docker (Recommended)
+```bash
+# Using the deployment script
+./deploy.sh
+
+# Or manually
+docker-compose up -d --build
+```
+
+### Traditional Hosting
+```bash
+npm run build
+npm start
+```
+
+### Cloud Platforms
+- **Vercel**: Connect your GitHub repository for automatic deployments
+- **Netlify**: Drag and drop the `out/` folder after running `npm run build`
+- **AWS/GCP/Azure**: Use the Docker image with container services
+
+## 🔧 Configuration
+
+### Environment Variables
+Copy `.env.example` to `.env.local` and configure:
+
+```bash
+NODE_ENV=production
+NEXT_TELEMETRY_DISABLED=1
+# Add other environment variables as needed
+```
+
+### Port Configuration
+- **Development**: Port 3000
+- **Docker**: Port 1111 (mapped from container's 3000)
+- **Custom**: Modify `docker-compose.yml` port mapping
+
+## 📱 Responsive Design
+
+The website is fully responsive and optimized for:
+- 📱 Mobile devices (320px+)
+- 📱 Tablets (768px+)
+- 💻 Desktops (1024px+)
+- 🖥️ Large screens (1440px+)
+
+## 🎨 Customization
+
+### Colors and Theming
+The design uses a cohesive color scheme defined in Tailwind classes:
+- Primary: Blue gradient (`from-blue-600 to-purple-600`)
+- Secondary: Various accent colors for different sections
+- Background: Light gradient (`from-slate-50 to-blue-50`)
+
+### Content Updates
+- **Personal Information**: Update in `src/app/page.tsx`
+- **Skills**: Modify `skillsData` in `src/app/skills/page.tsx`
+- **Projects**: Update `projects` array in `src/app/projects/page.tsx`
+
+## 🔍 SEO and Performance
+
+- **Meta Tags**: Comprehensive metadata in `layout.tsx`
+- **Semantic HTML**: Proper heading structure and accessibility
+- **Image Optimization**: Next.js Image component for optimized loading
+- **Performance**: Lighthouse score optimized for Core Web Vitals
+
+## 🤝 Contributing
+
+This is a personal portfolio, but suggestions and improvements are welcome:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📞 Contact
+
+- **Email**: sam.xiaojian.zhang@outlook.com
+- **Phone**: 07502 118207
+- **LinkedIn**: [samuel-xj-zhang](https://linkedin.com/in/samuel-xj-zhang/)
+- **Location**: London, UK (Flexible to relocate)
+
+## 📄 License
+
+This project is for personal portfolio use. Feel free to use as inspiration for your own portfolio.
+
+---
+
+Built with ❤️ using Next.js, TypeScript, and modern web technologies.
