@@ -35,8 +35,9 @@ fi
 
 print_success "Docker and Docker Compose are installed"
 
-# Build the application first
+# Clean any previous builds and build the application
 print_status "Building Next.js application..."
+rm -rf .next
 npm run build
 print_success "Next.js build completed"
 
