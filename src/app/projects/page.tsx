@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+
 import {
   ExternalLink,
   Github,
@@ -21,10 +22,12 @@ import {
   Download,
   Heart,
   Music,
-  Gamepad2,
   Mountain,
   Code,
-  BookOpen
+  BookOpen,
+  ChevronDown,
+  ChevronUp,
+  Map
 } from "lucide-react";
 
 type Project = {
@@ -53,21 +56,42 @@ const ProjectsPage = () => {
       icon: TrendingUp,
       color: "text-blue-600",
       bgGradient: "from-blue-500 to-blue-600",
-      description: "Mission-critical enterprise resource management and forecasting platform for Pfizer's Global Analytics team. Led full product lifecycle from user research to deployment.",
+      description:
+        "Mission-critical enterprise resource management and forecasting platform for Pfizer's Global Analytics team. Led full product lifecycle from user research to deployment.",
       achievements: [
         "1200% efficiency improvement across 40+ users",
         "120+ person-hours saved monthly",
         "99.9% system uptime with 3-tier disaster recovery",
         "Department-wide adoption with director commendation",
-        "Replaced 15-year-old legacy Excel system"
+        "Replaced 15-year-old legacy Excel system",
       ],
-      technologies: ["Next.js", "PostgreSQL", "Julia", "Docker", "AWS", "Spotfire", "Agile"],
-      duration: "10 months (2024 - Present)",
-      impact: "Transformed workflow management for entire analytical department",
+      technologies: [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Julia",
+        "Docker Compose",
+        "AWS",
+        "Spotfire",
+        "PostgreSQL",
+        "Amazon Linux 2",
+      ],
+      duration: "2024 - Present",
+      impact:
+        "Transformed workflow management for entire GMP Analytics department @ Pfizer",
       links: [
-        { type: "demo", url: "/growmat-case-study.html", label: "View Case Study" },
-        { type: "demo", url: "/mckinsey-case-study.html", label: "McKinsey Analysis" }
-      ]
+        {
+          type: "download",
+          url: "/GROWMAT Showcase External Highest Quality.pdf",
+          label: "Slide Deck",
+        },
+        {
+          type: "demo",
+          url: "/growmat-case-study.html",
+          label: "Executive Summary",
+        },
+        // { type: "demo", url: "/mckinsey-case-study.html", label: "McKinsey Analysis" }
+      ],
     },
     {
       id: "covid-response",
@@ -76,36 +100,54 @@ const ProjectsPage = () => {
       icon: Shield,
       color: "text-red-600",
       bgGradient: "from-red-500 to-red-600",
-      description: "Developed predictive analytics and automation system for Singapore Civil Defence Force during COVID-19 pandemic, managing operations for 1,000+ frontline responders.",
+      description:
+        "Developed predictive analytics and automation system for Singapore Civil Defence Force during COVID-19 pandemic, managing operations for 1,000+ frontline responders.",
       achievements: [
         "300% improvement in emergency response time",
         "Automated HR operations for 1,000+ personnel",
         "Real-time COVID-19 transmission modeling",
         "Service Excellence Award recognition",
-        "Zero system downtime during critical operations"
+        "Zero system downtime during critical operations",
       ],
-      technologies: ["MATLAB", "Excel VBA", "Access", "Statistical Modeling", "Automation"],
+      technologies: [
+        "MATLAB",
+        "Excel VBA",
+        "Access",
+        "Statistical Modeling",
+        "Automation",
+      ],
       duration: "2019 - 2021",
-      impact: "Enhanced national emergency response capabilities during pandemic"
+      impact:
+        "Enhanced national emergency response capabilities during pandemic",
     },
     {
       id: "drug-discovery",
-      title: "Novel Drug Target Design",
+      title: "Novel Drug Target Design Literature Review",
       category: "Research",
       icon: Beaker,
       color: "text-purple-600",
       bgGradient: "from-purple-500 to-purple-600",
-      description: "Computational drug discovery project using SwissDock and AlphaFold 3 for novel therapeutic target identification and drug-protein interaction analysis.",
+      description:
+        "Computational drug discovery project exploring AlphaFold3 for novel therapeutic target identification and drug-protein interaction analysis.",
       achievements: [
-        "Designed innovative computational workflows",
-        "Integrated multiple AI/ML models for drug discovery",
-        "Applied cutting-edge protein folding predictions",
-        "Developed QSAR analysis pipelines",
-        "Contributed to pharmaceutical research advancement"
+        "Investigated multiple AI/ML models for drug discovery",
+        "Explored how Nobel Prize willing AlphaFold3 impact the computational structural biology space",
       ],
-      technologies: ["SwissDock", "AlphaFold 3", "Python", "Computational Chemistry", "QSAR"],
+      technologies: [
+        "SwissDock",
+        "AlphaFold 3",
+        "Python",
+        "Computational Chemistry",
+        "QSAR",
+      ],
       duration: "Final Year Project (2025)",
-      impact: "Advanced computational approaches to drug discovery"
+      links: [
+        {
+          type: "download",
+          url: "/UndergradThesis.pdf",
+          label: "Thesis",
+        },
+      ],
     },
     {
       id: "molecular-dynamics",
@@ -114,61 +156,94 @@ const ProjectsPage = () => {
       icon: Brain,
       color: "text-green-600",
       bgGradient: "from-green-500 to-green-600",
-      description: "Built high-performance computing infrastructure for molecular dynamics simulations, achieving significant performance improvements in protein research.",
+      description:
+        "Built high-performance computing infrastructure for molecular dynamics simulations, achieving significant performance improvements in protein research.",
       achievements: [
         "70% reduction in simulation computation time",
         "Self-hosted GPU-accelerated infrastructure",
         "Optimized GROMACS workflows",
         "Advanced membrane protein dynamics research",
-        "40% improvement in data analysis efficiency"
+        "40% improvement in data analysis efficiency",
       ],
-      technologies: ["GROMACS", "GPU Computing", "HPC", "MATLAB", "Python", "Linux"],
+      technologies: [
+        "GROMACS",
+        "GPU Computing",
+        "HPC",
+        "MATLAB",
+        "Python",
+        "Linux",
+      ],
       duration: "Research Fellowship (2022-2023)",
-      impact: "Accelerated computational biology research capabilities"
+      impact: "Accelerated computational biology research capabilities",
     },
     {
       id: "home-automation",
-      title: "HomeAutomationStack",
+      title: "Home Automation Stack",
       category: "Personal",
       icon: Home,
       color: "text-orange-600",
       bgGradient: "from-orange-500 to-orange-600",
-      description: "Comprehensive home automation system running on Raspberry Pi 5, featuring remote control, monitoring, and intelligent automation capabilities.",
+      description:
+        "Comprehensive home automation system running on Raspberry Pi 5, featuring remote control, monitoring, and intelligent automation capabilities.",
       achievements: [
         "Full-stack IoT implementation",
         "32TB NAS with facial recognition",
         "Real-time air quality monitoring",
         "Secure VPN and remote access",
-        "Automated disaster recovery system"
+        "Automated disaster recovery system",
       ],
-      technologies: ["Raspberry Pi", "Docker", "OpenVPN", "PostgreSQL", "Cloudflare", "IoT Sensors"],
+      technologies: [
+        "Raspberry Pi",
+        "Docker",
+        "OpenVPN",
+        "PostgreSQL",
+        "Cloudflare",
+        "IoT Sensors",
+      ],
       duration: "Ongoing Personal Project",
       impact: "Complete smart home ecosystem with enterprise-grade features",
       links: [
-        { type: "github", url: "https://homepage.samuelzhang.co.uk", label: "View" }
-      ]
+        {
+          type: "github",
+          url: "https://homepage.samuelzhang.co.uk",
+          label: "View",
+        },
+      ],
     },
     {
       id: "fortune-bank-analysis",
-      title: "Fortune Bank - Campaign Analysis Dashboard",
-      category: "Professional",
+      title: "Bank Campaign Analysis Dashboard (Case Study)",
+      category: "Personal",
       icon: TrendingUp,
       color: "text-green-600",
       bgGradient: "from-green-500 to-green-600",
-      description: "Comprehensive financial analytics dashboard showcasing data-driven insights for strategic decision making with interactive visualizations and campaign performance analysis.",
+      description:
+        "Case study of a comprehensive financial analytics dashboard demonstrating data-driven insights for strategic decision making. This conceptual project showcases interactive visualizations and campaign performance analysis techniques for financial institutions.",
       achievements: [
         "Interactive data visualization with Chart.js integration",
         "Real-time campaign performance tracking",
         "Geographic customer distribution analysis",
         "Loan approval rate optimization insights",
-        "Customer satisfaction correlation analysis"
+        "Customer satisfaction correlation analysis",
       ],
-      technologies: ["JavaScript", "Chart.js", "CSS3", "Data Visualization", "Financial Analytics", "Dashboard Design"],
+      technologies: [
+        "JavaScript",
+        "Chart.js",
+        "CSS3",
+        "Data Visualization",
+        "Financial Analytics",
+        "Dashboard Design",
+      ],
       duration: "Financial Analytics Project",
-      impact: "Demonstrated ability to transform complex financial data into actionable business insights",
+      impact:
+        "Demonstrated ability to transform complex financial data into actionable business insights",
       links: [
-        { type: "demo", url: "/fortune-bank-dashboard.html", label: "View Dashboard" }
-      ]
+        {
+          type: "demo",
+          url: "/fortune-bank-dashboard.html",
+          label: "View Dashboard",
+        },
+      ],
     },
     {
       id: "chemistry-education",
@@ -177,67 +252,82 @@ const ProjectsPage = () => {
       icon: Code,
       color: "text-indigo-600",
       bgGradient: "from-indigo-500 to-indigo-600",
-      description: "Founded and led department-wide programming education initiative, designing curriculum and training 80+ students in computational skills.",
+      description:
+        "Founded and led department-wide programming education initiative, designing curriculum and training 80+ students in computational skills.",
       achievements: [
         "Trained 80+ students across 20+ sessions",
         "90% positive feedback rate",
         "Royal Society endorsement and sponsorship",
         "Comprehensive curriculum development",
-        "Sustainable program implementation"
+        "Sustainable program implementation",
       ],
-      technologies: ["Python", "Excel", "Data Analysis", "Scientific Computing", "Curriculum Design"],
+      technologies: [
+        "Python",
+        "Excel",
+        "Data Analysis",
+        "Scientific Computing",
+        "Curriculum Design",
+      ],
       duration: "2022 - Present",
-      impact: "Enhanced computational literacy across chemistry department"
-    }
+      impact: "Enhanced computational literacy across chemistry department",
+    },
   ];
 
   const interests = [
     {
       icon: Mountain,
       title: "Outdoor Adventures",
-      description: "Hiking, climbing, and exploring nature's computational patterns",
-      color: "text-green-600"
+      description:
+        "Hiking, climbing, and exploring nature! I can go anywhere with a pair of hiking shoes and a windbreaker",
+      color: "text-green-600",
     },
     {
       icon: Camera,
       title: "Photography",
-      description: "Digital photography and visual storytelling, with technical focus on post-processing",
-      color: "text-blue-600"
+      description:
+        "Profession landscape and food photographer, always discovering beauty in the smallest things",
+      color: "text-blue-600",
     },
     {
       icon: Music,
       title: "Music",
-      description: "Member of KCL Brass Band, combining musical expression with mathematical precision",
-      color: "text-purple-600"
+      description:
+        "Member of KCL Brass Band, frequent attendee of UniBrass competition. Go Banders, go KCLBB!",
+      color: "text-purple-600",
     },
     {
       icon: BookOpen,
       title: "Continuous Learning",
-      description: "Always exploring new technologies, methodologies, and interdisciplinary approaches",
-      color: "text-orange-600"
+      description:
+        "Always exploring new technologies, methodologies, and interdisciplinary approaches in tech and science",
+      color: "text-orange-600",
     },
     {
-      icon: Gamepad2,
-      title: "Gaming & Tech",
-      description: "Interested in game mechanics, AI applications, and emerging technologies",
-      color: "text-red-600"
+      icon: Map,
+      title: "Multiculturalism",
+      description:
+        "Singaporean living in Shanghai and London, I foster diverse and creative solutions from my unique background",
+      color: "text-red-600",
     },
     {
       icon: Heart,
       title: "Community Impact",
-      description: "STEM outreach, mentoring, and helping others discover their potential in technology",
-      color: "text-pink-600"
-    }
+      description:
+        "STEM outreach, mentoring, and helping others discover their potential in technology. My true passion is to give back to society",
+      color: "text-pink-600",
+    },
   ];
 
   const categories = ["All", "Professional", "Research", "Personal"];
 
-  const filteredProjects = selectedCategory === "All"
-    ? projects
-    : projects.filter(project => project.category === selectedCategory);
+  const filteredProjects =
+    selectedCategory === "All"
+      ? projects
+      : projects.filter((project) => project.category === selectedCategory);
 
   const ProjectCard = ({ project }: { project: Project }) => {
     const Icon = project.icon;
+    const [showAllAchievements, setShowAllAchievements] = useState(false);
 
     return (
       <motion.div
@@ -248,17 +338,25 @@ const ProjectsPage = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-start space-x-4 mb-6">
-          <div className={`p-4 bg-gradient-to-br ${project.bgGradient} rounded-xl`}>
+          <div
+            className={`p-4 bg-gradient-to-br ${project.bgGradient} rounded-xl`}
+          >
             <Icon className="text-white" size={32} />
           </div>
           <div className="flex-1">
             <div className="flex items-center space-x-2 mb-2">
-              <h3 className="text-xl font-bold text-gray-900">{project.title}</h3>
-              <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                project.category === 'Professional' ? 'bg-blue-100 text-blue-800' :
-                project.category === 'Research' ? 'bg-purple-100 text-purple-800' :
-                'bg-green-100 text-green-800'
-              }`}>
+              <h3 className="text-xl font-bold text-gray-900">
+                {project.title}
+              </h3>
+              <span
+                className={`px-3 py-1 text-xs font-medium rounded-full ${
+                  project.category === "Professional"
+                    ? "bg-blue-100 text-blue-800"
+                    : project.category === "Research"
+                    ? "bg-purple-100 text-purple-800"
+                    : "bg-green-100 text-green-800"
+                }`}
+              >
                 {project.category}
               </span>
             </div>
@@ -266,7 +364,9 @@ const ProjectsPage = () => {
           </div>
         </div>
 
-        <p className="text-gray-700 mb-6 leading-relaxed">{project.description}</p>
+        <p className="text-gray-700 mb-6 leading-relaxed">
+          {project.description}
+        </p>
 
         {project.impact && (
           <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-l-4 border-blue-500">
@@ -281,25 +381,46 @@ const ProjectsPage = () => {
             Key Achievements
           </h4>
           <ul className="space-y-2">
-            {project.achievements.slice(0, 3).map((achievement, index) => (
-              <li key={index} className="flex items-start space-x-2 text-sm text-gray-700">
-                <span className={`w-1.5 h-1.5 bg-gradient-to-r ${project.bgGradient} rounded-full mt-2 flex-shrink-0`}></span>
+            {(showAllAchievements ? project.achievements : project.achievements.slice(0, 3)).map((achievement, index) => (
+              <li
+                key={index}
+                className="flex items-start space-x-2 text-sm text-gray-700"
+              >
+                <span
+                  className={`w-1.5 h-1.5 bg-gradient-to-r ${project.bgGradient} rounded-full mt-2 flex-shrink-0`}
+                ></span>
                 <span>{achievement}</span>
               </li>
             ))}
-            {project.achievements.length > 3 && (
-              <li className="text-sm text-gray-500 ml-4">
-                +{project.achievements.length - 3} more achievements
-              </li>
-            )}
           </ul>
+          {project.achievements.length > 3 && (
+            <button
+              onClick={() => setShowAllAchievements(!showAllAchievements)}
+              className="mt-3 flex items-center space-x-1 text-sm text-blue-600 hover:text-blue-800 transition-colors font-medium"
+            >
+              {showAllAchievements ? (
+                <>
+                  <ChevronUp size={16} />
+                  <span>Show Less</span>
+                </>
+              ) : (
+                <>
+                  <ChevronDown size={16} />
+                  <span>Show {project.achievements.length - 3} More</span>
+                </>
+              )}
+            </button>
+          )}
         </div>
 
         <div className="mb-6">
           <h4 className="font-semibold text-gray-900 mb-3">Technologies</h4>
           <div className="flex flex-wrap gap-2">
             {project.technologies.map((tech, index) => (
-              <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+              <span
+                key={index}
+                className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
+              >
                 {tech}
               </span>
             ))}
@@ -318,7 +439,11 @@ const ProjectsPage = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {link.type === 'github' ? <Github size={16} /> : <ExternalLink size={16} />}
+                {link.type === "github" ? (
+                  <Github size={16} />
+                ) : (
+                  <ExternalLink size={16} />
+                )}
                 <span>{link.label}</span>
               </motion.a>
             ))}
@@ -328,7 +453,16 @@ const ProjectsPage = () => {
     );
   };
 
-  const InterestCard = ({ interest }: { interest: { icon: React.ElementType; title: string; description: string; color: string } }) => {
+  const InterestCard = ({
+    interest,
+  }: {
+    interest: {
+      icon: React.ElementType;
+      title: string;
+      description: string;
+      color: string;
+    };
+  }) => {
     const Icon = interest.icon;
 
     return (
@@ -340,11 +474,17 @@ const ProjectsPage = () => {
         transition={{ duration: 0.4 }}
       >
         <div className="text-center">
-          <div className={`inline-flex p-4 ${interest.color} bg-gray-50 rounded-full mb-4`}>
+          <div
+            className={`inline-flex p-4 ${interest.color} bg-gray-50 rounded-full mb-4`}
+          >
             <Icon size={32} />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{interest.title}</h3>
-          <p className="text-gray-600 text-sm leading-relaxed">{interest.description}</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {interest.title}
+          </h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            {interest.description}
+          </p>
         </div>
       </motion.div>
     );
@@ -360,10 +500,13 @@ const ProjectsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">Projects & Experience</h1>
+          <h1 className="text-5xl font-bold text-gray-900 mb-6">
+            Projects & Experience
+          </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            A showcase of impactful projects across professional, research, and personal domains,
-            demonstrating technical expertise and innovative problem-solving.
+            A showcase of impactful projects across professional, research, and
+            personal domains, demonstrating technical expertise and innovative
+            problem-solving.
           </p>
         </motion.div>
 
@@ -410,9 +553,12 @@ const ProjectsPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Interests & Hobbies</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Interests & Hobbies
+            </h2>
             <p className="text-xl text-gray-600">
-              Beyond professional work, these interests fuel creativity and provide fresh perspectives
+              Beyond professional work, these interests fuel creativity and
+              provide fresh perspectives
             </p>
           </motion.div>
 
@@ -452,8 +598,9 @@ const ProjectsPage = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Proven Impact</h3>
                 <p className="text-blue-100">
-                  Delivered measurable results: 1200% efficiency improvements, 120+ hours saved monthly,
-                  and enterprise-wide digital transformation success.
+                  Delivered measurable results: 1200% efficiency improvements,
+                  120+ hours saved monthly, and enterprise-wide digital
+                  transformation success.
                 </p>
               </div>
 
@@ -461,10 +608,13 @@ const ProjectsPage = () => {
                 <div className="inline-flex p-4 bg-white/20 rounded-full mb-4">
                   <Users className="text-white" size={32} />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Cross-Functional Leader</h3>
+                <h3 className="text-xl font-semibold mb-2">
+                  Cross-Functional Leader
+                </h3>
                 <p className="text-blue-100">
-                  Successfully led teams across technical, business, and research domains,
-                  with experience managing 1000+ person operations.
+                  Successfully led teams across technical, business, and
+                  research domains, with experience managing 1000+ person
+                  operations.
                 </p>
               </div>
 
@@ -472,10 +622,13 @@ const ProjectsPage = () => {
                 <div className="inline-flex p-4 bg-white/20 rounded-full mb-4">
                   <Brain className="text-white" size={32} />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Innovation Mindset</h3>
+                <h3 className="text-xl font-semibold mb-2">
+                  Innovation Mindset
+                </h3>
                 <p className="text-blue-100">
-                  Currently pursuing AI Applications at Imperial College London, constantly learning
-                  and applying cutting-edge technologies to solve real-world problems.
+                  Currently pursuing AI Applications at Imperial College London,
+                  constantly learning and applying cutting-edge technologies to
+                  solve real-world problems.
                 </p>
               </div>
             </div>
@@ -489,7 +642,9 @@ const ProjectsPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-8">Let&apos;s Connect</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-8">
+              Let&apos;s Connect
+            </h2>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               <motion.a
@@ -501,7 +656,9 @@ const ProjectsPage = () => {
                   <Mail className="text-blue-600" size={24} />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-                <p className="text-gray-600 text-sm">sam.xiaojian.zhang@outlook.com</p>
+                <p className="text-gray-600 text-sm">
+                  sam.xiaojian.zhang@outlook.com
+                </p>
               </motion.a>
 
               <motion.a
@@ -530,14 +687,16 @@ const ProjectsPage = () => {
                 <p className="text-gray-600 text-sm">Connect professionally</p>
               </motion.a>
 
-              <motion.div
-                className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg border border-gray-100"
-              >
+              <motion.div className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg border border-gray-100">
                 <div className="p-4 bg-purple-100 rounded-full mb-4">
                   <MapPin className="text-purple-600" size={24} />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Location</h3>
-                <p className="text-gray-600 text-sm">London, UK<br />Flexible to relocate</p>
+                <p className="text-gray-600 text-sm">
+                  London, UK
+                  <br />
+                  Flexible to relocate
+                </p>
               </motion.div>
             </div>
 
@@ -546,11 +705,14 @@ const ProjectsPage = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             >
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Ready to Make an Impact?</h3>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                Ready to Make an Impact?
+              </h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Whether you&apos;re looking for a product manager, AI engineer, digital consultant, or someone who
-                can bridge technical and business domains, I&apos;m excited to discuss how we can work together
-                to create meaningful solutions.
+                Whether you&apos;re looking for a product manager, AI engineer,
+                digital consultant, or someone who can bridge technical and
+                business domains, I&apos;m excited to discuss how we can work
+                together to create meaningful solutions.
               </p>
               <div className="flex justify-center space-x-4">
                 <motion.a
@@ -565,7 +727,9 @@ const ProjectsPage = () => {
                   className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all flex items-center space-x-2"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => window.open('/CVtemplateProduct.pdf', '_blank')}
+                  onClick={() =>
+                    window.open("/CVtemplateProduct.pdf", "_blank")
+                  }
                 >
                   <Download size={16} />
                   <span>Download CV</span>
