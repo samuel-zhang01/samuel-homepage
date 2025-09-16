@@ -351,7 +351,7 @@ const ProjectsPage = () => {
   };
 
   return (
-    <div className="min-h-screen py-16 px-4">
+    <div className="min-h-screen py-16 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
