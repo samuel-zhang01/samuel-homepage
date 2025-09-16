@@ -428,25 +428,46 @@ const ProjectsPage = () => {
         </div>
 
         {project.links && (
-          <div className="flex space-x-3">
-            {project.links.map((link, index) => (
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-3">Links</h4>
+            <div className="flex space-x-3">
+              {project.links.map((link, index) => (
               <motion.a
                 key={index}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center space-x-2 px-4 py-2 bg-gradient-to-r ${project.bgGradient} text-white rounded-lg hover:shadow-lg transition-all text-sm font-medium`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className={`flex items-center space-x-2 px-4 py-2 bg-gradient-to-r ${project.bgGradient} text-white rounded-full hover:shadow-lg transition-all text-sm font-medium border-2 border-transparent hover:border-white/30`}
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 0.5, -0.5, 0],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                whileHover={{
+                  scale: 1.15,
+                  rotate: 0,
+                  boxShadow: "0 0 20px rgba(255, 255, 255, 0.3)"
+                }}
+                whileTap={{ scale: 0.9 }}
+                style={{
+                  filter: "drop-shadow(0 0 10px rgba(255, 255, 255, 0.2))"
+                }}
               >
                 {link.type === "github" ? (
                   <Github size={16} />
+                ) : link.type === "download" ? (
+                  <Download size={16} />
                 ) : (
                   <ExternalLink size={16} />
                 )}
                 <span>{link.label}</span>
               </motion.a>
             ))}
+            </div>
           </div>
         )}
       </motion.div>
@@ -706,7 +727,7 @@ const ProjectsPage = () => {
               transition={{ duration: 0.3 }}
             >
               <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                Ready to Make an Impact?
+                Ready to Have Me on Your Team?
               </h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Whether you&apos;re looking for a product manager, AI engineer,
@@ -717,16 +738,46 @@ const ProjectsPage = () => {
               <div className="flex justify-center space-x-4">
                 <motion.a
                   href="mailto:sam.xiaojian.zhang@outlook.com?subject=Opportunity Discussion"
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold border-2 border-transparent hover:border-blue-300"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    rotate: [0, 0.5, -0.5, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: 0,
+                    boxShadow: "0 0 30px rgba(59, 130, 246, 0.8)"
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  style={{
+                    filter: "drop-shadow(0 0 15px rgba(59, 130, 246, 0.4))"
+                  }}
                 >
                   Start a Conversation
                 </motion.a>
                 <motion.button
-                  className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all flex items-center space-x-2"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-full font-semibold hover:bg-gray-50 transition-all flex items-center space-x-2"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    rotate: [0, -0.5, 0.5, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: 0,
+                    borderColor: "#6b7280",
+                    boxShadow: "0 0 20px rgba(107, 114, 128, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() =>
                     window.open("/CVtemplateProduct.pdf", "_blank")
                   }
