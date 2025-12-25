@@ -5,9 +5,6 @@ import { useRouter } from "next/navigation";
 import {
   GraduationCap,
   Briefcase,
-  Code,
-  Database,
-  Brain,
   MapPin,
   Phone,
   Mail,
@@ -284,22 +281,12 @@ export default function Home() {
       institution: "Imperial College London",
       date: "Sep 2025 – Sep 2026",
       details: [
-        "Studying at I-X, Imperial's flagship AI research and teaching initiative at White City campus, delivered jointly by Imperial Business School, Computing, Electrical & Electronic Engineering, and Mathematics departments",
-        "Core modules include Group Project on AI Ventures and Ethics, where teams develop AI technologies, craft business strategies, and pitch to leading venture capitalists and innovation investors",
-        "Comprehensive AI curriculum covering machine learning fundamentals, deep learning architectures, responsible AI ethics, and real-world applications across healthcare, finance, and robotics sectors",
-        "Competing in college wide P&G Hackathon to solve detergent sustainability challenges in a multidisciplinary team.",
+        "**Founded a pre-seed phase AI venture startup** in recruitment. Currently sourcing Imperial VC funding rounds",
+        "Competing in **P&G Hackathon** solving detergent sustainability challenges in a multidisciplinary team",
+        "Delivered through I-X flagship initiative combining **Computing**, **Engineering**, **Mathematics**, and **Business** departments",
+        "Modules: **Deep Learning**, **Innovation Management**, **AI Safety**, **ML in Climate Change**, **ML in Medical Imaging**"
       ],
-      achievements: [
-        "Python",
-        "Deep Learning",
-        "Machine Learning",
-        "Innovation Management",
-        "ML for Climate Change",
-        "Generative Modelling",
-        "AI in Medical Imaging",
-        "Responsible AI",
-        "AI Ventures",
-      ],
+      achievements: ["Python", "Deep Learning", "Generative AI", "Startups", "Venture Capital", "Computer Vision"]
     },
     {
       title: "BSc Chemistry with Biomedicine with Placement",
@@ -328,11 +315,12 @@ export default function Home() {
       date: "Oct 2024 – Present",
       location: "London, Remote",
       achievements: [
-        "Product owner and fullstack developer for GROWMAT - Pfizer's mission-critical workflow management system",
-        "Develop roadmap, prioritize features, conduct A/B testing to satisfy evolving requirements",
-        "Maintain comprehensive end-user documentation and stakeholder communication",
-        "Lead collaborative development with team and Pfizer management for continuous improvement",
-      ],
+        "**Spearheaded** full product development of **GROWMAT** - enterprise resource management and forecasting platform",
+        "Achieved **1200% efficiency increase**, saved **120+ person-hours monthly**, revolutionised drug development workflow for **40+ analysts**",
+        "Created **continuous analytics dashboard** tracking project timelines, compliance metrics, and future workload modeling",
+        "Maintained **99.9% uptime** and achieved **80% performance improvement** through rigorous optimisation",
+        "Conducted comprehensive **technical documentation** including API specifications and user manuals"
+      ]
     },
     {
       role: "Data Analyst Undergraduate in Analytical R&D Informatics Team (Placement)",
@@ -340,12 +328,12 @@ export default function Home() {
       date: "Sep 2023 – Sep 2024",
       location: "Sandwich, UK",
       achievements: [
-        "Led development of GROWMAT - department-wide workflow management system facilitating all preclinical drug testing for Pfizer",
-        "Architected full-stack solution using Next.js, Julia, PostgreSQL, and Spotfire with real-time visualisations, deployed with Docker",
-        "Developed Active Pharmaceutical Ingredients solubility modeling tool using PC-SAFT theory and machine learning (Differential Evolution, Evolutionary Centers Algorithm)",
-        "Implemented robust backend with concurrency protection and 3-tier disaster recovery",
-        "Created comprehensive documentation and training materials ensuring long-term sustainability",
-      ],
+        "**Directly pitched** to senior directors, defining technical requirements and leading agile team for **GROWMAT** development",
+        "**Architected full-stack solution** using **Next.js**, **Julia**, **PostgreSQL**, and **Spotfire** with real-time visualisations",
+        "Developed pharmaceutical **solubility modelling system** using **statistical thermodynamics** (PC-SAFT) and ML libraries",
+        "Collaborated with **MIT** and **Imperial College** to implement solution leveraging open-source fluid thermodynamic packages",
+        "Implemented **robust backend** with concurrency protection and **3-tier disaster recovery**"
+      ]
     },
     {
       role: "STEM Outreach Officer & Coding Series Founder (Societies & Initiatives)",
@@ -353,11 +341,11 @@ export default function Home() {
       date: "Sep 2022 – Apr 2025",
       location: "London, UK",
       achievements: [
-        "Founded and led development of >20 hours computational skills course for chemistry department",
-        "Designed curriculum covering Excel, Python, data analysis, and scientific computing",
-        "Trained 80+ students across 20 sessions, receiving 90% positive feedback",
-        "Secured departmental and Royal Society Endorsement for continued support",
-      ],
+        "**Founded** and led development of **>20 hours** computational skills course for chemistry department",
+        "Organised **Careers in Data Science event**, broadening perspectives of **100+ students** with panelists from 5 diverse industries",
+        "**Trained 80+ students** across 20 sessions, receiving **90% positive feedback**",
+        "Secured departmental and **Royal Society Endorsement** for continued support"
+      ]
     },
     {
       role: "Royal Society of Chemistry Research Bursary (Research Internship)",
@@ -365,11 +353,11 @@ export default function Home() {
       date: "May 2023 – Jul 2023",
       location: "London, UK",
       achievements: [
-        "Conducted interdisciplinary research on biological membrane organisation and protein-lipid co-assembly",
-        "Applied molecular dynamics simulations using GROMACS on King's supercomputer",
-        "Developed self-hosted, GPU-accelerated infrastructure, reducing simulation time by 70%",
-        "Investigated protein folding mechanisms during synthesis and lipid bilayer interactions",
-      ],
+        "**Architected and deployed** GPU-accelerated computing infrastructure for **large-scale molecular simulations**",
+        "Achieved **70% performance improvement** through optimised computational workflows",
+        "Implemented **high-performance computing pipelines** using **GROMACS** on distributed systems",
+        "Analysed complex **protein-membrane interaction** in Silico, iteratively altering experimental design"
+      ]
     },
     {
       role: "King's Undergraduate Research Fellowship (Research Internship)",
@@ -377,11 +365,11 @@ export default function Home() {
       date: "Jun 2022 – Jul 2022",
       location: "London, UK",
       achievements: [
-        "Conducted molecular recognition research through The King's Undergraduate Research Fellowship (KURF)",
-        "Investigated structural determination of odorant compounds using chirped-pulse broadband rotational microwave spectroscopy",
-        "Optimised data analysis pipelines using Excel and MATLAB, improving efficiency by 40%",
-        "Received King's College London Research Experience Award (2022)",
-      ],
+        "**Engineered end-to-end data pipeline** integrating **MATLAB**, **Excel**, and **Python** for spectroscopic signal processing",
+        "Reduced analysis time by **40%**, method adopted by research group for future data processing",
+        "Processed and analysed **rotational spectroscopic datasets** for odorant exaltenone",
+        "Presented results in **university undergraduate research fellowship poster symposium**"
+      ]
     },
     {
       role: "Personal Assistance to Commander, Personnel Serviceman (National Service)",
@@ -389,12 +377,11 @@ export default function Home() {
       date: "Jul 2019 – Jul 2021",
       location: "Singapore",
       achievements: [
-        "Served dual role as Commander's Personal Assistant and HR Personnel Officer",
-        "Managed welfare and HR operations for 1,000+ frontline workers",
-        "Developed predictive models for COVID-19 transmission using MATLAB",
-        "Automated and revolutionised HR operations through Excel, VBA, and MS Access integration, reducing response time by 300%",
-        "Received Service Excellence Award and promotion to Sergeant",
-      ],
+        "Built and presented **MATLAB based predictive analytics** statistical model for **COVID-19 resource planning**",
+        "**Revolutionised** arms recall emergency activation attendance checking system for **1,200+ personnel**",
+        "Decreased **emergency response time** by over **300%**, received praise from division commander",
+        "Awarded **Service Excellence Award** and promoted to the rank of **Sergeant**"
+      ]
     },
   ];
 
