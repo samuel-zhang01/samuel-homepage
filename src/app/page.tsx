@@ -286,7 +286,7 @@ export default function Home() {
         "Delivered through I-X flagship initiative combining **Computing**, **Engineering**, **Mathematics**, and **Business** departments",
         "Modules: **Deep Learning**, **Innovation Management**, **AI Safety**, **ML in Climate Change**, **ML in Medical Imaging**"
       ],
-      achievements: ["Python", "Deep Learning", "Generative AI", "Startups", "Venture Capital", "Computer Vision"]
+      achievements: ["Python", "Deep Learning","Machine Learning", "Generative AI", "Innovation Management","Startups", "Venture Capital", "Computer Vision","AI Ethics",]
     },
     {
       title: "BSc Chemistry with Biomedicine with Placement",
