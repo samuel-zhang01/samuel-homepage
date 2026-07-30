@@ -1,25 +1,43 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Samuel Zhang - Product Manager & AI Engineer",
-  description: "Interactive portfolio showcasing Samuel Zhang's expertise in Product Management, AI/ML Engineering, Digital Consultancy, Analytical Chemistry, and Finance",
-  keywords: ["Product Manager", "AI Engineer", "Digital Consultant", "Machine Learning", "Chemistry", "Finance", "Samuel Zhang"],
+  metadataBase: new URL("https://me.samuelzhang.co.uk"),
+  title: {
+    default: "Samuel System 7 — Samuel Zhang",
+    template: "%s · Samuel Zhang",
+  },
+  description:
+    "The interactive portfolio of Samuel Zhang: applied AI researcher, product builder, founder of coverd.ai, and Imperial College London MSc student.",
+  keywords: [
+    "Samuel Zhang",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Product Management",
+    "coverd.ai",
+    "Imperial College London",
+    "Responsible AI",
+  ],
   authors: [{ name: "Samuel Zhang" }],
   openGraph: {
-    title: "Samuel Zhang - Product Manager & AI Engineer",
-    description: "Interactive portfolio showcasing expertise across technology and business domains",
+    title: "Samuel System 7 — Samuel Zhang",
+    description:
+      "Explore Samuel Zhang's work, experience, and projects through a classic Macintosh-inspired desktop.",
     type: "website",
+    url: "https://me.samuelzhang.co.uk",
+  },
+  twitter: {
+    card: "summary",
+    title: "Samuel System 7 — Samuel Zhang",
+    description: "Applied AI researcher, product builder, and founder.",
   },
 };
 
-export const viewport = {
-  width: 'device-width',
+export const viewport: Viewport = {
+  width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#8587a8",
 };
 
 export default function RootLayout({
@@ -28,13 +46,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen antialiased`}>
-        <Navigation />
-        <main className="pt-16">
-          {children}
-        </main>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }

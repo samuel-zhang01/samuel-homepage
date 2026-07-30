@@ -1,0 +1,1742 @@
+"use client";
+
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+type AppId =
+  | "about"
+  | "coverd"
+  | "finder"
+  | "experience"
+  | "projects"
+  | "skills"
+  | "education"
+  | "resume"
+  | "documents"
+  | "browser"
+  | "games"
+  | "contact"
+  | "lab"
+  | "scrapbook"
+  | "secret";
+
+type WindowState = {
+  id: AppId;
+  title: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  z: number;
+  open: boolean;
+  maximized: boolean;
+};
+
+type DesktopIcon = {
+  id: AppId;
+  label: string;
+  icon: IconKind;
+};
+
+type IconKind =
+  | "computer"
+  | "folder"
+  | "document"
+  | "controls"
+  | "university"
+  | "network"
+  | "disk"
+  | "photos"
+  | "game"
+  | "pdf"
+  | "browser"
+  | "secret";
+
+const INITIAL_WINDOWS: WindowState[] = [
+  {
+    id: "about",
+    title: "About Samuel Zhang",
+    x: 166,
+    y: 78,
+    width: 676,
+    height: 532,
+    z: 12,
+    open: true,
+    maximized: false,
+  },
+  {
+    id: "coverd",
+    title: "COVERD — Founder’s Desk",
+    x: 112,
+    y: 50,
+    width: 850,
+    height: 620,
+    z: 11,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "finder",
+    title: "Samuel HD",
+    x: 86,
+    y: 116,
+    width: 610,
+    height: 430,
+    z: 2,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "experience",
+    title: "Career",
+    x: 118,
+    y: 62,
+    width: 790,
+    height: 590,
+    z: 3,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "projects",
+    title: "Selected Projects",
+    x: 148,
+    y: 70,
+    width: 820,
+    height: 584,
+    z: 4,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "skills",
+    title: "Control Panels: Capabilities",
+    x: 206,
+    y: 92,
+    width: 690,
+    height: 520,
+    z: 5,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "education",
+    title: "Education & Awards",
+    x: 232,
+    y: 84,
+    width: 680,
+    height: 532,
+    z: 6,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "resume",
+    title: "Samuel Zhang — Profile",
+    x: 246,
+    y: 58,
+    width: 650,
+    height: 606,
+    z: 7,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "documents",
+    title: "Document Viewer",
+    x: 180,
+    y: 48,
+    width: 820,
+    height: 630,
+    z: 13,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "browser",
+    title: "World Wide Web",
+    x: 154,
+    y: 64,
+    width: 850,
+    height: 600,
+    z: 14,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "games",
+    title: "Games",
+    x: 204,
+    y: 72,
+    width: 720,
+    height: 560,
+    z: 15,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "contact",
+    title: "Chooser",
+    x: 286,
+    y: 122,
+    width: 570,
+    height: 420,
+    z: 8,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "lab",
+    title: "Home Lab Network",
+    x: 188,
+    y: 86,
+    width: 710,
+    height: 520,
+    z: 9,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "scrapbook",
+    title: "Scrapbook",
+    x: 218,
+    y: 102,
+    width: 660,
+    height: 488,
+    z: 10,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "secret",
+    title: "The Secret About Box",
+    x: 294,
+    y: 134,
+    width: 500,
+    height: 350,
+    z: 16,
+    open: false,
+    maximized: false,
+  },
+];
+
+const DESKTOP_ICONS: DesktopIcon[] = [
+  { id: "about", label: "About Samuel", icon: "computer" },
+  { id: "coverd", label: "COVERD", icon: "document" },
+  { id: "finder", label: "Samuel HD", icon: "disk" },
+  { id: "experience", label: "Career", icon: "folder" },
+  { id: "projects", label: "Projects", icon: "folder" },
+  { id: "skills", label: "Control Panels", icon: "controls" },
+  { id: "education", label: "Education", icon: "university" },
+  { id: "resume", label: "Résumé", icon: "document" },
+  { id: "documents", label: "Documents", icon: "pdf" },
+  { id: "games", label: "Games", icon: "game" },
+  { id: "lab", label: "Home Lab", icon: "network" },
+  { id: "scrapbook", label: "Scrapbook", icon: "photos" },
+  { id: "contact", label: "Contact", icon: "network" },
+];
+
+const finderItems: Array<{
+  id: AppId;
+  name: string;
+  kind: IconKind;
+  meta: string;
+}> = [
+  { id: "coverd", name: "COVERD — Founder’s Desk", kind: "document", meta: "Flagship venture" },
+  { id: "experience", name: "Career", kind: "folder", meta: "7 items" },
+  { id: "projects", name: "Selected Projects", kind: "folder", meta: "8 items" },
+  { id: "skills", name: "Control Panels", kind: "controls", meta: "6 panels" },
+  { id: "education", name: "Education & Awards", kind: "university", meta: "2 folders" },
+  { id: "lab", name: "Home Lab Network", kind: "network", meta: "Online" },
+  { id: "scrapbook", name: "Scrapbook", kind: "photos", meta: "6 clippings" },
+  { id: "resume", name: "Samuel Zhang — Profile", kind: "document", meta: "5 pages" },
+  { id: "documents", name: "Document Viewer", kind: "pdf", meta: "3 documents" },
+  { id: "browser", name: "World Wide Web", kind: "browser", meta: "3 local sites" },
+  { id: "games", name: "Games", kind: "game", meta: "2 games" },
+  { id: "contact", name: "Chooser", kind: "network", meta: "3 services" },
+];
+
+const experience = [
+  {
+    period: "May 2026 — Present",
+    role: "AI Intern — Data & Machine Learning",
+    company: "Marsh Risk",
+    location: "London",
+    copy: "Researching and implementing AI approaches for insurance lead matching as a four-month Imperial MSc thesis project.",
+    tag: "CURRENT",
+  },
+  {
+    period: "Mar 2026 — Present",
+    role: "Founder",
+    company: "coverd.ai",
+    location: "London",
+    copy: "Leading product, AI and venture development for a recruitment intelligence layer that evaluates candidates consistently while keeping consequential decisions human.",
+    tag: "FOUNDER",
+  },
+  {
+    period: "Nov 2025 — Present",
+    role: "Co-founder",
+    company: "Stealth AI Startup",
+    location: "London",
+    copy: "Developing recruitment technology focused on bias reduction and responsible AI.",
+    tag: "VENTURE",
+  },
+  {
+    period: "Oct 2024 — Apr 2026",
+    role: "Web Application Developer · Product Owner",
+    company: "Pfizer",
+    location: "London",
+    copy: "Owned the GROWMAT roadmap, translated leadership requirements into development priorities, and drove iterative product adoption.",
+    tag: "PRODUCT",
+  },
+  {
+    period: "Sep 2023 — Aug 2024",
+    role: "Data Analyst Undergraduate",
+    company: "Pfizer Analytical R&D",
+    location: "Sandwich",
+    copy: "Built enterprise resource and analytics systems delivering a 1200% efficiency gain, 120+ person-hours saved monthly, 99.9% uptime, and an 80% performance improvement across 40+ analysts.",
+    tag: "DATA",
+  },
+  {
+    period: "2022 — 2025",
+    role: "STEM Outreach Officer · Coding Tutor",
+    company: "KCL Chemistry Society",
+    location: "London",
+    copy: "Designed 20+ programming and data-analysis sessions for 80+ students with 90% satisfaction; secured Royal Society of Chemistry endorsement and organised a five-industry data-science panel for 100+ students.",
+    tag: "EDUCATION",
+  },
+  {
+    period: "Jun — Jul 2023",
+    role: "Royal Society Summer Fellow",
+    company: "King’s College London",
+    location: "London",
+    copy: "Architected GPU-accelerated GROMACS infrastructure for molecular simulations, improving performance by 70% while researching protein–membrane interactions in silico.",
+    tag: "RESEARCH",
+  },
+  {
+    period: "Jun — Jul 2022",
+    role: "Undergraduate Research Fellow",
+    company: "King’s College London",
+    location: "London",
+    copy: "Created MATLAB, Python and Excel pipelines for rotational spectroscopy, reducing processing time by 40% and establishing a workflow adopted by the research group.",
+    tag: "RESEARCH",
+  },
+  {
+    period: "Jul 2019 — Jul 2021",
+    role: "HR NSF · Commander's Personal Assistant",
+    company: "Singapore Civil Defence Force",
+    location: "Singapore",
+    copy: "Built predictive COVID-19 resource planning and emergency activation systems for 1,200+ personnel; reduced response time by more than 300% and earned promotion to Sergeant.",
+    tag: "SERVICE",
+  },
+];
+
+const projects: Array<{
+  title: string;
+  year: string;
+  category: string;
+  description: string;
+  tools: string[];
+  metric: string;
+  app?: AppId;
+}> = [
+  {
+    title: "coverd.ai",
+    year: "2026",
+    category: "Responsible AI · Founder",
+    description:
+      "A recruitment intelligence layer with specialist evaluation agents, living candidate profiles, voice interviews, bias testing, and auditable human decision-making.",
+    tools: ["Multi-agent AI", "Product", "AI Safety", "Founder"],
+    metric: "FLAGSHIP VENTURE",
+    app: "coverd",
+  },
+  {
+    title: "GROWMAT",
+    year: "2023—26",
+    category: "Enterprise Product · Pfizer",
+    description:
+      "Resource management, forecasting, and analytics platform created for pharmaceutical Analytical R&D.",
+    tools: ["Next.js", "Julia", "PostgreSQL", "Docker"],
+    metric: "1200% FASTER",
+    app: "browser",
+  },
+  {
+    title: "Insurance Lead Matching",
+    year: "2026",
+    category: "MSc Thesis · Marsh",
+    description:
+      "AI research and implementation exploring more effective matching between insurance opportunities and expertise.",
+    tools: ["Machine Learning", "Research", "Responsible AI"],
+    metric: "MSc THESIS",
+    app: "resume",
+  },
+  {
+    title: "Drug Solubility Modelling",
+    year: "2023",
+    category: "Scientific Programming · Pfizer",
+    description:
+      "Predictive modelling using statistical thermodynamics and Julia to reduce experimental testing requirements.",
+    tools: ["Julia", "ML", "PC-SAFT", "Pharma"],
+    metric: "R&D ACCELERATOR",
+    app: "resume",
+  },
+  {
+    title: "COVID-19 Decision Support",
+    year: "2020",
+    category: "Emergency Operations · SCDF",
+    description:
+      "Predictive analytics and cross-system workflow automation for emergency planning and 1,000+ frontline personnel.",
+    tools: ["MATLAB", "Statistics", "Automation"],
+    metric: "1000+ PEOPLE",
+    app: "experience",
+  },
+  {
+    title: "Molecular Recognition",
+    year: "2022",
+    category: "Research Fellowship · King's",
+    description:
+      "Automated Excel and MATLAB workflows combining microwave spectroscopy with computational predictions for chiral odorant research.",
+    tools: ["MATLAB", "Spectroscopy", "Research"],
+    metric: "KURF AWARD",
+    app: "documents",
+  },
+  {
+    title: "Home Automation & AI Infrastructure",
+    year: "ONGOING",
+    category: "Self-hosting · Systems",
+    description:
+      "A multi-server Docker environment with GPU inference, environmental telemetry, private cloud storage, automated recovery, remote access, and observability.",
+    tools: ["Docker", "Linux", "PostgreSQL", "GPU"],
+    metric: "17+ SERVICES",
+    app: "lab",
+  },
+  {
+    title: "Stock Market Simulation Engine",
+    year: "2025",
+    category: "Full-stack · Financial systems",
+    description:
+      "Market simulator with order-matching algorithms, Julia and SQL processing, live WebSocket order-book updates, and a responsive trading interface.",
+    tools: ["Julia", "SQL", "WebSockets", "React"],
+    metric: "REAL-TIME ENGINE",
+  },
+  {
+    title: "Coding Series",
+    year: "2023—25",
+    category: "Teaching · Curriculum",
+    description:
+      "A department-backed programming and machine-learning course designed for chemistry students without a traditional computing background.",
+    tools: ["Python", "Data analysis", "Teaching", "Outreach"],
+    metric: "80+ STUDENTS",
+    app: "experience",
+  },
+];
+
+const skillGroups = [
+  {
+    title: "Artificial Intelligence",
+    level: 91,
+    items: ["PyTorch & TensorFlow", "CNNs & LLMs", "Scikit-learn", "Responsible AI"],
+  },
+  {
+    title: "Product & Entrepreneurship",
+    level: 93,
+    items: ["Product ownership", "Venture building", "Stakeholder discovery", "Agile delivery"],
+  },
+  {
+    title: "Data & Engineering",
+    level: 90,
+    items: ["Python & Julia", "SQL & PostgreSQL", "React & TypeScript", "APIs & data pipelines"],
+  },
+  {
+    title: "Scientific Computing",
+    level: 86,
+    items: ["Statistical modelling", "GROMACS & HPC", "MATLAB", "Computational chemistry"],
+  },
+  {
+    title: "Infrastructure",
+    level: 82,
+    items: ["Docker & Linux", "AWS & CI/CD", "GPU computing", "Self-hosting"],
+  },
+  {
+    title: "Human Skills",
+    level: 94,
+    items: ["Leadership", "Teaching", "Communication", "Cross-cultural teams"],
+  },
+];
+
+function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean }) {
+  const common = {
+    fill: "none",
+    stroke: "#111",
+    strokeWidth: 3,
+    strokeLinecap: "square" as const,
+    strokeLinejoin: "miter" as const,
+  };
+
+  const artwork: Record<IconKind, React.ReactNode> = {
+    computer: (
+      <g {...common}>
+        <rect x="5" y="3" width="38" height="35" rx="2" fill="#d7d7d1" />
+        <rect x="10" y="8" width="28" height="20" fill="#fff" />
+        <path d="M17 17h2m9 0h2m-12 6c3 2 9 2 12 0" />
+        <path d="M16 38v5h16v-5" fill="#aaa" />
+      </g>
+    ),
+    folder: (
+      <g {...common}>
+        <path d="M3 14h16l4-6h10l4 6h8v29H3z" fill="#f2ca59" />
+        <path d="M3 18h42" stroke="#fff2ad" />
+        <path d="M7 38h34" stroke="#b68921" />
+      </g>
+    ),
+    document: (
+      <g {...common}>
+        <path d="M9 3h22l9 9v33H9z" fill="#fff" />
+        <path d="M31 3v10h9" fill="#aaa" />
+        <path d="M15 21h19M15 27h19M15 33h15M15 39h17" strokeWidth="2" />
+      </g>
+    ),
+    controls: (
+      <g {...common}>
+        <rect x="4" y="5" width="40" height="38" fill="#d7d7d1" />
+        <path d="M13 11v26M24 11v26M35 11v26" />
+        <rect x="9" y="17" width="8" height="7" fill="#fff" />
+        <rect x="20" y="29" width="8" height="7" fill="#fff" />
+        <rect x="31" y="14" width="8" height="7" fill="#fff" />
+      </g>
+    ),
+    university: (
+      <g {...common}>
+        <path d="M3 16 24 4l21 12z" fill="#d8d8d2" />
+        <path d="M7 20h34M5 42h38" />
+        <path d="M10 20v20M19 20v20M29 20v20M38 20v20" strokeWidth="4" />
+      </g>
+    ),
+    network: (
+      <g {...common}>
+        <path d="M24 16v9M11 30v-5h26v5" />
+        <rect x="17" y="3" width="14" height="13" fill="#d8d8d2" />
+        <rect x="4" y="30" width="14" height="13" fill="#fff" />
+        <rect x="30" y="30" width="14" height="13" fill="#fff" />
+        <path d="M20 12h8M7 39h8M33 39h8" strokeWidth="2" />
+      </g>
+    ),
+    disk: (
+      <g {...common}>
+        <rect x="4" y="3" width="40" height="42" rx="2" fill="#c5c5c0" />
+        <rect x="11" y="7" width="26" height="13" fill="#fff" />
+        <rect x="11" y="28" width="26" height="13" fill="#eee" />
+        <path d="M31 8v9M15 33h18M15 37h18" strokeWidth="2" />
+      </g>
+    ),
+    photos: (
+      <g {...common}>
+        <path d="M5 8h37v33H5z" fill="#fff" />
+        <circle cx="31" cy="17" r="4" fill="#f2ca59" />
+        <path d="m8 36 10-12 7 7 5-5 9 10" fill="#7da574" />
+        <path d="M2 12V4h36" stroke="#888" />
+      </g>
+    ),
+    game: (
+      <g {...common}>
+        <path d="M13 17h22l8 18-5 7-10-8h-8l-10 8-5-7z" fill="#d7d7d1" />
+        <path d="M16 23v10M11 28h10" />
+        <rect x="31" y="23" width="4" height="4" fill="#f26b3d" />
+        <rect x="36" y="29" width="4" height="4" fill="#3458a5" />
+        <path d="M20 17V8h8" />
+      </g>
+    ),
+    pdf: (
+      <g {...common}>
+        <path d="M8 3h23l9 9v33H8z" fill="#fff" />
+        <path d="M31 3v10h9" fill="#aaa" />
+        <rect x="4" y="24" width="32" height="14" fill="#b74343" />
+        <path d="M9 28h5c4 0 4 6 0 6H9zm12 0v6m0-6h7m-7 3h5" stroke="#fff" strokeWidth="2" />
+      </g>
+    ),
+    browser: (
+      <g {...common}>
+        <circle cx="24" cy="24" r="20" fill="#dbe3ef" />
+        <path d="M4 24h40M24 4c7 7 7 33 0 40M24 4c-7 7-7 33 0 40M8 13h32M8 35h32" strokeWidth="2" />
+      </g>
+    ),
+    secret: (
+      <g {...common}>
+        <path d="m24 3 5 13 14 1-11 9 4 14-12-8-12 8 4-14-11-9 14-1z" fill="#f2ca59" />
+        <path d="M18 21h2m8 0h2m-11 6c3 2 7 2 10 0" strokeWidth="2" />
+      </g>
+    ),
+  };
+
+  return (
+    <span className={`pixel-icon pixel-icon--${kind}${small ? " pixel-icon--small" : ""}`} aria-hidden="true">
+      <svg className="pixel-icon__svg" viewBox="0 0 48 48" shapeRendering="crispEdges">
+        {artwork[kind]}
+      </svg>
+    </span>
+  );
+}
+
+function WindowChrome({
+  windowState,
+  active,
+  onFocus,
+  onClose,
+  onZoom,
+  onDragStart,
+  children,
+}: {
+  windowState: WindowState;
+  active: boolean;
+  onFocus: () => void;
+  onClose: () => void;
+  onZoom: () => void;
+  onDragStart: (event: React.PointerEvent<HTMLDivElement>) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      className={`mac-window${active ? " is-active" : ""}${windowState.maximized ? " is-maximized" : ""}`}
+      style={{
+        left: windowState.x,
+        top: windowState.y,
+        width: windowState.width,
+        height: windowState.height,
+        zIndex: windowState.z,
+      }}
+      onPointerDown={onFocus}
+      aria-label={`${windowState.title} window`}
+    >
+      <div
+        className="mac-titlebar"
+        onPointerDown={onDragStart}
+        onDoubleClick={onZoom}
+      >
+        <button className="window-box window-close" onClick={onClose} aria-label={`Close ${windowState.title}`} />
+        <h2>{windowState.title}</h2>
+        <button className="window-box window-zoom" onClick={onZoom} aria-label={`Maximize ${windowState.title}`} />
+      </div>
+      <div className="mac-window__content">{children}</div>
+      <div className="fake-scrollbar" aria-hidden="true">
+        <span className="scroll-arrow scroll-arrow--up" />
+        <span className="scroll-track" />
+        <span className="scroll-arrow scroll-arrow--down" />
+      </div>
+      <span className="resize-corner" aria-hidden="true" />
+    </section>
+  );
+}
+
+function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
+  return (
+    <div className="about-app">
+      <div className="about-sidebar">
+        <div className="portrait-frame">
+          <Image src="/headshot.jpg" alt="Samuel Zhang" fill sizes="170px" priority />
+        </div>
+        <p className="portrait-caption">SAMUEL.ZHANG</p>
+        <dl className="quick-facts">
+          <div><dt>Location</dt><dd>London, UK</dd></div>
+          <div><dt>Current</dt><dd>Marsh Risk</dd></div>
+          <div><dt>Venture</dt><dd>coverd.ai</dd></div>
+          <div><dt>Education</dt><dd>Imperial</dd></div>
+        </dl>
+      </div>
+      <div className="about-main">
+        <div className="eyebrow">ABOUT THIS MACINTOSH</div>
+        <h1>Samuel Zhang</h1>
+        <p className="hero-role">AI researcher, product builder &amp; founder of coverd.ai.</p>
+        <p className="hero-copy">
+          Imperial College MSc student specialising in applied AI and machine learning.
+          I build responsible, useful systems—from enterprise analytics at Pfizer to
+          human-centred recruitment intelligence at coverd.ai.
+        </p>
+        <div className="impact-grid">
+          <div><strong>1200%</strong><span>efficiency gain</span></div>
+          <div><strong>120+</strong><span>hours saved / month</span></div>
+          <div><strong>99.9%</strong><span>system uptime</span></div>
+        </div>
+        <blockquote>
+          “Translate difficult business and scientific problems into systems people
+          can understand, trust, and use.”
+        </blockquote>
+        <div className="button-row">
+          <button className="mac-button is-default" onClick={() => openApp("coverd")}>Explore COVERD</button>
+          <button className="mac-button" onClick={() => openApp("projects")}>View Work</button>
+          <button className="mac-button" onClick={() => openApp("resume")}>Open Résumé</button>
+          <button className="mac-button" onClick={() => openApp("contact")}>Contact</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CoverdApp() {
+  const products = [
+    {
+      code: "01",
+      title: "Intelligence Layer",
+      copy: "Connects to an existing ATS and uses multiple specialist agents to review each applicant across cultural and technical dimensions.",
+    },
+    {
+      code: "02",
+      title: "Living Profiles",
+      copy: "Evidence, strengths, gaps, confidence and interview signals accumulate into a profile that sharpens throughout the process.",
+    },
+    {
+      code: "03",
+      title: "COVERD-VOX",
+      copy: "A voice agent follows up on what a CV cannot explain, then returns structured evidence and interview context to the recruiter.",
+    },
+    {
+      code: "04",
+      title: "Candidate Compass",
+      copy: "Maps the whole pipeline visually so teams can distinguish strong matches, mixed signals and candidates requiring review.",
+    },
+    {
+      code: "05",
+      title: "COVERD-ATS",
+      copy: "A complete recruiting platform for teams without an ATS, with the evaluation agents embedded from the beginning.",
+    },
+  ];
+
+  const pipeline = [
+    ["01", "Role brief", "Requirements, context and weighting enter the system."],
+    ["02", "Agent review", "Specialists assess evidence in parallel across six dimensions."],
+    ["03", "Living profile", "Scores are paired with reasons, strengths, gaps and confidence."],
+    ["04", "VOX interview", "Open questions become targeted candidate conversations."],
+    ["05", "Human decision", "Uncertain cases defer with context; the recruiter makes the call."],
+  ];
+
+  return (
+    <div className="coverd-app">
+      <header className="coverd-hero">
+        <div className="coverd-brand">
+          <span className="coverd-kicker">BUILT AT IMPERIAL COLLEGE LONDON</span>
+          <h3>COVERD<span>.</span></h3>
+          <p>Recruitment intelligence that makes high-volume hiring faster, fairer and more defensible.</p>
+          <div className="coverd-actions">
+            <a className="coverd-link" href="#coverd-products">Explore the product ↓</a>
+            <span>FOUNDED 2026 · LONDON</span>
+          </div>
+        </div>
+        <div className="founder-note">
+          <span>FOUNDER’S NOTE / SZ</span>
+          <p>
+            The CV dates to 1482. In the LLM era, applications can become polished in
+            exactly the same way—more volume, less signal. COVERD is my attempt to build
+            a better interface between people and opportunity.
+          </p>
+        </div>
+      </header>
+
+      <section className="coverd-thesis">
+        <div>
+          <span className="eyebrow">THE THESIS</span>
+          <h4>AI should carry the volume.<br />Humans should carry the judgement.</h4>
+        </div>
+        <p>
+          COVERD sits above the applicant tracking system as an intelligence layer.
+          It evaluates every candidate consistently, creates evidence-backed briefs,
+          identifies questions worth asking, and gives recruiters back the time needed
+          for interviews, relationships and difficult decisions.
+        </p>
+      </section>
+
+      <section className="coverd-numbers">
+        <div><strong>6</strong><span>evaluation dimensions</span></div>
+        <div><strong>50—5K</strong><span>applications per role</span></div>
+        <div><strong>&lt;3</strong><span>point fairness variance target</span></div>
+        <div><strong>100%</strong><span>human final decision</span></div>
+      </section>
+
+      <section className="coverd-section" id="coverd-products">
+        <div className="coverd-section__heading">
+          <span>PRODUCT SYSTEM</span>
+          <h4>A recruiting suite, not another keyword matcher.</h4>
+        </div>
+        <div className="coverd-product-grid">
+          {products.map((product) => (
+            <article key={product.code}>
+              <span>{product.code}</span>
+              <h5>{product.title}</h5>
+              <p>{product.copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="coverd-section coverd-section--pipeline">
+        <div className="coverd-section__heading">
+          <span>OPERATING MODEL</span>
+          <h4>From role brief to a defensible shortlist.</h4>
+        </div>
+        <div className="coverd-pipeline">
+          {pipeline.map(([number, title, copy]) => (
+            <article key={number}>
+              <b>{number}</b>
+              <div><h5>{title}</h5><p>{copy}</p></div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="coverd-ethics">
+        <div className="coverd-ethics__intro">
+          <span className="eyebrow">RESPONSIBLE BY DESIGN</span>
+          <h4>Fair hiring that can be inspected.</h4>
+          <p>Transparency is a product feature, not a policy document hidden in the footer.</p>
+        </div>
+        <div className="coverd-principles">
+          <article><strong>Candidates have agency</strong><p>People can view evaluations, request corrections and withdraw consent.</p></article>
+          <article><strong>Every score has evidence</strong><p>Recommendations include reasons, confidence, strengths, gaps and an audit trail.</p></article>
+          <article><strong>Bias is tested continuously</strong><p>Blind review, name-variation and education-prestige tests challenge every cycle.</p></article>
+          <article><strong>Uncertainty defers</strong><p>Edge cases are surfaced with context instead of being quietly rejected by a model.</p></article>
+          <article><strong>Candidate data stays private</strong><p>Product policy excludes candidate data from model training; outcome learning is aggregated and anonymised.</p></article>
+          <article><strong>Recruiters remain accountable</strong><p>Weights can be inspected, recommendations overridden and every final decision kept human.</p></article>
+        </div>
+        <div className="coverd-values">
+          {["TRANSPARENT", "AUDITABLE", "FAIR", "PRIVATE", "CANDIDATE-FIRST"].map((value) => <span key={value}>{value}</span>)}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function FinderApp({ openApp }: { openApp: (id: AppId) => void }) {
+  return (
+    <div className="finder-app">
+      <div className="finder-meta"><span>{finderItems.length} items</span><span>Samuel HD</span><span>42.0 MB available</span></div>
+      <div className="finder-grid">
+        {finderItems.map((item) => (
+          <button key={item.id} className="finder-item" onDoubleClick={() => openApp(item.id)} onClick={() => openApp(item.id)}>
+            <PixelIcon kind={item.kind} />
+            <strong>{item.name}</strong>
+            <span>{item.meta}</span>
+          </button>
+        ))}
+      </div>
+      <div className="finder-status">Double-click an item to open it.</div>
+    </div>
+  );
+}
+
+function ExperienceApp() {
+  return (
+    <div className="experience-app">
+      <header className="document-header">
+        <div>
+          <span className="eyebrow">PROFESSIONAL HISTORY</span>
+          <h3>Building useful intelligence.</h3>
+        </div>
+        <span className="file-stamp">2019—2026</span>
+      </header>
+      <div className="career-list">
+        {experience.map((item) => (
+          <article className="career-record" key={`${item.company}-${item.period}`}>
+            <div className="career-period">
+              <span>{item.period}</span>
+              <em>{item.location}</em>
+            </div>
+            <div className="career-copy">
+              <div className="record-heading">
+                <div><h4>{item.role}</h4><p>{item.company}</p></div>
+                <span>{item.tag}</span>
+              </div>
+              <p>{item.copy}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProjectsApp({ openApp }: { openApp: (id: AppId) => void }) {
+  return (
+    <div className="projects-app">
+      <header className="document-header">
+        <div><span className="eyebrow">SELECTED FILES</span><h3>Projects with measurable consequences.</h3></div>
+        <span className="file-stamp">{projects.length} OBJECTS</span>
+      </header>
+      <div className="project-grid">
+        {projects.map((project, index) => (
+          <article className="project-card" key={project.title}>
+            <div className="project-number">{String(index + 1).padStart(2, "0")}</div>
+            <div className="project-card__head">
+              <div><span>{project.category}</span><h4>{project.title}</h4></div>
+              <time>{project.year}</time>
+            </div>
+            <p>{project.description}</p>
+            <div className="project-tools">{project.tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
+            <div className="project-card__foot">
+              <strong>{project.metric}</strong>
+              {project.app && <button onClick={() => openApp(project.app!)}>Open in System →</button>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SkillsApp() {
+  return (
+    <div className="skills-app">
+      <div className="control-panel-intro">
+        <PixelIcon kind="controls" />
+        <div><h3>Capabilities</h3><p>Six connected systems. Adjustments are saved automatically.</p></div>
+      </div>
+      <div className="control-groups">
+        {skillGroups.map((group) => (
+          <fieldset className="control-group" key={group.title}>
+            <legend>{group.title}</legend>
+            <div className="skill-meter" aria-label={`${group.title}: ${group.level}%`}>
+              <span style={{ width: `${group.level}%` }} />
+            </div>
+            <div className="skill-items">
+              {group.items.map((item) => (
+                <label key={item}><input type="checkbox" checked readOnly /><span>{item}</span></label>
+              ))}
+            </div>
+          </fieldset>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function EducationApp() {
+  return (
+    <div className="education-app">
+      <header className="document-header">
+        <div><span className="eyebrow">EDUCATION</span><h3>Science, computation &amp; enterprise.</h3></div>
+        <PixelIcon kind="university" />
+      </header>
+      <section className="degree-card degree-card--imperial">
+        <div className="degree-mark">ICL</div>
+        <div><span>2025—2026</span><h4>MSc AI Applications &amp; Innovation</h4><p>Imperial College London · Distinction</p><small>Deep learning · AI safety · medical imaging · climate ML · venture building</small></div>
+      </section>
+      <section className="degree-card">
+        <div className="degree-mark">KCL</div>
+        <div><span>2021—2025</span><h4>BSc Chemistry with Biomedicine &amp; Placement</h4><p>King&apos;s College London</p><small>First-class honours · computational chemistry · pharmaceutical placement</small></div>
+      </section>
+      <div className="education-columns">
+        <section>
+          <h4>Honours &amp; awards</h4>
+          <ul>
+            <li>Associate of King&apos;s College London</li>
+            <li>SCIS Academic Excellence Award (valedictorian)</li>
+            <li>King&apos;s Research Experience Award</li>
+            <li>SCDF 1st Division HQ Wall of Fame</li>
+            <li>SCDF Service Excellence &amp; Best Trainee Awards</li>
+            <li>EARCOS Global Citizenship Award</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Languages</h4>
+          <dl className="language-list">
+            <div><dt>English</dt><dd>Native / bilingual</dd></div>
+            <div><dt>Chinese</dt><dd>Native / bilingual</dd></div>
+            <div><dt>Italian</dt><dd>Elementary</dd></div>
+          </dl>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
+  return (
+    <div className="resume-app">
+      <div className="simpletext-toolbar"><span>Times</span><span>11 pt</span><span>A4</span><button onClick={() => openApp("documents")}>Preview original PDF</button></div>
+      <article className="resume-paper">
+        <header><div><h3>Samuel Zhang</h3><p>Applied AI · Product · Founder of coverd.ai</p></div><address>London, United Kingdom<br />sam.xiaojian.zhang@outlook.com<br />linkedin.com/in/samuel-xj-zhang</address></header>
+        <hr />
+        <section>
+          <h4>Profile</h4>
+          <p>Imperial College MSc student specialising in AI applications and innovation. Created enterprise data products at Pfizer with a 1200% efficiency gain, predictive systems for emergency services, scientific ML tools and full-stack applications. Combines technical delivery with product ownership, research and venture building.</p>
+        </section>
+        <section>
+          <h4>Current</h4>
+          <div>
+            <p><strong>Marsh Risk — AI Intern, Data &amp; Machine Learning</strong><br /><em>May 2026—Present · London</em><br />Researching and implementing AI for insurance lead matching through an Imperial MSc thesis.</p>
+            <p><strong>coverd.ai — Founder</strong><br /><em>Mar 2026—Present · London</em><br />Leading a responsible recruitment intelligence product spanning multi-agent evaluation, candidate profiles, voice interviews, fairness testing and human-in-the-loop decisions.</p>
+          </div>
+        </section>
+        <section>
+          <h4>Pfizer</h4>
+          <div>
+            <p><strong>Product Owner &amp; Web Application Developer</strong><br /><em>Oct 2024—Apr 2026</em></p>
+            <ul>
+              <li>Led GROWMAT from user research and senior-director pitch through roadmap, agile delivery, deployment and department-wide adoption.</li>
+              <li>Improved scheduling efficiency by 1200%, saving 120+ person-hours monthly across 40+ analysts.</li>
+              <li>Created continuous analytics for project timelines, compliance, performance and workload modelling with 99.9% uptime and an 80% performance improvement.</li>
+              <li>Produced API specifications, user manuals and video training for long-term maintainability.</li>
+            </ul>
+            <p><strong>Data Analyst Undergraduate, Analytical R&amp;D</strong><br /><em>Sep 2023—Aug 2024</em></p>
+            <ul>
+              <li>Developed pharmaceutical solubility modelling using statistical thermodynamics, Julia and machine-learning libraries.</li>
+              <li>Worked across Pfizer, MIT and Imperial to bridge open-source fluid thermodynamics with pharmaceutical development.</li>
+            </ul>
+          </div>
+        </section>
+        <section>
+          <h4>Research &amp; teaching</h4>
+          <div>
+            <p><strong>KCL Coding Series — Tutor &amp; Curriculum Designer</strong><br />Designed 20+ sessions for 80+ students, achieved 90% satisfaction and secured Royal Society of Chemistry endorsement.</p>
+            <p><strong>Royal Society Summer Fellowship</strong><br />Built GPU-accelerated GROMACS workflows with a 70% performance improvement for protein–membrane research.</p>
+            <p><strong>King’s Undergraduate Research Fellowship</strong><br />Engineered MATLAB, Excel and Python spectroscopy pipelines that reduced analysis time by 40%.</p>
+          </div>
+        </section>
+        <section>
+          <h4>Public service</h4>
+          <div>
+            <p><strong>Singapore Civil Defence Force — Commander’s PA</strong><br /><em>Jul 2019—Jul 2021</em></p>
+            <ul>
+              <li>Created MATLAB-based COVID-19 resource planning from public epidemiological data.</li>
+              <li>Automated emergency activation attendance for 1,200+ personnel and reduced response time by more than 300%.</li>
+              <li>Received the Service Excellence Award, 1st Division HQ Wall of Fame recognition and promotion to Sergeant.</li>
+            </ul>
+          </div>
+        </section>
+        <section>
+          <h4>Education</h4>
+          <p><strong>Imperial College London</strong> — MSc AI Applications &amp; Innovation, 2025–2026<br />Deep Learning · AI Safety · Innovation · Medical Imaging · Climate ML<br /><br /><strong>King&apos;s College London</strong> — BSc Chemistry with Biomedicine &amp; Placement, First-Class Honours, 2021–2025</p>
+        </section>
+        <section>
+          <h4>Technical</h4>
+          <p><strong>ML:</strong> PyTorch, TensorFlow, Scikit-learn, CNNs, LLMs, stochastic modelling<br /><strong>Programming:</strong> Python, Julia, SQL, JavaScript, TypeScript, MATLAB, React<br /><strong>Data:</strong> pipelines, statistical modelling, A/B testing, Power BI, Pandas, NumPy<br /><strong>Infrastructure:</strong> Docker, AWS, Linux, PostgreSQL, HPC, GPU computing, CI/CD</p>
+        </section>
+        <section>
+          <h4>Selected projects</h4>
+          <p><strong>Home Automation &amp; AI Infrastructure:</strong> 17+ containerised services, 42 GB VRAM GPU compute, automated backups and BLE environmental telemetry.<br /><br /><strong>Stock Market Simulation Engine:</strong> Julia/SQL order matching with real-time WebSocket order-book visualisation.</p>
+        </section>
+        <section>
+          <h4>Awards</h4>
+          <p>Associate of King’s College · King’s Research Experience Award · SCDF Service Excellence Award · SCDF 1st Division HQ Wall of Fame · EARCOS Global Citizenship Award</p>
+        </section>
+      </article>
+    </div>
+  );
+}
+
+function ContactApp({ openApp }: { openApp: (id: AppId) => void }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    const email = "sam.xiaojian.zhang@outlook.com";
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(email);
+    } else {
+      const input = document.createElement("textarea");
+      input.value = email;
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      input.remove();
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
+
+  return (
+    <div className="chooser-app">
+      <div className="chooser-columns">
+        <div className="chooser-list" role="listbox" aria-label="Contact services">
+          <button className="is-selected"><PixelIcon kind="network" small />Internet</button>
+          <button><PixelIcon kind="document" small />Electronic Mail</button>
+          <button><PixelIcon kind="computer" small />LinkedIn</button>
+        </div>
+        <div className="chooser-detail">
+          <div className="contact-machine"><PixelIcon kind="computer" /><span className="machine-light" /></div>
+          <h3>Samuel Zhang</h3>
+          <p>Available for conversations about applied AI, responsible technology, product leadership, and ambitious early-stage ventures.</p>
+          <div className="contact-links">
+            <button className="mac-button is-default" onClick={copyEmail}>{copied ? "Address Copied!" : "Copy Email"}</button>
+            <a className="mac-button" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <button className="mac-button" onClick={() => openApp("coverd")}>COVERD</button>
+          </div>
+          <dl><div><dt>Location:</dt><dd>London, UK</dd></div><div><dt>Network:</dt><dd>Open to useful conversations</dd></div></dl>
+        </div>
+      </div>
+      <div className="chooser-status"><span className="status-dot" /> AppleTalk Active</div>
+    </div>
+  );
+}
+
+const documentLibrary = [
+  {
+    id: "profile",
+    title: "Samuel Zhang — Profile",
+    meta: "Curriculum vitae · 70 KB",
+    src: "/Samuel-Zhang-Profile.pdf",
+  },
+  {
+    id: "thesis",
+    title: "Molecular Recognition Thesis",
+    meta: "Undergraduate research · 6.5 MB",
+    src: "/UndergradThesis.pdf",
+  },
+  {
+    id: "growmat",
+    title: "GROWMAT Product Showcase",
+    meta: "Enterprise case study · 8.3 MB",
+    src: "/GROWMAT%20Showcase%20External%20Highest%20Quality.pdf",
+  },
+];
+
+function DocumentsApp() {
+  const [activeDocument, setActiveDocument] = useState(documentLibrary[0]);
+
+  return (
+    <div className="documents-app">
+      <aside className="documents-library">
+        <div className="documents-library__title">
+          <PixelIcon kind="pdf" />
+          <div><span>LIBRARY</span><strong>{documentLibrary.length} documents</strong></div>
+        </div>
+        {documentLibrary.map((document) => (
+          <button
+            key={document.id}
+            className={activeDocument.id === document.id ? "is-active" : ""}
+            onClick={() => setActiveDocument(document)}
+          >
+            <PixelIcon kind="document" small />
+            <span><strong>{document.title}</strong><small>{document.meta}</small></span>
+          </button>
+        ))}
+      </aside>
+      <section className="documents-preview">
+        <div className="documents-toolbar">
+          <span>{activeDocument.title}</span>
+          <span className="documents-toolbar__hint">Use the reader controls to zoom, search and print.</span>
+          <a href={activeDocument.src} download>Save a copy</a>
+        </div>
+        <iframe
+          key={activeDocument.id}
+          src={`${activeDocument.src}#view=FitH&toolbar=1&navpanes=0`}
+          title={`Preview of ${activeDocument.title}`}
+        />
+        <p className="documents-fallback">
+          If your browser cannot render PDFs, <a href={activeDocument.src}>open this document in the current tab</a>.
+        </p>
+      </section>
+    </div>
+  );
+}
+
+function BrowserApp() {
+  const pages = [
+    { title: "GROWMAT Case Study", label: "GROWMAT", src: "/growmat-case-study.html" },
+    { title: "Fortune Bank Dashboard", label: "Fortune Bank", src: "/fortune-bank-dashboard.html" },
+    { title: "Strategy Case Study", label: "Strategy Lab", src: "/mckinsey-case-study.html" },
+  ];
+  const [activePage, setActivePage] = useState(pages[0]);
+
+  return (
+    <div className="browser-app">
+      <div className="browser-toolbar">
+        <PixelIcon kind="browser" small />
+        <label>
+          <span>Address</span>
+          <input value={`me.samuelzhang.co.uk${activePage.src}`} readOnly aria-label="Current address" />
+        </label>
+        <span className="browser-secure">◆ LOCAL</span>
+      </div>
+      <div className="browser-bookmarks">
+        {pages.map((page) => (
+          <button key={page.src} className={activePage.src === page.src ? "is-active" : ""} onClick={() => setActivePage(page)}>
+            {page.label}
+          </button>
+        ))}
+      </div>
+      <iframe key={activePage.src} src={activePage.src} title={activePage.title} />
+    </div>
+  );
+}
+
+type MineCell = {
+  mine: boolean;
+  revealed: boolean;
+  flagged: boolean;
+  adjacent: number;
+};
+
+function seededRandom(seed: number) {
+  let value = seed % 2147483647;
+  if (value <= 0) value += 2147483646;
+  return () => ((value = (value * 16807) % 2147483647) - 1) / 2147483646;
+}
+
+function createMinefield(seed = 91): MineCell[] {
+  const size = 8;
+  const random = seededRandom(seed);
+  const mines = new Set<number>();
+  while (mines.size < 10) mines.add(Math.floor(random() * size * size));
+
+  return Array.from({ length: size * size }, (_, index) => {
+    const row = Math.floor(index / size);
+    const column = index % size;
+    let adjacent = 0;
+    for (let y = -1; y <= 1; y += 1) {
+      for (let x = -1; x <= 1; x += 1) {
+        const nextRow = row + y;
+        const nextColumn = column + x;
+        if (nextRow >= 0 && nextRow < size && nextColumn >= 0 && nextColumn < size && mines.has(nextRow * size + nextColumn)) adjacent += 1;
+      }
+    }
+    return { mine: mines.has(index), revealed: false, flagged: false, adjacent };
+  });
+}
+
+function createPuzzle(seed = 1991) {
+  const random = seededRandom(seed);
+  const tiles = Array.from({ length: 16 }, (_, index) => (index + 1) % 16);
+  let blank = 15;
+  for (let move = 0; move < 180; move += 1) {
+    const row = Math.floor(blank / 4);
+    const column = blank % 4;
+    const neighbours = [
+      row > 0 ? blank - 4 : -1,
+      row < 3 ? blank + 4 : -1,
+      column > 0 ? blank - 1 : -1,
+      column < 3 ? blank + 1 : -1,
+    ].filter((index) => index >= 0);
+    const next = neighbours[Math.floor(random() * neighbours.length)];
+    [tiles[blank], tiles[next]] = [tiles[next], tiles[blank]];
+    blank = next;
+  }
+  return tiles;
+}
+
+function GamesApp() {
+  const [game, setGame] = useState<"minefield" | "puzzle">("minefield");
+  const [minefield, setMinefield] = useState(() => createMinefield());
+  const [mineStatus, setMineStatus] = useState<"playing" | "won" | "lost">("playing");
+  const [flagMode, setFlagMode] = useState(false);
+  const [puzzle, setPuzzle] = useState(() => createPuzzle());
+  const [moves, setMoves] = useState(0);
+
+  const resetMines = () => {
+    setMinefield(createMinefield(Date.now()));
+    setMineStatus("playing");
+    setFlagMode(false);
+  };
+
+  const flagCell = (index: number) => {
+    if (mineStatus !== "playing" || minefield[index].revealed) return;
+    setMinefield((current) => current.map((cell, cellIndex) => cellIndex === index ? { ...cell, flagged: !cell.flagged } : cell));
+  };
+
+  const revealCell = (index: number) => {
+    if (flagMode) {
+      flagCell(index);
+      return;
+    }
+    if (mineStatus !== "playing" || minefield[index].revealed || minefield[index].flagged) return;
+    const next = minefield.map((cell) => ({ ...cell }));
+    if (next[index].mine) {
+      next.forEach((cell) => { if (cell.mine) cell.revealed = true; });
+      setMinefield(next);
+      setMineStatus("lost");
+      return;
+    }
+
+    const queue = [index];
+    const visited = new Set<number>();
+    while (queue.length) {
+      const current = queue.shift()!;
+      if (visited.has(current)) continue;
+      visited.add(current);
+      next[current].revealed = true;
+      if (next[current].adjacent !== 0) continue;
+      const row = Math.floor(current / 8);
+      const column = current % 8;
+      for (let y = -1; y <= 1; y += 1) {
+        for (let x = -1; x <= 1; x += 1) {
+          const nextRow = row + y;
+          const nextColumn = column + x;
+          const nextIndex = nextRow * 8 + nextColumn;
+          if (nextRow >= 0 && nextRow < 8 && nextColumn >= 0 && nextColumn < 8 && !next[nextIndex].mine && !next[nextIndex].flagged) queue.push(nextIndex);
+        }
+      }
+    }
+    const won = next.every((cell) => cell.mine || cell.revealed);
+    setMinefield(next);
+    if (won) setMineStatus("won");
+  };
+
+  const resetPuzzle = () => {
+    setPuzzle(createPuzzle(Date.now()));
+    setMoves(0);
+  };
+
+  const moveTile = (index: number) => {
+    const blank = puzzle.indexOf(0);
+    const row = Math.floor(index / 4);
+    const column = index % 4;
+    const blankRow = Math.floor(blank / 4);
+    const blankColumn = blank % 4;
+    if (Math.abs(row - blankRow) + Math.abs(column - blankColumn) !== 1) return;
+    setPuzzle((current) => {
+      const next = [...current];
+      [next[index], next[blank]] = [next[blank], next[index]];
+      return next;
+    });
+    setMoves((current) => current + 1);
+  };
+
+  const puzzleSolved = puzzle.every((tile, index) => tile === (index + 1) % 16);
+  const flagged = minefield.filter((cell) => cell.flagged).length;
+
+  return (
+    <div className="games-app">
+      <aside className="games-sidebar">
+        <div className="games-logo"><PixelIcon kind="game" /><span>Desk<br />Arcade</span></div>
+        <button className={game === "minefield" ? "is-active" : ""} onClick={() => setGame("minefield")}><span className="game-mini-icon">M</span>Minefield</button>
+        <button className={game === "puzzle" ? "is-active" : ""} onClick={() => setGame("puzzle")}><span className="game-mini-icon">15</span>Sliding Puzzle</button>
+        <p>Two tiny distractions.<br />No tracking. No coins.<br />No season pass.</p>
+      </aside>
+      <section className="game-stage">
+        {game === "minefield" ? (
+          <>
+            <div className="game-header">
+              <div><span>DESK ACCESSORY 01</span><h3>Minefield</h3></div>
+              <div className={`game-face game-face--${mineStatus}`}>{mineStatus === "lost" ? "x_x" : mineStatus === "won" ? "^_^" : ":)"}</div>
+            </div>
+            <div className="mine-toolbar">
+              <strong>{mineStatus === "playing" ? `${10 - flagged} mines` : mineStatus === "won" ? "You cleared it!" : "A small administrative error."}</strong>
+              <button className={flagMode ? "is-active" : ""} onClick={() => setFlagMode((current) => !current)}>F Flag mode</button>
+              <button onClick={resetMines}>New field</button>
+            </div>
+            <div className="minefield" aria-label="Minefield game board">
+              {minefield.map((cell, index) => (
+                <button
+                  key={index}
+                  className={`${cell.revealed ? "is-revealed" : ""}${cell.mine && cell.revealed ? " is-mine" : ""}`}
+                  onClick={() => revealCell(index)}
+                  onContextMenu={(event) => { event.preventDefault(); flagCell(index); }}
+                  aria-label={`Cell ${index + 1}${cell.flagged ? ", flagged" : ""}`}
+                >
+                  {cell.flagged && !cell.revealed ? "F" : cell.revealed && cell.mine ? "*" : cell.revealed && cell.adjacent ? cell.adjacent : ""}
+                </button>
+              ))}
+            </div>
+            <p className="game-help">Click to reveal · right-click or use Flag mode to mark a mine</p>
+          </>
+        ) : (
+          <>
+            <div className="game-header">
+              <div><span>DESK ACCESSORY 02</span><h3>Sliding Puzzle</h3></div>
+              <div className="puzzle-counter">{moves}<small>MOVES</small></div>
+            </div>
+            <div className="puzzle-message">{puzzleSolved ? "Solved. The Macintosh is impressed." : "Put the numbers back in order."}</div>
+            <div className="puzzle-board" aria-label="Sliding number puzzle">
+              {puzzle.map((tile, index) => (
+                <button key={`${tile}-${index}`} className={tile === 0 ? "is-empty" : ""} onClick={() => moveTile(index)} disabled={tile === 0}>
+                  {tile || ""}
+                </button>
+              ))}
+            </div>
+            <div className="puzzle-actions"><button className="mac-button" onClick={resetPuzzle}>Shuffle again</button></div>
+          </>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function SecretApp() {
+  return (
+    <div className="secret-app">
+      <div className="secret-stars" aria-hidden="true"><i /><i /><i /><i /><i /></div>
+      <div className="flying-toaster" aria-hidden="true"><span /><i /><b /></div>
+      <PixelIcon kind="secret" />
+      <span className="eyebrow">UNREASONABLE CORNER DETECTED</span>
+      <h3>Welcome, power user.</h3>
+      <p>You found the part of the portfolio that contributes nothing to conversion metrics.</p>
+      <blockquote>“The best interface is one with at least one completely unnecessary secret.”</blockquote>
+      <small>Hint: the menu-bar memory and clock are not as serious as they look.</small>
+    </div>
+  );
+}
+
+function ServiceIcon({ code, tone }: { code: string; tone: string }) {
+  return <span className={`service-pixel-icon service-pixel-icon--${tone}`} aria-hidden="true">{code}</span>;
+}
+
+function LabApp() {
+  const [filter, setFilter] = useState("All");
+  const services = [
+    { group: "Compute", code: "PX", tone: "violet", name: "Proxmox", host: "Virtualisation cluster", description: "Runs isolated VMs and Linux containers for the heavier parts of the lab." },
+    { group: "Compute", code: "AI", tone: "blue", name: "Local AI GPU", host: "42 GB VRAM", description: "Private model training and inference exposed through an Open WebUI workspace." },
+    { group: "Compute", code: "DEV", tone: "navy", name: "Code Servers", host: "Browser IDEs", description: "GPU-connected VS Code environments for remote development and experiments." },
+    { group: "Compute", code: "KVM", tone: "grey", name: "GLKVM", host: "Physical console", description: "Out-of-band keyboard, video and mouse access when a server stops responding." },
+    { group: "Network", code: "NPM", tone: "green", name: "Nginx Proxy Manager", host: "TLS gateway", description: "Routes public domains to private services and manages HTTPS certificates." },
+    { group: "Network", code: "WG", tone: "blue", name: "WireGuard", host: "Private access", description: "Encrypted remote entry to the home network without exposing internal tools." },
+    { group: "Network", code: "DNS", tone: "red", name: "Pi-hole", host: "Network protection", description: "Network-wide DNS filtering for adverts, trackers and unwanted domains." },
+    { group: "Network", code: "F2B", tone: "orange", name: "Fail2ban", host: "Intrusion response", description: "Watches service logs and automatically blocks repeated hostile requests." },
+    { group: "Network", code: "RDP", tone: "violet", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
+    { group: "Operations", code: "CT", tone: "blue", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
+    { group: "Operations", code: "HP", tone: "navy", name: "Homepage", host: "Service directory", description: "The live control surface at homepage.samuelzhang.co.uk for links, status and metrics." },
+    { group: "Operations", code: "JOB", tone: "orange", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
+    { group: "Data", code: "SQL", tone: "blue", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
+    { group: "Data", code: "CO2", tone: "green", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Collects CO₂, temperature, humidity and pressure over Bluetooth for live dashboards." },
+    { group: "Data", code: "HA", tone: "amber", name: "Home Assistant", host: "Automation hub", description: "Connects sensors, energy data and smart-home devices into one event-driven system." },
+    { group: "Storage", code: "96", tone: "green", name: "UGREEN NAS", host: "96 TB storage", description: "High-capacity storage for media, datasets, backups and long-term archives." },
+    { group: "Storage", code: "NAS", tone: "grey", name: "Synology Cloud", host: "Files & photos", description: "Private file sync, photo management and resilient network storage." },
+    { group: "Storage", code: "NC", tone: "blue", name: "Nextcloud", host: "Private cloud", description: "Self-hosted document access and synchronisation across personal devices." },
+    { group: "Media", code: "JF", tone: "violet", name: "Jellyfin", host: "Home cinema", description: "A private media library and streaming service with live playback monitoring." },
+    { group: "Media", code: "KX", tone: "amber", name: "Kiwix", host: "Offline knowledge", description: "Serves offline Wikipedia and reference libraries without an internet connection." },
+    { group: "Apps", code: "ERP", tone: "green", name: "Frappe / ERPNext", host: "Business systems lab", description: "A containerised environment for exploring open-source ERP and workflow software." },
+    { group: "Apps", code: "ODO", tone: "violet", name: "Odoo Lab", host: "Application sandbox", description: "A separate test stack for business application and database experiments." },
+  ];
+  const groups = ["All", "Compute", "Network", "Operations", "Data", "Storage", "Media", "Apps"];
+  const visibleServices = filter === "All" ? services : services.filter((service) => service.group === filter);
+
+  return (
+    <div className="lab-app">
+      <header className="document-header">
+        <div><span className="eyebrow">PERSONAL INFRASTRUCTURE</span><h3>A small internet, built at home.</h3></div>
+        <span className="online-badge">● {services.length} SYSTEMS</span>
+      </header>
+      <div className="lab-summary">
+        <p>
+          A multi-server environment for AI, private cloud, media, automation and
+          experimentation—containerised, monitored, remotely accessible and backed up
+          on a schedule.
+        </p>
+        <dl>
+          <div><dt>GPU memory</dt><dd>42 GB</dd></div>
+          <div><dt>Largest NAS</dt><dd>96 TB</dd></div>
+          <div><dt>Core platform</dt><dd>Docker</dd></div>
+        </dl>
+      </div>
+      <div className="lab-filters" aria-label="Filter infrastructure">
+        {groups.map((group) => (
+          <button key={group} className={filter === group ? "is-active" : ""} onClick={() => setFilter(group)}>{group}</button>
+        ))}
+      </div>
+      <div className="service-grid">
+        {visibleServices.map((service) => (
+          <article className="service-card" key={service.name}>
+            <ServiceIcon code={service.code} tone={service.tone} />
+            <div className="service-card__copy">
+              <div><h4>{service.name}</h4><span><i />ONLINE</span></div>
+              <strong>{service.host}</strong>
+              <p>{service.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScrapbookApp() {
+  const interests = [
+    ["Hiking & climbing", "A pair of boots, a windbreaker, and somewhere new."],
+    ["Photography", "Eight years of landscape and food photography; looking carefully is the point."],
+    ["Music", "KCL Brass Band and enthusiastic UniBrass supporter."],
+    ["Multiculturalism", "Singapore, Shanghai, and London shape how I work."],
+    ["Teaching", "Helping people discover confidence in technical subjects."],
+    ["Curiosity", "Science, systems, people, and the useful spaces between them."],
+  ];
+  return (
+    <div className="scrapbook-app">
+      <header className="document-header"><div><span className="eyebrow">SCRAPBOOK</span><h3>Things outside the office.</h3></div><PixelIcon kind="photos" /></header>
+      <div className="scrap-grid">
+        {interests.map(([title, copy], index) => (
+          <article key={title} className={`scrap-note scrap-note--${(index % 3) + 1}`}><span>{index + 1}</span><h4>{title}</h4><p>{copy}</p></article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AppContent({ id, openApp }: { id: AppId; openApp: (id: AppId) => void }) {
+  switch (id) {
+    case "about": return <AboutApp openApp={openApp} />;
+    case "coverd": return <CoverdApp />;
+    case "finder": return <FinderApp openApp={openApp} />;
+    case "experience": return <ExperienceApp />;
+    case "projects": return <ProjectsApp openApp={openApp} />;
+    case "skills": return <SkillsApp />;
+    case "education": return <EducationApp />;
+    case "resume": return <ResumeApp openApp={openApp} />;
+    case "documents": return <DocumentsApp />;
+    case "browser": return <BrowserApp />;
+    case "games": return <GamesApp />;
+    case "contact": return <ContactApp openApp={openApp} />;
+    case "lab": return <LabApp />;
+    case "scrapbook": return <ScrapbookApp />;
+    case "secret": return <SecretApp />;
+  }
+}
+
+export default function SystemSevenDesktop({
+  initialApp = "about",
+  skipBoot = false,
+}: {
+  initialApp?: AppId;
+  skipBoot?: boolean;
+}) {
+  const [windows, setWindows] = useState(() =>
+    INITIAL_WINDOWS.map((windowState) => ({
+      ...windowState,
+      open: windowState.id === initialApp,
+    })),
+  );
+  const [activeId, setActiveId] = useState<AppId>(initialApp);
+  const [selectedIcon, setSelectedIcon] = useState<AppId | null>(null);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [booting, setBooting] = useState(!skipBoot);
+  const [clock, setClock] = useState("--:--");
+  const [pattern, setPattern] = useState<"classic" | "blue">("classic");
+  const [memoryMagic, setMemoryMagic] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const zCounter = useRef(20);
+  const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
+  const toastTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = window.setTimeout(() => setBooting(false), reduceMotion ? 120 : 1350);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const updateClock = () => setClock(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
+    updateClock();
+    const timer = window.setInterval(updateClock, 30000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const move = (event: PointerEvent) => {
+      const drag = dragState.current;
+      if (!drag || window.innerWidth <= 720) return;
+      setWindows((current) =>
+        current.map((windowState) =>
+          windowState.id === drag.id
+            ? {
+                ...windowState,
+                x: Math.max(4, Math.min(window.innerWidth - 180, event.clientX - drag.offsetX)),
+                y: Math.max(26, Math.min(window.innerHeight - 80, event.clientY - drag.offsetY)),
+              }
+            : windowState,
+        ),
+      );
+    };
+    const stop = () => { dragState.current = null; };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", stop);
+      window.removeEventListener("pointercancel", stop);
+    };
+  }, []);
+
+  const activeTitle = windows.find((item) => item.id === activeId && item.open)?.title ?? "Finder";
+  const openWindows = useMemo(() => windows.filter((item) => item.open), [windows]);
+
+  const focusWindow = (id: AppId) => {
+    const nextZ = ++zCounter.current;
+    setActiveId(id);
+    setWindows((current) => current.map((item) => item.id === id ? { ...item, z: nextZ } : item));
+  };
+
+  const openApp = useCallback((id: AppId) => {
+    const nextZ = ++zCounter.current;
+    setWindows((current) => current.map((item) => item.id === id ? { ...item, open: true, z: nextZ } : item));
+    setActiveId(id);
+    setSelectedIcon(id);
+    setOpenMenu(null);
+  }, []);
+
+  const showToast = useCallback((message: string) => {
+    setToast(message);
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2600);
+  }, []);
+
+  const closeApp = (id: AppId) => {
+    setWindows((current) => current.map((item) => item.id === id ? { ...item, open: false } : item));
+    const remaining = windows.filter((item) => item.open && item.id !== id).sort((a, b) => b.z - a.z);
+    setActiveId(remaining[0]?.id ?? "finder");
+  };
+
+  const toggleZoom = (id: AppId) => {
+    setWindows((current) => current.map((item) => item.id === id ? { ...item, maximized: !item.maximized } : item));
+    focusWindow(id);
+  };
+
+  const closeActive = () => {
+    const active = windows.find((item) => item.id === activeId && item.open);
+    if (active) closeApp(active.id);
+    setOpenMenu(null);
+  };
+
+  const restart = () => {
+    setOpenMenu(null);
+    setWindows(INITIAL_WINDOWS.map((item) => ({ ...item, open: item.id === "about" })));
+    setActiveId("about");
+    setMemoryMagic(false);
+    setToast(null);
+    setBooting(true);
+    window.setTimeout(() => setBooting(false), 1200);
+  };
+
+  const handleDragStart = (event: React.PointerEvent<HTMLDivElement>, id: AppId) => {
+    if ((event.target as HTMLElement).closest("button")) return;
+    const target = windows.find((item) => item.id === id);
+    if (!target || target.maximized) return;
+    focusWindow(id);
+    dragState.current = {
+      id,
+      offsetX: event.clientX - target.x,
+      offsetY: event.clientY - target.y,
+    };
+  };
+
+  useEffect(() => {
+    const sequence = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+    let position = 0;
+    const listen = (event: KeyboardEvent) => {
+      const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+      position = key === sequence[position] ? position + 1 : key === sequence[0] ? 1 : 0;
+      if (position === sequence.length) {
+        position = 0;
+        openApp("secret");
+        showToast("Cheat code accepted. Absolutely no extra lives awarded.");
+      }
+    };
+    window.addEventListener("keydown", listen);
+    return () => window.removeEventListener("keydown", listen);
+  }, [openApp, showToast]);
+
+  if (booting) {
+    return (
+      <main className="boot-screen" onClick={() => setBooting(false)}>
+        <div className="boot-computer"><div className="boot-face">:)</div><span /></div>
+        <h1>Welcome to Samuel System 7</h1>
+        <div className="boot-progress"><span /></div>
+        <button>Click to start</button>
+      </main>
+    );
+  }
+
+  return (
+    <main
+      className={`system-desktop desktop-pattern--${pattern}`}
+      onPointerDown={(event) => {
+        if (event.target === event.currentTarget) {
+          setSelectedIcon(null);
+          setOpenMenu(null);
+        }
+      }}
+    >
+      <nav className="system-menubar" aria-label="System menu bar">
+        <div className="menu-cluster">
+          <div className="menu-root">
+            <button className={openMenu === "apple" ? "is-open apple-menu" : "apple-menu"} onClick={() => setOpenMenu(openMenu === "apple" ? null : "apple")} aria-label="Samuel menu">
+              <svg className="human-mark" viewBox="0 0 18 18" aria-hidden="true" shapeRendering="crispEdges">
+                <circle cx="9" cy="5" r="3" />
+                <path d="M3 17v-3c0-3.2 2.4-5 6-5s6 1.8 6 5v3z" />
+              </svg>
+            </button>
+            {openMenu === "apple" && (
+              <div className="menu-dropdown apple-dropdown">
+                <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
+                <button onClick={() => openApp("coverd")}><PixelIcon kind="document" small />COVERD — Founder&apos;s Desk</button>
+                <hr />
+                <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Control Panels</button>
+                <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Document Viewer</button>
+                <button onClick={() => openApp("games")}><PixelIcon kind="game" small />Games</button>
+                <button onClick={() => openApp("contact")}><PixelIcon kind="network" small />Chooser</button>
+                <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Scrapbook</button>
+                <hr />
+                <button onClick={restart}>Restart…</button>
+              </div>
+            )}
+          </div>
+          <strong className="active-application">{activeTitle === "Finder" ? "Finder" : activeTitle}</strong>
+          <div className="menu-root">
+            <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")}>File</button>
+            {openMenu === "file" && <div className="menu-dropdown"><button onClick={() => openApp("finder")}>Open Samuel HD</button><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open Document Viewer</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
+          </div>
+          <div className="menu-root menu-optional">
+            <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")}>Edit</button>
+            {openMenu === "edit" && <div className="menu-dropdown"><button className="is-disabled">Undo <kbd>⌘Z</kbd></button><hr /><button className="is-disabled">Cut <kbd>⌘X</kbd></button><button className="is-disabled">Copy <kbd>⌘C</kbd></button><button className="is-disabled">Paste <kbd>⌘V</kbd></button></div>}
+          </div>
+          <div className="menu-root menu-optional">
+            <button className={openMenu === "view" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "view" ? null : "view")}>View</button>
+            {openMenu === "view" && <div className="menu-dropdown"><button onClick={() => setPattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button onClick={() => setPattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button></div>}
+          </div>
+          <div className="menu-root menu-optional">
+            <button className={openMenu === "special" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "special" ? null : "special")}>Special</button>
+            {openMenu === "special" && <div className="menu-dropdown"><button onClick={() => openApp("browser")}>World Wide Web</button><button onClick={() => openApp("games")}>Desk Arcade</button><hr /><button onClick={() => { setWindows((current) => current.map((item) => ({ ...item, open: false }))); setOpenMenu(null); }}>Hide All Windows</button><button onClick={() => openApp("secret")}>About This Secret…</button><button onClick={restart}>Restart</button></div>}
+          </div>
+        </div>
+        <div className="menu-status">
+          <button
+            className="menu-memory"
+            onClick={() => {
+              setMemoryMagic((current) => !current);
+              showToast(memoryMagic ? "Reality restored to 32 MB." : "Memory upgraded to an irresponsible amount.");
+            }}
+          >
+            {memoryMagic ? "∞ MB" : "32 MB"}
+          </button>
+          <button className="menu-clock" onDoubleClick={() => { openApp("secret"); showToast("Time is an implementation detail."); }}>{clock}</button>
+        </div>
+      </nav>
+
+      <div className="desktop-icons" aria-label="Desktop items">
+        {DESKTOP_ICONS.map((item) => (
+          <button
+            key={item.id}
+            className={`desktop-icon${selectedIcon === item.id ? " is-selected" : ""}`}
+            onClick={() => setSelectedIcon(item.id)}
+            onDoubleClick={() => openApp(item.id)}
+            onPointerUp={(event) => { if (event.pointerType === "touch") openApp(item.id); }}
+            onKeyDown={(event) => { if (event.key === "Enter") openApp(item.id); }}
+          >
+            <PixelIcon kind={item.icon} />
+            <span>{item.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {windows.filter((windowState) => windowState.open).map((windowState) => (
+        <WindowChrome
+          key={windowState.id}
+          windowState={windowState}
+          active={activeId === windowState.id}
+          onFocus={() => focusWindow(windowState.id)}
+          onClose={() => closeApp(windowState.id)}
+          onZoom={() => toggleZoom(windowState.id)}
+          onDragStart={(event) => handleDragStart(event, windowState.id)}
+        >
+          <AppContent id={windowState.id} openApp={openApp} />
+        </WindowChrome>
+      ))}
+
+      <div className="desktop-hint">Double-click an icon · Drag a title bar · Some menu-bar items are suspicious</div>
+      <div className="window-switcher" role="navigation" aria-label="Open applications">
+        {openWindows.map((item) => (
+          <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`Show ${item.title}`}>
+            <PixelIcon kind={DESKTOP_ICONS.find((icon) => icon.id === item.id)?.icon ?? "document"} small />
+            <span>{item.title}</span>
+          </button>
+        ))}
+      </div>
+      {toast && <div className="system-toast" role="status"><PixelIcon kind="computer" small /><span>{toast}</span></div>}
+    </main>
+  );
+}

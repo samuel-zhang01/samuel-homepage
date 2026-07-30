@@ -1,42 +1,38 @@
-# Build stage
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS dependencies
 
 WORKDIR /app
 
-# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm ci
 
-# Copy source and build
-COPY . .
-RUN npm run build
-
-# Runtime stage
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
-# Create user
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy built application
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/package-lock.json ./
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
 
-# Set ownership
-RUN chown -R nextjs:nodejs /app
+FROM node:24-alpine AS runner
 
-USER nextjs
-
-EXPOSE 3000
+WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["npm", "start"]
+RUN addgroup --system --gid 1001 nodejs \
+  && adduser --system --uid 1001 nextjs
+
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
