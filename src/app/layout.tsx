@@ -3,6 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://me.samuelzhang.co.uk"),
+  applicationName: "Samuel System 7",
   title: {
     default: "Samuel System 7 — Samuel Zhang",
     template: "%s · Samuel Zhang",
@@ -19,6 +20,30 @@ export const metadata: Metadata = {
     "Responsible AI",
   ],
   authors: [{ name: "Samuel Zhang" }],
+  creator: "Samuel Zhang",
+  publisher: "Samuel Zhang",
+  category: "portfolio",
+  manifest: "/manifest.webmanifest?v=4",
+  icons: {
+    icon: [
+      { url: "/favicon.svg?v=4", type: "image/svg+xml" },
+      { url: "/favicon.ico?v=4", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+    ],
+    shortcut: [{ url: "/favicon.ico?v=4", type: "image/x-icon" }],
+    apple: [{ url: "/apple-touch-icon.png?v=4", sizes: "180x180", type: "image/png" }],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/safari-pinned-tab.svg?v=4",
+        color: "#11177a",
+      },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Samuel System 7",
+  },
   openGraph: {
     title: "Samuel System 7 — Samuel Zhang",
     description:

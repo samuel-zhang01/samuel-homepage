@@ -13,7 +13,6 @@ type AppId =
   | "education"
   | "resume"
   | "documents"
-  | "browser"
   | "games"
   | "contact"
   | "lab"
@@ -49,7 +48,6 @@ type IconKind =
   | "photos"
   | "game"
   | "pdf"
-  | "browser"
   | "secret";
 
 const INITIAL_WINDOWS: WindowState[] = [
@@ -153,17 +151,6 @@ const INITIAL_WINDOWS: WindowState[] = [
     maximized: false,
   },
   {
-    id: "browser",
-    title: "World Wide Web",
-    x: 154,
-    y: 64,
-    width: 850,
-    height: 600,
-    z: 14,
-    open: false,
-    maximized: false,
-  },
-  {
     id: "games",
     title: "Games",
     x: 204,
@@ -251,8 +238,7 @@ const finderItems: Array<{
   { id: "scrapbook", name: "Scrapbook", kind: "photos", meta: "6 clippings" },
   { id: "resume", name: "Samuel Zhang — Profile", kind: "document", meta: "5 pages" },
   { id: "documents", name: "Document Viewer", kind: "pdf", meta: "3 documents" },
-  { id: "browser", name: "World Wide Web", kind: "browser", meta: "3 local sites" },
-  { id: "games", name: "Games", kind: "game", meta: "2 games" },
+  { id: "games", name: "Games", kind: "game", meta: "4 games" },
   { id: "contact", name: "Chooser", kind: "network", meta: "3 services" },
 ];
 
@@ -358,7 +344,7 @@ const projects: Array<{
       "Resource management, forecasting, and analytics platform created for pharmaceutical Analytical R&D.",
     tools: ["Next.js", "Julia", "PostgreSQL", "Docker"],
     metric: "1200% FASTER",
-    app: "browser",
+    app: "documents",
   },
   {
     title: "Insurance Lead Matching",
@@ -552,12 +538,6 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
         <path d="M31 3v10h9" fill="#aaa" />
         <rect x="4" y="24" width="32" height="14" fill="#b74343" />
         <path d="M9 28h5c4 0 4 6 0 6H9zm12 0v6m0-6h7m-7 3h5" stroke="#fff" strokeWidth="2" />
-      </g>
-    ),
-    browser: (
-      <g {...common}>
-        <circle cx="24" cy="24" r="20" fill="#dbe3ef" />
-        <path d="M4 24h40M24 4c7 7 7 33 0 40M24 4c-7 7-7 33 0 40M8 13h32M8 35h32" strokeWidth="2" />
       </g>
     ),
     secret: (
@@ -1128,36 +1108,6 @@ function DocumentsApp() {
   );
 }
 
-function BrowserApp() {
-  const pages = [
-    { title: "GROWMAT Case Study", label: "GROWMAT", src: "/growmat-case-study.html" },
-    { title: "Fortune Bank Dashboard", label: "Fortune Bank", src: "/fortune-bank-dashboard.html" },
-    { title: "Strategy Case Study", label: "Strategy Lab", src: "/mckinsey-case-study.html" },
-  ];
-  const [activePage, setActivePage] = useState(pages[0]);
-
-  return (
-    <div className="browser-app">
-      <div className="browser-toolbar">
-        <PixelIcon kind="browser" small />
-        <label>
-          <span>Address</span>
-          <input value={`me.samuelzhang.co.uk${activePage.src}`} readOnly aria-label="Current address" />
-        </label>
-        <span className="browser-secure">◆ LOCAL</span>
-      </div>
-      <div className="browser-bookmarks">
-        {pages.map((page) => (
-          <button key={page.src} className={activePage.src === page.src ? "is-active" : ""} onClick={() => setActivePage(page)}>
-            {page.label}
-          </button>
-        ))}
-      </div>
-      <iframe key={activePage.src} src={activePage.src} title={activePage.title} />
-    </div>
-  );
-}
-
 type MineCell = {
   mine: boolean;
   revealed: boolean;
@@ -1212,13 +1162,82 @@ function createPuzzle(seed = 1991) {
   return tiles;
 }
 
-function GamesApp() {
-  const [game, setGame] = useState<"minefield" | "puzzle">("minefield");
+const SAM_WORDS = [
+  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD combines specialist AI evaluation with auditable, human-owned hiring decisions." },
+  { answer: "PFIZER", clue: "Where GROWMAT began its enterprise life.", fact: "At Pfizer, Samuel’s systems delivered a 1200% efficiency gain and saved 120+ hours each month." },
+  { answer: "PYTHON", clue: "A language threading through Samuel’s research, teaching and AI work.", fact: "Samuel has taught programming and data analysis to more than 80 students." },
+  { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "Samuel’s work spans research, insurance, education and responsible AI across London." },
+] as const;
+
+const MEMORY_PAIRS = [
+  { id: "coverd", left: "COVERD", right: "HIRING AI", fact: "Samuel’s startup builds responsible recruitment intelligence." },
+  { id: "growmat", left: "1200%", right: "GROWMAT", fact: "The efficiency gain delivered by Samuel’s Pfizer platform." },
+  { id: "gpu", left: "42 GB", right: "LOCAL AI", fact: "Private model training and inference run in Samuel’s home lab." },
+  { id: "scdf", left: "SCDF", right: "1,200 PEOPLE", fact: "Emergency planning systems supported personnel in Singapore." },
+  { id: "teaching", left: "80+ STUDENTS", right: "CODING", fact: "Samuel designed an accessible programming and data curriculum." },
+  { id: "science", left: "JULIA", right: "SOLUBILITY", fact: "Scientific models helped reduce experimental testing requirements." },
+  { id: "infra", left: "DOCKER", right: "HOME LAB", fact: "A private, monitored stack powers AI, storage and automation." },
+  { id: "air", left: "CO₂", right: "GRAFANA", fact: "Bluetooth air-quality telemetry flows into SQL dashboards." },
+] as const;
+
+type MemoryCard = {
+  pairId: string;
+  label: string;
+  fact: string;
+};
+
+function createMemoryDeck(seed = 1991): MemoryCard[] {
+  const random = seededRandom(seed);
+  const deck = MEMORY_PAIRS.flatMap((pair) => [
+    { pairId: pair.id, label: pair.left, fact: pair.fact },
+    { pairId: pair.id, label: pair.right, fact: pair.fact },
+  ]);
+  for (let index = deck.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [deck[index], deck[swapIndex]] = [deck[swapIndex], deck[index]];
+  }
+  return deck;
+}
+
+function scoreWordGuess(guess: string, answer: string) {
+  const score = Array<"correct" | "present" | "absent">(answer.length).fill("absent");
+  const remaining = new Map<string, number>();
+
+  answer.split("").forEach((letter, index) => {
+    if (guess[index] === letter) score[index] = "correct";
+    else remaining.set(letter, (remaining.get(letter) ?? 0) + 1);
+  });
+  guess.split("").forEach((letter, index) => {
+    if (score[index] === "correct") return;
+    if ((remaining.get(letter) ?? 0) > 0) {
+      score[index] = "present";
+      remaining.set(letter, (remaining.get(letter) ?? 0) - 1);
+    }
+  });
+  return score;
+}
+
+function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
+  const [game, setGame] = useState<"minefield" | "puzzle" | "samword" | "memory">("minefield");
   const [minefield, setMinefield] = useState(() => createMinefield());
   const [mineStatus, setMineStatus] = useState<"playing" | "won" | "lost">("playing");
   const [flagMode, setFlagMode] = useState(false);
   const [puzzle, setPuzzle] = useState(() => createPuzzle());
   const [moves, setMoves] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [wordInput, setWordInput] = useState("");
+  const [wordGuesses, setWordGuesses] = useState<string[]>([]);
+  const [wordMessage, setWordMessage] = useState("Six letters. All clues lead back to Samuel.");
+  const [memoryDeck, setMemoryDeck] = useState(() => createMemoryDeck());
+  const [memoryOpen, setMemoryOpen] = useState<number[]>([]);
+  const [memoryMatched, setMemoryMatched] = useState<Set<string>>(() => new Set());
+  const [memoryTurns, setMemoryTurns] = useState(0);
+  const [memoryFact, setMemoryFact] = useState("");
+  const memoryTimer = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (memoryTimer.current) window.clearTimeout(memoryTimer.current);
+  }, []);
 
   const resetMines = () => {
     setMinefield(createMinefield(Date.now()));
@@ -1291,6 +1310,76 @@ function GamesApp() {
 
   const puzzleSolved = puzzle.every((tile, index) => tile === (index + 1) % 16);
   const flagged = minefield.filter((cell) => cell.flagged).length;
+  const activeWord = SAM_WORDS[wordIndex];
+  const wordSolved = wordGuesses.includes(activeWord.answer);
+
+  const submitWord = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const guess = wordInput.trim().toUpperCase();
+    if (guess === "SAMUEL") {
+      setWordMessage("Profile override accepted. Opening the unnecessary secret...");
+      openApp("secret");
+      setWordInput("");
+      return;
+    }
+    if (guess.length !== activeWord.answer.length) {
+      setWordMessage(`Please enter exactly ${activeWord.answer.length} letters.`);
+      return;
+    }
+    if (!/^[A-Z]+$/.test(guess)) {
+      setWordMessage("Letters only. System 7 is particular about paperwork.");
+      return;
+    }
+    if (wordSolved || wordGuesses.length >= 6) return;
+    const nextGuesses = [...wordGuesses, guess];
+    setWordGuesses(nextGuesses);
+    setWordInput("");
+    setWordMessage(
+      guess === activeWord.answer
+        ? activeWord.fact
+        : nextGuesses.length === 6
+          ? `The answer was ${activeWord.answer}. ${activeWord.fact}`
+          : `${6 - nextGuesses.length} attempt${6 - nextGuesses.length === 1 ? "" : "s"} remaining.`,
+    );
+  };
+
+  const nextWord = () => {
+    setWordIndex((current) => (current + 1) % SAM_WORDS.length);
+    setWordInput("");
+    setWordGuesses([]);
+    setWordMessage("New profile file loaded. Six letters.");
+  };
+
+  const resetMemory = () => {
+    if (memoryTimer.current) window.clearTimeout(memoryTimer.current);
+    setMemoryDeck(createMemoryDeck(Date.now()));
+    setMemoryOpen([]);
+    setMemoryMatched(new Set());
+    setMemoryTurns(0);
+    setMemoryFact("");
+  };
+
+  const flipMemory = (index: number) => {
+    if (memoryOpen.length >= 2 || memoryOpen.includes(index) || memoryMatched.has(memoryDeck[index].pairId)) return;
+    if (memoryOpen.length === 0) {
+      setMemoryOpen([index]);
+      return;
+    }
+
+    const firstIndex = memoryOpen[0];
+    const nextOpen = [firstIndex, index];
+    setMemoryOpen(nextOpen);
+    setMemoryTurns((current) => current + 1);
+    const isMatch = memoryDeck[firstIndex].pairId === memoryDeck[index].pairId;
+    memoryTimer.current = window.setTimeout(() => {
+      if (isMatch) {
+        setMemoryMatched((current) => new Set(current).add(memoryDeck[index].pairId));
+        setMemoryFact(memoryDeck[index].fact);
+      }
+      setMemoryOpen([]);
+      memoryTimer.current = null;
+    }, isMatch ? 420 : 780);
+  };
 
   return (
     <div className="games-app">
@@ -1298,10 +1387,12 @@ function GamesApp() {
         <div className="games-logo"><PixelIcon kind="game" /><span>Desk<br />Arcade</span></div>
         <button className={game === "minefield" ? "is-active" : ""} onClick={() => setGame("minefield")}><span className="game-mini-icon">M</span>Minefield</button>
         <button className={game === "puzzle" ? "is-active" : ""} onClick={() => setGame("puzzle")}><span className="game-mini-icon">15</span>Sliding Puzzle</button>
-        <p>Two tiny distractions.<br />No tracking. No coins.<br />No season pass.</p>
+        <button className={game === "samword" ? "is-active" : ""} onClick={() => setGame("samword")}><span className="game-mini-icon">SZ</span>SamWord</button>
+        <button className={game === "memory" ? "is-active" : ""} onClick={() => setGame("memory")}><span className="game-mini-icon">8</span>Profile Pairs</button>
+        <p>Four tiny distractions.<br />No tracking. No coins.<br />One suspicious password.</p>
       </aside>
       <section className="game-stage">
-        {game === "minefield" ? (
+        {game === "minefield" && (
           <>
             <div className="game-header">
               <div><span>DESK ACCESSORY 01</span><h3>Minefield</h3></div>
@@ -1327,7 +1418,8 @@ function GamesApp() {
             </div>
             <p className="game-help">Click to reveal · right-click or use Flag mode to mark a mine</p>
           </>
-        ) : (
+        )}
+        {game === "puzzle" && (
           <>
             <div className="game-header">
               <div><span>DESK ACCESSORY 02</span><h3>Sliding Puzzle</h3></div>
@@ -1342,6 +1434,74 @@ function GamesApp() {
               ))}
             </div>
             <div className="puzzle-actions"><button className="mac-button" onClick={resetPuzzle}>Shuffle again</button></div>
+          </>
+        )}
+        {game === "samword" && (
+          <>
+            <div className="game-header">
+              <div><span>PROFILE ACCESSORY 03</span><h3>SamWord</h3></div>
+              <div className="word-counter">{wordIndex + 1}<small>OF {SAM_WORDS.length}</small></div>
+            </div>
+            <div className="samword-clue"><strong>CLUE</strong><span>{activeWord.clue}</span></div>
+            <div className="samword-grid" aria-label="SamWord guesses">
+              {Array.from({ length: 6 }, (_, rowIndex) => {
+                const guess = wordGuesses[rowIndex] ?? "";
+                const score = guess ? scoreWordGuess(guess, activeWord.answer) : [];
+                return (
+                  <div className="samword-row" key={rowIndex}>
+                    {Array.from({ length: activeWord.answer.length }, (_, columnIndex) => (
+                      <span className={score[columnIndex] ? `is-${score[columnIndex]}` : ""} key={columnIndex}>
+                        {guess[columnIndex] ?? ""}
+                      </span>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+            <form className="samword-form" onSubmit={submitWord}>
+              <input
+                value={wordInput}
+                onChange={(event) => setWordInput(event.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, activeWord.answer.length))}
+                maxLength={activeWord.answer.length}
+                aria-label="Six-letter guess"
+                autoComplete="off"
+                disabled={wordSolved || wordGuesses.length >= 6}
+              />
+              <button className="mac-button" type="submit" disabled={wordSolved || wordGuesses.length >= 6}>Enter</button>
+              <button className="mac-button" type="button" onClick={nextWord}>Next file</button>
+            </form>
+            <p className={`samword-message${wordSolved ? " is-solved" : ""}`}>{wordMessage}</p>
+          </>
+        )}
+        {game === "memory" && (
+          <>
+            <div className="game-header">
+              <div><span>PROFILE ACCESSORY 04</span><h3>Profile Pairs</h3></div>
+              <div className="puzzle-counter">{memoryTurns}<small>TURNS</small></div>
+            </div>
+            <p className="memory-intro">Match each clue to the part of Samuel’s profile it belongs to.</p>
+            <div className="memory-grid" aria-label="Samuel profile matching game">
+              {memoryDeck.map((card, index) => {
+                const visible = memoryOpen.includes(index) || memoryMatched.has(card.pairId);
+                return (
+                  <button
+                    key={`${card.pairId}-${index}`}
+                    className={`${visible ? "is-visible" : ""}${memoryMatched.has(card.pairId) ? " is-matched" : ""}`}
+                    onClick={() => flipMemory(index)}
+                    aria-label={visible ? card.label : `Hidden profile card ${index + 1}`}
+                  >
+                    <span>{visible ? card.label : "?"}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="memory-status">
+              <span>{memoryMatched.size === MEMORY_PAIRS.length ? "You now know suspiciously much about Samuel." : `${memoryMatched.size} of ${MEMORY_PAIRS.length} connections found`}</span>
+              <button className="mac-button" onClick={resetMemory}>Shuffle cards</button>
+            </div>
+            {memoryFact && (
+              <p className="memory-fact">{memoryFact}</p>
+            )}
           </>
         )}
       </section>
@@ -1468,8 +1628,7 @@ function AppContent({ id, openApp }: { id: AppId; openApp: (id: AppId) => void }
     case "education": return <EducationApp />;
     case "resume": return <ResumeApp openApp={openApp} />;
     case "documents": return <DocumentsApp />;
-    case "browser": return <BrowserApp />;
-    case "games": return <GamesApp />;
+    case "games": return <GamesApp openApp={openApp} />;
     case "contact": return <ContactApp openApp={openApp} />;
     case "lab": return <LabApp />;
     case "scrapbook": return <ScrapbookApp />;
@@ -1498,6 +1657,7 @@ export default function SystemSevenDesktop({
   const [pattern, setPattern] = useState<"classic" | "blue">("classic");
   const [memoryMagic, setMemoryMagic] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [mobileGuide, setMobileGuide] = useState(false);
   const zCounter = useRef(20);
   const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
   const toastTimer = useRef<number | null>(null);
@@ -1513,6 +1673,16 @@ export default function SystemSevenDesktop({
     updateClock();
     const timer = window.setInterval(updateClock, 30000);
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    if (!isMobile) return;
+    try {
+      if (window.sessionStorage.getItem("samuel-mobile-window-guide") !== "seen") setMobileGuide(true);
+    } catch {
+      setMobileGuide(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -1590,6 +1760,15 @@ export default function SystemSevenDesktop({
     setToast(null);
     setBooting(true);
     window.setTimeout(() => setBooting(false), 1200);
+  };
+
+  const dismissMobileGuide = () => {
+    try {
+      window.sessionStorage.setItem("samuel-mobile-window-guide", "seen");
+    } catch {
+      // The guide still closes when storage is unavailable.
+    }
+    setMobileGuide(false);
   };
 
   const handleDragStart = (event: React.PointerEvent<HTMLDivElement>, id: AppId) => {
@@ -1680,7 +1859,7 @@ export default function SystemSevenDesktop({
           </div>
           <div className="menu-root menu-optional">
             <button className={openMenu === "special" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "special" ? null : "special")}>Special</button>
-            {openMenu === "special" && <div className="menu-dropdown"><button onClick={() => openApp("browser")}>World Wide Web</button><button onClick={() => openApp("games")}>Desk Arcade</button><hr /><button onClick={() => { setWindows((current) => current.map((item) => ({ ...item, open: false }))); setOpenMenu(null); }}>Hide All Windows</button><button onClick={() => openApp("secret")}>About This Secret…</button><button onClick={restart}>Restart</button></div>}
+            {openMenu === "special" && <div className="menu-dropdown"><button onClick={() => openApp("games")}>Desk Arcade</button><hr /><button onClick={() => { setWindows((current) => current.map((item) => ({ ...item, open: false }))); setOpenMenu(null); }}>Hide All Windows</button><button onClick={() => openApp("secret")}>About This Secret…</button><button onClick={restart}>Restart</button></div>}
           </div>
         </div>
         <div className="menu-status">
@@ -1736,6 +1915,20 @@ export default function SystemSevenDesktop({
           </button>
         ))}
       </div>
+      {mobileGuide && (
+        <aside className="mobile-window-guide" role="dialog" aria-label="Using windows on mobile">
+          <div className="mobile-window-guide__title">
+            <span className="mobile-guide-window-box" aria-hidden="true" />
+            <strong>Windows on a small screen</strong>
+          </div>
+          <p>
+            Tap the small square at a window’s top-left to close it. Mobile windows stay
+            full-screen, so dragging is disabled; use the bar along the bottom to switch
+            between anything that is open.
+          </p>
+          <button onClick={dismissMobileGuide}>Got it</button>
+        </aside>
+      )}
       {toast && <div className="system-toast" role="status"><PixelIcon kind="computer" small /><span>{toast}</span></div>}
     </main>
   );

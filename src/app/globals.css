@@ -10,6 +10,8 @@
   --desktop: #8587a8;
   --accent: #db2f3d;
   --amber: #f2c14f;
+  --system-font: Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --system-mono: "Courier New", Courier, monospace;
 }
 
 * {
@@ -44,8 +46,21 @@ button {
 
 body {
   color: var(--ink);
-  font-family: Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--system-font);
   font-size: 13px;
+}
+
+.boot-screen,
+.system-menubar,
+.menu-dropdown,
+.desktop-icon,
+.desktop-hint,
+.window-switcher,
+.mac-titlebar,
+.finder-app,
+.system-toast,
+.mobile-window-guide {
+  font-family: var(--system-font);
 }
 
 ::selection {
@@ -96,7 +111,7 @@ body {
   background:
     linear-gradient(45deg, #fff 25%, #eee 25%, #eee 50%, #fff 50%, #fff 75%, #eee 75%);
   background-size: 4px 4px;
-  font-family: Geneva, Helvetica, Arial, sans-serif;
+  font-family: var(--system-font);
   animation: boot-fade-in .2s steps(2);
 }
 
@@ -407,6 +422,10 @@ body {
 }
 
 .window-switcher {
+  display: none;
+}
+
+.mobile-window-guide {
   display: none;
 }
 
@@ -2035,84 +2054,6 @@ body {
   display: none;
 }
 
-/* World Wide Web */
-
-.browser-app {
-  display: flex;
-  height: 100%;
-  min-height: 400px;
-  flex-direction: column;
-  background: #c9c9c4;
-}
-
-.browser-toolbar {
-  display: flex;
-  min-height: 37px;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 8px;
-  border-bottom: 1px solid #777;
-}
-
-.browser-toolbar label {
-  display: flex;
-  min-width: 0;
-  flex: 1;
-  align-items: center;
-  gap: 7px;
-  font-size: 9px;
-  font-weight: 700;
-}
-
-.browser-toolbar input {
-  min-width: 0;
-  height: 23px;
-  flex: 1;
-  padding: 2px 7px;
-  border: 2px inset #eee;
-  color: #222;
-  background: #fff;
-  font-family: "Courier New", monospace;
-  font-size: 9px;
-}
-
-.browser-secure {
-  color: #317343;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  font-weight: 700;
-}
-
-.browser-bookmarks {
-  display: flex;
-  min-height: 27px;
-  padding: 3px 7px;
-  border-bottom: 2px solid #111;
-  background: #e5e5e0;
-}
-
-.browser-bookmarks button {
-  padding: 2px 10px;
-  border: 0;
-  border-right: 1px solid #999;
-  background: transparent;
-  font-family: inherit;
-  font-size: 9px;
-}
-
-.browser-bookmarks button.is-active {
-  color: #fff;
-  background: var(--selection);
-}
-
-.browser-app iframe {
-  width: 100%;
-  min-height: 0;
-  flex: 1;
-  border: 0;
-  background: #fff;
-}
-
 /* Games */
 
 .games-app {
@@ -2355,6 +2296,183 @@ body {
 .puzzle-actions {
   margin-top: 13px;
   text-align: center;
+}
+
+.word-counter {
+  min-width: 62px;
+  padding: 5px;
+  border: 2px solid #111;
+  background: #fff;
+  font-family: var(--system-mono);
+  font-size: 22px;
+  text-align: center;
+}
+
+.word-counter small {
+  display: block;
+  font-size: 7px;
+}
+
+.samword-clue {
+  display: flex;
+  gap: 10px;
+  margin: 0 auto 12px;
+  padding: 8px 10px;
+  border: 1px solid #777;
+  background: #f7f7f1;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.samword-clue strong {
+  color: var(--selection);
+  font-family: var(--system-mono);
+  font-size: 8px;
+  letter-spacing: .08em;
+}
+
+.samword-grid {
+  display: grid;
+  width: min(100%, 300px);
+  gap: 4px;
+  margin: 0 auto;
+}
+
+.samword-row {
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  gap: 4px;
+}
+
+.samword-row > span {
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 2px solid #777;
+  background: #f5f5ef;
+  box-shadow: inset 1px 1px #fff;
+  font-family: var(--system-mono);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.samword-row > span.is-correct {
+  border-color: #315f37;
+  color: #fff;
+  background: #4f8055;
+  box-shadow: inset 1px 1px #8ebb91;
+}
+
+.samword-row > span.is-present {
+  border-color: #8a6716;
+  color: #111;
+  background: #e1b94e;
+  box-shadow: inset 1px 1px #ffe59a;
+}
+
+.samword-row > span.is-absent {
+  border-color: #555;
+  color: #fff;
+  background: #777;
+  box-shadow: inset 1px 1px #aaa;
+}
+
+.samword-form {
+  display: flex;
+  width: min(100%, 380px);
+  gap: 6px;
+  margin: 12px auto 0;
+}
+
+.samword-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 5px 8px;
+  border: 2px inset #eee;
+  background: #fff;
+  font-family: var(--system-mono);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.samword-message {
+  min-height: 31px;
+  margin: 9px auto 0;
+  color: #555;
+  font-size: 9px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.samword-message.is-solved {
+  color: #285f32;
+  font-weight: 700;
+}
+
+.memory-intro {
+  margin: -3px 0 12px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.memory-grid {
+  display: grid;
+  width: min(100%, 430px);
+  grid-template-columns: repeat(4,1fr);
+  gap: 7px;
+  margin: 0 auto;
+}
+
+.memory-grid button {
+  display: grid;
+  min-width: 0;
+  min-height: 65px;
+  place-items: center;
+  padding: 5px;
+  border: 3px outset #eee;
+  color: #fff;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 3px, rgba(255,255,255,.08) 3px 5px),
+    #222b67;
+  box-shadow: 1px 1px 0 #555;
+  font-family: var(--system-mono);
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.memory-grid button.is-visible {
+  border: 2px solid #111;
+  color: #111;
+  background: #f5f1df;
+  box-shadow: inset 2px 2px #fff, inset -2px -2px #aaa;
+}
+
+.memory-grid button.is-matched {
+  border-color: #315f37;
+  background: #cfe2c9;
+}
+
+.memory-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 13px;
+  font-family: var(--system-mono);
+  font-size: 8px;
+}
+
+.memory-fact {
+  margin: 10px auto 0;
+  padding: 7px 9px;
+  border-left: 4px solid #315f37;
+  background: rgba(255,255,255,.55);
+  font-size: 9px;
+  line-height: 1.35;
 }
 
 /* Secret About Box */
@@ -3190,19 +3308,6 @@ body {
     display: none;
   }
 
-  .browser-toolbar label > span,
-  .browser-secure {
-    display: none;
-  }
-
-  .browser-bookmarks {
-    overflow-x: auto;
-  }
-
-  .browser-bookmarks button {
-    flex: 0 0 auto;
-  }
-
   .games-app {
     display: block;
   }
@@ -3211,12 +3316,14 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
+    overflow-x: auto;
     padding: 7px;
     border-right: 0;
     border-bottom: 2px solid #111;
   }
 
   .games-logo {
+    flex: 0 0 auto;
     margin: 0 auto 0 0;
     padding: 0 8px 0 0;
     border: 0;
@@ -3230,6 +3337,7 @@ body {
 
   .games-sidebar > button {
     width: auto;
+    flex: 0 0 auto;
     margin: 0;
     padding: 5px 7px;
   }
@@ -3249,6 +3357,102 @@ body {
 
   .mine-toolbar strong {
     width: 100%;
+  }
+
+  .samword-row > span {
+    font-size: 14px;
+  }
+
+  .samword-form {
+    flex-wrap: wrap;
+  }
+
+  .samword-form input {
+    flex-basis: 100%;
+  }
+
+  .samword-form button {
+    flex: 1;
+  }
+
+  .memory-grid {
+    gap: 5px;
+  }
+
+  .memory-grid button {
+    min-height: 58px;
+    padding: 3px;
+    font-size: 8px;
+  }
+
+  .memory-status {
+    flex-wrap: wrap;
+  }
+
+  .mobile-window-guide {
+    position: fixed;
+    z-index: 6200;
+    right: 8px;
+    bottom: 50px;
+    left: 8px;
+    display: block;
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 10px 11px 9px;
+    border: 2px solid #111;
+    color: #111;
+    background: #f4f4ef;
+    box-shadow: 4px 4px 0 rgba(0,0,0,.48);
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .mobile-window-guide::after {
+    position: absolute;
+    right: 18px;
+    bottom: -9px;
+    width: 13px;
+    height: 13px;
+    border-right: 2px solid #111;
+    border-bottom: 2px solid #111;
+    background: #f4f4ef;
+    content: "";
+    transform: rotate(45deg);
+  }
+
+  .mobile-window-guide__title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #888;
+    font-size: 11px;
+  }
+
+  .mobile-guide-window-box {
+    width: 13px;
+    height: 13px;
+    border: 2px solid #111;
+    background: #dedede;
+    box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  }
+
+  .mobile-window-guide p {
+    margin: 7px 0;
+  }
+
+  .mobile-window-guide button {
+    position: relative;
+    z-index: 1;
+    display: block;
+    min-width: 76px;
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 2px solid #111;
+    border-radius: 3px;
+    background: #e5e5df;
+    box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+    font-weight: 700;
   }
 
   .secret-app {
@@ -3311,6 +3515,7 @@ body {
   .fake-scrollbar,
   .window-switcher,
   .desktop-hint,
+  .mobile-window-guide,
   .simpletext-toolbar {
     display: none !important;
   }
