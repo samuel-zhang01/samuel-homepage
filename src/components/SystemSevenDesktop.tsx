@@ -35,10 +35,14 @@ type DesktopIcon = {
   id: AppId;
   label: string;
   icon: IconKind;
+  description: string;
 };
 
 type IconKind =
+  | "profile"
+  | "coverd"
   | "computer"
+  | "briefcase"
   | "folder"
   | "document"
   | "controls"
@@ -48,6 +52,7 @@ type IconKind =
   | "photos"
   | "game"
   | "pdf"
+  | "mail"
   | "secret";
 
 const BOOT_DURATION = 5600;
@@ -61,6 +66,7 @@ const BOOT_MESSAGES = [
   "Rewinding the startup chime…",
   "Almost ready. Pretending this took serious computing power…",
 ] as const;
+const BOOT_PROGRESS = [8, 17, 29, 42, 56, 70, 85, 100] as const;
 
 const INITIAL_WINDOWS: WindowState[] = [
   {
@@ -87,7 +93,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "finder",
-    title: "Samuel HD",
+    title: "Portfolio Index",
     x: 86,
     y: 116,
     width: 610,
@@ -120,7 +126,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "skills",
-    title: "Control Panels: Capabilities",
+    title: "Skills & Capabilities",
     x: 206,
     y: 92,
     width: 690,
@@ -142,7 +148,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "resume",
-    title: "Samuel Zhang — Profile",
+    title: "Résumé & Profile",
     x: 246,
     y: 58,
     width: 650,
@@ -153,7 +159,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "documents",
-    title: "Document Viewer",
+    title: "CV & Papers",
     x: 180,
     y: 48,
     width: 820,
@@ -164,7 +170,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "games",
-    title: "Games",
+    title: "Desk Arcade",
     x: 204,
     y: 72,
     width: 720,
@@ -175,7 +181,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "contact",
-    title: "Chooser",
+    title: "Contact Samuel",
     x: 286,
     y: 122,
     width: 570,
@@ -197,7 +203,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "scrapbook",
-    title: "Scrapbook",
+    title: "Interests & Notes",
     x: 218,
     y: 102,
     width: 660,
@@ -220,19 +226,19 @@ const INITIAL_WINDOWS: WindowState[] = [
 ];
 
 const DESKTOP_ICONS: DesktopIcon[] = [
-  { id: "about", label: "About Samuel", icon: "computer" },
-  { id: "coverd", label: "COVERD", icon: "document" },
-  { id: "finder", label: "Samuel HD", icon: "disk" },
-  { id: "experience", label: "Career", icon: "folder" },
-  { id: "projects", label: "Projects", icon: "folder" },
-  { id: "skills", label: "Control Panels", icon: "controls" },
-  { id: "education", label: "Education", icon: "university" },
-  { id: "resume", label: "Résumé", icon: "document" },
-  { id: "documents", label: "Documents", icon: "pdf" },
-  { id: "games", label: "Games", icon: "game" },
-  { id: "lab", label: "Home Lab", icon: "network" },
-  { id: "scrapbook", label: "Scrapbook", icon: "photos" },
-  { id: "contact", label: "Contact", icon: "network" },
+  { id: "about", label: "Profile", icon: "profile", description: "Start here: biography, current work and highlights." },
+  { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
+  { id: "finder", label: "Portfolio Index", icon: "disk", description: "A directory of everything available in this portfolio." },
+  { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
+  { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
+  { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
+  { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
+  { id: "resume", label: "Résumé", icon: "document", description: "A concise, in-browser professional profile." },
+  { id: "documents", label: "CV & Papers", icon: "pdf", description: "Full CV, thesis and GROWMAT documents in the built-in reader." },
+  { id: "games", label: "Desk Arcade", icon: "game", description: "Four small games with profile-themed easter eggs." },
+  { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
+  { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
+  { id: "contact", label: "Contact", icon: "mail", description: "Email, LinkedIn and GitHub without leaving the desktop." },
 ];
 
 const finderItems: Array<{
@@ -241,17 +247,17 @@ const finderItems: Array<{
   kind: IconKind;
   meta: string;
 }> = [
-  { id: "coverd", name: "COVERD — Founder’s Desk", kind: "document", meta: "Flagship venture" },
-  { id: "experience", name: "Career", kind: "folder", meta: "7 items" },
+  { id: "coverd", name: "COVERD — Founder’s Desk", kind: "coverd", meta: "Flagship venture" },
+  { id: "experience", name: "Experience", kind: "briefcase", meta: "7 roles" },
   { id: "projects", name: "Selected Projects", kind: "folder", meta: "8 items" },
-  { id: "skills", name: "Control Panels", kind: "controls", meta: "6 panels" },
+  { id: "skills", name: "Skills & Capabilities", kind: "controls", meta: "6 groups" },
   { id: "education", name: "Education & Awards", kind: "university", meta: "2 folders" },
   { id: "lab", name: "Home Lab Network", kind: "network", meta: "Online" },
-  { id: "scrapbook", name: "Scrapbook", kind: "photos", meta: "6 clippings" },
-  { id: "resume", name: "Samuel Zhang — Profile", kind: "document", meta: "5 pages" },
-  { id: "documents", name: "Document Viewer", kind: "pdf", meta: "3 documents" },
-  { id: "games", name: "Games", kind: "game", meta: "4 games" },
-  { id: "contact", name: "Chooser", kind: "network", meta: "3 services" },
+  { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "6 clippings" },
+  { id: "resume", name: "Résumé & Profile", kind: "document", meta: "In-browser profile" },
+  { id: "documents", name: "CV & Papers", kind: "pdf", meta: "3 documents" },
+  { id: "games", name: "Desk Arcade", kind: "game", meta: "4 games" },
+  { id: "contact", name: "Contact Samuel", kind: "mail", meta: "3 channels" },
 ];
 
 const experience = [
@@ -472,6 +478,20 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
   };
 
   const artwork: Record<IconKind, React.ReactNode> = {
+    profile: (
+      <g {...common}>
+        <circle cx="24" cy="14" r="8" fill="#f2ca59" />
+        <path d="M8 44v-5c0-10 6-16 16-16s16 6 16 16v5z" fill="#d7d7d1" />
+        <path d="M15 40h18" stroke="#11177a" strokeWidth="2" />
+      </g>
+    ),
+    coverd: (
+      <g strokeLinecap="square" strokeLinejoin="miter">
+        <rect x="4" y="5" width="40" height="38" fill="#111" stroke="#111" strokeWidth="3" />
+        <path d="M34 16c-2-3-5-5-9-5-8 0-13 6-13 13s5 13 13 13c4 0 7-2 9-5" fill="none" stroke="#fff" strokeWidth="5" />
+        <rect x="36" y="34" width="4" height="4" fill="#db2f3d" />
+      </g>
+    ),
     computer: (
       <g {...common}>
         <rect x="5" y="3" width="38" height="35" rx="2" fill="#d7d7d1" />
@@ -485,6 +505,14 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
         <path d="M3 14h16l4-6h10l4 6h8v29H3z" fill="#f2ca59" />
         <path d="M3 18h42" stroke="#fff2ad" />
         <path d="M7 38h34" stroke="#b68921" />
+      </g>
+    ),
+    briefcase: (
+      <g {...common}>
+        <path d="M16 14V8h16v6" />
+        <rect x="4" y="14" width="40" height="29" rx="1" fill="#c8b078" />
+        <path d="M4 25h40M20 23v6h8v-6" />
+        <path d="M9 39h30" stroke="#8c7544" strokeWidth="2" />
       </g>
     ),
     document: (
@@ -550,6 +578,13 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
         <path d="M31 3v10h9" fill="#aaa" />
         <rect x="4" y="24" width="32" height="14" fill="#b74343" />
         <path d="M9 28h5c4 0 4 6 0 6H9zm12 0v6m0-6h7m-7 3h5" stroke="#fff" strokeWidth="2" />
+      </g>
+    ),
+    mail: (
+      <g {...common}>
+        <rect x="4" y="9" width="40" height="31" fill="#fff" />
+        <path d="m6 12 18 15 18-15M6 38l13-14m23 14L29 24" strokeWidth="2" />
+        <path d="M9 43h30" stroke="#777" strokeWidth="2" />
       </g>
     ),
     secret: (
@@ -798,7 +833,7 @@ function CoverdApp() {
 function FinderApp({ openApp }: { openApp: (id: AppId) => void }) {
   return (
     <div className="finder-app">
-      <div className="finder-meta"><span>{finderItems.length} items</span><span>Samuel HD</span><span>42.0 MB available</span></div>
+      <div className="finder-meta"><span>{finderItems.length} items</span><span>Portfolio Index</span><span>42.0 MB available</span></div>
       <div className="finder-grid">
         {finderItems.map((item) => (
           <button key={item.id} className="finder-item" onDoubleClick={() => openApp(item.id)} onClick={() => openApp(item.id)}>
@@ -808,7 +843,7 @@ function FinderApp({ openApp }: { openApp: (id: AppId) => void }) {
           </button>
         ))}
       </div>
-      <div className="finder-status">Double-click an item to open it.</div>
+      <div className="finder-status">Click an item once to open it.</div>
     </div>
   );
 }
@@ -1738,6 +1773,7 @@ export default function SystemSevenDesktop({
 
   const activeTitle = windows.find((item) => item.id === activeId && item.open)?.title ?? "Finder";
   const openWindows = useMemo(() => windows.filter((item) => item.open), [windows]);
+  const selectedDesktopItem = DESKTOP_ICONS.find((item) => item.id === selectedIcon);
 
   const focusWindow = (id: AppId) => {
     const nextZ = ++zCounter.current;
@@ -1827,8 +1863,17 @@ export default function SystemSevenDesktop({
       <main className="boot-screen" onClick={() => setBooting(false)}>
         <div className="boot-computer"><div className="boot-face">:)</div><span /></div>
         <h1>Welcome to Samuel System 7</h1>
-        <p className="boot-status" key={bootMessageIndex}>{BOOT_MESSAGES[bootMessageIndex]}</p>
-        <div className="boot-progress"><span /></div>
+        <p className="boot-status" key={bootMessageIndex} aria-live="polite">{BOOT_MESSAGES[bootMessageIndex]}</p>
+        <div
+          className="boot-progress"
+          role="progressbar"
+          aria-label="Starting Samuel System 7"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={BOOT_PROGRESS[bootMessageIndex]}
+        >
+          <span style={{ width: `${BOOT_PROGRESS[bootMessageIndex]}%` }} />
+        </div>
         <button>Click anywhere to skip startup</button>
       </main>
     );
@@ -1856,13 +1901,13 @@ export default function SystemSevenDesktop({
             {openMenu === "apple" && (
               <div className="menu-dropdown apple-dropdown">
                 <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
-                <button onClick={() => openApp("coverd")}><PixelIcon kind="document" small />COVERD — Founder&apos;s Desk</button>
+                <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder&apos;s Desk</button>
                 <hr />
-                <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Control Panels</button>
-                <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Document Viewer</button>
-                <button onClick={() => openApp("games")}><PixelIcon kind="game" small />Games</button>
-                <button onClick={() => openApp("contact")}><PixelIcon kind="network" small />Chooser</button>
-                <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Scrapbook</button>
+                <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
+                <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />CV &amp; Papers</button>
+                <button onClick={() => openApp("games")}><PixelIcon kind="game" small />Desk Arcade</button>
+                <button onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
+                <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Interests &amp; Notes</button>
                 <hr />
                 <button onClick={restart}>Restart…</button>
               </div>
@@ -1871,7 +1916,7 @@ export default function SystemSevenDesktop({
           <strong className="active-application">{activeTitle === "Finder" ? "Finder" : activeTitle}</strong>
           <div className="menu-root">
             <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")}>File</button>
-            {openMenu === "file" && <div className="menu-dropdown"><button onClick={() => openApp("finder")}>Open Samuel HD</button><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open Document Viewer</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
+            {openMenu === "file" && <div className="menu-dropdown"><button onClick={() => openApp("finder")}>Open Portfolio Index</button><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open CV &amp; Papers</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
             <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")}>Edit</button>
@@ -1905,13 +1950,16 @@ export default function SystemSevenDesktop({
           <button
             key={item.id}
             className={`desktop-icon${selectedIcon === item.id ? " is-selected" : ""}`}
+            title={`${item.label}: ${item.description}`}
+            aria-label={`${item.label}. ${item.description} Double-click to open.`}
+            aria-pressed={selectedIcon === item.id}
             onClick={() => setSelectedIcon(item.id)}
             onDoubleClick={() => openApp(item.id)}
             onPointerUp={(event) => { if (event.pointerType === "touch") openApp(item.id); }}
             onKeyDown={(event) => { if (event.key === "Enter") openApp(item.id); }}
           >
-            <PixelIcon kind={item.icon} />
-            <span>{item.label}</span>
+            <span className="desktop-icon__graphic"><PixelIcon kind={item.icon} /></span>
+            <span className="desktop-icon__label">{item.label}</span>
           </button>
         ))}
       </div>
@@ -1930,7 +1978,16 @@ export default function SystemSevenDesktop({
         </WindowChrome>
       ))}
 
-      <div className="desktop-hint">Double-click an icon · Drag a title bar · Some menu-bar items are suspicious</div>
+      <div className={`desktop-hint${selectedDesktopItem ? " has-selection" : ""}`}>
+        {selectedDesktopItem ? (
+          <>
+            <strong>{selectedDesktopItem.label}</strong>
+            <span>{selectedDesktopItem.description} Double-click to open.</span>
+          </>
+        ) : (
+          <span>Select an icon to learn what it opens · Double-click to launch · Drag title bars to move windows</span>
+        )}
+      </div>
       <div className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
           <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`Show ${item.title}`}>

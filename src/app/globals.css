@@ -195,17 +195,11 @@ body {
 
 .boot-progress span {
   display: block;
-  width: 100%;
+  width: 0;
   height: 100%;
   background:
     repeating-linear-gradient(90deg, #111 0 5px, #fff 5px 7px);
-  transform-origin: left;
-  animation: boot-load 5.6s steps(28);
-}
-
-@keyframes boot-load {
-  from { transform: scaleX(.04); }
-  to { transform: scaleX(1); }
+  transition: width .2s steps(3,end);
 }
 
 @keyframes boot-fade-in {
@@ -387,9 +381,10 @@ body {
   top: 43px;
   right: 18px;
   display: grid;
+  grid-auto-columns: 94px;
   grid-auto-flow: column;
-  grid-template-rows: repeat(7, 84px);
-  gap: 3px 14px;
+  grid-template-rows: repeat(7, 90px);
+  gap: 2px 10px;
   align-content: start;
   justify-content: end;
 }
@@ -411,15 +406,33 @@ body {
   cursor: default;
 }
 
-.desktop-icon > span:last-child {
-  display: inline;
-  max-width: 82px;
+.desktop-icon {
+  width: 94px;
+  min-height: 88px;
+  justify-content: flex-start;
+  gap: 1px;
+}
+
+.desktop-icon__graphic {
+  display: grid;
+  width: 54px;
+  height: 51px;
+  flex: 0 0 51px;
+  place-items: center;
+}
+
+.desktop-icon__label {
+  display: inline-flex;
+  max-width: 92px;
+  min-height: 28px;
+  align-items: flex-start;
+  justify-content: center;
   padding: 1px 3px 2px;
   line-height: 1.12;
 }
 
-.desktop-icon.is-selected > span:last-child,
-.desktop-icon:focus-visible > span:last-child {
+.desktop-icon.is-selected .desktop-icon__label,
+.desktop-icon:focus-visible .desktop-icon__label {
   color: #fff;
   background: var(--selection);
   outline: 1px dotted #fff;
@@ -430,11 +443,25 @@ body {
   z-index: 1;
   bottom: 13px;
   left: 14px;
-  padding: 4px 7px;
+  display: flex;
+  max-width: min(560px, calc(100vw - 28px));
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 8px;
   color: rgba(255,255,255,.88);
   background: rgba(0,0,0,.26);
   font-size: 10px;
   letter-spacing: .03em;
+}
+
+.desktop-hint strong {
+  color: #fff;
+  font-size: 11px;
+}
+
+.desktop-hint.has-selection {
+  background: rgba(17,23,122,.76);
+  box-shadow: 2px 2px 0 rgba(0,0,0,.35);
 }
 
 .window-switcher {
@@ -448,10 +475,11 @@ body {
 /* Pixel icons */
 
 .pixel-icon {
-  display: inline-block;
+  display: inline-grid;
   flex: 0 0 auto;
   width: 44px;
   height: 44px;
+  place-items: center;
   filter: drop-shadow(1px 1px 0 rgba(0,0,0,.75));
 }
 
@@ -466,6 +494,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: visible;
+  transform-origin: center;
 }
 
 /* Windows */
@@ -2850,7 +2879,7 @@ body {
 
 @media (max-width: 900px) {
   .desktop-icons {
-    grid-template-rows: repeat(7, 84px);
+    grid-template-rows: repeat(7, 90px);
   }
 
   .about-app {
