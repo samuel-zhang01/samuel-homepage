@@ -72,10 +72,10 @@ const INITIAL_WINDOWS: WindowState[] = [
   {
     id: "about",
     title: "About Samuel Zhang",
-    x: 166,
-    y: 78,
-    width: 676,
-    height: 532,
+    x: 110,
+    y: 60,
+    width: 760,
+    height: 650,
     z: 12,
     open: true,
     maximized: false,
@@ -680,12 +680,30 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
           systems depend on trust, attention and the right tool—not the loudest one.
         </p>
         <nav className="identity-switchboard" aria-label="Samuel’s cabinet of curiosities">
-          <span>CABINET OF CURIOSITIES</span>
-          <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small /><b>Founder</b></button>
-          <button onClick={() => openApp("projects")}><PixelIcon kind="briefcase" small /><b>Product</b></button>
-          <button onClick={() => openApp("experience")}><PixelIcon kind="university" small /><b>Scientist</b></button>
-          <button onClick={() => openApp("lab")}><PixelIcon kind="network" small /><b>Builder</b></button>
-          <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small /><b>Musician</b></button>
+          <div className="identity-switchboard__heading">
+            <b>CABINET OF CURIOSITIES</b>
+            <p>Five ways into the same person. Open a drawer to explore.</p>
+          </div>
+          <button onClick={() => openApp("coverd")}>
+            <PixelIcon kind="coverd" small />
+            <span><b>Founder</b><span className="identity-detail">Building COVERD from first principles: company context first, adaptive interviews and human-owned decisions.</span></span>
+          </button>
+          <button onClick={() => openApp("projects")}>
+            <PixelIcon kind="briefcase" small />
+            <span><b>Product</b><span className="identity-detail">Turning messy operational knowledge into polished tools that people trust, adopt and keep using.</span></span>
+          </button>
+          <button onClick={() => openApp("experience")}>
+            <PixelIcon kind="university" small />
+            <span><b>Scientist</b><span className="identity-detail">Chemistry-trained thinking: expose uncertainty, test assumptions honestly and learn from failed experiments.</span></span>
+          </button>
+          <button onClick={() => openApp("lab")}>
+            <PixelIcon kind="network" small />
+            <span><b>Builder</b><span className="identity-detail">Seven servers, private AI and self-hosted CI—with enough scars to make backups non-negotiable.</span></span>
+          </button>
+          <button onClick={() => openApp("scrapbook")}>
+            <PixelIcon kind="photos" small />
+            <span><b>Musician &amp; maker</b><span className="identity-detail">Euphonium, musical theatre and photography: the creative work behind the technical one.</span></span>
+          </button>
         </nav>
         <div className="impact-grid">
           <div><strong>1200%</strong><span>efficiency gain</span></div>
