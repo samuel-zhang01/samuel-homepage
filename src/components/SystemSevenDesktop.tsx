@@ -253,7 +253,7 @@ const finderItems: Array<{
   { id: "skills", name: "Skills & Capabilities", kind: "controls", meta: "6 groups" },
   { id: "education", name: "Education & Awards", kind: "university", meta: "2 folders" },
   { id: "lab", name: "Home Lab Network", kind: "network", meta: "Online" },
-  { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "7 clippings" },
+  { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "9 clippings" },
   { id: "resume", name: "Résumé & Profile", kind: "document", meta: "In-browser profile" },
   { id: "documents", name: "CV & Papers", kind: "pdf", meta: "3 documents" },
   { id: "games", name: "Desk Arcade", kind: "game", meta: "4 games" },
@@ -274,7 +274,7 @@ const experience = [
     role: "Founder",
     company: "coverd.ai",
     location: "London",
-    copy: "Building the AI interviewer that interviews the company first: learning what success looks like from teams and top performers, then conducting role-specific candidate conversations with cited evaluations.",
+    copy: "Building the AI interviewer that interviews the company first: an adaptive system that updates a role-specific belief graph as evidence arrives, then chooses the next useful question.",
     tag: "FOUNDER",
   },
   {
@@ -306,7 +306,7 @@ const experience = [
     role: "STEM Outreach Officer · Coding Tutor",
     company: "KCL Chemistry Society",
     location: "London",
-    copy: "Designed 20+ programming and data-analysis sessions for 80+ students with 90% satisfaction; secured Royal Society of Chemistry endorsement and organised a five-industry data-science panel for 100+ students.",
+    copy: "Designed 20+ programming and data-analysis sessions for 80+ students with 90% satisfaction; secured Royal Society of Chemistry endorsement—and later watched one student earn an offer from Microsoft.",
     tag: "EDUCATION",
   },
   {
@@ -330,7 +330,7 @@ const experience = [
     role: "HR NSF · Commander's Personal Assistant",
     company: "Singapore Civil Defence Force",
     location: "Singapore",
-    copy: "Built predictive COVID-19 resource planning and emergency activation systems for 1,200+ personnel; reduced response time by more than 300% and earned promotion to Sergeant.",
+    copy: "Built predictive COVID-19 resource planning and emergency activation systems for 1,200+ personnel. Sergeant-level service taught me to seek missing information quickly, prioritise ruthlessly and own decisions made under uncertainty.",
     tag: "SERVICE",
   },
 ];
@@ -349,8 +349,8 @@ const projects: Array<{
     year: "2026",
     category: "Responsible AI · Founder",
     description:
-      "The AI interviewer that interviews the company first—turning conversations with teams and top performers into role knowledge for natural candidate interviews and cited evaluations.",
-    tools: ["Voice AI", "Product", "Evaluation", "Founder"],
+      "The AI interviewer that interviews the company first—using a role-specific belief graph to adapt each interview, ask for missing evidence and return a cited evaluation.",
+    tools: ["Adaptive interviews", "Belief graphs", "Voice AI", "Product"],
     metric: "4 DESIGN PARTNERS",
     app: "coverd",
   },
@@ -369,7 +369,7 @@ const projects: Array<{
     year: "2026",
     category: "MSc Thesis · Marsh",
     description:
-      "Research testing how historical placement data and contract wording can support decision-making without overstating what retrospective evidence can prove.",
+      "Research testing how historical placement data and contract wording can support decision-making without overstating what retrospective evidence can prove. Early work made the cost of scattered, inconsistent data impossible to ignore.",
     tools: ["Ranking", "Document AI", "Evaluation", "Governance"],
     metric: "EVIDENCE-BOUNDED AI",
     app: "resume",
@@ -409,9 +409,9 @@ const projects: Array<{
     year: "ONGOING",
     category: "Self-hosting · Systems",
     description:
-      "A physical, multi-server lab assembled from first principles: Proxmox, Docker, cross-architecture workloads, self-hosted CI, private AI, networking, security, storage and observability.",
+      "Seven physical servers assembled and connected over four-plus years: Proxmox, Docker, cross-architecture workloads, self-hosted CI, private AI, networking, security, storage and observability.",
     tools: ["Docker", "Linux", "PostgreSQL", "GPU"],
-    metric: "23 SYSTEMS",
+    metric: "7 SERVERS",
     app: "lab",
   },
   {
@@ -674,11 +674,19 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
         <h1>Samuel Zhang</h1>
         <p className="hero-role">People-powered generalist · AI · product · founder.</p>
         <p className="hero-copy">
-          I move between AI research, product decisions, engineering and conversations
-          with people. Chemistry taught me to design careful experiments; work across
-          SCDF, Pfizer, Marsh and COVERD taught me that useful systems are built with
-          trust, attention and the right tool—not whichever technology is loudest.
+          My first product was a clickable Visual Basic periodic table for the IB. Nobody
+          used it; building it was the revelation. Chemistry later taught me to design
+          honest experiments, while SCDF, Pfizer, Marsh and COVERD taught me that useful
+          systems depend on trust, attention and the right tool—not the loudest one.
         </p>
+        <nav className="identity-switchboard" aria-label="Samuel’s cabinet of curiosities">
+          <span>CABINET OF CURIOSITIES</span>
+          <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small /><b>Founder</b></button>
+          <button onClick={() => openApp("projects")}><PixelIcon kind="briefcase" small /><b>Product</b></button>
+          <button onClick={() => openApp("experience")}><PixelIcon kind="university" small /><b>Scientist</b></button>
+          <button onClick={() => openApp("lab")}><PixelIcon kind="network" small /><b>Builder</b></button>
+          <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small /><b>Musician</b></button>
+        </nav>
         <div className="impact-grid">
           <div><strong>1200%</strong><span>efficiency gain</span></div>
           <div><strong>120+</strong><span>hours saved / month</span></div>
@@ -704,17 +712,17 @@ function CoverdApp() {
     {
       code: "01",
       title: "Company Interview",
-      copy: "Starts with the team and its top performers—not the candidate—to learn how the role really works and what success looks like.",
+      copy: "Starts with the company—not the candidate—to learn how the role really works, what success looks like and which gaps matter.",
     },
     {
       code: "02",
-      title: "Role Knowledge",
-      copy: "Turns those conversations into structured company knowledge: success patterns, common pitfalls and the gaps the next hire should fill.",
+      title: "Belief Graph",
+      copy: "Turns role knowledge into a working model of what is known, what remains uncertain and which evidence would be most useful next.",
     },
     {
       code: "03",
-      title: "Candidate Interview",
-      copy: "Conducts natural, role-specific voice interviews for every candidate and asks targeted follow-up questions instead of reading a generic script.",
+      title: "Adaptive Voice Interview",
+      copy: "As the candidate answers, the model updates its beliefs and chooses increasingly useful follow-up questions instead of reading a fixed script.",
     },
     {
       code: "04",
@@ -724,14 +732,14 @@ function CoverdApp() {
     {
       code: "05",
       title: "Outcome Learning",
-      copy: "Connects hiring outcomes back to the role model so the system can improve while recruiters remain responsible for consequential decisions.",
+      copy: "Connects hiring outcomes back to the role model so the system can improve while recruiters remain responsible for every consequential decision.",
     },
   ];
 
   const pipeline = [
     ["01", "Interview the team", "Learn from managers and top performers before assessing anyone."],
-    ["02", "Model the role", "Capture success, pitfalls, team gaps and the language people actually use."],
-    ["03", "Talk to candidates", "Run natural voice interviews with role-specific follow-up questions."],
+    ["02", "Build the belief graph", "Represent what matters, what is known and where evidence is still missing."],
+    ["03", "Adapt the interview", "Ask the next useful question, update the graph, and repeat until the evidence is sufficient."],
     ["04", "Cite the evidence", "Return a reviewable evaluation linked to the candidate’s own answers."],
     ["05", "Decide & learn", "Recruiters make the call; outcomes sharpen future role understanding."],
   ];
@@ -749,13 +757,13 @@ function CoverdApp() {
           </div>
         </div>
         <div className="founder-note">
-          <span>FOUNDERS’ NOTE / SAM + AXEL</span>
+          <span>FOUNDER’S NOTE / SAM</span>
           <p>
-            We met during our Master’s at Imperial. Companies were stuck choosing
-            between shallow CV screening and expensive human interviews, while existing
-            AI interviewers still sounded generic because they did not understand how
-            the role actually worked. COVERD began with a different first question:
-            what if the interviewer learned from the company before meeting a candidate?
+            COVERD began on the candidate side, as an idea for tailoring CVs to job
+            descriptions. The more we explored it, the clearer the real problem became:
+            companies still struggled to distinguish meaningful evidence from polished
+            applications. We pivoted away from building another ATS and toward a focused
+            voice interview system that learns the company before questioning a candidate.
           </p>
         </div>
       </header>
@@ -767,18 +775,19 @@ function CoverdApp() {
         </div>
         <p>
           Generic interviews scale, but they miss the lived knowledge behind a role.
-          COVERD interviews the team and top performers first, turns those conversations
-          into company knowledge, then conducts natural candidate interviews with
-          targeted follow-ups and cited evaluations. The goal is not to replace recruiter
-          judgement; it is to give that judgement better context. Four design partners—
-          Imperial, Marsh and two startups—are helping shape the product.
+          COVERD interviews the company first and turns that context into a belief graph.
+          During each candidate interview, answers update the graph and determine which
+          question should come next. The experience should feel like an informed
+          interviewer pursuing useful evidence—not a bot reading a script. Four design
+          partners, including Imperial College London, are shaping the discovery and
+          prototype; the others remain undisclosed.
         </p>
       </section>
 
       <section className="coverd-numbers">
         <div><strong>4</strong><span>active design partners</span></div>
-        <div><strong>2</strong><span>founders from Imperial</span></div>
-        <div><strong>VOICE</strong><span>natural role-specific interviews</span></div>
+        <div><strong>5</strong><span>paying-customer milestone</span></div>
+        <div><strong>ADAPT</strong><span>belief-led interviews</span></div>
         <div><strong>CITED</strong><span>reviewable candidate evidence</span></div>
       </section>
 
@@ -822,13 +831,13 @@ function CoverdApp() {
         <div className="coverd-principles">
           <article><strong>Context comes first</strong><p>The system learns the real work, team and success criteria before interviewing candidates.</p></article>
           <article><strong>Every evaluation cites evidence</strong><p>Recruiters can trace an assessment back to what was asked and what the candidate said.</p></article>
-          <article><strong>Interviews should feel natural</strong><p>Role-specific follow-ups create a conversation, not an automated oral application form.</p></article>
+          <article><strong>Questions must earn their place</strong><p>Each follow-up should reduce a real uncertainty, not merely make an automated interview longer.</p></article>
           <article><strong>Uncertainty stays visible</strong><p>The product should surface missing evidence instead of turning every ambiguity into confidence.</p></article>
-          <article><strong>Outcomes improve understanding</strong><p>Learning is grounded in what happens after hiring, not merely what looked predictive in the past.</p></article>
+          <article><strong>Evidence beats elegance</strong><p>Three interview-agent architectures were tested with real users; results, not theoretical appeal, determined the direction.</p></article>
           <article><strong>Recruiters remain accountable</strong><p>AI carries repetition and context; people retain the judgement and responsibility.</p></article>
         </div>
         <div className="coverd-values">
-          {["ROLE-SPECIFIC", "EVIDENCE-LED", "NATURAL", "HUMAN-OWNED", "CANDIDATE-TRUSTED"].map((value) => <span key={value}>{value}</span>)}
+          {["ROLE-SPECIFIC", "EVIDENCE-LED", "ADAPTIVE", "HUMAN-OWNED", "CANDIDATE-TRUSTED"].map((value) => <span key={value}>{value}</span>)}
         </div>
       </section>
     </div>
@@ -987,13 +996,13 @@ function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
         <hr />
         <section>
           <h4>Profile</h4>
-          <p>A people-centred generalist who moves between AI research, product leadership, engineering and stakeholder conversations. Chemistry-trained experimental thinking and experience across SCDF, Pfizer, Marsh and COVERD shape an evidence-first approach: understand the problem, earn trust, test what works and help the people around the system thrive.</p>
+          <p>A people-centred generalist who moves between AI research, product leadership, engineering and stakeholder conversations. From an unused Visual Basic periodic table to enterprise products and adaptive AI interviews, the through-line is an evidence-first approach: understand the problem, earn trust, test what works and help the people around the system thrive.</p>
         </section>
         <section>
           <h4>Current</h4>
           <div>
             <p><strong>Marsh Risk — AI Intern, Data &amp; Machine Learning</strong><br /><em>May 2026—Present · London</em><br />Investigating how historical placement data and contract wording can support evidence-bounded decisions while preserving provenance, uncertainty and the limits of retrospective evidence.</p>
-            <p><strong>coverd.ai — Founder</strong><br /><em>Mar 2026—Present · London</em><br />Co-founding the AI interviewer that interviews the company first: learning role knowledge from teams and top performers before conducting natural candidate interviews with cited evaluations. Working with four design partners across Imperial, Marsh and two startups.</p>
+            <p><strong>coverd.ai — Founder</strong><br /><em>Mar 2026—Present · London</em><br />Building the AI interviewer that interviews the company first. The bootstrapped prototype uses a role-specific belief graph to select adaptive questions and produce cited evaluations; four design partners, including Imperial College London, are shaping discovery and testing.</p>
           </div>
         </section>
         <section>
@@ -1017,7 +1026,7 @@ function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
         <section>
           <h4>Research &amp; teaching</h4>
           <div>
-            <p><strong>KCL Coding Series — Tutor &amp; Curriculum Designer</strong><br />Designed 20+ sessions for 80+ students, achieved 90% satisfaction and secured Royal Society of Chemistry endorsement.</p>
+            <p><strong>KCL Coding Series — Tutor &amp; Curriculum Designer</strong><br />Designed 20+ sessions for 80+ students, achieved 90% satisfaction and secured Royal Society of Chemistry endorsement. One former student later earned an offer from Microsoft.</p>
             <p><strong>Royal Society Summer Fellowship</strong><br />Built GPU-accelerated GROMACS workflows with a 70% performance improvement for protein–membrane research.</p>
             <p><strong>King’s Undergraduate Research Fellowship</strong><br />Engineered MATLAB, Excel and Python spectroscopy pipelines that reduced analysis time by 40%.</p>
           </div>
@@ -1043,11 +1052,11 @@ function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
         </section>
         <section>
           <h4>Selected projects</h4>
-          <p><strong>Home Automation &amp; AI Infrastructure:</strong> 23 systems spanning Proxmox, Docker, 42 GB VRAM GPU compute, self-hosted CI, cross-architecture workloads, networking, security, backups and BLE environmental telemetry.<br /><br /><strong>Stock Market Simulation Engine:</strong> Julia/SQL order matching with real-time WebSocket order-book visualisation.</p>
+          <p><strong>Home Automation &amp; AI Infrastructure:</strong> Seven servers and 23 systems spanning Proxmox, Docker, 42 GB VRAM GPU compute, self-hosted CI, cross-architecture workloads, networking, security and a 96 TB raw / 72 TB usable backup array.<br /><br /><strong>Stock Market Simulation Engine:</strong> Julia/SQL order matching with real-time WebSocket order-book visualisation.</p>
         </section>
         <section>
           <h4>Creative life</h4>
-          <p>Competitive brass-band musician with a fourth-place UK university result; participant in three musical productions as a drummer, lead performer and supporting actor; and a former professional photographer who now photographs for the love of the craft.</p>
+          <p>Euphonium player with King’s College London Brass Band at UniBrass 2021 and 2022, including a fourth-place result; involved in <em>Thoroughly Modern Millie</em>, <em>Tombalek</em> and <em>Curtains</em> across performance and drums; and a former wedding photographer who now photographs for the love of the craft.</p>
         </section>
         <section>
           <h4>Awards</h4>
@@ -1220,7 +1229,7 @@ function createPuzzle(seed = 1991) {
 }
 
 const SAM_WORDS = [
-  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD combines specialist AI evaluation with auditable, human-owned hiring decisions." },
+  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD uses a role-specific belief graph to choose adaptive questions while keeping hiring decisions human-owned." },
   { answer: "PFIZER", clue: "Where GROWMAT began its enterprise life.", fact: "At Pfizer, Samuel’s systems delivered a 1200% efficiency gain and saved 120+ hours each month." },
   { answer: "PYTHON", clue: "A language threading through Samuel’s research, teaching and AI work.", fact: "Samuel has taught programming and data analysis to more than 80 students." },
   { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "Samuel’s work spans research, insurance, education and responsible AI across London." },
@@ -1576,7 +1585,7 @@ function SecretApp() {
       <h3>Welcome, power user.</h3>
       <p>You found the part of the portfolio that contributes nothing to conversion metrics.</p>
       <blockquote>“The best interface is one with at least one completely unnecessary secret.”</blockquote>
-      <small>Hint: the menu-bar memory and clock are not as serious as they look.</small>
+      <small>System note: OpenClaw did not, in fact, complete Samuel’s entire life. Results remain inconclusive.</small>
     </div>
   );
 }
@@ -1598,13 +1607,13 @@ function LabApp() {
     { group: "Network", code: "F2B", tone: "orange", name: "Fail2ban", host: "Intrusion response", description: "Watches service logs and automatically blocks repeated hostile requests." },
     { group: "Network", code: "RDP", tone: "violet", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
     { group: "Operations", code: "CT", tone: "blue", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
-    { group: "Operations", code: "CI", tone: "green", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs on Samuel’s own hardware, including the awkward work of coordinating different CPU architectures." },
+    { group: "Operations", code: "CI", tone: "green", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs across Samuel’s own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs." },
     { group: "Operations", code: "HP", tone: "navy", name: "Homepage", host: "Service directory", description: "The live control surface at homepage.samuelzhang.co.uk for links, status and metrics." },
     { group: "Operations", code: "JOB", tone: "orange", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
     { group: "Data", code: "SQL", tone: "blue", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
     { group: "Data", code: "CO2", tone: "green", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Collects CO₂, temperature, humidity and pressure over Bluetooth for live dashboards." },
     { group: "Data", code: "HA", tone: "amber", name: "Home Assistant", host: "Automation hub", description: "Connects sensors, energy data and smart-home devices into one event-driven system." },
-    { group: "Storage", code: "96", tone: "green", name: "UGREEN NAS", host: "96 TB storage", description: "High-capacity storage for media, datasets, backups and long-term archives." },
+    { group: "Storage", code: "72", tone: "green", name: "UGREEN NAS", host: "96 TB raw · 72 TB usable", description: "Six-bay RAID 5 storage for media, datasets and automated recovery after earlier failures made the value of backups unforgettable." },
     { group: "Storage", code: "NAS", tone: "grey", name: "Synology Cloud", host: "Files & photos", description: "Private file sync, photo management and resilient network storage." },
     { group: "Storage", code: "NC", tone: "blue", name: "Nextcloud", host: "Private cloud", description: "Self-hosted document access and synchronisation across personal devices." },
     { group: "Media", code: "JF", tone: "violet", name: "Jellyfin", host: "Home cinema", description: "A private media library and streaming service with live playback monitoring." },
@@ -1623,15 +1632,17 @@ function LabApp() {
       </header>
       <div className="lab-summary">
         <p>
-          Built before “vibe coding” made infrastructure feel approachable: physical
-          machines assembled by hand, Proxmox installed from scratch, and a daunting
-          climb through networking, port forwarding, security and cross-architecture
-          compatibility. It has grown into a private platform for AI, cloud storage,
-          media, automation, CI and experiments—monitored and backed up on a schedule.
+          Built over four-plus years, before “vibe coding” made infrastructure feel
+          approachable: seven servers ranging from hand-built machines to Raspberry Pis,
+          Proxmox installed from scratch, and a daunting climb through networking,
+          security and cross-architecture compatibility. One ill-fated attempt to host a
+          large file erased a database and its Compose configuration; the lab now has
+          monitored, scheduled backups and 72 TB of usable RAID storage.
         </p>
         <dl>
           <div><dt>GPU memory</dt><dd>42 GB</dd></div>
-          <div><dt>Largest NAS</dt><dd>96 TB</dd></div>
+          <div><dt>Server fleet</dt><dd>7</dd></div>
+          <div><dt>Backup storage</dt><dd>72 TB usable</dd></div>
           <div><dt>Running systems</dt><dd>{services.length}</dd></div>
         </dl>
       </div>
@@ -1659,12 +1670,14 @@ function LabApp() {
 function ScrapbookApp() {
   const interests = [
     ["Hiking & climbing", "A pair of boots, a windbreaker, and somewhere new."],
-    ["Photography", "After years working professionally, I stepped away from client work so I could photograph landscapes, food and people for the love of looking carefully."],
-    ["Brass band", "Competition matters to me: our band placed fourth among UK universities. The reward is the collective sound, not merely the result."],
-    ["Musical theatre", "Three productions as a drummer, lead performer and supporting actor. Months of singing, dancing and lines for ten electric seconds on stage."],
+    ["Photography", "Two years photographing weddings professionally; now the camera is for landscapes, food, people and the pleasure of looking carefully."],
+    ["Euphonium", "Played with King’s College London Brass Band at UniBrass in 2021 and 2022, including a fourth-place result."],
+    ["Musical theatre", "Thoroughly Modern Millie, the Singaporean Society’s original Tombalek, and Curtains—across performance and drums."],
     ["Multiculturalism", "Singapore, Shanghai, and London shape how I work."],
-    ["Teaching & people", "I am energised by rooms full of people—teaching, resolving difficult conversations and helping someone recognise their own strengths."],
+    ["Teaching & people", "I am energised by rooms full of people. One student I taught Python later earned an offer from Microsoft; their success remains one of my proudest outcomes."],
     ["Curiosity", "Science, systems, music, people and an unreasonable number of random facts. Being a generalist is the point."],
+    ["First software", "A clickable Visual Basic periodic table built for IB Chemistry. It found almost no users and revealed exactly how much I loved making software."],
+    ["Hardware catalogue", "Ask me for a processor part number and I may answer. A decade of architectures, prices and improbable component combinations lives rent-free in my head."],
   ];
   return (
     <div className="scrapbook-app">
