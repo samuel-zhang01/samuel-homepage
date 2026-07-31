@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s · Samuel Zhang",
   },
   description:
-    "The interactive portfolio of Samuel Zhang: applied AI researcher, product builder, founder of coverd.ai, and Imperial College London MSc student.",
+    "The interactive portfolio of Samuel Zhang: a people-centred generalist working across applied AI, product leadership, research and coverd.ai.",
   keywords: [
     "Samuel Zhang",
     "Artificial Intelligence",
@@ -47,14 +47,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Samuel System 7 — Samuel Zhang",
     description:
-      "Explore Samuel Zhang's work, experience, and projects through a classic Macintosh-inspired desktop.",
+      "Meet a people-centred generalist working across applied AI, product leadership, research and entrepreneurship—inside a classic Macintosh-inspired desktop.",
     type: "website",
     url: "https://me.samuelzhang.co.uk",
   },
   twitter: {
     card: "summary",
     title: "Samuel System 7 — Samuel Zhang",
-    description: "Applied AI researcher, product builder, and founder.",
+    description: "People-centred generalist, applied AI builder, product leader and founder.",
   },
 };
 

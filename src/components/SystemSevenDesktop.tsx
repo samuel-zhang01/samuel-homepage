@@ -249,11 +249,11 @@ const finderItems: Array<{
 }> = [
   { id: "coverd", name: "COVERD — Founder’s Desk", kind: "coverd", meta: "Flagship venture" },
   { id: "experience", name: "Experience", kind: "briefcase", meta: "7 roles" },
-  { id: "projects", name: "Selected Projects", kind: "folder", meta: "8 items" },
+  { id: "projects", name: "Selected Projects", kind: "folder", meta: "9 items" },
   { id: "skills", name: "Skills & Capabilities", kind: "controls", meta: "6 groups" },
   { id: "education", name: "Education & Awards", kind: "university", meta: "2 folders" },
   { id: "lab", name: "Home Lab Network", kind: "network", meta: "Online" },
-  { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "6 clippings" },
+  { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "7 clippings" },
   { id: "resume", name: "Résumé & Profile", kind: "document", meta: "In-browser profile" },
   { id: "documents", name: "CV & Papers", kind: "pdf", meta: "3 documents" },
   { id: "games", name: "Desk Arcade", kind: "game", meta: "4 games" },
@@ -266,7 +266,7 @@ const experience = [
     role: "AI Intern — Data & Machine Learning",
     company: "Marsh Risk",
     location: "London",
-    copy: "Researching and implementing AI approaches for insurance lead matching as a four-month Imperial MSc thesis project.",
+    copy: "Investigating how historical placement data and contract wording can support evidence-bounded decisions in the London insurance market—preserving provenance, uncertainty and the limits of what each source can prove.",
     tag: "CURRENT",
   },
   {
@@ -274,7 +274,7 @@ const experience = [
     role: "Founder",
     company: "coverd.ai",
     location: "London",
-    copy: "Leading product, AI and venture development for a recruitment intelligence layer that evaluates candidates consistently while keeping consequential decisions human.",
+    copy: "Building the AI interviewer that interviews the company first: learning what success looks like from teams and top performers, then conducting role-specific candidate conversations with cited evaluations.",
     tag: "FOUNDER",
   },
   {
@@ -290,7 +290,7 @@ const experience = [
     role: "Web Application Developer · Product Owner",
     company: "Pfizer",
     location: "London",
-    copy: "Owned the GROWMAT roadmap, translated leadership requirements into development priorities, and drove iterative product adoption.",
+    copy: "Owned GROWMAT from business discovery to adoption: connecting technical capability with real staff availability, choosing maintainable tools over fashionable ones, and earning stakeholder trust through a highly polished product.",
     tag: "PRODUCT",
   },
   {
@@ -349,9 +349,9 @@ const projects: Array<{
     year: "2026",
     category: "Responsible AI · Founder",
     description:
-      "A recruitment intelligence layer with specialist evaluation agents, living candidate profiles, voice interviews, bias testing, and auditable human decision-making.",
-    tools: ["Multi-agent AI", "Product", "AI Safety", "Founder"],
-    metric: "FLAGSHIP VENTURE",
+      "The AI interviewer that interviews the company first—turning conversations with teams and top performers into role knowledge for natural candidate interviews and cited evaluations.",
+    tools: ["Voice AI", "Product", "Evaluation", "Founder"],
+    metric: "4 DESIGN PARTNERS",
     app: "coverd",
   },
   {
@@ -359,7 +359,7 @@ const projects: Array<{
     year: "2023—26",
     category: "Enterprise Product · Pfizer",
     description:
-      "Resource management, forecasting, and analytics platform created for pharmaceutical Analytical R&D.",
+      "A resource, forecasting and analytics platform for pharmaceutical R&D, shaped through deep operational discovery and trust-building—not technology for technology’s sake.",
     tools: ["Next.js", "Julia", "PostgreSQL", "Docker"],
     metric: "1200% FASTER",
     app: "documents",
@@ -369,9 +369,9 @@ const projects: Array<{
     year: "2026",
     category: "MSc Thesis · Marsh",
     description:
-      "AI research and implementation exploring more effective matching between insurance opportunities and expertise.",
-    tools: ["Machine Learning", "Research", "Responsible AI"],
-    metric: "MSc THESIS",
+      "Research testing how historical placement data and contract wording can support decision-making without overstating what retrospective evidence can prove.",
+    tools: ["Ranking", "Document AI", "Evaluation", "Governance"],
+    metric: "EVIDENCE-BOUNDED AI",
     app: "resume",
   },
   {
@@ -409,9 +409,9 @@ const projects: Array<{
     year: "ONGOING",
     category: "Self-hosting · Systems",
     description:
-      "A multi-server Docker environment with GPU inference, environmental telemetry, private cloud storage, automated recovery, remote access, and observability.",
+      "A physical, multi-server lab assembled from first principles: Proxmox, Docker, cross-architecture workloads, self-hosted CI, private AI, networking, security, storage and observability.",
     tools: ["Docker", "Linux", "PostgreSQL", "GPU"],
-    metric: "17+ SERVICES",
+    metric: "23 SYSTEMS",
     app: "lab",
   },
   {
@@ -444,7 +444,7 @@ const skillGroups = [
   {
     title: "Product & Entrepreneurship",
     level: 93,
-    items: ["Product ownership", "Venture building", "Stakeholder discovery", "Agile delivery"],
+    items: ["Product ownership", "Design partnerships", "Stakeholder trust", "Evidence over hype"],
   },
   {
     title: "Data & Engineering",
@@ -464,7 +464,7 @@ const skillGroups = [
   {
     title: "Human Skills",
     level: 94,
-    items: ["Leadership", "Teaching", "Communication", "Cross-cultural teams"],
+    items: ["People leadership", "Conflict resolution", "Teaching & mentoring", "Cross-cultural teams"],
   },
 ];
 
@@ -666,17 +666,18 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
           <div><dt>Location</dt><dd>London, UK</dd></div>
           <div><dt>Current</dt><dd>Marsh Risk</dd></div>
           <div><dt>Venture</dt><dd>coverd.ai</dd></div>
-          <div><dt>Education</dt><dd>Imperial</dd></div>
+          <div><dt>Direction</dt><dd>Product leadership</dd></div>
         </dl>
       </div>
       <div className="about-main">
         <div className="eyebrow">ABOUT THIS MACINTOSH</div>
         <h1>Samuel Zhang</h1>
-        <p className="hero-role">AI researcher, product builder &amp; founder of coverd.ai.</p>
+        <p className="hero-role">People-powered generalist · AI · product · founder.</p>
         <p className="hero-copy">
-          Imperial College MSc student specialising in applied AI and machine learning.
-          I build responsible, useful systems—from enterprise analytics at Pfizer to
-          human-centred recruitment intelligence at coverd.ai.
+          I move between AI research, product decisions, engineering and conversations
+          with people. Chemistry taught me to design careful experiments; work across
+          SCDF, Pfizer, Marsh and COVERD taught me that useful systems are built with
+          trust, attention and the right tool—not whichever technology is loudest.
         </p>
         <div className="impact-grid">
           <div><strong>1200%</strong><span>efficiency gain</span></div>
@@ -684,8 +685,8 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
           <div><strong>99.9%</strong><span>system uptime</span></div>
         </div>
         <blockquote>
-          “Translate difficult business and scientific problems into systems people
-          can understand, trust, and use.”
+          “A people-centred generalist: technically curious, attentive in a room, and
+          happiest when helping other people do their best work.”
         </blockquote>
         <div className="button-row">
           <button className="mac-button is-default" onClick={() => openApp("coverd")}>Explore COVERD</button>
@@ -702,37 +703,37 @@ function CoverdApp() {
   const products = [
     {
       code: "01",
-      title: "Intelligence Layer",
-      copy: "Connects to an existing ATS and uses multiple specialist agents to review each applicant across cultural and technical dimensions.",
+      title: "Company Interview",
+      copy: "Starts with the team and its top performers—not the candidate—to learn how the role really works and what success looks like.",
     },
     {
       code: "02",
-      title: "Living Profiles",
-      copy: "Evidence, strengths, gaps, confidence and interview signals accumulate into a profile that sharpens throughout the process.",
+      title: "Role Knowledge",
+      copy: "Turns those conversations into structured company knowledge: success patterns, common pitfalls and the gaps the next hire should fill.",
     },
     {
       code: "03",
-      title: "COVERD-VOX",
-      copy: "A voice agent follows up on what a CV cannot explain, then returns structured evidence and interview context to the recruiter.",
+      title: "Candidate Interview",
+      copy: "Conducts natural, role-specific voice interviews for every candidate and asks targeted follow-up questions instead of reading a generic script.",
     },
     {
       code: "04",
-      title: "Candidate Compass",
-      copy: "Maps the whole pipeline visually so teams can distinguish strong matches, mixed signals and candidates requiring review.",
+      title: "Cited Evaluation",
+      copy: "Gives recruiters a structured evaluation grounded in what the candidate actually said, with evidence they can inspect rather than a mysterious score.",
     },
     {
       code: "05",
-      title: "COVERD-ATS",
-      copy: "A complete recruiting platform for teams without an ATS, with the evaluation agents embedded from the beginning.",
+      title: "Outcome Learning",
+      copy: "Connects hiring outcomes back to the role model so the system can improve while recruiters remain responsible for consequential decisions.",
     },
   ];
 
   const pipeline = [
-    ["01", "Role brief", "Requirements, context and weighting enter the system."],
-    ["02", "Agent review", "Specialists assess evidence in parallel across six dimensions."],
-    ["03", "Living profile", "Scores are paired with reasons, strengths, gaps and confidence."],
-    ["04", "VOX interview", "Open questions become targeted candidate conversations."],
-    ["05", "Human decision", "Uncertain cases defer with context; the recruiter makes the call."],
+    ["01", "Interview the team", "Learn from managers and top performers before assessing anyone."],
+    ["02", "Model the role", "Capture success, pitfalls, team gaps and the language people actually use."],
+    ["03", "Talk to candidates", "Run natural voice interviews with role-specific follow-up questions."],
+    ["04", "Cite the evidence", "Return a reviewable evaluation linked to the candidate’s own answers."],
+    ["05", "Decide & learn", "Recruiters make the call; outcomes sharpen future role understanding."],
   ];
 
   return (
@@ -741,18 +742,20 @@ function CoverdApp() {
         <div className="coverd-brand">
           <span className="coverd-kicker">BUILT AT IMPERIAL COLLEGE LONDON</span>
           <h3>COVERD<span>.</span></h3>
-          <p>Recruitment intelligence that makes high-volume hiring faster, fairer and more defensible.</p>
+          <p>The AI interviewer that interviews the company first.</p>
           <div className="coverd-actions">
             <a className="coverd-link" href="#coverd-products">Explore the product ↓</a>
             <span>FOUNDED 2026 · LONDON</span>
           </div>
         </div>
         <div className="founder-note">
-          <span>FOUNDER’S NOTE / SZ</span>
+          <span>FOUNDERS’ NOTE / SAM + AXEL</span>
           <p>
-            The CV dates to 1482. In the LLM era, applications can become polished in
-            exactly the same way—more volume, less signal. COVERD is my attempt to build
-            a better interface between people and opportunity.
+            We met during our Master’s at Imperial. Companies were stuck choosing
+            between shallow CV screening and expensive human interviews, while existing
+            AI interviewers still sounded generic because they did not understand how
+            the role actually worked. COVERD began with a different first question:
+            what if the interviewer learned from the company before meeting a candidate?
           </p>
         </div>
       </header>
@@ -760,27 +763,29 @@ function CoverdApp() {
       <section className="coverd-thesis">
         <div>
           <span className="eyebrow">THE THESIS</span>
-          <h4>AI should carry the volume.<br />Humans should carry the judgement.</h4>
+          <h4>Understand the company.<br />Then interview the candidate.</h4>
         </div>
         <p>
-          COVERD sits above the applicant tracking system as an intelligence layer.
-          It evaluates every candidate consistently, creates evidence-backed briefs,
-          identifies questions worth asking, and gives recruiters back the time needed
-          for interviews, relationships and difficult decisions.
+          Generic interviews scale, but they miss the lived knowledge behind a role.
+          COVERD interviews the team and top performers first, turns those conversations
+          into company knowledge, then conducts natural candidate interviews with
+          targeted follow-ups and cited evaluations. The goal is not to replace recruiter
+          judgement; it is to give that judgement better context. Four design partners—
+          Imperial, Marsh and two startups—are helping shape the product.
         </p>
       </section>
 
       <section className="coverd-numbers">
-        <div><strong>6</strong><span>evaluation dimensions</span></div>
-        <div><strong>50—5K</strong><span>applications per role</span></div>
-        <div><strong>&lt;3</strong><span>point fairness variance target</span></div>
-        <div><strong>100%</strong><span>human final decision</span></div>
+        <div><strong>4</strong><span>active design partners</span></div>
+        <div><strong>2</strong><span>founders from Imperial</span></div>
+        <div><strong>VOICE</strong><span>natural role-specific interviews</span></div>
+        <div><strong>CITED</strong><span>reviewable candidate evidence</span></div>
       </section>
 
       <section className="coverd-section" id="coverd-products">
         <div className="coverd-section__heading">
           <span>PRODUCT SYSTEM</span>
-          <h4>A recruiting suite, not another keyword matcher.</h4>
+          <h4>Company context before candidate judgement.</h4>
         </div>
         <div className="coverd-product-grid">
           {products.map((product) => (
@@ -796,7 +801,7 @@ function CoverdApp() {
       <section className="coverd-section coverd-section--pipeline">
         <div className="coverd-section__heading">
           <span>OPERATING MODEL</span>
-          <h4>From role brief to a defensible shortlist.</h4>
+          <h4>From organisational knowledge to a better interview.</h4>
         </div>
         <div className="coverd-pipeline">
           {pipeline.map(([number, title, copy]) => (
@@ -811,19 +816,19 @@ function CoverdApp() {
       <section className="coverd-ethics">
         <div className="coverd-ethics__intro">
           <span className="eyebrow">RESPONSIBLE BY DESIGN</span>
-          <h4>Fair hiring that can be inspected.</h4>
-          <p>Transparency is a product feature, not a policy document hidden in the footer.</p>
+          <h4>Hiring intelligence people can inspect.</h4>
+          <p>Trust comes from evidence, appropriate uncertainty and a recognisably human conversation.</p>
         </div>
         <div className="coverd-principles">
-          <article><strong>Candidates have agency</strong><p>People can view evaluations, request corrections and withdraw consent.</p></article>
-          <article><strong>Every score has evidence</strong><p>Recommendations include reasons, confidence, strengths, gaps and an audit trail.</p></article>
-          <article><strong>Bias is tested continuously</strong><p>Blind review, name-variation and education-prestige tests challenge every cycle.</p></article>
-          <article><strong>Uncertainty defers</strong><p>Edge cases are surfaced with context instead of being quietly rejected by a model.</p></article>
-          <article><strong>Candidate data stays private</strong><p>Product policy excludes candidate data from model training; outcome learning is aggregated and anonymised.</p></article>
-          <article><strong>Recruiters remain accountable</strong><p>Weights can be inspected, recommendations overridden and every final decision kept human.</p></article>
+          <article><strong>Context comes first</strong><p>The system learns the real work, team and success criteria before interviewing candidates.</p></article>
+          <article><strong>Every evaluation cites evidence</strong><p>Recruiters can trace an assessment back to what was asked and what the candidate said.</p></article>
+          <article><strong>Interviews should feel natural</strong><p>Role-specific follow-ups create a conversation, not an automated oral application form.</p></article>
+          <article><strong>Uncertainty stays visible</strong><p>The product should surface missing evidence instead of turning every ambiguity into confidence.</p></article>
+          <article><strong>Outcomes improve understanding</strong><p>Learning is grounded in what happens after hiring, not merely what looked predictive in the past.</p></article>
+          <article><strong>Recruiters remain accountable</strong><p>AI carries repetition and context; people retain the judgement and responsibility.</p></article>
         </div>
         <div className="coverd-values">
-          {["TRANSPARENT", "AUDITABLE", "FAIR", "PRIVATE", "CANDIDATE-FIRST"].map((value) => <span key={value}>{value}</span>)}
+          {["ROLE-SPECIFIC", "EVIDENCE-LED", "NATURAL", "HUMAN-OWNED", "CANDIDATE-TRUSTED"].map((value) => <span key={value}>{value}</span>)}
         </div>
       </section>
     </div>
@@ -978,17 +983,17 @@ function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
     <div className="resume-app">
       <div className="simpletext-toolbar"><span>Times</span><span>11 pt</span><span>A4</span><button onClick={() => openApp("documents")}>Preview original PDF</button></div>
       <article className="resume-paper">
-        <header><div><h3>Samuel Zhang</h3><p>Applied AI · Product · Founder of coverd.ai</p></div><address>London, United Kingdom<br />sam.xiaojian.zhang@outlook.com<br />linkedin.com/in/samuel-xj-zhang</address></header>
+        <header><div><h3>Samuel Zhang</h3><p>People-centred generalist · Applied AI · Product · Founder</p></div><address>London, United Kingdom<br />sam.xiaojian.zhang@outlook.com<br />linkedin.com/in/samuel-xj-zhang</address></header>
         <hr />
         <section>
           <h4>Profile</h4>
-          <p>Imperial College MSc student specialising in AI applications and innovation. Created enterprise data products at Pfizer with a 1200% efficiency gain, predictive systems for emergency services, scientific ML tools and full-stack applications. Combines technical delivery with product ownership, research and venture building.</p>
+          <p>A people-centred generalist who moves between AI research, product leadership, engineering and stakeholder conversations. Chemistry-trained experimental thinking and experience across SCDF, Pfizer, Marsh and COVERD shape an evidence-first approach: understand the problem, earn trust, test what works and help the people around the system thrive.</p>
         </section>
         <section>
           <h4>Current</h4>
           <div>
-            <p><strong>Marsh Risk — AI Intern, Data &amp; Machine Learning</strong><br /><em>May 2026—Present · London</em><br />Researching and implementing AI for insurance lead matching through an Imperial MSc thesis.</p>
-            <p><strong>coverd.ai — Founder</strong><br /><em>Mar 2026—Present · London</em><br />Leading a responsible recruitment intelligence product spanning multi-agent evaluation, candidate profiles, voice interviews, fairness testing and human-in-the-loop decisions.</p>
+            <p><strong>Marsh Risk — AI Intern, Data &amp; Machine Learning</strong><br /><em>May 2026—Present · London</em><br />Investigating how historical placement data and contract wording can support evidence-bounded decisions while preserving provenance, uncertainty and the limits of retrospective evidence.</p>
+            <p><strong>coverd.ai — Founder</strong><br /><em>Mar 2026—Present · London</em><br />Co-founding the AI interviewer that interviews the company first: learning role knowledge from teams and top performers before conducting natural candidate interviews with cited evaluations. Working with four design partners across Imperial, Marsh and two startups.</p>
           </div>
         </section>
         <section>
@@ -997,6 +1002,7 @@ function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
             <p><strong>Product Owner &amp; Web Application Developer</strong><br /><em>Oct 2024—Apr 2026</em></p>
             <ul>
               <li>Led GROWMAT from user research and senior-director pitch through roadmap, agile delivery, deployment and department-wide adoption.</li>
+              <li>Connected technical capability with operational availability, chose maintainable tools over fashionable ones and built stakeholder trust through a polished, dependable product.</li>
               <li>Improved scheduling efficiency by 1200%, saving 120+ person-hours monthly across 40+ analysts.</li>
               <li>Created continuous analytics for project timelines, compliance, performance and workload modelling with 99.9% uptime and an 80% performance improvement.</li>
               <li>Produced API specifications, user manuals and video training for long-term maintainability.</li>
@@ -1037,7 +1043,11 @@ function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
         </section>
         <section>
           <h4>Selected projects</h4>
-          <p><strong>Home Automation &amp; AI Infrastructure:</strong> 17+ containerised services, 42 GB VRAM GPU compute, automated backups and BLE environmental telemetry.<br /><br /><strong>Stock Market Simulation Engine:</strong> Julia/SQL order matching with real-time WebSocket order-book visualisation.</p>
+          <p><strong>Home Automation &amp; AI Infrastructure:</strong> 23 systems spanning Proxmox, Docker, 42 GB VRAM GPU compute, self-hosted CI, cross-architecture workloads, networking, security, backups and BLE environmental telemetry.<br /><br /><strong>Stock Market Simulation Engine:</strong> Julia/SQL order matching with real-time WebSocket order-book visualisation.</p>
+        </section>
+        <section>
+          <h4>Creative life</h4>
+          <p>Competitive brass-band musician with a fourth-place UK university result; participant in three musical productions as a drummer, lead performer and supporting actor; and a former professional photographer who now photographs for the love of the craft.</p>
         </section>
         <section>
           <h4>Awards</h4>
@@ -1588,6 +1598,7 @@ function LabApp() {
     { group: "Network", code: "F2B", tone: "orange", name: "Fail2ban", host: "Intrusion response", description: "Watches service logs and automatically blocks repeated hostile requests." },
     { group: "Network", code: "RDP", tone: "violet", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
     { group: "Operations", code: "CT", tone: "blue", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
+    { group: "Operations", code: "CI", tone: "green", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs on Samuel’s own hardware, including the awkward work of coordinating different CPU architectures." },
     { group: "Operations", code: "HP", tone: "navy", name: "Homepage", host: "Service directory", description: "The live control surface at homepage.samuelzhang.co.uk for links, status and metrics." },
     { group: "Operations", code: "JOB", tone: "orange", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
     { group: "Data", code: "SQL", tone: "blue", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
@@ -1612,14 +1623,16 @@ function LabApp() {
       </header>
       <div className="lab-summary">
         <p>
-          A multi-server environment for AI, private cloud, media, automation and
-          experimentation—containerised, monitored, remotely accessible and backed up
-          on a schedule.
+          Built before “vibe coding” made infrastructure feel approachable: physical
+          machines assembled by hand, Proxmox installed from scratch, and a daunting
+          climb through networking, port forwarding, security and cross-architecture
+          compatibility. It has grown into a private platform for AI, cloud storage,
+          media, automation, CI and experiments—monitored and backed up on a schedule.
         </p>
         <dl>
           <div><dt>GPU memory</dt><dd>42 GB</dd></div>
           <div><dt>Largest NAS</dt><dd>96 TB</dd></div>
-          <div><dt>Core platform</dt><dd>Docker</dd></div>
+          <div><dt>Running systems</dt><dd>{services.length}</dd></div>
         </dl>
       </div>
       <div className="lab-filters" aria-label="Filter infrastructure">
@@ -1646,15 +1659,16 @@ function LabApp() {
 function ScrapbookApp() {
   const interests = [
     ["Hiking & climbing", "A pair of boots, a windbreaker, and somewhere new."],
-    ["Photography", "Eight years of landscape and food photography; looking carefully is the point."],
-    ["Music", "KCL Brass Band and enthusiastic UniBrass supporter."],
+    ["Photography", "After years working professionally, I stepped away from client work so I could photograph landscapes, food and people for the love of looking carefully."],
+    ["Brass band", "Competition matters to me: our band placed fourth among UK universities. The reward is the collective sound, not merely the result."],
+    ["Musical theatre", "Three productions as a drummer, lead performer and supporting actor. Months of singing, dancing and lines for ten electric seconds on stage."],
     ["Multiculturalism", "Singapore, Shanghai, and London shape how I work."],
-    ["Teaching", "Helping people discover confidence in technical subjects."],
-    ["Curiosity", "Science, systems, people, and the useful spaces between them."],
+    ["Teaching & people", "I am energised by rooms full of people—teaching, resolving difficult conversations and helping someone recognise their own strengths."],
+    ["Curiosity", "Science, systems, music, people and an unreasonable number of random facts. Being a generalist is the point."],
   ];
   return (
     <div className="scrapbook-app">
-      <header className="document-header"><div><span className="eyebrow">SCRAPBOOK</span><h3>Things outside the office.</h3></div><PixelIcon kind="photos" /></header>
+      <header className="document-header"><div><span className="eyebrow">INTERESTS &amp; NOTES</span><h3>The creative life behind the technical work.</h3></div><PixelIcon kind="photos" /></header>
       <div className="scrap-grid">
         {interests.map(([title, copy], index) => (
           <article key={title} className={`scrap-note scrap-note--${(index % 3) + 1}`}><span>{index + 1}</span><h4>{title}</h4><p>{copy}</p></article>

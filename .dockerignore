@@ -64,3 +64,6 @@ coverage/
 # Temporary files
 .tmp/
 temp/
+
+# Confidential local reference
+main (13).pdf
