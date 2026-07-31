@@ -50,6 +50,18 @@ type IconKind =
   | "pdf"
   | "secret";
 
+const BOOT_DURATION = 5600;
+const BOOT_MESSAGES = [
+  "Buying the last Apple computer on eBay…",
+  "RAM prices too high — caching to paper instead…",
+  "Asking Docker to please stay contained…",
+  "Polishing one-bit icons by hand…",
+  "Loading responsible AI responsibly…",
+  "Finding Samuel somewhere between London and the home lab…",
+  "Rewinding the startup chime…",
+  "Almost ready. Pretending this took serious computing power…",
+] as const;
+
 const INITIAL_WINDOWS: WindowState[] = [
   {
     id: "about",
@@ -1653,6 +1665,7 @@ export default function SystemSevenDesktop({
   const [selectedIcon, setSelectedIcon] = useState<AppId | null>(null);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [booting, setBooting] = useState(!skipBoot);
+  const [bootMessageIndex, setBootMessageIndex] = useState(0);
   const [clock, setClock] = useState("--:--");
   const [pattern, setPattern] = useState<"classic" | "blue">("classic");
   const [memoryMagic, setMemoryMagic] = useState(false);
@@ -1663,10 +1676,21 @@ export default function SystemSevenDesktop({
   const toastTimer = useRef<number | null>(null);
 
   useEffect(() => {
+    if (!booting) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const timer = window.setTimeout(() => setBooting(false), reduceMotion ? 120 : 1350);
-    return () => window.clearTimeout(timer);
-  }, []);
+    setBootMessageIndex(0);
+    const finishTimer = window.setTimeout(() => setBooting(false), reduceMotion ? 700 : BOOT_DURATION);
+    const messageTimer = reduceMotion
+      ? null
+      : window.setInterval(
+          () => setBootMessageIndex((current) => Math.min(current + 1, BOOT_MESSAGES.length - 1)),
+          BOOT_DURATION / BOOT_MESSAGES.length,
+        );
+    return () => {
+      window.clearTimeout(finishTimer);
+      if (messageTimer) window.clearInterval(messageTimer);
+    };
+  }, [booting]);
 
   useEffect(() => {
     const updateClock = () => setClock(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
@@ -1759,7 +1783,6 @@ export default function SystemSevenDesktop({
     setMemoryMagic(false);
     setToast(null);
     setBooting(true);
-    window.setTimeout(() => setBooting(false), 1200);
   };
 
   const dismissMobileGuide = () => {
@@ -1804,8 +1827,9 @@ export default function SystemSevenDesktop({
       <main className="boot-screen" onClick={() => setBooting(false)}>
         <div className="boot-computer"><div className="boot-face">:)</div><span /></div>
         <h1>Welcome to Samuel System 7</h1>
+        <p className="boot-status" key={bootMessageIndex}>{BOOT_MESSAGES[bootMessageIndex]}</p>
         <div className="boot-progress"><span /></div>
-        <button>Click to start</button>
+        <button>Click anywhere to skip startup</button>
       </main>
     );
   }
