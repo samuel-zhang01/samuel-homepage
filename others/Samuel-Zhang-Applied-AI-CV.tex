@@ -1,6 +1,7 @@
 \documentclass[10pt,a4paper]{article}
 
 % A focused, ATS-readable CV for applied AI, ML engineering and AI product roles.
+% Compile with: latexmk -pdf -interaction=nonstopmode Samuel-Zhang-Applied-AI-CV.tex
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[margin=1.35cm]{geometry}
@@ -61,7 +62,7 @@
 \end{center}
 
 \section{Profile}
-Applied AI builder and product owner completing an MSc in AI Applications and Innovation at Imperial College London. Combines machine-learning research, experimental design and production engineering with the stakeholder work needed to turn ambiguous problems into trusted products. Built enterprise software at Pfizer with measurable operational impact, develops evidence-bounded AI for insurance, and founded COVERD to create adaptive, human-owned recruitment interviews.
+Applied AI builder, founder and product owner completing an MSc in AI Applications and Innovation at Imperial College London. Combines machine-learning research, experimental design and production engineering with the stakeholder work needed to turn ambiguous problems into trusted products. Currently develops evidence-bounded decision support for insurance at Marsh and leads COVERD, a company-first voice-interview product; previously delivered enterprise software at Pfizer with measurable operational impact.
 
 \section{Core Expertise}
 \textbf{AI/ML:} PyTorch, TensorFlow, scikit-learn, LLM systems, ranking and evaluation, document processing, computer vision, statistical modelling, experiment design
@@ -72,19 +73,21 @@ Applied AI builder and product owner completing an MSc in AI Applications and In
 
 \section{Selected Experience}
 
-\role{Marsh Risk}{AI Intern -- Data \& Machine Learning}{May 2026 -- Present}{London, United Kingdom}
+\role{Marsh Risk}{AI Intern -- Applied AI \& Machine Learning}{May 2026 -- Present}{London, United Kingdom}
 \begin{itemize}
-  \item Investigating how historical placement data and contract wording can support better-informed decisions in the London insurance market without treating historical patterns as present-day truth.
-  \item Building and stress-testing ranking, document-processing and contract-review prototypes with temporal evaluation, explicit provenance and visible uncertainty.
-  \item Translating research findings into bounded decision support: separating evidence sources, documenting limitations and identifying when a system should abstain rather than overstate confidence.
+  \item Building a lead-matching decision-support engine that brings together historical placement patterns, quantitative attributes and legal-document evidence for the London insurance market.
+  \item Reframed the target from predicting the ``best'' lead to testing what retrospective records can legitimately recover, recognising that an observed outcome does not prove suitability, appetite or causality.
+  \item Designing ranking, document-processing and contract-review prototypes with time-aware evaluation, explicit provenance, strong baselines and visible uncertainty.
+  \item Turned data-quality and availability constraints into product controls: separated evidence types, documented limitations and defined when the system should abstain instead of manufacturing confidence.
 \end{itemize}
 
-\role{coverd.ai}{Founder}{Mar 2026 -- Present}{London, United Kingdom}
+\role{coverd.ai}{Founder \& Product Lead}{Mar 2026 -- Present}{London, United Kingdom}
 \begin{itemize}
-  \item Building ``the AI interviewer that interviews the company first'': team interviews capture role knowledge before candidates are assessed, including success criteria, common pitfalls and capability gaps.
-  \item Designed a role-specific belief graph that updates as evidence arrives, selects the next useful voice-interview question and returns recruiter-reviewable evaluations cited to candidate answers.
-  \item Tested three interview-agent architectures with users and used comparative evidence to choose the product direction; developing the bootstrapped prototype with four design partners, including Imperial College London.
-  \item Keeping consequential hiring decisions human-owned by surfacing missing evidence and uncertainty instead of reducing candidates to an opaque score.
+  \item Led discovery from an initial candidate-side CV tool to ``the AI interviewer that interviews the company first'', after research showed that generic screening misses the lived knowledge behind a role.
+  \item Interviews teams and top performers to capture success criteria, common pitfalls and capability gaps before a candidate is assessed, turning that context into a role-specific belief graph.
+  \item Designed adaptive voice interviews that update the graph as evidence arrives, select the next useful question and return recruiter-reviewable evaluations cited to candidate answers.
+  \item Tested three interview-agent architectures with real users and used comparative evidence to choose the product direction; building the bootstrapped prototype with four design partners, including Imperial College London.
+  \item Keeps consequential hiring decisions human-owned by exposing missing evidence and uncertainty rather than reducing candidates to an opaque score.
 \end{itemize}
 
 \role{Pfizer, Analytical R\&D}{Web Application Developer \& Product Owner}{Oct 2024 -- Apr 2026}{London, United Kingdom}

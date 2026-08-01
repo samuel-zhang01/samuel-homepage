@@ -42,3 +42,13 @@ next-env.d.ts
 
 # Confidential MSc dissertation (local reference only)
 /main (13).pdf
+
+# Local LaTeX build products (the published CV lives in /public)
+/others/*.aux
+/others/*.fdb_latexmk
+/others/*.fls
+/others/*.log
+/others/*.out
+/others/*.synctex.gz
+/others/CVtemplateAI.pdf
+/others/Samuel-Zhang-Applied-AI-CV.pdf

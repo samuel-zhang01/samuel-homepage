@@ -263,10 +263,10 @@ const finderItems: Array<{
 const experience = [
   {
     period: "May 2026 — Present",
-    role: "AI Intern — Data & Machine Learning",
+    role: "AI Intern — Applied AI & Machine Learning",
     company: "Marsh Risk",
     location: "London",
-    copy: "Investigating how historical placement data and contract wording can support evidence-bounded decisions in the London insurance market—preserving provenance, uncertainty and the limits of what each source can prove.",
+    copy: "Building lead-matching decision support from historical placement patterns, quantitative attributes and legal-document evidence—using time-aware evaluation, strong baselines and explicit abstention when the data cannot support a claim.",
     tag: "CURRENT",
   },
   {
@@ -274,7 +274,7 @@ const experience = [
     role: "Founder",
     company: "coverd.ai",
     location: "London",
-    copy: "Building the AI interviewer that interviews the company first: an adaptive system that updates a role-specific belief graph as evidence arrives, then chooses the next useful question.",
+    copy: "Led the pivot from candidate-side CV tooling to the AI interviewer that interviews the company first: a human-owned voice system that updates a role-specific belief graph, asks the next useful question and cites the evidence it finds.",
     tag: "FOUNDER",
   },
   {
@@ -455,6 +455,21 @@ const skillGroups = [
 ];
 
 function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean }) {
+  if (kind === "coverd") {
+    return (
+      <span className={`pixel-icon pixel-icon--coverd${small ? " pixel-icon--small" : ""}`} aria-hidden="true">
+        <span className="coverd-icon-plate">
+          <Image
+            src="/coverd-logo-black-on-transparent.png"
+            alt=""
+            fill
+            sizes={small ? "18px" : "34px"}
+          />
+        </span>
+      </span>
+    );
+  }
+
   const common = {
     fill: "none",
     stroke: "#111",
@@ -463,19 +478,12 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
     strokeLinejoin: "miter" as const,
   };
 
-  const artwork: Record<IconKind, React.ReactNode> = {
+  const artwork: Record<Exclude<IconKind, "coverd">, React.ReactNode> = {
     profile: (
       <g {...common}>
         <circle cx="24" cy="14" r="8" fill="#f2ca59" />
         <path d="M8 44v-5c0-10 6-16 16-16s16 6 16 16v5z" fill="#d7d7d1" />
         <path d="M15 40h18" stroke="#11177a" strokeWidth="2" />
-      </g>
-    ),
-    coverd: (
-      <g strokeLinecap="square" strokeLinejoin="miter">
-        <rect x="4" y="5" width="40" height="38" fill="#111" stroke="#111" strokeWidth="3" />
-        <path d="M34 16c-2-3-5-5-9-5-8 0-13 6-13 13s5 13 13 13c4 0 7-2 9-5" fill="none" stroke="#fff" strokeWidth="5" />
-        <rect x="36" y="34" width="4" height="4" fill="#db2f3d" />
       </g>
     ),
     computer: (
@@ -755,7 +763,17 @@ function CoverdApp() {
       <header className="coverd-hero">
         <div className="coverd-brand">
           <span className="coverd-kicker">BUILT AT IMPERIAL COLLEGE LONDON</span>
-          <h3>COVERD<span>.</span></h3>
+          <div className="coverd-wordmark">
+            <Image
+              src="/coverd-logo-black-on-transparent.png"
+              alt=""
+              width={58}
+              height={58}
+              sizes="(max-width: 720px) 42px, 58px"
+              priority
+            />
+            <h3>COVERD<span>.</span></h3>
+          </div>
           <p>The AI interviewer that interviews the company first.</p>
           <div className="coverd-actions">
             <a className="coverd-link" href="#coverd-products">Explore the product ↓</a>
@@ -1004,8 +1022,8 @@ function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
         <section>
           <h4>Current</h4>
           <div>
-            <p><strong>Marsh Risk — AI Intern, Data &amp; Machine Learning</strong><br /><em>May 2026—Present · London</em><br />Investigating how historical placement data and contract wording can support evidence-bounded decisions while preserving provenance, uncertainty and the limits of retrospective evidence.</p>
-            <p><strong>coverd.ai — Founder</strong><br /><em>Mar 2026—Present · London</em><br />Building the AI interviewer that interviews the company first. The bootstrapped prototype uses a role-specific belief graph to select adaptive questions and produce cited evaluations; four design partners, including Imperial College London, are shaping discovery and testing.</p>
+            <p><strong>Marsh Risk — AI Intern, Applied AI &amp; Machine Learning</strong><br /><em>May 2026—Present · London</em><br />Building lead-matching decision support from historical placement patterns, quantitative attributes and legal-document evidence. The research uses time-aware evaluation, strong baselines, provenance and explicit abstention rather than treating a historical outcome as proof of suitability.</p>
+            <p><strong>coverd.ai — Founder &amp; Product Lead</strong><br /><em>Mar 2026—Present · London</em><br />Led the pivot from candidate-side CV tooling to the AI interviewer that interviews the company first. Team interviews create a role-specific belief graph; adaptive voice interviews pursue missing evidence and return cited, recruiter-reviewable evaluations. Four design partners, including Imperial College London, are shaping the bootstrapped prototype.</p>
           </div>
         </section>
         <section>

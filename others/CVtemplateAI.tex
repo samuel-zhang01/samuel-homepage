@@ -13,7 +13,9 @@
 
 % Font setup for XeLaTeX/LuaLaTeX
 \usepackage{fontspec}
-\setmainfont{Times New Roman}
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {\setmainfont{TeX Gyre Termes}}
 
 % Document styling
 \pagestyle{empty}
@@ -60,7 +62,7 @@ Imperial College MSc student specialising in AI application and innovation. Devi
 
 % Education section
 \section{Education}
-\noindent\textbf{Imperial College London} \textit{MSc AI Applications and Innovation, Distinction} \hfill  \textbf{London, Sep 2025 -- Sep 2026}
+\noindent\textbf{Imperial College London} \textit{MSc AI Applications and Innovation} \hfill  \textbf{London, Sep 2025 -- Sep 2026}
 \begin{itemize}
     \item Founded an pre-seed phase AI venture startup in recruitment. Currently sourcing Imperial VC funding rounds.
     \item Competing in P\&G Hackathon solving detergent sustainability challenges in a multidisciplinary team.
