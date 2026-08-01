@@ -917,12 +917,18 @@ body {
   border-bottom: 0;
 }
 
-.identity-switchboard button > span {
+.identity-switchboard button > .identity-copy {
   display: grid;
   min-width: 0;
   grid-template-columns: 110px minmax(0, 1fr);
   align-items: baseline;
   gap: 8px;
+}
+
+.identity-switchboard button > .pixel-icon {
+  width: 18px;
+  height: 18px;
+  justify-self: center;
 }
 
 .identity-switchboard button b {
@@ -3045,9 +3051,14 @@ body {
   }
 
   .active-application {
-    max-width: 127px;
-    padding-right: 4px;
+    display: block;
+    max-width: 112px;
+    min-width: 0;
+    overflow: hidden;
+    padding-right: 5px;
+    line-height: 27px;
     font-size: 11px;
+    text-overflow: ellipsis;
   }
 
   .menu-root > button {
@@ -3222,7 +3233,7 @@ body {
     margin-top: 2px;
   }
 
-  .identity-switchboard button > span {
+  .identity-switchboard button > .identity-copy {
     display: block;
   }
 

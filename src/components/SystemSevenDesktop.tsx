@@ -683,23 +683,23 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
           </div>
           <button onClick={() => openApp("coverd")}>
             <PixelIcon kind="coverd" small />
-            <span><b>Founder</b><span className="identity-detail">Building COVERD from first principles: company context first, adaptive interviews and human-owned decisions.</span></span>
+            <span className="identity-copy"><b>Founder</b><span className="identity-detail">Building COVERD from first principles: company context first, adaptive interviews and human-owned decisions.</span></span>
           </button>
           <button onClick={() => openApp("projects")}>
             <PixelIcon kind="briefcase" small />
-            <span><b>Product</b><span className="identity-detail">Turning messy operational knowledge into polished tools that people trust, adopt and keep using.</span></span>
+            <span className="identity-copy"><b>Product</b><span className="identity-detail">Turning messy operational knowledge into polished tools that people trust, adopt and keep using.</span></span>
           </button>
           <button onClick={() => openApp("experience")}>
             <PixelIcon kind="university" small />
-            <span><b>Scientist</b><span className="identity-detail">Chemistry-trained thinking: expose uncertainty, test assumptions honestly and learn from failed experiments.</span></span>
+            <span className="identity-copy"><b>Scientist</b><span className="identity-detail">Chemistry-trained thinking: expose uncertainty, test assumptions honestly and learn from failed experiments.</span></span>
           </button>
           <button onClick={() => openApp("lab")}>
             <PixelIcon kind="network" small />
-            <span><b>Builder</b><span className="identity-detail">Seven servers, private AI and self-hosted CI—with enough scars to make backups non-negotiable.</span></span>
+            <span className="identity-copy"><b>Builder</b><span className="identity-detail">Seven servers, private AI and self-hosted CI—with enough scars to make backups non-negotiable.</span></span>
           </button>
           <button onClick={() => openApp("scrapbook")}>
             <PixelIcon kind="photos" small />
-            <span><b>Musician &amp; maker</b><span className="identity-detail">Euphonium, musical theatre and photography: the creative work behind the technical one.</span></span>
+            <span className="identity-copy"><b>Musician &amp; maker</b><span className="identity-detail">Euphonium, musical theatre and photography: the creative work behind the technical one.</span></span>
           </button>
         </nav>
         <fieldset className="about-panel about-evidence">
