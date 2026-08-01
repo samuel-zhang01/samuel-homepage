@@ -464,6 +464,7 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
             alt=""
             fill
             sizes={small ? "18px" : "34px"}
+            loading="eager"
           />
         </span>
       </span>

@@ -3154,7 +3154,7 @@ body {
     box-shadow: none;
   }
 
-  .window-switcher span:last-child {
+  .window-switcher button > span:last-child {
     display: none;
   }
 
