@@ -248,14 +248,14 @@ const finderItems: Array<{
   meta: string;
 }> = [
   { id: "coverd", name: "COVERD — Founder’s Desk", kind: "coverd", meta: "Flagship venture" },
-  { id: "experience", name: "Experience", kind: "briefcase", meta: "7 roles" },
+  { id: "experience", name: "Experience", kind: "briefcase", meta: "8 roles" },
   { id: "projects", name: "Selected Projects", kind: "folder", meta: "9 items" },
   { id: "skills", name: "Skills & Capabilities", kind: "controls", meta: "6 groups" },
   { id: "education", name: "Education & Awards", kind: "university", meta: "2 folders" },
   { id: "lab", name: "Home Lab Network", kind: "network", meta: "Online" },
   { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "9 clippings" },
   { id: "resume", name: "Résumé & Profile", kind: "document", meta: "In-browser profile" },
-  { id: "documents", name: "CV & Papers", kind: "pdf", meta: "3 documents" },
+  { id: "documents", name: "CV & Papers", kind: "pdf", meta: "4 documents" },
   { id: "games", name: "Desk Arcade", kind: "game", meta: "4 games" },
   { id: "contact", name: "Contact Samuel", kind: "mail", meta: "3 channels" },
 ];
@@ -276,14 +276,6 @@ const experience = [
     location: "London",
     copy: "Building the AI interviewer that interviews the company first: an adaptive system that updates a role-specific belief graph as evidence arrives, then chooses the next useful question.",
     tag: "FOUNDER",
-  },
-  {
-    period: "Nov 2025 — Present",
-    role: "Co-founder",
-    company: "Stealth AI Startup",
-    location: "London",
-    copy: "Developing recruitment technology focused on bias reduction and responsible AI.",
-    tag: "VENTURE",
   },
   {
     period: "Oct 2024 — Apr 2026",
@@ -438,32 +430,26 @@ const projects: Array<{
 const skillGroups = [
   {
     title: "Artificial Intelligence",
-    level: 91,
     items: ["PyTorch & TensorFlow", "CNNs & LLMs", "Scikit-learn", "Responsible AI"],
   },
   {
     title: "Product & Entrepreneurship",
-    level: 93,
     items: ["Product ownership", "Design partnerships", "Stakeholder trust", "Evidence over hype"],
   },
   {
     title: "Data & Engineering",
-    level: 90,
     items: ["Python & Julia", "SQL & PostgreSQL", "React & TypeScript", "APIs & data pipelines"],
   },
   {
     title: "Scientific Computing",
-    level: 86,
     items: ["Statistical modelling", "GROMACS & HPC", "MATLAB", "Computational chemistry"],
   },
   {
     title: "Infrastructure",
-    level: 82,
     items: ["Docker & Linux", "AWS & CI/CD", "GPU computing", "Self-hosting"],
   },
   {
     title: "Human Skills",
-    level: 94,
     items: ["People leadership", "Conflict resolution", "Teaching & mentoring", "Cross-cultural teams"],
   },
 ];
@@ -644,12 +630,6 @@ function WindowChrome({
         <button className="window-box window-zoom" onClick={onZoom} aria-label={`Maximize ${windowState.title}`} />
       </div>
       <div className="mac-window__content">{children}</div>
-      <div className="fake-scrollbar" aria-hidden="true">
-        <span className="scroll-arrow scroll-arrow--up" />
-        <span className="scroll-track" />
-        <span className="scroll-arrow scroll-arrow--down" />
-      </div>
-      <span className="resize-corner" aria-hidden="true" />
     </section>
   );
 }
@@ -670,19 +650,27 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
         </dl>
       </div>
       <div className="about-main">
-        <div className="eyebrow">ABOUT THIS MACINTOSH</div>
-        <h1>Samuel Zhang</h1>
-        <p className="hero-role">People-powered generalist · AI · product · founder.</p>
+        <div className="about-program">
+          <PixelIcon kind="profile" />
+          <div>
+            <h1>Samuel Zhang</h1>
+            <p className="hero-role">Personal Profile 7.1 · AI, product and people</p>
+          </div>
+        </div>
         <p className="hero-copy">
           My first product was a clickable Visual Basic periodic table for the IB. Nobody
           used it; building it was the revelation. Chemistry later taught me to design
           honest experiments, while SCDF, Pfizer, Marsh and COVERD taught me that useful
           systems depend on trust, attention and the right tool—not the loudest one.
         </p>
+        <fieldset className="about-panel">
+          <legend>Working style</legend>
+          <p>Technically curious, attentive in a room, and happiest when helping other people do their best work.</p>
+        </fieldset>
         <nav className="identity-switchboard" aria-label="Samuel’s cabinet of curiosities">
           <div className="identity-switchboard__heading">
             <b>CABINET OF CURIOSITIES</b>
-            <p>Five ways into the same person. Open a drawer to explore.</p>
+            <p>Choose a drawer to open the corresponding part of the portfolio.</p>
           </div>
           <button onClick={() => openApp("coverd")}>
             <PixelIcon kind="coverd" small />
@@ -705,19 +693,19 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
             <span><b>Musician &amp; maker</b><span className="identity-detail">Euphonium, musical theatre and photography: the creative work behind the technical one.</span></span>
           </button>
         </nav>
-        <div className="impact-grid">
-          <div><strong>1200%</strong><span>efficiency gain</span></div>
-          <div><strong>120+</strong><span>hours saved / month</span></div>
-          <div><strong>99.9%</strong><span>system uptime</span></div>
-        </div>
-        <blockquote>
-          “A people-centred generalist: technically curious, attentive in a room, and
-          happiest when helping other people do their best work.”
-        </blockquote>
+        <fieldset className="about-panel about-evidence">
+          <legend>Selected evidence</legend>
+          <dl>
+            <div><dt>GROWMAT</dt><dd>120+ staff hours returned each month across 40+ analysts.</dd></div>
+            <div><dt>Delivery</dt><dd>99.9% uptime for a department-wide operational product.</dd></div>
+            <div><dt>Teaching</dt><dd>20+ programming sessions designed for more than 80 students.</dd></div>
+          </dl>
+        </fieldset>
         <div className="button-row">
           <button className="mac-button is-default" onClick={() => openApp("coverd")}>Explore COVERD</button>
           <button className="mac-button" onClick={() => openApp("projects")}>View Work</button>
           <button className="mac-button" onClick={() => openApp("resume")}>Open Résumé</button>
+          <a className="mac-button" href="/Samuel-Zhang-Applied-AI-CV.pdf" download>Download AI CV</a>
           <button className="mac-button" onClick={() => openApp("contact")}>Contact</button>
         </div>
       </div>
@@ -944,20 +932,17 @@ function SkillsApp() {
     <div className="skills-app">
       <div className="control-panel-intro">
         <PixelIcon kind="controls" />
-        <div><h3>Capabilities</h3><p>Six connected systems. Adjustments are saved automatically.</p></div>
+        <div><h3>Capabilities</h3><p>Six practical groups drawn from products, research and leadership.</p></div>
       </div>
       <div className="control-groups">
         {skillGroups.map((group) => (
           <fieldset className="control-group" key={group.title}>
             <legend>{group.title}</legend>
-            <div className="skill-meter" aria-label={`${group.title}: ${group.level}%`}>
-              <span style={{ width: `${group.level}%` }} />
-            </div>
-            <div className="skill-items">
+            <ul className="skill-items">
               {group.items.map((item) => (
-                <label key={item}><input type="checkbox" checked readOnly /><span>{item}</span></label>
+                <li key={item}>{item}</li>
               ))}
-            </div>
+            </ul>
           </fieldset>
         ))}
       </div>
@@ -974,7 +959,7 @@ function EducationApp() {
       </header>
       <section className="degree-card degree-card--imperial">
         <div className="degree-mark">ICL</div>
-        <div><span>2025—2026</span><h4>MSc AI Applications &amp; Innovation</h4><p>Imperial College London · Distinction</p><small>Deep learning · AI safety · medical imaging · climate ML · venture building</small></div>
+        <div><span>2025—2026</span><h4>MSc AI Applications &amp; Innovation</h4><p>Imperial College London · Completing Sep 2026</p><small>Deep learning · AI safety · medical imaging · climate ML · venture building</small></div>
       </section>
       <section className="degree-card">
         <div className="degree-mark">KCL</div>
@@ -1008,7 +993,7 @@ function EducationApp() {
 function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
   return (
     <div className="resume-app">
-      <div className="simpletext-toolbar"><span>Times</span><span>11 pt</span><span>A4</span><button onClick={() => openApp("documents")}>Preview original PDF</button></div>
+      <div className="simpletext-toolbar"><span>Times</span><span>10 pt</span><span>A4 · 2 pages</span><button onClick={() => openApp("documents")}>Preview AI CV</button></div>
       <article className="resume-paper">
         <header><div><h3>Samuel Zhang</h3><p>People-centred generalist · Applied AI · Product · Founder</p></div><address>London, United Kingdom<br />sam.xiaojian.zhang@outlook.com<br />linkedin.com/in/samuel-xj-zhang</address></header>
         <hr />
@@ -1109,7 +1094,7 @@ function ContactApp({ openApp }: { openApp: (id: AppId) => void }) {
   return (
     <div className="chooser-app">
       <div className="chooser-columns">
-        <div className="chooser-list" role="listbox" aria-label="Contact services">
+        <div className="chooser-list" aria-label="Contact services">
           <button className="is-selected"><PixelIcon kind="network" small />Internet</button>
           <button><PixelIcon kind="document" small />Electronic Mail</button>
           <button><PixelIcon kind="computer" small />LinkedIn</button>
@@ -1133,9 +1118,15 @@ function ContactApp({ openApp }: { openApp: (id: AppId) => void }) {
 
 const documentLibrary = [
   {
+    id: "ai-cv",
+    title: "Samuel Zhang — Applied AI CV",
+    meta: "AI roles · 2 pages · 178 KB",
+    src: "/Samuel-Zhang-Applied-AI-CV.pdf",
+  },
+  {
     id: "profile",
-    title: "Samuel Zhang — Profile",
-    meta: "Curriculum vitae · 70 KB",
+    title: "LinkedIn Profile Export",
+    meta: "Archived profile · 70 KB",
     src: "/Samuel-Zhang-Profile.pdf",
   },
   {
@@ -1666,7 +1657,7 @@ function LabApp() {
       </div>
       <div className="lab-filters" aria-label="Filter infrastructure">
         {groups.map((group) => (
-          <button key={group} className={filter === group ? "is-active" : ""} onClick={() => setFilter(group)}>{group}</button>
+          <button key={group} className={filter === group ? "is-active" : ""} aria-pressed={filter === group} onClick={() => setFilter(group)}>{group}</button>
         ))}
       </div>
       <div className="service-grid">
@@ -1755,11 +1746,29 @@ export default function SystemSevenDesktop({
   const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
   const toastTimer = useRef<number | null>(null);
 
+  const completeBoot = useCallback(() => {
+    try {
+      window.sessionStorage.setItem("samuel-system7-boot", "seen");
+    } catch {
+      // The boot still completes when storage is unavailable.
+    }
+    setBooting(false);
+  }, []);
+
+  useEffect(() => {
+    if (skipBoot) return;
+    try {
+      if (window.sessionStorage.getItem("samuel-system7-boot") === "seen") setBooting(false);
+    } catch {
+      // Keep the normal startup sequence when storage is unavailable.
+    }
+  }, [skipBoot]);
+
   useEffect(() => {
     if (!booting) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setBootMessageIndex(0);
-    const finishTimer = window.setTimeout(() => setBooting(false), reduceMotion ? 700 : BOOT_DURATION);
+    const finishTimer = window.setTimeout(completeBoot, reduceMotion ? 700 : BOOT_DURATION);
     const messageTimer = reduceMotion
       ? null
       : window.setInterval(
@@ -1770,7 +1779,15 @@ export default function SystemSevenDesktop({
       window.clearTimeout(finishTimer);
       if (messageTimer) window.clearInterval(messageTimer);
     };
-  }, [booting]);
+  }, [booting, completeBoot]);
+
+  useEffect(() => {
+    const closeMenus = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenMenu(null);
+    };
+    window.addEventListener("keydown", closeMenus);
+    return () => window.removeEventListener("keydown", closeMenus);
+  }, []);
 
   useEffect(() => {
     const updateClock = () => setClock(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
@@ -1905,7 +1922,7 @@ export default function SystemSevenDesktop({
 
   if (booting) {
     return (
-      <main className="boot-screen" onClick={() => setBooting(false)}>
+      <main className="boot-screen" onClick={completeBoot}>
         <div className="boot-computer"><div className="boot-face">:)</div><span /></div>
         <h1>Welcome to Samuel System 7</h1>
         <p className="boot-status" key={bootMessageIndex} aria-live="polite">{BOOT_MESSAGES[bootMessageIndex]}</p>
@@ -1937,7 +1954,7 @@ export default function SystemSevenDesktop({
       <nav className="system-menubar" aria-label="System menu bar">
         <div className="menu-cluster">
           <div className="menu-root">
-            <button className={openMenu === "apple" ? "is-open apple-menu" : "apple-menu"} onClick={() => setOpenMenu(openMenu === "apple" ? null : "apple")} aria-label="Samuel menu">
+            <button className={openMenu === "apple" ? "is-open apple-menu" : "apple-menu"} onClick={() => setOpenMenu(openMenu === "apple" ? null : "apple")} aria-label="Samuel menu" aria-haspopup="menu" aria-expanded={openMenu === "apple"}>
               <svg className="human-mark" viewBox="0 0 18 18" aria-hidden="true" shapeRendering="crispEdges">
                 <circle cx="9" cy="5" r="3" />
                 <path d="M3 17v-3c0-3.2 2.4-5 6-5s6 1.8 6 5v3z" />
@@ -1960,19 +1977,19 @@ export default function SystemSevenDesktop({
           </div>
           <strong className="active-application">{activeTitle === "Finder" ? "Finder" : activeTitle}</strong>
           <div className="menu-root">
-            <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")}>File</button>
+            <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")} aria-haspopup="menu" aria-expanded={openMenu === "file"}>File</button>
             {openMenu === "file" && <div className="menu-dropdown"><button onClick={() => openApp("finder")}>Open Portfolio Index</button><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open CV &amp; Papers</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")}>Edit</button>
+            <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")} aria-haspopup="menu" aria-expanded={openMenu === "edit"}>Edit</button>
             {openMenu === "edit" && <div className="menu-dropdown"><button className="is-disabled">Undo <kbd>⌘Z</kbd></button><hr /><button className="is-disabled">Cut <kbd>⌘X</kbd></button><button className="is-disabled">Copy <kbd>⌘C</kbd></button><button className="is-disabled">Paste <kbd>⌘V</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "view" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "view" ? null : "view")}>View</button>
+            <button className={openMenu === "view" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "view" ? null : "view")} aria-haspopup="menu" aria-expanded={openMenu === "view"}>View</button>
             {openMenu === "view" && <div className="menu-dropdown"><button onClick={() => setPattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button onClick={() => setPattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "special" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "special" ? null : "special")}>Special</button>
+            <button className={openMenu === "special" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "special" ? null : "special")} aria-haspopup="menu" aria-expanded={openMenu === "special"}>Special</button>
             {openMenu === "special" && <div className="menu-dropdown"><button onClick={() => openApp("games")}>Desk Arcade</button><hr /><button onClick={() => { setWindows((current) => current.map((item) => ({ ...item, open: false }))); setOpenMenu(null); }}>Hide All Windows</button><button onClick={() => openApp("secret")}>About This Secret…</button><button onClick={restart}>Restart</button></div>}
           </div>
         </div>

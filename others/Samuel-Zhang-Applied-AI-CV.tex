@@ -1,0 +1,152 @@
+\documentclass[10pt,a4paper]{article}
+
+% A focused, ATS-readable CV for applied AI, ML engineering and AI product roles.
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1.35cm]{geometry}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{parskip}
+
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+\definecolor{ink}{HTML}{151515}
+\definecolor{accent}{HTML}{214F7A}
+\definecolor{muted}{HTML}{555555}
+
+\hypersetup{
+  pdftitle={Samuel Zhang -- Applied AI CV},
+  pdfauthor={Samuel Zhang},
+  pdfsubject={Applied AI, machine learning and AI product development},
+  pdfkeywords={Applied AI, Machine Learning, Python, Responsible AI, Product, Data Science}
+}
+
+\pagestyle{empty}
+\color{ink}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\tabcolsep}{0pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=1.5pt,topsep=2pt,parsep=0pt,partopsep=0pt}
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-2pt}\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{7pt}{4pt}
+
+\newcommand{\role}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} \textbar{} \textit{#2} & \textbf{#3} \\
+    \multicolumn{2}{@{}l@{}}{\small\color{muted}#4}
+  \end{tabularx}\vspace{-2pt}
+}
+
+\newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Samuel Zhang}\\[2pt]
+  {\large Applied AI \textbar{} Machine Learning \textbar{} Product Engineering}\\[4pt]
+  \small
+  London, United Kingdom \enspace\textbullet\enspace
+  +44 (0)7502 118207 \enspace\textbullet\enspace
+  \href{mailto:sam.xiaojian.zhang@outlook.com}{sam.xiaojian.zhang@outlook.com}\\[-1pt]
+  \href{https://www.linkedin.com/in/samuel-xj-zhang/}{linkedin.com/in/samuel-xj-zhang}
+  \enspace\textbullet\enspace
+  \href{https://me.samuelzhang.co.uk}{me.samuelzhang.co.uk}
+  \enspace\textbullet\enspace
+  \href{https://coverd.ai}{coverd.ai}
+\end{center}
+
+\section{Profile}
+Applied AI builder and product owner completing an MSc in AI Applications and Innovation at Imperial College London. Combines machine-learning research, experimental design and production engineering with the stakeholder work needed to turn ambiguous problems into trusted products. Built enterprise software at Pfizer with measurable operational impact, develops evidence-bounded AI for insurance, and founded COVERD to create adaptive, human-owned recruitment interviews.
+
+\section{Core Expertise}
+\textbf{AI/ML:} PyTorch, TensorFlow, scikit-learn, LLM systems, ranking and evaluation, document processing, computer vision, statistical modelling, experiment design
+
+\textbf{Engineering:} Python, Julia, SQL, TypeScript, JavaScript, MATLAB, React/Next.js, APIs, PostgreSQL, Docker, Linux, CI/CD, GPU and HPC systems
+
+\textbf{Product:} Discovery, requirements, roadmaps, rapid prototyping, A/B testing, stakeholder management, responsible AI, technical documentation, adoption and training
+
+\section{Selected Experience}
+
+\role{Marsh Risk}{AI Intern -- Data \& Machine Learning}{May 2026 -- Present}{London, United Kingdom}
+\begin{itemize}
+  \item Investigating how historical placement data and contract wording can support better-informed decisions in the London insurance market without treating historical patterns as present-day truth.
+  \item Building and stress-testing ranking, document-processing and contract-review prototypes with temporal evaluation, explicit provenance and visible uncertainty.
+  \item Translating research findings into bounded decision support: separating evidence sources, documenting limitations and identifying when a system should abstain rather than overstate confidence.
+\end{itemize}
+
+\role{coverd.ai}{Founder}{Mar 2026 -- Present}{London, United Kingdom}
+\begin{itemize}
+  \item Building ``the AI interviewer that interviews the company first'': team interviews capture role knowledge before candidates are assessed, including success criteria, common pitfalls and capability gaps.
+  \item Designed a role-specific belief graph that updates as evidence arrives, selects the next useful voice-interview question and returns recruiter-reviewable evaluations cited to candidate answers.
+  \item Tested three interview-agent architectures with users and used comparative evidence to choose the product direction; developing the bootstrapped prototype with four design partners, including Imperial College London.
+  \item Keeping consequential hiring decisions human-owned by surfacing missing evidence and uncertainty instead of reducing candidates to an opaque score.
+\end{itemize}
+
+\role{Pfizer, Analytical R\&D}{Web Application Developer \& Product Owner}{Oct 2024 -- Apr 2026}{London, United Kingdom}
+\begin{itemize}
+  \item Owned GROWMAT, an enterprise resource, forecasting and analytics platform, from operational discovery and senior-director pitch through roadmap, agile delivery, deployment and department-wide adoption.
+  \item Connected technical capability with real staff availability and selected maintainable tools over fashionable technology, building stakeholder trust through a polished, dependable product.
+  \item Delivered a reported 1,200\% efficiency improvement and saved 120+ person-hours per month across 40+ analysts while maintaining 99.9\% uptime and improving application performance by 80\%.
+  \item Built continuous analytics for timelines, compliance, analytical performance and future workload; produced API documentation, user guides and video training to support long-term ownership.
+\end{itemize}
+
+\role{Pfizer, Analytical R\&D}{Data Analyst Undergraduate}{Sep 2023 -- Aug 2024}{Sandwich, United Kingdom}
+\begin{itemize}
+  \item Prototyped pharmaceutical solubility modelling using statistical thermodynamics, Julia and machine-learning libraries to reduce experimental testing requirements.
+  \item Worked across Pfizer, MIT and Imperial College London to translate open-source fluid-thermodynamics research into a practical drug-development workflow.
+\end{itemize}
+
+\newpage
+
+\section{Research, Teaching \& Public Service}
+
+\role{King's College London}{Coding Series Tutor \& Curriculum Designer}{Jan 2023 -- Apr 2025}{London, United Kingdom}
+\begin{itemize}
+  \item Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, achieving 90\% satisfaction and Royal Society of Chemistry endorsement.
+  \item Organised a cross-industry data-science careers panel for 100+ students; mentored learners in using technical skills to widen their career options.
+\end{itemize}
+
+\role{Royal Society / King's College London}{Summer Research Fellow}{Jun 2023 -- Jul 2023}{London, United Kingdom}
+\begin{itemize}
+  \item Built GPU-accelerated GROMACS workflows for protein--membrane molecular simulations, improving computational performance by 70\% and iterating experimental design from simulation results.
+\end{itemize}
+
+\role{King's College London}{Undergraduate Research Fellow}{Jun 2022 -- Jul 2022}{London, United Kingdom}
+\begin{itemize}
+  \item Engineered MATLAB, Python and Excel pipelines for rotational spectroscopy, reducing analysis time by 40\% and creating a reusable workflow adopted by the research group.
+\end{itemize}
+
+\role{Singapore Civil Defence Force}{Commander's Personal Assistant / Sergeant}{Jul 2019 -- Jul 2021}{Singapore}
+\begin{itemize}
+  \item Built MATLAB-based COVID-19 resource-planning models from public epidemiological data and automated emergency activation attendance across legacy systems for 1,200+ personnel.
+  \item Supported senior leadership in time-critical operations, balancing incomplete information, rapid prioritisation and accountability; received the Service Excellence Award and 1st Division HQ Wall of Fame recognition.
+\end{itemize}
+
+\section{Education}
+\role{Imperial College London}{MSc AI Applications and Innovation}{Sep 2025 -- Sep 2026}{London, United Kingdom}
+Deep Learning, AI Safety, Innovation Management, Machine Learning in Medical Imaging, Machine Learning in Climate Change
+
+\role{King's College London}{BSc Chemistry with Biomedicine -- First-Class Honours}{Sep 2021 -- May 2025}{London, United Kingdom}
+Professional placement; Computational Chemistry, Molecular Biology, Chemical Biology, Organic Chemistry; Associate of King's College London
+
+\section{Selected Technical Projects}
+\begin{itemize}
+  \item \project{Home Lab \& Private AI Infrastructure --}{Designed and operate seven physical servers and 23 services across Proxmox and Docker, including 42 GB VRAM GPU compute, self-hosted GitHub Actions CI, cross-architecture workloads, monitoring, network security and a 96 TB raw / 72 TB usable RAID array.}
+  \item \project{Stock Market Simulation Engine --}{Built Julia/SQL order matching, real-time WebSocket order-book updates and a responsive trading interface.}
+  \item \project{COVID-19 Decision Support --}{Created predictive analytics and workflow automation for emergency planning and large-scale personnel operations.}
+  \item \project{Molecular Recognition --}{Combined microwave spectroscopy with computational predictions through automated MATLAB and Excel analysis workflows.}
+\end{itemize}
+
+\section{Awards \& Additional Information}
+\textbf{Awards:} King's Research Experience Award; SCDF Service Excellence Award; SCDF 1st Division HQ Wall of Fame; EARCOS Global Citizenship Award
+
+\textbf{Languages:} English and Mandarin (native/bilingual); Italian (elementary)
+
+\textbf{Interests:} Competitive brass band (euphonium, UniBrass); musical theatre; photography; hiking and climbing
+
+\end{document}
