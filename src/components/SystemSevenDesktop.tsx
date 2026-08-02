@@ -1,9 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  cloneElement,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import {
+  localeCvAssets,
+  localeOptions,
+  localeSlug,
+  normaliseLocale,
+  translateText,
+  type Locale,
+} from "@/lib/i18n";
 
-type AppId =
+export type AppId =
   | "about"
   | "coverd"
   | "finder"
@@ -54,6 +72,42 @@ type IconKind =
   | "pdf"
   | "mail"
   | "secret";
+
+const TRANSLATED_ATTRIBUTES = ["aria-label", "title", "placeholder"] as const;
+
+function localiseNode(node: ReactNode, locale: Locale): ReactNode {
+  if (typeof node === "string") return translateText(locale, node);
+  if (Array.isArray(node)) return node.map((child) => localiseNode(child, locale));
+  if (!isValidElement<Record<string, unknown>>(node)) return node;
+
+  const translatedProps: Record<string, unknown> = {};
+  for (const attribute of TRANSLATED_ATTRIBUTES) {
+    const value = node.props[attribute];
+    if (typeof value === "string") translatedProps[attribute] = translateText(locale, value);
+  }
+  if ("children" in node.props) {
+    translatedProps.children = localiseNode(node.props.children as ReactNode, locale);
+  }
+  return cloneElement(node, translatedProps);
+}
+
+function TranslationBoundary({ locale, children }: { locale: Locale; children: ReactNode }) {
+  return <>{localiseNode(children, locale)}</>;
+}
+
+function localiseGameMessage(locale: Locale, message: string): string {
+  if (locale === "en-GB" || locale === "en-US") return translateText(locale, message);
+  const lengthMatch = message.match(/^Please enter exactly (\d+) letters\.$/);
+  if (lengthMatch) return locale === "zh-CN" ? `请输入恰好 ${lengthMatch[1]} 个字母。` : `請輸入恰好 ${lengthMatch[1]} 個字母。`;
+  const attemptMatch = message.match(/^(\d+) attempts? remaining\.$/);
+  if (attemptMatch) return locale === "zh-CN" ? `还剩 ${attemptMatch[1]} 次机会。` : `還剩 ${attemptMatch[1]} 次機會。`;
+  const answerMatch = message.match(/^The answer was ([A-Z]+)\. (.+)$/);
+  if (answerMatch) {
+    const prefix = locale === "zh-CN" ? `答案是 ${answerMatch[1]}。` : `答案是 ${answerMatch[1]}。`;
+    return `${prefix}${translateText(locale, answerMatch[2])}`;
+  }
+  return translateText(locale, message);
+}
 
 const BOOT_DURATION = 5600;
 const BOOT_MESSAGES = [
@@ -234,7 +288,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "resume", label: "Résumé", icon: "document", description: "A concise, in-browser professional profile." },
-  { id: "documents", label: "CV & Papers", icon: "pdf", description: "Full CV, thesis and GROWMAT documents in the built-in reader." },
+  { id: "documents", label: "CV & Papers", icon: "pdf", description: "Current AI CV, undergraduate thesis and external GROWMAT case study in the built-in reader." },
   { id: "games", label: "Desk Arcade", icon: "game", description: "Four small games with profile-themed easter eggs." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
@@ -255,7 +309,7 @@ const finderItems: Array<{
   { id: "lab", name: "Home Lab Network", kind: "network", meta: "Online" },
   { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "9 clippings" },
   { id: "resume", name: "Résumé & Profile", kind: "document", meta: "In-browser profile" },
-  { id: "documents", name: "CV & Papers", kind: "pdf", meta: "4 documents" },
+  { id: "documents", name: "CV & Papers", kind: "pdf", meta: "3 documents" },
   { id: "games", name: "Desk Arcade", kind: "game", meta: "4 games" },
   { id: "contact", name: "Contact Samuel", kind: "mail", meta: "3 channels" },
 ];
@@ -263,26 +317,26 @@ const finderItems: Array<{
 const experience = [
   {
     period: "May 2026 — Present",
-    role: "AI Intern — Applied AI & Machine Learning",
+    role: "AI Intern — Applied AI & ML Thesis",
     company: "Marsh Risk",
     location: "London",
-    copy: "Building lead-matching decision support from historical placement patterns, quantitative attributes and legal-document evidence—using time-aware evaluation, strong baselines and explicit abstention when the data cannot support a claim.",
+    copy: "Structured a proof of concept for planned Broker Workbench integration around quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence. Developed an internal lead-matching engine for lead-insurer selection using historical trading performance, wording quality and real-time appetite signals, then translated the evidence into transparent recommendations supporting broker judgement and client outcomes.",
     tag: "CURRENT",
   },
   {
     period: "Mar 2026 — Present",
-    role: "Founder",
-    company: "coverd.ai",
+    role: "Founder & Product Lead · Part-time",
+    company: "COVERD",
     location: "London",
-    copy: "Led the pivot from candidate-side CV tooling to the AI interviewer that interviews the company first: a human-owned voice system that updates a role-specific belief graph, asks the next useful question and cites the evidence it finds.",
+    copy: "Led customer discovery with four design partners and pivoted from candidate-side CV tooling to an interviewer that first learns how each company and role works. Selected a multi-agent, graph-based voice architecture seeded with company-interview priors after testing three architectures across 20 candidate interviews; candidates praised its follow-ups, question quality and ability to make them feel heard and valued.",
     tag: "FOUNDER",
   },
   {
     period: "Oct 2024 — Apr 2026",
-    role: "Web Application Developer · Product Owner",
-    company: "Pfizer",
+    role: "Web Application Developer & Product Owner · Part-time",
+    company: "Pfizer Analytical R&D",
     location: "London",
-    copy: "Owned GROWMAT from business discovery to adoption: connecting technical capability with real staff availability, choosing maintainable tools over fashionable ones, and earning stakeholder trust through a highly polished product.",
+    copy: "Secured senior sponsorship, significant funding and department-wide adoption through live demonstrations; retained for a two-year part-time extension to own GROWMAT’s roadmap.",
     tag: "PRODUCT",
   },
   {
@@ -290,23 +344,23 @@ const experience = [
     role: "Data Analyst Undergraduate",
     company: "Pfizer Analytical R&D",
     location: "Sandwich",
-    copy: "Built enterprise resource and analytics systems delivering a 1200% efficiency gain, 120+ person-hours saved monthly, 99.9% uptime, and an 80% performance improvement across 40+ analysts.",
+    copy: "Built and deployed GROWMAT over ten months: a seven-component platform used by 40+ employees across four teams, with wider impact across 80+. Cut capacity calculations from 12 minutes to under 60 seconds, saved 120+ hours monthly and replaced weekly workbooks with live, two-hourly refreshes. Also prototyped pharmaceutical solubility modelling across Pfizer, MIT and Imperial.",
     tag: "DATA",
   },
   {
-    period: "2022 — 2025",
-    role: "STEM Outreach Officer · Coding Tutor",
-    company: "KCL Chemistry Society",
+    period: "Jan 2023 — Apr 2025",
+    role: "Coding Series Tutor & Curriculum Designer",
+    company: "King’s College London",
     location: "London",
-    copy: "Designed 20+ programming and data-analysis sessions for 80+ students with 90% satisfaction; secured Royal Society of Chemistry endorsement—and later watched one student earn an offer from Microsoft.",
+    copy: "Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, achieving 90% satisfaction and Royal Society of Chemistry endorsement. Organised a cross-industry data-science careers panel for 100+ students and mentored learners in using technical skills to widen their options.",
     tag: "EDUCATION",
   },
   {
     period: "Jun — Jul 2023",
-    role: "Royal Society Summer Fellow",
-    company: "King’s College London",
+    role: "Summer Research Fellow",
+    company: "Royal Society / King’s College London",
     location: "London",
-    copy: "Architected GPU-accelerated GROMACS infrastructure for molecular simulations, improving performance by 70% while researching protein–membrane interactions in silico.",
+    copy: "Built GPU-accelerated GROMACS workflows for protein–membrane molecular simulations, improving computational performance by 70% and iterating experimental design from the simulation results.",
     tag: "RESEARCH",
   },
   {
@@ -314,15 +368,15 @@ const experience = [
     role: "Undergraduate Research Fellow",
     company: "King’s College London",
     location: "London",
-    copy: "Created MATLAB, Python and Excel pipelines for rotational spectroscopy, reducing processing time by 40% and establishing a workflow adopted by the research group.",
+    copy: "Engineered MATLAB, Python and Excel pipelines for rotational spectroscopy, reducing analysis time by 40% and creating an adopted workflow that now underpins a publication in progress.",
     tag: "RESEARCH",
   },
   {
     period: "Jul 2019 — Jul 2021",
-    role: "HR NSF · Commander's Personal Assistant",
+    role: "Commander’s Personal Assistant / Sergeant",
     company: "Singapore Civil Defence Force",
     location: "Singapore",
-    copy: "Built predictive COVID-19 resource planning and emergency activation systems for 1,200+ personnel. Sergeant-level service taught me to seek missing information quickly, prioritise ruthlessly and own decisions made under uncertainty.",
+    copy: "Built MATLAB COVID-19 resource-planning models from public epidemiological data and automated emergency-activation attendance across legacy systems for 1,200+ personnel. Supported senior leaders in time-critical operations, balancing incomplete information, rapid prioritisation and accountability across large-scale personnel operations.",
     tag: "SERVICE",
   },
 ];
@@ -341,9 +395,9 @@ const projects: Array<{
     year: "2026",
     category: "Responsible AI · Founder",
     description:
-      "The AI interviewer that interviews the company first—using a role-specific belief graph to adapt each interview, ask for missing evidence and return a cited evaluation.",
-    tools: ["Adaptive interviews", "Belief graphs", "Voice AI", "Product"],
-    metric: "4 DESIGN PARTNERS",
+      "A company-aware voice interviewer using multi-agent, graph-based belief updates. Three architectures were tested across 20 candidate interviews; candidates praised its follow-ups, question quality and ability to make them feel heard and valued.",
+    tools: ["Multi-agent", "Belief graph", "Voice AI", "Evaluation"],
+    metric: "20 INTERVIEWS · 4 PARTNERS",
     app: "coverd",
   },
   {
@@ -351,9 +405,9 @@ const projects: Array<{
     year: "2023—26",
     category: "Enterprise Product · Pfizer",
     description:
-      "A resource, forecasting and analytics platform for pharmaceutical R&D, shaped through deep operational discovery and trust-building—not technology for technology’s sake.",
+      "A seven-component pharmaceutical capacity-planning platform: cut calculations from 12 minutes to under 60 seconds, replaced weekly workbooks with two-hourly live-data refreshes and returned 120+ staff hours each month.",
     tools: ["Next.js", "Julia", "PostgreSQL", "Docker"],
-    metric: "1200% FASTER",
+    metric: "12× FASTER · 120 HRS/MO",
     app: "documents",
   },
   {
@@ -361,9 +415,9 @@ const projects: Array<{
     year: "2026",
     category: "MSc Thesis · Marsh",
     description:
-      "Research testing how historical placement data and contract wording can support decision-making without overstating what retrospective evidence can prove. Early work made the cost of scattered, inconsistent data impossible to ignore.",
-    tools: ["Ranking", "Document AI", "Evaluation", "Governance"],
-    metric: "EVIDENCE-BOUNDED AI",
+      "A Broker Workbench proof of concept combining quantitative placement ranking, qualitative contract review and time-bounded market intelligence into transparent, human-in-the-loop lead recommendations.",
+    tools: ["Learning-to-rank", "Document AI", "Market signals", "Governance"],
+    metric: "3 EVIDENCE PILLARS",
     app: "resume",
   },
   {
@@ -371,7 +425,7 @@ const projects: Array<{
     year: "2023",
     category: "Scientific Programming · Pfizer",
     description:
-      "Predictive modelling using statistical thermodynamics and Julia to reduce experimental testing requirements.",
+      "Pharmaceutical solubility modelling with statistical thermodynamics and Julia, translating open-source research across Pfizer, MIT and Imperial into a practical drug-development workflow.",
     tools: ["Julia", "ML", "PC-SAFT", "Pharma"],
     metric: "R&D ACCELERATOR",
     app: "resume",
@@ -381,9 +435,9 @@ const projects: Array<{
     year: "2020",
     category: "Emergency Operations · SCDF",
     description:
-      "Predictive analytics and cross-system workflow automation for emergency planning and 1,000+ frontline personnel.",
+      "Predictive analytics and cross-system workflow automation for emergency planning and activation attendance across 1,200+ personnel.",
     tools: ["MATLAB", "Statistics", "Automation"],
-    metric: "1000+ PEOPLE",
+    metric: "1,200+ PERSONNEL",
     app: "experience",
   },
   {
@@ -391,19 +445,19 @@ const projects: Array<{
     year: "2022",
     category: "Research Fellowship · King's",
     description:
-      "Automated Excel and MATLAB workflows combining microwave spectroscopy with computational predictions for chiral odorant research.",
+      "MATLAB, Python and Excel workflows combining rotational spectroscopy with computational predictions; reduced analysis time by 40%, was adopted by the group and underpins a publication in progress.",
     tools: ["MATLAB", "Spectroscopy", "Research"],
     metric: "KURF AWARD",
     app: "documents",
   },
   {
-    title: "Home Automation & AI Infrastructure",
+    title: "Home Lab & Private AI Infrastructure",
     year: "ONGOING",
     category: "Self-hosting · Systems",
     description:
-      "Seven physical servers assembled and connected over four-plus years: Proxmox, Docker, cross-architecture workloads, self-hosted CI, private AI, networking, security, storage and observability.",
-    tools: ["Docker", "Linux", "PostgreSQL", "GPU"],
-    metric: "7 SERVERS",
+      "Seven Proxmox/Docker servers running 23 services, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB of usable RAID storage.",
+    tools: ["Proxmox", "Docker", "Linux", "GPU"],
+    metric: "23 SERVICES · 42 GB VRAM",
     app: "lab",
   },
   {
@@ -420,7 +474,7 @@ const projects: Array<{
     year: "2023—25",
     category: "Teaching · Curriculum",
     description:
-      "A department-backed programming and machine-learning course designed for chemistry students without a traditional computing background.",
+      "A department-backed programming and introductory ML course for 80+ chemistry students, paired with mentoring and a cross-industry data-science careers panel for more than 100 learners.",
     tools: ["Python", "Data analysis", "Teaching", "Outreach"],
     metric: "80+ STUDENTS",
     app: "experience",
@@ -429,28 +483,28 @@ const projects: Array<{
 
 const skillGroups = [
   {
-    title: "Artificial Intelligence",
-    items: ["PyTorch & TensorFlow", "CNNs & LLMs", "Scikit-learn", "Responsible AI"],
+    title: "Applied AI",
+    items: ["Multi-agent systems", "RAG & retrieval", "LLM & embedding evaluation", "Document intelligence & learning-to-rank"],
   },
   {
-    title: "Product & Entrepreneurship",
-    items: ["Product ownership", "Design partnerships", "Stakeholder trust", "Evidence over hype"],
+    title: "Evidence & Evaluation",
+    items: ["Time-aware validation", "Strong baselines", "Provenance & abstention", "Human-in-the-loop design"],
   },
   {
     title: "Data & Engineering",
-    items: ["Python & Julia", "SQL & PostgreSQL", "React & TypeScript", "APIs & data pipelines"],
+    items: ["Python & Julia", "SQL & PostgreSQL", "TypeScript & React/Next.js", "Docker & CI/CD"],
   },
   {
     title: "Scientific Computing",
-    items: ["Statistical modelling", "GROMACS & HPC", "MATLAB", "Computational chemistry"],
+    items: ["Statistical thermodynamics", "Computational chemistry", "GROMACS & HPC", "MATLAB & experiment design"],
   },
   {
     title: "Infrastructure",
-    items: ["Docker & Linux", "AWS & CI/CD", "GPU computing", "Self-hosting"],
+    items: ["Docker, Linux & Proxmox", "Cross-architecture CI", "GPU compute & private AI", "Monitoring, security & recovery"],
   },
   {
-    title: "Human Skills",
-    items: ["People leadership", "Conflict resolution", "Teaching & mentoring", "Cross-cultural teams"],
+    title: "Product & People",
+    items: ["Customer discovery", "Rapid prototyping", "Stakeholder management", "Responsible AI & adoption"],
   },
 ];
 
@@ -607,6 +661,7 @@ function WindowChrome({
   onZoom,
   onDragStart,
   children,
+  locale,
 }: {
   windowState: WindowState;
   active: boolean;
@@ -615,9 +670,10 @@ function WindowChrome({
   onZoom: () => void;
   onDragStart: (event: React.PointerEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
+  locale: Locale;
 }) {
   return (
-    <section
+    <TranslationBoundary locale={locale}><section
       className={`mac-window${active ? " is-active" : ""}${windowState.maximized ? " is-maximized" : ""}`}
       style={{
         left: windowState.x,
@@ -627,25 +683,25 @@ function WindowChrome({
         zIndex: windowState.z,
       }}
       onPointerDown={onFocus}
-      aria-label={`${windowState.title} window`}
+      aria-label={`${translateText(locale, windowState.title)} ${translateText(locale, "window")}`}
     >
       <div
         className="mac-titlebar"
         onPointerDown={onDragStart}
         onDoubleClick={onZoom}
       >
-        <button className="window-box window-close" onClick={onClose} aria-label={`Close ${windowState.title}`} />
+        <button className="window-box window-close" onClick={onClose} aria-label={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} />
         <h2>{windowState.title}</h2>
-        <button className="window-box window-zoom" onClick={onZoom} aria-label={`Maximize ${windowState.title}`} />
+        <button className="window-box window-zoom" onClick={onZoom} aria-label={`${translateText(locale, "Maximize")} ${translateText(locale, windowState.title)}`} />
       </div>
       <div className="mac-window__content">{children}</div>
-    </section>
+    </section></TranslationBoundary>
   );
 }
 
-function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
+function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
   return (
-    <div className="about-app">
+    <TranslationBoundary locale={locale}><div className="about-app">
       <div className="about-sidebar">
         <div className="portrait-frame">
           <Image src="/headshot.jpg" alt="Samuel Zhang" fill sizes="170px" priority />
@@ -667,10 +723,12 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
           </div>
         </div>
         <p className="hero-copy">
-          My first product was a clickable Visual Basic periodic table for the IB. Nobody
-          used it; building it was the revelation. Chemistry later taught me to design
-          honest experiments, while SCDF, Pfizer, Marsh and COVERD taught me that useful
-          systems depend on trust, attention and the right tool—not the loudest one.
+          I&apos;m an applied AI engineer and founder who turns ambiguous, domain-heavy
+          problems into products people love. At Marsh, I build and evaluate ranking and
+          document-intelligence systems for brokers; at COVERD, I lead a company-aware
+          voice-interview product. Previously, I delivered GROWMAT at Pfizer—a
+          capacity-planning platform that saves 120+ analyst hours each month through full-stack
+          engineering, product ownership and stakeholder-led adoption.
         </p>
         <fieldset className="about-panel">
           <legend>Working style</legend>
@@ -695,34 +753,34 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
           </button>
           <button onClick={() => openApp("lab")}>
             <PixelIcon kind="network" small />
-            <span className="identity-copy"><b>Builder</b><span className="identity-detail">Seven servers, private AI and self-hosted CI—with enough scars to make backups non-negotiable.</span></span>
+            <span className="identity-copy"><b>Builder</b><span className="identity-detail">Seven servers, 23 services, 42 GB VRAM and cross-architecture CI—with enough scars to make backups non-negotiable.</span></span>
           </button>
           <button onClick={() => openApp("scrapbook")}>
             <PixelIcon kind="photos" small />
-            <span className="identity-copy"><b>Musician &amp; maker</b><span className="identity-detail">Euphonium, musical theatre and photography: the creative work behind the technical one.</span></span>
+            <span className="identity-copy"><b>Musician &amp; maker</b><span className="identity-detail">Fourth-place UniBrass euphonium, three musicals and a former life photographing weddings.</span></span>
           </button>
         </nav>
         <fieldset className="about-panel about-evidence">
           <legend>Selected evidence</legend>
           <dl>
-            <div><dt>GROWMAT</dt><dd>120+ staff hours returned each month across 40+ analysts.</dd></div>
-            <div><dt>Delivery</dt><dd>99.9% uptime for a department-wide operational product.</dd></div>
-            <div><dt>Teaching</dt><dd>20+ programming sessions designed for more than 80 students.</dd></div>
+            <div><dt>COVERD</dt><dd>Three architectures tested across 20 candidate interviews with four design partners.</dd></div>
+            <div><dt>GROWMAT</dt><dd>Capacity calculations cut from 12 minutes to under 60 seconds; 120+ hours returned monthly.</dd></div>
+            <div><dt>People</dt><dd>20+ teaching sessions for 80+ students and a careers panel for more than 100.</dd></div>
           </dl>
         </fieldset>
         <div className="button-row">
           <button className="mac-button is-default" onClick={() => openApp("coverd")}>Explore COVERD</button>
           <button className="mac-button" onClick={() => openApp("projects")}>View Work</button>
           <button className="mac-button" onClick={() => openApp("resume")}>Open Résumé</button>
-          <a className="mac-button" href="/Samuel-Zhang-Applied-AI-CV.pdf" download>Download AI CV</a>
+          <a className="mac-button" href={localeCvAssets[locale].src} download>Download AI CV</a>
           <button className="mac-button" onClick={() => openApp("contact")}>Contact</button>
         </div>
       </div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function CoverdApp() {
+function CoverdApp({ locale }: { locale: Locale }) {
   const products = [
     {
       code: "01",
@@ -732,7 +790,7 @@ function CoverdApp() {
     {
       code: "02",
       title: "Belief Graph",
-      copy: "Turns role knowledge into a working model of what is known, what remains uncertain and which evidence would be most useful next.",
+      copy: "Multiple agents turn company interviews into priors: a working graph of what matters, what remains uncertain and which evidence would be most useful next.",
     },
     {
       code: "03",
@@ -760,7 +818,7 @@ function CoverdApp() {
   ];
 
   return (
-    <div className="coverd-app">
+    <TranslationBoundary locale={locale}><div className="coverd-app">
       <header className="coverd-hero">
         <div className="coverd-brand">
           <span className="coverd-kicker">BUILT AT IMPERIAL COLLEGE LONDON</span>
@@ -800,20 +858,21 @@ function CoverdApp() {
         </div>
         <p>
           Generic interviews scale, but they miss the lived knowledge behind a role.
-          COVERD interviews the company first and turns that context into a belief graph.
-          During each candidate interview, answers update the graph and determine which
-          question should come next. The experience should feel like an informed
-          interviewer pursuing useful evidence—not a bot reading a script. Four design
-          partners, including Imperial College London, are shaping the discovery and
-          prototype; the others remain undisclosed.
+          COVERD interviews the company first and turns that context into priors for a
+          multi-agent belief graph. During each candidate interview, answers update the
+          graph and determine which evidence-seeking question should come next. Three
+          architectures have been tested across 20 candidate interviews; feedback praised
+          the intelligence and relevance of the questions, and the feeling of being heard
+          and valued.
+          Four design partners, including Imperial College London, are shaping the product.
         </p>
       </section>
 
       <section className="coverd-numbers">
         <div><strong>4</strong><span>active design partners</span></div>
-        <div><strong>5</strong><span>paying-customer milestone</span></div>
-        <div><strong>ADAPT</strong><span>belief-led interviews</span></div>
-        <div><strong>CITED</strong><span>reviewable candidate evidence</span></div>
+        <div><strong>20</strong><span>candidate interviews</span></div>
+        <div><strong>3</strong><span>architectures tested</span></div>
+        <div><strong>HUMAN</strong><span>decision owner</span></div>
       </section>
 
       <section className="coverd-section" id="coverd-products">
@@ -858,21 +917,21 @@ function CoverdApp() {
           <article><strong>Every evaluation cites evidence</strong><p>Recruiters can trace an assessment back to what was asked and what the candidate said.</p></article>
           <article><strong>Questions must earn their place</strong><p>Each follow-up should reduce a real uncertainty, not merely make an automated interview longer.</p></article>
           <article><strong>Uncertainty stays visible</strong><p>The product should surface missing evidence instead of turning every ambiguity into confidence.</p></article>
-          <article><strong>Evidence beats elegance</strong><p>Three interview-agent architectures were tested with real users; results, not theoretical appeal, determined the direction.</p></article>
+          <article><strong>Evidence beats elegance</strong><p>Three architectures were tested across 20 candidate interviews; candidate feedback and observed behaviour—not theoretical appeal—determined the direction.</p></article>
           <article><strong>Recruiters remain accountable</strong><p>AI carries repetition and context; people retain the judgement and responsibility.</p></article>
         </div>
         <div className="coverd-values">
           {["ROLE-SPECIFIC", "EVIDENCE-LED", "ADAPTIVE", "HUMAN-OWNED", "CANDIDATE-TRUSTED"].map((value) => <span key={value}>{value}</span>)}
         </div>
       </section>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function FinderApp({ openApp }: { openApp: (id: AppId) => void }) {
+function FinderApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
   return (
-    <div className="finder-app">
-      <div className="finder-meta"><span>{finderItems.length} items</span><span>Portfolio Index</span><span>42.0 MB available</span></div>
+    <TranslationBoundary locale={locale}><div className="finder-app">
+      <div className="finder-meta"><span>{finderItems.length} items</span><span>Portfolio Index</span><span>3 documents · 15 MB</span></div>
       <div className="finder-grid">
         {finderItems.map((item) => (
           <button key={item.id} className="finder-item" onDoubleClick={() => openApp(item.id)} onClick={() => openApp(item.id)}>
@@ -883,13 +942,13 @@ function FinderApp({ openApp }: { openApp: (id: AppId) => void }) {
         ))}
       </div>
       <div className="finder-status">Click an item once to open it.</div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function ExperienceApp() {
+function ExperienceApp({ locale }: { locale: Locale }) {
   return (
-    <div className="experience-app">
+    <TranslationBoundary locale={locale}><div className="experience-app">
       <header className="document-header">
         <div>
           <span className="eyebrow">PROFESSIONAL HISTORY</span>
@@ -914,13 +973,13 @@ function ExperienceApp() {
           </article>
         ))}
       </div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function ProjectsApp({ openApp }: { openApp: (id: AppId) => void }) {
+function ProjectsApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
   return (
-    <div className="projects-app">
+    <TranslationBoundary locale={locale}><div className="projects-app">
       <header className="document-header">
         <div><span className="eyebrow">SELECTED FILES</span><h3>Projects with measurable consequences.</h3></div>
         <span className="file-stamp">{projects.length} OBJECTS</span>
@@ -942,13 +1001,13 @@ function ProjectsApp({ openApp }: { openApp: (id: AppId) => void }) {
           </article>
         ))}
       </div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function SkillsApp() {
+function SkillsApp({ locale }: { locale: Locale }) {
   return (
-    <div className="skills-app">
+    <TranslationBoundary locale={locale}><div className="skills-app">
       <div className="control-panel-intro">
         <PixelIcon kind="controls" />
         <div><h3>Capabilities</h3><p>Six practical groups drawn from products, research and leadership.</p></div>
@@ -965,34 +1024,33 @@ function SkillsApp() {
           </fieldset>
         ))}
       </div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function EducationApp() {
+function EducationApp({ locale }: { locale: Locale }) {
   return (
-    <div className="education-app">
+    <TranslationBoundary locale={locale}><div className="education-app">
       <header className="document-header">
         <div><span className="eyebrow">EDUCATION</span><h3>Science, computation &amp; enterprise.</h3></div>
         <PixelIcon kind="university" />
       </header>
       <section className="degree-card degree-card--imperial">
         <div className="degree-mark">ICL</div>
-        <div><span>2025—2026</span><h4>MSc AI Applications &amp; Innovation</h4><p>Imperial College London · Completing Sep 2026</p><small>Deep learning · AI safety · medical imaging · climate ML · venture building</small></div>
+        <div><span>Sep 2025—Sep 2026</span><h4>MSc AI Applications &amp; Innovation</h4><p>Imperial College London · Predicted Distinction</p><small>Deep Learning · AI Safety · Innovation Management · ML in Medical Imaging · ML in Climate Change</small></div>
       </section>
       <section className="degree-card">
         <div className="degree-mark">KCL</div>
-        <div><span>2021—2025</span><h4>BSc Chemistry with Biomedicine &amp; Placement</h4><p>King&apos;s College London</p><small>First-class honours · computational chemistry · pharmaceutical placement</small></div>
+        <div><span>Sep 2021—May 2025</span><h4>BSc Chemistry with Biomedicine</h4><p>King&apos;s College London · First-Class Honours</p><small>Professional placement · Computational Chemistry · Molecular Biology · Chemical Biology · Organic Chemistry</small></div>
       </section>
       <div className="education-columns">
         <section>
           <h4>Honours &amp; awards</h4>
           <ul>
-            <li>Associate of King&apos;s College London</li>
-            <li>SCIS Academic Excellence Award (valedictorian)</li>
             <li>King&apos;s Research Experience Award</li>
+            <li>Associate of King&apos;s College London (AKC)</li>
+            <li>SCDF Service Excellence Award</li>
             <li>SCDF 1st Division HQ Wall of Fame</li>
-            <li>SCDF Service Excellence &amp; Best Trainee Awards</li>
             <li>EARCOS Global Citizenship Award</li>
           </ul>
         </section>
@@ -1000,96 +1058,114 @@ function EducationApp() {
           <h4>Languages</h4>
           <dl className="language-list">
             <div><dt>English</dt><dd>Native / bilingual</dd></div>
-            <div><dt>Chinese</dt><dd>Native / bilingual</dd></div>
+            <div><dt>Mandarin</dt><dd>Native / bilingual</dd></div>
             <div><dt>Italian</dt><dd>Elementary</dd></div>
           </dl>
         </section>
       </div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function ResumeApp({ openApp }: { openApp: (id: AppId) => void }) {
+function ResumeApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
   return (
-    <div className="resume-app">
+    <TranslationBoundary locale={locale}><div className="resume-app">
       <div className="simpletext-toolbar"><span>Times</span><span>10 pt</span><span>A4 · 2 pages</span><button onClick={() => openApp("documents")}>Preview AI CV</button></div>
       <article className="resume-paper">
-        <header><div><h3>Samuel Zhang</h3><p>People-centred generalist · Applied AI · Product · Founder</p></div><address>London, United Kingdom<br />sam.xiaojian.zhang@outlook.com<br />linkedin.com/in/samuel-xj-zhang</address></header>
+        <header><div><h3>Samuel Zhang</h3><p>Applied AI Engineer · Product Builder · Founder</p></div><address>London, United Kingdom<br />sam.xiaojian.zhang@outlook.com<br />linkedin.com/in/samuel-xj-zhang</address></header>
         <hr />
         <section>
           <h4>Profile</h4>
-          <p>A people-centred generalist who moves between AI research, product leadership, engineering and stakeholder conversations. From an unused Visual Basic periodic table to enterprise products and adaptive AI interviews, the through-line is an evidence-first approach: understand the problem, earn trust, test what works and help the people around the system thrive.</p>
+          <p>Applied AI engineer and founder who turns ambiguous, domain-heavy problems into products people love. At Marsh, builds and evaluates ranking and document-intelligence systems for brokers; at COVERD, leads a company-aware voice-interview product. Previously delivered GROWMAT at Pfizer, a transformative platform saving 120+ analyst hours monthly through full-stack engineering, product ownership and stakeholder-led adoption.</p>
         </section>
         <section>
           <h4>Current</h4>
           <div>
-            <p><strong>Marsh Risk — AI Intern, Applied AI &amp; Machine Learning</strong><br /><em>May 2026—Present · London</em><br />Building lead-matching decision support from historical placement patterns, quantitative attributes and legal-document evidence. The research uses time-aware evaluation, strong baselines, provenance and explicit abstention rather than treating a historical outcome as proof of suitability.</p>
-            <p><strong>coverd.ai — Founder &amp; Product Lead</strong><br /><em>Mar 2026—Present · London</em><br />Led the pivot from candidate-side CV tooling to the AI interviewer that interviews the company first. Team interviews create a role-specific belief graph; adaptive voice interviews pursue missing evidence and return cited, recruiter-reviewable evaluations. Four design partners, including Imperial College London, are shaping the bootstrapped prototype.</p>
+            <div className="resume-role">
+              <p><strong>Marsh Risk — AI Intern, Applied AI &amp; ML Thesis</strong><br /><em>May 2026—Present · London</em></p>
+              <ul><li>Structured a proof of concept for planned Broker Workbench integration around quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence. Developed an internal broker lead-matching engine for lead-insurer selection using historical trading performance, wording quality and real-time appetite signals. Translated the findings for Marsh Matching Companion Phase 3 into transparent, human-in-the-loop recommendations supporting broker judgement, wider market consideration and client outcomes.</li></ul>
+            </div>
+            <div className="resume-role">
+              <p><strong>COVERD — Founder &amp; Product Lead (part-time)</strong><br /><em>Mar 2026—Present · London</em></p>
+              <ul><li>Led customer discovery with four design partners and pivoted from candidate-side CV tooling to an interviewer that first learns how each company and role works. Selected a multi-agent, graph-based voice architecture seeded with priors from company interviews; agents update evidence-weighted beliefs to choose role-specific follow-ups. Tested three architectures across 20 candidate interviews, with candidates praising the question quality and ability to make them feel heard and valued.</li></ul>
+            </div>
           </div>
         </section>
         <section>
           <h4>Pfizer</h4>
           <div>
-            <p><strong>Product Owner &amp; Web Application Developer</strong><br /><em>Oct 2024—Apr 2026</em></p>
-            <ul>
-              <li>Led GROWMAT from user research and senior-director pitch through roadmap, agile delivery, deployment and department-wide adoption.</li>
-              <li>Connected technical capability with operational availability, chose maintainable tools over fashionable ones and built stakeholder trust through a polished, dependable product.</li>
-              <li>Improved scheduling efficiency by 1200%, saving 120+ person-hours monthly across 40+ analysts.</li>
-              <li>Created continuous analytics for project timelines, compliance, performance and workload modelling with 99.9% uptime and an 80% performance improvement.</li>
-              <li>Produced API specifications, user manuals and video training for long-term maintainability.</li>
-            </ul>
-            <p><strong>Data Analyst Undergraduate, Analytical R&amp;D</strong><br /><em>Sep 2023—Aug 2024</em></p>
-            <ul>
-              <li>Developed pharmaceutical solubility modelling using statistical thermodynamics, Julia and machine-learning libraries.</li>
-              <li>Worked across Pfizer, MIT and Imperial to bridge open-source fluid thermodynamics with pharmaceutical development.</li>
-            </ul>
+            <div className="resume-role">
+              <p><strong>Web Application Developer &amp; Product Owner (part-time)</strong><br /><em>Oct 2024—Apr 2026 · London</em></p>
+              <ul>
+                <li>Secured senior sponsorship, significant funding and department-wide adoption through live demonstrations; retained for a two-year part-time extension to own GROWMAT&apos;s roadmap.</li>
+              </ul>
+            </div>
+            <div className="resume-role">
+              <p><strong>Data Analyst Undergraduate, Analytical R&amp;D</strong><br /><em>Sep 2023—Aug 2024 · Sandwich</em></p>
+              <ul>
+                <li>Built and deployed GROWMAT over ten months: a seven-component capacity-planning platform used by 40+ employees across four teams, with wider impact across 80+ people.</li>
+                <li>Cut capacity calculations from 12 minutes to under 60 seconds (12×), saved 120+ hours monthly and replaced weekly workbooks with live data and automated two-hourly refreshes.</li>
+                <li>Engineered concurrency protection, daily backups, 180-day rollback and live dashboards spanning project timelines, compliance, analytical performance and future workloads.</li>
+                <li>Prototyped pharmaceutical solubility modelling with statistical thermodynamics and Julia, working across Pfizer, MIT and Imperial to translate open-source research into a practical drug-development workflow.</li>
+              </ul>
+            </div>
           </div>
         </section>
         <section>
           <h4>Research &amp; teaching</h4>
           <div>
-            <p><strong>KCL Coding Series — Tutor &amp; Curriculum Designer</strong><br />Designed 20+ sessions for 80+ students, achieved 90% satisfaction and secured Royal Society of Chemistry endorsement. One former student later earned an offer from Microsoft.</p>
-            <p><strong>Royal Society Summer Fellowship</strong><br />Built GPU-accelerated GROMACS workflows with a 70% performance improvement for protein–membrane research.</p>
-            <p><strong>King’s Undergraduate Research Fellowship</strong><br />Engineered MATLAB, Excel and Python spectroscopy pipelines that reduced analysis time by 40%.</p>
+            <div className="resume-role">
+              <p><strong>King’s College London — Coding Series Tutor &amp; Curriculum Designer</strong><br /><em>Jan 2023—Apr 2025</em></p>
+              <ul><li>Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, achieving 90% satisfaction and Royal Society of Chemistry endorsement. Organised a cross-industry data-science careers panel for 100+ students and mentored learners in widening their options through technical skills.</li></ul>
+            </div>
+            <div className="resume-role">
+              <p><strong>Royal Society / King’s College London — Summer Research Fellow</strong><br /><em>Jun—Jul 2023</em></p>
+              <ul><li>Built GPU-accelerated GROMACS workflows for protein–membrane simulations, improving computational performance by 70% and iterating experimental design from the results.</li></ul>
+            </div>
+            <div className="resume-role">
+              <p><strong>King’s College London — Undergraduate Research Fellow</strong><br /><em>Jun—Jul 2022</em></p>
+              <ul><li>Engineered MATLAB, Python and Excel spectroscopy pipelines that reduced analysis time by 40%, were adopted by the group and now underpin a publication in progress.</li></ul>
+            </div>
           </div>
         </section>
         <section>
           <h4>Public service</h4>
           <div>
-            <p><strong>Singapore Civil Defence Force — Commander’s PA</strong><br /><em>Jul 2019—Jul 2021</em></p>
-            <ul>
-              <li>Created MATLAB-based COVID-19 resource planning from public epidemiological data.</li>
-              <li>Automated emergency activation attendance for 1,200+ personnel and reduced response time by more than 300%.</li>
-              <li>Received the Service Excellence Award, 1st Division HQ Wall of Fame recognition and promotion to Sergeant.</li>
-            </ul>
+            <div className="resume-role">
+              <p><strong>Singapore Civil Defence Force — Commander’s Personal Assistant / Sergeant</strong><br /><em>Jul 2019—Jul 2021 · Singapore</em></p>
+              <ul>
+                <li>Built MATLAB COVID-19 resource-planning models from public epidemiological data and automated emergency-activation attendance across legacy systems for 1,200+ personnel.</li>
+                <li>Supported senior leaders in time-critical operations, balancing incomplete information, rapid prioritisation and accountability across large-scale personnel operations.</li>
+              </ul>
+            </div>
           </div>
         </section>
         <section>
           <h4>Education</h4>
-          <p><strong>Imperial College London</strong> — MSc AI Applications &amp; Innovation, 2025–2026<br />Deep Learning · AI Safety · Innovation · Medical Imaging · Climate ML<br /><br /><strong>King&apos;s College London</strong> — BSc Chemistry with Biomedicine &amp; Placement, First-Class Honours, 2021–2025</p>
+          <p><strong>Imperial College London</strong> — MSc AI Applications &amp; Innovation, Predicted Distinction, Sep 2025—Sep 2026<br />Deep Learning · AI Safety · Innovation Management · ML in Medical Imaging · ML in Climate Change<br /><br /><strong>King&apos;s College London</strong> — BSc Chemistry with Biomedicine, First-Class Honours, Sep 2021—May 2025<br />Professional placement · Computational Chemistry · Molecular Biology · Chemical Biology · Organic Chemistry · Associate of King&apos;s College London</p>
         </section>
         <section>
           <h4>Technical</h4>
-          <p><strong>ML:</strong> PyTorch, TensorFlow, Scikit-learn, CNNs, LLMs, stochastic modelling<br /><strong>Programming:</strong> Python, Julia, SQL, JavaScript, TypeScript, MATLAB, React<br /><strong>Data:</strong> pipelines, statistical modelling, A/B testing, Power BI, Pandas, NumPy<br /><strong>Infrastructure:</strong> Docker, AWS, Linux, PostgreSQL, HPC, GPU computing, CI/CD</p>
+          <p><strong>AI &amp; ML:</strong> multi-agent systems, RAG and retrieval, LLM and embedding evaluation, document intelligence, learning-to-rank, modelling and experiment design<br /><strong>Engineering:</strong> Python, Julia, SQL, TypeScript/React, PostgreSQL, Docker and CI/CD<br /><strong>Product:</strong> customer discovery, rapid prototyping, stakeholder management, responsible AI and adoption</p>
         </section>
         <section>
           <h4>Selected projects</h4>
-          <p><strong>Home Automation &amp; AI Infrastructure:</strong> Seven servers and 23 systems spanning Proxmox, Docker, 42 GB VRAM GPU compute, self-hosted CI, cross-architecture workloads, networking, security and a 96 TB raw / 72 TB usable backup array.<br /><br /><strong>Stock Market Simulation Engine:</strong> Julia/SQL order matching with real-time WebSocket order-book visualisation.</p>
+          <p><strong>Home Lab &amp; Private AI Infrastructure:</strong> Run 23 services across seven Proxmox/Docker servers, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB usable RAID storage.<br /><br /><strong>Stock Market Simulation Engine:</strong> Built Julia/SQL order matching, real-time WebSocket order-book updates and a responsive trading interface.</p>
         </section>
         <section>
           <h4>Creative life</h4>
-          <p>Euphonium player with King’s College London Brass Band at UniBrass 2021 and 2022, including a fourth-place result; involved in <em>Thoroughly Modern Millie</em>, <em>Tombalek</em> and <em>Curtains</em> across performance and drums; and a former wedding photographer who now photographs for the love of the craft.</p>
+          <p>Competitive brass-band euphonium player and member of a fourth-place UniBrass ensemble; performed in three musical-theatre productions, including one self-directed, written and composed. Former professional wedding photographer, now photographing nature and friends for the joy of the craft. Builds computers and home infrastructure across 12 machines; also enjoys hiking, climbing, science fiction and travelling.</p>
         </section>
         <section>
           <h4>Awards</h4>
-          <p>Associate of King’s College · King’s Research Experience Award · SCDF Service Excellence Award · SCDF 1st Division HQ Wall of Fame · EARCOS Global Citizenship Award</p>
+          <p>King’s Research Experience Award · Associate of King’s College London (AKC) · SCDF Service Excellence Award · SCDF 1st Division HQ Wall of Fame · EARCOS Global Citizenship Award<br /><strong>Languages:</strong> English and Mandarin (native/bilingual) · Italian (elementary)</p>
         </section>
       </article>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function ContactApp({ openApp }: { openApp: (id: AppId) => void }) {
+function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = async () => {
@@ -1111,7 +1187,7 @@ function ContactApp({ openApp }: { openApp: (id: AppId) => void }) {
   };
 
   return (
-    <div className="chooser-app">
+    <TranslationBoundary locale={locale}><div className="chooser-app">
       <div className="chooser-columns">
         <div className="chooser-list" aria-label="Contact services">
           <button className="is-selected"><PixelIcon kind="network" small />Internet</button>
@@ -1131,23 +1207,11 @@ function ContactApp({ openApp }: { openApp: (id: AppId) => void }) {
         </div>
       </div>
       <div className="chooser-status"><span className="status-dot" /> AppleTalk Active</div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-const documentLibrary = [
-  {
-    id: "ai-cv",
-    title: "Samuel Zhang — Applied AI CV",
-    meta: "AI roles · 2 pages · 178 KB",
-    src: "/Samuel-Zhang-Applied-AI-CV.pdf",
-  },
-  {
-    id: "profile",
-    title: "LinkedIn Profile Export",
-    meta: "Archived profile · 70 KB",
-    src: "/Samuel-Zhang-Profile.pdf",
-  },
+const supportingDocuments = [
   {
     id: "thesis",
     title: "Molecular Recognition Thesis",
@@ -1162,11 +1226,16 @@ const documentLibrary = [
   },
 ];
 
-function DocumentsApp() {
-  const [activeDocument, setActiveDocument] = useState(documentLibrary[0]);
+function DocumentsApp({ locale }: { locale: Locale }) {
+  const [activeDocumentId, setActiveDocumentId] = useState("ai-cv");
+  const documentLibrary = useMemo(() => [
+    { id: "ai-cv", ...localeCvAssets[locale] },
+    ...supportingDocuments,
+  ], [locale]);
+  const activeDocument = documentLibrary.find((document) => document.id === activeDocumentId) ?? documentLibrary[0];
 
   return (
-    <div className="documents-app">
+    <TranslationBoundary locale={locale}><div className="documents-app">
       <aside className="documents-library">
         <div className="documents-library__title">
           <PixelIcon kind="pdf" />
@@ -1176,7 +1245,7 @@ function DocumentsApp() {
           <button
             key={document.id}
             className={activeDocument.id === document.id ? "is-active" : ""}
-            onClick={() => setActiveDocument(document)}
+            onClick={() => setActiveDocumentId(document.id)}
           >
             <PixelIcon kind="document" small />
             <span><strong>{document.title}</strong><small>{document.meta}</small></span>
@@ -1192,13 +1261,13 @@ function DocumentsApp() {
         <iframe
           key={activeDocument.id}
           src={`${activeDocument.src}#view=FitH&toolbar=1&navpanes=0`}
-          title={`Preview of ${activeDocument.title}`}
+          title={`${translateText(locale, "Preview of")} ${translateText(locale, activeDocument.title)}`}
         />
         <p className="documents-fallback">
           If your browser cannot render PDFs, <a href={activeDocument.src}>open this document in the current tab</a>.
         </p>
       </section>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
@@ -1257,15 +1326,15 @@ function createPuzzle(seed = 1991) {
 }
 
 const SAM_WORDS = [
-  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD uses a role-specific belief graph to choose adaptive questions while keeping hiring decisions human-owned." },
-  { answer: "PFIZER", clue: "Where GROWMAT began its enterprise life.", fact: "At Pfizer, Samuel’s systems delivered a 1200% efficiency gain and saved 120+ hours each month." },
+  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD selected a multi-agent belief graph after testing three architectures across 20 candidate interviews." },
+  { answer: "PFIZER", clue: "Where GROWMAT began its enterprise life.", fact: "At Pfizer, GROWMAT cut capacity calculations from 12 minutes to under 60 seconds and returned 120+ hours each month." },
   { answer: "PYTHON", clue: "A language threading through Samuel’s research, teaching and AI work.", fact: "Samuel has taught programming and data analysis to more than 80 students." },
   { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "Samuel’s work spans research, insurance, education and responsible AI across London." },
 ] as const;
 
 const MEMORY_PAIRS = [
-  { id: "coverd", left: "COVERD", right: "HIRING AI", fact: "Samuel’s startup builds responsible recruitment intelligence." },
-  { id: "growmat", left: "1200%", right: "GROWMAT", fact: "The efficiency gain delivered by Samuel’s Pfizer platform." },
+  { id: "coverd", left: "COVERD", right: "20 INTERVIEWS", fact: "Candidate feedback helped select COVERD’s multi-agent voice architecture." },
+  { id: "growmat", left: "12×", right: "GROWMAT", fact: "Capacity calculations fell from 12 minutes to under 60 seconds." },
   { id: "gpu", left: "42 GB", right: "LOCAL AI", fact: "Private model training and inference run in Samuel’s home lab." },
   { id: "scdf", left: "SCDF", right: "1,200 PEOPLE", fact: "Emergency planning systems supported personnel in Singapore." },
   { id: "teaching", left: "80+ STUDENTS", right: "CODING", fact: "Samuel designed an accessible programming and data curriculum." },
@@ -1311,7 +1380,7 @@ function scoreWordGuess(guess: string, answer: string) {
   return score;
 }
 
-function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
+function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
   const [game, setGame] = useState<"minefield" | "puzzle" | "samword" | "memory">("minefield");
   const [minefield, setMinefield] = useState(() => createMinefield());
   const [mineStatus, setMineStatus] = useState<"playing" | "won" | "lost">("playing");
@@ -1476,7 +1545,7 @@ function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
   };
 
   return (
-    <div className="games-app">
+    <TranslationBoundary locale={locale}><div className="games-app">
       <aside className="games-sidebar">
         <div className="games-logo"><PixelIcon kind="game" /><span>Desk<br />Arcade</span></div>
         <button className={game === "minefield" ? "is-active" : ""} onClick={() => setGame("minefield")}><span className="game-mini-icon">M</span>Minefield</button>
@@ -1493,7 +1562,9 @@ function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
               <div className={`game-face game-face--${mineStatus}`}>{mineStatus === "lost" ? "x_x" : mineStatus === "won" ? "^_^" : ":)"}</div>
             </div>
             <div className="mine-toolbar">
-              <strong>{mineStatus === "playing" ? `${10 - flagged} mines` : mineStatus === "won" ? "You cleared it!" : "A small administrative error."}</strong>
+              <strong aria-live="polite">{mineStatus === "playing"
+                ? locale === "zh-CN" ? `${10 - flagged} 枚地雷` : locale === "zh-TW" ? `${10 - flagged} 顆地雷` : `${10 - flagged} mines`
+                : mineStatus === "won" ? "You cleared it!" : "A small administrative error."}</strong>
               <button className={flagMode ? "is-active" : ""} onClick={() => setFlagMode((current) => !current)}>F Flag mode</button>
               <button onClick={resetMines}>New field</button>
             </div>
@@ -1504,7 +1575,11 @@ function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
                   className={`${cell.revealed ? "is-revealed" : ""}${cell.mine && cell.revealed ? " is-mine" : ""}`}
                   onClick={() => revealCell(index)}
                   onContextMenu={(event) => { event.preventDefault(); flagCell(index); }}
-                  aria-label={`Cell ${index + 1}${cell.flagged ? ", flagged" : ""}`}
+                  aria-label={locale === "zh-CN"
+                    ? `格子 ${index + 1}${cell.flagged ? "，已标记" : ""}`
+                    : locale === "zh-TW"
+                      ? `格子 ${index + 1}${cell.flagged ? "，已標記" : ""}`
+                      : `Cell ${index + 1}${cell.flagged ? ", flagged" : ""}`}
                 >
                   {cell.flagged && !cell.revealed ? "F" : cell.revealed && cell.mine ? "*" : cell.revealed && cell.adjacent ? cell.adjacent : ""}
                 </button>
@@ -1519,7 +1594,7 @@ function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
               <div><span>DESK ACCESSORY 02</span><h3>Sliding Puzzle</h3></div>
               <div className="puzzle-counter">{moves}<small>MOVES</small></div>
             </div>
-            <div className="puzzle-message">{puzzleSolved ? "Solved. The Macintosh is impressed." : "Put the numbers back in order."}</div>
+            <div className="puzzle-message" role="status">{puzzleSolved ? "Solved. The Macintosh is impressed." : "Put the numbers back in order."}</div>
             <div className="puzzle-board" aria-label="Sliding number puzzle">
               {puzzle.map((tile, index) => (
                 <button key={`${tile}-${index}`} className={tile === 0 ? "is-empty" : ""} onClick={() => moveTile(index)} disabled={tile === 0}>
@@ -1564,7 +1639,7 @@ function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
               <button className="mac-button" type="submit" disabled={wordSolved || wordGuesses.length >= 6}>Enter</button>
               <button className="mac-button" type="button" onClick={nextWord}>Next file</button>
             </form>
-            <p className={`samword-message${wordSolved ? " is-solved" : ""}`}>{wordMessage}</p>
+            <p className={`samword-message${wordSolved ? " is-solved" : ""}`} role="status">{localiseGameMessage(locale, wordMessage)}</p>
           </>
         )}
         {game === "memory" && (
@@ -1582,7 +1657,9 @@ function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
                     key={`${card.pairId}-${index}`}
                     className={`${visible ? "is-visible" : ""}${memoryMatched.has(card.pairId) ? " is-matched" : ""}`}
                     onClick={() => flipMemory(index)}
-                    aria-label={visible ? card.label : `Hidden profile card ${index + 1}`}
+                    aria-label={visible
+                      ? translateText(locale, card.label)
+                      : locale === "zh-CN" ? `隐藏的个人资料卡 ${index + 1}` : locale === "zh-TW" ? `隱藏的個人資料卡 ${index + 1}` : `Hidden profile card ${index + 1}`}
                   >
                     <span>{visible ? card.label : "?"}</span>
                   </button>
@@ -1590,22 +1667,24 @@ function GamesApp({ openApp }: { openApp: (id: AppId) => void }) {
               })}
             </div>
             <div className="memory-status">
-              <span>{memoryMatched.size === MEMORY_PAIRS.length ? "You now know suspiciously much about Samuel." : `${memoryMatched.size} of ${MEMORY_PAIRS.length} connections found`}</span>
+              <span aria-live="polite">{memoryMatched.size === MEMORY_PAIRS.length
+                ? "You now know suspiciously much about Samuel."
+                : locale === "zh-CN" ? `已找到 ${memoryMatched.size} / ${MEMORY_PAIRS.length} 组配对` : locale === "zh-TW" ? `已找到 ${memoryMatched.size} / ${MEMORY_PAIRS.length} 組配對` : `${memoryMatched.size} of ${MEMORY_PAIRS.length} connections found`}</span>
               <button className="mac-button" onClick={resetMemory}>Shuffle cards</button>
             </div>
             {memoryFact && (
-              <p className="memory-fact">{memoryFact}</p>
+              <p className="memory-fact" role="status">{memoryFact}</p>
             )}
           </>
         )}
       </section>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function SecretApp() {
+function SecretApp({ locale }: { locale: Locale }) {
   return (
-    <div className="secret-app">
+    <TranslationBoundary locale={locale}><div className="secret-app">
       <div className="secret-stars" aria-hidden="true"><i /><i /><i /><i /><i /></div>
       <div className="flying-toaster" aria-hidden="true"><span /><i /><b /></div>
       <PixelIcon kind="secret" />
@@ -1614,7 +1693,7 @@ function SecretApp() {
       <p>You found the part of the portfolio that contributes nothing to conversion metrics.</p>
       <blockquote>“The best interface is one with at least one completely unnecessary secret.”</blockquote>
       <small>System note: OpenClaw did not, in fact, complete Samuel’s entire life. Results remain inconclusive.</small>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
@@ -1622,7 +1701,7 @@ function ServiceIcon({ code, tone }: { code: string; tone: string }) {
   return <span className={`service-pixel-icon service-pixel-icon--${tone}`} aria-hidden="true">{code}</span>;
 }
 
-function LabApp() {
+function LabApp({ locale }: { locale: Locale }) {
   const [filter, setFilter] = useState("All");
   const services = [
     { group: "Compute", code: "PX", tone: "violet", name: "Proxmox", host: "Virtualisation cluster", description: "Runs isolated VMs and Linux containers for the heavier parts of the lab." },
@@ -1653,7 +1732,7 @@ function LabApp() {
   const visibleServices = filter === "All" ? services : services.filter((service) => service.group === filter);
 
   return (
-    <div className="lab-app">
+    <TranslationBoundary locale={locale}><div className="lab-app">
       <header className="document-header">
         <div><span className="eyebrow">PERSONAL INFRASTRUCTURE</span><h3>A small internet, built at home.</h3></div>
         <span className="online-badge">● {services.length} SYSTEMS</span>
@@ -1665,12 +1744,12 @@ function LabApp() {
           Proxmox installed from scratch, and a daunting climb through networking,
           security and cross-architecture compatibility. One ill-fated attempt to host a
           large file erased a database and its Compose configuration; the lab now has
-          monitored, scheduled backups and 72 TB of usable RAID storage.
+          monitored, scheduled backups and 106 TB of usable RAID storage across its systems.
         </p>
         <dl>
           <div><dt>GPU memory</dt><dd>42 GB</dd></div>
           <div><dt>Server fleet</dt><dd>7</dd></div>
-          <div><dt>Backup storage</dt><dd>72 TB usable</dd></div>
+          <div><dt>Backup storage</dt><dd>106 TB usable</dd></div>
           <div><dt>Running systems</dt><dd>{services.length}</dd></div>
         </dl>
       </div>
@@ -1691,60 +1770,64 @@ function LabApp() {
           </article>
         ))}
       </div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function ScrapbookApp() {
+function ScrapbookApp({ locale }: { locale: Locale }) {
   const interests = [
     ["Hiking & climbing", "A pair of boots, a windbreaker, and somewhere new."],
-    ["Photography", "Two years photographing weddings professionally; now the camera is for landscapes, food, people and the pleasure of looking carefully."],
+    ["Photography", "Former professional wedding photographer; now the camera is for nature, friends, and the smile on people’s faces."],
     ["Euphonium", "Played with King’s College London Brass Band at UniBrass in 2021 and 2022, including a fourth-place result."],
-    ["Musical theatre", "Thoroughly Modern Millie, the Singaporean Society’s original Tombalek, and Curtains—across performance and drums."],
+    ["Musical theatre", "Three productions across performance and drums, including one self-directed, written and composed."],
     ["Multiculturalism", "Singapore, Shanghai, and London shape how I work."],
     ["Teaching & people", "I am energised by rooms full of people. One student I taught Python later earned an offer from Microsoft; their success remains one of my proudest outcomes."],
     ["Curiosity", "Science, systems, music, people and an unreasonable number of random facts. Being a generalist is the point."],
     ["First software", "A clickable Visual Basic periodic table built for IB Chemistry. It found almost no users and revealed exactly how much I loved making software."],
-    ["Hardware catalogue", "Ask me for a processor part number and I may answer. A decade of architectures, prices and improbable component combinations lives rent-free in my head."],
+    ["Hardware catalogue", "Twelve machines, seven active servers and an electricity bill that has become a recurring systems-monitoring alert."],
   ];
   return (
-    <div className="scrapbook-app">
+    <TranslationBoundary locale={locale}><div className="scrapbook-app">
       <header className="document-header"><div><span className="eyebrow">INTERESTS &amp; NOTES</span><h3>The creative life behind the technical work.</h3></div><PixelIcon kind="photos" /></header>
       <div className="scrap-grid">
         {interests.map(([title, copy], index) => (
           <article key={title} className={`scrap-note scrap-note--${(index % 3) + 1}`}><span>{index + 1}</span><h4>{title}</h4><p>{copy}</p></article>
         ))}
       </div>
-    </div>
+    </div></TranslationBoundary>
   );
 }
 
-function AppContent({ id, openApp }: { id: AppId; openApp: (id: AppId) => void }) {
+function AppContent({ id, openApp, locale }: { id: AppId; openApp: (id: AppId) => void; locale: Locale }) {
   switch (id) {
-    case "about": return <AboutApp openApp={openApp} />;
-    case "coverd": return <CoverdApp />;
-    case "finder": return <FinderApp openApp={openApp} />;
-    case "experience": return <ExperienceApp />;
-    case "projects": return <ProjectsApp openApp={openApp} />;
-    case "skills": return <SkillsApp />;
-    case "education": return <EducationApp />;
-    case "resume": return <ResumeApp openApp={openApp} />;
-    case "documents": return <DocumentsApp />;
-    case "games": return <GamesApp openApp={openApp} />;
-    case "contact": return <ContactApp openApp={openApp} />;
-    case "lab": return <LabApp />;
-    case "scrapbook": return <ScrapbookApp />;
-    case "secret": return <SecretApp />;
+    case "about": return <AboutApp openApp={openApp} locale={locale} />;
+    case "coverd": return <CoverdApp locale={locale} />;
+    case "finder": return <FinderApp openApp={openApp} locale={locale} />;
+    case "experience": return <ExperienceApp locale={locale} />;
+    case "projects": return <ProjectsApp openApp={openApp} locale={locale} />;
+    case "skills": return <SkillsApp locale={locale} />;
+    case "education": return <EducationApp locale={locale} />;
+    case "resume": return <ResumeApp openApp={openApp} locale={locale} />;
+    case "documents": return <DocumentsApp locale={locale} />;
+    case "games": return <GamesApp openApp={openApp} locale={locale} />;
+    case "contact": return <ContactApp openApp={openApp} locale={locale} />;
+    case "lab": return <LabApp locale={locale} />;
+    case "scrapbook": return <ScrapbookApp locale={locale} />;
+    case "secret": return <SecretApp locale={locale} />;
   }
 }
 
 export default function SystemSevenDesktop({
   initialApp = "about",
   skipBoot = false,
+  initialLocale = "en-GB",
 }: {
   initialApp?: AppId;
   skipBoot?: boolean;
+  initialLocale?: Locale;
 }) {
+  const router = useRouter();
+  const [locale, setLocale] = useState<Locale>(initialLocale);
   const [windows, setWindows] = useState(() =>
     INITIAL_WINDOWS.map((windowState) => ({
       ...windowState,
@@ -1764,6 +1847,27 @@ export default function SystemSevenDesktop({
   const zCounter = useRef(20);
   const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
   const toastTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const queryLocale = normaliseLocale(new URLSearchParams(window.location.search).get("lang"));
+    let storedLocale: Locale | null = null;
+    try {
+      storedLocale = normaliseLocale(window.localStorage.getItem("samuel-system7-locale"));
+    } catch {
+      // Explicit route and default locale still work when storage is unavailable.
+    }
+    if (queryLocale) setLocale(queryLocale);
+    else if (initialLocale === "en-GB" && storedLocale) setLocale(storedLocale);
+  }, [initialLocale]);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    try {
+      window.localStorage.setItem("samuel-system7-locale", locale);
+    } catch {
+      // Language switching remains available for this session.
+    }
+  }, [locale]);
 
   const completeBoot = useCallback(() => {
     try {
@@ -1809,11 +1913,11 @@ export default function SystemSevenDesktop({
   }, []);
 
   useEffect(() => {
-    const updateClock = () => setClock(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
+    const updateClock = () => setClock(new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
     updateClock();
     const timer = window.setInterval(updateClock, 30000);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     const isMobile = window.matchMedia("(max-width: 720px)").matches;
@@ -1853,6 +1957,7 @@ export default function SystemSevenDesktop({
   }, []);
 
   const activeTitle = windows.find((item) => item.id === activeId && item.open)?.title ?? "Finder";
+  const activeLocaleOption = localeOptions.find((option) => option.locale === locale) ?? localeOptions[0];
   const openWindows = useMemo(() => windows.filter((item) => item.open), [windows]);
   const selectedDesktopItem = DESKTOP_ICONS.find((item) => item.id === selectedIcon);
 
@@ -1875,6 +1980,21 @@ export default function SystemSevenDesktop({
     if (toastTimer.current) window.clearTimeout(toastTimer.current);
     toastTimer.current = window.setTimeout(() => setToast(null), 2600);
   }, []);
+
+  const chooseLocale = (nextLocale: Locale) => {
+    setLocale(nextLocale);
+    setOpenMenu(null);
+    const url = new URL(window.location.href);
+    const segments = url.pathname.split("/").filter(Boolean);
+    if (segments[0] && normaliseLocale(segments[0])) {
+      segments[0] = localeSlug(nextLocale);
+      url.pathname = `/${segments.join("/")}`;
+      url.searchParams.delete("lang");
+    } else {
+      url.searchParams.set("lang", nextLocale);
+    }
+    router.replace(`${url.pathname}${url.search}${url.hash}`, { scroll: false });
+  };
 
   const closeApp = (id: AppId) => {
     setWindows((current) => current.map((item) => item.id === id ? { ...item, open: false } : item));
@@ -1941,7 +2061,7 @@ export default function SystemSevenDesktop({
 
   if (booting) {
     return (
-      <main className="boot-screen" onClick={completeBoot}>
+      <TranslationBoundary locale={locale}><main className="boot-screen" data-locale={locale} onClick={completeBoot}>
         <div className="boot-computer"><div className="boot-face">:)</div><span /></div>
         <h1>Welcome to Samuel System 7</h1>
         <p className="boot-status" key={bootMessageIndex} aria-live="polite">{BOOT_MESSAGES[bootMessageIndex]}</p>
@@ -1956,13 +2076,14 @@ export default function SystemSevenDesktop({
           <span style={{ width: `${BOOT_PROGRESS[bootMessageIndex]}%` }} />
         </div>
         <button>Click anywhere to skip startup</button>
-      </main>
+      </main></TranslationBoundary>
     );
   }
 
   return (
-    <main
+    <TranslationBoundary locale={locale}><main
       className={`system-desktop desktop-pattern--${pattern}`}
+      data-locale={locale}
       onPointerDown={(event) => {
         if (event.target === event.currentTarget) {
           setSelectedIcon(null);
@@ -2022,7 +2143,41 @@ export default function SystemSevenDesktop({
           >
             {memoryMagic ? "∞ MB" : "32 MB"}
           </button>
-          <button className="menu-clock" onDoubleClick={() => { openApp("secret"); showToast("Time is an implementation detail."); }}>{clock}</button>
+          <div className="menu-root menu-language">
+            <button
+              className={openMenu === "language" ? "is-open" : ""}
+              onClick={() => setOpenMenu(openMenu === "language" ? null : "language")}
+              aria-haspopup="menu"
+              aria-expanded={openMenu === "language"}
+              aria-label={`${translateText(locale, "Language")}: ${activeLocaleOption.label}`}
+              title="Language"
+            >
+              <span className="language-label">Language</span>
+              <span className="language-short">文/A</span>
+            </button>
+            {openMenu === "language" && (
+              <div className="menu-dropdown language-dropdown" role="menu" aria-label="Language">
+                {localeOptions.map((option) => (
+                  <button
+                    key={option.locale}
+                    onClick={() => chooseLocale(option.locale)}
+                    lang={option.locale}
+                    role="menuitemradio"
+                    aria-checked={locale === option.locale}
+                  >
+                    <span className="language-check" aria-hidden="true">{locale === option.locale ? "✓" : ""}</span>
+                    <span>{option.label}</span>
+                    <small>{option.short}</small>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <button
+            className="menu-clock"
+            aria-label={`${translateText(locale, "Current time")}: ${clock}`}
+            onDoubleClick={() => { openApp("secret"); showToast("Time is an implementation detail."); }}
+          >{clock}</button>
         </div>
       </nav>
 
@@ -2031,8 +2186,8 @@ export default function SystemSevenDesktop({
           <button
             key={item.id}
             className={`desktop-icon${selectedIcon === item.id ? " is-selected" : ""}`}
-            title={`${item.label}: ${item.description}`}
-            aria-label={`${item.label}. ${item.description} Double-click to open.`}
+            title={`${translateText(locale, item.label)}: ${translateText(locale, item.description)}`}
+            aria-label={`${translateText(locale, item.label)}. ${translateText(locale, item.description)} ${translateText(locale, "Double-click to open.")}`}
             aria-pressed={selectedIcon === item.id}
             onClick={() => setSelectedIcon(item.id)}
             onDoubleClick={() => openApp(item.id)}
@@ -2054,16 +2209,17 @@ export default function SystemSevenDesktop({
           onClose={() => closeApp(windowState.id)}
           onZoom={() => toggleZoom(windowState.id)}
           onDragStart={(event) => handleDragStart(event, windowState.id)}
+          locale={locale}
         >
-          <AppContent id={windowState.id} openApp={openApp} />
+          <AppContent id={windowState.id} openApp={openApp} locale={locale} />
         </WindowChrome>
       ))}
 
       <div className={`desktop-hint${selectedDesktopItem ? " has-selection" : ""}`}>
         {selectedDesktopItem ? (
           <>
-            <strong>{selectedDesktopItem.label}</strong>
-            <span>{selectedDesktopItem.description} Double-click to open.</span>
+            <strong>{translateText(locale, selectedDesktopItem.label)}</strong>
+            <span>{translateText(locale, selectedDesktopItem.description)} {translateText(locale, "Double-click to open.")}</span>
           </>
         ) : (
           <span>Select an icon to learn what it opens · Double-click to launch · Drag title bars to move windows</span>
@@ -2071,7 +2227,7 @@ export default function SystemSevenDesktop({
       </div>
       <div className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
-          <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`Show ${item.title}`}>
+          <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, item.title)}`}>
             <PixelIcon kind={DESKTOP_ICONS.find((icon) => icon.id === item.id)?.icon ?? "document"} small />
             <span>{item.title}</span>
           </button>
@@ -2092,6 +2248,6 @@ export default function SystemSevenDesktop({
         </aside>
       )}
       {toast && <div className="system-toast" role="status"><PixelIcon kind="computer" small /><span>{toast}</span></div>}
-    </main>
+    </main></TranslationBoundary>
   );
 }

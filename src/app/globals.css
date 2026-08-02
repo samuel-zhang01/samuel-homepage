@@ -373,6 +373,56 @@ body {
   min-width: 244px;
 }
 
+.language-short {
+  display: none;
+}
+
+.language-dropdown {
+  min-width: 214px;
+}
+
+.menu-status .menu-language {
+  align-self: stretch;
+}
+
+.menu-status .language-dropdown {
+  right: 0;
+  left: auto;
+}
+
+.language-dropdown button {
+  display: grid;
+  grid-template-columns: 15px 1fr auto;
+  gap: 8px;
+}
+
+.language-dropdown small {
+  color: #666;
+  font-family: var(--system-mono);
+  font-size: 9px;
+}
+
+.language-dropdown button:hover small {
+  color: #fff;
+}
+
+.language-check {
+  min-width: 15px;
+  font-weight: 900;
+}
+
+[data-locale="zh-CN"],
+[data-locale="zh-TW"] {
+  --system-font: Geneva, Charcoal, Chicago, "Droid Sans Fallback", "AR PL KaitiM GB", Arial, sans-serif;
+  --system-mono: "Droid Sans Fallback", "AR PL KaitiM GB", "Courier New", monospace;
+  letter-spacing: 0;
+}
+
+[data-locale="zh-TW"] {
+  --system-font: Geneva, Charcoal, Chicago, "Droid Sans Fallback", "AR PL KaitiM Big5", Arial, sans-serif;
+  --system-mono: "Droid Sans Fallback", "AR PL KaitiM Big5", "Courier New", monospace;
+}
+
 /* Desktop */
 
 .desktop-icons {
@@ -1936,6 +1986,18 @@ body {
   padding-left: 14px;
 }
 
+.resume-role + .resume-role {
+  margin-top: 10px;
+}
+
+.resume-role > p {
+  margin-bottom: 2px;
+}
+
+.resume-role li + li {
+  margin-top: 2px;
+}
+
 /* Chooser */
 
 .chooser-app {
@@ -3050,6 +3112,21 @@ body {
     display: none;
   }
 
+  .language-label {
+    display: none;
+  }
+
+  .language-short {
+    display: inline;
+    font-weight: 700;
+  }
+
+  .menu-language > button {
+    min-width: 42px;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
   .active-application {
     display: block;
     max-width: 112px;
@@ -3073,6 +3150,15 @@ body {
     right: 4px;
     left: 4px;
     min-width: 0;
+  }
+
+  .menu-status .language-dropdown {
+    right: 4px;
+    left: 4px;
+  }
+
+  .menu-dropdown button {
+    min-height: 38px;
   }
 
   .desktop-icons {
@@ -3682,6 +3768,19 @@ body {
     grid-template-columns: 78px 1fr;
   }
 
+}
+
+.system-desktop :where(button, a, input):focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.system-menubar :where(button, a):focus-visible,
+.window-switcher button:focus-visible {
+  outline: 1px dotted currentColor;
+  outline-offset: -3px;
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

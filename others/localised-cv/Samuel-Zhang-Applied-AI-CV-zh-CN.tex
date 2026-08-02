@@ -1,0 +1,153 @@
+\documentclass[UTF8,11pt,a4paper,fontset=none]{ctexart}
+\raggedright
+
+% Samuel Zhang 的应用人工智能简历（简体中文）。使用 XeLaTeX 编译。
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+\setCJKmainfont{AR PL UMing CN}
+\usepackage[top=1.35cm,bottom=1.35cm,left=1.45cm,right=1.45cm]{geometry}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{setspace}
+
+\definecolor{ink}{HTML}{171717}
+\definecolor{accent}{HTML}{173F63}
+\definecolor{muted}{HTML}{4F4F4F}
+
+\hypersetup{
+  pdftitle={Samuel Zhang -- 应用人工智能简历},
+  pdfauthor={Samuel Zhang},
+  pdfsubject={应用人工智能、机器学习与人工智能产品开发},
+  pdfkeywords={应用人工智能, 机器学习, Python, 负责任人工智能, 产品, 数据科学}
+}
+
+\pagestyle{empty}
+\color{ink}
+\setstretch{1.04}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{0pt}
+\setlist[itemize]{leftmargin=1.35em,labelsep=.35em,itemsep=.6pt,topsep=1.2pt,parsep=0pt,partopsep=0pt,after=\vspace{1.5pt}}
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-2pt}\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{5pt}{2.5pt}
+
+\newcommand{\role}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} \textbar{} \textit{#2} & \textbf{#3} \\
+    \multicolumn{2}{@{}l@{}}{\small\color{muted}#4}
+  \end{tabularx}\vspace{-1pt}
+}
+
+\newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
+
+\begin{document}
+
+\begin{center}
+  {\huge\bfseries Samuel Zhang}\\[2pt]
+  {\large\bfseries 应用人工智能工程师与产品构建者}\\[4pt]
+  \small
+  英国伦敦 \enspace\textbullet\enspace
+  +44 7502 118207 \enspace\textbullet\enspace
+  \href{mailto:sam.xiaojian.zhang@outlook.com}{sam.xiaojian.zhang@outlook.com}\\[-1pt]
+  \href{https://www.linkedin.com/in/samuel-xj-zhang/}{linkedin.com/in/samuel-xj-zhang}
+  \enspace\textbullet\enspace
+  \href{https://me.samuelzhang.co.uk}{me.samuelzhang.co.uk}
+  \enspace\textbullet\enspace
+  \href{https://coverd.ai}{coverd.ai}
+\end{center}
+
+\section{个人简介}
+应用人工智能工程师与创业者，擅长把模糊、领域知识密集的问题转化为人们愿意使用并喜爱的产品。在 Marsh，为保险经纪人构建并评估排序与文档智能系统；在 COVERD，负责一款理解企业语境的语音面试产品。此前在辉瑞交付了产能规划平台 GROWMAT，通过全栈工程、产品负责与利益相关方推动，每月节省 120 多个分析人员工时。
+
+\section{核心能力}
+\textbf{人工智能与机器学习：}多智能体系统、检索增强生成与信息检索、大语言模型与嵌入评估、文档智能、学习排序、建模与实验设计
+
+\textbf{工程：}Python、Julia、SQL、TypeScript/React、PostgreSQL、Docker 与持续集成/交付
+
+\textbf{产品：}客户探索、快速原型、利益相关方管理、负责任人工智能与采用落地
+
+\section{精选工作经历}
+
+\role{Marsh Risk}{人工智能实习生——应用人工智能与机器学习论文}{2026 年 5 月—至今}{英国伦敦}
+\begin{itemize}
+  \item 围绕三个证据支柱，为计划接入 Broker Workbench 的概念验证设计框架：定量承保市场匹配排序、定性合同审查，以及探索性且限定时效的市场情报。
+  \item 开发内部经纪人线索匹配决策引擎，用于首席承保人选择；将历史交易表现、条款文本质量与实时承保意愿信号整合为透明、排序后的首席承保市场建议。
+  \item 向 Marsh Matching Companion 第三阶段利益相关方转化研究结论，形成透明、人在回路的建议，以支持经纪人的专业判断、更广泛的市场考虑与客户结果。
+\end{itemize}
+
+\role{\href{https://coverd.ai}{COVERD}}{创始人兼产品负责人（兼职）}{2026 年 3 月—至今}{英国伦敦}
+\begin{itemize}
+  \item 与四家设计合作伙伴开展客户探索，并将产品从候选人端简历工具转向一款先理解企业与岗位实际运作方式的人工智能面试系统。
+  \item 选定以企业访谈先验信息为起点的多智能体图结构语音架构；智能体在候选人面试中更新证据加权信念，以选择针对岗位的追问。
+  \item 在 20 场候选人面试中测试三种架构；候选人肯定了所选系统的智能追问、问题质量，以及让他们感到被认真倾听与重视的能力。
+\end{itemize}
+
+\role{辉瑞分析研发}{网页应用开发工程师兼产品负责人（兼职）}{2024 年 10 月—2026 年 4 月}{英国伦敦}
+\begin{itemize}
+  \item 通过现场演示获得高层支持、重要资金与部门级采用，并获两年兼职续约，继续负责 GROWMAT 产品路线图。
+\end{itemize}
+
+\role{辉瑞分析研发}{本科数据分析实习生}{2023 年 9 月—2024 年 8 月}{英国桑威奇}
+\begin{itemize}
+  \item 历时十个月构建并部署由七个组件组成的 GROWMAT 产能规划平台，供四个团队的 40 多名员工直接使用，并影响更广泛的 80 多人。
+  \item 将产能计算从 12 分钟缩短至不到 60 秒（12 倍），每月节省 120 多个工时，并以实时数据和每两小时自动刷新取代每周工作簿。
+  \item 构建并发保护、每日备份和 180 天回滚机制；开发覆盖项目时间线、合规、分析表现与未来工作量的实时仪表板。
+  \item 使用统计热力学与 Julia 完成药物溶解度建模原型；与辉瑞、麻省理工学院和帝国理工学院合作，将开源研究转化为实用的药物研发流程。
+\end{itemize}
+
+\newpage
+
+\section{教育}
+\role{帝国理工学院}{人工智能应用与创新理学硕士——预计优秀等级}{2025 年 9 月—2026 年 9 月}{英国伦敦}
+深度学习、人工智能安全、创新管理、医学影像机器学习、气候变化机器学习
+
+\role{伦敦国王学院}{化学与生物医学理学学士——一等荣誉学位}{2021 年 9 月—2025 年 5 月}{英国伦敦}
+专业实习；计算化学、分子生物学、化学生物学、有机化学；伦敦国王学院 AKC 资格
+
+\section{早期经历、研究与公共服务}
+
+\role{伦敦国王学院}{编程课程导师兼课程设计者}{2023 年 1 月—2025 年 4 月}{英国伦敦}
+\begin{itemize}
+  \item 为 80 多名化学专业学生设计并讲授 20 多场编程、数据分析与机器学习入门课程，满意度达 90\%，并获英国皇家化学学会认可。
+  \item 为 100 多名学生组织跨行业数据科学职业分享会，并指导学习者运用技术能力拓宽职业选择。
+\end{itemize}
+
+\role{英国皇家学会 / 伦敦国王学院}{暑期研究员}{2023 年 6—7 月}{英国伦敦}
+\begin{itemize}
+  \item 为蛋白质—膜分子模拟构建 GPU 加速的 GROMACS 工作流，将计算性能提升 70\%，并依据模拟结果迭代实验设计。
+\end{itemize}
+
+\role{伦敦国王学院}{本科研究员}{2022 年 6—7 月}{英国伦敦}
+\begin{itemize}
+  \item 为转动光谱构建 MATLAB、Python 与 Excel 数据流程，将分析时间缩短 40\%；该流程获团队采用，并支撑一篇在撰论文。
+\end{itemize}
+
+\role{新加坡民防部队}{指挥官私人助理 / 中士}{2019 年 7 月—2021 年 7 月}{新加坡}
+\begin{itemize}
+  \item 基于公开流行病学数据构建 MATLAB 新冠资源规划模型，并跨旧有系统自动化 1,200 多人的紧急动员考勤。
+  \item 在时间紧迫的行动中支持高级领导，在信息不完整的情况下兼顾快速排序、执行责任与大规模人员运作。
+\end{itemize}
+
+\section{精选技术项目}
+\begin{itemize}
+  \item \project{家庭实验室与私有人工智能基础设施——}{在七台 Proxmox/Docker 服务器上运行 23 项服务，配备 42 GB 显存人工智能算力、跨架构持续集成、网络安全和 106 TB 可用 RAID 存储。}
+  \item \project{股票市场模拟引擎——}{使用 Julia/SQL 构建订单撮合与处理、WebSocket 实时订单簿更新和响应式交易界面。}
+\end{itemize}
+
+\section{奖项与其他信息}
+\textbf{奖项：}伦敦国王学院研究体验奖；伦敦国王学院 AKC 资格；新加坡民防部队卓越服务奖；新加坡民防部队第一师总部荣誉榜；EARCOS 全球公民奖
+
+\textbf{语言：}英语与普通话（母语 / 双语）；意大利语（初级）
+
+\section{兴趣}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.7em}}X@{}}
+音乐 & 竞技铜管乐团次中音号手，所在乐团获 UniBrass 第四名；参与三部音乐剧，其中一部由自己执导、编写并作曲。\\[1pt]
+摄影 & 曾是专业婚礼摄影师；如今为创作本身，也为自然、朋友与人们脸上的笑容而摄影。\\[1pt]
+构建 & 在十二台机器上搭建计算机与家庭基础设施，电费也日益显眼。\\[1pt]
+其他 & 徒步、攀登、科幻与旅行，并充分利用新加坡护照。
+\end{tabularx}
+
+\end{document}
