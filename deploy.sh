@@ -1,68 +1,50 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Samuel Homepage Deployment Script
+set -euo pipefail
 
-set -e
+service_name="samuel-homepage"
 
-echo "🚀 Samuel Homepage Deployment Script"
-echo "===================================="
-
-# Function to print colored output
-print_status() {
-    echo -e "\n\033[1;34m$1\033[0m"
-}
-
-print_success() {
-    echo -e "\033[1;32m✅ $1\033[0m"
-}
-
-print_error() {
-    echo -e "\033[1;31m❌ $1\033[0m"
-}
-
-# Check if Docker and Docker Compose are installed
-print_status "Checking dependencies..."
-
-if ! command -v docker &> /dev/null; then
-    print_error "Docker is not installed. Please install Docker first."
-    exit 1
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Docker is required but was not found." >&2
+  exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null; then
-    print_error "Docker Compose is not installed. Please install Docker Compose first."
-    exit 1
-fi
-
-print_success "Docker and Docker Compose are installed"
-
-# Clean any previous builds and build the application
-print_status "Building Next.js application..."
-rm -rf .next
-npm run build
-print_success "Next.js build completed"
-
-# Build and start the Docker containers
-print_status "Building Docker image..."
-docker-compose build --no-cache
-
-print_status "Starting containers..."
-docker-compose up -d
-
-# Wait for the container to be healthy
-print_status "Waiting for application to be ready..."
-sleep 10
-
-# Check if the container is running
-if docker-compose ps | grep -q "Up"; then
-    print_success "Container is running successfully!"
-    echo ""
-    echo "🎉 Your portfolio is now available at:"
-    echo "   http://localhost:1111"
-    echo ""
-    echo "📊 To view logs: docker-compose logs -f"
-    echo "🛑 To stop: docker-compose down"
-    echo "🔄 To restart: docker-compose restart"
+if docker compose version >/dev/null 2>&1; then
+  compose=(docker compose)
+elif command -v docker-compose >/dev/null 2>&1; then
+  compose=(docker-compose)
 else
-    print_error "Container failed to start. Check logs with: docker-compose logs"
-    exit 1
+  echo "Docker Compose is required but was not found." >&2
+  exit 1
 fi
+
+echo "Building and starting Samuel System 7..."
+"${compose[@]}" up -d --build "$service_name"
+
+container_id=$("${compose[@]}" ps -q "$service_name")
+if [[ -z "$container_id" ]]; then
+  echo "Compose did not return a container for $service_name." >&2
+  "${compose[@]}" ps
+  exit 1
+fi
+
+echo "Waiting for the application health check..."
+for _ in {1..45}; do
+  health=$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$container_id")
+  case "$health" in
+    healthy)
+      echo "Samuel System 7 is ready at http://localhost:1111"
+      exit 0
+      ;;
+    unhealthy|exited|dead)
+      echo "Container entered the '$health' state." >&2
+      "${compose[@]}" logs --tail=100 "$service_name" >&2
+      exit 1
+      ;;
+  esac
+  sleep 2
+done
+
+echo "The container did not become healthy within 90 seconds." >&2
+"${compose[@]}" logs --tail=100 "$service_name" >&2
+exit 1
