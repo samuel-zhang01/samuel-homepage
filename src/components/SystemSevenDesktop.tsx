@@ -24,7 +24,6 @@ import {
 export type AppId =
   | "about"
   | "coverd"
-  | "finder"
   | "experience"
   | "projects"
   | "skills"
@@ -66,7 +65,6 @@ type IconKind =
   | "controls"
   | "university"
   | "network"
-  | "disk"
   | "photos"
   | "game"
   | "pdf"
@@ -142,17 +140,6 @@ const INITIAL_WINDOWS: WindowState[] = [
     width: 850,
     height: 620,
     z: 11,
-    open: false,
-    maximized: false,
-  },
-  {
-    id: "finder",
-    title: "Portfolio Index",
-    x: 86,
-    y: 116,
-    width: 610,
-    height: 430,
-    z: 2,
     open: false,
     maximized: false,
   },
@@ -282,7 +269,6 @@ const INITIAL_WINDOWS: WindowState[] = [
 const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "about", label: "Profile", icon: "profile", description: "Start here: biography, current work and highlights." },
   { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
-  { id: "finder", label: "Portfolio Index", icon: "disk", description: "A directory of everything available in this portfolio." },
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
   { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
@@ -293,25 +279,6 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
   { id: "contact", label: "Contact", icon: "mail", description: "Email, LinkedIn and GitHub without leaving the desktop." },
-];
-
-const finderItems: Array<{
-  id: AppId;
-  name: string;
-  kind: IconKind;
-  meta: string;
-}> = [
-  { id: "coverd", name: "COVERD — Founder’s Desk", kind: "coverd", meta: "Flagship venture" },
-  { id: "experience", name: "Experience", kind: "briefcase", meta: "8 roles" },
-  { id: "projects", name: "Selected Projects", kind: "folder", meta: "9 items" },
-  { id: "skills", name: "Skills & Capabilities", kind: "controls", meta: "6 groups" },
-  { id: "education", name: "Education & Awards", kind: "university", meta: "2 folders" },
-  { id: "lab", name: "Home Lab Network", kind: "network", meta: "Online" },
-  { id: "scrapbook", name: "Interests & Notes", kind: "photos", meta: "9 clippings" },
-  { id: "resume", name: "Résumé & Profile", kind: "document", meta: "In-browser profile" },
-  { id: "documents", name: "CV & Papers", kind: "pdf", meta: "3 documents" },
-  { id: "games", name: "Desk Arcade", kind: "game", meta: "4 games" },
-  { id: "contact", name: "Contact Samuel", kind: "mail", meta: "3 channels" },
 ];
 
 const experience = [
@@ -483,28 +450,84 @@ const projects: Array<{
 
 const skillGroups = [
   {
-    title: "Applied AI",
-    items: ["Multi-agent systems", "RAG & retrieval", "LLM & embedding evaluation", "Document intelligence & learning-to-rank"],
+    title: "Applied AI & Voice Systems",
+    summary: "Designing adaptive AI products that combine company knowledge, natural conversation and evidence-led decisions.",
+    evidence: "COVERD — tested three interview architectures across 20 candidate interviews, then selected a multi-agent belief graph and cascade voice design from observed quality and candidate feedback.",
+    items: [
+      "Multi-agent orchestration & graph workflows",
+      "Voice pipelines & cascade model design",
+      "RAG, retrieval & knowledge refresh",
+      "LLM, prompt & embedding evaluation",
+      "Evidence-weighted belief updates",
+      "Human-in-the-loop AI safeguards",
+    ],
   },
   {
-    title: "Evidence & Evaluation",
-    items: ["Time-aware validation", "Strong baselines", "Provenance & abstention", "Human-in-the-loop design"],
+    title: "Software & Product Engineering",
+    summary: "Building maintainable products end to end: interface, service logic, data model, integration, testing and deployment.",
+    evidence: "COVERD — builds the TypeScript/React interview experience, Python AI services, structured company knowledge, evaluation tooling and rapid design-partner releases.",
+    items: [
+      "Python services & asynchronous workflows",
+      "TypeScript, React & Next.js",
+      "API design & third-party integrations",
+      "PostgreSQL schemas & data modelling",
+      "Real-time interfaces & WebSockets",
+      "Testing, debugging & code review",
+      "Authentication, privacy & secure defaults",
+      "Product analytics & observability",
+    ],
   },
   {
-    title: "Data & Engineering",
-    items: ["Python & Julia", "SQL & PostgreSQL", "TypeScript & React/Next.js", "Docker & CI/CD"],
+    title: "Search, Data & Evaluation",
+    summary: "Treating evaluation as an engineering discipline: explicit baselines, provenance, failure analysis and honest limits.",
+    evidence: "Marsh — combines learning-to-rank, document intelligence and changing market signals into transparent lead recommendations that support broker judgement.",
+    items: [
+      "Learning-to-rank & recommendation systems",
+      "Document extraction & intelligence",
+      "SQL, PostgreSQL & analytical pipelines",
+      "Time-aware validation & lagged baselines",
+      "Error analysis, provenance & abstention",
+      "Quantitative and qualitative evaluation",
+    ],
   },
   {
-    title: "Scientific Computing",
-    items: ["Statistical thermodynamics", "Computational chemistry", "GROMACS & HPC", "MATLAB & experiment design"],
+    title: "Infrastructure & Delivery",
+    summary: "Operating the systems behind the product, with an emphasis on repeatability, recovery and sensible security.",
+    evidence: "Home lab — operates seven Proxmox/Docker servers, 23 services, 42 GB VRAM compute, self-hosted CI and 106 TB usable RAID storage.",
+    items: [
+      "Docker, Linux & Proxmox",
+      "CI/CD & self-hosted GitHub Actions",
+      "Cross-architecture builds & runners",
+      "GPU compute & private AI hosting",
+      "Networking, monitoring & hardening",
+      "Backups, rollback & disaster recovery",
+    ],
   },
   {
-    title: "Infrastructure",
-    items: ["Docker, Linux & Proxmox", "Cross-architecture CI", "GPU compute & private AI", "Monitoring, security & recovery"],
+    title: "Scientific & Quantitative Computing",
+    summary: "A chemistry-trained approach to modelling: design the experiment, test assumptions and let evidence change the implementation.",
+    evidence: "Pfizer and King's — applied statistical thermodynamics, Julia, MATLAB, Python, GROMACS and GPU workflows to drug-development and molecular-research problems.",
+    items: [
+      "Statistical modelling & experiment design",
+      "Julia, MATLAB & scientific Python",
+      "Statistical thermodynamics",
+      "Computational chemistry",
+      "GROMACS, molecular simulation & HPC",
+      "Reproducible research workflows",
+    ],
   },
   {
-    title: "Product & People",
-    items: ["Customer discovery", "Rapid prototyping", "Stakeholder management", "Responsible AI & adoption"],
+    title: "Product, Leadership & Adoption",
+    summary: "Turning ambiguous technical opportunities into trusted products by listening closely, making trade-offs and bringing people with the work.",
+    evidence: "Pfizer and COVERD — secured senior sponsorship and department-wide adoption for GROWMAT, while customer discovery with four design partners drove COVERD's product pivot.",
+    items: [
+      "Customer discovery & problem framing",
+      "Rapid prototyping & product strategy",
+      "Roadmaps, prioritisation & trade-offs",
+      "Stakeholder communication & live demos",
+      "Responsible AI & adoption planning",
+      "Teaching, mentoring & team enablement",
+    ],
   },
 ];
 
@@ -594,14 +617,6 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
         <rect x="4" y="30" width="14" height="13" fill="#fff" />
         <rect x="30" y="30" width="14" height="13" fill="#fff" />
         <path d="M20 12h8M7 39h8M33 39h8" strokeWidth="2" />
-      </g>
-    ),
-    disk: (
-      <g {...common}>
-        <rect x="4" y="3" width="40" height="42" rx="2" fill="#c5c5c0" />
-        <rect x="11" y="7" width="26" height="13" fill="#fff" />
-        <rect x="11" y="28" width="26" height="13" fill="#eee" />
-        <path d="M31 8v9M15 33h18M15 37h18" strokeWidth="2" />
       </g>
     ),
     photos: (
@@ -928,24 +943,6 @@ function CoverdApp({ locale }: { locale: Locale }) {
   );
 }
 
-function FinderApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
-  return (
-    <TranslationBoundary locale={locale}><div className="finder-app">
-      <div className="finder-meta"><span>{finderItems.length} items</span><span>Portfolio Index</span><span>3 documents · 15 MB</span></div>
-      <div className="finder-grid">
-        {finderItems.map((item) => (
-          <button key={item.id} className="finder-item" onDoubleClick={() => openApp(item.id)} onClick={() => openApp(item.id)}>
-            <PixelIcon kind={item.kind} />
-            <strong>{item.name}</strong>
-            <span>{item.meta}</span>
-          </button>
-        ))}
-      </div>
-      <div className="finder-status">Click an item once to open it.</div>
-    </div></TranslationBoundary>
-  );
-}
-
 function ExperienceApp({ locale }: { locale: Locale }) {
   return (
     <TranslationBoundary locale={locale}><div className="experience-app">
@@ -1010,17 +1007,19 @@ function SkillsApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="skills-app">
       <div className="control-panel-intro">
         <PixelIcon kind="controls" />
-        <div><h3>Capabilities</h3><p>Six practical groups drawn from products, research and leadership.</p></div>
+        <div><h3>Capabilities, with receipts.</h3><p>A broader engineering toolkit, connected to the products and systems where Samuel has actually used it.</p></div>
       </div>
       <div className="control-groups">
         {skillGroups.map((group) => (
           <fieldset className="control-group" key={group.title}>
             <legend>{group.title}</legend>
+            <p className="skill-summary">{group.summary}</p>
             <ul className="skill-items">
               {group.items.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
+            <p className="skill-evidence"><strong>USED IN PRACTICE</strong>{group.evidence}</p>
           </fieldset>
         ))}
       </div>
@@ -1802,7 +1801,6 @@ function AppContent({ id, openApp, locale }: { id: AppId; openApp: (id: AppId) =
   switch (id) {
     case "about": return <AboutApp openApp={openApp} locale={locale} />;
     case "coverd": return <CoverdApp locale={locale} />;
-    case "finder": return <FinderApp openApp={openApp} locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
     case "projects": return <ProjectsApp openApp={openApp} locale={locale} />;
     case "skills": return <SkillsApp locale={locale} />;
@@ -1999,7 +1997,7 @@ export default function SystemSevenDesktop({
   const closeApp = (id: AppId) => {
     setWindows((current) => current.map((item) => item.id === id ? { ...item, open: false } : item));
     const remaining = windows.filter((item) => item.open && item.id !== id).sort((a, b) => b.z - a.z);
-    setActiveId(remaining[0]?.id ?? "finder");
+    setActiveId(remaining[0]?.id ?? "about");
   };
 
   const toggleZoom = (id: AppId) => {
@@ -2115,10 +2113,10 @@ export default function SystemSevenDesktop({
               </div>
             )}
           </div>
-          <strong className="active-application">{activeTitle === "Finder" ? "Finder" : activeTitle}</strong>
+          <strong className="active-application">{activeTitle}</strong>
           <div className="menu-root">
             <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")} aria-haspopup="menu" aria-expanded={openMenu === "file"}>File</button>
-            {openMenu === "file" && <div className="menu-dropdown"><button onClick={() => openApp("finder")}>Open Portfolio Index</button><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open CV &amp; Papers</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
+            {openMenu === "file" && <div className="menu-dropdown"><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open CV &amp; Papers</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
             <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")} aria-haspopup="menu" aria-expanded={openMenu === "edit"}>Edit</button>

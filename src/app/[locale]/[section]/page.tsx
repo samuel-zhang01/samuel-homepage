@@ -9,7 +9,6 @@ const sections: Record<string, AppId> = {
   documents: "documents",
   education: "education",
   experience: "experience",
-  finder: "finder",
   games: "games",
   interests: "scrapbook",
   lab: "lab",

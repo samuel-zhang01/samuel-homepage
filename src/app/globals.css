@@ -57,7 +57,6 @@ body {
 .desktop-hint,
 .window-switcher,
 .mac-titlebar,
-.finder-app,
 .system-toast,
 .mobile-window-guide {
   font-family: var(--system-font);
@@ -439,8 +438,7 @@ body {
   justify-content: end;
 }
 
-.desktop-icon,
-.finder-item {
+.desktop-icon {
   display: flex;
   width: 82px;
   flex-direction: column;
@@ -1418,70 +1416,6 @@ body {
   font-size: 8px;
 }
 
-/* Finder */
-
-.finder-app {
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  background: #fff;
-}
-
-.finder-meta {
-  display: flex;
-  height: 25px;
-  flex: 0 0 25px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px;
-  border-bottom: 2px solid #111;
-  color: #555;
-  font-size: 10px;
-}
-
-.finder-grid {
-  display: grid;
-  flex: 1;
-  grid-template-columns: repeat(4, minmax(95px, 1fr));
-  align-content: start;
-  gap: 17px 12px;
-  padding: 24px 22px;
-}
-
-.finder-item {
-  width: auto;
-  min-width: 0;
-  color: #111;
-  text-shadow: none;
-  cursor: pointer;
-}
-
-.finder-item strong {
-  max-width: 120px;
-  font-size: 11px;
-  line-height: 1.1;
-}
-
-.finder-item > span:last-child {
-  color: #777;
-  font-size: 9px;
-}
-
-.finder-item:hover strong,
-.finder-item:focus strong {
-  color: #fff;
-  background: var(--selection);
-}
-
-.finder-status {
-  padding: 4px 8px;
-  border-top: 2px solid #111;
-  color: #666;
-  background: #eee;
-  font-size: 10px;
-  text-align: center;
-}
-
 /* Experience */
 
 .experience-app,
@@ -1735,6 +1669,15 @@ body {
   font-weight: 700;
 }
 
+.skill-summary {
+  min-height: 43px;
+  margin: 0 0 10px;
+  color: #444;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
 .skill-items {
   display: grid;
   grid-template-columns: repeat(2,minmax(0,1fr));
@@ -1761,6 +1704,24 @@ body {
   margin-top: 3px;
   border: 1px solid #111;
   background: #d8d8d8;
+}
+
+.skill-evidence {
+  margin: 11px 0 0;
+  padding-top: 9px;
+  border-top: 1px solid #aaa;
+  color: #333;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.skill-evidence strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--selection);
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  letter-spacing: .07em;
 }
 
 /* Education */
@@ -3419,12 +3380,6 @@ body {
     margin-top: 20px;
   }
 
-  .finder-grid {
-    grid-template-columns: repeat(2,minmax(90px,1fr));
-    gap: 16px 8px;
-    padding: 18px 10px;
-  }
-
   .experience-app,
   .projects-app,
   .education-app,
@@ -3478,6 +3433,10 @@ body {
 
   .control-groups {
     grid-template-columns: 1fr;
+  }
+
+  .skill-summary {
+    min-height: 0;
   }
 
   .degree-card {
