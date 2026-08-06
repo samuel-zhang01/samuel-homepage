@@ -78,7 +78,16 @@ export default function RootLayout({
   return (
     <html lang="en-GB" suppressHydrationWarning>
       <head><script id="locale-bootstrap" dangerouslySetInnerHTML={{ __html: localeBootstrap }} /></head>
-      <body>{children}</body>
+      <body>
+        <div className="legacy-browser-notice" role="document">
+          <h1>Samuel Zhang</h1>
+          <p>This interactive System 7 portfolio needs a modern browser.</p>
+          <p>
+            Internet Explorer can still access the essentials: <a href="/Samuel-Zhang-Applied-AI-CV.pdf">read Samuel&apos;s CV</a> or <a href="mailto:sam.xiaojian.zhang@outlook.com">send an email</a>.
+          </p>
+        </div>
+        {children}
+      </body>
     </html>
   );
 }

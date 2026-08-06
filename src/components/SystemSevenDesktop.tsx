@@ -20,6 +20,7 @@ import {
   translateText,
   type Locale,
 } from "@/lib/i18n";
+import PdfPreview from "@/components/PdfPreview";
 
 export type AppId =
   | "about"
@@ -284,8 +285,8 @@ const DESKTOP_ICONS: DesktopIcon[] = [
 const experience = [
   {
     period: "May 2026 — Present",
-    role: "AI Intern — Applied AI & ML Thesis",
-    company: "Marsh Risk",
+    role: "Senior Coordinator — Digital Transformation Strategy Internship",
+    company: "Marsh · Strategy & Corporate Development Group",
     location: "London",
     copy: "Structured a proof of concept for planned Broker Workbench integration around quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence. Developed an internal lead-matching engine for lead-insurer selection using historical trading performance, wording quality and real-time appetite signals, then translated the evidence into transparent recommendations supporting broker judgement and client outcomes.",
     tag: "CURRENT",
@@ -380,7 +381,7 @@ const projects: Array<{
   {
     title: "Insurance Lead Matching",
     year: "2026",
-    category: "MSc Thesis · Marsh",
+    category: "Digital Transformation Strategy · Marsh",
     description:
       "A Broker Workbench proof of concept combining quantitative placement ranking, qualitative contract review and time-bounded market intelligence into transparent, human-in-the-loop lead recommendations.",
     tools: ["Learning-to-rank", "Document AI", "Market signals", "Governance"],
@@ -422,7 +423,7 @@ const projects: Array<{
     year: "ONGOING",
     category: "Self-hosting · Systems",
     description:
-      "Seven Proxmox/Docker servers running 23 services, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB of usable RAID storage.",
+      "Seven Proxmox/Docker servers running 23 services, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB of total usable RAID storage.",
     tools: ["Proxmox", "Docker", "Linux", "GPU"],
     metric: "23 SERVICES · 42 GB VRAM",
     app: "lab",
@@ -493,7 +494,7 @@ const skillGroups = [
   {
     title: "Infrastructure & Delivery",
     summary: "Operating the systems behind the product, with an emphasis on repeatability, recovery and sensible security.",
-    evidence: "Home lab — operates seven Proxmox/Docker servers, 23 services, 42 GB VRAM compute, self-hosted CI and 106 TB usable RAID storage.",
+    evidence: "Home lab — operates seven Proxmox/Docker servers, 23 services, 42 GB VRAM compute, self-hosted CI and 106 TB total usable RAID storage.",
     items: [
       "Docker, Linux & Proxmox",
       "CI/CD & self-hosted GitHub Actions",
@@ -690,6 +691,7 @@ function WindowChrome({
   return (
     <TranslationBoundary locale={locale}><section
       className={`mac-window${active ? " is-active" : ""}${windowState.maximized ? " is-maximized" : ""}`}
+      data-app-id={windowState.id}
       style={{
         left: windowState.x,
         top: windowState.y,
@@ -709,7 +711,7 @@ function WindowChrome({
         <h2>{windowState.title}</h2>
         <button className="window-box window-zoom" onClick={onZoom} aria-label={`${translateText(locale, "Maximize")} ${translateText(locale, windowState.title)}`} />
       </div>
-      <div className="mac-window__content">{children}</div>
+      <div className="mac-window__content" tabIndex={0}>{children}</div>
     </section></TranslationBoundary>
   );
 }
@@ -724,7 +726,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
         <p className="portrait-caption">SAMUEL.ZHANG</p>
         <dl className="quick-facts">
           <div><dt>Location</dt><dd>London, UK</dd></div>
-          <div><dt>Current</dt><dd>Marsh Risk</dd></div>
+          <div><dt>Current</dt><dd>Senior Coordinator</dd></div>
           <div><dt>Venture</dt><dd>coverd.ai</dd></div>
           <div><dt>Direction</dt><dd>Product leadership</dd></div>
         </dl>
@@ -1081,7 +1083,11 @@ function ResumeApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: 
           <h4>Current</h4>
           <div>
             <div className="resume-role">
-              <p><strong>Marsh Risk — AI Intern, Applied AI &amp; ML Thesis</strong><br /><em>May 2026—Present · London</em></p>
+              <p>
+                <strong>Senior Coordinator — Digital Transformation Strategy Internship</strong><br />
+                <span className="resume-organisation">Marsh · Strategy &amp; Corporate Development Group</span><br />
+                <em>May 2026—Present · London</em>
+              </p>
               <ul><li>Structured a proof of concept for planned Broker Workbench integration around quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence. Developed an internal broker lead-matching engine for lead-insurer selection using historical trading performance, wording quality and real-time appetite signals. Translated the findings for Marsh Matching Companion Phase 3 into transparent, human-in-the-loop recommendations supporting broker judgement, wider market consideration and client outcomes.</li></ul>
             </div>
             <div className="resume-role">
@@ -1149,7 +1155,7 @@ function ResumeApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: 
         </section>
         <section>
           <h4>Selected projects</h4>
-          <p><strong>Home Lab &amp; Private AI Infrastructure:</strong> Run 23 services across seven Proxmox/Docker servers, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB usable RAID storage.<br /><br /><strong>Stock Market Simulation Engine:</strong> Built Julia/SQL order matching, real-time WebSocket order-book updates and a responsive trading interface.</p>
+          <p><strong>Home Lab &amp; Private AI Infrastructure:</strong> Run 23 services across seven Proxmox/Docker servers, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB total usable RAID storage.<br /><br /><strong>Stock Market Simulation Engine:</strong> Built Julia/SQL order matching, real-time WebSocket order-book updates and a responsive trading interface.</p>
         </section>
         <section>
           <h4>Creative life</h4>
@@ -1169,9 +1175,16 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
 
   const copyEmail = async () => {
     const email = "sam.xiaojian.zhang@outlook.com";
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(email);
-    } else {
+    let copiedWithClipboard = false;
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(email);
+        copiedWithClipboard = true;
+      }
+    } catch {
+      // Firefox and Safari can deny clipboard access outside a trusted gesture.
+    }
+    if (!copiedWithClipboard) {
       const input = document.createElement("textarea");
       input.value = email;
       input.style.position = "fixed";
@@ -1254,16 +1267,17 @@ function DocumentsApp({ locale }: { locale: Locale }) {
       <section className="documents-preview">
         <div className="documents-toolbar">
           <span>{activeDocument.title}</span>
-          <span className="documents-toolbar__hint">Use the reader controls to zoom, search and print.</span>
+          <span className="documents-toolbar__hint">Use the reader controls to turn pages and zoom.</span>
           <a href={activeDocument.src} download>Save a copy</a>
         </div>
-        <iframe
+        <PdfPreview
           key={activeDocument.id}
-          src={`${activeDocument.src}#view=FitH&toolbar=1&navpanes=0`}
-          title={`${translateText(locale, "Preview of")} ${translateText(locale, activeDocument.title)}`}
+          src={activeDocument.src}
+          title={translateText(locale, activeDocument.title)}
+          locale={locale}
         />
         <p className="documents-fallback">
-          If your browser cannot render PDFs, <a href={activeDocument.src}>open this document in the current tab</a>.
+          Prefer your browser&apos;s full PDF tools? <a href={activeDocument.src}>Open this document in the current tab</a>.
         </p>
       </section>
     </div></TranslationBoundary>
@@ -1719,7 +1733,7 @@ function LabApp({ locale }: { locale: Locale }) {
     { group: "Data", code: "SQL", tone: "blue", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
     { group: "Data", code: "CO2", tone: "green", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Collects CO₂, temperature, humidity and pressure over Bluetooth for live dashboards." },
     { group: "Data", code: "HA", tone: "amber", name: "Home Assistant", host: "Automation hub", description: "Connects sensors, energy data and smart-home devices into one event-driven system." },
-    { group: "Storage", code: "72", tone: "green", name: "UGREEN NAS", host: "96 TB raw · 72 TB usable", description: "Six-bay RAID 5 storage for media, datasets and automated recovery after earlier failures made the value of backups unforgettable." },
+    { group: "Storage", code: "106", tone: "green", name: "Storage pool", host: "106 TB usable across the lab", description: "RAID storage across the lab for media, datasets and automated recovery after earlier failures made the value of backups unforgettable." },
     { group: "Storage", code: "NAS", tone: "grey", name: "Synology Cloud", host: "Files & photos", description: "Private file sync, photo management and resilient network storage." },
     { group: "Storage", code: "NC", tone: "blue", name: "Nextcloud", host: "Private cloud", description: "Self-hosted document access and synchronisation across personal devices." },
     { group: "Media", code: "JF", tone: "violet", name: "Jellyfin", host: "Home cinema", description: "A private media library and streaming service with live playback monitoring." },
@@ -1743,12 +1757,12 @@ function LabApp({ locale }: { locale: Locale }) {
           Proxmox installed from scratch, and a daunting climb through networking,
           security and cross-architecture compatibility. One ill-fated attempt to host a
           large file erased a database and its Compose configuration; the lab now has
-          monitored, scheduled backups and 106 TB of usable RAID storage across its systems.
+          monitored, scheduled backups and a total of 106 TB of usable RAID storage across its systems.
         </p>
         <dl>
           <div><dt>GPU memory</dt><dd>42 GB</dd></div>
           <div><dt>Server fleet</dt><dd>7</dd></div>
-          <div><dt>Backup storage</dt><dd>106 TB usable</dd></div>
+          <div><dt>Total usable storage</dt><dd>106 TB</dd></div>
           <div><dt>Running systems</dt><dd>{services.length}</dd></div>
         </dl>
       </div>
@@ -1775,23 +1789,91 @@ function LabApp({ locale }: { locale: Locale }) {
 
 function ScrapbookApp({ locale }: { locale: Locale }) {
   const interests = [
-    ["Hiking & climbing", "A pair of boots, a windbreaker, and somewhere new."],
-    ["Photography", "Former professional wedding photographer; now the camera is for nature, friends, and the smile on people’s faces."],
-    ["Euphonium", "Played with King’s College London Brass Band at UniBrass in 2021 and 2022, including a fourth-place result."],
-    ["Musical theatre", "Three productions across performance and drums, including one self-directed, written and composed."],
-    ["Multiculturalism", "Singapore, Shanghai, and London shape how I work."],
-    ["Teaching & people", "I am energised by rooms full of people. One student I taught Python later earned an offer from Microsoft; their success remains one of my proudest outcomes."],
-    ["Curiosity", "Science, systems, music, people and an unreasonable number of random facts. Being a generalist is the point."],
-    ["First software", "A clickable Visual Basic periodic table built for IB Chemistry. It found almost no users and revealed exactly how much I loved making software."],
-    ["Hardware catalogue", "Twelve machines, seven active servers and an electricity bill that has become a recurring systems-monitoring alert."],
+    {
+      title: "Hiking & climbing",
+      summary: "A pair of boots, a windbreaker, and somewhere new.",
+      detail: "I like the unhurried conversations that happen on a long walk as much as the view at the end. A good route leaves enough room for curiosity, a little discomfort and a shared story on the way home.",
+    },
+    {
+      title: "Photography",
+      summary: "Former professional wedding photographer; now the camera is for nature, friends, and the smile on people’s faces.",
+      detail: "Weddings taught me to notice the quiet person at the edge of the room, anticipate moments without interrupting them and help people feel comfortable. I stopped working professionally so photography could feel playful again.",
+    },
+    {
+      title: "Euphonium",
+      summary: "Played with King’s College London Brass Band at UniBrass in 2021 and 2022, including a fourth-place result.",
+      detail: "Competitive brass banding is a peculiar combination of precision and trust: an entire band breathes together, listens closely and makes one sound. I love the discipline, but even more the feeling of contributing to someone else’s best performance.",
+    },
+    {
+      title: "Musical theatre",
+      summary: "Three productions across performance and drums, including one self-directed, written and composed.",
+      detail: "Months of singing, dancing, line-learning and rehearsal collapse into a few seconds on stage. That slightly unreasonable exchange is exactly the appeal—and it is difficult to beat the energy of building something live with a cast and crew.",
+    },
+    {
+      title: "Multiculturalism",
+      summary: "Singapore, Shanghai, and London shape how I work.",
+      detail: "Moving between cultures made me attentive to what a room assumes but never says aloud. It is useful in product work, teaching and friendship: listen first, translate carefully and leave space for another interpretation.",
+    },
+    {
+      title: "Teaching & people",
+      summary: "I am energised by rooms full of people. One student I taught Python later earned an offer from Microsoft; their success remains one of my proudest outcomes.",
+      detail: "I care less about being the cleverest person in a room than helping the room become more capable. The best teaching moment is when someone stops needing the teacher—and then goes somewhere neither of you expected.",
+    },
+    {
+      title: "Curiosity",
+      summary: "Science, systems, music, people and an unreasonable number of random facts. Being a generalist is the point.",
+      detail: "A satisfying evening can move from statistical thermodynamics to theatre orchestration, network topology and why a stranger chose their career. The connections between subjects are usually where the useful ideas hide.",
+    },
+    {
+      title: "First software",
+      summary: "A clickable Visual Basic periodic table built for IB Chemistry. It found almost no users and revealed exactly how much I loved making software.",
+      detail: "Nobody asked for it and almost nobody used it. Still, making an idea respond to a click was the revelation: software could turn private curiosity into something another person might explore.",
+    },
+    {
+      title: "Hardware catalogue",
+      summary: "Twelve machines, seven active servers and an electricity bill that has become a recurring systems-monitoring alert.",
+      detail: "The home lab began before ‘vibe coding’ made infrastructure approachable. It survived hand-built servers, Proxmox, port forwarding, mixed CPU architectures and one database-erasing lesson; backups are now the least negotiable part of the personality test.",
+    },
   ];
+  const [openInterest, setOpenInterest] = useState<number | null>(null);
+
   return (
     <TranslationBoundary locale={locale}><div className="scrapbook-app">
       <header className="document-header"><div><span className="eyebrow">INTERESTS &amp; NOTES</span><h3>The creative life behind the technical work.</h3></div><PixelIcon kind="photos" /></header>
+      <p className="scrapbook-intro">Open a clipping to read the story behind it.</p>
       <div className="scrap-grid">
-        {interests.map(([title, copy], index) => (
-          <article key={title} className={`scrap-note scrap-note--${(index % 3) + 1}`}><span>{index + 1}</span><h4>{title}</h4><p>{copy}</p></article>
-        ))}
+        {interests.map((interest, index) => {
+          const isOpen = openInterest === index;
+          const titleId = `interest-title-${index}`;
+          const actionId = `interest-action-${index}`;
+          const panelId = `interest-story-${index}`;
+
+          return (
+            <article
+              key={interest.title}
+              className={`scrap-note scrap-note--${(index % 3) + 1}${isOpen ? " is-open" : ""}`}
+              aria-labelledby={titleId}
+            >
+              <span className="scrap-note__number" aria-hidden="true">{index + 1}</span>
+              <h4 id={titleId}>{interest.title}</h4>
+              <p className="scrap-note__summary">{interest.summary}</p>
+              <div className="scrap-note__story" id={panelId} role="region" aria-labelledby={titleId} hidden={!isOpen}>
+                <p>{interest.detail}</p>
+              </div>
+              <button
+                className="scrap-note__toggle"
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                aria-labelledby={`${titleId} ${actionId}`}
+                onClick={() => setOpenInterest(isOpen ? null : index)}
+              >
+                <span id={actionId}>{isOpen ? "Close note" : "Open note"}</span>
+                <span aria-hidden="true">{isOpen ? "−" : "+"}</span>
+              </button>
+            </article>
+          );
+        })}
       </div>
     </div></TranslationBoundary>
   );
@@ -1845,6 +1927,10 @@ export default function SystemSevenDesktop({
   const zCounter = useRef(20);
   const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
   const toastTimer = useRef<number | null>(null);
+  const languageButtonRef = useRef<HTMLButtonElement | null>(null);
+  const languageMenuRef = useRef<HTMLDivElement | null>(null);
+  const mobileGuideButtonRef = useRef<HTMLButtonElement | null>(null);
+  const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
 
   useEffect(() => {
     const queryLocale = normaliseLocale(new URLSearchParams(window.location.search).get("lang"));
@@ -1928,6 +2014,27 @@ export default function SystemSevenDesktop({
   }, []);
 
   useEffect(() => {
+    if (!mobileGuide) return;
+    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const focusFrame = window.requestAnimationFrame(() => mobileGuideButtonRef.current?.focus());
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      try {
+        window.sessionStorage.setItem("samuel-mobile-window-guide", "seen");
+      } catch {
+        // The guide still closes when storage is unavailable.
+      }
+      setMobileGuide(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      window.removeEventListener("keydown", closeOnEscape);
+      if (previouslyFocused?.isConnected) previouslyFocused.focus();
+    };
+  }, [mobileGuide]);
+
+  useEffect(() => {
     const move = (event: PointerEvent) => {
       const drag = dragState.current;
       if (!drag || window.innerWidth <= 720) return;
@@ -1966,11 +2073,15 @@ export default function SystemSevenDesktop({
   };
 
   const openApp = useCallback((id: AppId) => {
+    if (document.activeElement instanceof HTMLElement) returnFocusByApp.current[id] = document.activeElement;
     const nextZ = ++zCounter.current;
     setWindows((current) => current.map((item) => item.id === id ? { ...item, open: true, z: nextZ } : item));
     setActiveId(id);
     setSelectedIcon(id);
     setOpenMenu(null);
+    window.requestAnimationFrame(() => {
+      document.querySelector<HTMLButtonElement>(`[data-app-id="${id}"] .window-close`)?.focus();
+    });
   }, []);
 
   const showToast = useCallback((message: string) => {
@@ -1998,6 +2109,39 @@ export default function SystemSevenDesktop({
     setWindows((current) => current.map((item) => item.id === id ? { ...item, open: false } : item));
     const remaining = windows.filter((item) => item.open && item.id !== id).sort((a, b) => b.z - a.z);
     setActiveId(remaining[0]?.id ?? "about");
+    window.requestAnimationFrame(() => {
+      const returnTarget = returnFocusByApp.current[id];
+      if (returnTarget?.isConnected) returnTarget.focus();
+      else if (remaining[0]) document.querySelector<HTMLButtonElement>(`[data-app-id="${remaining[0].id}"] .window-close`)?.focus();
+    });
+  };
+
+  const focusLanguageOption = (position: "first" | "last") => {
+    window.requestAnimationFrame(() => {
+      const options = languageMenuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]');
+      if (!options?.length) return;
+      options[position === "first" ? 0 : options.length - 1].focus();
+    });
+  };
+
+  const handleLanguageMenuKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const options = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]'));
+    if (options.length === 0) return;
+    const currentIndex = options.indexOf(document.activeElement as HTMLButtonElement);
+    let nextIndex: number | null = null;
+    if (event.key === "ArrowDown") nextIndex = (currentIndex + 1) % options.length;
+    else if (event.key === "ArrowUp") nextIndex = (currentIndex - 1 + options.length) % options.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = options.length - 1;
+    else if (event.key === "Escape") {
+      event.preventDefault();
+      setOpenMenu(null);
+      languageButtonRef.current?.focus();
+      return;
+    }
+    if (nextIndex === null) return;
+    event.preventDefault();
+    options[nextIndex]?.focus();
   };
 
   const toggleZoom = (id: AppId) => {
@@ -2092,14 +2236,14 @@ export default function SystemSevenDesktop({
       <nav className="system-menubar" aria-label="System menu bar">
         <div className="menu-cluster">
           <div className="menu-root">
-            <button className={openMenu === "apple" ? "is-open apple-menu" : "apple-menu"} onClick={() => setOpenMenu(openMenu === "apple" ? null : "apple")} aria-label="Samuel menu" aria-haspopup="menu" aria-expanded={openMenu === "apple"}>
+            <button className={openMenu === "apple" ? "is-open apple-menu" : "apple-menu"} onClick={() => setOpenMenu(openMenu === "apple" ? null : "apple")} aria-label="Samuel menu" aria-controls="samuel-menu" aria-expanded={openMenu === "apple"}>
               <svg className="human-mark" viewBox="0 0 18 18" aria-hidden="true" shapeRendering="crispEdges">
                 <circle cx="9" cy="5" r="3" />
                 <path d="M3 17v-3c0-3.2 2.4-5 6-5s6 1.8 6 5v3z" />
               </svg>
             </button>
             {openMenu === "apple" && (
-              <div className="menu-dropdown apple-dropdown">
+              <div className="menu-dropdown apple-dropdown" id="samuel-menu">
                 <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
                 <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder&apos;s Desk</button>
                 <hr />
@@ -2115,20 +2259,20 @@ export default function SystemSevenDesktop({
           </div>
           <strong className="active-application">{activeTitle}</strong>
           <div className="menu-root">
-            <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")} aria-haspopup="menu" aria-expanded={openMenu === "file"}>File</button>
-            {openMenu === "file" && <div className="menu-dropdown"><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open CV &amp; Papers</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
+            <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")} aria-controls="file-menu" aria-expanded={openMenu === "file"}>File</button>
+            {openMenu === "file" && <div className="menu-dropdown" id="file-menu"><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open CV &amp; Papers</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")} aria-haspopup="menu" aria-expanded={openMenu === "edit"}>Edit</button>
-            {openMenu === "edit" && <div className="menu-dropdown"><button className="is-disabled">Undo <kbd>⌘Z</kbd></button><hr /><button className="is-disabled">Cut <kbd>⌘X</kbd></button><button className="is-disabled">Copy <kbd>⌘C</kbd></button><button className="is-disabled">Paste <kbd>⌘V</kbd></button></div>}
+            <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")} aria-controls="edit-menu" aria-expanded={openMenu === "edit"}>Edit</button>
+            {openMenu === "edit" && <div className="menu-dropdown" id="edit-menu"><button className="is-disabled" disabled>Undo <kbd>⌘Z</kbd></button><hr /><button className="is-disabled" disabled>Cut <kbd>⌘X</kbd></button><button className="is-disabled" disabled>Copy <kbd>⌘C</kbd></button><button className="is-disabled" disabled>Paste <kbd>⌘V</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "view" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "view" ? null : "view")} aria-haspopup="menu" aria-expanded={openMenu === "view"}>View</button>
-            {openMenu === "view" && <div className="menu-dropdown"><button onClick={() => setPattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button onClick={() => setPattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button></div>}
+            <button className={openMenu === "view" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "view" ? null : "view")} aria-controls="view-menu" aria-expanded={openMenu === "view"}>View</button>
+            {openMenu === "view" && <div className="menu-dropdown" id="view-menu"><button onClick={() => setPattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button onClick={() => setPattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "special" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "special" ? null : "special")} aria-haspopup="menu" aria-expanded={openMenu === "special"}>Special</button>
-            {openMenu === "special" && <div className="menu-dropdown"><button onClick={() => openApp("games")}>Desk Arcade</button><hr /><button onClick={() => { setWindows((current) => current.map((item) => ({ ...item, open: false }))); setOpenMenu(null); }}>Hide All Windows</button><button onClick={() => openApp("secret")}>About This Secret…</button><button onClick={restart}>Restart</button></div>}
+            <button className={openMenu === "special" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "special" ? null : "special")} aria-controls="special-menu" aria-expanded={openMenu === "special"}>Special</button>
+            {openMenu === "special" && <div className="menu-dropdown" id="special-menu"><button onClick={() => openApp("games")}>Desk Arcade</button><hr /><button onClick={() => { setWindows((current) => current.map((item) => ({ ...item, open: false }))); setOpenMenu(null); }}>Hide All Windows</button><button onClick={() => openApp("secret")}>About This Secret…</button><button onClick={restart}>Restart</button></div>}
           </div>
         </div>
         <div className="menu-status">
@@ -2143,10 +2287,18 @@ export default function SystemSevenDesktop({
           </button>
           <div className="menu-root menu-language">
             <button
+              ref={languageButtonRef}
               className={openMenu === "language" ? "is-open" : ""}
               onClick={() => setOpenMenu(openMenu === "language" ? null : "language")}
+              onKeyDown={(event) => {
+                if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+                event.preventDefault();
+                setOpenMenu("language");
+                focusLanguageOption(event.key === "ArrowDown" ? "first" : "last");
+              }}
               aria-haspopup="menu"
               aria-expanded={openMenu === "language"}
+              aria-controls="language-menu"
               aria-label={`${translateText(locale, "Language")}: ${activeLocaleOption.label}`}
               title="Language"
             >
@@ -2154,7 +2306,7 @@ export default function SystemSevenDesktop({
               <span className="language-short">文/A</span>
             </button>
             {openMenu === "language" && (
-              <div className="menu-dropdown language-dropdown" role="menu" aria-label="Language">
+              <div ref={languageMenuRef} className="menu-dropdown language-dropdown" id="language-menu" role="menu" aria-label="Language" onKeyDown={handleLanguageMenuKeyDown}>
                 {localeOptions.map((option) => (
                   <button
                     key={option.locale}
@@ -2232,17 +2384,17 @@ export default function SystemSevenDesktop({
         ))}
       </div>
       {mobileGuide && (
-        <aside className="mobile-window-guide" role="dialog" aria-label="Using windows on mobile">
+        <aside className="mobile-window-guide" role="dialog" aria-labelledby="mobile-guide-title" aria-describedby="mobile-guide-copy">
           <div className="mobile-window-guide__title">
             <span className="mobile-guide-window-box" aria-hidden="true" />
-            <strong>Windows on a small screen</strong>
+            <strong id="mobile-guide-title">Windows on a small screen</strong>
           </div>
-          <p>
+          <p id="mobile-guide-copy">
             Tap the small square at a window’s top-left to close it. Mobile windows stay
             full-screen, so dragging is disabled; use the bar along the bottom to switch
             between anything that is open.
           </p>
-          <button onClick={dismissMobileGuide}>Got it</button>
+          <button ref={mobileGuideButtonRef} onClick={dismissMobileGuide}>Got it</button>
         </aside>
       )}
       {toast && <div className="system-toast" role="status"><PixelIcon kind="computer" small /><span>{toast}</span></div>}

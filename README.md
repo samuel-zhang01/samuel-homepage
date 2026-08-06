@@ -9,7 +9,7 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 - Four fully routed locales: British English, American English, Simplified Chinese and Traditional Chinese.
 - A language selector beside the desktop clock, with locale persistence and mobile-safe menus.
 - An in-browser résumé and four downloadable, two-page Applied AI CVs.
-- Updated experience spanning COVERD, Marsh, Pfizer, King's College London and the Singapore Civil Defence Force.
+- Updated experience spanning COVERD; a Senior Coordinator — Digital Transformation Strategy Internship in Marsh's Strategy & Corporate Development Group; Pfizer; King's College London; and the Singapore Civil Defence Force.
 - Built-in PDF previews, four profile-themed games and small desktop easter eggs.
 - Keyboard focus states, accessible controls, reduced-motion support and first-visit mobile guidance.
 - Responsive System 7 windows tested from 320 px mobile screens through 1440 px desktops.
@@ -24,7 +24,7 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 
 ## Local development
 
-Node.js 20.9 or newer is required.
+Node.js 20.16 or newer is required.
 
 ```bash
 npm ci
@@ -60,6 +60,12 @@ docker compose logs -f samuel-homepage
 ```
 
 The runtime container is read-only, runs as an unprivileged user, drops Linux capabilities and uses `no-new-privileges`. A reverse proxy can route the public hostname to port `1111` and terminate TLS.
+
+## Browser support
+
+The full desktop is maintained for current Chrome, Edge and Firefox releases and Safari 16.4 or newer, matching Next.js 15's supported-browser floor. Mobile Safari and Chromium-based mobile browsers receive the same content in a small-screen window layout with safe-area handling.
+
+Internet Explorer is not supported by Next.js 15 or the interactive desktop. IE 10/11 receive a small server-rendered fallback with direct CV and email access; the full experience requires a modern JavaScript, CSS Grid and ES2019-capable browser.
 
 ## Content structure
 

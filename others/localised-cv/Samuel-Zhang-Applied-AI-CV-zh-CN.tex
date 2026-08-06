@@ -41,6 +41,13 @@
   \end{tabularx}\vspace{-1pt}
 }
 
+\newcommand{\primaryrole}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \multicolumn{2}{@{}l@{}}{\textbf{#1}} \\[-1pt]
+    {\small\color{muted}#2} & {\small\textbf{#3}\enspace\textbullet\enspace #4}
+  \end{tabularx}\vspace{-1pt}
+}
+
 \newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
 
 \begin{document}
@@ -71,7 +78,7 @@
 
 \section{精选工作经历}
 
-\role{Marsh Risk}{人工智能实习生——应用人工智能与机器学习论文}{2026 年 5 月—至今}{英国伦敦}
+\primaryrole{高级协调员——数字化转型战略实习}{Marsh \textperiodcentered{} 战略与企业发展集团}{2026 年 5 月—至今}{英国伦敦}
 \begin{itemize}
   \item 围绕三个证据支柱，为计划接入 Broker Workbench 的概念验证设计框架：定量承保市场匹配排序、定性合同审查，以及探索性且限定时效的市场情报。
   \item 开发内部经纪人线索匹配决策引擎，用于首席承保人选择；将历史交易表现、条款文本质量与实时承保意愿信号整合为透明、排序后的首席承保市场建议。
@@ -133,7 +140,7 @@
 
 \section{精选技术项目}
 \begin{itemize}
-  \item \project{家庭实验室与私有人工智能基础设施——}{在七台 Proxmox/Docker 服务器上运行 23 项服务，配备 42 GB 显存人工智能算力、跨架构持续集成、网络安全和 106 TB 可用 RAID 存储。}
+  \item \project{家庭实验室与私有人工智能基础设施——}{在七台 Proxmox/Docker 服务器上运行 23 项服务，配备 42 GB 显存人工智能算力、跨架构持续集成、网络安全和共 106 TB 可用 RAID 存储。}
   \item \project{股票市场模拟引擎——}{使用 Julia/SQL 构建订单撮合与处理、WebSocket 实时订单簿更新和响应式交易界面。}
 \end{itemize}
 

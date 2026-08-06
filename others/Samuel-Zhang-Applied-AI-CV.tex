@@ -55,6 +55,13 @@
   \end{tabularx}\vspace{-1pt}
 }
 
+\newcommand{\primaryrole}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \multicolumn{2}{@{}l@{}}{\textbf{#1}} \\[-1pt]
+    {\small\color{muted}#2} & {\small\textbf{#3}\enspace\textbullet\enspace #4}
+  \end{tabularx}\vspace{-1pt}
+}
+
 \newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
 
 \begin{document}
@@ -86,7 +93,7 @@ Applied AI engineer and founder who turns ambiguous, domain-heavy problems into 
 
 \section{Selected Experience}
 
-\role{Marsh Risk}{AI Intern -- Applied AI \& ML Thesis}{May 2026 -- Present}{London, United Kingdom}
+\primaryrole{Senior Coordinator --- Digital Transformation Strategy Internship}{Marsh \textperiodcentered{} Strategy \& Corporate Development Group}{May 2026 -- Present}{London, United Kingdom}
 \begin{itemize}
   \item Structured a proof of concept for planned Broker Workbench integration around three evidence pillars: quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence.
   \item Developed internal broker lead-matching decision engine for lead insurer selection, combining historical trading performance, wording quality and real-time appetite signals into transparent, ranked lead-market recommendations.
@@ -148,7 +155,7 @@ Professional placement; Computational Chemistry, Molecular Biology, Chemical Bio
 
 \section{Selected Technical Projects}
 \begin{itemize}
-  \item \project{Home Lab \& Private AI Infrastructure --}{Run 23 services across seven Proxmox/Docker servers, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB usable RAID storage.}
+  \item \project{Home Lab \& Private AI Infrastructure --}{Run 23 services across seven Proxmox/Docker servers, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB total usable RAID storage.}
   \item \project{Stock Market Simulation Engine --}{Built Julia/SQL order matching, real-time WebSocket order-book updates and a responsive trading interface.}
 \end{itemize}
 
