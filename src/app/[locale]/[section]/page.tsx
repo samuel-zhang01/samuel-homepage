@@ -1,6 +1,6 @@
 import SystemSevenDesktop, { type AppId } from "@/components/SystemSevenDesktop";
 import { localeOptions, normaliseLocale } from "@/lib/i18n";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const sections: Record<string, AppId> = {
   about: "about",
@@ -13,7 +13,7 @@ const sections: Record<string, AppId> = {
   interests: "scrapbook",
   lab: "lab",
   projects: "projects",
-  resume: "resume",
+  resume: "documents",
   skills: "skills",
 };
 
@@ -30,6 +30,7 @@ export default async function LocalisedSectionPage({
 }) {
   const { locale: localeSlug, section } = await params;
   const locale = normaliseLocale(localeSlug);
+  if (locale && section === "resume") redirect(`/${localeSlug}/documents`);
   const initialApp = sections[section];
   if (!locale || !initialApp) notFound();
   return <SystemSevenDesktop initialApp={initialApp} initialLocale={locale} skipBoot />;

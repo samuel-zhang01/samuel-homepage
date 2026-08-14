@@ -1,10 +1,10 @@
-import SystemSevenDesktop from "@/components/SystemSevenDesktop";
+import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Résumé",
-  description: "Samuel Zhang’s current applied AI résumé in an in-browser System 7 document.",
+  title: "CV",
+  description: "Samuel Zhang’s current Applied AI CV.",
 };
 
 export default function ResumePage() {
-  return <SystemSevenDesktop initialApp="resume" skipBoot />;
+  redirect("/documents");
 }

@@ -4,7 +4,7 @@
 % Samuel Zhang 的應用人工智慧履歷（繁體中文）。使用 XeLaTeX 編譯。
 \usepackage{fontspec}
 \setmainfont{TeX Gyre Termes}
-\setCJKmainfont{AR PL UMing TW MBE}
+\setCJKmainfont[AutoFakeBold=2.2,AutoFakeSlant=.16]{AR PL Mingti2L Big5}
 \usepackage[top=1.35cm,bottom=1.35cm,left=1.45cm,right=1.45cm]{geometry}
 \usepackage{enumitem}
 \usepackage{tabularx}
@@ -18,6 +18,7 @@
 \definecolor{muted}{HTML}{4F4F4F}
 
 \hypersetup{
+  pdflang={zh-TW},
   pdftitle={Samuel Zhang -- 應用人工智慧履歷},
   pdfauthor={Samuel Zhang},
   pdfsubject={應用人工智慧、機器學習與人工智慧產品開發},
@@ -34,18 +35,18 @@
 \titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-2pt}\color{accent}\titlerule]
 \titlespacing*{\section}{0pt}{5pt}{2.5pt}
 
+\newcommand{\cvdate}[1]{{\normalfont\normalsize\bfseries #1}}
+
 \newcommand{\role}[4]{%
   \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \textbf{#1} \textbar{} \textit{#2} & \textbf{#3} \\
+    \textbf{#1} \textbar{} \textit{#2} & \cvdate{#3} \\
     \multicolumn{2}{@{}l@{}}{\small\color{muted}#4}
   \end{tabularx}\vspace{-1pt}
 }
 
 \newcommand{\primaryrole}[4]{%
-  \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \multicolumn{2}{@{}l@{}}{\textbf{#1}} \\[-1pt]
-    {\small\color{muted}#2} & {\small\textbf{#3}\enspace\textbullet\enspace #4}
-  \end{tabularx}\vspace{-1pt}
+  \textbf{#1}\par\vspace{-1pt}
+  {\small\color{muted}#2\enspace\textbullet\enspace #4\hfill\color{ink}\cvdate{#3}\par}\vspace{-1pt}
 }
 
 \newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
@@ -54,10 +55,10 @@
 
 \begin{center}
   {\huge\bfseries Samuel Zhang}\\[2pt]
-  {\large\bfseries 應用人工智慧工程師與產品構建者}\\[4pt]
+  {\large\bfseries 應用人工智慧工程師 \textperiodcentered{} 產品構建者 \textperiodcentered{} 創辦人}\\[4pt]
   \small
   英國倫敦 \enspace\textbullet\enspace
-  +44 7502 118207 \enspace\textbullet\enspace
+  \href{tel:+447502118207}{+44 7502 118207} \enspace\textbullet\enspace
   \href{mailto:sam.xiaojian.zhang@outlook.com}{sam.xiaojian.zhang@outlook.com}\\[-1pt]
   \href{https://www.linkedin.com/in/samuel-xj-zhang/}{linkedin.com/in/samuel-xj-zhang}
   \enspace\textbullet\enspace
@@ -67,12 +68,12 @@
 \end{center}
 
 \section{個人簡介}
-應用人工智慧工程師與創業者，擅長把模糊、領域知識密集的問題轉化為人們願意使用並喜愛的產品。在 Marsh，為保險經紀人構建並評估排序與文件智慧系統；在 COVERD，負責一款理解企業語境的語音面試產品。此前在輝瑞交付了產能規劃平台 GROWMAT，透過全棧工程、產品負責與利害關係人推動，每月節省 120 多個分析人員工時。
+應用人工智慧工程師與創業者，擅長把模糊、領域知識密集的問題轉化為實用且值得信賴的產品。在 Marsh，為保險經紀人構建並評估排序與文件智慧系統；在 COVERD，負責一款理解企業語境的語音面試產品。此前在輝瑞交付了產能規劃平台 GROWMAT，透過全棧工程、產品負責與利害關係人推動，每月節省 120 多個分析人員工時。
 
 \section{核心能力}
 \textbf{人工智慧與機器學習：}多智慧代理系統、檢索增強生成與資訊檢索、大語言模型與嵌入評估、文件智慧、學習排序、建模與實驗設計
 
-\textbf{工程：}Python、Julia、SQL、TypeScript/React、PostgreSQL、Docker 與持續集成/交付
+\textbf{工程：}Python、Julia、SQL、TypeScript/React、PostgreSQL、Docker 與持續整合/交付
 
 \textbf{產品：}客戶探索、快速原型、利害關係人管理、負責任人工智慧與導入落地
 
@@ -85,10 +86,10 @@
   \item 向 Marsh Matching Companion 第三階段利害關係人轉化研究結論，形成透明、人工參與決策的建議，以支持經紀人的專業判斷、更廣泛的市場考慮與客戶結果。
 \end{itemize}
 
-\role{\href{https://coverd.ai}{COVERD}}{創始人兼產品負責人（兼職）}{2026 年 3 月—至今}{英國倫敦}
+\role{\href{https://coverd.ai}{COVERD}}{創辦人兼產品負責人（兼職）}{2026 年 3 月—至今}{英國倫敦}
 \begin{itemize}
   \item 與四家設計合作夥伴開展客戶探索，並將產品從候選人端履歷工具轉向一款先理解企業與職位實際運作方式的人工智慧面試系統。
-  \item 選定以企業訪談先驗資訊為起点的多智慧代理圖結構語音架構；智慧代理在候選人面試中更新證據加權信念，以選擇針對職位的追問。
+  \item 選定以企業訪談先驗資訊為起點的多智慧代理圖結構語音架構；智慧代理在候選人面試中更新證據加權信念，以選擇針對職位的追問。
   \item 在 20 場候選人面試中測試三種架構；候選人肯定了所選系統的智慧追問、問題品質，以及讓他們感到被認真傾聽與重視的能力。
 \end{itemize}
 
@@ -100,7 +101,7 @@
 \role{輝瑞分析研發}{大學部資料分析實習生}{2023 年 9 月—2024 年 8 月}{英國桑威奇}
 \begin{itemize}
   \item 歷時十個月構建並部署由七個組件組成的 GROWMAT 產能規劃平台，供四個團隊的 40 多名員工直接使用，並影響更廣泛的 80 多人。
-  \item 將產能計算從 12 分鐘縮短至不到 60 秒（12 倍），每月節省 120 多個工時，並以即時資料和每兩小時自動刷新取代每周工作簿。
+  \item 將產能計算從 12 分鐘縮短至不到 60 秒（12 倍），每月節省 120 多個工時，並以即時資料和每兩小時自動刷新取代每週工作簿。
   \item 構建並發保護、每日備份和 180 天回滾機制；開發覆蓋專案時間線、合規、分析表現與未來工作量的即時儀表板。
   \item 使用統計熱力學與 Julia 完成藥物溶解度建模原型；與輝瑞、麻省理工學院和帝國理工學院合作，將開源研究轉化為實用的藥物研發流程。
 \end{itemize}
@@ -141,7 +142,7 @@
 \section{精選技術專案}
 \begin{itemize}
   \item \project{家庭實驗室與私有人工智慧基礎設施——}{在七台 Proxmox/Docker 伺服器上運行 23 項服務，配備 42 GB 顯示記憶體人工智慧算力、跨架構持續整合、網路安全和共 106 TB 可用 RAID 儲存。}
-  \item \project{股票市場模擬引擎——}{使用 Julia/SQL 構建訂單撮合與處理、WebSocket 即時訂單簿更新和響應式交易界面。}
+  \item \project{股票市場模擬引擎——}{使用 Julia/SQL 構建訂單撮合與處理、WebSocket 即時訂單簿更新和回應式交易介面。}
 \end{itemize}
 
 \section{獎項與其他資訊}
@@ -153,7 +154,7 @@
 \begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.7em}}X@{}}
 音樂 & 競技銅管樂團次中音號手，所在樂團獲 UniBrass 第四名；參與三部音樂劇，其中一部由自己執導、編寫並作曲。\\[1pt]
 攝影 & 曾是專業婚禮攝影師；如今為創作本身，也為自然、朋友與人們臉上的笑容而攝影。\\[1pt]
-構建 & 在十二台機器上搭建計算機與家庭基礎設施，電費也日益顯眼。\\[1pt]
+構建 & 在十二台機器（其中七台為伺服器）上搭建計算機與家庭基礎設施，電費也日益顯眼。\\[1pt]
 其他 & 徒步、攀登、科幻與旅行，並充分利用新加坡護照。
 \end{tabularx}
 

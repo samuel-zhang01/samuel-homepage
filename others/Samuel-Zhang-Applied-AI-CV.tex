@@ -9,9 +9,7 @@
   \usepackage{tgtermes}
 \else
   \usepackage{fontspec}
-  \IfFontExistsTF{Times New Roman}
-    {\setmainfont{Times New Roman}}
-    {\setmainfont{TeX Gyre Termes}}
+  \setmainfont{TeX Gyre Termes}
 \fi
 \usepackage[top=1.4cm,bottom=1.4cm,left=1.5cm,right=1.5cm]{geometry}
 \usepackage{enumitem}
@@ -32,6 +30,7 @@
 \definecolor{muted}{HTML}{4F4F4F}
 
 \hypersetup{
+  pdflang={en-GB},
   pdftitle={Samuel Zhang -- Applied AI CV},
   pdfauthor={Samuel Zhang},
   pdfsubject={Applied AI, machine learning and AI product development},
@@ -48,18 +47,18 @@
 \titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{\MakeUppercase}[\vspace{-2pt}\color{accent}\titlerule]
 \titlespacing*{\section}{0pt}{6pt}{3pt}
 
+\newcommand{\cvdate}[1]{{\normalfont\normalsize\bfseries #1}}
+
 \newcommand{\role}[4]{%
   \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \textbf{#1} \textbar{} \textit{#2} & \textbf{#3} \\
+    \textbf{#1} \textbar{} \textit{#2} & \cvdate{#3} \\
     \multicolumn{2}{@{}l@{}}{\small\color{muted}#4}
   \end{tabularx}\vspace{-1pt}
 }
 
 \newcommand{\primaryrole}[4]{%
-  \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \multicolumn{2}{@{}l@{}}{\textbf{#1}} \\[-1pt]
-    {\small\color{muted}#2} & {\small\textbf{#3}\enspace\textbullet\enspace #4}
-  \end{tabularx}\vspace{-1pt}
+  \textbf{#1}\par\vspace{-1pt}
+  {\small\color{muted}#2\enspace\textbullet\enspace #4\hfill\color{ink}\cvdate{#3}\par}\vspace{-1pt}
 }
 
 \newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
@@ -68,10 +67,10 @@
 
 \begin{center}
   {\huge\bfseries Samuel Zhang}\\[2pt]
-  {\large\bfseries Applied AI Engineer \& Product Builder}\\[4pt]
+  {\large\bfseries Applied AI Engineer \textperiodcentered{} Product Builder \textperiodcentered{} Founder}\\[4pt]
   \small
   London, United Kingdom \enspace\textbullet\enspace
-  +44 7502 118207 \enspace\textbullet\enspace
+  \href{tel:+447502118207}{+44 7502 118207} \enspace\textbullet\enspace
   \href{mailto:sam.xiaojian.zhang@outlook.com}{sam.xiaojian.zhang@outlook.com}\\[-1pt]
   \href{https://www.linkedin.com/in/samuel-xj-zhang/}{linkedin.com/in/samuel-xj-zhang}
   \enspace\textbullet\enspace
@@ -81,7 +80,7 @@
 \end{center}
 
 \section{Profile}
-Applied AI engineer and founder who turns ambiguous, domain-heavy problems into products people love. At Marsh, builds and evaluates ranking and document-intelligence systems for brokers; at COVERD, leads a company-aware voice-interview product. Previously delivered GROWMAT at Pfizer, a transformative platform saving 120+ analyst hours monthly through full-stack engineering, product ownership and stakeholder-led adoption.
+Applied AI engineer and founder who turns ambiguous, domain-heavy problems into useful products people trust. At Marsh, builds and evaluates ranking and document-intelligence systems for brokers; at COVERD, leads a company-aware voice-interview product. Previously delivered GROWMAT at Pfizer, a capacity-planning platform saving 120+ analyst hours monthly through full-stack engineering, product ownership and stakeholder-led adoption.
 
 \section{Core Expertise}
 \textbf{AI \& ML:} Multi-agent systems, RAG and retrieval, LLM and embedding evaluation, document intelligence, learning-to-rank, modelling and experiment design
@@ -96,7 +95,7 @@ Applied AI engineer and founder who turns ambiguous, domain-heavy problems into 
 \primaryrole{Senior Coordinator --- Digital Transformation Strategy Internship}{Marsh \textperiodcentered{} Strategy \& Corporate Development Group}{May 2026 -- Present}{London, United Kingdom}
 \begin{itemize}
   \item Structured a proof of concept for planned Broker Workbench integration around three evidence pillars: quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence.
-  \item Developed internal broker lead-matching decision engine for lead insurer selection, combining historical trading performance, wording quality and real-time appetite signals into transparent, ranked lead-market recommendations.
+  \item Developed an internal broker lead-matching decision engine for lead insurer selection, combining historical trading performance, wording quality and real-time appetite signals into transparent, ranked lead-market recommendations.
   \item Translated findings for Marsh Matching Companion Phase 3 stakeholders into transparent, human-in-the-loop lead recommendations supporting broker judgement, wider market consideration and client outcomes.
 \end{itemize}
 
@@ -165,10 +164,10 @@ Professional placement; Computational Chemistry, Molecular Biology, Chemical Bio
 \textbf{Languages:} English and Mandarin (native/bilingual); Italian (elementary)
 
 \section{Interests}
-\begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.7em}}X@{}}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}X@{}}
 Music & Competitive brass band euphonium player and member of a fourth-place UniBrass ensemble; performed in three musical-theatre productions, including one self-directed, written and composed.\\[1pt]
 Photography & Former professional wedding photographer, now photographing nature and friends for the joy of the craft, and the smile on people's faces.\\[1pt]
-Making & Builds computers and home infrastructure across 12 machines, with an increasingly noticeable electricity bill.\\[1pt]
+Making & Builds computers and home infrastructure across 12 machines, including seven servers, with an increasingly noticeable electricity bill.\\[1pt]
 Beyond & Hiking, climbing, science fiction and travelling, making full use of a Singaporean passport.
 \end{tabularx}
 

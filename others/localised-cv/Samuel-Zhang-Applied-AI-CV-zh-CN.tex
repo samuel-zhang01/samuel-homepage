@@ -4,7 +4,7 @@
 % Samuel Zhang 的应用人工智能简历（简体中文）。使用 XeLaTeX 编译。
 \usepackage{fontspec}
 \setmainfont{TeX Gyre Termes}
-\setCJKmainfont{AR PL UMing CN}
+\setCJKmainfont[AutoFakeBold=2.2,AutoFakeSlant=.16]{AR PL SungtiL GB}
 \usepackage[top=1.35cm,bottom=1.35cm,left=1.45cm,right=1.45cm]{geometry}
 \usepackage{enumitem}
 \usepackage{tabularx}
@@ -18,6 +18,7 @@
 \definecolor{muted}{HTML}{4F4F4F}
 
 \hypersetup{
+  pdflang={zh-CN},
   pdftitle={Samuel Zhang -- 应用人工智能简历},
   pdfauthor={Samuel Zhang},
   pdfsubject={应用人工智能、机器学习与人工智能产品开发},
@@ -34,18 +35,18 @@
 \titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-2pt}\color{accent}\titlerule]
 \titlespacing*{\section}{0pt}{5pt}{2.5pt}
 
+\newcommand{\cvdate}[1]{{\normalfont\normalsize\bfseries #1}}
+
 \newcommand{\role}[4]{%
   \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \textbf{#1} \textbar{} \textit{#2} & \textbf{#3} \\
+    \textbf{#1} \textbar{} \textit{#2} & \cvdate{#3} \\
     \multicolumn{2}{@{}l@{}}{\small\color{muted}#4}
   \end{tabularx}\vspace{-1pt}
 }
 
 \newcommand{\primaryrole}[4]{%
-  \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \multicolumn{2}{@{}l@{}}{\textbf{#1}} \\[-1pt]
-    {\small\color{muted}#2} & {\small\textbf{#3}\enspace\textbullet\enspace #4}
-  \end{tabularx}\vspace{-1pt}
+  \textbf{#1}\par\vspace{-1pt}
+  {\small\color{muted}#2\enspace\textbullet\enspace #4\hfill\color{ink}\cvdate{#3}\par}\vspace{-1pt}
 }
 
 \newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
@@ -54,10 +55,10 @@
 
 \begin{center}
   {\huge\bfseries Samuel Zhang}\\[2pt]
-  {\large\bfseries 应用人工智能工程师与产品构建者}\\[4pt]
+  {\large\bfseries 应用人工智能工程师 \textperiodcentered{} 产品构建者 \textperiodcentered{} 创始人}\\[4pt]
   \small
   英国伦敦 \enspace\textbullet\enspace
-  +44 7502 118207 \enspace\textbullet\enspace
+  \href{tel:+447502118207}{+44 7502 118207} \enspace\textbullet\enspace
   \href{mailto:sam.xiaojian.zhang@outlook.com}{sam.xiaojian.zhang@outlook.com}\\[-1pt]
   \href{https://www.linkedin.com/in/samuel-xj-zhang/}{linkedin.com/in/samuel-xj-zhang}
   \enspace\textbullet\enspace
@@ -67,7 +68,7 @@
 \end{center}
 
 \section{个人简介}
-应用人工智能工程师与创业者，擅长把模糊、领域知识密集的问题转化为人们愿意使用并喜爱的产品。在 Marsh，为保险经纪人构建并评估排序与文档智能系统；在 COVERD，负责一款理解企业语境的语音面试产品。此前在辉瑞交付了产能规划平台 GROWMAT，通过全栈工程、产品负责与利益相关方推动，每月节省 120 多个分析人员工时。
+应用人工智能工程师与创业者，擅长把模糊、领域知识密集的问题转化为实用且值得信赖的产品。在 Marsh，为保险经纪人构建并评估排序与文档智能系统；在 COVERD，负责一款理解企业语境的语音面试产品。此前在辉瑞交付了产能规划平台 GROWMAT，通过全栈工程、产品负责与利益相关方推动，每月节省 120 多个分析人员工时。
 
 \section{核心能力}
 \textbf{人工智能与机器学习：}多智能体系统、检索增强生成与信息检索、大语言模型与嵌入评估、文档智能、学习排序、建模与实验设计
@@ -82,7 +83,7 @@
 \begin{itemize}
   \item 围绕三个证据支柱，为计划接入 Broker Workbench 的概念验证设计框架：定量承保市场匹配排序、定性合同审查，以及探索性且限定时效的市场情报。
   \item 开发内部经纪人线索匹配决策引擎，用于首席承保人选择；将历史交易表现、条款文本质量与实时承保意愿信号整合为透明、排序后的首席承保市场建议。
-  \item 向 Marsh Matching Companion 第三阶段利益相关方转化研究结论，形成透明、人在回路的建议，以支持经纪人的专业判断、更广泛的市场考虑与客户结果。
+  \item 向 Marsh Matching Companion 第三阶段利益相关方转化研究结论，形成透明、人工参与决策的建议，以支持经纪人的专业判断、更广泛的市场考虑与客户结果。
 \end{itemize}
 
 \role{\href{https://coverd.ai}{COVERD}}{创始人兼产品负责人（兼职）}{2026 年 3 月—至今}{英国伦敦}
@@ -153,7 +154,7 @@
 \begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.7em}}X@{}}
 音乐 & 竞技铜管乐团次中音号手，所在乐团获 UniBrass 第四名；参与三部音乐剧，其中一部由自己执导、编写并作曲。\\[1pt]
 摄影 & 曾是专业婚礼摄影师；如今为创作本身，也为自然、朋友与人们脸上的笑容而摄影。\\[1pt]
-构建 & 在十二台机器上搭建计算机与家庭基础设施，电费也日益显眼。\\[1pt]
+构建 & 在十二台机器（其中七台为服务器）上搭建计算机与家庭基础设施，电费也日益显眼。\\[1pt]
 其他 & 徒步、攀登、科幻与旅行，并充分利用新加坡护照。
 \end{tabularx}
 

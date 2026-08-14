@@ -8,7 +8,7 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 
 - Four fully routed locales: British English, American English, Simplified Chinese and Traditional Chinese.
 - A language selector beside the desktop clock, with locale persistence and mobile-safe menus.
-- An in-browser résumé and four downloadable, two-page Applied AI CVs.
+- One canonical Documents app with four localised, downloadable two-page Applied AI CVs and continuously scrolling research previews.
 - Updated experience spanning COVERD; a Senior Coordinator — Digital Transformation Strategy Internship in Marsh's Strategy & Corporate Development Group; Pfizer; King's College London; and the Singapore Civil Defence Force.
 - Built-in PDF previews, four profile-themed games and small desktop easter eggs.
 - Keyboard focus states, accessible controls, reduced-motion support and first-visit mobile guidance.

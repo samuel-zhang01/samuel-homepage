@@ -29,7 +29,6 @@ export type AppId =
   | "projects"
   | "skills"
   | "education"
-  | "resume"
   | "documents"
   | "games"
   | "contact"
@@ -189,19 +188,8 @@ const INITIAL_WINDOWS: WindowState[] = [
     maximized: false,
   },
   {
-    id: "resume",
-    title: "Résumé & Profile",
-    x: 246,
-    y: 58,
-    width: 650,
-    height: 606,
-    z: 7,
-    open: false,
-    maximized: false,
-  },
-  {
     id: "documents",
-    title: "CV & Papers",
+    title: "Documents",
     x: 180,
     y: 48,
     width: 820,
@@ -274,8 +262,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
-  { id: "resume", label: "Résumé", icon: "document", description: "A concise, in-browser professional profile." },
-  { id: "documents", label: "CV & Papers", icon: "pdf", description: "Current AI CV, undergraduate thesis and external GROWMAT case study in the built-in reader." },
+  { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV, research thesis and product case study in one continuous reader." },
   { id: "games", label: "Desk Arcade", icon: "game", description: "Four small games with profile-themed easter eggs." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
@@ -386,7 +373,7 @@ const projects: Array<{
       "A Broker Workbench proof of concept combining quantitative placement ranking, qualitative contract review and time-bounded market intelligence into transparent, human-in-the-loop lead recommendations.",
     tools: ["Learning-to-rank", "Document AI", "Market signals", "Governance"],
     metric: "3 EVIDENCE PILLARS",
-    app: "resume",
+    app: "experience",
   },
   {
     title: "Drug Solubility Modelling",
@@ -396,7 +383,7 @@ const projects: Array<{
       "Pharmaceutical solubility modelling with statistical thermodynamics and Julia, translating open-source research across Pfizer, MIT and Imperial into a practical drug-development workflow.",
     tools: ["Julia", "ML", "PC-SAFT", "Pharma"],
     metric: "R&D ACCELERATOR",
-    app: "resume",
+    app: "experience",
   },
   {
     title: "COVID-19 Decision Support",
@@ -736,12 +723,12 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           <PixelIcon kind="profile" />
           <div>
             <h1>Samuel Zhang</h1>
-            <p className="hero-role">Personal Profile 7.1 · AI, product and people</p>
+            <p className="hero-role">Applied AI Engineer · Product Builder · Founder</p>
           </div>
         </div>
         <p className="hero-copy">
           I&apos;m an applied AI engineer and founder who turns ambiguous, domain-heavy
-          problems into products people love. At Marsh, I build and evaluate ranking and
+          problems into useful products people trust. At Marsh, I build and evaluate ranking and
           document-intelligence systems for brokers; at COVERD, I lead a company-aware
           voice-interview product. Previously, I delivered GROWMAT at Pfizer—a
           capacity-planning platform that saves 120+ analyst hours each month through full-stack
@@ -788,8 +775,8 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
         <div className="button-row">
           <button className="mac-button is-default" onClick={() => openApp("coverd")}>Explore COVERD</button>
           <button className="mac-button" onClick={() => openApp("projects")}>View Work</button>
-          <button className="mac-button" onClick={() => openApp("resume")}>Open Résumé</button>
-          <a className="mac-button" href={localeCvAssets[locale].src} download>Download AI CV</a>
+          <button className="mac-button" onClick={() => openApp("documents")}>View CV</button>
+          <a className="mac-button" href={localeCvAssets[locale].src} download>Download CV</a>
           <button className="mac-button" onClick={() => openApp("contact")}>Contact</button>
         </div>
       </div>
@@ -1068,108 +1055,6 @@ function EducationApp({ locale }: { locale: Locale }) {
   );
 }
 
-function ResumeApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
-  return (
-    <TranslationBoundary locale={locale}><div className="resume-app">
-      <div className="simpletext-toolbar"><span>Times</span><span>10 pt</span><span>A4 · 2 pages</span><button onClick={() => openApp("documents")}>Preview AI CV</button></div>
-      <article className="resume-paper">
-        <header><div><h3>Samuel Zhang</h3><p>Applied AI Engineer · Product Builder · Founder</p></div><address>London, United Kingdom<br />sam.xiaojian.zhang@outlook.com<br />linkedin.com/in/samuel-xj-zhang</address></header>
-        <hr />
-        <section>
-          <h4>Profile</h4>
-          <p>Applied AI engineer and founder who turns ambiguous, domain-heavy problems into products people love. At Marsh, builds and evaluates ranking and document-intelligence systems for brokers; at COVERD, leads a company-aware voice-interview product. Previously delivered GROWMAT at Pfizer, a transformative platform saving 120+ analyst hours monthly through full-stack engineering, product ownership and stakeholder-led adoption.</p>
-        </section>
-        <section>
-          <h4>Current</h4>
-          <div>
-            <div className="resume-role">
-              <p>
-                <strong>Senior Coordinator — Digital Transformation Strategy Internship</strong><br />
-                <span className="resume-organisation">Marsh · Strategy &amp; Corporate Development Group</span><br />
-                <em>May 2026—Present · London</em>
-              </p>
-              <ul><li>Structured a proof of concept for planned Broker Workbench integration around quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence. Developed an internal broker lead-matching engine for lead-insurer selection using historical trading performance, wording quality and real-time appetite signals. Translated the findings for Marsh Matching Companion Phase 3 into transparent, human-in-the-loop recommendations supporting broker judgement, wider market consideration and client outcomes.</li></ul>
-            </div>
-            <div className="resume-role">
-              <p><strong>COVERD — Founder &amp; Product Lead (part-time)</strong><br /><em>Mar 2026—Present · London</em></p>
-              <ul><li>Led customer discovery with four design partners and pivoted from candidate-side CV tooling to an interviewer that first learns how each company and role works. Selected a multi-agent, graph-based voice architecture seeded with priors from company interviews; agents update evidence-weighted beliefs to choose role-specific follow-ups. Tested three architectures across 20 candidate interviews, with candidates praising the question quality and ability to make them feel heard and valued.</li></ul>
-            </div>
-          </div>
-        </section>
-        <section>
-          <h4>Pfizer</h4>
-          <div>
-            <div className="resume-role">
-              <p><strong>Web Application Developer &amp; Product Owner (part-time)</strong><br /><em>Oct 2024—Apr 2026 · London</em></p>
-              <ul>
-                <li>Secured senior sponsorship, significant funding and department-wide adoption through live demonstrations; retained for a two-year part-time extension to own GROWMAT&apos;s roadmap.</li>
-              </ul>
-            </div>
-            <div className="resume-role">
-              <p><strong>Data Analyst Undergraduate, Analytical R&amp;D</strong><br /><em>Sep 2023—Aug 2024 · Sandwich</em></p>
-              <ul>
-                <li>Built and deployed GROWMAT over ten months: a seven-component capacity-planning platform used by 40+ employees across four teams, with wider impact across 80+ people.</li>
-                <li>Cut capacity calculations from 12 minutes to under 60 seconds (12×), saved 120+ hours monthly and replaced weekly workbooks with live data and automated two-hourly refreshes.</li>
-                <li>Engineered concurrency protection, daily backups, 180-day rollback and live dashboards spanning project timelines, compliance, analytical performance and future workloads.</li>
-                <li>Prototyped pharmaceutical solubility modelling with statistical thermodynamics and Julia, working across Pfizer, MIT and Imperial to translate open-source research into a practical drug-development workflow.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        <section>
-          <h4>Research &amp; teaching</h4>
-          <div>
-            <div className="resume-role">
-              <p><strong>King’s College London — Coding Series Tutor &amp; Curriculum Designer</strong><br /><em>Jan 2023—Apr 2025</em></p>
-              <ul><li>Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, achieving 90% satisfaction and Royal Society of Chemistry endorsement. Organised a cross-industry data-science careers panel for 100+ students and mentored learners in widening their options through technical skills.</li></ul>
-            </div>
-            <div className="resume-role">
-              <p><strong>Royal Society / King’s College London — Summer Research Fellow</strong><br /><em>Jun—Jul 2023</em></p>
-              <ul><li>Built GPU-accelerated GROMACS workflows for protein–membrane simulations, improving computational performance by 70% and iterating experimental design from the results.</li></ul>
-            </div>
-            <div className="resume-role">
-              <p><strong>King’s College London — Undergraduate Research Fellow</strong><br /><em>Jun—Jul 2022</em></p>
-              <ul><li>Engineered MATLAB, Python and Excel spectroscopy pipelines that reduced analysis time by 40%, were adopted by the group and now underpin a publication in progress.</li></ul>
-            </div>
-          </div>
-        </section>
-        <section>
-          <h4>Public service</h4>
-          <div>
-            <div className="resume-role">
-              <p><strong>Singapore Civil Defence Force — Commander’s Personal Assistant / Sergeant</strong><br /><em>Jul 2019—Jul 2021 · Singapore</em></p>
-              <ul>
-                <li>Built MATLAB COVID-19 resource-planning models from public epidemiological data and automated emergency-activation attendance across legacy systems for 1,200+ personnel.</li>
-                <li>Supported senior leaders in time-critical operations, balancing incomplete information, rapid prioritisation and accountability across large-scale personnel operations.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        <section>
-          <h4>Education</h4>
-          <p><strong>Imperial College London</strong> — MSc AI Applications &amp; Innovation, Predicted Distinction, Sep 2025—Sep 2026<br />Deep Learning · AI Safety · Innovation Management · ML in Medical Imaging · ML in Climate Change<br /><br /><strong>King&apos;s College London</strong> — BSc Chemistry with Biomedicine, First-Class Honours, Sep 2021—May 2025<br />Professional placement · Computational Chemistry · Molecular Biology · Chemical Biology · Organic Chemistry · Associate of King&apos;s College London</p>
-        </section>
-        <section>
-          <h4>Technical</h4>
-          <p><strong>AI &amp; ML:</strong> multi-agent systems, RAG and retrieval, LLM and embedding evaluation, document intelligence, learning-to-rank, modelling and experiment design<br /><strong>Engineering:</strong> Python, Julia, SQL, TypeScript/React, PostgreSQL, Docker and CI/CD<br /><strong>Product:</strong> customer discovery, rapid prototyping, stakeholder management, responsible AI and adoption</p>
-        </section>
-        <section>
-          <h4>Selected projects</h4>
-          <p><strong>Home Lab &amp; Private AI Infrastructure:</strong> Run 23 services across seven Proxmox/Docker servers, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB total usable RAID storage.<br /><br /><strong>Stock Market Simulation Engine:</strong> Built Julia/SQL order matching, real-time WebSocket order-book updates and a responsive trading interface.</p>
-        </section>
-        <section>
-          <h4>Creative life</h4>
-          <p>Competitive brass-band euphonium player and member of a fourth-place UniBrass ensemble; performed in three musical-theatre productions, including one self-directed, written and composed. Former professional wedding photographer, now photographing nature and friends for the joy of the craft. Builds computers and home infrastructure across 12 machines; also enjoys hiking, climbing, science fiction and travelling.</p>
-        </section>
-        <section>
-          <h4>Awards</h4>
-          <p>King’s Research Experience Award · Associate of King’s College London (AKC) · SCDF Service Excellence Award · SCDF 1st Division HQ Wall of Fame · EARCOS Global Citizenship Award<br /><strong>Languages:</strong> English and Mandarin (native/bilingual) · Italian (elementary)</p>
-        </section>
-      </article>
-    </div></TranslationBoundary>
-  );
-}
-
 function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
   const [copied, setCopied] = useState(false);
 
@@ -1267,8 +1152,8 @@ function DocumentsApp({ locale }: { locale: Locale }) {
       <section className="documents-preview">
         <div className="documents-toolbar">
           <span>{activeDocument.title}</span>
-          <span className="documents-toolbar__hint">Use the reader controls to turn pages and zoom.</span>
-          <a href={activeDocument.src} download>Save a copy</a>
+          <span className="documents-toolbar__hint">Scroll continuously to read every page; zoom when needed.</span>
+          <a href={activeDocument.src} download>{activeDocument.id === "ai-cv" ? "Download CV" : "Save a copy"}</a>
         </div>
         <PdfPreview
           key={activeDocument.id}
@@ -1887,7 +1772,6 @@ function AppContent({ id, openApp, locale }: { id: AppId; openApp: (id: AppId) =
     case "projects": return <ProjectsApp openApp={openApp} locale={locale} />;
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
-    case "resume": return <ResumeApp openApp={openApp} locale={locale} />;
     case "documents": return <DocumentsApp locale={locale} />;
     case "games": return <GamesApp openApp={openApp} locale={locale} />;
     case "contact": return <ContactApp openApp={openApp} locale={locale} />;
@@ -2248,7 +2132,7 @@ export default function SystemSevenDesktop({
                 <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder&apos;s Desk</button>
                 <hr />
                 <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
-                <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />CV &amp; Papers</button>
+                <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
                 <button onClick={() => openApp("games")}><PixelIcon kind="game" small />Desk Arcade</button>
                 <button onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
                 <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Interests &amp; Notes</button>
@@ -2260,7 +2144,7 @@ export default function SystemSevenDesktop({
           <strong className="active-application">{activeTitle}</strong>
           <div className="menu-root">
             <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")} aria-controls="file-menu" aria-expanded={openMenu === "file"}>File</button>
-            {openMenu === "file" && <div className="menu-dropdown" id="file-menu"><button onClick={() => openApp("resume")}>Open Résumé</button><button onClick={() => openApp("documents")}>Open CV &amp; Papers</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
+            {openMenu === "file" && <div className="menu-dropdown" id="file-menu"><button onClick={() => openApp("documents")}>Open Documents…</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
             <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")} aria-controls="edit-menu" aria-expanded={openMenu === "edit"}>Edit</button>

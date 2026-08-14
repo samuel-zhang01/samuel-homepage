@@ -1,7 +1,7 @@
 import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 
 export const metadata = {
-  title: "CV & Papers",
+  title: "Documents",
   description: "Read Samuel Zhang’s CV, research thesis, and product work without leaving the portfolio.",
 };
 

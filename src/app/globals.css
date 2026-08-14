@@ -284,6 +284,7 @@ body {
 }
 
 .menu-memory {
+  min-width: 24px;
   color: #555;
   font-size: 10px;
 }
@@ -714,6 +715,8 @@ body {
 
 .mac-window__content {
   position: relative;
+  min-width: 0;
+  min-height: 0;
   flex: 1;
   overflow: auto;
   color: var(--ink);
@@ -1473,6 +1476,11 @@ body {
   border-bottom: 1px solid #999;
 }
 
+html:lang(zh-CN) .career-record,
+html:lang(zh-TW) .career-record {
+  grid-template-columns: 168px 1fr;
+}
+
 .career-period {
   display: flex;
   flex-direction: column;
@@ -1481,6 +1489,10 @@ body {
   font-family: "Courier New", monospace;
   font-size: 10px;
   font-weight: 700;
+}
+
+.career-period span {
+  white-space: nowrap;
 }
 
 .career-period em {
@@ -1791,8 +1803,9 @@ body {
 .degree-card span {
   color: #666;
   font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .degree-card h4 {
@@ -1858,145 +1871,6 @@ body {
 .language-list dd {
   margin: 0;
   color: #666;
-}
-
-/* SimpleText résumé */
-
-.resume-app {
-  min-height: 100%;
-  background: #aaa;
-}
-
-.simpletext-toolbar {
-  position: sticky;
-  z-index: 2;
-  top: 0;
-  display: flex;
-  height: 29px;
-  align-items: center;
-  border-bottom: 2px solid #111;
-  background: #ddd;
-}
-
-.simpletext-toolbar span,
-.simpletext-toolbar a,
-.simpletext-toolbar button {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  padding: 0 11px;
-  border-right: 1px solid #777;
-  color: #111;
-  background: transparent;
-  font-family: inherit;
-  font-size: 10px;
-  text-decoration: none;
-}
-
-.simpletext-toolbar a,
-.simpletext-toolbar button {
-  margin-left: auto;
-  border-top: 0;
-  border-right: 0;
-  border-bottom: 0;
-  border-left: 2px solid #111;
-  font-weight: 700;
-}
-
-.simpletext-toolbar a:hover,
-.simpletext-toolbar button:hover {
-  color: #fff;
-  background: var(--selection);
-}
-
-.resume-paper {
-  width: min(92%, 540px);
-  min-height: 720px;
-  margin: 18px auto 28px;
-  padding: 36px 42px;
-  border: 1px solid #777;
-  background: #fff;
-  box-shadow: 5px 5px 0 #777;
-  font-family: Georgia, "Times New Roman", serif;
-}
-
-.resume-paper header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.resume-paper h3 {
-  margin: 0;
-  font-size: 29px;
-  letter-spacing: -.03em;
-}
-
-.resume-paper header p {
-  margin: 4px 0 0;
-  font-size: 11px;
-  font-style: italic;
-}
-
-.resume-paper address {
-  font-family: Geneva, sans-serif;
-  font-size: 9px;
-  font-style: normal;
-  line-height: 1.5;
-  text-align: right;
-}
-
-.resume-paper hr {
-  height: 4px;
-  margin: 17px 0 19px;
-  border: 0;
-  border-top: 1px solid #111;
-  border-bottom: 1px solid #111;
-}
-
-.resume-paper section {
-  display: grid;
-  grid-template-columns: 95px 1fr;
-  gap: 14px;
-  margin-bottom: 17px;
-}
-
-.resume-paper section h4 {
-  margin: 0;
-  font-family: Geneva, sans-serif;
-  font-size: 10px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.resume-paper section p,
-.resume-paper section ul {
-  margin: 0;
-  font-size: 10px;
-  line-height: 1.5;
-}
-
-.resume-paper section ul {
-  padding-left: 14px;
-}
-
-.resume-role + .resume-role {
-  margin-top: 10px;
-}
-
-.resume-role > p {
-  margin-bottom: 2px;
-}
-
-.resume-organisation {
-  color: #333;
-  font-size: 9px;
-  font-weight: 700;
-}
-
-.resume-role li + li {
-  margin-top: 2px;
 }
 
 /* Chooser */
@@ -2123,6 +1997,8 @@ body {
   height: 100%;
   min-height: 420px;
   grid-template-columns: 205px minmax(0,1fr);
+  grid-template-rows: minmax(0,1fr);
+  overflow: hidden;
   background: #777;
 }
 
@@ -2208,7 +2084,9 @@ body {
 .documents-preview {
   display: flex;
   min-width: 0;
+  min-height: 0;
   flex-direction: column;
+  overflow: hidden;
   background: #777;
 }
 
@@ -2293,7 +2171,7 @@ body {
 }
 
 .pdf-reader__controls output {
-  min-width: 76px;
+  min-width: 190px;
   color: #333;
   font-variant-numeric: tabular-nums;
   text-align: center;
@@ -2307,21 +2185,62 @@ body {
 }
 
 .pdf-reader__stage {
+  display: block;
   min-width: 0;
   min-height: 0;
   flex: 1;
   overflow: auto;
   padding: 14px;
   background: #777;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
   scrollbar-color: #555 #bbb;
 }
 
-.pdf-reader__stage canvas {
+.pdf-reader__page {
+  position: relative;
   display: block;
-  max-width: none;
-  margin: 0 auto;
+  overflow: hidden;
+  margin: 0 auto 18px;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,.45);
+}
+
+.pdf-reader__page:last-child {
+  margin-bottom: 0;
+}
+
+.pdf-reader__page canvas {
+  display: block;
+  max-width: none;
+  background: #fff;
+}
+
+.pdf-reader__page-number {
+  position: absolute;
+  z-index: 1;
+  right: 7px;
+  bottom: 7px;
+  display: grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 1px solid #777;
+  color: #444;
+  background: rgba(238,238,232,.9);
+  font-family: var(--system-mono);
+  font-size: 8px;
+  pointer-events: none;
+}
+
+.pdf-reader__loading {
+  width: min(320px, calc(100% - 24px));
+  margin: 40px auto;
+  padding: 18px;
+  border: 2px solid #111;
+  background: #eee;
+  box-shadow: 3px 3px rgba(0,0,0,.35);
+  text-align: center;
 }
 
 .pdf-reader__error {
@@ -3652,31 +3571,6 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .resume-paper {
-    width: calc(100% - 18px);
-    margin-top: 9px;
-    padding: 24px 19px;
-  }
-
-  .resume-paper header,
-  .resume-paper section {
-    display: block;
-  }
-
-  .resume-paper address {
-    margin-top: 8px;
-    text-align: left;
-  }
-
-  .resume-paper section h4 {
-    margin-bottom: 5px;
-  }
-
-  .simpletext-toolbar span:nth-child(2),
-  .simpletext-toolbar span:nth-child(3) {
-    display: none;
-  }
-
   .chooser-app {
     padding: 10px;
   }
@@ -3969,7 +3863,10 @@ body {
   .window-switcher,
   .desktop-hint,
   .mobile-window-guide,
-  .simpletext-toolbar {
+  .documents-library,
+  .documents-toolbar,
+  .pdf-reader__controls,
+  .documents-fallback {
     display: none !important;
   }
 
@@ -3978,7 +3875,10 @@ body {
   .system-desktop,
   .mac-window,
   .mac-window__content,
-  .resume-app {
+  .documents-app,
+  .documents-preview,
+  .pdf-reader,
+  .pdf-reader__stage {
     position: static !important;
     width: auto !important;
     height: auto !important;
@@ -3988,16 +3888,20 @@ body {
     box-shadow: none !important;
   }
 
-  .mac-window:not([data-app-id="resume"]) {
+  .mac-window:not([data-app-id="documents"]) {
     display: none !important;
   }
 
-  .resume-paper {
-    width: auto;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
+  .pdf-reader__page {
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    break-after: page;
     box-shadow: none;
+  }
+
+  .pdf-reader__page canvas {
+    width: 100% !important;
+    height: auto !important;
   }
 }
