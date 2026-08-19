@@ -1,0 +1,476 @@
+.archiveCssAnchor {
+  --project-actions-css-ready: 1;
+}
+
+.panel {
+  --action-ink: #171717;
+  --action-blue: #11177a;
+  --action-green: #225b35;
+  overflow: hidden;
+  container-type: inline-size;
+  border: 2px solid var(--action-ink);
+  color: var(--action-ink);
+  background: #e6e6e1;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #858580, 3px 3px 0 rgba(0, 0, 0, .28);
+  font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
+}
+
+.panel button,
+.panel input,
+.panel a {
+  font: inherit;
+}
+
+.titleBar {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 5px;
+  border-bottom: 2px solid #111;
+  color: #fff;
+  background: var(--action-blue);
+}
+
+.titleBar strong {
+  flex: 0 0 auto;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  letter-spacing: .12em;
+}
+
+.titleRule {
+  height: 6px;
+  flex: 1;
+  border-top: 1px solid rgba(255, 255, 255, .7);
+  border-bottom: 1px solid rgba(255, 255, 255, .7);
+}
+
+.windowControl {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  border: 1px solid #fff;
+  background: #d9d9d4;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #737373;
+}
+
+.windowControl::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 1px solid #777;
+}
+
+.windowControlRight::after {
+  inset: 1px;
+  border-top: 3px double #777;
+}
+
+.launchArea,
+.shareArea {
+  padding: 12px 14px 14px;
+}
+
+.shareArea {
+  border-top: 3px double #777;
+  background:
+    linear-gradient(rgba(247, 247, 243, .93), rgba(247, 247, 243, .93)),
+    repeating-linear-gradient(0deg, #aaa 0 1px, transparent 1px 4px);
+}
+
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 9px;
+}
+
+.sectionLabel > span {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 2px solid #111;
+  color: #fff;
+  background: #4b4b4b;
+  box-shadow: 1px 1px #888;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.sectionLabel > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.sectionLabel strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  line-height: 1.05;
+}
+
+.sectionLabel small {
+  margin-top: 2px;
+  color: #5a5a5a;
+  font-size: 8px;
+  line-height: 1.25;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.action {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 2px solid #111;
+  color: #111;
+  background: #f8f8f4;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #898989, 1px 1px #888;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action:hover {
+  background: #fff;
+  outline: 2px solid var(--action-blue);
+  outline-offset: -5px;
+}
+
+.action:active {
+  padding: 8px 7px 6px 9px;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
+}
+
+.actionIcon {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 2px solid currentColor;
+  background: #e2e2dd;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #858585;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.actionCopy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.actionCopy small {
+  color: #666;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.actionCopy strong {
+  overflow: hidden;
+  margin-top: 2px;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+}
+
+.newWindow,
+.runState {
+  align-self: flex-start;
+  color: #696969;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.runState {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #dff6e5;
+}
+
+.runState i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #7aee9e;
+  box-shadow: 0 0 0 1px #071;
+}
+
+.primaryAction {
+  color: #fff;
+  background: var(--action-blue);
+  box-shadow: inset 1px 1px #7075b7, inset -1px -1px #080a3b, 1px 1px #777;
+}
+
+.primaryAction:hover {
+  background: #202895;
+  outline-color: #fff;
+}
+
+.primaryAction .actionIcon {
+  color: #fff;
+  background: #242b8d;
+  box-shadow: inset 1px 1px #6f75bd, inset -1px -1px #070936;
+}
+
+.primaryAction .actionCopy small,
+.primaryAction .newWindow {
+  color: #d5d8ff;
+}
+
+.emptyAction {
+  display: flex;
+  grid-column: 1 / -1;
+  min-height: 48px;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border: 1px dashed #777;
+  color: #555;
+  background: #efefeb;
+}
+
+.emptyAction > span {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-family: Georgia, serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.emptyAction > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.emptyAction strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10px;
+}
+
+.emptyAction small {
+  margin-top: 2px;
+  font-size: 8px;
+}
+
+.permalinkRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.addressField {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.addressField > span {
+  color: #555;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.addressField input {
+  width: 100%;
+  height: 33px;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 2px inset #999;
+  border-radius: 0;
+  color: #202020;
+  background: #fff;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  text-overflow: ellipsis;
+}
+
+.addressField input:focus {
+  outline: 2px solid var(--action-blue);
+  outline-offset: 1px;
+}
+
+.shareButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.shareButtons button,
+.shareButtons a {
+  display: inline-flex;
+  min-height: 33px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 2px solid #111;
+  color: #111;
+  background: #efefea;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #858585, 1px 1px #888;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.shareButtons button:hover,
+.shareButtons a:hover {
+  outline: 2px solid var(--action-blue);
+  outline-offset: -5px;
+}
+
+.shareButtons [aria-disabled="true"] {
+  color: #777;
+  cursor: wait;
+}
+
+.shareStatus {
+  display: flex;
+  min-height: 25px;
+  align-items: center;
+  gap: 7px;
+  margin: 8px 0 0;
+  padding: 5px 7px;
+  border: 1px solid #9a9a94;
+  color: #4c4c4c;
+  background: #e9e9e4;
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.shareStatus > span {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-family: Georgia, serif;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.status_copied,
+.status_shared {
+  border-color: #6c9378;
+  color: #174b27;
+  background: #e3f1e7;
+}
+
+.status_manual {
+  border-color: #aa833f;
+  color: #664200;
+  background: #fff1cf;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .actionGrid,
+  .permalinkRow {
+    grid-template-columns: 1fr;
+  }
+
+  .shareButtons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .shareButtons button,
+  .shareButtons a {
+    min-height: 38px;
+  }
+}
+
+@container (max-width: 520px) {
+  .permalinkRow {
+    grid-template-columns: 1fr;
+  }
+
+  .shareButtons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@container (max-width: 380px) {
+  .actionGrid,
+  .shareButtons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .launchArea,
+  .shareArea {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .actionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .shareButtons {
+    grid-template-columns: 1fr;
+  }
+
+  .newWindow,
+  .runState {
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel *,
+  .panel *::before,
+  .panel *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

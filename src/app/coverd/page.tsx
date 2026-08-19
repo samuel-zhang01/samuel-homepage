@@ -3,7 +3,7 @@ import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 export const metadata = {
   title: "COVERD — Founder’s Desk",
   description:
-    "COVERD is the AI interviewer that interviews the company first—using a role-specific belief graph to ask adaptive questions and produce cited evaluations.",
+    "COVERD is an ATS-connected recruitment-intelligence layer that reviews applications, retains evidence and returns reasoned shortlists while recruiters keep the decision.",
 };
 
 export default function CoverdPage() {

@@ -7,7 +7,13 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev:lan": "next dev --hostname 0.0.0.0 --port 5174",
+    "check:artifacts": "node scripts/check-project-artifacts.mjs",
+    "check:catalogue": "node scripts/check-project-catalogue.mjs",
+    "check:styles": "node scripts/check-project-css-modules.mjs",
+    "prebuild": "npm run check:artifacts && npm run check:catalogue && npm run check:styles",
     "build": "next build",
+    "build:isolated": "npm run check:artifacts && npm run check:catalogue && npm run check:styles && NEXT_DIST_DIR=.next-build next build",
     "start": "next start",
     "lint": "eslint"
   },

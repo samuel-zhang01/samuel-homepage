@@ -1,0 +1,233 @@
+.disclosure {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
+  margin-bottom: 12px;
+  padding: 9px 11px;
+  border: 1px solid #38664f;
+  background: #e1f0e4;
+  color: #244b39;
+}
+
+.disclosure > span {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: #fff;
+  font-family: Georgia, serif;
+  font-weight: 800;
+}
+
+.disclosure p { margin: 0; font-size: 10px; line-height: 1.45; }
+
+.modeTabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid #171717;
+  background: #c9c9c4;
+}
+
+.modeTabs button {
+  min-width: 0;
+  padding: 9px 6px 8px;
+  border: 0;
+  border-right: 1px solid #686864;
+  background: #eeeeea;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa;
+  cursor: pointer;
+}
+
+.modeTabs button:last-child { border-right: 0; }
+.modeTabs strong, .modeTabs span { display: block; }
+.modeTabs strong { font-size: 10px; }
+.modeTabs span { margin-top: 2px; color: #666; font: 7px/1.2 "Courier New", monospace; text-transform: uppercase; }
+.modeTabs .modeActive { color: #fff; background: #11177a; box-shadow: inset 1px 1px #080b44, inset -1px -1px #555abe; }
+.modeTabs .modeActive span { color: #d9dcff; }
+
+.ruleStrip {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 9px;
+  border: solid #171717;
+  border-width: 0 1px 1px;
+  background: #f7f7f2;
+}
+
+.ruleStrip > span { color: #61615d; font: 700 7px "Courier New", monospace; letter-spacing: .11em; }
+.ruleStrip p { margin: 0; font-size: 9px; }
+.ruleStrip code { padding: 2px 5px; border: 1px solid #888; background: #fff; color: #11177a; font-size: 9px; font-weight: 800; }
+
+.controlDeck {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(240px, .7fr);
+  gap: 11px;
+  margin-top: 12px;
+}
+
+.controlDeck > section { min-width: 0; padding: 9px; border: 1px solid #171717; background: #eeeeea; box-shadow: inset 1px 1px #fff; }
+.sectionTitle { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.sectionTitle span { display: grid; width: 19px; height: 19px; place-items: center; color: #fff; background: #171717; font: 700 8px "Courier New", monospace; }
+.sectionTitle strong { font-size: 10px; }
+
+.hostGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+.hostGrid button {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 25px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 5px;
+  padding: 6px;
+  border: 1px solid #777;
+  background: #f9f9f5;
+  text-align: left;
+  cursor: pointer;
+}
+.hostGrid .hostSelected { border: 2px solid #11177a; padding: 5px; background: #e7e9ff; }
+.avatar { display: grid; width: 24px; height: 24px; place-items: center; border: 1px solid #171717; border-radius: 50%; color: #fff; background: #454968; font-size: 9px; font-weight: 800; }
+.hostGrid button > span:nth-child(2) { min-width: 0; }
+.hostGrid strong, .hostGrid small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hostGrid strong { font-size: 9px; }
+.hostGrid small { color: #656560; font-size: 8px; }
+.load, .weight { text-align: center; }
+.load b, .weight b { display: block; font: 800 9px "Courier New", monospace; }
+.weight { color: #11177a; }
+
+.constraintGrid { display: grid; gap: 6px; }
+.constraintGrid label { display: grid; grid-template-columns: 82px minmax(0, 1fr); align-items: center; gap: 6px; }
+.constraintGrid label > span { color: #555; font-size: 8px; font-weight: 700; }
+.constraintGrid select { width: 100%; min-width: 0; height: 26px; border: 1px solid #171717; border-radius: 0; background: #fff; font-size: 9px; }
+
+.metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 12px 0; border: 1px solid #171717; background: #11177a; color: #fff; }
+.metrics div { padding: 8px; border-right: 1px solid #686dc3; text-align: center; }
+.metrics div:last-child { border-right: 0; }
+.metrics strong, .metrics span { display: block; }
+.metrics strong { font: 800 17px Georgia, serif; }
+.metrics span { color: #d9dcff; font-size: 8px; letter-spacing: .06em; text-transform: uppercase; }
+
+.workspace { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(230px, .55fr); gap: 11px; }
+.calendarPanel, .reservationPanel { min-width: 0; overflow: hidden; border: 1px solid #171717; background: #fff; }
+.panelHeader { display: flex; min-height: 42px; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 9px; border-bottom: 1px solid #171717; background: #deded9; }
+.panelHeader span { display: block; color: #5c5c58; font: 700 7px "Courier New", monospace; letter-spacing: .08em; }
+.panelHeader h3 { margin: 1px 0 0; font-size: 11px; }
+.legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.legend span::before { display: inline-block; width: 7px; height: 7px; margin-right: 3px; border: 1px solid #171717; content: ""; }
+.legend span[data-state="available"]::before { background: #dfe8ff; }
+.legend span[data-state="conflict"]::before { background: #ffe2c5; }
+.legend span[data-state="outside"]::before { background: #d7d7d2; }
+
+.keyboardHelp {
+  margin: 0;
+  padding: 7px 9px;
+  border-bottom: 1px solid #8d8d88;
+  color: #50504c;
+  background: #f4f4ef;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.keyboardHelp strong {
+  color: #11177a;
+  font: 800 7px "Courier New", monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.keyboardHelp kbd {
+  display: inline-block;
+  min-width: 17px;
+  margin: 0 1px;
+  padding: 1px 3px;
+  border: 1px solid #777;
+  border-bottom-width: 2px;
+  color: #282824;
+  background: #fff;
+  font: 800 7px "Courier New", monospace;
+  text-align: center;
+}
+
+.calendarScroll { overflow-x: auto; }
+.calendar { display: grid; min-width: 560px; grid-template-columns: 50px repeat(5, minmax(86px, 1fr)); }
+.timeCorner, .day { display: flex; min-height: 36px; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #999; border-bottom: 1px solid #171717; background: #f0f0eb; }
+.timeCorner { font: 800 8px "Courier New", monospace; }
+.day { font-size: 9px; }
+.day small { color: #666; font-size: 8px; font-weight: 400; }
+.calendarRow { display: grid; grid-column: 1 / -1; grid-template-columns: 50px repeat(5, minmax(86px, 1fr)); }
+.time { display: grid; min-height: 39px; place-items: center; border-right: 1px solid #999; border-bottom: 1px solid #bbb; background: #eeeeea; font: 700 8px "Courier New", monospace; }
+.time small { margin-top: -8px; color: #7b4217; font-size: 8px; }
+.calendarRow button,
+.emptyCell { display: grid; min-width: 0; min-height: 39px; place-content: center; padding: 3px; border: 0; border-right: 1px solid #bbb; border-bottom: 1px solid #bbb; }
+.calendarRow button { position: relative; cursor: pointer; }
+.calendarRow button[aria-disabled="true"] { cursor: not-allowed; }
+.emptyCell { color: #aaa; background: #f1f1ed; font: 700 8px "Courier New", monospace; }
+.calendarRow button[data-state="available"] { background: #eef1ff; color: #11177a; }
+.calendarRow button[data-state="available"]:hover { background: #d6d9ff; }
+.calendarRow button[data-state="conflict"] { background: repeating-linear-gradient(135deg, #ffe7cf 0 4px, #fff3e6 4px 8px); color: #7b4217; }
+.calendarRow button[data-state="outside"] { background: #ddddda; color: #777; }
+.calendarRow button > span { font: 800 9px "Courier New", monospace; }
+.calendarRow button small { display: block; max-width: 72px; overflow: hidden; color: #58588a; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.calendarRow .slotSelected { outline: 3px solid #11177a; outline-offset: -4px; background: #bcc1ff; }
+.calendarRow button:focus-visible {
+  z-index: 2;
+  outline: 3px solid #11177a;
+  outline-offset: -3px;
+  box-shadow: inset 0 0 0 5px #fff, inset 0 0 0 7px #11177a;
+}
+
+.slotAudit { border-top: 1px solid #888; background: #f4f4ef; }
+.slotAudit summary { padding: 7px 9px; color: #34345f; font: 800 7px "Courier New", monospace; cursor: pointer; }
+.slotAudit ul { display: grid; gap: 3px; margin: 0; padding: 0 9px 9px; list-style: none; }
+.slotAudit li { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: start; gap: 5px; color: #555; font-size: 8px; line-height: 1.35; }
+.slotAudit li strong { display: grid; min-height: 16px; place-items: center; border: 1px solid #777; color: #111; background: #fff; font: 800 7px "Courier New", monospace; }
+
+.reservationPanel { padding-bottom: 10px; }
+.holdClock { margin: 10px; padding: 11px; border: 2px solid #171717; background: #fff2c9; text-align: center; box-shadow: 3px 3px #bbb; }
+.holdClock span, .holdClock strong, .holdClock small { display: block; }
+.holdClock span { color: #785100; font: 800 7px "Courier New", monospace; letter-spacing: .12em; }
+.holdClock strong { margin: 3px 0; font: 800 25px "Courier New", monospace; }
+.holdClock small { color: #5f5f5a; font-size: 8px; }
+.review { margin: 0 10px 9px; }
+.review > div { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 5px; padding: 6px 0; border-bottom: 1px dotted #aaa; }
+.review dt { color: #666; font-size: 8px; font-weight: 800; text-transform: uppercase; }
+.review dd { margin: 0; font-size: 9px; font-weight: 700; }
+.review dd small { display: block; color: #60605c; font-size: 8px; font-weight: 400; }
+.reservationPanel > button { width: calc(100% - 20px); margin: 0 10px 6px; }
+.emptyReservation { padding: 18px 14px; text-align: center; }
+.emptyReservation > span { display: block; color: #11177a; font-size: 26px; }
+.emptyReservation strong { display: block; margin: 3px 0; font-size: 10px; }
+.emptyReservation p { margin: 0; color: #666; font-size: 9px; line-height: 1.45; }
+.message { margin: 8px 10px; padding: 7px; border: 1px solid #42765b; background: #e1f0e4; color: #28533e; font-size: 9px; }
+.pipeline { display: grid; gap: 4px; margin: 10px; padding: 9px; border-top: 1px solid #aaa; list-style: none; }
+.pipeline li { display: grid; grid-template-columns: 17px minmax(0, 1fr); align-items: center; gap: 5px; color: #575753; font-size: 9px; }
+.pipeline span { display: grid; width: 15px; height: 15px; place-items: center; border: 1px solid #171717; background: #eee; color: #171717; font: 700 7px "Courier New", monospace; }
+
+@container (max-width: 760px) {
+  .controlDeck, .workspace { grid-template-columns: minmax(0, 1fr); }
+  .reservationPanel { order: -1; }
+}
+
+@container (max-width: 560px) {
+  .modeTabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .modeTabs button:nth-child(2) { border-right: 0; }
+  .modeTabs button:nth-child(-n + 2) { border-bottom: 1px solid #686864; }
+  .ruleStrip { grid-template-columns: minmax(0, 1fr) auto; }
+  .ruleStrip > span { grid-column: 1 / -1; }
+  .hostGrid { grid-template-columns: minmax(0, 1fr); }
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metrics div:nth-child(2) { border-right: 0; }
+  .metrics div:nth-child(-n + 2) { border-bottom: 1px solid #686dc3; }
+  .panelHeader { align-items: flex-start; flex-direction: column; }
+  .legend { justify-content: flex-start; }
+}
+
+@container (max-width: 360px) {
+  .constraintGrid label { grid-template-columns: minmax(0, 1fr); }
+  .metrics { grid-template-columns: minmax(0, 1fr); }
+  .metrics div { border-right: 0; border-bottom: 1px solid #686dc3; }
+  .metrics div:last-child { border-bottom: 0; }
+}

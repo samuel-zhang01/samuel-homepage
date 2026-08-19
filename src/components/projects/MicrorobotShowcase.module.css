@@ -1,0 +1,90 @@
+.showcase {
+  min-width: 0;
+}
+
+.viewSwitch {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) repeat(2, minmax(140px, auto));
+  gap: 3px;
+  align-items: stretch;
+  margin-bottom: 10px;
+  padding: 3px;
+  border: 2px solid #111;
+  background: #aaa;
+  box-shadow: inset 1px 1px #666, 2px 2px #c3c3be;
+}
+
+.viewSwitch > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 5px 8px;
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 1px 1px #5b61b0;
+}
+
+.viewSwitch > div span {
+  color: #cbd0ff;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.viewSwitch > div strong {
+  overflow: hidden;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewSwitch button {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border: 0;
+  color: #171717;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.viewSwitch button:hover {
+  background: #fff;
+}
+
+.viewSwitch button[aria-pressed="true"] {
+  color: #fff;
+  background: #262626;
+  box-shadow: inset 1px 1px #070707, inset -1px -1px #666;
+}
+
+.viewSwitch button span {
+  font-size: 14px;
+}
+
+.viewPanel {
+  min-width: 0;
+}
+
+@container (max-width: 560px) {
+  .viewSwitch {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .viewSwitch > div {
+    grid-column: 1 / -1;
+  }
+
+  .viewSwitch button {
+    white-space: normal;
+  }
+}

@@ -83,7 +83,7 @@ export default function RootLayout({
           <h1>Samuel Zhang</h1>
           <p>This interactive System 7 portfolio needs a modern browser.</p>
           <p>
-            Internet Explorer can still access the essentials: <a href="/Samuel-Zhang-Applied-AI-CV.pdf?v=dbcf0a90">read Samuel&apos;s CV</a> or <a href="mailto:sam.xiaojian.zhang@outlook.com">send an email</a>.
+            Internet Explorer can still access the essentials: <a href="/Samuel-Zhang-Applied-AI-CV.pdf?v=4f5a51d8">read Samuel&apos;s CV</a> or <a href="mailto:sam.xiaojian.zhang@outlook.com">send an email</a>.
           </p>
         </div>
         {children}

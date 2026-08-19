@@ -18,6 +18,11 @@ else
   exit 1
 fi
 
+echo "Checking reviewed public artifacts, catalogue metadata and project styles..."
+npm run check:artifacts
+npm run check:catalogue
+npm run check:styles
+
 echo "Building and starting Samuel System 7..."
 "${compose[@]}" up -d --build "$service_name"
 
@@ -33,7 +38,8 @@ for _ in {1..45}; do
   health=$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$container_id")
   case "$health" in
     healthy)
-      echo "Samuel System 7 is ready at http://localhost:1111"
+      echo "Samuel System 7 is ready at http://localhost:${HOMEPAGE_PORT:-5174}"
+      echo "LAN: http://<machine-ip>:${HOMEPAGE_PORT:-5174}"
       exit 0
       ;;
     unhealthy|exited|dead)

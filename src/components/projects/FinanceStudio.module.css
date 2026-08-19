@@ -1,0 +1,1489 @@
+.financeStudio {
+  --ocean-abyss: #06131c;
+  --ocean-deep: #0a2030;
+  --ocean-surface: #0f2c3c;
+  --ocean-surface-2: #15394c;
+  --ocean-line: #1e4f62;
+  --ocean-foam: #e4f2f7;
+  --ocean-mist: #9dc0cd;
+  --ocean-teal: #2ec4b6;
+  --ocean-cyan: #35c7e0;
+  --ocean-blue: #4f9dde;
+  --ocean-kelp: #34d399;
+  --ocean-coral: #fb7185;
+  --ocean-amber: #fbbf24;
+  --demo-blue: #0d6c72;
+  --demo-green: #176746;
+  --demo-green-soft: #dceddf;
+}
+
+.privacyBanner {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 11px 13px;
+  border: 1px solid #17605f;
+  color: var(--ocean-foam);
+  background:
+    linear-gradient(105deg, rgba(46, 196, 182, 0.2), transparent 58%),
+    var(--ocean-deep);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.12);
+}
+
+.privacyBanner > span {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid var(--ocean-teal);
+  color: var(--ocean-teal);
+  background: rgba(46, 196, 182, 0.08);
+  font-size: 17px;
+}
+
+.privacyBanner strong {
+  display: block;
+  color: var(--ocean-foam);
+  font-size: 11px;
+}
+
+.privacyBanner p {
+  margin: 2px 0 0;
+  color: var(--ocean-mist);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.privacyBanner code {
+  padding: 7px 9px;
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-cyan);
+  background: rgba(6, 19, 28, 0.7);
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.viewTabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px 4px 0;
+  border: 1px solid var(--ocean-abyss);
+  border-bottom: 0;
+  background: #d8d8d3;
+}
+
+.viewTabs button {
+  min-width: 0;
+  padding: 8px 7px 7px;
+  border: 1px solid #5e6567;
+  border-bottom: 0;
+  color: #2d3f45;
+  background: #bfc7c8;
+  box-shadow: inset 1px 1px 0 #eef4f4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.viewTabs button:hover {
+  background: #d8e1e1;
+}
+
+.viewTabs button strong,
+.viewTabs button span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewTabs button strong {
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.viewTabs button span {
+  margin-top: 1px;
+  color: #596b70;
+  font-size: 8px;
+}
+
+.viewTabs .activeView {
+  position: relative;
+  z-index: 1;
+  color: var(--ocean-foam);
+  background: var(--ocean-surface);
+  box-shadow: inset 0 3px 0 var(--ocean-teal);
+}
+
+.viewTabs .activeView span {
+  color: var(--ocean-mist);
+}
+
+.oceanCanvas {
+  min-height: 590px;
+  padding: 13px;
+  border: 1px solid var(--ocean-abyss);
+  color: var(--ocean-foam);
+  background:
+    radial-gradient(circle at 86% -20%, rgba(53, 199, 224, 0.11), transparent 34%),
+    linear-gradient(rgba(228, 242, 247, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(228, 242, 247, 0.018) 1px, transparent 1px),
+    var(--ocean-abyss);
+  background-size: auto, 22px 22px, 22px 22px, auto;
+}
+
+.scopeBar {
+  display: grid;
+  grid-template-columns: auto minmax(190px, 0.7fr) minmax(230px, 1fr);
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 11px;
+  padding: 8px;
+  border: 1px solid var(--ocean-line);
+  background: rgba(10, 32, 48, 0.88);
+}
+
+.scopeBar label,
+.ledgerFilters label {
+  display: grid;
+  gap: 3px;
+}
+
+.scopeBar label > span,
+.ledgerFilters label > span,
+.parameterGrid label > span,
+.transferControls > label > span {
+  color: var(--ocean-mist);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scopeBar select,
+.ledgerFilters select,
+.ledgerFilters input {
+  width: 100%;
+  min-height: 29px;
+  padding: 5px 7px;
+  border: 1px solid var(--ocean-line);
+  border-radius: 0;
+  color: var(--ocean-foam);
+  background: var(--ocean-surface);
+  font-size: 9px;
+}
+
+.scopeBar select option,
+.ledgerFilters select option {
+  color: #101820;
+  background: #fff;
+}
+
+.scopeBar p {
+  align-self: center;
+  margin: 0;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  text-align: right;
+}
+
+.scopeBar p strong {
+  color: var(--ocean-foam);
+}
+
+.rangeSwitch,
+.importMode {
+  display: flex;
+  align-items: stretch;
+}
+
+.rangeSwitch button,
+.importMode button,
+.thresholdStrip button {
+  min-height: 29px;
+  padding: 5px 9px;
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-surface);
+  font-size: 8px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.rangeSwitch button + button,
+.importMode button + button,
+.thresholdStrip button + button {
+  margin-left: -1px;
+}
+
+.rangeSwitch .active,
+.importMode .active,
+.thresholdStrip .active {
+  position: relative;
+  z-index: 1;
+  border-color: var(--ocean-teal);
+  color: var(--ocean-abyss);
+  background: var(--ocean-teal);
+}
+
+.metricStrip {
+  display: grid;
+  grid-template-columns: 1.15fr repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-bottom: 11px;
+}
+
+.metricCard {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--ocean-line);
+  background:
+    linear-gradient(145deg, rgba(79, 157, 222, 0.08), transparent 70%),
+    var(--ocean-deep);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.06);
+}
+
+.metricCard > span,
+.metricCard > strong,
+.metricCard > small {
+  display: block;
+}
+
+.metricCard.default {
+  border-color: var(--ocean-line);
+}
+
+.metricCard > span {
+  overflow: hidden;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metricCard > strong {
+  margin: 5px 0 1px;
+  color: var(--ocean-foam);
+  font-size: clamp(14px, 2.2cqi, 22px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.045em;
+}
+
+.metricCard > small {
+  min-height: 21px;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.metricCard.teal {
+  border-color: rgba(46, 196, 182, 0.65);
+  background:
+    linear-gradient(140deg, rgba(46, 196, 182, 0.18), transparent 70%),
+    var(--ocean-deep);
+}
+
+.metricCard.teal > strong {
+  color: var(--ocean-teal);
+}
+
+.metricCard.positive > strong {
+  color: var(--ocean-kelp);
+}
+
+.metricCard.negative > strong {
+  color: var(--ocean-coral);
+}
+
+.overviewGrid,
+.lowerGrid,
+.ledgerLayout,
+.transferLayout,
+.importLayout {
+  display: grid;
+  gap: 11px;
+}
+
+.overviewGrid {
+  grid-template-columns: minmax(0, 1.25fr) minmax(250px, 0.75fr);
+  margin-bottom: 11px;
+}
+
+.lowerGrid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(250px, 0.9fr);
+}
+
+.oceanPanel {
+  min-width: 0;
+  border: 1px solid var(--ocean-line);
+  background: rgba(10, 32, 48, 0.94);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.045);
+}
+
+.panelTitle {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 9px;
+  border-bottom: 1px solid var(--ocean-line);
+  background: rgba(21, 57, 76, 0.7);
+}
+
+.panelTitle > div > span {
+  display: block;
+  color: var(--ocean-teal);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.panelTitle h3 {
+  margin: 2px 0 0;
+  color: var(--ocean-foam);
+  font-size: 12px;
+  letter-spacing: -0.02em;
+}
+
+.panelTitle > button {
+  padding: 4px 8px;
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-deep);
+  font-size: 8px;
+  cursor: pointer;
+}
+
+.legend {
+  display: flex;
+  gap: 9px;
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend span::before {
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(228, 242, 247, 0.35);
+  content: "";
+}
+
+.incomeSwatch::before {
+  background: var(--ocean-kelp);
+}
+
+.spendSwatch::before {
+  background: repeating-linear-gradient(135deg, var(--ocean-coral) 0 2px, transparent 2px 4px);
+}
+
+.flowChart {
+  display: flex;
+  height: 190px;
+  align-items: stretch;
+  justify-content: space-around;
+  gap: 16px;
+  padding: 16px 17px 10px;
+  background:
+    repeating-linear-gradient(to top, rgba(157, 192, 205, 0.14) 0 1px, transparent 1px 42px),
+    linear-gradient(180deg, rgba(53, 199, 224, 0.025), transparent);
+}
+
+.flowPeriod {
+  display: grid;
+  width: min(92px, 24%);
+  min-width: 43px;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 3px;
+  color: var(--ocean-mist);
+  text-align: center;
+}
+
+.flowPeriod > strong {
+  color: var(--ocean-mist);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.flowPeriod > small {
+  color: var(--ocean-foam);
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.flowBars {
+  display: flex;
+  min-height: 0;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+}
+
+.flowBars > span {
+  display: block;
+  width: 19px;
+  min-height: 0;
+  border: 1px solid rgba(228, 242, 247, 0.28);
+}
+
+.flowIncome {
+  background: linear-gradient(180deg, var(--ocean-kelp), #177a5a);
+}
+
+.flowSpend {
+  background: repeating-linear-gradient(135deg, var(--ocean-coral) 0 3px, #8a3347 3px 6px);
+}
+
+.reconcileBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  padding: 6px 9px;
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: rgba(6, 19, 28, 0.6);
+  font-size: 8px;
+}
+
+.reconcileBar strong {
+  color: var(--ocean-foam);
+}
+
+.pass {
+  color: var(--ocean-kelp) !important;
+}
+
+.fail {
+  color: var(--ocean-coral) !important;
+}
+
+.signalStack {
+  margin: 0;
+  padding: 3px 10px;
+  list-style: none;
+}
+
+.signalStack li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  padding: 12px 0;
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.3);
+}
+
+.signalStack li:last-child {
+  border-bottom: 0;
+}
+
+.signalStack li > span {
+  display: grid;
+  width: 27px;
+  height: 23px;
+  place-items: center;
+  border: 1px solid;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.signalGood {
+  border-color: #2f9e77 !important;
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.signalWarn {
+  border-color: #b97f18 !important;
+  color: var(--ocean-amber);
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.signalStack strong,
+.signalStack p {
+  display: block;
+}
+
+.signalStack strong {
+  color: var(--ocean-foam);
+  font-size: 9px;
+}
+
+.signalStack p {
+  margin: 2px 0 0;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.accountList {
+  padding: 3px 9px;
+}
+
+.accountList article {
+  display: grid;
+  grid-template-columns: 5px minmax(150px, 1fr) auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
+}
+
+.accountList article:last-child {
+  border-bottom: 0;
+}
+
+.accountMark {
+  width: 4px;
+  height: 27px;
+}
+
+.accountList article > div strong,
+.accountList article > div small {
+  display: block;
+}
+
+.accountList article > div strong,
+.accountList article > strong {
+  color: var(--ocean-foam);
+  font-size: 8px;
+}
+
+.accountList article > div small {
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.accountList code {
+  color: var(--ocean-mist);
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.accountList article > strong {
+  min-width: 62px;
+  color: var(--ocean-kelp);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.accountList .debt {
+  color: var(--ocean-coral);
+}
+
+.categoryBars {
+  display: grid;
+  gap: 9px;
+  padding: 11px 10px;
+}
+
+.categoryBars > div {
+  display: grid;
+  grid-template-columns: minmax(82px, 0.85fr) minmax(70px, 1.6fr) 55px;
+  align-items: center;
+  gap: 7px;
+  font-size: 8px;
+}
+
+.categoryBars > div > span {
+  overflow: hidden;
+  color: var(--ocean-mist);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.categoryBars > div > div {
+  height: 8px;
+  border: 1px solid rgba(157, 192, 205, 0.22);
+  background: var(--ocean-abyss);
+}
+
+.categoryBars i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--ocean-blue), var(--ocean-cyan));
+}
+
+.categoryBars strong {
+  color: var(--ocean-foam);
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.thresholdStrip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: -1px 0 10px;
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.thresholdStrip > span {
+  margin-right: 7px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.thresholdStrip small {
+  margin-left: 9px;
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.ledgerLayout {
+  grid-template-columns: minmax(0, 1.65fr) minmax(245px, 0.65fr);
+  align-items: start;
+}
+
+.ledgerPanel {
+  overflow: hidden;
+}
+
+.rowCount {
+  color: var(--ocean-mist);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ledgerFilters {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(125px, 0.75fr) minmax(160px, 0.9fr);
+  gap: 7px;
+  padding: 8px;
+  border-bottom: 1px solid var(--ocean-line);
+  background: rgba(6, 19, 28, 0.45);
+}
+
+.ledgerTableWrap,
+.patternTableWrap,
+.auditTableWrap {
+  overflow: auto;
+}
+
+.ledgerTableWrap {
+  max-height: 445px;
+}
+
+.ledgerTable,
+.patternTable,
+.auditTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8px;
+}
+
+.ledgerTable thead,
+.patternTable thead,
+.auditTable thead {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+}
+
+.ledgerTable th,
+.patternTable th,
+.auditTable th {
+  padding: 6px 7px;
+  border-right: 1px solid var(--ocean-line);
+  border-bottom: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: #123347;
+  font-size: 8px;
+  letter-spacing: 0.07em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ledgerTable td,
+.patternTable td,
+.auditTable td {
+  padding: 7px;
+  border-bottom: 1px solid rgba(30, 79, 98, 0.55);
+  color: var(--ocean-mist);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ledgerTable tbody tr:nth-child(even),
+.patternTable tbody tr:nth-child(even),
+.auditTable tbody tr:nth-child(even) {
+  background: rgba(21, 57, 76, 0.25);
+}
+
+.ledgerTable tbody tr:hover,
+.patternTable tbody tr:hover,
+.auditTable tbody tr:hover,
+.ledgerTable .selectedRow {
+  background: rgba(46, 196, 182, 0.09);
+}
+
+.ledgerTable td:nth-child(3) button {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ledgerTable td:nth-child(3) strong,
+.ledgerTable td:nth-child(3) small {
+  display: block;
+  overflow: hidden;
+  max-width: 165px;
+  text-overflow: ellipsis;
+}
+
+.ledgerTable td:nth-child(3) strong {
+  color: var(--ocean-foam);
+  font-size: 8px;
+}
+
+.ledgerTable td:nth-child(3) small {
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.ledgerTable th:last-child,
+.ledgerTable td:last-child,
+.patternTable th:nth-last-child(4),
+.patternTable th:nth-last-child(3),
+.patternTable td:nth-last-child(4),
+.patternTable td:nth-last-child(3),
+.auditTable th:nth-child(n + 2):not(:last-child),
+.auditTable td:nth-child(n + 2):not(:last-child) {
+  text-align: right;
+}
+
+.categoryPill,
+.cashflowPill,
+.excludePill,
+.cadencePill,
+.priceChange,
+.activePattern,
+.auditPass {
+  display: inline-flex;
+  align-items: center;
+  min-height: 17px;
+  padding: 2px 5px;
+  border: 1px solid;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.categoryPill {
+  border-color: rgba(79, 157, 222, 0.5);
+  color: #b7d9f5;
+  background: rgba(79, 157, 222, 0.1);
+}
+
+.cashflowPill,
+.activePattern,
+.auditPass {
+  border-color: rgba(52, 211, 153, 0.45);
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.08);
+}
+
+.excludePill,
+.priceChange {
+  border-color: rgba(251, 191, 36, 0.5);
+  color: var(--ocean-amber);
+  background: rgba(251, 191, 36, 0.08);
+}
+
+.cadencePill {
+  border-color: rgba(46, 196, 182, 0.5);
+  color: var(--ocean-teal);
+  background: rgba(46, 196, 182, 0.08);
+}
+
+.amountIn {
+  color: var(--ocean-kelp) !important;
+}
+
+.amountOut {
+  color: var(--ocean-coral) !important;
+}
+
+.ledgerTotals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 9px;
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
+  font-size: 8px;
+}
+
+.ledgerTotals strong {
+  color: var(--ocean-foam);
+}
+
+.inspector {
+  position: sticky;
+  top: 8px;
+}
+
+.inspectorBody {
+  padding: 10px;
+}
+
+.inspectAmount {
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--ocean-line);
+}
+
+.inspectAmount span,
+.inspectAmount strong {
+  display: block;
+}
+
+.inspectAmount span {
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.inspectAmount strong {
+  margin-top: 3px;
+  font-size: 23px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+}
+
+.inspector dl {
+  margin: 7px 0;
+}
+
+.inspector dl > div {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 7px;
+  padding: 7px 0;
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
+}
+
+.inspector dt {
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.inspector dd {
+  margin: 0;
+  color: var(--ocean-foam);
+  font-size: 8px;
+  overflow-wrap: anywhere;
+}
+
+.inspector dd span {
+  display: block;
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.signatureBox,
+.matchFormula {
+  padding: 8px;
+  border: 1px solid var(--ocean-line);
+  background: var(--ocean-abyss);
+}
+
+.signatureBox > span,
+.matchFormula > span {
+  display: block;
+  color: var(--ocean-teal);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.signatureBox code,
+.matchFormula code {
+  display: block;
+  margin: 5px 0;
+  color: var(--ocean-cyan);
+  font-size: 8px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.signatureBox p,
+.matchFormula p {
+  margin: 0;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.emptyState {
+  padding: 24px !important;
+  color: var(--ocean-mist) !important;
+  text-align: center !important;
+  white-space: normal !important;
+}
+
+.modelWorkbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(230px, 0.55fr);
+  gap: 11px;
+  margin-bottom: 11px;
+}
+
+.controlPanel {
+  min-width: 0;
+}
+
+.parameterGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 11px 10px 8px;
+}
+
+.parameterGrid label {
+  display: grid;
+  gap: 6px;
+}
+
+.parameterGrid label > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  line-height: 1.4;
+}
+
+.parameterGrid label > span strong,
+.transferControls > label > span strong {
+  color: var(--ocean-foam);
+  white-space: nowrap;
+}
+
+.parameterGrid input[type="range"],
+.transferControls input[type="range"] {
+  width: 100%;
+  accent-color: var(--ocean-teal);
+}
+
+.methodNote {
+  margin: 0;
+  padding: 0 10px 10px;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.patternMetrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.patternMetrics .metricCard:first-child {
+  grid-column: 1 / -1;
+}
+
+.patternTableWrap {
+  max-height: 410px;
+}
+
+.patternTable td:first-child strong,
+.auditTable td:first-child strong,
+.auditTable td:first-child small {
+  display: block;
+}
+
+.patternTable td:first-child strong,
+.auditTable td:first-child strong {
+  color: var(--ocean-foam);
+}
+
+.auditTable td:first-child small {
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.transferLayout {
+  grid-template-columns: minmax(245px, 0.72fr) minmax(0, 1.28fr);
+  align-items: start;
+}
+
+.transferControls > label:not(.checkControl) {
+  display: grid;
+  gap: 7px;
+  padding: 13px 11px 9px;
+}
+
+.transferControls > label > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 7px;
+}
+
+.checkControl {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 3px 11px 11px;
+  padding: 9px;
+  border: 1px solid var(--ocean-line);
+  background: rgba(6, 19, 28, 0.55);
+}
+
+.checkControl input {
+  margin: 2px 0 0;
+  accent-color: var(--ocean-teal);
+}
+
+.checkControl span,
+.checkControl strong,
+.checkControl small {
+  display: block;
+}
+
+.checkControl strong {
+  color: var(--ocean-foam) !important;
+  font-size: 8px;
+}
+
+.checkControl small {
+  margin-top: 2px;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.matchFormula {
+  margin: 0 11px 11px;
+}
+
+.transferMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--ocean-line);
+}
+
+.transferMetrics > div {
+  min-width: 0;
+  padding: 8px;
+  border-right: 1px solid var(--ocean-line);
+  text-align: center;
+}
+
+.transferMetrics > div:last-child {
+  border-right: 0;
+}
+
+.transferMetrics span,
+.transferMetrics strong {
+  display: block;
+}
+
+.transferMetrics span {
+  color: var(--ocean-mist);
+  font-size: 8px;
+  letter-spacing: 0.07em;
+}
+
+.transferMetrics strong {
+  margin-top: 3px;
+  color: var(--ocean-teal);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.transferFlows {
+  padding: 8px 11px;
+}
+
+.transferFlows article {
+  padding: 11px 0;
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
+}
+
+.transferFlows article:last-child {
+  border-bottom: 0;
+}
+
+.transferRoute {
+  display: grid;
+  grid-template-columns: 78px minmax(70px, 1fr) 78px;
+  align-items: center;
+  gap: 8px;
+}
+
+.transferRoute > span {
+  overflow: hidden;
+  color: var(--ocean-foam);
+  font-size: 8px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transferRoute > span:last-child {
+  text-align: right;
+}
+
+.transferRoute > div {
+  position: relative;
+  display: flex;
+  height: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.transferRoute i {
+  position: absolute;
+  left: 0;
+  height: 6px;
+  max-width: calc(100% - 12px);
+  background: linear-gradient(90deg, var(--ocean-blue), var(--ocean-teal));
+}
+
+.transferRoute b {
+  position: absolute;
+  right: 0;
+  color: var(--ocean-teal);
+}
+
+.transferDetail {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-top: 5px;
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.transferDetail strong {
+  color: var(--ocean-cyan);
+}
+
+.transferDetail code {
+  color: var(--ocean-teal);
+}
+
+.transferFootnote {
+  padding: 8px 10px;
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.importLayout {
+  grid-template-columns: minmax(245px, 0.65fr) minmax(0, 1.35fr);
+  align-items: start;
+}
+
+.pipelinePanel {
+  padding-bottom: 10px;
+}
+
+.importMode {
+  margin: 11px 10px 8px;
+}
+
+.importMode button {
+  flex: 1;
+}
+
+.runButton {
+  width: calc(100% - 20px);
+  margin: 0 10px 10px;
+  padding: 8px;
+  border: 1px solid #1c9c90;
+  color: var(--ocean-abyss);
+  background: var(--ocean-teal);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.55), 2px 2px 0 #031017;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.runButton:active {
+  transform: translate(1px, 1px);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3), 1px 1px 0 #031017;
+}
+
+.pipelineSteps {
+  margin: 0 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.pipelineSteps li {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
+}
+
+.pipelineSteps li > span {
+  display: grid;
+  width: 24px;
+  height: 21px;
+  place-items: center;
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.pipelineSteps li strong,
+.pipelineSteps li small {
+  display: block;
+}
+
+.pipelineSteps li strong {
+  color: var(--ocean-foam);
+  font-size: 8px;
+}
+
+.pipelineSteps li small {
+  color: var(--ocean-mist);
+  font-size: 8px;
+}
+
+.pipelineSteps .completeStep > span {
+  border-color: var(--ocean-kelp);
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.08);
+}
+
+.importReceipt {
+  margin: 10px 10px 0;
+  padding: 9px;
+  border: 1px solid var(--ocean-line);
+  background: var(--ocean-abyss);
+}
+
+.importReceipt span,
+.importReceipt strong {
+  display: block;
+}
+
+.importReceipt span {
+  color: var(--ocean-teal);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.importReceipt strong {
+  margin: 3px 0;
+  color: var(--ocean-foam);
+  font-size: 9px;
+}
+
+.importReceipt p {
+  margin: 0;
+  color: var(--ocean-mist);
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.auditPanel {
+  overflow: hidden;
+}
+
+.auditTableWrap {
+  max-height: 360px;
+}
+
+.auditNotes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--ocean-line);
+  background: var(--ocean-line);
+}
+
+.auditNotes p {
+  margin: 0;
+  padding: 8px;
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.auditNotes strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--ocean-foam);
+}
+
+@container (max-width: 900px) {
+  .metricStrip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .metricStrip .metricCard:first-child {
+    grid-column: span 2;
+  }
+
+  .ledgerLayout,
+  .transferLayout,
+  .importLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .inspector {
+    position: static;
+  }
+
+  .modelWorkbench {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .patternMetrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .patternMetrics .metricCard:first-child {
+    grid-column: auto;
+  }
+}
+
+@container (max-width: 720px) {
+  .privacyBanner {
+    grid-template-columns: 31px minmax(0, 1fr);
+  }
+
+  .privacyBanner code {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .viewTabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .scopeBar {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .scopeBar p {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .overviewGrid,
+  .lowerGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .parameterGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .auditNotes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@container (max-width: 500px) {
+  .oceanCanvas {
+    padding: 9px;
+  }
+
+  .viewTabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .scopeBar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rangeSwitch button {
+    flex: 1;
+  }
+
+  .metricStrip,
+  .patternMetrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metricStrip .metricCard:first-child,
+  .patternMetrics .metricCard:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .metricCard > span {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .ledgerFilters,
+  .parameterGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .thresholdStrip {
+    flex-wrap: wrap;
+  }
+
+  .thresholdStrip small {
+    width: 100%;
+    margin: 5px 0 0;
+  }
+
+  .accountList article {
+    grid-template-columns: 5px minmax(120px, 1fr) auto;
+  }
+
+  .accountList code {
+    display: none;
+  }
+
+  .transferRoute {
+    grid-template-columns: 62px minmax(50px, 1fr) 62px;
+  }
+
+  .transferDetail {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .transferDetail code {
+    display: none;
+  }
+
+  .transferMetrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .transferMetrics > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--ocean-line);
+  }
+}

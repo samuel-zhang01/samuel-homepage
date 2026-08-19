@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import {
+  Children,
   cloneElement,
   isValidElement,
   useCallback,
@@ -21,6 +23,18 @@ import {
   type Locale,
 } from "@/lib/i18n";
 import PdfPreview from "@/components/PdfPreview";
+import projectExplorerStyles from "@/components/projects/ProjectExplorer.module.css";
+import projectActionsStyles from "@/components/projects/ProjectActions.module.css";
+import projectDemoRouterStyles from "@/components/projects/ProjectDemoRouter.module.css";
+
+const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
+  loading: () => (
+    <div className={`projects-app ${projectExplorerStyles.archiveModuleLoading} ${projectActionsStyles.archiveCssAnchor} ${projectDemoRouterStyles.archiveCssAnchor}`}>
+      <span className="eyebrow">OPENING PROJECT ARCHIVE…</span>
+      <span className={projectExplorerStyles.archiveLoadingTrack} aria-hidden="true"><i /></span>
+    </div>
+  ),
+});
 
 export type AppId =
   | "about"
@@ -75,7 +89,12 @@ const TRANSLATED_ATTRIBUTES = ["aria-label", "title", "placeholder"] as const;
 
 function localiseNode(node: ReactNode, locale: Locale): ReactNode {
   if (typeof node === "string") return translateText(locale, node);
-  if (Array.isArray(node)) return node.map((child) => localiseNode(child, locale));
+  if (Array.isArray(node)) {
+    // `Children.toArray` flattens nested JSX arrays and gives every element a
+    // stable key before localisation clones it. This matters here because the
+    // boundary sees both authored sibling lists and the output of mapped lists.
+    return Children.toArray(node).map((child) => localiseNode(child, locale));
+  }
   if (!isValidElement<Record<string, unknown>>(node)) return node;
 
   const translatedProps: Record<string, unknown> = {};
@@ -156,11 +175,11 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "projects",
-    title: "Selected Projects",
-    x: 148,
-    y: 70,
-    width: 820,
-    height: 584,
+    title: "Project Archive",
+    x: 72,
+    y: 48,
+    width: 900,
+    height: 670,
     z: 4,
     open: false,
     maximized: false,
@@ -262,7 +281,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
-  { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV, research thesis and product case study in one continuous reader." },
+  { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
   { id: "games", label: "Desk Arcade", icon: "game", description: "Four small games with profile-themed easter eggs." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
@@ -275,7 +294,7 @@ const experience = [
     role: "Senior Coordinator — Digital Transformation Strategy Internship",
     company: "Marsh · Strategy & Corporate Development Group",
     location: "London",
-    copy: "Structured a proof of concept for planned Broker Workbench integration around quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence. Developed an internal lead-matching engine for lead-insurer selection using historical trading performance, wording quality and real-time appetite signals, then translated the evidence into transparent recommendations supporting broker judgement and client outcomes.",
+    copy: "Conducted client-confidential applied-AI research in a regulated insurance setting, with emphasis on transparent evaluation, human oversight and safe deployment. Operational data, model design and findings remain private.",
     tag: "CURRENT",
   },
   {
@@ -283,7 +302,7 @@ const experience = [
     role: "Founder & Product Lead · Part-time",
     company: "COVERD",
     location: "London",
-    copy: "Led customer discovery with four design partners and pivoted from candidate-side CV tooling to an interviewer that first learns how each company and role works. Selected a multi-agent, graph-based voice architecture seeded with company-interview priors after testing three architectures across 20 candidate interviews; candidates praised its follow-ups, question quality and ability to make them feel heard and valued.",
+    copy: "Developed early company-aware voice-interview experiments, then evolved that research into COVERD’s current product: an ATS-connected recruitment-intelligence layer that reviews applications across specialist dimensions, enriches evidence with automated voice interviews and returns reasoned shortlists while recruiters keep the decision.",
     tag: "FOUNDER",
   },
   {
@@ -291,7 +310,7 @@ const experience = [
     role: "Web Application Developer & Product Owner · Part-time",
     company: "Pfizer Analytical R&D",
     location: "London",
-    copy: "Secured senior sponsorship, significant funding and department-wide adoption through live demonstrations; retained for a two-year part-time extension to own GROWMAT’s roadmap.",
+    copy: "Owned the roadmap and stakeholder adoption for GROWMAT, an internal enterprise product. Its external showcase documents the architecture and outcomes; live data, source code, credentials and non-public operating context remain private.",
     tag: "PRODUCT",
   },
   {
@@ -299,7 +318,7 @@ const experience = [
     role: "Data Analyst Undergraduate",
     company: "Pfizer Analytical R&D",
     location: "Sandwich",
-    copy: "Built and deployed GROWMAT over ten months: a seven-component platform used by 40+ employees across four teams, with wider impact across 80+. Cut capacity calculations from 12 minutes to under 60 seconds, saved 120+ hours monthly and replaced weekly workbooks with live, two-hourly refreshes. Also prototyped pharmaceutical solubility modelling across Pfizer, MIT and Imperial.",
+    copy: "Built and delivered GROWMAT within a regulated R&D environment, improving an internal planning process and supporting wider product adoption. Its external showcase is public; live company data, source code, credentials and non-public operating context remain private. Also explored scientific modelling workflows for pharmaceutical research.",
     tag: "DATA",
   },
   {
@@ -307,15 +326,15 @@ const experience = [
     role: "Coding Series Tutor & Curriculum Designer",
     company: "King’s College London",
     location: "London",
-    copy: "Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, achieving 90% satisfaction and Royal Society of Chemistry endorsement. Organised a cross-industry data-science careers panel for 100+ students and mentored learners in using technical skills to widen their options.",
+    copy: "Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students. Organised a cross-industry data-science careers panel for 100+ attendees and mentored learners in using technical skills to widen their options.",
     tag: "EDUCATION",
   },
   {
     period: "Jun — Jul 2023",
     role: "Summer Research Fellow",
-    company: "Royal Society / King’s College London",
+    company: "King’s College London",
     location: "London",
-    copy: "Built GPU-accelerated GROMACS workflows for protein–membrane molecular simulations, improving computational performance by 70% and iterating experimental design from the simulation results.",
+    copy: "Configured and documented a GPU-capable WSL 2/CUDA/Docker environment and completed a containerised GROMACS topology-preparation checkpoint, with reproducibility gaps explicitly audited.",
     tag: "RESEARCH",
   },
   {
@@ -323,7 +342,7 @@ const experience = [
     role: "Undergraduate Research Fellow",
     company: "King’s College London",
     location: "London",
-    copy: "Engineered MATLAB, Python and Excel pipelines for rotational spectroscopy, reducing analysis time by 40% and creating an adopted workflow that now underpins a publication in progress.",
+    copy: "Built MATLAB, Python and Excel tooling for rotational-spectroscopy analysis; named co-author on the 2025 International Symposium on Molecular Spectroscopy conference record.",
     tag: "RESEARCH",
   },
   {
@@ -331,116 +350,16 @@ const experience = [
     role: "Commander’s Personal Assistant / Sergeant",
     company: "Singapore Civil Defence Force",
     location: "Singapore",
-    copy: "Built MATLAB COVID-19 resource-planning models from public epidemiological data and automated emergency-activation attendance across legacy systems for 1,200+ personnel. Supported senior leaders in time-critical operations, balancing incomplete information, rapid prioritisation and accountability across large-scale personnel operations.",
+    copy: "Built decision-support and workflow automation during COVID-19 emergency operations using public epidemiological data. Personnel records, operational processes, infrastructure and scale remain protected.",
     tag: "SERVICE",
-  },
-];
-
-const projects: Array<{
-  title: string;
-  year: string;
-  category: string;
-  description: string;
-  tools: string[];
-  metric: string;
-  app?: AppId;
-}> = [
-  {
-    title: "coverd.ai",
-    year: "2026",
-    category: "Responsible AI · Founder",
-    description:
-      "A company-aware voice interviewer using multi-agent, graph-based belief updates. Three architectures were tested across 20 candidate interviews; candidates praised its follow-ups, question quality and ability to make them feel heard and valued.",
-    tools: ["Multi-agent", "Belief graph", "Voice AI", "Evaluation"],
-    metric: "20 INTERVIEWS · 4 PARTNERS",
-    app: "coverd",
-  },
-  {
-    title: "GROWMAT",
-    year: "2023—26",
-    category: "Enterprise Product · Pfizer",
-    description:
-      "A seven-component pharmaceutical capacity-planning platform: cut calculations from 12 minutes to under 60 seconds, replaced weekly workbooks with two-hourly live-data refreshes and returned 120+ staff hours each month.",
-    tools: ["Next.js", "Julia", "PostgreSQL", "Docker"],
-    metric: "12× FASTER · 120 HRS/MO",
-    app: "documents",
-  },
-  {
-    title: "Insurance Lead Matching",
-    year: "2026",
-    category: "Digital Transformation Strategy · Marsh",
-    description:
-      "A Broker Workbench proof of concept combining quantitative placement ranking, qualitative contract review and time-bounded market intelligence into transparent, human-in-the-loop lead recommendations.",
-    tools: ["Learning-to-rank", "Document AI", "Market signals", "Governance"],
-    metric: "3 EVIDENCE PILLARS",
-    app: "experience",
-  },
-  {
-    title: "Drug Solubility Modelling",
-    year: "2023",
-    category: "Scientific Programming · Pfizer",
-    description:
-      "Pharmaceutical solubility modelling with statistical thermodynamics and Julia, translating open-source research across Pfizer, MIT and Imperial into a practical drug-development workflow.",
-    tools: ["Julia", "ML", "PC-SAFT", "Pharma"],
-    metric: "R&D ACCELERATOR",
-    app: "experience",
-  },
-  {
-    title: "COVID-19 Decision Support",
-    year: "2020",
-    category: "Emergency Operations · SCDF",
-    description:
-      "Predictive analytics and cross-system workflow automation for emergency planning and activation attendance across 1,200+ personnel.",
-    tools: ["MATLAB", "Statistics", "Automation"],
-    metric: "1,200+ PERSONNEL",
-    app: "experience",
-  },
-  {
-    title: "Molecular Recognition",
-    year: "2022",
-    category: "Research Fellowship · King's",
-    description:
-      "MATLAB, Python and Excel workflows combining rotational spectroscopy with computational predictions; reduced analysis time by 40%, was adopted by the group and underpins a publication in progress.",
-    tools: ["MATLAB", "Spectroscopy", "Research"],
-    metric: "KURF AWARD",
-    app: "documents",
-  },
-  {
-    title: "Home Lab & Private AI Infrastructure",
-    year: "ONGOING",
-    category: "Self-hosting · Systems",
-    description:
-      "Seven Proxmox/Docker servers running 23 services, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB of total usable RAID storage.",
-    tools: ["Proxmox", "Docker", "Linux", "GPU"],
-    metric: "23 SERVICES · 42 GB VRAM",
-    app: "lab",
-  },
-  {
-    title: "Stock Market Simulation Engine",
-    year: "2025",
-    category: "Full-stack · Financial systems",
-    description:
-      "Market simulator with order-matching algorithms, Julia and SQL processing, live WebSocket order-book updates, and a responsive trading interface.",
-    tools: ["Julia", "SQL", "WebSockets", "React"],
-    metric: "REAL-TIME ENGINE",
-  },
-  {
-    title: "Coding Series",
-    year: "2023—25",
-    category: "Teaching · Curriculum",
-    description:
-      "A department-backed programming and introductory ML course for 80+ chemistry students, paired with mentoring and a cross-industry data-science careers panel for more than 100 learners.",
-    tools: ["Python", "Data analysis", "Teaching", "Outreach"],
-    metric: "80+ STUDENTS",
-    app: "experience",
   },
 ];
 
 const skillGroups = [
   {
-    title: "Applied AI & Voice Systems",
-    summary: "Designing adaptive AI products that combine company knowledge, natural conversation and evidence-led decisions.",
-    evidence: "COVERD — tested three interview architectures across 20 candidate interviews, then selected a multi-agent belief graph and cascade voice design from observed quality and candidate feedback.",
+    title: "Applied AI & Recruitment Systems",
+    summary: "Designing inspectable AI products that combine application evidence, specialist evaluation, voice enrichment and human-owned decisions.",
+    evidence: "COVERD — an ATS-connected intelligence layer that reviews applications, retains evidence and returns reasoned shortlists; automated voice interviews add signal when needed.",
     items: [
       "Multi-agent orchestration & graph workflows",
       "Voice pipelines & cascade model design",
@@ -453,7 +372,7 @@ const skillGroups = [
   {
     title: "Software & Product Engineering",
     summary: "Building maintainable products end to end: interface, service logic, data model, integration, testing and deployment.",
-    evidence: "COVERD — builds the TypeScript/React interview experience, Python AI services, structured company knowledge, evaluation tooling and rapid design-partner releases.",
+    evidence: "COVERD — combines TypeScript/React product surfaces, Python AI services, ATS integrations, structured evidence and evaluation tooling.",
     items: [
       "Python services & asynchronous workflows",
       "TypeScript, React & Next.js",
@@ -468,7 +387,7 @@ const skillGroups = [
   {
     title: "Search, Data & Evaluation",
     summary: "Treating evaluation as an engineering discipline: explicit baselines, provenance, failure analysis and honest limits.",
-    evidence: "Marsh — combines learning-to-rank, document intelligence and changing market signals into transparent lead recommendations that support broker judgement.",
+    evidence: "Client-confidential research — applies careful evaluation, transparent recommendations and human oversight in a regulated setting.",
     items: [
       "Learning-to-rank & recommendation systems",
       "Document extraction & intelligence",
@@ -481,7 +400,7 @@ const skillGroups = [
   {
     title: "Infrastructure & Delivery",
     summary: "Operating the systems behind the product, with an emphasis on repeatability, recovery and sensible security.",
-    evidence: "Home lab — operates seven Proxmox/Docker servers, 23 services, 42 GB VRAM compute, self-hosted CI and 106 TB total usable RAID storage.",
+    evidence: "Home lab — maintains a private Proxmox/Docker fleet; the public audit exposes one six-service Compose slice, a scheduled PostgreSQL backup job and explicit recovery gaps.",
     items: [
       "Docker, Linux & Proxmox",
       "CI/CD & self-hosted GitHub Actions",
@@ -494,20 +413,20 @@ const skillGroups = [
   {
     title: "Scientific & Quantitative Computing",
     summary: "A chemistry-trained approach to modelling: design the experiment, test assumptions and let evidence change the implementation.",
-    evidence: "Pfizer and King's — applied statistical thermodynamics, Julia, MATLAB, Python, GROMACS and GPU workflows to drug-development and molecular-research problems.",
+    evidence: "Regulated R&D and academic research — applied scientific computing to modelling and molecular-research problems.",
     items: [
       "Statistical modelling & experiment design",
       "Julia, MATLAB & scientific Python",
       "Statistical thermodynamics",
       "Computational chemistry",
-      "GROMACS, molecular simulation & HPC",
+      "GROMACS environment setup & topology preprocessing",
       "Reproducible research workflows",
     ],
   },
   {
     title: "Product, Leadership & Adoption",
     summary: "Turning ambiguous technical opportunities into trusted products by listening closely, making trade-offs and bringing people with the work.",
-    evidence: "Pfizer and COVERD — secured senior sponsorship and department-wide adoption for GROWMAT, while customer discovery with four design partners drove COVERD's product pivot.",
+    evidence: "GROWMAT and COVERD — turned ambiguous needs into adopted products through discovery, roadmap ownership and stakeholder communication.",
     items: [
       "Customer discovery & problem framing",
       "Rapid prototyping & product strategy",
@@ -663,6 +582,8 @@ function WindowChrome({
   onClose,
   onZoom,
   onDragStart,
+  onResizeStart,
+  onResizeKeyDown,
   children,
   locale,
 }: {
@@ -672,6 +593,8 @@ function WindowChrome({
   onClose: () => void;
   onZoom: () => void;
   onDragStart: (event: React.PointerEvent<HTMLDivElement>) => void;
+  onResizeStart: (event: React.PointerEvent<HTMLButtonElement>) => void;
+  onResizeKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
   locale: Locale;
 }) {
@@ -696,9 +619,25 @@ function WindowChrome({
       >
         <button className="window-box window-close" onClick={onClose} aria-label={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} />
         <h2>{windowState.title}</h2>
-        <button className="window-box window-zoom" onClick={onZoom} aria-label={`${translateText(locale, "Maximize")} ${translateText(locale, windowState.title)}`} />
+        <button
+          className="window-box window-zoom"
+          onClick={onZoom}
+          aria-label={`${translateText(locale, windowState.maximized ? "Restore" : "Maximize")} ${translateText(locale, windowState.title)}`}
+          aria-pressed={windowState.maximized}
+        />
       </div>
       <div className="mac-window__content" tabIndex={0}>{children}</div>
+      {!windowState.maximized && (
+        <button
+          type="button"
+          className="window-resize-handle"
+          onPointerDown={onResizeStart}
+          onKeyDown={onResizeKeyDown}
+          aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight"
+          aria-label={`${translateText(locale, "Resize")} ${translateText(locale, windowState.title)}. ${translateText(locale, "Use arrow keys to resize.")}`}
+          title={`${translateText(locale, "Resize")} ${translateText(locale, windowState.title)}`}
+        />
+      )}
     </section></TranslationBoundary>
   );
 }
@@ -728,11 +667,11 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
         </div>
         <p className="hero-copy">
           I&apos;m an applied AI engineer and founder who turns ambiguous, domain-heavy
-          problems into useful products people trust. At Marsh, I build and evaluate ranking and
-          document-intelligence systems for brokers; at COVERD, I lead a company-aware
-          voice-interview product. Previously, I delivered GROWMAT at Pfizer—a
-          capacity-planning platform that saves 120+ analyst hours each month through full-stack
-          engineering, product ownership and stakeholder-led adoption.
+          problems into useful products people trust. My current work spans responsible AI
+          research and COVERD, an ATS-connected recruitment-intelligence product that can
+          enrich application evidence through automated voice interviews. Previously, I delivered
+          GROWMAT—an internal enterprise product documented through an external showcase;
+          live company data, source code, credentials and non-public operating context remain private.
         </p>
         <fieldset className="about-panel">
           <legend>Working style</legend>
@@ -745,7 +684,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           </div>
           <button onClick={() => openApp("coverd")}>
             <PixelIcon kind="coverd" small />
-            <span className="identity-copy"><b>Founder</b><span className="identity-detail">Building COVERD from first principles: company context first, adaptive interviews and human-owned decisions.</span></span>
+            <span className="identity-copy"><b>Founder</b><span className="identity-detail">Building COVERD: ATS-connected applicant review, voice enrichment, reasoned shortlists and human-owned decisions.</span></span>
           </button>
           <button onClick={() => openApp("projects")}>
             <PixelIcon kind="briefcase" small />
@@ -757,7 +696,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           </button>
           <button onClick={() => openApp("lab")}>
             <PixelIcon kind="network" small />
-            <span className="identity-copy"><b>Builder</b><span className="identity-detail">Seven servers, 23 services, 42 GB VRAM and cross-architecture CI—with enough scars to make backups non-negotiable.</span></span>
+            <span className="identity-copy"><b>Builder</b><span className="identity-detail">A private Proxmox/Docker lab with self-hosted services, cross-architecture CI and recovery lessons made explicit.</span></span>
           </button>
           <button onClick={() => openApp("scrapbook")}>
             <PixelIcon kind="photos" small />
@@ -767,8 +706,8 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
         <fieldset className="about-panel about-evidence">
           <legend>Selected evidence</legend>
           <dl>
-            <div><dt>COVERD</dt><dd>Three architectures tested across 20 candidate interviews with four design partners.</dd></div>
-            <div><dt>GROWMAT</dt><dd>Capacity calculations cut from 12 minutes to under 60 seconds; 120+ hours returned monthly.</dd></div>
+            <div><dt>COVERD</dt><dd>Public product covers ATS-connected review, six specialist dimensions, voice enrichment and reasoned shortlists.</dd></div>
+            <div><dt>GROWMAT</dt><dd>External showcase covers architecture and outcomes; live data and source remain private.</dd></div>
             <div><dt>People</dt><dd>20+ teaching sessions for 80+ students and a careers panel for more than 100.</dd></div>
           </dl>
         </fieldset>
@@ -788,44 +727,49 @@ function CoverdApp({ locale }: { locale: Locale }) {
   const products = [
     {
       code: "01",
-      title: "Company Interview",
-      copy: "Starts with the company—not the candidate—to learn how the role really works, what success looks like and which gaps matter.",
+      title: "ATS Intelligence Layer",
+      copy: "Connects to an existing applicant-tracking workflow so teams keep the system they already use while COVERD adds structured evaluation.",
     },
     {
       code: "02",
-      title: "Belief Graph",
-      copy: "Multiple agents turn company interviews into priors: a working graph of what matters, what remains uncertain and which evidence would be most useful next.",
+      title: "Six Specialist Reviews",
+      copy: "Examines skills, experience, domain knowledge, trajectory, communication and culture as distinct evidence dimensions rather than one opaque score.",
     },
     {
       code: "03",
-      title: "Adaptive Voice Interview",
-      copy: "As the candidate answers, the model updates its beliefs and chooses increasingly useful follow-up questions instead of reading a fixed script.",
+      title: "Voice Enrichment",
+      copy: "Automated voice interviews and follow-ups can add evidence when an application alone leaves important questions unresolved.",
     },
     {
       code: "04",
-      title: "Cited Evaluation",
-      copy: "Gives recruiters a structured evaluation grounded in what the candidate actually said, with evidence they can inspect rather than a mysterious score.",
+      title: "Candidate Compass",
+      copy: "Maps the applicant pool into an inspectable shortlist, review set and rejection set so recruiters can see the whole pipeline at once.",
     },
     {
       code: "05",
+      title: "Reasons & Review",
+      copy: "Retains the evidence behind each assessment, flags uncertainty for human review and gives recruiters context instead of an unexplained model verdict.",
+    },
+    {
+      code: "06",
       title: "Outcome Learning",
-      copy: "Connects hiring outcomes back to the role model so the system can improve while recruiters remain responsible for every consequential decision.",
+      copy: "Uses aggregated hiring outcomes to improve role understanding while recruiters remain responsible for every consequential decision.",
     },
   ];
 
   const pipeline = [
-    ["01", "Interview the team", "Learn from managers and top performers before assessing anyone."],
-    ["02", "Build the belief graph", "Represent what matters, what is known and where evidence is still missing."],
-    ["03", "Adapt the interview", "Ask the next useful question, update the graph, and repeat until the evidence is sufficient."],
-    ["04", "Cite the evidence", "Return a reviewable evaluation linked to the candidate’s own answers."],
-    ["05", "Decide & learn", "Recruiters make the call; outcomes sharpen future role understanding."],
+    ["01", "Connect the ATS", "Keep the existing recruiting workflow and add an intelligence layer over the incoming application pool."],
+    ["02", "Read every application", "Apply the same structured review to every candidate without reviewer-fatigue shortcuts."],
+    ["03", "Separate the evidence", "Run specialist assessments across six dimensions and retain the reasons behind each result."],
+    ["04", "Enrich when useful", "Use voice interviews, portfolio review or follow-ups when the existing record leaves material gaps."],
+    ["05", "Shortlist with reasons", "Return an inspectable pipeline; recruiters review uncertainty and make the final decision."],
   ];
 
   return (
     <TranslationBoundary locale={locale}><div className="coverd-app">
       <header className="coverd-hero">
         <div className="coverd-brand">
-          <span className="coverd-kicker">BUILT AT IMPERIAL COLLEGE LONDON</span>
+          <span className="coverd-kicker">RECRUITMENT INTELLIGENCE LAYER</span>
           <div className="coverd-wordmark">
             <Image
               src="/coverd-logo-black-on-transparent.png"
@@ -837,20 +781,19 @@ function CoverdApp({ locale }: { locale: Locale }) {
             />
             <h3>COVERD<span>.</span></h3>
           </div>
-          <p>The AI interviewer that interviews the company first.</p>
+          <p>Every applicant reviewed. A defensible shortlist with reasons.</p>
           <div className="coverd-actions">
-            <a className="coverd-link" href="#coverd-products">Explore the product ↓</a>
+            <a className="coverd-link" href="https://coverd.ai/" target="_blank" rel="noopener noreferrer">Visit coverd.ai ↗</a>
             <span>FOUNDED 2026 · LONDON</span>
           </div>
         </div>
         <div className="founder-note">
-          <span>FOUNDER’S NOTE / SAM</span>
+          <span>CURRENT PRODUCT / AUG 2026</span>
           <p>
-            COVERD began on the candidate side, as an idea for tailoring CVs to job
-            descriptions. The more we explored it, the clearer the real problem became:
-            companies still struggled to distinguish meaningful evidence from polished
-            applications. We pivoted away from building another ATS and toward a focused
-            voice interview system that learns the company before questioning a candidate.
+            COVERD began with candidate-side CV tooling and company-aware voice-interview
+            experiments. That research now feeds a broader product: an intelligence layer
+            over an existing ATS that evaluates applications, preserves evidence, enriches
+            profiles when needed and returns a reasoned shortlist for recruiter review.
           </p>
         </div>
       </header>
@@ -858,31 +801,28 @@ function CoverdApp({ locale }: { locale: Locale }) {
       <section className="coverd-thesis">
         <div>
           <span className="eyebrow">THE THESIS</span>
-          <h4>Understand the company.<br />Then interview the candidate.</h4>
+          <h4>Review every applicant.<br />Keep people in control.</h4>
         </div>
         <p>
-          Generic interviews scale, but they miss the lived knowledge behind a role.
-          COVERD interviews the company first and turns that context into priors for a
-          multi-agent belief graph. During each candidate interview, answers update the
-          graph and determine which evidence-seeking question should come next. Three
-          architectures have been tested across 20 candidate interviews; feedback praised
-          the intelligence and relevance of the questions, and the feeling of being heard
-          and valued.
-          Four design partners, including Imperial College London, are shaping the product.
+          Application volume makes consistent review difficult. COVERD applies specialist
+          evaluation across six dimensions, keeps the evidence behind each assessment and
+          adds automated voice interviews when another signal would help. The result is a
+          ranked, inspectable pipeline—not a replacement for recruiter judgement. Candidate
+          records, prompts and production internals remain outside this public portfolio.
         </p>
       </section>
 
       <section className="coverd-numbers">
-        <div><strong>4</strong><span>active design partners</span></div>
-        <div><strong>20</strong><span>candidate interviews</span></div>
-        <div><strong>3</strong><span>architectures tested</span></div>
+        <div><strong>6</strong><span>specialist dimensions</span></div>
+        <div><strong>ATS</strong><span>existing workflow</span></div>
+        <div><strong>CV + VOICE</strong><span>evidence paths</span></div>
         <div><strong>HUMAN</strong><span>decision owner</span></div>
       </section>
 
       <section className="coverd-section" id="coverd-products">
         <div className="coverd-section__heading">
           <span>PRODUCT SYSTEM</span>
-          <h4>Company context before candidate judgement.</h4>
+          <h4>One inspectable layer across the hiring pipeline.</h4>
         </div>
         <div className="coverd-product-grid">
           {products.map((product) => (
@@ -898,7 +838,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
       <section className="coverd-section coverd-section--pipeline">
         <div className="coverd-section__heading">
           <span>OPERATING MODEL</span>
-          <h4>From organisational knowledge to a better interview.</h4>
+          <h4>From application volume to a reasoned shortlist.</h4>
         </div>
         <div className="coverd-pipeline">
           {pipeline.map(([number, title, copy]) => (
@@ -914,18 +854,18 @@ function CoverdApp({ locale }: { locale: Locale }) {
         <div className="coverd-ethics__intro">
           <span className="eyebrow">RESPONSIBLE BY DESIGN</span>
           <h4>Hiring intelligence people can inspect.</h4>
-          <p>Trust comes from evidence, appropriate uncertainty and a recognisably human conversation.</p>
+          <p>Trust comes from evidence, visible uncertainty, candidate agency and accountable human decisions.</p>
         </div>
         <div className="coverd-principles">
-          <article><strong>Context comes first</strong><p>The system learns the real work, team and success criteria before interviewing candidates.</p></article>
-          <article><strong>Every evaluation cites evidence</strong><p>Recruiters can trace an assessment back to what was asked and what the candidate said.</p></article>
-          <article><strong>Questions must earn their place</strong><p>Each follow-up should reduce a real uncertainty, not merely make an automated interview longer.</p></article>
-          <article><strong>Uncertainty stays visible</strong><p>The product should surface missing evidence instead of turning every ambiguity into confidence.</p></article>
-          <article><strong>Evidence beats elegance</strong><p>Three architectures were tested across 20 candidate interviews; candidate feedback and observed behaviour—not theoretical appeal—determined the direction.</p></article>
+          <article><strong>Every score has a reason</strong><p>Recruiters receive the evidence and reasoning behind an assessment, not an unexplained algorithmic verdict.</p></article>
+          <article><strong>Candidate agency matters</strong><p>The public product commits to evaluation visibility, correction requests and consent withdrawal.</p></article>
+          <article><strong>Enrichment is purposeful</strong><p>Voice interviews and follow-ups should resolve a real evidence gap rather than merely add friction.</p></article>
+          <article><strong>Uncertainty triggers review</strong><p>Low-confidence or conflicting evidence is surfaced for human attention instead of converted into false certainty.</p></article>
+          <article><strong>Consistency is testable</strong><p>Specialist dimensions, audit trails and fairness testing make the review process inspectable.</p></article>
           <article><strong>Recruiters remain accountable</strong><p>AI carries repetition and context; people retain the judgement and responsibility.</p></article>
         </div>
         <div className="coverd-values">
-          {["ROLE-SPECIFIC", "EVIDENCE-LED", "ADAPTIVE", "HUMAN-OWNED", "CANDIDATE-TRUSTED"].map((value) => <span key={value}>{value}</span>)}
+          {["ATS-CONNECTED", "EVIDENCE-LED", "VOICE-ENRICHED", "HUMAN-OWNED", "CANDIDATE-FIRST"].map((value) => <span key={value}>{value}</span>)}
         </div>
       </section>
     </div></TranslationBoundary>
@@ -963,32 +903,16 @@ function ExperienceApp({ locale }: { locale: Locale }) {
   );
 }
 
-function ProjectsApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
-  return (
-    <TranslationBoundary locale={locale}><div className="projects-app">
-      <header className="document-header">
-        <div><span className="eyebrow">SELECTED FILES</span><h3>Projects with measurable consequences.</h3></div>
-        <span className="file-stamp">{projects.length} OBJECTS</span>
-      </header>
-      <div className="project-grid">
-        {projects.map((project, index) => (
-          <article className="project-card" key={project.title}>
-            <div className="project-number">{String(index + 1).padStart(2, "0")}</div>
-            <div className="project-card__head">
-              <div><span>{project.category}</span><h4>{project.title}</h4></div>
-              <time>{project.year}</time>
-            </div>
-            <p>{project.description}</p>
-            <div className="project-tools">{project.tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
-            <div className="project-card__foot">
-              <strong>{project.metric}</strong>
-              {project.app && <button onClick={() => openApp(project.app!)}>Open in System →</button>}
-            </div>
-          </article>
-        ))}
-      </div>
-    </div></TranslationBoundary>
-  );
+function ProjectsApp({
+  openApp,
+  locale,
+  initialSlug,
+}: {
+  openApp: (id: AppId) => void;
+  locale: Locale;
+  initialSlug?: string;
+}) {
+  return <ProjectExplorer initialSlug={initialSlug} locale={locale} onOpenApp={openApp} />;
 }
 
 function SkillsApp({ locale }: { locale: Locale }) {
@@ -1086,7 +1010,7 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
   return (
     <TranslationBoundary locale={locale}><div className="chooser-app">
       <div className="chooser-columns">
-        <div className="chooser-list" aria-label="Contact services">
+        <div className="chooser-list" role="group" aria-label="Contact services">
           <button className="is-selected"><PixelIcon kind="network" small />Internet</button>
           <button><PixelIcon kind="document" small />Electronic Mail</button>
           <button><PixelIcon kind="computer" small />LinkedIn</button>
@@ -1110,16 +1034,10 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
 
 const supportingDocuments = [
   {
-    id: "thesis",
-    title: "Molecular Recognition Thesis",
-    meta: "Undergraduate research · 6.5 MB",
-    src: "/UndergradThesis.pdf",
-  },
-  {
-    id: "growmat",
-    title: "GROWMAT Product Showcase",
-    meta: "Enterprise case study · 8.3 MB",
-    src: "/GROWMAT%20Showcase%20External%20Highest%20Quality.pdf",
+    id: "study-rl",
+    title: "Reinforcement Learning Study Syllabus",
+    meta: "Reviewed learning atlas · PDF",
+    src: "/projects/study-rl/syllabus.pdf",
   },
 ];
 
@@ -1224,20 +1142,20 @@ function createPuzzle(seed = 1991) {
 }
 
 const SAM_WORDS = [
-  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD selected a multi-agent belief graph after testing three architectures across 20 candidate interviews." },
-  { answer: "PFIZER", clue: "Where GROWMAT began its enterprise life.", fact: "At Pfizer, GROWMAT cut capacity calculations from 12 minutes to under 60 seconds and returned 120+ hours each month." },
+  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD connects to existing ATS workflows, reviews applications across specialist dimensions and keeps recruiters responsible for the decision." },
+  { answer: "PFIZER", clue: "Where Samuel worked on a private enterprise product.", fact: "At Pfizer, Samuel delivered GROWMAT; its external showcase is public while live data and source remain private." },
   { answer: "PYTHON", clue: "A language threading through Samuel’s research, teaching and AI work.", fact: "Samuel has taught programming and data analysis to more than 80 students." },
   { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "Samuel’s work spans research, insurance, education and responsible AI across London." },
 ] as const;
 
 const MEMORY_PAIRS = [
-  { id: "coverd", left: "COVERD", right: "20 INTERVIEWS", fact: "Candidate feedback helped select COVERD’s multi-agent voice architecture." },
-  { id: "growmat", left: "12×", right: "GROWMAT", fact: "Capacity calculations fell from 12 minutes to under 60 seconds." },
-  { id: "gpu", left: "42 GB", right: "LOCAL AI", fact: "Private model training and inference run in Samuel’s home lab." },
-  { id: "scdf", left: "SCDF", right: "1,200 PEOPLE", fact: "Emergency planning systems supported personnel in Singapore." },
+  { id: "coverd", left: "ATS LAYER", right: "COVERD", fact: "COVERD reviews applications across specialist dimensions and uses voice interviews as an enrichment path." },
+  { id: "growmat", left: "EXTERNAL", right: "GROWMAT", fact: "GROWMAT has an external showcase; source code, live data and credentials remain private." },
+  { id: "gpu", left: "PRIVATE", right: "LOCAL AI", fact: "Samuel’s private home-lab inventory includes local model-training and inference systems." },
+  { id: "scdf", left: "SCDF", right: "OPERATIONS", fact: "Emergency planning systems supported protected operations in Singapore." },
   { id: "teaching", left: "80+ STUDENTS", right: "CODING", fact: "Samuel designed an accessible programming and data curriculum." },
-  { id: "science", left: "JULIA", right: "SOLUBILITY", fact: "Scientific models helped reduce experimental testing requirements." },
-  { id: "infra", left: "DOCKER", right: "HOME LAB", fact: "A private, monitored stack powers AI, storage and automation." },
+  { id: "science", left: "SCIENCE", right: "MODELLING", fact: "Scientific computing supported research inside a regulated environment." },
+  { id: "infra", left: "DOCKER", right: "HOME LAB", fact: "A private infrastructure inventory spans AI, storage and automation; the public exhibit audits one six-service Compose slice." },
   { id: "air", left: "CO₂", right: "GRAFANA", fact: "Bluetooth air-quality telemetry flows into SQL dashboards." },
 ] as const;
 
@@ -1466,7 +1384,7 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <button className={flagMode ? "is-active" : ""} onClick={() => setFlagMode((current) => !current)}>F Flag mode</button>
               <button onClick={resetMines}>New field</button>
             </div>
-            <div className="minefield" aria-label="Minefield game board">
+            <div className="minefield" role="group" aria-label="Minefield game board">
               {minefield.map((cell, index) => (
                 <button
                   key={index}
@@ -1493,9 +1411,17 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <div className="puzzle-counter">{moves}<small>MOVES</small></div>
             </div>
             <div className="puzzle-message" role="status">{puzzleSolved ? "Solved. The Macintosh is impressed." : "Put the numbers back in order."}</div>
-            <div className="puzzle-board" aria-label="Sliding number puzzle">
+            <div className="puzzle-board" role="group" aria-label="Sliding number puzzle">
               {puzzle.map((tile, index) => (
-                <button key={`${tile}-${index}`} className={tile === 0 ? "is-empty" : ""} onClick={() => moveTile(index)} disabled={tile === 0}>
+                <button
+                  key={`${tile}-${index}`}
+                  className={tile === 0 ? "is-empty" : ""}
+                  onClick={() => moveTile(index)}
+                  disabled={tile === 0}
+                  aria-label={tile === 0
+                    ? locale === "zh-CN" ? "空白拼图位置" : locale === "zh-TW" ? "空白拼圖位置" : "Empty puzzle space"
+                    : locale === "zh-CN" ? `拼图块 ${tile}` : locale === "zh-TW" ? `拼圖塊 ${tile}` : `Puzzle tile ${tile}`}
+                >
                   {tile || ""}
                 </button>
               ))}
@@ -1510,7 +1436,7 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <div className="word-counter">{wordIndex + 1}<small>OF {SAM_WORDS.length}</small></div>
             </div>
             <div className="samword-clue"><strong>CLUE</strong><span>{activeWord.clue}</span></div>
-            <div className="samword-grid" aria-label="SamWord guesses">
+            <div className="samword-grid" role="group" aria-label="SamWord guesses">
               {Array.from({ length: 6 }, (_, rowIndex) => {
                 const guess = wordGuesses[rowIndex] ?? "";
                 const score = guess ? scoreWordGuess(guess, activeWord.answer) : [];
@@ -1547,7 +1473,7 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <div className="puzzle-counter">{memoryTurns}<small>TURNS</small></div>
             </div>
             <p className="memory-intro">Match each clue to the part of Samuel’s profile it belongs to.</p>
-            <div className="memory-grid" aria-label="Samuel profile matching game">
+            <div className="memory-grid" role="group" aria-label="Samuel profile matching game">
               {memoryDeck.map((card, index) => {
                 const visible = memoryOpen.includes(index) || memoryMatched.has(card.pairId);
                 return (
@@ -1603,7 +1529,7 @@ function LabApp({ locale }: { locale: Locale }) {
   const [filter, setFilter] = useState("All");
   const services = [
     { group: "Compute", code: "PX", tone: "violet", name: "Proxmox", host: "Virtualisation cluster", description: "Runs isolated VMs and Linux containers for the heavier parts of the lab." },
-    { group: "Compute", code: "AI", tone: "blue", name: "Local AI GPU", host: "42 GB VRAM", description: "Private model training and inference exposed through an Open WebUI workspace." },
+    { group: "Compute", code: "AI", tone: "blue", name: "Local AI GPU", host: "Private GPU workspace", description: "A self-reported private-fleet entry for local model training and inference through an Open WebUI workspace." },
     { group: "Compute", code: "DEV", tone: "navy", name: "Code Servers", host: "Browser IDEs", description: "GPU-connected VS Code environments for remote development and experiments." },
     { group: "Compute", code: "KVM", tone: "grey", name: "GLKVM", host: "Physical console", description: "Out-of-band keyboard, video and mouse access when a server stops responding." },
     { group: "Network", code: "NPM", tone: "green", name: "Nginx Proxy Manager", host: "TLS gateway", description: "Routes public domains to private services and manages HTTPS certificates." },
@@ -1613,15 +1539,15 @@ function LabApp({ locale }: { locale: Locale }) {
     { group: "Network", code: "RDP", tone: "violet", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
     { group: "Operations", code: "CT", tone: "blue", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
     { group: "Operations", code: "CI", tone: "green", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs across Samuel’s own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs." },
-    { group: "Operations", code: "HP", tone: "navy", name: "Homepage", host: "Service directory", description: "The live control surface at homepage.samuelzhang.co.uk for links, status and metrics." },
+    { group: "Operations", code: "HP", tone: "navy", name: "Homepage", host: "Service directory", description: "A documented directory for service links and operational notes." },
     { group: "Operations", code: "JOB", tone: "orange", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
     { group: "Data", code: "SQL", tone: "blue", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
-    { group: "Data", code: "CO2", tone: "green", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Collects CO₂, temperature, humidity and pressure over Bluetooth for live dashboards." },
+    { group: "Data", code: "CO2", tone: "green", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Documents a Bluetooth-to-dashboard path for CO₂, temperature, humidity and pressure." },
     { group: "Data", code: "HA", tone: "amber", name: "Home Assistant", host: "Automation hub", description: "Connects sensors, energy data and smart-home devices into one event-driven system." },
-    { group: "Storage", code: "106", tone: "green", name: "Storage pool", host: "106 TB usable across the lab", description: "RAID storage across the lab for media, datasets and automated recovery after earlier failures made the value of backups unforgettable." },
+    { group: "Storage", code: "RAID", tone: "green", name: "Storage pool", host: "Private fleet inventory", description: "RAID storage supports private media and datasets. The public six-service audit documents backup intent and a restore script, but does not claim verified recovery." },
     { group: "Storage", code: "NAS", tone: "grey", name: "Synology Cloud", host: "Files & photos", description: "Private file sync, photo management and resilient network storage." },
     { group: "Storage", code: "NC", tone: "blue", name: "Nextcloud", host: "Private cloud", description: "Self-hosted document access and synchronisation across personal devices." },
-    { group: "Media", code: "JF", tone: "violet", name: "Jellyfin", host: "Home cinema", description: "A private media library and streaming service with live playback monitoring." },
+    { group: "Media", code: "JF", tone: "violet", name: "Jellyfin", host: "Home cinema", description: "Documents a private media-library and playback-monitoring service." },
     { group: "Media", code: "KX", tone: "amber", name: "Kiwix", host: "Offline knowledge", description: "Serves offline Wikipedia and reference libraries without an internet connection." },
     { group: "Apps", code: "ERP", tone: "green", name: "Frappe / ERPNext", host: "Business systems lab", description: "A containerised environment for exploring open-source ERP and workflow software." },
     { group: "Apps", code: "ODO", tone: "violet", name: "Odoo Lab", host: "Application sandbox", description: "A separate test stack for business application and database experiments." },
@@ -1633,25 +1559,23 @@ function LabApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="lab-app">
       <header className="document-header">
         <div><span className="eyebrow">PERSONAL INFRASTRUCTURE</span><h3>A small internet, built at home.</h3></div>
-        <span className="online-badge">● {services.length} SYSTEMS</span>
+        <span className="online-badge">◆ {services.length} INVENTORY ENTRIES</span>
       </header>
       <div className="lab-summary">
         <p>
-          Built over four-plus years, before “vibe coding” made infrastructure feel
-          approachable: seven servers ranging from hand-built machines to Raspberry Pis,
-          Proxmox installed from scratch, and a daunting climb through networking,
-          security and cross-architecture compatibility. One ill-fated attempt to host a
-          large file erased a database and its Compose configuration; the lab now has
-          monitored, scheduled backups and a total of 106 TB of usable RAID storage across its systems.
+          This is a self-reported private-fleet inventory, not a live status page. The
+          source-audited public exhibit covers one six-service Docker Compose snapshot:
+          it declares a daily PostgreSQL backup job and includes a restore script, while
+          availability, recovery success and the wider fleet remain unverified here.
         </p>
         <dl>
-          <div><dt>GPU memory</dt><dd>42 GB</dd></div>
-          <div><dt>Server fleet</dt><dd>7</dd></div>
-          <div><dt>Total usable storage</dt><dd>106 TB</dd></div>
-          <div><dt>Running systems</dt><dd>{services.length}</dd></div>
+          <div><dt>Audited Compose slice</dt><dd>6 services</dd></div>
+          <div><dt>Declared health checks</dt><dd>0</dd></div>
+          <div><dt>Backup schedule</dt><dd>Daily intent</dd></div>
+          <div><dt>Inventory entries</dt><dd>{services.length}</dd></div>
         </dl>
       </div>
-      <div className="lab-filters" aria-label="Filter infrastructure">
+      <div className="lab-filters" role="group" aria-label="Filter infrastructure">
         {groups.map((group) => (
           <button key={group} className={filter === group ? "is-active" : ""} aria-pressed={filter === group} onClick={() => setFilter(group)}>{group}</button>
         ))}
@@ -1661,7 +1585,7 @@ function LabApp({ locale }: { locale: Locale }) {
           <article className="service-card" key={service.name}>
             <ServiceIcon code={service.code} tone={service.tone} />
             <div className="service-card__copy">
-              <div><h4>{service.name}</h4><span><i />ONLINE</span></div>
+              <div><h4>{service.name}</h4><span><i />DOCUMENTED</span></div>
               <strong>{service.host}</strong>
               <p>{service.description}</p>
             </div>
@@ -1716,8 +1640,8 @@ function ScrapbookApp({ locale }: { locale: Locale }) {
     },
     {
       title: "Hardware catalogue",
-      summary: "Twelve machines, seven active servers and an electricity bill that has become a recurring systems-monitoring alert.",
-      detail: "The home lab began before ‘vibe coding’ made infrastructure approachable. It survived hand-built servers, Proxmox, port forwarding, mixed CPU architectures and one database-erasing lesson; backups are now the least negotiable part of the personality test.",
+      summary: "A private, evolving systems inventory—and an electricity bill that has become a recurring monitoring concern.",
+      detail: "The home lab began before ‘vibe coding’ made infrastructure approachable. It has included hand-built servers, Proxmox, mixed CPU architectures and one database-erasing lesson. The public project exhibit audits a six-service Compose snapshot and backup intent; it does not claim live fleet health or verified recovery.",
     },
   ];
   const [openInterest, setOpenInterest] = useState<number | null>(null);
@@ -1764,12 +1688,22 @@ function ScrapbookApp({ locale }: { locale: Locale }) {
   );
 }
 
-function AppContent({ id, openApp, locale }: { id: AppId; openApp: (id: AppId) => void; locale: Locale }) {
+function AppContent({
+  id,
+  openApp,
+  locale,
+  initialProjectSlug,
+}: {
+  id: AppId;
+  openApp: (id: AppId) => void;
+  locale: Locale;
+  initialProjectSlug?: string;
+}) {
   switch (id) {
     case "about": return <AboutApp openApp={openApp} locale={locale} />;
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
-    case "projects": return <ProjectsApp openApp={openApp} locale={locale} />;
+    case "projects": return <ProjectsApp openApp={openApp} locale={locale} initialSlug={initialProjectSlug} />;
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
     case "documents": return <DocumentsApp locale={locale} />;
@@ -1785,10 +1719,12 @@ export default function SystemSevenDesktop({
   initialApp = "about",
   skipBoot = false,
   initialLocale = "en-GB",
+  initialProjectSlug,
 }: {
   initialApp?: AppId;
   skipBoot?: boolean;
   initialLocale?: Locale;
+  initialProjectSlug?: string;
 }) {
   const router = useRouter();
   const [locale, setLocale] = useState<Locale>(initialLocale);
@@ -1796,6 +1732,12 @@ export default function SystemSevenDesktop({
     INITIAL_WINDOWS.map((windowState) => ({
       ...windowState,
       open: windowState.id === initialApp,
+      // A direct project permalink is a working surface rather than a small
+      // desktop preview. Give its diagrams and evidence tables the available
+      // canvas immediately; the title-bar zoom box still restores the classic
+      // floating-window size. Projects opened later from the desktop retain
+      // that normal floating-window behaviour.
+      maximized: windowState.id === "projects" && initialApp === "projects",
     })),
   );
   const [activeId, setActiveId] = useState<AppId>(initialApp);
@@ -1810,6 +1752,15 @@ export default function SystemSevenDesktop({
   const [mobileGuide, setMobileGuide] = useState(false);
   const zCounter = useRef(20);
   const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
+  const resizeState = useRef<{
+    id: AppId;
+    startX: number;
+    startY: number;
+    startWidth: number;
+    startHeight: number;
+    originX: number;
+    originY: number;
+  } | null>(null);
   const toastTimer = useRef<number | null>(null);
   const languageButtonRef = useRef<HTMLButtonElement | null>(null);
   const languageMenuRef = useRef<HTMLDivElement | null>(null);
@@ -1898,10 +1849,19 @@ export default function SystemSevenDesktop({
   }, []);
 
   useEffect(() => {
-    if (!mobileGuide) return;
+    // The guide is not mounted while the boot screen owns the page. Wait for
+    // that early-return branch to finish before moving keyboard focus.
+    if (!mobileGuide || booting) return;
     const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const focusFrame = window.requestAnimationFrame(() => mobileGuideButtonRef.current?.focus());
-    const closeOnEscape = (event: KeyboardEvent) => {
+    const handleGuideKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Tab") {
+        // This lightweight modal has one action. Keep keyboard users inside it
+        // until they acknowledge or dismiss the guide.
+        event.preventDefault();
+        mobileGuideButtonRef.current?.focus();
+        return;
+      }
       if (event.key !== "Escape") return;
       try {
         window.sessionStorage.setItem("samuel-mobile-window-guide", "seen");
@@ -1910,16 +1870,35 @@ export default function SystemSevenDesktop({
       }
       setMobileGuide(false);
     };
-    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", handleGuideKeyDown);
     return () => {
       window.cancelAnimationFrame(focusFrame);
-      window.removeEventListener("keydown", closeOnEscape);
-      if (previouslyFocused?.isConnected) previouslyFocused.focus();
+      window.removeEventListener("keydown", handleGuideKeyDown);
+      const restoreTarget = previouslyFocused
+        && previouslyFocused !== document.body
+        && previouslyFocused.isConnected
+        ? previouslyFocused
+        : document.querySelector<HTMLButtonElement>(".apple-menu");
+      restoreTarget?.focus();
     };
-  }, [mobileGuide]);
+  }, [booting, mobileGuide]);
 
   useEffect(() => {
     const move = (event: PointerEvent) => {
+      const resize = resizeState.current;
+      if (resize && window.innerWidth > 720) {
+        setWindows((current) => current.map((windowState) => {
+          if (windowState.id !== resize.id || windowState.maximized) return windowState;
+          const maximumWidth = Math.max(320, window.innerWidth - resize.originX - (window.innerWidth <= 900 ? 10 : 5));
+          const maximumHeight = Math.max(240, window.innerHeight - resize.originY - 8);
+          return {
+            ...windowState,
+            width: Math.max(320, Math.min(maximumWidth, resize.startWidth + event.clientX - resize.startX)),
+            height: Math.max(240, Math.min(maximumHeight, resize.startHeight + event.clientY - resize.startY)),
+          };
+        }));
+        return;
+      }
       const drag = dragState.current;
       if (!drag || window.innerWidth <= 720) return;
       setWindows((current) =>
@@ -1934,7 +1913,10 @@ export default function SystemSevenDesktop({
         ),
       );
     };
-    const stop = () => { dragState.current = null; };
+    const stop = () => {
+      dragState.current = null;
+      resizeState.current = null;
+    };
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop);
     window.addEventListener("pointercancel", stop);
@@ -2029,6 +2011,9 @@ export default function SystemSevenDesktop({
   };
 
   const toggleZoom = (id: AppId) => {
+    // Small-screen windows already occupy the fixed usable canvas; toggling
+    // the desktop maximize bit cannot produce a meaningful visual state.
+    if (window.innerWidth <= 720) return;
     setWindows((current) => current.map((item) => item.id === id ? { ...item, maximized: !item.maximized } : item));
     focusWindow(id);
   };
@@ -2067,6 +2052,48 @@ export default function SystemSevenDesktop({
       offsetX: event.clientX - target.x,
       offsetY: event.clientY - target.y,
     };
+  };
+
+  const handleResizeStart = (event: React.PointerEvent<HTMLButtonElement>, id: AppId) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const target = windows.find((item) => item.id === id);
+    if (!target || target.maximized || window.innerWidth <= 720) return;
+    const renderedWindow = event.currentTarget.closest<HTMLElement>(".mac-window")?.getBoundingClientRect();
+    focusWindow(id);
+    resizeState.current = {
+      id,
+      startX: event.clientX,
+      startY: event.clientY,
+      startWidth: renderedWindow?.width ?? target.width,
+      startHeight: renderedWindow?.height ?? target.height,
+      originX: renderedWindow?.left ?? target.x,
+      originY: renderedWindow?.top ?? target.y,
+    };
+  };
+
+  const resizeWithKeyboard = (event: React.KeyboardEvent<HTMLButtonElement>, id: AppId) => {
+    const direction = event.key;
+    if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(direction)) return;
+    event.preventDefault();
+    const step = event.shiftKey ? 64 : 24;
+    const renderedWindow = event.currentTarget.closest<HTMLElement>(".mac-window")?.getBoundingClientRect();
+    setWindows((current) => current.map((windowState) => {
+      if (windowState.id !== id || windowState.maximized) return windowState;
+      const widthDelta = direction === "ArrowRight" ? step : direction === "ArrowLeft" ? -step : 0;
+      const heightDelta = direction === "ArrowDown" ? step : direction === "ArrowUp" ? -step : 0;
+      const originX = renderedWindow?.left ?? windowState.x;
+      const originY = renderedWindow?.top ?? windowState.y;
+      const currentWidth = renderedWindow?.width ?? windowState.width;
+      const currentHeight = renderedWindow?.height ?? windowState.height;
+      const maximumWidth = Math.max(320, window.innerWidth - originX - (window.innerWidth <= 900 ? 10 : 5));
+      const maximumHeight = Math.max(240, window.innerHeight - originY - 8);
+      return {
+        ...windowState,
+        width: Math.max(320, Math.min(maximumWidth, currentWidth + widthDelta)),
+        height: Math.max(240, Math.min(maximumHeight, currentHeight + heightDelta)),
+      };
+    }));
   };
 
   useEffect(() => {
@@ -2182,7 +2209,7 @@ export default function SystemSevenDesktop({
               }}
               aria-haspopup="menu"
               aria-expanded={openMenu === "language"}
-              aria-controls="language-menu"
+              aria-controls={openMenu === "language" ? "language-menu" : undefined}
               aria-label={`${translateText(locale, "Language")}: ${activeLocaleOption.label}`}
               title="Language"
             >
@@ -2215,7 +2242,7 @@ export default function SystemSevenDesktop({
         </div>
       </nav>
 
-      <div className="desktop-icons" aria-label="Desktop items">
+      <div className="desktop-icons" role="group" aria-label="Desktop items">
         {DESKTOP_ICONS.map((item) => (
           <button
             key={item.id}
@@ -2243,9 +2270,11 @@ export default function SystemSevenDesktop({
           onClose={() => closeApp(windowState.id)}
           onZoom={() => toggleZoom(windowState.id)}
           onDragStart={(event) => handleDragStart(event, windowState.id)}
+          onResizeStart={(event) => handleResizeStart(event, windowState.id)}
+          onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <AppContent id={windowState.id} openApp={openApp} locale={locale} />
+          <AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={initialProjectSlug} />
         </WindowChrome>
       ))}
 
@@ -2256,7 +2285,7 @@ export default function SystemSevenDesktop({
             <span>{translateText(locale, selectedDesktopItem.description)} {translateText(locale, "Double-click to open.")}</span>
           </>
         ) : (
-          <span>Select an icon to learn what it opens · Double-click to launch · Drag title bars to move windows</span>
+          <span>Select an icon to learn what it opens · Double-click to launch · Drag title bars to move · Drag lower-right corners to resize</span>
         )}
       </div>
       <div className="window-switcher" role="navigation" aria-label="Open applications">
@@ -2268,18 +2297,21 @@ export default function SystemSevenDesktop({
         ))}
       </div>
       {mobileGuide && (
-        <aside className="mobile-window-guide" role="dialog" aria-labelledby="mobile-guide-title" aria-describedby="mobile-guide-copy">
-          <div className="mobile-window-guide__title">
-            <span className="mobile-guide-window-box" aria-hidden="true" />
-            <strong id="mobile-guide-title">Windows on a small screen</strong>
-          </div>
-          <p id="mobile-guide-copy">
-            Tap the small square at a window’s top-left to close it. Mobile windows stay
-            full-screen, so dragging is disabled; use the bar along the bottom to switch
-            between anything that is open.
-          </p>
-          <button ref={mobileGuideButtonRef} onClick={dismissMobileGuide}>Got it</button>
-        </aside>
+        <>
+          <div className="mobile-guide-backdrop" aria-hidden="true" />
+          <aside className="mobile-window-guide" role="dialog" aria-modal="true" aria-labelledby="mobile-guide-title" aria-describedby="mobile-guide-copy">
+            <div className="mobile-window-guide__title">
+              <span className="mobile-guide-window-box" aria-hidden="true" />
+              <strong id="mobile-guide-title">Windows on a small screen</strong>
+            </div>
+            <p id="mobile-guide-copy">
+              Tap the small square at a window’s top-left to close it. Mobile windows stay
+              full-screen, so dragging is disabled; use the bar along the bottom to switch
+              between anything that is open.
+            </p>
+            <button ref={mobileGuideButtonRef} onClick={dismissMobileGuide}>Got it</button>
+          </aside>
+        </>
       )}
       {toast && <div className="system-toast" role="status"><PixelIcon kind="computer" small /><span>{toast}</span></div>}
     </main></TranslationBoundary>

@@ -6,16 +6,14 @@ yarn-error.log*
 
 # Next.js
 .next/
+.next-build/
 out/
 
 # Production build
 build/
 
 # Environment files
-.env
-.env.local
-.env.production.local
-.env.development.local
+.env*
 
 # Debug files
 *.log
@@ -47,6 +45,18 @@ docker-compose.yml
 # Documentation
 README.md
 *.md
+others/
+
+# Local credentials and private keys never enter the build context
+.npmrc
+.yarnrc*
+.pnpmrc
+*.pem
+*.key
+
+# Root-only source material is not part of the deployed site
+/Candidate Linkedin.txt
+/CVtemplateProduct.pdf
 
 # Test files
 __tests__/
@@ -71,5 +81,16 @@ Candidate Linkedin.txt
 CVtemplateProduct.pdf
 public/CVtemplateProduct.pdf
 public/Samuel-Zhang-Profile.pdf
+public/UndergradThesis.pdf
 marsh_contract_review_ai_editable.pdf
 MAC Phase 3 - Lead Matching - GRC.pdf
+
+# Never send raw portfolio data or model artifacts to the Docker build context
+public/projects/**/raw/
+public/projects/**/*.db
+public/projects/**/*.sqlite*
+public/projects/**/*.csv
+public/projects/**/*.ipynb
+public/projects/**/*.pth
+public/projects/**/*.pt
+public/projects/**/*.ckpt

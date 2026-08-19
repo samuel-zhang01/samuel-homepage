@@ -1,0 +1,1963 @@
+.studio {
+  --mri-navy: #101942;
+  --mri-teal: #0d7775;
+  --mri-teal-soft: #d8f0ed;
+  --mri-magenta: #a83162;
+  --mri-magenta-soft: #f5dbe5;
+  --mri-yellow: #f0d86b;
+  --mri-grid: #c6c7c2;
+  --mri-muted: #5c5e5d;
+  background: #eeeee9;
+}
+
+.disclaimer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 14px;
+  padding: 9px 11px;
+  border: 1px solid #65665f;
+  background:
+    repeating-linear-gradient(-45deg, rgba(16, 25, 66, 0.04) 0 4px, transparent 4px 8px),
+    #fbfbf6;
+  box-shadow: inset 1px 1px #fff;
+}
+
+.disclaimer > span,
+.disclaimer > strong {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.disclaimer > span {
+  padding: 4px 6px;
+  border: 1px solid var(--mri-navy);
+  color: #fff;
+  background: var(--mri-navy);
+}
+
+.disclaimer > strong {
+  color: #8a1e48;
+}
+
+.disclaimer p {
+  margin: 0;
+  color: #3f4140;
+  font-size: 10px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
+  padding: 3px;
+  border: 1px solid #242522;
+  background: #242522;
+  box-shadow:
+    inset 1px 1px #fff,
+    2px 2px 0 #a5a5a0;
+}
+
+.tabs button {
+  display: flex;
+  min-width: 0;
+  min-height: 44px;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 9px;
+  border: 0;
+  background: #e4e4df;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #9b9c97;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tabs button:hover {
+  background: #f5f5f0;
+}
+
+.tabs button[aria-current="page"] {
+  color: #fff;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.055) 5px 6px),
+    var(--mri-navy);
+  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.34), inset -1px -1px #05091c;
+}
+
+.tabs button > span {
+  color: #747570;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.tabs button[aria-current="page"] > span {
+  color: #9eddd6;
+}
+
+.tabs button > strong {
+  overflow: hidden;
+  font-size: 10px;
+  letter-spacing: 0.035em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewShell {
+  min-height: 670px;
+  margin-top: 14px;
+  border: 1px solid #b3b4ae;
+  background: #f8f8f4;
+  box-shadow: inset 1px 1px #fff;
+}
+
+.workspace {
+  padding: 17px;
+  animation: viewIn 180ms ease-out;
+}
+
+@keyframes viewIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sectionLead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 2px 1px 15px;
+  border-bottom: 1px dotted #9a9b96;
+}
+
+.sectionLead > div:first-child {
+  max-width: 660px;
+}
+
+.kicker,
+.microLabel,
+.controlLabel {
+  color: #555753;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.kicker {
+  color: var(--mri-teal);
+}
+
+.sectionLead h3 {
+  margin: 3px 0 6px;
+  font-size: clamp(19px, 3vw, 28px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.sectionLead p,
+.formulaPanel p,
+.comparisonPanel p,
+.maskPanel p,
+.chartPanel p,
+.xaiPanel p,
+.gatePanel p,
+.evidencePanel p,
+.shiftCallout p,
+.robustFinding p,
+.datasetLedger p {
+  margin: 0;
+  color: var(--mri-muted);
+  font-size: 10px;
+  line-height: 1.48;
+}
+
+.controlStack {
+  flex: 0 0 auto;
+}
+
+.controlLabel {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.segmented,
+.factorButtons,
+.epsilonButtons > div {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid #42433f;
+  background: #c8c8c3;
+  box-shadow: inset 1px 1px #8f908b, 1px 1px #fff;
+}
+
+.segmented button,
+.factorButtons button,
+.epsilonButtons button {
+  min-height: 27px;
+  padding: 5px 9px;
+  border: 0;
+  background: #eeeeea;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #999a95;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.segmented button:hover,
+.factorButtons button:hover,
+.epsilonButtons button:hover {
+  background: #fff;
+}
+
+.segmented button[aria-pressed="true"],
+.factorButtons button[aria-pressed="true"],
+.epsilonButtons button[aria-pressed="true"] {
+  color: #fff;
+  background: var(--mri-navy);
+  box-shadow: inset 1px 1px #05091c, inset -1px -1px rgba(255, 255, 255, 0.3);
+}
+
+.methodRail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.methodRail button {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+  padding: 9px 11px;
+  border: 1px solid #777872;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, 1px 1px #b8b9b4;
+  cursor: pointer;
+  text-align: left;
+}
+
+.methodRail button:hover:not(:disabled) {
+  border-color: var(--mri-teal);
+}
+
+.methodRail button[aria-pressed="true"] {
+  border-color: var(--mri-navy);
+  color: #fff;
+  background: var(--mri-navy);
+}
+
+.methodRail button:disabled {
+  color: #8e8f8a;
+  background: #dadad5;
+  cursor: not-allowed;
+}
+
+.methodRail button span {
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.methodRail button small {
+  color: inherit;
+  font-size: 8px;
+  opacity: 0.72;
+}
+
+.reconGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.22fr) minmax(260px, 0.78fr);
+  gap: 13px;
+}
+
+.imageWorkbench,
+.maskPanel,
+.formulaPanel,
+.pipelinePanel,
+.methodDossier,
+.comparisonPanel,
+.chartPanel,
+.robustReadout,
+.shiftChooser,
+.shiftCallout,
+.dicePanel,
+.gatePanel,
+.evidencePanel,
+.xaiPanel,
+.specPanel,
+.datasetLedger {
+  border: 1px solid #858681;
+  background: #eeeeea;
+  box-shadow: inset 1px 1px #fff, 2px 2px #d1d1cc;
+}
+
+.imageWorkbench {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.9fr) minmax(300px, 1.1fr);
+  gap: 11px;
+  padding: 10px;
+}
+
+.sliceFrame {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  border: 1px solid #15171a;
+  background: #07090c;
+  box-shadow: inset 0 0 0 1px #555a60;
+}
+
+.sliceSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 184px;
+}
+
+.sliceFrame figcaption {
+  min-height: 29px;
+  padding: 7px 8px;
+  border-top: 1px solid #4e5358;
+  color: #e7ebed;
+  background: #161a20;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.syntheticFlag {
+  position: absolute;
+  z-index: 2;
+  top: 7px;
+  left: 7px;
+  padding: 3px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  color: #fff;
+  background: rgba(8, 10, 14, 0.84);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.resultStrip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.metric {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 9px;
+  border: 1px solid #a5a6a1;
+  background: #f9f9f5;
+  box-shadow: inset 1px 1px #fff;
+}
+
+.metric > span {
+  color: #686a66;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.metric > strong {
+  margin: 3px 0 1px;
+  color: var(--mri-navy);
+  font-family: "Courier New", monospace;
+  font-size: clamp(15px, 2vw, 21px);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.metric > small {
+  overflow: hidden;
+  color: #777873;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metric.good {
+  border-color: #5c9d91;
+  background: #e4f3f0;
+}
+
+.metric.good > strong {
+  color: #065e5d;
+}
+
+.metric.warn {
+  border-color: #bd7991;
+  background: #f7e5eb;
+}
+
+.metric.warn > strong {
+  color: #8c2850;
+}
+
+.maskPanel {
+  padding: 11px;
+}
+
+.maskHeader,
+.panelTitle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.maskHeader > div {
+  display: grid;
+  gap: 3px;
+}
+
+.maskHeader strong {
+  font-size: 11px;
+}
+
+.readout {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  padding: 4px 7px;
+  border: 1px solid #50514d;
+  color: #fff;
+  background: var(--mri-navy);
+  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.25);
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.maskSvg {
+  display: block;
+  width: 100%;
+  margin-bottom: 9px;
+  border: 1px solid #15171a;
+}
+
+.lowerGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 13px;
+}
+
+.formulaPanel,
+.pipelinePanel,
+.comparisonPanel,
+.gatePanel,
+.evidencePanel {
+  padding: 12px;
+}
+
+.panelTitle h4,
+.pipelinePanel h4,
+.comparisonPanel h4,
+.dicePanel h4,
+.shiftCallout h4,
+.evidencePanel h4,
+.xaiPanel h4,
+.datasetLedger h4 {
+  margin: 2px 0 0;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+.sliderLabel {
+  display: grid;
+  gap: 5px;
+  margin: 8px 0 10px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.sliderLabel input {
+  width: 100%;
+  accent-color: var(--mri-teal);
+}
+
+.equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 50px;
+  margin-bottom: 9px;
+  padding: 8px;
+  border: 1px inset #a5a6a1;
+  background: #fff;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+}
+
+.equation > strong {
+  padding: 4px 6px;
+  color: #fff;
+  background: var(--mri-teal);
+  font-size: 13px;
+}
+
+.pipelinePanel {
+  display: flex;
+  flex-direction: column;
+}
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 9px 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.pipeline li {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.pipeline li:not(:last-child)::after {
+  position: absolute;
+  top: 12px;
+  right: -6px;
+  width: 12px;
+  content: "→";
+  font-size: 9px;
+}
+
+.pipeline b {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 1px solid var(--mri-navy);
+  border-radius: 50%;
+  color: #fff;
+  background: var(--mri-navy);
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+}
+
+.pipeline span {
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.pipeline small {
+  color: #777873;
+  font-size: 8px;
+  font-weight: 500;
+}
+
+.factLine {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 10px;
+  margin-top: auto;
+  padding: 8px 9px;
+  border: 1px solid #915373;
+  background: var(--mri-magenta-soft);
+}
+
+.factLine span {
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.factLine strong {
+  color: #822148;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+}
+
+.factLine em {
+  grid-column: 1 / -1;
+  color: #7d5261;
+  font-size: 8px;
+  font-style: normal;
+}
+
+.uqGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 13px;
+  margin-top: 14px;
+}
+
+.uncertaintyVisuals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  padding: 9px;
+  border: 1px solid #858681;
+  background: #1a1c24;
+  box-shadow: inset 1px 1px #62666e, 2px 2px #d1d1cc;
+}
+
+.methodDossier {
+  padding: 12px;
+}
+
+.dossierTop {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding-bottom: 9px;
+  border-bottom: 1px dotted #9c9d98;
+}
+
+.dossierTop > span:first-child {
+  grid-column: 1 / -1;
+}
+
+.dossierTop h4 {
+  margin: 2px 0 0;
+  font-size: 17px;
+}
+
+.runStamp {
+  padding: 3px 5px;
+  border: 1px solid #777872;
+  background: #fff;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+}
+
+.dossierMetrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: 9px 0;
+}
+
+.strengthCallout {
+  padding: 9px;
+  border-left: 5px solid var(--mri-teal);
+  background: var(--mri-teal-soft);
+}
+
+.strengthCallout > span {
+  display: block;
+  color: #39706d;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.strengthCallout > strong {
+  display: block;
+  margin: 2px 0 4px;
+  font-size: 11px;
+}
+
+.strengthCallout p {
+  margin: 0;
+  color: #4e6b69;
+  font-size: 8px;
+}
+
+.barRows,
+.diceRows {
+  display: grid;
+  gap: 8px;
+  margin: 11px 0;
+}
+
+.barRows > div,
+.diceRows > div {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 8px;
+  font-size: 8px;
+}
+
+.barRows i,
+.diceRows i {
+  display: block;
+  height: 10px;
+  overflow: hidden;
+  border: 1px solid #858681;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px #aaa;
+}
+
+.barRows i b,
+.diceRows i b {
+  display: block;
+  height: 100%;
+  background: var(--mri-teal);
+}
+
+.barRows > div:nth-child(2) i b {
+  background: var(--mri-magenta);
+}
+
+.barRows strong,
+.diceRows strong {
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  text-align: right;
+}
+
+.attackControls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 14px 0;
+  padding: 10px;
+  border: 1px solid #a0a19b;
+  background: #e6e6e1;
+}
+
+.epsilonButtons {
+  margin-left: auto;
+}
+
+.robustGrid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(260px, 0.88fr) minmax(285px, 1.05fr);
+  gap: 12px;
+}
+
+.robustReadout {
+  padding: 10px;
+}
+
+.robustFinding {
+  margin-top: 9px;
+  padding: 10px;
+  border-left: 5px solid var(--mri-magenta);
+  background: var(--mri-magenta-soft);
+}
+
+.robustFinding > span {
+  color: #8b3c5d;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.robustFinding > strong {
+  display: block;
+  margin: 3px 0 5px;
+  font-size: 10px;
+}
+
+.chartPanel {
+  padding: 9px 10px;
+}
+
+.chartPanel svg {
+  display: block;
+  width: 100%;
+  border: 1px solid #bbbcb6;
+  background: #fafaf6;
+}
+
+.chartLegend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 11px;
+  margin-bottom: 5px;
+}
+
+.chartLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.chartLegend i {
+  width: 11px;
+  height: 3px;
+}
+
+.chartPanel p {
+  margin-top: 6px;
+  font-size: 8px;
+}
+
+.shiftLayout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.75fr) minmax(250px, 0.75fr) minmax(220px, 0.6fr);
+  gap: 13px;
+  margin-top: 14px;
+}
+
+.shiftChooser,
+.shiftCallout {
+  padding: 13px;
+}
+
+.domainSwitch {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.domainSwitch button {
+  display: grid;
+  gap: 2px;
+  padding: 12px 8px;
+  border: 1px solid #777872;
+  background: #eee;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa;
+  cursor: pointer;
+}
+
+.domainSwitch button[aria-pressed="true"] {
+  color: #fff;
+  background: var(--mri-navy);
+}
+
+.domainSwitch button b {
+  font-size: 15px;
+}
+
+.domainSwitch button small {
+  font-size: 8px;
+}
+
+.shiftMetrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.shiftCallout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-color: #9a5472;
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 6px, rgba(168, 49, 98, 0.055) 6px 7px),
+    #f9edf1;
+}
+
+.shiftCallout > strong {
+  color: var(--mri-magenta);
+  font-family: "Courier New", monospace;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 0.95;
+  letter-spacing: -0.09em;
+}
+
+.segGrid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.75fr) minmax(420px, 1.25fr);
+  gap: 13px;
+  margin-top: 14px;
+}
+
+.dicePanel {
+  padding: 13px;
+}
+
+.diceRows {
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.diceRows > div {
+  grid-template-columns: 94px minmax(0, 1fr) 48px;
+}
+
+.diceRows i {
+  height: 17px;
+}
+
+.diceRows i b.ground {
+  background: #676a70;
+}
+
+.diceRows i b.recon {
+  background: var(--mri-teal);
+}
+
+.diceRows i b.zero {
+  background: var(--mri-magenta);
+}
+
+.calculationTape {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  border: 1px solid #aaa;
+  background: #aaa;
+}
+
+.calculationTape > div {
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+  background: #fafaf6;
+}
+
+.calculationTape span {
+  color: #696b67;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.calculationTape strong {
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+}
+
+.gateStatus {
+  padding: 5px 8px;
+  border: 1px solid #555;
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.gateStatus.pass {
+  background: var(--mri-teal);
+}
+
+.gateStatus.review {
+  background: var(--mri-magenta);
+}
+
+.evidencePanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-color: #7a6290;
+  background: #eee7f4;
+}
+
+.evidencePanel > strong {
+  color: #56306d;
+  font-family: "Courier New", monospace;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.07em;
+}
+
+.architectureWorkspace {
+  container-name: mri-architecture;
+  container-type: inline-size;
+}
+
+.architectureStamp {
+  display: grid;
+  flex: 0 0 auto;
+  min-width: 190px;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid #242522;
+  color: #fff;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 7px, rgba(255, 255, 255, 0.055) 7px 8px),
+    var(--mri-navy);
+  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.28), 2px 2px #b8b9b4;
+}
+
+.architectureStamp span,
+.architectureStamp small {
+  color: #a7deda;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.architectureStamp strong {
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+}
+
+.architectureFacts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 14px 0 13px;
+  padding: 1px;
+  border: 1px solid #7b7c77;
+  background: #a6a7a1;
+}
+
+.architectureFacts > div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+  padding: 10px;
+  background: #f5f5f0;
+}
+
+.architectureFacts span,
+.architectureFacts small {
+  color: #686a66;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.architectureFacts strong {
+  overflow-wrap: anywhere;
+  color: var(--mri-navy);
+  font-family: "Courier New", monospace;
+  font-size: clamp(13px, 1.8vw, 18px);
+  line-height: 1.05;
+}
+
+.architectureFacts small {
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.architectureWorkbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(250px, 0.45fr);
+  gap: 13px;
+}
+
+.architectureViewport {
+  min-width: 0;
+  overflow-x: auto;
+  padding: 12px;
+  border: 1px solid #11162e;
+  color: #e9edf0;
+  background:
+    linear-gradient(rgba(106, 209, 202, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(106, 209, 202, 0.07) 1px, transparent 1px),
+    #11172d;
+  background-size: 18px 18px;
+  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.15), 2px 2px #c6c7c2;
+  scrollbar-color: #6ea8a5 #11172d;
+}
+
+.architectureViewport:focus-visible,
+.architectureTableFrame:focus-visible {
+  outline: 3px solid var(--mri-yellow);
+  outline-offset: 2px;
+}
+
+.mapEntry,
+.mapExit,
+.architectureAxes,
+.architectureMap {
+  min-width: 720px;
+}
+
+.mapEntry,
+.mapExit {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.mapEntry > span,
+.mapExit > span,
+.architectureAxes span {
+  color: #9eddd6;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.mapExit {
+  margin-top: 8px;
+}
+
+.mapExit > span {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.mapExit > button {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.architectureAxes {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 12px 0 7px;
+  padding: 6px 8px;
+  border-top: 1px solid rgba(126, 225, 219, 0.3);
+  border-bottom: 1px solid rgba(126, 225, 219, 0.3);
+  background: rgba(5, 9, 26, 0.58);
+}
+
+.architectureMap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr)) minmax(132px, 1.05fr);
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.architectureMap > li {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: minmax(79px, auto) 50px minmax(79px, auto);
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid rgba(153, 213, 209, 0.17);
+  background: rgba(7, 12, 34, 0.48);
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.architectureMap > li.selectedSkipPair {
+  border-color: #7fe1da;
+  background: rgba(13, 119, 117, 0.18);
+}
+
+.architectureNode {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  min-height: 64px;
+  align-content: center;
+  gap: 3px;
+  padding: 8px;
+  border: 1px solid #9b9d98;
+  color: #171917;
+  background: #f2f2ed;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #9c9d98;
+  cursor: pointer;
+  text-align: left;
+}
+
+.architectureViewport .architectureNode {
+  color: #171917;
+}
+
+.architectureNode:hover {
+  border-color: #8ce3dc;
+  background: #fff;
+}
+
+.architectureNode > span {
+  color: var(--mri-teal);
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.architectureNode > strong {
+  overflow-wrap: anywhere;
+  font-size: 9px;
+  line-height: 1.12;
+}
+
+.architectureNode > small {
+  color: #5b5d59;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  line-height: 1.2;
+}
+
+.architectureNode.skipEndpoint {
+  border-color: #45aaa5;
+  box-shadow: inset 3px 0 var(--mri-teal), inset 1px 1px #fff, inset -1px -1px #9c9d98;
+}
+
+.architectureNode.selectedNode {
+  border-color: #ffb3ce;
+  color: #fff;
+  background: var(--mri-magenta);
+  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.28), inset -1px -1px #6c1739;
+}
+
+.architectureNode.selectedNode > span,
+.architectureNode.selectedNode > small {
+  color: #fff;
+}
+
+.skipConnector {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  place-content: center;
+  gap: 2px;
+  padding: 2px;
+  border: 0;
+  color: #a8deda;
+  background: transparent;
+  cursor: pointer;
+  font-family: "Courier New", monospace;
+}
+
+.skipConnector::before {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1px);
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, #5bbeb8 0 5px, transparent 5px 8px);
+  content: "";
+}
+
+.skipConnector span,
+.skipConnector small {
+  z-index: 1;
+  justify-self: center;
+  padding: 2px 4px;
+  background: #11172d;
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.skipConnector small {
+  color: #cbd0d2;
+  font-weight: 500;
+}
+
+.skipConnector[aria-pressed="true"] span {
+  color: #171917;
+  background: var(--mri-yellow);
+}
+
+.bottleneckPair {
+  border-color: rgba(240, 216, 107, 0.4) !important;
+  background: rgba(240, 216, 107, 0.08) !important;
+}
+
+.bottleneckPair .architectureNode {
+  border-color: #c9b74e;
+  background: #fff9d8;
+}
+
+.bottleneckPair .architectureNode.selectedNode {
+  border-color: #ffb3ce;
+  background: var(--mri-magenta);
+}
+
+.turnArrow {
+  display: grid;
+  min-height: 50px;
+  place-items: center;
+  color: var(--mri-yellow);
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.stageInspector,
+.dcPanel,
+.modelRoles,
+.architectureTableFrame {
+  border: 1px solid #858681;
+  background: #eeeeea;
+  box-shadow: inset 1px 1px #fff, 2px 2px #d1d1cc;
+}
+
+.stageInspector {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 13px;
+}
+
+.stageInspector > strong {
+  margin: 5px 0 8px;
+  color: var(--mri-navy);
+  font-size: clamp(18px, 2.4vw, 25px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.stageInspector > output {
+  align-self: flex-start;
+  padding: 6px 8px;
+  border: 1px solid var(--mri-teal);
+  color: #fff;
+  background: var(--mri-teal);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.stageInspector dl {
+  display: grid;
+  gap: 1px;
+  margin: 12px 0;
+  padding: 1px;
+  background: #a9aaa4;
+}
+
+.stageInspector dl > div {
+  display: grid;
+  gap: 4px;
+  padding: 9px;
+  background: #fafaf6;
+}
+
+.stageInspector dt,
+.stageInspector dd {
+  margin: 0;
+}
+
+.stageInspector dt {
+  color: #676964;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stageInspector dd,
+.stageInspector p {
+  overflow-wrap: anywhere;
+  color: #4e504c;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.stageInspector p {
+  margin: auto 0 0;
+  padding: 9px;
+  border-left: 4px solid #8e8f89;
+  background: #deded9;
+}
+
+.architectureLowerGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: 13px;
+  margin-top: 13px;
+}
+
+.dcPanel,
+.modelRoles {
+  min-width: 0;
+  padding: 12px;
+}
+
+.dcPanel h4,
+.modelRoles h4 {
+  margin: 2px 0 0;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+.dcSelector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  min-width: 0;
+  margin: 10px 0;
+  padding: 0;
+  border: 0;
+}
+
+.dcSelector legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.dcSelector button {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+  padding: 8px;
+  border: 1px solid #777872;
+  background: #f7f7f2;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dcSelector button[aria-pressed="true"] {
+  border-color: var(--mri-navy);
+  color: #fff;
+  background: var(--mri-navy);
+  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.25), inset -1px -1px #05091c;
+}
+
+.dcSelector button span {
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.dcSelector button small {
+  color: inherit;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  opacity: 0.74;
+}
+
+.dcReadout {
+  padding: 11px;
+  border: 1px solid #161a2d;
+  color: #e7eaec;
+  background: #151a2d;
+}
+
+.dcReadout > span {
+  color: #92d9d4;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.dcReadout > strong {
+  display: block;
+  margin: 3px 0 9px;
+  font-size: 11px;
+}
+
+.dcEquation {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 5px 9px;
+  padding: 8px;
+  border: 1px solid #3c4567;
+  background: #090d1e;
+}
+
+.dcEquation span,
+.dcEquation code {
+  overflow-wrap: anywhere;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+.dcEquation span {
+  color: #f0d86b;
+  font-weight: 900;
+}
+
+.dcReadout p,
+.roleCards p,
+.roleBoundary {
+  color: #676964;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.dcReadout p {
+  margin: 9px 0 0;
+  color: #c7cbcd;
+}
+
+.roleCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.roleCards article {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #979892;
+  background: #fafaf6;
+}
+
+.roleCards article:last-child {
+  border-color: #a77a8d;
+  background: #f7e9ef;
+}
+
+.roleCards span {
+  color: #666863;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.roleCards strong {
+  margin: 6px 0 2px;
+  color: var(--mri-navy);
+  font-family: "Courier New", monospace;
+  font-size: clamp(17px, 2.3vw, 24px);
+  letter-spacing: -0.06em;
+}
+
+.roleCards b {
+  min-height: 28px;
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.roleCards p {
+  margin: 8px 0 0;
+}
+
+.roleBoundary {
+  margin: 9px 0 0;
+  padding: 8px;
+  border-left: 4px solid var(--mri-magenta);
+  background: var(--mri-magenta-soft);
+}
+
+.architectureTableFrame {
+  margin-top: 13px;
+  overflow-x: auto;
+  padding: 8px;
+}
+
+.architectureTable {
+  width: 100%;
+  min-width: 660px;
+  border-collapse: collapse;
+  font-size: 8px;
+}
+
+.architectureTable caption {
+  padding: 3px 3px 8px;
+  color: #5d5f5a;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.architectureTable th,
+.architectureTable td {
+  padding: 7px 8px;
+  border: 1px solid #b4b5af;
+  text-align: left;
+  vertical-align: top;
+}
+
+.architectureTable thead th {
+  color: #fff;
+  background: var(--mri-navy);
+  font-size: 8px;
+  letter-spacing: 0.07em;
+}
+
+.architectureTable tbody th {
+  min-width: 150px;
+  background: #e0e0db;
+}
+
+.architectureTable td:nth-child(2) {
+  font-family: "Courier New", monospace;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.architectureTable tr[data-selected="true"] th,
+.architectureTable tr[data-selected="true"] td {
+  color: #fff;
+  background: var(--mri-magenta);
+}
+
+.sourceButton {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  padding: 7px 10px;
+  border: 1px solid #1f201e;
+  color: #fff;
+  background: var(--mri-navy);
+  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.3), 2px 2px #aaa;
+  font-size: 9px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.sourceButton:hover {
+  background: var(--mri-teal);
+}
+
+.auditGrid {
+  display: grid;
+  grid-template-columns: minmax(330px, 0.9fr) minmax(320px, 1.1fr);
+  gap: 13px;
+  margin-top: 14px;
+}
+
+.xaiPanel,
+.specPanel,
+.datasetLedger {
+  padding: 12px;
+}
+
+.xaiCanvas {
+  max-width: 330px;
+  margin: 0 auto 9px;
+}
+
+.xaiPanel .factorButtons {
+  margin-bottom: 9px;
+}
+
+.xaiPanel .factorButtons button {
+  flex: 1 1 0;
+  white-space: normal;
+}
+
+.specList {
+  display: grid;
+  margin: 9px 0 0;
+  border: 1px solid #a1a29d;
+  background: #a1a29d;
+  gap: 1px;
+}
+
+.specList > div {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.5fr) minmax(0, 1fr);
+  min-height: 36px;
+  align-items: center;
+  background: #f8f8f4;
+}
+
+.specList dt,
+.specList dd {
+  margin: 0;
+  padding: 7px 9px;
+  font-size: 9px;
+}
+
+.specList dt {
+  align-self: stretch;
+  border-right: 1px solid #a1a29d;
+  color: #5f615d;
+  background: #e2e2dd;
+  font-weight: 900;
+}
+
+.specList dd {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+}
+
+.datasetLedger {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.4fr) minmax(370px, 1fr) minmax(190px, 0.5fr);
+  align-items: center;
+  gap: 14px;
+  margin-top: 13px;
+}
+
+.ledgerTable {
+  display: grid;
+  gap: 1px;
+  padding: 1px;
+  border: 1px solid #999a95;
+  background: #999a95;
+}
+
+.ledgerTable > div {
+  display: grid;
+  grid-template-columns: 1.2fr repeat(3, 1fr);
+  background: #f8f8f4;
+}
+
+.ledgerTable span,
+.ledgerTable strong {
+  padding: 5px 7px;
+  border-right: 1px solid #d1d1cc;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  text-align: right;
+}
+
+.ledgerTable span:first-child,
+.ledgerTable strong:first-child {
+  text-align: left;
+}
+
+.ledgerHead {
+  color: #fff;
+  background: var(--mri-navy) !important;
+  font-weight: 900;
+}
+
+.limitations {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.limitations > div {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #a1a29d;
+  background: #f2f2ed;
+}
+
+.limitations span {
+  display: inline-grid;
+  width: 22px;
+  height: 22px;
+  margin-bottom: 6px;
+  place-items: center;
+  border: 1px solid var(--mri-navy);
+  color: var(--mri-navy);
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.limitations strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 9px;
+}
+
+.limitations p {
+  margin: 0;
+  color: #656762;
+  font-size: 8px;
+  line-height: 1.42;
+}
+
+@container mri-architecture (max-width: 920px) {
+  .architectureFacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .architectureWorkbench,
+  .architectureLowerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .stageInspector p {
+    margin-top: 0;
+  }
+}
+
+@container mri-architecture (max-width: 620px) {
+  .architectureStamp {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mapEntry,
+  .mapExit,
+  .architectureAxes,
+  .architectureMap {
+    min-width: 650px;
+  }
+
+  .dcEquation {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container mri-architecture (max-width: 430px) {
+  .architectureFacts,
+  .roleCards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container mri-architecture (max-width: 390px) {
+  .dcSelector {
+    grid-template-columns: 1fr;
+  }
+
+  .architectureTableFrame {
+    margin-right: -4px;
+    margin-left: -4px;
+  }
+}
+
+@container (max-width: 900px) {
+  .reconGrid,
+  .uqGrid,
+  .robustGrid,
+  .shiftLayout,
+  .segGrid,
+  .auditGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .robustGrid > .chartPanel {
+    grid-column: 1 / -1;
+  }
+
+  .datasetLedger {
+    grid-template-columns: 1fr;
+  }
+
+  .imageWorkbench {
+    grid-template-columns: minmax(210px, 0.8fr) minmax(260px, 1.2fr);
+  }
+
+  .limitations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 680px) {
+  .workspace {
+    padding: 12px;
+  }
+
+  .disclaimer {
+    grid-template-columns: 1fr auto;
+  }
+
+  .disclaimer p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .tabs button {
+    justify-content: center;
+    padding: 7px 3px;
+  }
+
+  .tabs button > span {
+    display: none;
+  }
+
+  .tabs button > strong {
+    font-size: 8px;
+  }
+
+  .sectionLead,
+  .attackControls {
+    flex-direction: column;
+  }
+
+  .sectionLead > .controlStack,
+  .attackControls > div,
+  .epsilonButtons {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .sectionLead .segmented,
+  .attackControls .segmented,
+  .epsilonButtons > div {
+    width: 100%;
+  }
+
+  .sectionLead .segmented button,
+  .attackControls .segmented button,
+  .epsilonButtons button {
+    flex: 1 1 0;
+  }
+
+  .imageWorkbench,
+  .uncertaintyVisuals,
+  .lowerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .methodRail {
+    grid-template-columns: 1fr;
+  }
+
+  .pipeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 14px;
+  }
+
+  .pipeline li:nth-child(2)::after {
+    display: none;
+  }
+
+  .calculationTape {
+    grid-template-columns: 1fr;
+  }
+
+  .limitations {
+    grid-template-columns: 1fr;
+  }
+
+  .sourceButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@container (max-width: 460px) {
+  .disclaimer {
+    grid-template-columns: 1fr;
+  }
+
+  .disclaimer p,
+  .disclaimer > strong {
+    grid-column: 1;
+  }
+
+  .disclaimer > strong {
+    white-space: normal;
+  }
+
+  .tabs {
+    grid-template-columns: repeat(6, minmax(72px, 1fr));
+    overflow-x: auto;
+  }
+
+  .tabs button > strong {
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+
+  .resultStrip,
+  .dossierMetrics,
+  .shiftMetrics {
+    grid-template-columns: 1fr;
+  }
+
+  .equation {
+    flex-wrap: wrap;
+  }
+
+  .factorButtons {
+    overflow-x: auto;
+  }
+
+  .barRows > div,
+  .diceRows > div {
+    grid-template-columns: 78px minmax(80px, 1fr) 45px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workspace {
+    animation: none;
+  }
+}

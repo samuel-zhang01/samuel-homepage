@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+/.next-build/
 /out/
 
 # production
@@ -23,6 +24,10 @@
 # misc
 .DS_Store
 *.pem
+*.key
+.npmrc
+.yarnrc*
+.pnpmrc
 
 # debug
 npm-debug.log*
@@ -48,6 +53,7 @@ next-env.d.ts
 /CVtemplateProduct.pdf
 /public/CVtemplateProduct.pdf
 /public/Samuel-Zhang-Profile.pdf
+/public/UndergradThesis.pdf
 /marsh_contract_review_ai_editable.pdf
 /MAC Phase 3 - Lead Matching - GRC.pdf
 
@@ -60,3 +66,13 @@ next-env.d.ts
 /others/*.synctex.gz
 /others/CVtemplateAI.pdf
 /others/Samuel-Zhang-Applied-AI-CV.pdf
+
+# Portfolio artifact safety: publish only explicitly curated derivatives
+/public/projects/**/raw/
+/public/projects/**/*.db
+/public/projects/**/*.sqlite*
+/public/projects/**/*.csv
+/public/projects/**/*.ipynb
+/public/projects/**/*.pth
+/public/projects/**/*.pt
+/public/projects/**/*.ckpt
