@@ -1043,6 +1043,73 @@ body {
   gap: 8px;
 }
 
+/* The Project Archive is the deepest drawer in the cabinet. Give it a
+   classic selection frame and a short, intentionally finite invitation. */
+.identity-switchboard button.identity-drawer--projects {
+  position: relative;
+  width: calc(100% - 6px);
+  min-height: 66px;
+  margin: 3px;
+  border: 2px solid var(--selection);
+  background: #eef0ff;
+  box-shadow:
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #7779bd,
+    3px 3px 0 #777;
+  isolation: isolate;
+}
+
+.identity-switchboard button.identity-drawer--projects::before {
+  position: absolute;
+  z-index: 0;
+  inset: -5px;
+  border: 1px dotted var(--selection);
+  outline: 1px solid #fff;
+  outline-offset: 1px;
+  content: "";
+  pointer-events: none;
+}
+
+.identity-switchboard button.identity-drawer--projects > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .identity-switchboard button.identity-drawer--projects::before {
+    animation: project-archive-attention 1.15s steps(2, end) 7 both;
+  }
+}
+
+.identity-switchboard .identity-copy--product > b {
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.identity-switchboard .identity-copy--product > .identity-detail {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.identity-drawer-prompt {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 18px;
+  grid-column: 2;
+  grid-row: 2;
+  align-items: center;
+  margin-top: 3px;
+  padding: 1px 5px;
+  border: 1px solid var(--selection);
+  color: var(--selection);
+  background: #fff;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1;
+}
+
 .identity-switchboard button > .pixel-icon {
   width: 18px;
   height: 18px;
@@ -1072,6 +1139,44 @@ body {
 .identity-switchboard button:hover .identity-detail,
 .identity-switchboard button:focus-visible .identity-detail {
   color: #fff;
+}
+
+.identity-switchboard button.identity-drawer--projects:hover,
+.identity-switchboard button.identity-drawer--projects:focus-visible {
+  border-color: #fff;
+  box-shadow:
+    inset 1px 1px 0 #5b61b5,
+    inset -1px -1px 0 #080c50,
+    3px 3px 0 #777;
+}
+
+.identity-switchboard button.identity-drawer--projects:hover::before,
+.identity-switchboard button.identity-drawer--projects:focus-visible::before {
+  border-color: #fff;
+  outline-color: var(--selection);
+  animation: none;
+}
+
+.identity-switchboard button.identity-drawer--projects:hover .identity-drawer-prompt,
+.identity-switchboard button.identity-drawer--projects:focus-visible .identity-drawer-prompt {
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
+}
+
+.identity-switchboard button.identity-drawer--projects:active {
+  transform: translate(1px, 1px);
+  box-shadow:
+    inset 1px 1px 0 #080c50,
+    inset -1px -1px 0 #5b61b5,
+    2px 2px 0 #777;
+}
+
+@keyframes project-archive-attention {
+  50% {
+    border-color: #fff;
+    outline-color: var(--selection);
+  }
 }
 
 .about-evidence dl {
@@ -3447,6 +3552,10 @@ html:lang(zh-TW) .career-record {
   .identity-switchboard button b {
     display: block;
     margin-bottom: 2px;
+  }
+
+  .identity-drawer-prompt {
+    margin-top: 6px;
   }
 
   .about-evidence dl div {

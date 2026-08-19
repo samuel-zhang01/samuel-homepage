@@ -24,7 +24,9 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   ...(isolatedDistDir ? { distDir: isolatedDistDir } : {}),
-  allowedDevOrigins: ["127.0.0.1", "192.168.*.*", "10.*.*.*"],
+  // Permit the canonical HTTPS hostname as well as trusted LAN development
+  // origins. Production requests are additionally host-checked in middleware.
+  allowedDevOrigins: ["127.0.0.1", "192.168.*.*", "10.*.*.*", "me.samuelzhang.co.uk"],
   output: "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
@@ -44,7 +46,13 @@ const nextConfig: NextConfig = {
           // Browsers ignore COOP on an HTTP LAN origin and emit a misleading
           // console warning. Production is expected behind TLS and keeps it.
           ...(!isDevelopment
-            ? [{ key: "Cross-Origin-Opener-Policy", value: "same-origin" }]
+            ? [
+                { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+                // Browsers honour this only over HTTPS, so direct HTTP LAN
+                // troubleshooting remains possible while the public hostname
+                // is pinned to HTTPS after its first secure response.
+                { key: "Strict-Transport-Security", value: "max-age=31536000" },
+              ]
             : []),
           { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
           {

@@ -126,6 +126,7 @@ const zhCN: Record<string, string> = {
   "Building COVERD: ATS-connected applicant review, voice enrichment, reasoned shortlists and human-owned decisions.": "构建 COVERD：连接招聘管理系统的申请审查、语音证据补充、可解释候选名单，以及由人负责的最终决定。",
   "Product": "产品",
   "Turning messy operational knowledge into polished tools that people trust, adopt and keep using.": "把零散的业务知识转化为值得信任、愿意采用并持续使用的成熟工具。",
+  "OPEN PROJECT ARCHIVE →": "打开项目档案 →",
   "Scientist": "科学工作者",
   "Chemistry-trained thinking: expose uncertainty, test assumptions honestly and learn from failed experiments.": "化学训练塑造的思维：呈现不确定性，诚实检验假设，并从失败的实验中学习。",
   "Builder": "构建者",

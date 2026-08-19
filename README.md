@@ -96,7 +96,7 @@ When a development server is already using `.next`, run `npm run build:isolated`
 
 ## Docker deployment
 
-Compose binds the production container to `0.0.0.0:5174` by default. Override the host port with `HOMEPAGE_PORT=<port>`.
+Compose binds the production container to `0.0.0.0:5174` by default. This makes the app reachable from the trusted LAN and lets the HTTPS proxy reach it. Override the host port with `HOMEPAGE_PORT=<port>` or bind only the LAN interface with `HOMEPAGE_BIND_ADDRESS=192.168.1.200`.
 
 ```bash
 ./deploy.sh
@@ -112,6 +112,21 @@ docker compose logs -f samuel-homepage
 ```
 
 The runtime container is read-only, runs as an unprivileged user, drops Linux capabilities and uses `no-new-privileges`. Use a reverse proxy with TLS for public deployment.
+
+### Canonical HTTPS route
+
+`https://me.samuelzhang.co.uk` is the production identity. Copy [`deploy.env.example`](deploy.env.example) to a private, ignored `.env` file on `192.168.1.200`, then run `./deploy.sh`. The script verifies that the container accepts the canonical host header; add `VERIFY_PUBLIC_ORIGIN=1` once DNS and the proxy are configured to also verify the external HTTPS response.
+
+Configure the existing TLS reverse proxy / Nginx Proxy Manager host as follows:
+
+- Domain: `me.samuelzhang.co.uk`
+- Scheme: `http`
+- Forward host: `192.168.1.200`
+- Forward port: `5174`
+- Preserve the original `Host` header; enable force-HTTPS and a valid certificate.
+- Do not use Cloudflare Flexible TLS. Use Full (strict) TLS or an equivalent end-to-end certificate configuration.
+
+The application accepts only the canonical hostname, loopback health checks and RFC1918 LAN hosts in production. It sends CSP, no-sniff, same-origin isolation, permissions policy and HTTPS HSTS headers; the proxy remains responsible for TLS termination, certificate renewal, HTTP-to-HTTPS redirects and firewall exposure.
 
 ## Browser support
 

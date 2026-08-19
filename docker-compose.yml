@@ -5,7 +5,10 @@ services:
       dockerfile: Dockerfile
     container_name: samuel-homepage
     ports:
-      - "0.0.0.0:${HOMEPAGE_PORT:-5174}:3000"
+      # Bind to the LAN interface on the deployment host so the HTTPS reverse
+      # proxy can reach the app. Set HOMEPAGE_BIND_ADDRESS=127.0.0.1 when the
+      # proxy runs on the same host and direct LAN access is not required.
+      - "${HOMEPAGE_BIND_ADDRESS:-0.0.0.0}:${HOMEPAGE_PORT:-5174}:3000"
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1

@@ -686,9 +686,13 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             <PixelIcon kind="coverd" small />
             <span className="identity-copy"><b>Founder</b><span className="identity-detail">Building COVERD: ATS-connected applicant review, voice enrichment, reasoned shortlists and human-owned decisions.</span></span>
           </button>
-          <button onClick={() => openApp("projects")}>
+          <button className="identity-drawer--projects" onClick={() => openApp("projects")}>
             <PixelIcon kind="briefcase" small />
-            <span className="identity-copy"><b>Product</b><span className="identity-detail">Turning messy operational knowledge into polished tools that people trust, adopt and keep using.</span></span>
+            <span className="identity-copy identity-copy--product">
+              <b>Product</b>
+              <span className="identity-detail">Turning messy operational knowledge into polished tools that people trust, adopt and keep using.</span>
+              <span className="identity-drawer-prompt">OPEN PROJECT ARCHIVE →</span>
+            </span>
           </button>
           <button onClick={() => openApp("experience")}>
             <PixelIcon kind="university" small />
