@@ -1,0 +1,14 @@
+% Legacy-compatible entry point for Samuel's Applied AI CV.
+%
+% The maintained source lives in Samuel-Zhang-Applied-AI-CV.tex. Keeping this
+% lightweight wrapper means either familiar filename compiles the same CV and
+% prevents two copies of the content from drifting apart.
+%
+% Compile from this directory or the repository root with, for example:
+%   latexmk -pdf -interaction=nonstopmode CVtemplateAI.tex
+%   latexmk -xelatex -interaction=nonstopmode CVtemplateAI.tex
+
+\makeatletter
+\def\input@path{{./}{others/}}
+\makeatother
+\input{Samuel-Zhang-Applied-AI-CV.tex}

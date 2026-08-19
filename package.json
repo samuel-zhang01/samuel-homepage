@@ -2,6 +2,9 @@
   "name": "samuel-homepage",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.16.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,8 +13,15 @@
   },
   "dependencies": {
     "next": "15.5.22",
+    "pdfjs-dist": "5.4.624",
     "react": "19.1.0",
     "react-dom": "19.1.0"
+  },
+  "overrides": {
+    "js-yaml": "4.3.1",
+    "nanoid": "3.3.18",
+    "postcss": "8.5.25",
+    "sharp": "0.35.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

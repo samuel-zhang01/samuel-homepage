@@ -1,0 +1,174 @@
+\documentclass[11pt,a4paper]{extarticle}
+\raggedright
+
+% A focused, ATS-readable CV for applied AI and product-engineering roles.
+% Compiles with pdfLaTeX, XeLaTeX or LuaLaTeX.
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage{tgtermes}
+\else
+  \usepackage{fontspec}
+  \setmainfont{TeX Gyre Termes}
+\fi
+\usepackage[top=1.4cm,bottom=1.4cm,left=1.5cm,right=1.5cm]{geometry}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nopatch=footnote]{microtype}
+\usepackage{setspace}
+
+\ifPDFTeX
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
+
+\definecolor{ink}{HTML}{171717}
+\definecolor{accent}{HTML}{173F63}
+\definecolor{muted}{HTML}{4F4F4F}
+
+\hypersetup{
+  pdflang={en-US},
+  pdftitle={Samuel Zhang -- Applied AI Resume},
+  pdfauthor={Samuel Zhang},
+  pdfsubject={Applied AI, machine learning and AI product development},
+  pdfkeywords={Applied AI, Machine Learning, Python, Responsible AI, Product, Data Science}
+}
+
+\pagestyle{empty}
+\color{ink}
+\setstretch{1.10}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{0pt}
+\setlist[itemize]{leftmargin=1.35em,labelsep=.35em,itemsep=1pt,topsep=1.5pt,parsep=0pt,partopsep=0pt,after=\vspace{2pt}}
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{\MakeUppercase}[\vspace{-2pt}\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+
+\newcommand{\cvdate}[1]{{\normalfont\normalsize\bfseries #1}}
+
+\newcommand{\role}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} \textbar{} \textit{#2} & \cvdate{#3} \\
+    \multicolumn{2}{@{}l@{}}{\small\color{muted}#4}
+  \end{tabularx}\vspace{-1pt}
+}
+
+\newcommand{\primaryrole}[4]{%
+  \textbf{#1}\par\vspace{-1pt}
+  {\small\color{muted}#2\enspace\textbullet\enspace #4\hfill\color{ink}\cvdate{#3}\par}\vspace{-1pt}
+}
+
+\newcommand{\project}[2]{\textbf{#1}\hspace{0.35em}#2}
+
+\begin{document}
+
+\begin{center}
+  {\huge\bfseries Samuel Zhang}\\[2pt]
+  {\large\bfseries Applied AI Engineer \textperiodcentered{} Product Builder \textperiodcentered{} Founder}\\[4pt]
+  \small
+  London, United Kingdom \enspace\textbullet\enspace
+  \href{tel:+447502118207}{+44 7502 118207} \enspace\textbullet\enspace
+  \href{mailto:sam.xiaojian.zhang@outlook.com}{sam.xiaojian.zhang@outlook.com}\\[-1pt]
+  \href{https://www.linkedin.com/in/samuel-xj-zhang/}{linkedin.com/in/samuel-xj-zhang}
+  \enspace\textbullet\enspace
+  \href{https://me.samuelzhang.co.uk}{me.samuelzhang.co.uk}
+  \enspace\textbullet\enspace
+  \href{https://coverd.ai}{coverd.ai}
+\end{center}
+
+\section{Profile}
+Applied AI engineer and founder who turns ambiguous, domain-heavy problems into useful products people trust. At Marsh, builds and evaluates ranking and document-intelligence systems for brokers; at COVERD, leads a company-aware voice-interview product. Previously delivered GROWMAT at Pfizer, a capacity-planning platform saving 120+ analyst hours monthly through full-stack engineering, product ownership and stakeholder-led adoption.
+
+\section{Core Expertise}
+\textbf{AI \& ML:} Multi-agent systems, RAG and retrieval, LLM and embedding evaluation, document intelligence, learning-to-rank, modeling and experiment design
+
+\textbf{Engineering:} Python, Julia, SQL, TypeScript/React, PostgreSQL, Docker and CI/CD
+
+\textbf{Product:} Customer discovery, rapid prototyping, stakeholder management, responsible AI and adoption
+
+
+\section{Selected Experience}
+
+\primaryrole{Senior Coordinator --- Digital Transformation Strategy Internship}{Marsh \textperiodcentered{} Strategy \& Corporate Development Group}{May 2026 -- Present}{London, United Kingdom}
+\begin{itemize}
+  \item Structured a proof of concept for planned Broker Workbench integration around three evidence pillars: quantitative placement ranking, qualitative contract review and speculative, time-bounded market intelligence.
+  \item Developed an internal broker lead-matching decision engine for lead insurer selection, combining historical trading performance, wording quality and real-time appetite signals into transparent, ranked lead-market recommendations.
+  \item Translated findings for Marsh Matching Companion Phase 3 stakeholders into transparent, human-in-the-loop lead recommendations supporting broker judgment, wider market consideration and client outcomes.
+\end{itemize}
+
+\role{\href{https://coverd.ai}{COVERD}}{Founder \& Product Lead (part-time)}{Mar 2026 -- Present}{London, United Kingdom}
+\begin{itemize}
+  \item Led customer discovery with four design partners and pivoted from candidate-side resume tooling to an AI interviewer that first learns how each company and role actually works.
+  \item Selected a multi-agent, graph-based voice architecture seeded with priors from company interviews; agents update evidence-weighted beliefs during candidate interviews to choose role-specific follow-ups.
+  \item Tested three architectures across 20 candidate interviews; candidates praised the selected system's intelligent follow-ups, question quality and ability to make them feel heard and valued.
+\end{itemize}
+
+\role{Pfizer, Analytical R\&D}{Web Application Developer \& Product Owner (part-time)}{Oct 2024 -- Apr 2026}{London, United Kingdom}
+\begin{itemize}
+  \item Secured senior sponsorship, significant funding and department-wide adoption through live demonstrations; retained for a two-year part-time extension to own GROWMAT's roadmap.
+\end{itemize}
+
+\role{Pfizer, Analytical R\&D}{Data Analyst Undergraduate}{Sep 2023 -- Aug 2024}{Sandwich, United Kingdom}
+\begin{itemize}
+  \item Built and deployed GROWMAT over ten months, a seven-component capacity-planning platform used by 40+ employees across four teams, with wider impact across 80+ people.
+  \item Cut capacity calculations from 12 minutes to under 60 seconds (12$\times$), saving 120+ hours monthly and replacing weekly workbooks with live data and automated two-hourly refreshes.
+  \item Engineered concurrency protection, daily backups and 180-day rollback; built live dashboards for project timelines, compliance, analytical performance and future workloads.
+  \item Prototyped pharmaceutical solubility modeling with statistical thermodynamics and Julia; worked across Pfizer, MIT and Imperial to translate open-source research into a practical drug-development workflow.
+\end{itemize}
+
+\newpage
+
+\section{Education}
+\role{Imperial College London}{MSc AI Applications and Innovation -- Predicted Distinction}{Sep 2025 -- Sep 2026}{London, United Kingdom}
+Deep Learning, AI Safety, Innovation Management, Machine Learning in Medical Imaging, Machine Learning in Climate Change
+
+\role{King's College London}{BSc Chemistry with Biomedicine -- First-Class Honors}{Sep 2021 -- May 2025}{London, United Kingdom}
+Professional placement; Computational Chemistry, Molecular Biology, Chemical Biology, Organic Chemistry; Associate of King's College London
+
+\section{Earlier Experience, Research \& Public Service}
+
+\role{King's College London}{Coding Series Tutor \& Curriculum Designer}{Jan 2023 -- Apr 2025}{London, United Kingdom}
+\begin{itemize}
+  \item Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, achieving 90\% satisfaction and Royal Society of Chemistry endorsement.
+  \item Organized a cross-industry data-science careers panel for 100+ students and mentored learners in using technical skills to widen their career options.
+\end{itemize}
+
+\role{Royal Society / King's College London}{Summer Research Fellow}{Jun 2023 -- Jul 2023}{London, United Kingdom}
+\begin{itemize}
+  \item Built GPU-accelerated GROMACS workflows for protein--membrane molecular simulations, improving computational performance by 70\% and iterating experimental design from simulation results.
+\end{itemize}
+
+\role{King's College London}{Undergraduate Research Fellow}{Jun 2022 -- Jul 2022}{London, United Kingdom}
+\begin{itemize}
+  \item Engineered MATLAB, Python and Excel pipelines for rotational spectroscopy, reducing analysis time by 40\% and creating an adopted workflow underpinning a publication in progress.
+\end{itemize}
+
+\role{Singapore Civil Defence Force}{Commander's Personal Assistant / Sergeant}{Jul 2019 -- Jul 2021}{Singapore}
+\begin{itemize}
+  \item Built MATLAB COVID-19 resource-planning models from public epidemiological data and automated emergency-activation attendance across legacy systems for 1,200+ personnel.
+  \item Supported senior leaders in time-critical operations, balancing incomplete information, rapid prioritization and accountability across large-scale personnel operations.
+\end{itemize}
+
+\section{Selected Technical Projects}
+\begin{itemize}
+  \item \project{Home Lab \& Private AI Infrastructure --}{Run 23 services across seven Proxmox/Docker servers, with 42 GB VRAM AI compute, cross-architecture CI, network security and 106 TB total usable RAID storage.}
+  \item \project{Stock Market Simulation Engine --}{Built Julia/SQL order matching, real-time WebSocket order-book updates and a responsive trading interface.}
+\end{itemize}
+
+\section{Awards \& Additional Information}
+\textbf{Awards:} King's Research Experience Award; Associate of King's College London (AKC); SCDF Service Excellence Award; SCDF 1st Division HQ Wall of Fame; EARCOS Global Citizenship Award
+
+\textbf{Languages:} English and Mandarin (native/bilingual); Italian (elementary)
+
+\section{Interests}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}X@{}}
+Music & Competitive brass band euphonium player and member of a fourth-place UniBrass ensemble; performed in three musical-theater productions, including one self-directed, written, and composed.\\[1pt]
+Photography & Former professional wedding photographer, now photographing nature and friends for the joy of the craft, and the smile on people's faces.\\[1pt]
+Making & Builds computers and home infrastructure across 12 machines, including seven servers, with an increasingly noticeable electricity bill.\\[1pt]
+Beyond & Hiking, climbing, science fiction, and traveling, making full use of a Singaporean passport.
+\end{tabularx}
+
+\end{document}

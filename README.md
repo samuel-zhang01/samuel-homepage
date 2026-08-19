@@ -1,206 +1,78 @@
-# Samuel Zhang - Interactive Portfolio
+# Samuel System 7
 
-A modern, responsive portfolio website showcasing expertise in Product Management, AI/ML Engineering, Digital Consultancy, Analytical Chemistry, and Finance.
+Samuel Zhang's personal portfolio, presented as a playful System 7-inspired desktop. The site keeps the main experience inside one browser tab: biography, experience, projects, COVERD, games, CVs and supporting documents all open as movable desktop windows.
 
-## 🚀 Features
+Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 
-- **Interactive Skills Showcase**: Detailed modal views for each skill area with achievements and technologies
-- **Comprehensive Project Portfolio**: Professional, research, and personal projects with filtering
-- **Modern UI/UX**: Built with Next.js 15, TypeScript, and Tailwind CSS
-- **Smooth Animations**: Framer Motion for engaging user interactions
-- **Mobile Responsive**: Optimized for all device sizes
-- **SEO Optimized**: Proper metadata and semantic HTML
+## What is included
 
-## 🛠️ Technology Stack
+- Four fully routed locales: British English, American English, Simplified Chinese and Traditional Chinese.
+- A language selector beside the desktop clock, with locale persistence and mobile-safe menus.
+- One canonical Documents app with four localised, downloadable two-page Applied AI CVs and continuously scrolling research previews.
+- Updated experience spanning COVERD; a Senior Coordinator — Digital Transformation Strategy Internship in Marsh's Strategy & Corporate Development Group; Pfizer; King's College London; and the Singapore Civil Defence Force.
+- Built-in PDF previews, four profile-themed games and small desktop easter eggs.
+- Keyboard focus states, accessible controls, reduced-motion support and first-visit mobile guidance.
+- Responsive System 7 windows tested from 320 px mobile screens through 1440 px desktops.
 
-- **Framework**: Next.js 15 with TypeScript
-- **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Deployment**: Docker with Docker Compose
+## Technology
 
-## 📦 Quick Start with Docker
+- Next.js 15 App Router
+- React 19 and TypeScript
+- Hand-written CSS and SVG System 7 artwork
+- Static generation for the locale and application routes
+- A standalone, non-root Docker runtime
 
-### Prerequisites
-- Docker
-- Docker Compose
+## Local development
 
-### One-Command Deployment
-
-```bash
-./deploy.sh
-```
-
-This script will:
-1. Build the Next.js application
-2. Create the Docker image
-3. Start the container on port 1111
-
-### Manual Docker Commands
+Node.js 20.16 or newer is required.
 
 ```bash
-# Build and start the application
-docker-compose up -d --build
-
-# View logs
-docker-compose logs -f
-
-# Stop the application
-docker-compose down
-
-# Restart the application
-docker-compose restart
-```
-
-### Access the Application
-- **Local**: http://localhost:1111
-- **Production**: Replace `localhost` with your server's IP/domain
-
-## 🔧 Development Setup
-
-### Install Dependencies
-```bash
-npm install
-```
-
-### Run Development Server
-```bash
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open `http://localhost:3000`.
 
-### Build for Production
+Before publishing, run:
+
 ```bash
+npm run lint
+npx tsc --noEmit
 npm run build
-npm start
+npm audit --audit-level=moderate
 ```
 
-## 📁 Project Structure
+## Docker deployment
 
-```
-samuel-homepage/
-├── src/
-│   ├── app/
-│   │   ├── page.tsx           # About/CV page
-│   │   ├── skills/page.tsx    # Interactive skills showcase
-│   │   ├── projects/page.tsx  # Projects and contact
-│   │   └── layout.tsx         # Root layout with navigation
-│   └── components/
-│       └── Navigation.tsx     # Navigation component
-├── docker-compose.yml         # Docker Compose configuration
-├── Dockerfile                 # Docker image definition
-├── deploy.sh                  # Deployment script
-└── next.config.js            # Next.js configuration
-```
+The Compose service exposes the app on host port `1111` and includes a health check.
 
-## 🌟 Key Pages
-
-### 1. About/CV (Homepage)
-- Professional summary and contact information
-- Education details (Imperial College London, King's College London)
-- Professional experience (Pfizer, Singapore Civil Defence Force)
-- Technical skills categorization
-
-### 2. Skills Showcase
-- **Product Manager**: GROWMAT development, user research, cross-functional leadership
-- **ML Engineer**: AI applications, computational modeling, predictive analytics
-- **Digital Consultancy**: Digital transformation, process optimization, change management
-- **Analytical Chemist**: Pharmaceutical analysis, computational chemistry, drug discovery
-- **Finance**: Financial modeling, ROI analysis, resource planning
-
-### 3. Projects & Contact
-- Featured projects with detailed descriptions and achievements
-- Personal interests and hobbies
-- Comprehensive contact information
-- "Why hire me" value proposition
-
-## 🚀 Deployment Options
-
-### Docker (Recommended)
 ```bash
-# Using the deployment script
 ./deploy.sh
-
-# Or manually
-docker-compose up -d --build
 ```
 
-### Traditional Hosting
-```bash
-npm run build
-npm start
-```
+The script supports both the current `docker compose` command and the legacy `docker-compose` binary. It builds the production image, starts the service and waits for the container health check to pass.
 
-### Cloud Platforms
-- **Vercel**: Connect your GitHub repository for automatic deployments
-- **Netlify**: Drag and drop the `out/` folder after running `npm run build`
-- **AWS/GCP/Azure**: Use the Docker image with container services
-
-## 🔧 Configuration
-
-### Environment Variables
-Copy `.env.example` to `.env.local` and configure:
+Equivalent manual commands:
 
 ```bash
-NODE_ENV=production
-NEXT_TELEMETRY_DISABLED=1
-# Add other environment variables as needed
+docker compose up -d --build
+docker compose logs -f samuel-homepage
 ```
 
-### Port Configuration
-- **Development**: Port 3000
-- **Docker**: Port 1111 (mapped from container's 3000)
-- **Custom**: Modify `docker-compose.yml` port mapping
+The runtime container is read-only, runs as an unprivileged user, drops Linux capabilities and uses `no-new-privileges`. A reverse proxy can route the public hostname to port `1111` and terminate TLS.
 
-## 📱 Responsive Design
+## Browser support
 
-The website is fully responsive and optimized for:
-- 📱 Mobile devices (320px+)
-- 📱 Tablets (768px+)
-- 💻 Desktops (1024px+)
-- 🖥️ Large screens (1440px+)
+The full desktop is maintained for current Chrome, Edge and Firefox releases and Safari 16.4 or newer, matching Next.js 15's supported-browser floor. Mobile Safari and Chromium-based mobile browsers receive the same content in a small-screen window layout with safe-area handling.
 
-## 🎨 Customization
+Internet Explorer is not supported by Next.js 15 or the interactive desktop. IE 10/11 receive a small server-rendered fallback with direct CV and email access; the full experience requires a modern JavaScript, CSS Grid and ES2019-capable browser.
 
-### Colors and Theming
-The design uses a cohesive color scheme defined in Tailwind classes:
-- Primary: Blue gradient (`from-blue-600 to-purple-600`)
-- Secondary: Various accent colors for different sections
-- Background: Light gradient (`from-slate-50 to-blue-50`)
+## Content structure
 
-### Content Updates
-- **Personal Information**: Update in `src/app/page.tsx`
-- **Skills**: Modify `skillsData` in `src/app/skills/page.tsx`
-- **Projects**: Update `projects` array in `src/app/projects/page.tsx`
+- `src/components/SystemSevenDesktop.tsx` contains the desktop applications and portfolio content.
+- `src/lib/i18n.ts` contains locale definitions and interface translations.
+- `src/app/[locale]` generates the locale-aware routes.
+- `others/` contains the maintained LaTeX CV sources.
+- `public/` contains the downloadable CVs, public case studies and optimized image assets.
 
-## 🔍 SEO and Performance
-
-- **Meta Tags**: Comprehensive metadata in `layout.tsx`
-- **Semantic HTML**: Proper heading structure and accessibility
-- **Image Optimization**: Next.js Image component for optimized loading
-- **Performance**: Lighthouse score optimized for Core Web Vitals
-
-## 🤝 Contributing
-
-This is a personal portfolio, but suggestions and improvements are welcome:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## 📞 Contact
-
-- **Email**: sam.xiaojian.zhang@outlook.com
-- **Phone**: 07502 118207
-- **LinkedIn**: [samuel-xj-zhang](https://linkedin.com/in/samuel-xj-zhang/)
-- **Location**: London, UK (Flexible to relocate)
-
-## 📄 License
-
-This project is for personal portfolio use. Feel free to use as inspiration for your own portfolio.
-
----
-
-Built with ❤️ using Next.js, TypeScript, and modern web technologies.
+The confidential Marsh research and consulting source documents used while drafting the portfolio are deliberately excluded from the repository and are not served by the site.

@@ -3,7 +3,7 @@ import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 export const metadata = {
   title: "COVERD — Founder’s Desk",
   description:
-    "The story, product system, and responsible-AI principles behind Samuel Zhang’s recruitment intelligence startup.",
+    "COVERD is the AI interviewer that interviews the company first—using a role-specific belief graph to ask adaptive questions and produce cited evaluations.",
 };
 
 export default function CoverdPage() {
