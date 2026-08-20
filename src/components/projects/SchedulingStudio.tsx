@@ -521,6 +521,21 @@ export function SchedulingStudio() {
         <p><strong>Real scheduling rules, fictional calendars.</strong> This browser port mirrors the repository’s four scheduling modes, buffered working-window constraints, weighted allocation, IANA timezone display, temporary reservations and final revalidation.</p>
       </div>
 
+      <section className={styles.bookingJourney} aria-labelledby="booking-journey-title">
+        <div>
+          <span>SOURCE APPLICATION JOURNEY</span>
+          <h3 id="booking-journey-title">From public page to managed calendar event</h3>
+          <p>The live repository carries the booking beyond slot display. This sandbox executes the middle scheduling transaction and documents the excluded integrations.</p>
+        </div>
+        <ol>
+          <li><span>01</span><strong>Public page</strong><small>event + attendee input</small></li>
+          <li><span>02</span><strong>Availability</strong><small>windows − Graph busy − bookings</small></li>
+          <li><span>03</span><strong>Reservation</strong><small>UTC host/slot key · 10 min</small></li>
+          <li><span>04</span><strong>Revalidation</strong><small>host free + database exclusion</small></li>
+          <li><span>05</span><strong>Delivery</strong><small>Graph event · email · ICS</small></li>
+        </ol>
+      </section>
+
       <div className={styles.modeTabs} aria-label="Scheduling mode">
         {(Object.keys(MODE_COPY) as Mode[]).map((item) => (
           <button

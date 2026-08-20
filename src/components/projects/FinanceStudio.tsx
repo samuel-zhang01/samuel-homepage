@@ -938,6 +938,22 @@ export function FinanceStudio() {
         <code>PDF / CSV → SQLite → FastAPI → React</code>
       </div>
 
+      <section className={styles.sourceScale} aria-labelledby="finance-source-scale-title">
+        <div>
+          <span>SOURCE SNAPSHOT / SAFE AGGREGATES</span>
+          <h3 id="finance-source-scale-title">What the private application had to reconcile</h3>
+          <p>These counts come from the audited handover. The interactive ledger below is a smaller fictional fixture so no financial row or identifier is published.</p>
+        </div>
+        <dl>
+          <div><dt>Transactions</dt><dd>3,875</dd></div>
+          <div><dt>Accounts</dt><dd>6</dd></div>
+          <div><dt>Statements reconciled</dt><dd>67 / 67</dd></div>
+          <div><dt>Recurring patterns</dt><dd>36</dd></div>
+          <div><dt>Transfer groups</dt><dd>100</dd></div>
+          <div><dt>Anomaly records</dt><dd>122</dd></div>
+        </dl>
+      </section>
+
       <nav className={styles.viewTabs} aria-label="Finance intelligence views">
         {VIEWS.map((item) => (
           <button type="button" key={item.id} className={view === item.id ? styles.activeView : ""} onClick={() => setView(item.id)} aria-current={view === item.id ? "page" : undefined}>

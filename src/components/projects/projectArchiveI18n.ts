@@ -76,6 +76,11 @@ export type ProjectArchiveCopy = {
       eyebrow: string;
       title: string;
       purpose: string;
+      audience: string;
+      problem: string;
+      objective: string;
+      contribution: string;
+      pipeline: string;
       progression: string;
       evidence: string;
       walkthrough: string;
@@ -84,11 +89,15 @@ export type ProjectArchiveCopy = {
       relatedSuite: string;
       relatedCopy: string;
       discuss: string;
+      workspace: string;
+      chapter: string;
+      openChapter: string;
     };
   };
   markers: {
     demo: string;
     live: string;
+    suite: string;
   };
   actions: {
     panelAria: string;
@@ -118,6 +127,8 @@ export type ProjectArchiveCopy = {
     sourceNoLicence: string;
     viewRepository: string;
     openLab: string;
+    openSuite: string;
+    suiteChapter: string;
     openCoverdBrief: string;
     openSystemFile: string;
     shareMessage: string;
@@ -143,7 +154,7 @@ const enGB: ProjectArchiveCopy = {
     description: "Products, experiments and research—shown at the boundary each project permits.",
     summaryAria: "Archive summary",
     files: "files",
-    interactive: "interactive",
+    interactive: "experiences",
     redacted: "redacted",
     languageNotice: "Project titles and source-grounded descriptions remain in British English; archive controls follow your selected language.",
   },
@@ -201,6 +212,11 @@ const enGB: ProjectArchiveCopy = {
       eyebrow: "CASE BRIEF / READ BEFORE INTERACTING",
       title: "What this project is trying to establish",
       purpose: "CONTEXT & PURPOSE",
+      audience: "WHO THIS IS FOR",
+      problem: "PROBLEM",
+      objective: "OBJECTIVE",
+      contribution: "SAMUEL'S CONTRIBUTION",
+      pipeline: "INPUT → METHOD → OUTPUT",
       progression: "WORK PROGRESSION",
       evidence: "EVIDENCE CONTRACT",
       walkthrough: "30-SECOND WALKTHROUGH",
@@ -209,9 +225,12 @@ const enGB: ProjectArchiveCopy = {
       relatedSuite: "RELATED SUITE",
       relatedCopy: "Open a connected chapter without losing this project’s individual evidence boundary.",
       discuss: "Discuss this work →",
+      workspace: "SUITE WORKSPACE",
+      chapter: "CHAPTER {chapter} / {total}",
+      openChapter: "Open suite chapter",
     },
   },
-  markers: { demo: "DEMO", live: "LIVE" },
+  markers: { demo: "DEMO", live: "LIVE", suite: "SUITE" },
   actions: {
     panelAria: "Actions for {title}",
     commands: "PROJECT COMMANDS",
@@ -240,6 +259,8 @@ const enGB: ProjectArchiveCopy = {
     sourceNoLicence: "Inspect source snapshot · no licence",
     viewRepository: "View repository",
     openLab: "Open {title}",
+    openSuite: "Open {title}",
+    suiteChapter: "SUITE CHAPTER {chapter} / {total}",
     openCoverdBrief: "Open COVERD product brief",
     openSystemFile: "Open related System 7 file",
     shareMessage: "Explore {title} in Samuel Zhang's project archive.",
@@ -324,7 +345,7 @@ const zhCN: ProjectArchiveCopy = {
     description: "产品、实验与研究——仅展示每个项目获准公开的部分。",
     summaryAria: "档案概览",
     files: "份档案",
-    interactive: "个可互动",
+    interactive: "个专题体验",
     redacted: "项已隐去",
     languageNotice: "项目标题与经来源核实的说明保留英式英语；档案界面使用您选择的语言。",
   },
@@ -382,6 +403,11 @@ const zhCN: ProjectArchiveCopy = {
       eyebrow: "案例摘要 / 互动前请先阅读",
       title: "此项目希望说明什么",
       purpose: "背景与目标",
+      audience: "适用对象",
+      problem: "问题",
+      objective: "目标",
+      contribution: "SAMUEL 的贡献",
+      pipeline: "输入 → 方法 → 输出",
       progression: "工作推进过程",
       evidence: "证据范围",
       walkthrough: "30 秒导览",
@@ -390,9 +416,12 @@ const zhCN: ProjectArchiveCopy = {
       relatedSuite: "相关专题",
       relatedCopy: "打开相关章节，同时保留此项目独立的证据边界。",
       discuss: "讨论此项目 →",
+      workspace: "专题工作区",
+      chapter: "第 {chapter} / {total} 章",
+      openChapter: "打开专题章节",
     },
   },
-  markers: { demo: "演示", live: "在线" },
+  markers: { demo: "演示", live: "在线", suite: "专题" },
   actions: {
     panelAria: "{title} 的项目操作",
     commands: "项目操作",
@@ -421,6 +450,8 @@ const zhCN: ProjectArchiveCopy = {
     sourceNoLicence: "查看来源快照 · 未声明许可证",
     viewRepository: "查看代码仓库",
     openLab: "打开 {title}",
+    openSuite: "打开 {title}",
+    suiteChapter: "专题章节 {chapter} / {total}",
     openCoverdBrief: "打开 COVERD 产品简介",
     openSystemFile: "打开相关 System 7 档案",
     shareMessage: "在 Samuel Zhang 的项目档案中查看 {title}。",
@@ -482,7 +513,7 @@ const zhTW: ProjectArchiveCopy = {
     description: "產品、實驗與研究——僅展示每個專案獲准公開的部分。",
     summaryAria: "檔案概覽",
     files: "份檔案",
-    interactive: "個可互動",
+    interactive: "個專題體驗",
     redacted: "項已隱去",
     languageNotice: "專案標題與經來源核實的說明保留英式英語；檔案介面使用您選擇的語言。",
   },
@@ -540,6 +571,11 @@ const zhTW: ProjectArchiveCopy = {
       eyebrow: "案例摘要 / 互動前請先閱讀",
       title: "此專案希望說明什麼",
       purpose: "背景與目標",
+      audience: "適用對象",
+      problem: "問題",
+      objective: "目標",
+      contribution: "SAMUEL 的貢獻",
+      pipeline: "輸入 → 方法 → 輸出",
       progression: "工作推進過程",
       evidence: "證據範圍",
       walkthrough: "30 秒導覽",
@@ -548,9 +584,12 @@ const zhTW: ProjectArchiveCopy = {
       relatedSuite: "相關專題",
       relatedCopy: "開啟相關章節，同時保留此專案獨立的證據邊界。",
       discuss: "討論此專案 →",
+      workspace: "專題工作區",
+      chapter: "第 {chapter} / {total} 章",
+      openChapter: "開啟專題章節",
     },
   },
-  markers: { demo: "展示", live: "線上" },
+  markers: { demo: "展示", live: "線上", suite: "專題" },
   actions: {
     panelAria: "{title} 的專案操作",
     commands: "專案操作",
@@ -579,6 +618,8 @@ const zhTW: ProjectArchiveCopy = {
     sourceNoLicence: "查看來源快照 · 未聲明授權條款",
     viewRepository: "查看程式碼倉庫",
     openLab: "開啟 {title}",
+    openSuite: "開啟 {title}",
+    suiteChapter: "專題章節 {chapter} / {total}",
     openCoverdBrief: "開啟 COVERD 產品簡介",
     openSystemFile: "開啟相關 System 7 檔案",
     shareMessage: "在 Samuel Zhang 的專案檔案中查看 {title}。",

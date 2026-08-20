@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { projects, type Project } from "@/data/projects";
-import type { Locale } from "@/lib/i18n";
+import { localeSlug, type Locale } from "@/lib/i18n";
 import { getProjectArchiveCopy } from "./projectArchiveI18n";
+import { getProjectSuite } from "./projectSuites";
+import { getProjectStory } from "./projectStories";
 import styles from "./ProjectCaseBrief.module.css";
 
 function evidenceLabel(project: Project) {
@@ -10,50 +12,24 @@ function evidenceLabel(project: Project) {
   return "SOURCE-RECORDED METHOD / BROWSER RECONSTRUCTION";
 }
 
-const suites = [
-  {
-    title: "Decision & RL Methods",
-    description: "From learning exercises to policy evidence, causal adjustment and deferral limits.",
-    slugs: ["study-rl", "sequential-decisions-lab", "causal-ope-lab", "safe-learning-to-defer"],
-  },
-  {
-    title: "Scientific ML & Trust",
-    description: "Architecture, uncertainty and evaluation provenance for scientific machine-learning systems.",
-    slugs: ["microrobot-vision", "trustworthy-mri-reconstruction", "neural-cfd-surrogates", "safety-critical-ai", "deep-learning-environment-resolver"],
-  },
-  {
-    title: "Sensor ML & Evaluation Audits",
-    description: "Measurement, regularisation and the data-quality conditions required before model claims are credible.",
-    slugs: ["air-quality-sensor-optimisation", "regularisation-lab", "cost-sensitive-cyber-detection"],
-  },
-  {
-    title: "Molecular Modelling & Spectroscopy",
-    description: "Equation models, solubility workflows, conformer evidence and supporting scientific tools.",
-    slugs: ["pc-saft-thermodynamics", "drug-solubility", "molecular-recognition", "cprot-spectroscopy-plotter", "coding-series"],
-  },
-  {
-    title: "Strategy & Venture Reasoning",
-    description: "Structured reflection and synthetic evidence workbenches, presented as reasoning exercises rather than products.",
-    slugs: ["innovation-models-reflection", "ai-venture-reasoning", "course-recommender-audit"],
-  },
-  {
-    title: "Private Systems Audit",
-    description: "Safe public audits of infrastructure and simulation work, with reproducibility boundaries left visible.",
-    slugs: ["home-automation-stack", "gromacs-hpc", "stock-market-engine"],
-  },
-] as const;
+function formatChapter(template: string, chapter: number, total: number) {
+  return template.replace("{chapter}", String(chapter)).replace("{total}", String(total));
+}
 
 export function ProjectCaseBrief({
   project,
   locale,
   onSelectProject,
+  onOpenProjectDemo,
 }: {
   project: Project;
   locale: Locale;
   onSelectProject: (slug: string) => void;
+  onOpenProjectDemo: (slug: string) => void;
 }) {
   const copy = getProjectArchiveCopy(locale).detail.caseBrief;
-  const suite = suites.find((candidate) => (candidate.slugs as readonly string[]).includes(project.slug));
+  const suite = getProjectSuite(project);
+  const story = getProjectStory(project);
   const related = suite
     ? suite.slugs
       .filter((slug) => slug !== project.slug)
@@ -62,18 +38,57 @@ export function ProjectCaseBrief({
     : [];
   return (
     <section className={styles.brief} aria-labelledby={`case-brief-${project.slug}`}>
+      {suite ? (
+        <nav className={styles.workspace} aria-label={`${copy.workspace}: ${suite.title}`}>
+          <div>
+            <span>{copy.workspace}</span>
+            <strong lang="en-GB">{suite.title}</strong>
+            <small>{formatChapter(copy.chapter, suite.slugs.indexOf(project.slug) + 1, suite.slugs.length)}</small>
+          </div>
+          <div className={styles.chapterLinks}>
+            {suite.slugs.map((slug, index) => {
+              const chapter = projects.find((candidate) => candidate.slug === slug);
+              if (!chapter) return null;
+              const active = chapter.slug === project.slug;
+              return (
+                <button
+                  key={chapter.slug}
+                  type="button"
+                  aria-current={active ? "page" : undefined}
+                  aria-label={`${copy.openChapter} ${index + 1}: ${chapter.shortTitle ?? chapter.title}`}
+                  disabled={active}
+                  onClick={() => chapter.demo ? onOpenProjectDemo(chapter.slug) : onSelectProject(chapter.slug)}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <b lang="en-GB">{chapter.shortTitle ?? chapter.title}</b>
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      ) : null}
       <header className={styles.header}>
         <span>{copy.eyebrow}</span>
         <h4 id={`case-brief-${project.slug}`}>{copy.title}</h4>
         <p>{project.summary}</p>
-        <Link className={styles.contact} href="/contact">{copy.discuss}</Link>
+        {story ? <div className={styles.audience}><span>{copy.audience}</span><p lang="en-GB">{story.audience}</p></div> : null}
+        <Link className={styles.contact} href={`/${localeSlug(locale)}/contact`}>{copy.discuss}</Link>
       </header>
 
-      <div className={styles.grid}>
-        <section>
-          <span>{copy.purpose}</span>
-          <p>{project.detail}</p>
-        </section>
+      <div className={`${styles.grid} ${story ? styles.storyGrid : ""}`}>
+        {story ? (
+          <>
+            <section><span>{copy.problem}</span><p lang="en-GB">{story.problem}</p></section>
+            <section><span>{copy.objective}</span><p lang="en-GB">{story.objective}</p></section>
+            <section><span>{copy.contribution}</span><p lang="en-GB">{story.contribution}</p></section>
+            <section className={styles.pipeline}><span>{copy.pipeline}</span><code lang="en-GB">{story.pipeline}</code></section>
+          </>
+        ) : (
+          <section>
+            <span>{copy.purpose}</span>
+            <p>{project.detail}</p>
+          </section>
+        )}
         <section>
           <span>{copy.progression}</span>
           <ol>
@@ -91,7 +106,7 @@ export function ProjectCaseBrief({
         </div>
         <aside>
           <span>{copy.walkthrough}</span>
-          <p>{copy.walkthroughCopy}</p>
+          <p lang={story ? "en-GB" : undefined}>{story?.walkthrough ?? copy.walkthroughCopy}</p>
         </aside>
       </div>
 
@@ -107,7 +122,11 @@ export function ProjectCaseBrief({
           </div>
           <div className={styles.relatedLinks}>
             {related.map((relatedProject) => (
-              <button key={relatedProject.slug} type="button" onClick={() => onSelectProject(relatedProject.slug)}>
+              <button
+                key={relatedProject.slug}
+                type="button"
+                onClick={() => relatedProject.demo ? onOpenProjectDemo(relatedProject.slug) : onSelectProject(relatedProject.slug)}
+              >
                 {relatedProject.shortTitle ?? relatedProject.title} <b aria-hidden="true">→</b>
               </button>
             ))}

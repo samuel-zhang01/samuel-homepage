@@ -870,6 +870,20 @@ export function ItalianLearningStudio() {
             <button type="button" className={styles.resetButton} onClick={resetDemo}>↺ Reset</button>
           </div>
         </div>
+        <section className={styles.productMap} aria-labelledby="parliamo-product-map-title" lang="en-GB">
+          <div>
+            <span>PRODUCT MAP / START HERE</span>
+            <h3 id="parliamo-product-map-title">A dated 56-day learning product—not seven loose exercises</h3>
+            <p>Today selects work from the learner’s dated plan and weaker skills. Recall, writing and CEFR evidence then update separate progress records; the System chapter exposes the local-first persistence contract.</p>
+            <button type="button" onClick={() => setView("system")}>Inspect curriculum & sync architecture →</button>
+          </div>
+          <dl>
+            <div><dt>Plan</dt><dd>56 days</dd></div>
+            <div><dt>Study time</dt><dd>5,070 min</dd></div>
+            <div><dt>Lesson hubs</dt><dd>28</dd></div>
+            <div><dt>Content seed</dt><dd>753 rows</dd></div>
+          </dl>
+        </section>
         <AppMenu active={view} setActive={setView} bilingual={bilingual} />
         <div className={styles.viewPanel} key={resetVersion}>
           {view === "practice" ? <PracticeLab bilingual={bilingual} mastery={mastery} setMastery={setMastery} xp={xp} setXp={setXp} /> : null}

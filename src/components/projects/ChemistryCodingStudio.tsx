@@ -778,17 +778,98 @@ function ljForce(distance: number, epsilon: number, sigma: number) {
   return (24 * epsilon / safe) * (2 * ratio6 ** 2 - ratio6);
 }
 
+type MdParticle = { x: number; y: number; vx: number; vy: number };
+
+function wrapCoordinate(value: number, box: number) {
+  return ((value % box) + box) % box;
+}
+
+function mdForces(particles: readonly MdParticle[], box: number, epsilon: number, sigma: number, cutoff: number) {
+  const accelerations = particles.map(() => ({ x: 0, y: 0 }));
+  const cutoffDistance = cutoff * sigma;
+  const cutoffEnergy = ljPotential(cutoffDistance, epsilon, sigma);
+  let potential = 0;
+  for (let row = 0; row < particles.length; row += 1) {
+    for (let column = row + 1; column < particles.length; column += 1) {
+      let dx = particles[row].x - particles[column].x;
+      let dy = particles[row].y - particles[column].y;
+      dx -= box * Math.round(dx / box);
+      dy -= box * Math.round(dy / box);
+      const distance = Math.max(Math.hypot(dx, dy), sigma * 0.2);
+      if (distance >= cutoffDistance) continue;
+      const magnitude = ljForce(distance, epsilon, sigma);
+      const fx = magnitude * dx / distance;
+      const fy = magnitude * dy / distance;
+      accelerations[row].x += fx;
+      accelerations[row].y += fy;
+      accelerations[column].x -= fx;
+      accelerations[column].y -= fy;
+      potential += ljPotential(distance, epsilon, sigma) - cutoffEnergy;
+    }
+  }
+  return { accelerations, potential };
+}
+
+function simulateMiniMd(steps: number, dt: number, epsilon: number, sigma: number, cutoff: number) {
+  const box = 5.4 * sigma;
+  const speed = 0.18 * Math.sqrt(epsilon);
+  let particles: MdParticle[] = [
+    { x: 1.15 * sigma, y: 1.15 * sigma, vx: speed, vy: speed * 0.45 },
+    { x: 3.05 * sigma, y: 1.35 * sigma, vx: -speed * 0.7, vy: speed },
+    { x: 1.45 * sigma, y: 3.25 * sigma, vx: speed * 0.35, vy: -speed * 0.9 },
+    { x: 3.35 * sigma, y: 3.05 * sigma, vx: -speed * 0.65, vy: -speed * 0.55 },
+  ];
+  const meanVx = particles.reduce((sum, particle) => sum + particle.vx, 0) / particles.length;
+  const meanVy = particles.reduce((sum, particle) => sum + particle.vy, 0) / particles.length;
+  particles = particles.map((particle) => ({ ...particle, vx: particle.vx - meanVx, vy: particle.vy - meanVy }));
+  let forceState = mdForces(particles, box, epsilon, sigma, cutoff);
+  const energies: number[] = [];
+  const frames: MdParticle[][] = [];
+
+  const record = () => {
+    const kinetic = particles.reduce((sum, particle) => sum + 0.5 * (particle.vx ** 2 + particle.vy ** 2), 0);
+    energies.push(kinetic + forceState.potential);
+    frames.push(particles.map((particle) => ({ ...particle })));
+  };
+  record();
+  for (let step = 0; step < steps; step += 1) {
+    particles = particles.map((particle, index) => ({
+      ...particle,
+      x: wrapCoordinate(particle.x + particle.vx * dt + 0.5 * forceState.accelerations[index].x * dt ** 2, box),
+      y: wrapCoordinate(particle.y + particle.vy * dt + 0.5 * forceState.accelerations[index].y * dt ** 2, box),
+    }));
+    const nextForceState = mdForces(particles, box, epsilon, sigma, cutoff);
+    particles = particles.map((particle, index) => ({
+      ...particle,
+      vx: particle.vx + 0.5 * (forceState.accelerations[index].x + nextForceState.accelerations[index].x) * dt,
+      vy: particle.vy + 0.5 * (forceState.accelerations[index].y + nextForceState.accelerations[index].y) * dt,
+    }));
+    forceState = nextForceState;
+    record();
+  }
+  const initialEnergy = energies[0];
+  const finalEnergy = energies.at(-1) ?? initialEnergy;
+  const relativeDrift = Math.abs(initialEnergy) > 1e-12 ? ((finalEnergy - initialEnergy) / Math.abs(initialEnergy)) * 100 : 0;
+  return { box, particles, energies, frames, initialEnergy, finalEnergy, relativeDrift };
+}
+
 function DynamicsLab() {
   const [epsilon, setEpsilon] = useState(1);
   const [sigma, setSigma] = useState(1);
   const [distance, setDistance] = useState(1.18);
   const [cutoff, setCutoff] = useState(2.5);
   const [stage, setStage] = useState(0);
+  const [timeStep, setTimeStep] = useState(0.006);
+  const [trajectorySteps, setTrajectorySteps] = useState(160);
   const potential = ljPotential(distance, epsilon, sigma);
   const cutoffPotential = ljPotential(cutoff * sigma, epsilon, sigma);
   const shifted = distance < cutoff * sigma ? potential - cutoffPotential : 0;
   const force = distance < cutoff * sigma ? ljForce(distance, epsilon, sigma) : 0;
   const equilibrium = 2 ** (1 / 6) * sigma;
+  const miniMd = useMemo(
+    () => simulateMiniMd(trajectorySteps, timeStep, epsilon, sigma, cutoff),
+    [cutoff, epsilon, sigma, timeStep, trajectorySteps],
+  );
 
   const chart = useMemo(() => {
     const width = 600;
@@ -878,6 +959,39 @@ function DynamicsLab() {
         <MetricCard label="SHIFTED POTENTIAL" value={formatSigned(shifted, 4)} detail={`U(r) − U(${cutoff.toFixed(1)}σ)`} />
         <MetricCard label="FORCE DIRECTION" value={force >= 0 ? "OUTWARD" : "INWARD"} detail={distance >= cutoff * sigma ? "Suppressed beyond cutoff" : `Fᵣ = ${formatSigned(force, 3)}`} />
       </div>
+
+      <section className={styles.trajectoryLab} aria-labelledby="mini-md-title">
+        <div className={styles.trajectoryHeader}>
+          <div><span>EXECUTABLE BROWSER CALCULATION</span><h4 id="mini-md-title">Four-particle periodic velocity-Verlet trajectory</h4><p>This deterministic reduced-unit system executes minimum-image forces, wrapped positions and the full two-force velocity-Verlet update. It is a teaching fixture derived from the notebook mechanics—not a reproduced source trajectory.</p></div>
+          <div><span>RELATIVE ENERGY DRIFT</span><strong>{formatSigned(miniMd.relativeDrift, 4)}%</strong><small>{trajectorySteps} steps · Δt {timeStep.toFixed(3)}</small></div>
+        </div>
+        <div className={styles.trajectoryGrid}>
+          <svg viewBox="0 0 360 300" role="img" aria-label={`Final periodic simulation frame with four particles after ${trajectorySteps} steps`}>
+            <rect x="31" y="18" width="270" height="250" className={styles.periodicBox} />
+            {miniMd.frames.map((frame, frameIndex) => frameIndex % Math.max(1, Math.floor(miniMd.frames.length / 28)) === 0 ? frame.map((particle, particleIndex) => (
+              <circle key={`${frameIndex}-${particleIndex}`} cx={31 + (particle.x / miniMd.box) * 270} cy={18 + (particle.y / miniMd.box) * 250} r="1.5" className={styles.trajectoryGhost} />
+            )) : null)}
+            {miniMd.particles.map((particle, index) => <circle key={index} cx={31 + (particle.x / miniMd.box) * 270} cy={18 + (particle.y / miniMd.box) * 250} r="8" className={styles.trajectoryParticle} />)}
+            <text x="166" y="290" textAnchor="middle" className={styles.axisLabel}>periodic box · L = {miniMd.box.toFixed(2)} σ-units</text>
+          </svg>
+          <div className={styles.energyTrace}>
+            <div><span>TOTAL ENERGY RECEIPT</span><strong>E₀ {miniMd.initialEnergy.toFixed(6)} → Eₜ {miniMd.finalEnergy.toFixed(6)}</strong></div>
+            <svg viewBox="0 0 600 180" role="img" aria-label={`Total energy trace over ${trajectorySteps} velocity-Verlet steps`}>
+              <line x1="30" x2="580" y1="152" y2="152" />
+              <path d={linePath(miniMd.energies, 600, 180, 30)} />
+            </svg>
+            <div className={styles.trajectoryControls}>
+              <RangeControl label="Time step Δt" value={timeStep} minimum={0.002} maximum={0.02} step={0.001} output={timeStep.toFixed(3)} onChange={setTimeStep} />
+              <RangeControl label="Trajectory steps" value={trajectorySteps} minimum={25} maximum={400} step={25} output={String(trajectorySteps)} onChange={setTrajectorySteps} />
+            </div>
+            <div className={`${styles.driftAssessment} ${Math.abs(miniMd.relativeDrift) > 5 ? styles.driftBad : Math.abs(miniMd.relativeDrift) > 1 ? styles.driftWarn : styles.driftGood}`} role="status">
+              <strong>{Math.abs(miniMd.relativeDrift) > 5 ? "UNSTABLE TEACHING RUN" : Math.abs(miniMd.relativeDrift) > 1 ? "VISIBLE INTEGRATION DRIFT" : "DRIFT BELOW 1%"}</strong>
+              <span>{Math.abs(miniMd.relativeDrift) > 5 ? "Reduce Δt or shorten the run. A large energy change is a numerical failure signal, not a physical result." : "The receipt is diagnostic only; it does not establish convergence or reproduce a source trajectory."}</span>
+            </div>
+          </div>
+        </div>
+        <footer><span>4 PARTICLES</span><span>2D REDUCED UNITS</span><span>PERIODIC WRAP</span><span>MINIMUM IMAGE</span><span>ENERGY-SHIFTED CUTOFF</span><span>NVE · NO THERMOSTAT</span></footer>
+      </section>
 
       <section className={styles.integratorCard} aria-label="Velocity Verlet stepper">
         <div className={styles.integratorHeader}>

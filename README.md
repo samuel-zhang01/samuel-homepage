@@ -9,14 +9,18 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 - Four routed locales: British English, American English, Simplified Chinese and Traditional Chinese.
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
-- A 31-record project archive with 27 interactive exhibits, five reviewed external-or-artifact actions, counted filters and catalogue, balanced or detail-focused workspaces.
+- A 31-record project archive organised into 14 substantial experiences with 27 independently lazy-loaded interactive chapters, five reviewed external-or-artifact actions, counted filters and catalogue, balanced or detail-focused workspaces.
 - Built-in PDF previews, four profile-themed games and desktop easter eggs.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
 - Responsive System 7 windows designed for 320 px mobile screens through large desktops, with pointer- and keyboard-resizable floating windows on desktop.
 
 ## Project archive
 
-The Projects folder contains 31 records with discipline, access and featured-work filters plus curated, newest-first and title sorting. Press `/` anywhere in the archive to focus search. Each record follows a `Start small → Move forward → Polish` narrative; 27 include a privacy-safe interactive exhibit. Five reviewed external-or-artifact actions expose supporting PDFs, workbooks or a primary public record. Live websites and immutable source snapshots remain separately labelled, and public visibility is never presented as a licence.
+The Projects folder contains 31 records with discipline, access and featured-work filters plus curated, newest-first and title sorting. Press `/` anywhere in the archive to focus search. Eight multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture and Supporting Audits—while six flagship experiences remain standalone. This yields 14 visitor-facing experiences without breaking any of the 27 canonical project links or loading every chapter at once.
+
+Every executable chapter opens with a typed case brief: audience, human problem, objective, Samuel's precise contribution, input-to-output pipeline, evidence boundary and a concrete 30-second walkthrough. Suite navigation switches directly between lazy-loaded chapters while preserving each chapter's `?project=` deep link. The catalogue gate requires all 27 demos to have this story record, validates suite membership and enforces the 14-experience structure.
+
+Each record also retains its `Start small → Move forward → Polish` history. Five reviewed external-or-artifact actions expose supporting PDFs, workbooks or a primary public record. Live websites and immutable source snapshots remain separately labelled, and public visibility is never presented as a licence.
 
 The `Portfolio map · 6 views` command provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Archive search, filters, sorting, layouts, actions and status announcements follow the selected locale; project titles and source-grounded descriptions remain in British English.
 
@@ -149,6 +153,9 @@ src/
 │       ├── DemoChrome.tsx
 │       ├── ProjectDemoRouter.tsx
 │       ├── ProjectExplorer.tsx
+│       ├── ProjectCaseBrief.tsx
+│       ├── projectStories.ts
+│       ├── projectSuites.ts
 │       ├── PortfolioMap.tsx
 │       ├── PortfolioMap.module.css
 │       ├── ModelLineageMap.tsx

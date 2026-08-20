@@ -313,6 +313,21 @@
 .inlineFormula { min-height: 43px; padding: 9px; border: 1px solid #a8b2b3; color: #173d46; background: #edf3f1; font-family: Georgia, serif; font-size: 15px; text-align: center; }
 .definitionGrid p { margin: 9px 0 0; color: #5f6d72; font-size: 8px; line-height: 1.5; }
 
+.bakeoff { margin-top: 20px; padding: 17px; border: 1px solid #475a62; background: linear-gradient(135deg, #f9fbf8, #e8efec); box-shadow: 5px 5px 0 #d2d9d6; }
+.bakeoffGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
+.bakeoffGrid article { min-width: 0; padding: 13px; border: 1px solid #738186; background: #fff; box-shadow: 3px 3px 0 #d9dedc; }
+.bakeoffGrid article > span { color: var(--bandit-cyan); font: 800 7px "Courier New", monospace; letter-spacing: 0.09em; }
+.bakeoffGrid article > strong { display: block; margin: 5px 0; font-family: Georgia, serif; font-size: 15px; font-weight: 500; }
+.bakeoffGrid article > p { min-height: 38px; margin: 0 0 9px; color: #5f6d72; font-size: 8px; line-height: 1.45; }
+.bakeoffGrid dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border-top: 1px dotted #9ba7a9; }
+.bakeoffGrid dl > div { min-width: 0; padding-top: 8px; }
+.bakeoffGrid dt { color: #718086; font: 7px "Courier New", monospace; }
+.bakeoffGrid dd { overflow-wrap: anywhere; margin: 2px 0 0; color: #173b44; font: 800 10px "Courier New", monospace; }
+.bakeoffUnavailable { display: flex; align-items: baseline; gap: 12px; padding: 13px; border-left: 4px solid var(--bandit-gold); background: #f5eedf; }
+.bakeoffUnavailable strong { font-family: Georgia, serif; font-size: 14px; font-weight: 500; }
+.bakeoffUnavailable span { color: #6c6250; font-size: 8px; line-height: 1.45; }
+.bakeoff footer { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 12px; padding-top: 9px; border-top: 1px solid #9ba7a9; color: #4f656d; font: 800 7px "Courier New", monospace; letter-spacing: 0.06em; }
+
 .sourceSeal { flex: 0 0 auto; padding: 10px 14px; border: 2px solid #a74c55; color: #9a3e48; font: 8px/1.4 "Courier New", monospace; letter-spacing: 0.08em; text-align: center; transform: rotate(-2deg); }
 .sourceSeal span,
 .sourceSeal strong,
@@ -418,6 +433,7 @@
   .boardHeading { align-items: flex-start; flex-direction: column; }
   .boardHeading p { max-width: none; text-align: left; }
   .definitionGrid,
+  .bakeoffGrid,
   .methodGrid,
   .boundaryGrid { grid-template-columns: minmax(0, 1fr); }
   .algorithmFlow { grid-template-columns: minmax(0, 1fr); }
@@ -448,6 +464,7 @@
   .sourceLedger li { grid-template-columns: minmax(0, 1fr); }
   .equationRow { grid-template-columns: minmax(0, 1fr); }
   .equationRow > div { text-align: left; }
+  .bakeoffUnavailable { align-items: flex-start; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {

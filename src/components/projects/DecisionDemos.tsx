@@ -86,8 +86,31 @@ const AIR_CONFIGURATIONS = [
   },
 ] as const;
 
+const AIR_MODEL_RESULTS = [
+  { name: "OLS", testR2: 0.9065, testRmse: 0.4413, features: "11", transparency: 1 },
+  { name: "Ridge", testR2: 0.9063, testRmse: 0.4417, features: "11", transparency: 0.9 },
+  { name: "Lasso", testR2: 0.9065, testRmse: 0.4412, features: "10", transparency: 1 },
+  { name: "KRR polynomial", testR2: 0.9169, testRmse: 0.4161, features: "kernel", transparency: 0.35 },
+  { name: "KRR RBF", testR2: 0.9279, testRmse: 0.3874, features: "kernel", transparency: 0.2 },
+] as const;
+
+const AIR_MISSINGNESS = [
+  { name: "NO2(GT)", value: 5.42 },
+  { name: "NOx(GT)", value: 5.38 },
+  { name: "PT08.S1(CO)", value: 4.3 },
+  { name: "C6H6(GT)", value: 4.3 },
+  { name: "PT08.S2(NMHC)", value: 4.3 },
+  { name: "PT08.S3(NOx)", value: 4.3 },
+  { name: "PT08.S4(NO2)", value: 4.3 },
+  { name: "PT08.S5(O3)", value: 4.3 },
+  { name: "Temperature", value: 4.3 },
+  { name: "Relative humidity", value: 4.3 },
+] as const;
+
 export function AirQualityBudgetDemo() {
+  const [surface, setSurface] = useState<"data" | "models" | "planner">("planner");
   const [budget, setBudget] = useState(3_500);
+  const [interpretability, setInterpretability] = useState(60);
   const selected = AIR_CONFIGURATIONS.filter((configuration) => configuration.cost <= budget).at(-1) ??
     AIR_CONFIGURATIONS[0];
   const next = AIR_CONFIGURATIONS.find((configuration) => configuration.cost > budget);
@@ -98,6 +121,13 @@ export function AirQualityBudgetDemo() {
   const cvPoints = AIR_CONFIGURATIONS.slice(0, 2)
     .map((configuration) => `${x(configuration.cost)},${y(configuration.rmse)}`)
     .join(" ");
+  const rankedModels = useMemo(() => {
+    const fitWeight = 1 - interpretability / 100;
+    return AIR_MODEL_RESULTS.map((model) => {
+      const fitScore = clamp((model.testR2 - 0.9) / 0.03, 0, 1);
+      return { ...model, score: fitWeight * fitScore + (1 - fitWeight) * model.transparency };
+    }).sort((left, right) => right.score - left.score);
+  }, [interpretability]);
 
   return (
     <DemoWindow
@@ -114,9 +144,100 @@ export function AirQualityBudgetDemo() {
       }
     >
       <SourceNote title="Historical coursework explorer">
-        The three points reproduce reported modelling outputs. Prices are assignment assumptions—not
-        supplier quotes—and the interface does not retrain a model.
+        The source contains 7,674 air-quality observations, train-only KNN imputation and scaling,
+        five regression families, regularisation paths and a hypothetical sensor-cost exercise. This
+        browser chapter exposes those stages without shipping the dataset or claiming procurement validation.
       </SourceNote>
+
+      <div className={styles.surfaceTabs} role="group" aria-label="Air-quality decision lab chapter">
+        <button type="button" aria-pressed={surface === "data"} onClick={() => setSurface("data")}>01 · Data QA</button>
+        <button type="button" aria-pressed={surface === "models"} onClick={() => setSurface("models")}>02 · Model lab</button>
+        <button type="button" aria-pressed={surface === "planner"} onClick={() => setSurface("planner")}>03 · Sensor decision</button>
+      </div>
+
+      {surface === "data" ? (
+        <div className={styles.airAuditGrid}>
+          <section className={styles.controlPanel} aria-labelledby="air-data-title">
+            <div className={styles.panelTitle}>
+              <span aria-hidden="true">01</span>
+              <div><p>DATA CONTRACT</p><h3 id="air-data-title">What one row represents</h3></div>
+            </div>
+            <dl className={styles.airDataFacts}>
+              <div><dt>Rows</dt><dd>7,674 ambient snapshots</dd></div>
+              <div><dt>Target</dt><dd>CO(GT) · mg/m³</dd></div>
+              <div><dt>Predictors</dt><dd>11 sensor/environment signals</dd></div>
+              <div><dt>Split</dt><dd>6,139 train / 1,535 test</dd></div>
+              <div><dt>Imputation</dt><dd>KNN k=5 · fit on train</dd></div>
+              <div><dt>Scaling</dt><dd>StandardScaler · fit on train</dd></div>
+            </dl>
+            <SourceNote title="Analytical boundary" tone="amber">
+              The rows are time-indexed observations, but the recorded workflow uses a random 80/20 split.
+              That does not establish performance under future-time or site shift; a temporal evaluation is
+              the safer deployment test.
+            </SourceNote>
+          </section>
+          <section className={styles.chartPanel} aria-labelledby="air-missing-title">
+            <div className={styles.chartHeading}>
+              <div><span>SOURCE-RECORDED PROFILE</span><h3 id="air-missing-title">Missingness before imputation</h3></div>
+              <span className={styles.lowerLegend}>10 OF 11 PREDICTORS SHOWN</span>
+            </div>
+            <div className={styles.missingBars}>
+              {AIR_MISSINGNESS.map((feature) => (
+                <div key={feature.name}>
+                  <span>{feature.name}</span>
+                  <i style={{ "--missing": `${(feature.value / 6) * 100}%` } as CSSProperties} aria-hidden="true" />
+                  <strong>{feature.value.toFixed(2)}%</strong>
+                </div>
+              ))}
+            </div>
+            <p className={styles.identificationNote}>
+              <strong>Why it matters:</strong> imputation and scaling are learned from the training partition and reused on test. The portfolio does not rerun or redistribute the original observations.
+            </p>
+          </section>
+        </div>
+      ) : surface === "models" ? (
+        <div className={styles.airModelGrid}>
+          <section className={styles.controlPanel} aria-labelledby="air-model-priority-title">
+            <div className={styles.panelTitle}>
+              <span aria-hidden="true">02</span>
+              <div><p>BROWSER DECISION RULE</p><h3 id="air-model-priority-title">Choose the trade-off</h3></div>
+            </div>
+            <RangeField
+              label="Interpretability priority"
+              valueLabel={`${interpretability}%`}
+              min={0}
+              max={100}
+              value={interpretability}
+              onChange={(event) => setInterpretability(Number(event.target.value))}
+              help="The ranking blends source-recorded test R² with an explicitly authored transparency score. It is not source model selection."
+            />
+            <div className={styles.modelWinner} aria-live="polite">
+              <span>CURRENT BROWSER RANK</span>
+              <strong>{rankedModels[0].name}</strong>
+              <p>Score {rankedModels[0].score.toFixed(3)} · test R² {rankedModels[0].testR2.toFixed(4)} · {rankedModels[0].features} features</p>
+            </div>
+          </section>
+          <section className={styles.chartPanel} aria-labelledby="air-model-table-title">
+            <div className={styles.chartHeading}>
+              <div><span>SOURCE-RECORDED RESULTS</span><h3 id="air-model-table-title">Five model families</h3></div>
+              <span className={styles.lowerLegend}>RANDOM 80/20 TEST</span>
+            </div>
+            <div className={styles.modelTableWrap} role="region" tabIndex={0} aria-label="Scrollable air-quality model comparison">
+              <table className={styles.modelTable}>
+                <thead><tr><th>Model</th><th>Test R²</th><th>Test RMSE</th><th>Features</th><th>Browser score</th></tr></thead>
+                <tbody>{rankedModels.map((model, index) => (
+                  <tr key={model.name} data-best={index === 0 ? "true" : undefined}>
+                    <th scope="row">{model.name}</th><td>{model.testR2.toFixed(4)}</td><td>{model.testRmse.toFixed(4)}</td><td>{model.features}</td><td>{model.score.toFixed(3)}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+            <p className={styles.identificationNote}>
+              The RBF kernel reports the strongest recorded fit, while the linear models retain interpretability. The source results are historical coursework outputs, not a fresh reproducibility run.
+            </p>
+          </section>
+        </div>
+      ) : <>
 
       <div className={styles.twoColumnLayout}>
         <section className={styles.controlPanel} aria-labelledby="air-controls-title">
@@ -243,6 +364,7 @@ export function AirQualityBudgetDemo() {
           </SourceNote>
         </section>
       </div>
+      </>}
     </DemoWindow>
   );
 }
@@ -663,8 +785,235 @@ const OPE_UNITS = [
   { id: "L", treated: false, outcome: 5.5, extremePropensity: 0.65 },
 ] as const;
 
+type OpePolicy = "uniform" | "conservative" | "challenger";
+
+const OPE_POLICY_COPY: Record<OpePolicy, { title: string; text: string }> = {
+  uniform: {
+    title: "Uniform policy",
+    text: "Assigns each of the two synthetic actions with probability 0.5. This is the easiest overlap check.",
+  },
+  conservative: {
+    title: "Conservative policy",
+    text: "Moves gradually toward action 1 as the context segment increases, staying relatively close to the logger.",
+  },
+  challenger: {
+    title: "Challenger policy",
+    text: "Reverses the logger’s broad preference. Importance weights expose where the log has little support for that change.",
+  },
+};
+
+function targetActionOneProbability(policy: OpePolicy, segment: number) {
+  if (policy === "uniform") return 0.5;
+  if (policy === "conservative") return [0.35, 0.44, 0.56, 0.65][segment];
+  return [0.76, 0.66, 0.34, 0.24][segment];
+}
+
+function OpeEstimatorWorkbench() {
+  const [policy, setPolicy] = useState<OpePolicy>("challenger");
+  const [overlapQuality, setOverlapQuality] = useState(58);
+  const [clipEnabled, setClipEnabled] = useState(false);
+  const [clipAt, setClipAt] = useState(5);
+  const [switchTau, setSwitchTau] = useState(4);
+
+  const audit = useMemo(() => {
+    const behaviourActionOne = [0.18, 0.36, 0.64, 0.82] as const;
+    const actionPattern = [0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0] as const;
+    const stress = (100 - overlapQuality) / 90;
+    const rows = Array.from({ length: 24 }, (_, index) => {
+      const segment = index % 4;
+      const action = actionPattern[index % actionPattern.length];
+      const rawBehaviourOne = behaviourActionOne[segment];
+      const behaviourOne = 0.5 + (rawBehaviourOne - 0.5) * stress;
+      const propensity = action === 1 ? behaviourOne : 1 - behaviourOne;
+      const targetOne = targetActionOneProbability(policy, segment);
+      const targetProbability = action === 1 ? targetOne : 1 - targetOne;
+      const rawWeight = targetProbability / propensity;
+      const weight = clipEnabled ? Math.min(rawWeight, clipAt) : rawWeight;
+      const q0 = 0.31 + segment * 0.055;
+      const q1 = 0.61 - segment * 0.045;
+      const qLogged = action === 1 ? q1 : q0;
+      const qTarget = (1 - targetOne) * q0 + targetOne * q1;
+      const reward = ((index * 7 + action * 3 + segment) % 11) < (action === 1 ? 6 : 5) ? 1 : 0;
+      const correction = weight * (reward - qLogged);
+      return {
+        id: `L-${String(index + 1).padStart(2, "0")}`,
+        segment,
+        action,
+        reward,
+        propensity,
+        targetProbability,
+        rawWeight,
+        weight,
+        qLogged,
+        qTarget,
+        dr: qTarget + correction,
+        switched: rawWeight <= switchTau ? qTarget + correction : qTarget,
+      };
+    });
+    const mean = (values: number[]) => values.reduce((sum, value) => sum + value, 0) / values.length;
+    const weights = rows.map((row) => row.weight);
+    const weightSum = weights.reduce((sum, value) => sum + value, 0);
+    const weightSquareSum = weights.reduce((sum, value) => sum + value ** 2, 0);
+    const ips = mean(rows.map((row) => row.weight * row.reward));
+    const snips = rows.reduce((sum, row) => sum + row.weight * row.reward, 0) / weightSum;
+    return {
+      rows,
+      estimates: {
+        IPS: ips,
+        SNIPS: snips,
+        Direct: mean(rows.map((row) => row.qTarget)),
+        DR: mean(rows.map((row) => row.dr)),
+        "SWITCH-DR": mean(rows.map((row) => row.switched)),
+      },
+      ess: weightSum ** 2 / weightSquareSum,
+      maxWeight: Math.max(...rows.map((row) => row.rawWeight)),
+      clippedCount: rows.filter((row) => row.rawWeight > clipAt).length,
+      unsupportedCount: rows.filter((row) => row.propensity < 0.2).length,
+    };
+  }, [clipAt, clipEnabled, overlapQuality, policy, switchTau]);
+
+  const essShare = audit.ess / audit.rows.length;
+
+  return (
+    <div className={styles.opeWorkbench}>
+      <section className={styles.opeControls} aria-labelledby="ope-workbench-controls">
+        <div className={styles.chartHeading}>
+          <div>
+            <span>COUNTERFACTUAL POLICY</span>
+            <h3 id="ope-workbench-controls">Logged-policy replay</h3>
+          </div>
+          <span className={styles.hypothesisBadge}>24 SYNTHETIC LOGS</span>
+        </div>
+
+        <fieldset className={styles.policyChoices}>
+          <legend>Evaluation policy</legend>
+          {(Object.keys(OPE_POLICY_COPY) as OpePolicy[]).map((candidate) => (
+            <label key={candidate} className={candidate === policy ? styles.policyActive : undefined}>
+              <input
+                type="radio"
+                name="ope-policy"
+                value={candidate}
+                checked={candidate === policy}
+                onChange={() => setPolicy(candidate)}
+              />
+              <span>{OPE_POLICY_COPY[candidate].title}</span>
+            </label>
+          ))}
+        </fieldset>
+        <p className={styles.policyDescription}>{OPE_POLICY_COPY[policy].text}</p>
+
+        <RangeField
+          label="Logger overlap quality"
+          valueLabel={`${overlapQuality}%`}
+          min={10}
+          max={100}
+          value={overlapQuality}
+          onChange={(event) => setOverlapQuality(Number(event.target.value))}
+          help="Lower overlap makes some logged actions unlikely under the behaviour policy, increasing importance weights."
+        />
+        <RangeField
+          label="SWITCH-DR threshold τ"
+          valueLabel={switchTau.toFixed(1)}
+          min={1}
+          max={12}
+          step={0.5}
+          value={switchTau}
+          onChange={(event) => setSwitchTau(Number(event.target.value))}
+          help="Use the DR correction at or below τ; fall back to the direct reward model above it."
+        />
+        <label className={styles.checkboxRow}>
+          <input type="checkbox" checked={clipEnabled} onChange={(event) => setClipEnabled(event.target.checked)} />
+          <span>
+            <strong>Clip importance weights</strong>
+            <small>A bias–variance sensitivity control, not a free stability improvement.</small>
+          </span>
+        </label>
+        {clipEnabled ? (
+          <RangeField
+            label="Maximum applied weight"
+            valueLabel={clipAt.toFixed(1)}
+            min={1}
+            max={12}
+            step={0.5}
+            value={clipAt}
+            onChange={(event) => setClipAt(Number(event.target.value))}
+            help={`${audit.clippedCount}/${audit.rows.length} rows are currently clipped; report this fraction with the estimate.`}
+          />
+        ) : null}
+      </section>
+
+      <section className={styles.opeResults} aria-labelledby="ope-workbench-results">
+        <div className={styles.chartHeading}>
+          <div>
+            <span>ESTIMATOR RECEIPT</span>
+            <h3 id="ope-workbench-results">Same log, five estimators</h3>
+          </div>
+          <span className={essShare < 0.35 ? styles.essDanger : styles.essGood}>
+            ESS {audit.ess.toFixed(1)} / {audit.rows.length}
+          </span>
+        </div>
+
+        <div className={styles.estimatorGrid} aria-live="polite">
+          {Object.entries(audit.estimates).map(([name, value]) => (
+            <div key={name}>
+              <span>{name}</span>
+              <strong>{value.toFixed(3)}</strong>
+              <small>{name === "Direct" ? "reward model only" : name === "SWITCH-DR" ? `τ ${switchTau.toFixed(1)}` : "estimated value"}</small>
+            </div>
+          ))}
+        </div>
+
+        <div className={styles.opeDiagnostics}>
+          <div>
+            <span>MAX RAW WEIGHT</span>
+            <strong>{audit.maxWeight.toFixed(2)}</strong>
+          </div>
+          <div>
+            <span>ESS SHARE</span>
+            <strong>{(essShare * 100).toFixed(0)}%</strong>
+          </div>
+          <div>
+            <span>PROPENSITY &lt; 0.20</span>
+            <strong>{audit.unsupportedCount}</strong>
+          </div>
+          <div>
+            <span>CLIPPED ROWS</span>
+            <strong>{clipEnabled ? audit.clippedCount : 0}</strong>
+          </div>
+        </div>
+
+        <div className={styles.logTableWrap} role="region" tabIndex={0} aria-label="Scrollable synthetic logged-policy evidence table">
+          <table className={styles.logTable}>
+            <thead>
+              <tr><th>Log</th><th>Seg.</th><th>a</th><th>r</th><th>πb(a|x)</th><th>π(a|x)</th><th>w</th></tr>
+            </thead>
+            <tbody>
+              {audit.rows.map((row) => (
+                <tr key={row.id} data-risk={row.propensity < 0.15 ? "high" : undefined}>
+                  <th scope="row">{row.id}</th>
+                  <td>{row.segment + 1}</td>
+                  <td>{row.action}</td>
+                  <td>{row.reward}</td>
+                  <td>{row.propensity.toFixed(3)}</td>
+                  <td>{row.targetProbability.toFixed(3)}</td>
+                  <td title={`Raw weight ${row.rawWeight.toFixed(3)}`}>{row.weight.toFixed(3)}{clipEnabled && row.rawWeight > clipAt ? "*" : ""}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p className={styles.identificationNote}>
+          <strong>Source mechanic:</strong> the audited Week 11 code consumes (context, action, reward, recorded behaviour propensity), fits one ridge reward model per arm, and evaluates IPS, SNIPS, Direct, DR and SWITCH-DR. This deterministic browser log is newly authored; it demonstrates estimator mechanics, not a deployed policy result.
+        </p>
+      </section>
+    </div>
+  );
+}
+
 export function CausalOpeDemo() {
   const arrowId = `dag-arrow-${useId().replaceAll(":", "")}`;
+  const [surface, setSurface] = useState<"causal" | "ope">("causal");
   const [focusedNode, setFocusedNode] = useState<DagNode>("confounder");
   const [adjustConfounder, setAdjustConfounder] = useState(false);
   const [adjustCollider, setAdjustCollider] = useState(false);
@@ -715,24 +1064,28 @@ export function CausalOpeDemo() {
 
   return (
     <DemoWindow
-      appName="Causal Sandbox"
-      title="DAG & treatment-weighting lab"
-      status="RE-AUTHORED TOY"
+      appName="Decision Evidence Lab"
+      title="Causal adjustment & off-policy evaluation"
+      status="SOURCE-ALIGNED REBUILD"
       statusTone="safe"
       className={styles.window}
       footer={
         <>
-          <span>Synthetic 12-unit sample</span>
-          <span>No assessed solution text or real decisions</span>
+          <span>Two distinct chapters · causal adjustment + OPE</span>
+          <span>No assessed text, private logs or real decisions</span>
         </>
       }
     >
-      <SourceNote title="Learning interface—not a causal claim">
-        The graph, outcomes and propensities were newly authored for this portfolio. Click nodes to test
-        an adjustment set, then stress inverse-propensity treatment weighting in a small synthetic cohort.
+      <SourceNote title="Two questions that should not be collapsed">
+        The causal chapter asks whether an adjustment set blocks the displayed backdoor path. The OPE chapter asks what a counterfactual policy would have earned from logged bandit feedback. Both use synthetic browser fixtures and keep their assumptions visible.
       </SourceNote>
 
-      <div className={styles.causalLayout}>
+      <div className={styles.surfaceTabs} role="group" aria-label="Decision evidence lab chapter">
+        <button type="button" aria-pressed={surface === "causal"} onClick={() => setSurface("causal")}>01 · Causal adjustment</button>
+        <button type="button" aria-pressed={surface === "ope"} onClick={() => setSurface("ope")}>02 · Off-policy evaluation</button>
+      </div>
+
+      {surface === "ope" ? <OpeEstimatorWorkbench /> : <div className={styles.causalLayout}>
         <section className={styles.dagPanel} aria-labelledby="dag-title">
           <div className={styles.chartHeading}>
             <div>
@@ -881,7 +1234,7 @@ export function CausalOpeDemo() {
             identification assumptions; a tidy ATE number does not verify them.
           </p>
         </section>
-      </div>
+      </div>}
     </DemoWindow>
   );
 }

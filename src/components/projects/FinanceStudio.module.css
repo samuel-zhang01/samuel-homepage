@@ -65,6 +65,26 @@
   white-space: nowrap;
 }
 
+.sourceScale {
+  display: grid;
+  grid-template-columns: minmax(180px, .72fr) minmax(0, 1.28fr);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid #17605f;
+  color: var(--ocean-foam);
+  background: linear-gradient(100deg, var(--ocean-deep), var(--ocean-surface));
+}
+
+.sourceScale span { color: var(--ocean-teal); font-size: 8px; font-weight: 900; letter-spacing: .08em; }
+.sourceScale h3 { margin: 3px 0 0; font-size: 13px; line-height: 1.15; }
+.sourceScale p { margin: 4px 0 0; color: var(--ocean-mist); font-size: 8px; line-height: 1.4; }
+.sourceScale dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 0; }
+.sourceScale dl > div { min-width: 0; padding: 6px; border: 1px solid var(--ocean-line); background: rgba(6, 19, 28, .7); }
+.sourceScale dt { color: var(--ocean-mist); font-size: 7px; line-height: 1.2; }
+.sourceScale dd { margin: 3px 0 0; color: var(--ocean-cyan); font: 900 14px/1 "Courier New", monospace; font-variant-numeric: tabular-nums; }
+
 .viewTabs {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1384,6 +1404,8 @@
     text-align: center;
   }
 
+  .sourceScale { grid-template-columns: minmax(0, 1fr); }
+
   .viewTabs {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1415,6 +1437,8 @@
   .oceanCanvas {
     padding: 9px;
   }
+
+  .sourceScale dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   .viewTabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -5,16 +5,22 @@ import ts from "typescript";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const cataloguePath = resolve(projectRoot, "src/data/projects.ts");
-const source = readFileSync(cataloguePath, "utf8");
-const compiled = ts.transpileModule(source, {
-  compilerOptions: {
-    module: ts.ModuleKind.ESNext,
-    target: ts.ScriptTarget.ES2022,
-  },
-  fileName: cataloguePath,
-}).outputText;
-const moduleUrl = `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`;
-const { projects } = await import(moduleUrl);
+async function importTypeScriptModule(path) {
+  const source = readFileSync(path, "utf8");
+  const compiled = ts.transpileModule(source, {
+    compilerOptions: {
+      module: ts.ModuleKind.ESNext,
+      target: ts.ScriptTarget.ES2022,
+    },
+    fileName: path,
+  }).outputText;
+  const moduleUrl = `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`;
+  return import(moduleUrl);
+}
+
+const { projects } = await importTypeScriptModule(cataloguePath);
+const { projectSuites } = await importTypeScriptModule(resolve(projectRoot, "src/components/projects/projectSuites.ts"));
+const { projectStories } = await importTypeScriptModule(resolve(projectRoot, "src/components/projects/projectStories.ts"));
 
 const errors = [];
 const slugs = new Set();
@@ -140,6 +146,45 @@ for (const project of projects) {
   if (project.preview) localPublicFile(project, project.preview.src, "preview");
 }
 
+const suiteMembership = new Map();
+for (const suite of projectSuites) {
+  if (!suite.id?.trim() || !suite.title?.trim() || !suite.description?.trim()) {
+    errors.push("<suite>: id, title and description are required");
+  }
+  if (!Array.isArray(suite.slugs) || suite.slugs.length < 2) {
+    errors.push(`${suite.id || "<suite>"}: a suite requires at least two project chapters`);
+    continue;
+  }
+  for (const slug of suite.slugs) {
+    if (!slugs.has(slug)) errors.push(`${suite.id}: unknown project chapter ${slug}`);
+    const owner = suiteMembership.get(slug);
+    if (owner) errors.push(`${suite.id}: ${slug} is already assigned to suite ${owner}`);
+    suiteMembership.set(slug, suite.id);
+  }
+}
+
+const requiredStoryFields = ["audience", "problem", "objective", "contribution", "pipeline", "walkthrough"];
+for (const [demo, slug] of demoOwners) {
+  const story = projectStories[demo];
+  if (!story) {
+    errors.push(`${slug}: demo ${demo} requires a structured case story`);
+    continue;
+  }
+  for (const field of requiredStoryFields) {
+    if (!story[field]?.trim()) errors.push(`${slug}: case story field ${field} is required`);
+  }
+}
+for (const demo of Object.keys(projectStories)) {
+  if (!demoOwners.has(demo)) errors.push(`<stories>: orphan story for unknown demo ${demo}`);
+}
+
+const experienceIds = new Set(
+  [...demoOwners.entries()].map(([, slug]) => suiteMembership.has(slug) ? `suite:${suiteMembership.get(slug)}` : `project:${slug}`),
+);
+if (experienceIds.size !== 14) {
+  errors.push(`<catalogue>: expected 14 curated experiences, found ${experienceIds.size}`);
+}
+
 if (errors.length) {
   console.error("Project catalogue validation failed:\n");
   errors.forEach((error) => console.error(`- ${error}`));
@@ -147,5 +192,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Project catalogue gate: ${projects.length} unique files, ${demoOwners.size} interactive exhibits, ${artifactOwners.size} reviewed artifacts.`,
+  `Project catalogue gate: ${projects.length} unique files, ${demoOwners.size} interactive exhibits, ${experienceIds.size} curated experiences, ${artifactOwners.size} reviewed artifacts.`,
 );

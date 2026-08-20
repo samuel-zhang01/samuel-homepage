@@ -808,7 +808,7 @@ export function MolecularRecognitionStudio() {
             className={styles.assignmentPanel}
           >
             <div className={styles.sectionHeading}>
-              <div><span>OBSERVED ↔ CALCULATED</span><h3>Line-assignment sandbox</h3><p>Change the tolerance, add a calibration offset, test decoys and inspect every accepted residual.</p></div>
+              <div><span>OBSERVED ↔ CALCULATED</span><h3>Greedy line-assignment sandbox</h3><p>Change the tolerance, add a calibration offset, test decoys and inspect every accepted residual. The matcher is a transparent ordered nearest-neighbour heuristic—not a global bipartite fit or the group&apos;s expert assignment workflow.</p></div>
               <div className={styles.recordBadge}><small>RESEARCH BAND</small><strong>2–8 GHz</strong><span>publicly documented</span></div>
             </div>
 
@@ -973,9 +973,9 @@ export function MolecularRecognitionStudio() {
                       <p>The user-controlled offset δ is applied to every calculated line before matching.</p>
                     </div>
                     <div className={styles.equationCard}>
-                      <span>02 · ONE-TO-ONE MATCH</span>
+                      <span>02 · GREEDY ONE-TO-ONE MATCH</span>
                       <div className={styles.formula}>j* = arg min<sub>j ∈ unused</sub> |ν<sup>obs</sup><sub>i</sub> − ν̂<sub>j</sub>|</div>
-                      <p>A pair is accepted only when its absolute residual is no larger than tolerance τ.</p>
+                      <p>Predicted lines are visited in catalogue order; the nearest still-unused observation is accepted only when its absolute residual is no larger than tolerance τ. Changing order can change the result.</p>
                     </div>
                     <div className={styles.equationCard}>
                       <span>03 · FIT RECEIPT</span>
@@ -993,6 +993,8 @@ export function MolecularRecognitionStudio() {
   catalog_offset_kHz: ${offset}
   accepted_pairs: ${matches.length}
   rms_kHz: ${rms === null ? "null" : rms.toFixed(3)}
+  assignment: "ordered greedy nearest-neighbour"
+  global_optimum_claim: false
   network_calls: 0
 }`}</pre>
                   </div>

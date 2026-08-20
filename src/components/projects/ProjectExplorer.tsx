@@ -18,6 +18,7 @@ import {
   formatProjectArchiveCopy,
   getProjectArchiveCopy,
 } from "./projectArchiveI18n";
+import { getProjectSuite } from "./projectSuites";
 import styles from "./ProjectExplorer.module.css";
 
 type SystemApp = NonNullable<Project["systemApp"]>;
@@ -134,6 +135,8 @@ function ProjectRow({
   locale: Locale;
 }) {
   const copy = getProjectArchiveCopy(locale);
+  const suite = getProjectSuite(project);
+  const suiteChapter = suite ? suite.slugs.indexOf(project.slug) + 1 : 0;
   return (
     <button
       type="button"
@@ -158,7 +161,11 @@ function ProjectRow({
             {copy.access[project.access].short}
           </span>
           <span>{copy.statuses[project.status]}</span>
-          {project.demo && <span className={styles.resourceMarker}>▶ {copy.markers.demo}</span>}
+          {project.demo && (
+            <span className={styles.resourceMarker}>
+              ▶ {suite ? `${copy.markers.suite} ${suiteChapter}/${suite.slugs.length}` : copy.markers.demo}
+            </span>
+          )}
           {project.websiteUrl && <span className={styles.resourceMarker}>↗ {copy.markers.live}</span>}
           {project.artifacts?.[0] && (
             <span className={styles.resourceMarker}>◫ {copy.artifactKinds[project.artifacts[0].kind]}</span>
@@ -265,17 +272,23 @@ function HeroAction({
   onOpenDemo: () => void;
 }) {
   const copy = getProjectArchiveCopy(locale);
+  const suite = getProjectSuite(project);
 
   if (project.demo) {
+    const chapter = suite ? suite.slugs.indexOf(project.slug) + 1 : 0;
     return (
       <button type="button" className={styles.heroAction} onClick={onOpenDemo}>
         <span aria-hidden="true">▶</span>
         <span>
-          <small>{copy.actions.liveDemo}</small>
+          <small>
+            {suite
+              ? formatProjectArchiveCopy(copy.actions.suiteChapter, { chapter, total: suite.slugs.length })
+              : copy.actions.liveDemo}
+          </small>
           <strong>
             <ProjectTitleTemplate
-              template={copy.actions.openLab}
-              title={project.shortTitle ?? project.title}
+              template={suite ? copy.actions.openSuite : copy.actions.openLab}
+              title={suite?.title ?? project.shortTitle ?? project.title}
             />
           </strong>
         </span>
@@ -336,6 +349,7 @@ function ProjectDetail({
   setView,
   onOpenApp,
   onSelectProject,
+  onOpenProjectDemo,
   detailRef,
 }: {
   project: Project;
@@ -344,6 +358,7 @@ function ProjectDetail({
   setView: (view: DetailView) => void;
   onOpenApp: (id: SystemApp) => void;
   onSelectProject: (slug: string) => void;
+  onOpenProjectDemo: (slug: string) => void;
   detailRef: RefObject<HTMLElement | null>;
 }) {
   const copy = getProjectArchiveCopy(locale);
@@ -391,7 +406,12 @@ function ProjectDetail({
           <AccessBadge access={project.access} locale={locale} />
         </div>
         <div className={styles.demoBody} lang="en-GB">
-          <ProjectCaseBrief project={project} locale={locale} onSelectProject={onSelectProject} />
+          <ProjectCaseBrief
+            project={project}
+            locale={locale}
+            onSelectProject={onSelectProject}
+            onOpenProjectDemo={onOpenProjectDemo}
+          />
           <ProjectDemoRouter demoId={project.demo} />
         </div>
       </section>
@@ -645,7 +665,9 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     : filteredProjects[0]?.slug;
   const filteredProjectOrder = filteredProjects.map((project) => project.slug).join("|");
   const counts = useMemo(() => ({
-    interactive: projects.filter((project) => project.demo).length,
+    interactive: new Set(projects.filter((project) => project.demo).map((project) => (
+      getProjectSuite(project)?.id ?? `project:${project.slug}`
+    ))).size,
     open: projects.filter((project) => project.access !== "proprietary").length,
     private: projects.filter((project) => project.access === "proprietary").length,
   }), []);
@@ -712,6 +734,24 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
         detail.scrollIntoView({ block: "start" });
       });
     }
+  };
+
+  const openProjectDemo = (slug: string) => {
+    const nextProject = projects.find((project) => project.slug === slug);
+    if (!nextProject?.demo) {
+      selectProject(slug);
+      return;
+    }
+    shouldFocusDetail.current = true;
+    if (!filteredProjects.some((project) => project.slug === slug)) {
+      setQuery("");
+      setAccess("all");
+      setArea("all");
+      setFeaturedOnly(false);
+    }
+    setSelectedSlug(slug);
+    setDetailView("demo");
+    replaceProjectQuery(slug);
   };
 
   const navigateCatalogue = (event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
@@ -997,6 +1037,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
             setView={changeDetailView}
             onOpenApp={onOpenApp}
             onSelectProject={selectProjectFromMap}
+            onOpenProjectDemo={openProjectDemo}
             detailRef={detailRef}
           />
         )}

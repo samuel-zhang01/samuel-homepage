@@ -94,6 +94,31 @@
   color: #315342;
 }
 
+.surfaceTabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  margin: 0 0 12px;
+  border: 1px solid #242424;
+  background: #bcbcb6;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
+}
+
+.surfaceTabs button {
+  min-height: 31px;
+  border: 0;
+  border-right: 1px solid #777;
+  background: #efefe9;
+  color: #222;
+  cursor: pointer;
+  font: 700 10px/1.15 Geneva, Arial, sans-serif;
+}
+
+.surfaceTabs button:last-child { border-right: 0; }
+.surfaceTabs button:hover { background: #fff; }
+.surfaceTabs button[aria-pressed="true"] { background: var(--decision-blue); color: #fff; }
+.surfaceTabs button:focus-visible { position: relative; z-index: 1; outline: 2px dotted var(--decision-blue); outline-offset: -4px; }
+.surfaceTabs button[aria-pressed="true"]:focus-visible { outline-color: #fff; }
+
 .twoColumnLayout,
 .regularisationLayout,
 .causalLayout {
@@ -113,6 +138,207 @@
 .causalLayout {
   grid-template-columns: minmax(0, 1.16fr) minmax(270px, 0.84fr);
 }
+
+.opeWorkbench {
+  display: grid;
+  grid-template-columns: minmax(235px, .66fr) minmax(0, 1.34fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.airAuditGrid,
+.airModelGrid {
+  display: grid;
+  grid-template-columns: minmax(230px, .72fr) minmax(0, 1.28fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.airDataFacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 10px !important;
+}
+
+.airDataFacts > div {
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid #777;
+  background: #f8f8f3;
+}
+
+.airDataFacts dt { color: #5c5c58; font-size: 7px; font-weight: 900; letter-spacing: .08em; }
+.airDataFacts dd { margin-top: 3px !important; font-size: 9px; font-weight: 800; line-height: 1.25; }
+
+.missingBars {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.missingBars > div {
+  display: grid;
+  grid-template-columns: minmax(90px, .7fr) minmax(90px, 1fr) 46px;
+  align-items: center;
+  gap: 6px;
+  font-size: 8px;
+}
+
+.missingBars i {
+  display: block;
+  height: 10px;
+  border: 1px solid #777;
+  background: linear-gradient(90deg, var(--decision-amber) 0 var(--missing), #f5f5ef var(--missing) 100%);
+}
+
+.missingBars strong { font-family: "Courier New", monospace; text-align: right; }
+
+.modelWinner {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--decision-blue);
+  background: var(--decision-blue-soft);
+}
+
+.modelWinner span,
+.modelWinner strong { display: block; }
+.modelWinner span { color: #4f5277; font-size: 8px; font-weight: 900; letter-spacing: .08em; }
+.modelWinner strong { margin-top: 4px; color: var(--decision-blue); font-size: 18px; }
+.modelWinner p { margin-top: 5px !important; color: #44455d; font-size: 9px; line-height: 1.35; }
+
+.modelTableWrap {
+  margin-top: 10px;
+  overflow-x: auto;
+  border: 2px solid #202020;
+  border-color: #595955 #fff #fff #595955;
+  background: #fff;
+}
+
+.modelTableWrap:focus-visible { outline: 2px dotted var(--decision-blue); outline-offset: 2px; }
+.modelTable { width: 100%; min-width: 430px; border-collapse: collapse; font-size: 8px; font-variant-numeric: tabular-nums; }
+.modelTable th,
+.modelTable td { padding: 6px; border: 1px solid #ccc; text-align: right; }
+.modelTable th:first-child { text-align: left; }
+.modelTable thead th { background: #d8d8d2; }
+.modelTable tr[data-best="true"] { background: var(--decision-blue-soft); }
+
+.opeControls,
+.opeResults {
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid #242424;
+  background: #e5e5df;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #8e8e88;
+}
+
+.policyChoices {
+  display: grid;
+  gap: 4px;
+  margin-top: 11px !important;
+  padding: 0;
+  border: 0;
+}
+
+.policyChoices legend {
+  margin-bottom: 5px;
+  color: #5c5c58;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .11em;
+}
+
+.policyChoices label {
+  display: flex;
+  min-height: 27px;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 7px;
+  border: 1px solid #888;
+  background: #f7f7f3;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.policyChoices label.policyActive { border-color: var(--decision-blue); background: var(--decision-blue-soft); }
+.policyChoices input { margin: 0; accent-color: var(--decision-blue); }
+.policyDescription { margin-top: 6px !important; color: #555550; font-size: 9px; line-height: 1.35; }
+
+.essGood,
+.essDanger {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  padding: 4px 6px;
+  border: 1px solid #3e684f;
+  background: var(--decision-green-soft);
+  color: var(--decision-green) !important;
+  font: 900 8px/1 Geneva, Arial, sans-serif;
+  letter-spacing: .07em;
+}
+
+.essDanger { border-color: #8a4a2b; background: var(--decision-red-soft); color: var(--decision-red) !important; }
+
+.estimatorGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(72px, 1fr));
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.estimatorGrid > div,
+.opeDiagnostics > div {
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid #555;
+  background: #fff;
+  box-shadow: inset -1px -1px #bbb;
+}
+
+.estimatorGrid span,
+.estimatorGrid strong,
+.estimatorGrid small,
+.opeDiagnostics span,
+.opeDiagnostics strong { display: block; }
+.estimatorGrid span,
+.opeDiagnostics span { color: #5c5c58; font-size: 7px; font-weight: 900; letter-spacing: .06em; }
+.estimatorGrid strong { margin: 4px 0; color: var(--decision-blue); font: 900 15px/1 "Courier New", monospace; }
+.estimatorGrid small { color: #666; font-size: 7px; line-height: 1.2; }
+
+.opeDiagnostics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.opeDiagnostics strong { margin-top: 3px; font: 900 13px/1 "Courier New", monospace; }
+
+.logTableWrap {
+  max-height: 247px;
+  margin-top: 9px;
+  overflow: auto;
+  border: 2px solid #202020;
+  border-color: #595955 #fff #fff #595955;
+  background: #fff;
+}
+
+.logTableWrap:focus-visible { outline: 2px dotted var(--decision-blue); outline-offset: 2px; }
+
+.logTable {
+  width: 100%;
+  min-width: 430px;
+  border-collapse: collapse;
+  font: 8px/1.2 "Courier New", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.logTable th,
+.logTable td { padding: 4px 5px; border: 1px solid #ccc; text-align: right; }
+.logTable th:first-child { text-align: left; }
+.logTable thead th { position: sticky; top: 0; z-index: 1; background: #d8d8d2; color: #222; }
+.logTable tr[data-risk="high"] { background: var(--decision-red-soft); }
 
 .controlPanel,
 .chartPanel,
@@ -1139,7 +1365,10 @@
   .twoColumnLayout,
   .cyberLayout,
   .regularisationLayout,
-  .causalLayout {
+  .causalLayout,
+  .opeWorkbench,
+  .airAuditGrid,
+  .airModelGrid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1185,6 +1414,11 @@
   .opeMetrics {
     grid-template-columns: 1fr;
   }
+
+  .estimatorGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .opeDiagnostics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .airDataFacts { grid-template-columns: 1fr; }
+  .missingBars > div { grid-template-columns: minmax(90px, .8fr) minmax(70px, 1fr) 43px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

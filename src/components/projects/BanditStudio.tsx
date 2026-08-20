@@ -8,6 +8,7 @@ type ViewId = "policy" | "regret" | "method";
 type ScenarioId = "wide" | "close" | "gaussian";
 type RewardKind = "bernoulli" | "gaussian";
 type DecisionMode = "initialise" | "explore" | "exploit";
+type ComparisonPolicy = "epsilon" | "ucb1" | "thompson";
 
 type ArmDefinition = {
   id: string;
@@ -122,6 +123,7 @@ const scenarios: Record<ScenarioId, Scenario> = {
 };
 
 const seeds = [7, 23, 101, 2026] as const;
+const comparisonSeeds = [3, 7, 11, 19, 23, 31, 47, 71, 101, 211, 503, 2026] as const;
 
 function clamp(value: number, minimum: number, maximum: number) {
   return Math.min(maximum, Math.max(minimum, value));
@@ -156,6 +158,87 @@ function rewardAt(seed: number, scenario: Scenario, step: number, armIndex: numb
   const u2 = random();
   const standardNormal = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
   return mean + scenario.sigma * standardNormal;
+}
+
+function standardNormal(random: () => number) {
+  const u1 = Math.max(random(), 1e-12);
+  const u2 = random();
+  return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+}
+
+// Marsaglia-Tsang sampling lets the browser reproduce the source's
+// Beta(1,1)-Bernoulli Thompson update without a statistics dependency.
+function gammaSample(shape: number, random: () => number): number {
+  if (shape < 1) {
+    return gammaSample(shape + 1, random) * Math.pow(Math.max(random(), 1e-12), 1 / shape);
+  }
+  const d = shape - 1 / 3;
+  const c = 1 / Math.sqrt(9 * d);
+  while (true) {
+    const x = standardNormal(random);
+    const vRoot = 1 + c * x;
+    if (vRoot <= 0) continue;
+    const v = vRoot ** 3;
+    const u = random();
+    if (u < 1 - 0.0331 * x ** 4 || Math.log(Math.max(u, 1e-12)) < 0.5 * x ** 2 + d * (1 - v + Math.log(v))) {
+      return d * v;
+    }
+  }
+}
+
+function betaSample(alpha: number, beta: number, random: () => number) {
+  const left = gammaSample(alpha, random);
+  const right = gammaSample(beta, random);
+  return left / (left + right);
+}
+
+function simulateComparisonPolicy(
+  scenario: Scenario,
+  policy: ComparisonPolicy,
+  seed: number,
+  rounds: number,
+) {
+  const pulls = scenario.arms.map(() => 0);
+  const means = scenario.arms.map(() => 0);
+  const successes = scenario.arms.map(() => 0);
+  const failures = scenario.arms.map(() => 0);
+  const random = mulberry32((seed ^ scenario.seedSalt ^ 0x6c8e9cf5 ^ policy.length) >>> 0);
+  const bestMean = Math.max(...scenario.arms.map((arm) => arm.mean));
+  let regret = 0;
+
+  for (let step = 0; step < rounds; step += 1) {
+    let armIndex: number;
+    if (step < scenario.arms.length) {
+      armIndex = step;
+    } else if (policy === "epsilon") {
+      if (random() < 0.1) armIndex = Math.min(scenario.arms.length - 1, Math.floor(random() * scenario.arms.length));
+      else armIndex = means.indexOf(Math.max(...means));
+    } else if (policy === "ucb1") {
+      const scores = means.map((mean, index) => mean + Math.sqrt((2 * Math.log(step + 1)) / pulls[index]));
+      armIndex = scores.indexOf(Math.max(...scores));
+    } else {
+      const samples = scenario.arms.map((_, index) => betaSample(successes[index] + 1, failures[index] + 1, random));
+      armIndex = samples.indexOf(Math.max(...samples));
+    }
+
+    const reward = rewardAt(seed, scenario, step, armIndex);
+    pulls[armIndex] += 1;
+    means[armIndex] += (reward - means[armIndex]) / pulls[armIndex];
+    successes[armIndex] += reward;
+    failures[armIndex] += 1 - reward;
+    regret += bestMean - scenario.arms[armIndex].mean;
+  }
+  return regret;
+}
+
+function policyBakeoff(scenario: Scenario, rounds: number) {
+  if (scenario.kind !== "bernoulli") return null;
+  const policies: ComparisonPolicy[] = ["epsilon", "ucb1", "thompson"];
+  return policies.map((policy) => {
+    const values = comparisonSeeds.map((seed) => simulateComparisonPolicy(scenario, policy, seed, rounds));
+    const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
+    return { policy, mean, minimum: Math.min(...values), maximum: Math.max(...values) };
+  });
 }
 
 function simulateBandit(scenario: Scenario, epsilon: number, seed: number, rounds: number): Simulation {
@@ -465,6 +548,7 @@ export function BanditStudio() {
     () => simulateBandit(scenario, epsilonPercent / 100, seed, rounds),
     [scenario, epsilonPercent, seed, rounds],
   );
+  const bakeoff = useMemo(() => policyBakeoff(scenario, Math.max(50, rounds)), [rounds, scenario]);
   const current = simulation.trace.at(-1) ?? simulation.trace[0];
   const lastEvent = simulation.events.at(-1) ?? null;
   const bestMean = Math.max(...scenario.arms.map((arm) => arm.mean));
@@ -777,6 +861,36 @@ export function BanditStudio() {
               <section><span>NOISY · MAY FALL</span><strong>Realised counterfactual regret</strong><div className={styles.inlineFormula}>R̃<sub>T</sub> = Σ<sub>t</sub>(R*<sub>t</sub> − R<sub>t</sub>)</div><p>Uses seeded outcomes. A lucky policy draw can make an increment negative.</p></section>
               <section><span>ORACLE LIMIT</span><strong>Available only in simulation</strong><div className={styles.inlineFormula}>A* = arg max<sub>a</sub> μ<sub>a</sub></div><p>Ground-truth means and unchosen rewards are deliberately unavailable in operational bandit logs.</p></section>
             </div>
+
+            <section className={styles.bakeoff} aria-labelledby="policy-bakeoff-title">
+              <div className={styles.boardHeading}>
+                <div><span>SOURCE-MECHANIC COMPARISON</span><h4 id="policy-bakeoff-title">Three policies · twelve paired seeds</h4></div>
+                <p>The same deterministic reward table is replayed for each policy. This browser calculation compares action-path pseudo-regret; it does not copy or substitute the source experiment&apos;s recorded outputs.</p>
+              </div>
+              {bakeoff ? (
+                <div className={styles.bakeoffGrid}>
+                  {bakeoff.map((entry) => {
+                    const label = entry.policy === "epsilon" ? "ε-greedy · 0.10" : entry.policy === "ucb1" ? "UCB1 · c = 2" : "Thompson · Beta";
+                    const description = entry.policy === "epsilon"
+                      ? "Fixed random exploration plus greedy empirical means."
+                      : entry.policy === "ucb1"
+                        ? "Optimism bonus √(2 log t / nₐ) shrinks with evidence."
+                        : "Sample Beta(successes + 1, failures + 1), then act greedily.";
+                    return (
+                      <article key={entry.policy}>
+                        <span>{entry.policy === "epsilon" ? "BASELINE" : "ADAPTIVE EXPLORATION"}</span>
+                        <strong>{label}</strong>
+                        <p>{description}</p>
+                        <dl><div><dt>Mean regret</dt><dd>{entry.mean.toFixed(2)}</dd></div><div><dt>Seed range</dt><dd>{entry.minimum.toFixed(2)}—{entry.maximum.toFixed(2)}</dd></div></dl>
+                      </article>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className={styles.bakeoffUnavailable} role="note"><strong>Bernoulli policies only</strong><span>Beta-Bernoulli Thompson Sampling and bounded-reward UCB1 are intentionally withheld for the Gaussian scenario.</span></div>
+              )}
+              <footer><span>HORIZON {Math.max(50, rounds)}</span><span>12 FIXED SEEDS</span><span>PAIRED SYNTHETIC REWARDS</span><span>SOURCE DEFINITIONS · WEEK 01</span></footer>
+            </section>
 
             <section className={styles.checkpointLedger} aria-labelledby="checkpoint-title">
               <div className={styles.boardHeading}><div><span>TRACE RECONCILIATION</span><h4 id="checkpoint-title">Selected checkpoints</h4></div><p>Expected difference equals pseudo-regret at every row by construction.</p></div>

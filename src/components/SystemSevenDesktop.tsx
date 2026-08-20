@@ -1773,6 +1773,7 @@ export default function SystemSevenDesktop({
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
 
   useEffect(() => {
+    const pathLocale = normaliseLocale(window.location.pathname.split("/")[1]);
     const queryLocale = normaliseLocale(new URLSearchParams(window.location.search).get("lang"));
     let storedLocale: Locale | null = null;
     try {
@@ -1780,7 +1781,11 @@ export default function SystemSevenDesktop({
     } catch {
       // Explicit route and default locale still work when storage is unavailable.
     }
-    if (queryLocale) setLocale(queryLocale);
+    // An explicit locale path is canonical and must not be overridden by a
+    // stale preference from another route. Unlocalised routes may still use
+    // ?lang= and then the stored preference.
+    if (pathLocale) setLocale(pathLocale);
+    else if (queryLocale) setLocale(queryLocale);
     else if (initialLocale === "en-GB" && storedLocale) setLocale(storedLocale);
   }, [initialLocale]);
 

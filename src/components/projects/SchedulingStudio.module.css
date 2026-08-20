@@ -24,6 +24,31 @@
 
 .disclosure p { margin: 0; font-size: 10px; line-height: 1.45; }
 
+.bookingJourney {
+  display: grid;
+  grid-template-columns: minmax(175px, .55fr) minmax(0, 1.45fr);
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 9px 10px;
+  border: 1px solid #444;
+  background: #ecece7;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa;
+}
+
+.bookingJourney > div > span { color: #555; font: 800 7px/1 "Courier New", monospace; letter-spacing: .1em; }
+.bookingJourney h3 { margin: 3px 0 0; font-size: 11px; }
+.bookingJourney p { margin: 4px 0 0; color: #5b5b57; font-size: 8px; line-height: 1.35; }
+.bookingJourney ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; margin: 0; padding: 0; list-style: none; }
+.bookingJourney li { position: relative; min-width: 0; padding: 6px; border: 1px solid #777; background: #fff; }
+.bookingJourney li:not(:last-child)::after { position: absolute; z-index: 1; top: 50%; right: -6px; color: #11177a; content: "›"; font-weight: 900; transform: translateY(-50%); }
+.bookingJourney li span,
+.bookingJourney li strong,
+.bookingJourney li small { display: block; }
+.bookingJourney li span { color: #11177a; font: 900 7px/1 "Courier New", monospace; }
+.bookingJourney li strong { margin-top: 3px; font-size: 8px; }
+.bookingJourney li small { margin-top: 2px; color: #666; font-size: 7px; line-height: 1.25; }
+
 .modeTabs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -209,6 +234,7 @@
 @container (max-width: 760px) {
   .controlDeck, .workspace { grid-template-columns: minmax(0, 1fr); }
   .reservationPanel { order: -1; }
+  .bookingJourney { grid-template-columns: minmax(0, 1fr); }
 }
 
 @container (max-width: 560px) {
@@ -223,6 +249,9 @@
   .metrics div:nth-child(-n + 2) { border-bottom: 1px solid #686dc3; }
   .panelHeader { align-items: flex-start; flex-direction: column; }
   .legend { justify-content: flex-start; }
+  .bookingJourney ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bookingJourney li:last-child { grid-column: 1 / -1; }
+  .bookingJourney li::after { display: none; }
 }
 
 @container (max-width: 360px) {
