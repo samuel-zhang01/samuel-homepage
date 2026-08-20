@@ -32,6 +32,13 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   productionBrowserSourceMaps: false,
+  webpack(config) {
+    // Small, reviewed portfolio fixtures remain local CSV sources of truth.
+    // Webpack embeds their text in the relevant lazy demo chunk; no runtime
+    // network request or public raw-data endpoint is introduced.
+    config.module.rules.push({ test: /\.csv$/i, type: "asset/source" });
+    return config;
+  },
   async headers() {
     return [
       {

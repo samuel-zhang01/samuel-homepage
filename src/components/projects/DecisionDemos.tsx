@@ -2,6 +2,8 @@
 
 import { useId, useMemo, useState, type CSSProperties } from "react";
 
+import { DECISION_OPE_LOGS } from "@/data/decisionOpeLogs";
+
 import { DemoWindow, MacButton } from "./DemoChrome";
 import styles from "./DecisionDemos.module.css";
 
@@ -816,27 +818,22 @@ function OpeEstimatorWorkbench() {
   const [switchTau, setSwitchTau] = useState(4);
 
   const audit = useMemo(() => {
-    const behaviourActionOne = [0.18, 0.36, 0.64, 0.82] as const;
-    const actionPattern = [0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0] as const;
     const stress = (100 - overlapQuality) / 90;
-    const rows = Array.from({ length: 24 }, (_, index) => {
-      const segment = index % 4;
-      const action = actionPattern[index % actionPattern.length];
-      const rawBehaviourOne = behaviourActionOne[segment];
+    const rows = DECISION_OPE_LOGS.map((sourceRow) => {
+      const { action, segment } = sourceRow;
+      const rawBehaviourOne = sourceRow.behaviourActionOne;
       const behaviourOne = 0.5 + (rawBehaviourOne - 0.5) * stress;
       const propensity = action === 1 ? behaviourOne : 1 - behaviourOne;
       const targetOne = targetActionOneProbability(policy, segment);
       const targetProbability = action === 1 ? targetOne : 1 - targetOne;
       const rawWeight = targetProbability / propensity;
       const weight = clipEnabled ? Math.min(rawWeight, clipAt) : rawWeight;
-      const q0 = 0.31 + segment * 0.055;
-      const q1 = 0.61 - segment * 0.045;
+      const { q0, q1, reward } = sourceRow;
       const qLogged = action === 1 ? q1 : q0;
       const qTarget = (1 - targetOne) * q0 + targetOne * q1;
-      const reward = ((index * 7 + action * 3 + segment) % 11) < (action === 1 ? 6 : 5) ? 1 : 0;
       const correction = weight * (reward - qLogged);
       return {
-        id: `L-${String(index + 1).padStart(2, "0")}`,
+        id: sourceRow.id,
         segment,
         action,
         reward,
@@ -882,7 +879,7 @@ function OpeEstimatorWorkbench() {
             <span>COUNTERFACTUAL POLICY</span>
             <h3 id="ope-workbench-controls">Logged-policy replay</h3>
           </div>
-          <span className={styles.hypothesisBadge}>24 SYNTHETIC LOGS</span>
+          <span className={styles.hypothesisBadge}>{DECISION_OPE_LOGS.length} LOCAL CSV ROWS</span>
         </div>
 
         <fieldset className={styles.policyChoices}>
@@ -1004,7 +1001,7 @@ function OpeEstimatorWorkbench() {
         </div>
 
         <p className={styles.identificationNote}>
-          <strong>Source mechanic:</strong> the audited Week 11 code consumes (context, action, reward, recorded behaviour propensity), fits one ridge reward model per arm, and evaluates IPS, SNIPS, Direct, DR and SWITCH-DR. This deterministic browser log is newly authored; it demonstrates estimator mechanics, not a deployed policy result.
+          <strong>Source mechanic:</strong> the audited Week 11 code consumes (context, action, reward, recorded behaviour propensity), fits one ridge reward model per arm, and evaluates IPS, SNIPS, Direct, DR and SWITCH-DR. This deterministic browser log is loaded from a schema-checked local CSV; it demonstrates estimator mechanics, not a deployed policy result.
         </p>
       </section>
     </div>

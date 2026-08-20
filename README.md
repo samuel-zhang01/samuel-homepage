@@ -16,6 +16,12 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 
 ## Project archive
 
+Small interactive evidence fixtures use reviewed local CSV files under
+`src/data/project-fixtures/`. They are embedded into the relevant lazy chunk at
+build time rather than fetched from a third party or exposed as raw public
+downloads. `npm run check:data` pins their schema, size, row grain, domains,
+uniqueness and SHA-256 before every production build.
+
 The Projects folder contains 31 records with discipline, access and featured-work filters plus curated, newest-first and title sorting. Press `/` anywhere in the archive to focus search. Eight multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture and Supporting Audits—while six flagship experiences remain standalone. This yields 14 visitor-facing experiences without breaking any of the 27 canonical project links or loading every chapter at once.
 
 Every executable chapter opens with a typed case brief: audience, human problem, objective, Samuel's precise contribution, input-to-output pipeline, evidence boundary and a concrete 30-second walkthrough. Suite navigation switches directly between lazy-loaded chapters while preserving each chapter's `?project=` deep link. The catalogue gate requires all 27 demos to have this story record, validates suite membership and enforces the 14-experience structure.

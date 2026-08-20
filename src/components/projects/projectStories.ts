@@ -146,7 +146,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Causal adjustment and off-policy evaluation answer different questions, and both fail under weak overlap.",
     objective: "Make identification, propensities, support and estimator disagreement inspectable in two distinct chapters.",
     contribution: "Authored the causal fixture and rebuilt the tested Week 11 IPS/SNIPS/Direct/DR/SWITCH-DR contract over synthetic logs.",
-    pipeline: "DAG / logged context-action-reward → valid adjustment or policy ratio → weighted / model-assisted estimate → ESS + support audit",
+    pipeline: "Local synthetic CSV → logged context-action-reward → valid adjustment or policy ratio → weighted / model-assisted estimate → ESS + support audit",
     walkthrough: "First open a collider path in the DAG, then switch to OPE, choose Challenger, reduce overlap and watch ESS and estimator disagreement change.",
   },
   "innovation-models": {
