@@ -75,5 +75,11 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  // Next's image optimiser resolves local sources (for example
+  // /headshot.jpg) through an internal request that has no Host header.
+  // Keep static image files outside the Host-header guard so that request can
+  // succeed; Nginx still validates public hosts before traffic reaches Next.
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:avif|gif|ico|jpe?g|png|svg|webp)$).*)",
+  ],
 };
