@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { memo, useEffect, useMemo, useRef, useState, type KeyboardEvent, type RefObject } from "react";
+import { memo, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type RefObject } from "react";
 import {
   projectAreas,
   projects,
@@ -14,6 +14,7 @@ import type { Locale } from "@/lib/i18n";
 import { ProjectActions } from "./ProjectActions";
 import { ProjectCaseBrief } from "./ProjectCaseBrief";
 import { ProjectDemoRouter } from "./ProjectDemoRouter";
+import { ProjectGuidedIndex } from "./ProjectGuidedIndex";
 import {
   formatProjectArchiveCopy,
   getProjectArchiveCopy,
@@ -24,7 +25,8 @@ import styles from "./ProjectExplorer.module.css";
 type SystemApp = NonNullable<Project["systemApp"]>;
 type AccessFilter = ProjectAccess | "all";
 type AreaFilter = ProjectArea | "all";
-type DetailView = "story" | "demo" | "map";
+type ArchiveView = "guided" | "files" | "map";
+type DetailView = "story" | "demo";
 type LayoutMode = "catalogue" | "balanced" | "detail";
 type SortMode = "curated" | "recent" | "title";
 
@@ -363,30 +365,6 @@ function ProjectDetail({
 }) {
   const copy = getProjectArchiveCopy(locale);
 
-  if (view === "map") {
-    return (
-      <section
-        ref={detailRef}
-        id="project-detail"
-        className={styles.detailPane}
-        aria-label={copy.detail.archiveMapAria}
-        tabIndex={0}
-        lang={locale}
-      >
-        <div className={styles.demoHeader}>
-          <button type="button" onClick={() => setView("story")}>{copy.detail.backToProject}</button>
-          <div>
-            <span>{copy.detail.archiveMapEyebrow}</span>
-            <strong>{copy.detail.archiveMapTitle}</strong>
-          </div>
-        </div>
-        <div className={styles.demoBody} lang="en-GB">
-          <PortfolioMap initialSlug={project.slug} onSelectProject={onSelectProject} />
-        </div>
-      </section>
-    );
-  }
-
   if (view === "demo" && project.demo) {
     return (
       <section
@@ -552,13 +530,24 @@ function ProjectDetail({
 
 function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectExplorerProps) {
   const copy = getProjectArchiveCopy(locale);
+  const hasInitialProject = projects.some((project) => project.slug === initialSlug);
+  const viewId = useId();
   const [query, setQuery] = useState("");
   const [access, setAccess] = useState<AccessFilter>("all");
   const [area, setArea] = useState<AreaFilter>("all");
   const [featuredOnly, setFeaturedOnly] = useState(false);
   const [selectedSlug, setSelectedSlug] = useState(() =>
-    projects.some((project) => project.slug === initialSlug) ? initialSlug! : projects[0].slug,
+    hasInitialProject ? initialSlug! : projects[0].slug,
   );
+  const [guidedSelectedSlug, setGuidedSelectedSlug] = useState<string | undefined>(() => (
+    hasInitialProject ? initialSlug : undefined
+  ));
+  const [archiveView, setArchiveView] = useState<ArchiveView>(() => (
+    hasInitialProject ? "files" : "guided"
+  ));
+  const [archiveTabStop, setArchiveTabStop] = useState<ArchiveView>(() => (
+    hasInitialProject ? "files" : "guided"
+  ));
   const [detailView, setDetailView] = useState<DetailView>("story");
   const [showLegend, setShowLegend] = useState(false);
   const [layoutMode, setLayoutMode] = useState<LayoutMode>("balanced");
@@ -566,21 +555,36 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   const detailRef = useRef<HTMLElement>(null);
   const projectListRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const viewTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const shouldFocusDetail = useRef(false);
   const layoutBeforeDetailView = useRef<LayoutMode | null>(null);
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const projectParam = url.searchParams.get("project");
-    if (projectParam && projects.some((project) => project.slug === projectParam)) {
+    let frame = 0;
+    const syncProjectQuery = () => {
+      const projectParam = new URL(window.location.href).searchParams.get("project");
+      if (!projectParam || !projects.some((project) => project.slug === projectParam)) return;
+      setQuery("");
+      setAccess("all");
+      setArea("all");
+      setFeaturedOnly(false);
       setSelectedSlug(projectParam);
-      const frame = window.requestAnimationFrame(() => {
+      setGuidedSelectedSlug(projectParam);
+      setDetailView("story");
+      setArchiveView("files");
+      setArchiveTabStop("files");
+      frame = window.requestAnimationFrame(() => {
         if (usesStackedProjectLayout(detailRef.current)) {
           detailRef.current?.scrollIntoView({ block: "start" });
         }
       });
-      return () => window.cancelAnimationFrame(frame);
-    }
+    };
+    syncProjectQuery();
+    window.addEventListener("popstate", syncProjectQuery);
+    return () => {
+      window.removeEventListener("popstate", syncProjectQuery);
+      window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   useEffect(() => {
@@ -594,8 +598,12 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
         || (target instanceof HTMLElement && target.isContentEditable)
       ) return;
       event.preventDefault();
-      searchRef.current?.focus();
-      searchRef.current?.select();
+      setArchiveView("files");
+      setArchiveTabStop("files");
+      window.requestAnimationFrame(() => {
+        searchRef.current?.focus();
+        searchRef.current?.select();
+      });
     };
     window.addEventListener("keydown", focusSearch);
     return () => window.removeEventListener("keydown", focusSearch);
@@ -668,6 +676,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     interactive: new Set(projects.filter((project) => project.demo).map((project) => (
       getProjectSuite(project)?.id ?? `project:${project.slug}`
     ))).size,
+    suites: new Set(projects.map((project) => getProjectSuite(project)?.id).filter(Boolean)).size,
     open: projects.filter((project) => project.access !== "proprietary").length,
     private: projects.filter((project) => project.access === "proprietary").length,
   }), []);
@@ -678,15 +687,15 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       : copy.layout.balanced;
 
   useEffect(() => {
-    if (!activeCatalogueSlug) return;
+    if (archiveView !== "files" || !activeCatalogueSlug) return;
     const frame = window.requestAnimationFrame(() => {
       revealProjectRow(projectListRef.current, activeCatalogueSlug);
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [activeCatalogueSlug, filteredProjectOrder]);
+  }, [activeCatalogueSlug, archiveView, filteredProjectOrder]);
 
   useEffect(() => {
-    if (!/\/projects\/?$/i.test(window.location.pathname)) return;
+    if (archiveView !== "files" || !/\/projects\/?$/i.test(window.location.pathname)) return;
     const originalTitle = document.title;
     document.title = `${selectedProject.title} · Project Archive · Samuel Zhang`;
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
@@ -700,7 +709,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       document.title = originalTitle;
       if (canonical && originalCanonical) canonical.href = originalCanonical;
     };
-  }, [selectedProject]);
+  }, [archiveView, selectedProject]);
 
   useEffect(() => {
     if (!shouldFocusDetail.current) return;
@@ -712,7 +721,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     if (usesStackedProjectLayout(detail)) {
       detail.scrollIntoView({ block: "start" });
     }
-  }, [detailView, selectedSlug]);
+  }, [archiveView, detailView, selectedSlug]);
 
   const selectProject = (slug: string) => {
     const stackedLayout = usesStackedProjectLayout(detailRef.current);
@@ -723,6 +732,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       layoutBeforeDetailView.current = null;
     }
     setSelectedSlug(slug);
+    setGuidedSelectedSlug(slug);
     setDetailView("story");
     replaceProjectQuery(slug);
     if (activateCurrentStory) {
@@ -737,6 +747,8 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   };
 
   const openProjectDemo = (slug: string) => {
+    setArchiveView("files");
+    setArchiveTabStop("files");
     const nextProject = projects.find((project) => project.slug === slug);
     if (!nextProject?.demo) {
       selectProject(slug);
@@ -750,6 +762,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       setFeaturedOnly(false);
     }
     setSelectedSlug(slug);
+    setGuidedSelectedSlug(slug);
     setDetailView("demo");
     replaceProjectQuery(slug);
   };
@@ -775,6 +788,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       layoutBeforeDetailView.current = null;
     }
     setSelectedSlug(nextProject.slug);
+    setGuidedSelectedSlug(nextProject.slug);
     setDetailView("story");
     replaceProjectQuery(nextProject.slug);
     window.requestAnimationFrame(() => {
@@ -836,9 +850,50 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       setArea("all");
       setFeaturedOnly(false);
     }
+    setArchiveView("files");
+    setArchiveTabStop("files");
     setSelectedSlug(slug);
+    setGuidedSelectedSlug(slug);
     setDetailView("story");
     replaceProjectQuery(slug);
+  };
+
+  const archiveViews: Array<{ id: ArchiveView; label: string; hint: string; glyph: string }> = [
+    { id: "guided", label: copy.views.guided, hint: copy.views.guidedHint, glyph: "▦" },
+    {
+      id: "files",
+      label: formatProjectArchiveCopy(copy.views.files, { count: projects.length }),
+      hint: copy.views.filesHint,
+      glyph: "▤",
+    },
+    { id: "map", label: copy.views.map, hint: copy.views.mapHint, glyph: "◈" },
+  ];
+
+  const activateArchiveView = (nextView: ArchiveView) => {
+    setArchiveView(nextView);
+    setArchiveTabStop(nextView);
+    shouldFocusDetail.current = false;
+  };
+
+  const navigateArchiveViews = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    currentIndex: number,
+    view: ArchiveView,
+  ) => {
+    if (["Enter", " "].includes(event.key)) {
+      event.preventDefault();
+      activateArchiveView(view);
+      return;
+    }
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? archiveViews.length - 1
+        : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + archiveViews.length) % archiveViews.length;
+    setArchiveTabStop(archiveViews[nextIndex].id);
+    viewTabRefs.current[nextIndex]?.focus();
   };
 
   return (
@@ -852,6 +907,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
         <div className={styles.archiveStats} aria-label={copy.header.summaryAria}>
           <span><strong>{projects.length}</strong> {copy.header.files}</span>
           <span><strong>{counts.interactive}</strong> {copy.header.interactive}</span>
+          <span><strong>{counts.suites}</strong> {copy.header.suites}</span>
           <span><strong>{counts.private}</strong> {copy.header.redacted}</span>
         </div>
       </header>
@@ -860,6 +916,67 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
         {copy.header.languageNotice}
       </p>
 
+      <div className={styles.archiveViewTabs} role="tablist" aria-label={copy.views.aria}>
+        {archiveViews.map((item, index) => (
+          <button
+            key={item.id}
+            ref={(element) => { viewTabRefs.current[index] = element; }}
+            id={`${viewId}-${item.id}-tab`}
+            type="button"
+            role="tab"
+            className={styles.archiveViewTab}
+            aria-controls={`${viewId}-${item.id}-panel`}
+            aria-selected={archiveView === item.id}
+            tabIndex={archiveTabStop === item.id ? 0 : -1}
+            onFocus={() => setArchiveTabStop(item.id)}
+            onClick={() => activateArchiveView(item.id)}
+            onKeyDown={(event) => navigateArchiveViews(event, index, item.id)}
+          >
+            <span className={styles.archiveViewGlyph} aria-hidden="true">{item.glyph}</span>
+            <span>
+              <strong>{item.label}</strong>
+              <small>{item.hint}</small>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {archiveView === "guided" && (
+        <section
+          id={`${viewId}-guided-panel`}
+          className={`${styles.archiveViewPanel} ${styles.guidedView}`}
+          role="tabpanel"
+          aria-labelledby={`${viewId}-guided-tab`}
+          tabIndex={0}
+        >
+          <ProjectGuidedIndex
+            locale={locale}
+            selectedSlug={guidedSelectedSlug}
+            onSelectProject={selectProjectFromMap}
+            onOpenProjectDemo={openProjectDemo}
+          />
+        </section>
+      )}
+
+      {archiveView === "map" && (
+        <section
+          id={`${viewId}-map-panel`}
+          className={`${styles.archiveViewPanel} ${styles.mapView}`}
+          role="tabpanel"
+          aria-labelledby={`${viewId}-map-tab`}
+          tabIndex={0}
+        >
+          <PortfolioMap initialSlug={selectedProject.slug} onSelectProject={selectProjectFromMap} />
+        </section>
+      )}
+
+      {archiveView === "files" && (
+      <section
+        id={`${viewId}-files-panel`}
+        className={`${styles.archiveViewPanel} ${styles.filesView}`}
+        role="tabpanel"
+        aria-labelledby={`${viewId}-files-tab`}
+      >
       <p className={styles.srOnly} aria-live="polite" aria-atomic="true">
         {filteredProjects.length === 0
           ? copy.catalogue.emptyTitle
@@ -985,14 +1102,6 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
               total: projects.length,
             })}</span>
             <span className={styles.catalogueCommands}>
-              <button
-                type="button"
-                className={`${styles.catalogueMapButton} ${detailView === "map" ? styles.catalogueCommandActive : ""}`}
-                onClick={() => changeDetailView("map")}
-                aria-pressed={detailView === "map"}
-              >
-                ◈ {copy.catalogue.archiveMap}
-              </button>
               {(query || access !== "all" || area !== "all" || featuredOnly) && (
                 <button type="button" onClick={() => resetFilters({ focusSearch: true })}>{copy.filters.clearFilters}</button>
               )}
@@ -1042,6 +1151,8 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
           />
         )}
       </div>
+      </section>
+      )}
     </div>
   );
 }

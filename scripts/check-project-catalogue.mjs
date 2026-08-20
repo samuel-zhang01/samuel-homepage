@@ -19,7 +19,11 @@ async function importTypeScriptModule(path) {
 }
 
 const { projects } = await importTypeScriptModule(cataloguePath);
-const { projectSuites } = await importTypeScriptModule(resolve(projectRoot, "src/components/projects/projectSuites.ts"));
+const {
+  projectShelfSpecs,
+  projectStartPaths,
+  projectSuites,
+} = await importTypeScriptModule(resolve(projectRoot, "src/components/projects/projectSuites.ts"));
 const { projectStories } = await importTypeScriptModule(resolve(projectRoot, "src/components/projects/projectStories.ts"));
 
 const errors = [];
@@ -185,6 +189,97 @@ if (experienceIds.size !== 14) {
   errors.push(`<catalogue>: expected 14 curated experiences, found ${experienceIds.size}`);
 }
 
+const guidedShelfIds = new Set();
+const guidedSuiteIds = [];
+const guidedStandaloneSlugs = [];
+const guidedVisibleSlugs = [];
+let guidedExperienceCount = 0;
+
+for (const shelf of projectShelfSpecs) {
+  if (!shelf.id?.trim() || !shelf.code?.trim()) {
+    errors.push("<guided>: every shelf requires an id and code");
+  }
+  if (guidedShelfIds.has(shelf.id)) errors.push(`<guided>: duplicate shelf ${shelf.id}`);
+  guidedShelfIds.add(shelf.id);
+  if (!Array.isArray(shelf.experiences) || shelf.experiences.length === 0) {
+    errors.push(`${shelf.id || "<guided>"}: shelf requires at least one experience`);
+    continue;
+  }
+
+  for (const experience of shelf.experiences) {
+    guidedExperienceCount += 1;
+    if (experience.kind === "suite") {
+      const suite = projectSuites.find((candidate) => candidate.id === experience.id);
+      if (!suite) {
+        errors.push(`${shelf.id}: unknown guided suite ${experience.id}`);
+        continue;
+      }
+      guidedSuiteIds.push(suite.id);
+      guidedVisibleSlugs.push(...suite.slugs);
+      if (!suite.slugs.includes(experience.recommendedSlug)) {
+        errors.push(`${shelf.id}: recommended chapter ${experience.recommendedSlug} is not in ${suite.id}`);
+      } else if (!projects.find((project) => project.slug === experience.recommendedSlug)?.demo) {
+        errors.push(`${shelf.id}: recommended chapter ${experience.recommendedSlug} is not interactive`);
+      }
+      continue;
+    }
+
+    if (experience.kind !== "project" || !slugs.has(experience.slug)) {
+      errors.push(`${shelf.id}: unknown guided project ${experience.slug || "<missing>"}`);
+      continue;
+    }
+    if (!projects.find((project) => project.slug === experience.slug)?.demo) {
+      errors.push(`${shelf.id}: standalone experience ${experience.slug} is not interactive`);
+    }
+    guidedStandaloneSlugs.push(experience.slug);
+    guidedVisibleSlugs.push(experience.slug);
+  }
+
+  for (const slug of shelf.supportingSlugs ?? []) {
+    const project = projects.find((candidate) => candidate.slug === slug);
+    if (!project) {
+      errors.push(`${shelf.id}: unknown supporting file ${slug}`);
+      continue;
+    }
+    if (project.demo) errors.push(`${shelf.id}: interactive project ${slug} cannot be demoted to supporting evidence`);
+    guidedVisibleSlugs.push(slug);
+  }
+}
+
+const expectedStandaloneSlugs = projects
+  .filter((project) => project.demo && !suiteMembership.has(project.slug))
+  .map((project) => project.slug);
+const sameMembers = (left, right) => (
+  left.length === right.length && left.every((item) => right.includes(item))
+);
+
+if (guidedShelfIds.size !== 6) errors.push(`<guided>: expected 6 shelves, found ${guidedShelfIds.size}`);
+if (guidedExperienceCount !== 14) errors.push(`<guided>: expected 14 experiences, found ${guidedExperienceCount}`);
+if (!sameMembers(guidedSuiteIds, projectSuites.map((suite) => suite.id))) {
+  errors.push("<guided>: every editorial suite must appear exactly once");
+}
+if (!sameMembers(guidedStandaloneSlugs, expectedStandaloneSlugs)) {
+  errors.push("<guided>: standalone experiences do not match unsuited interactive projects");
+}
+if (
+  guidedVisibleSlugs.length !== projects.length
+  || new Set(guidedVisibleSlugs).size !== projects.length
+  || !projects.every((project) => guidedVisibleSlugs.includes(project.slug))
+) {
+  errors.push("<guided>: all 31 canonical projects must appear exactly once");
+}
+
+const startIds = new Set(projectStartPaths.map((path) => path.id));
+const startSlugs = new Set(projectStartPaths.map((path) => path.slug));
+if (projectStartPaths.length !== 4 || startIds.size !== 4 || startSlugs.size !== 4) {
+  errors.push("<guided>: Start Here requires four distinct routes");
+}
+for (const path of projectStartPaths) {
+  if (!projects.find((project) => project.slug === path.slug)?.demo) {
+    errors.push(`<guided>: Start Here route ${path.slug} must open an interactive project`);
+  }
+}
+
 if (errors.length) {
   console.error("Project catalogue validation failed:\n");
   errors.forEach((error) => console.error(`- ${error}`));
@@ -192,5 +287,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Project catalogue gate: ${projects.length} unique files, ${demoOwners.size} interactive exhibits, ${experienceIds.size} curated experiences, ${artifactOwners.size} reviewed artifacts.`,
+  `Project catalogue gate: ${projects.length} unique files, ${demoOwners.size} interactive exhibits, ${experienceIds.size} curated experiences across ${guidedShelfIds.size} guided shelves, ${artifactOwners.size} reviewed artifacts.`,
 );

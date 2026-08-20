@@ -7,6 +7,27 @@ export type ProjectSuite = {
   slugs: readonly string[];
 };
 
+export type ProjectShelfId =
+  | "products-operations"
+  | "decision-intelligence"
+  | "scientific-ml"
+  | "molecular-computational"
+  | "systems-reproducibility"
+  | "learning-strategy";
+
+export type GuidedStartId = "finance" | "insurance" | "mri" | "molecular";
+
+export type ProjectGuidedExperienceReference =
+  | { kind: "suite"; id: string; recommendedSlug: string }
+  | { kind: "project"; slug: string };
+
+export type ProjectShelfSpec = {
+  id: ProjectShelfId;
+  code: string;
+  experiences: readonly ProjectGuidedExperienceReference[];
+  supportingSlugs?: readonly string[];
+};
+
 // These are editorial workspaces, not bundles: each chapter stays independently
 // lazy-loaded and retains its canonical ?project= deep link.
 export const projectSuites: readonly ProjectSuite[] = [
@@ -58,6 +79,70 @@ export const projectSuites: readonly ProjectSuite[] = [
     description: "Small source projects presented as transparent audits of what the code does—and does not—establish.",
     slugs: ["course-recommender-audit", "cost-sensitive-cyber-detection", "stock-market-engine"],
   },
+] as const;
+
+// The guided archive is a disjoint editorial index: every canonical project
+// appears exactly once, either as an experience chapter or as supporting evidence.
+export const projectShelfSpecs: readonly ProjectShelfSpec[] = [
+  {
+    id: "products-operations",
+    code: "P/O",
+    experiences: [
+      { kind: "project", slug: "insurance-lead-matching" },
+      { kind: "project", slug: "cv-keyword-automator" },
+      { kind: "project", slug: "ocean-depths-finance" },
+      { kind: "project", slug: "coverd-yasa" },
+    ],
+    supportingSlugs: ["coverd-ai", "growmat"],
+  },
+  {
+    id: "decision-intelligence",
+    code: "D/R",
+    experiences: [
+      { kind: "suite", id: "decision-rl", recommendedSlug: "causal-ope-lab" },
+    ],
+    supportingSlugs: ["covid-decision-support"],
+  },
+  {
+    id: "scientific-ml",
+    code: "S/ML",
+    experiences: [
+      { kind: "suite", id: "scientific-ml", recommendedSlug: "trustworthy-mri-reconstruction" },
+      { kind: "suite", id: "air-quality", recommendedSlug: "air-quality-sensor-optimisation" },
+    ],
+  },
+  {
+    id: "molecular-computational",
+    code: "M/C",
+    experiences: [
+      { kind: "suite", id: "molecular-recognition", recommendedSlug: "molecular-recognition" },
+      { kind: "suite", id: "thermodynamics", recommendedSlug: "pc-saft-thermodynamics" },
+      { kind: "project", slug: "coding-series" },
+    ],
+  },
+  {
+    id: "systems-reproducibility",
+    code: "SYS",
+    experiences: [
+      { kind: "suite", id: "systems-reproducibility", recommendedSlug: "deep-learning-environment-resolver" },
+      { kind: "suite", id: "supporting-audits", recommendedSlug: "course-recommender-audit" },
+    ],
+  },
+  {
+    id: "learning-strategy",
+    code: "L/V",
+    experiences: [
+      { kind: "project", slug: "parliamo-italian-learning" },
+      { kind: "suite", id: "strategy-venture", recommendedSlug: "ai-venture-reasoning" },
+    ],
+  },
+] as const;
+
+export const projectStartPaths: readonly { id: GuidedStartId; slug: string }[] = [
+  { id: "finance", slug: "ocean-depths-finance" },
+  { id: "insurance", slug: "insurance-lead-matching" },
+  { id: "mri", slug: "trustworthy-mri-reconstruction" },
+  { id: "molecular", slug: "molecular-recognition" },
 ] as const;
 
 export function getProjectSuite(project: Pick<Project, "slug">) {
