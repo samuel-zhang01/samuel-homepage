@@ -26,10 +26,11 @@ import PdfPreview from "@/components/PdfPreview";
 import projectExplorerStyles from "@/components/projects/ProjectExplorer.module.css";
 import projectActionsStyles from "@/components/projects/ProjectActions.module.css";
 import projectDemoRouterStyles from "@/components/projects/ProjectDemoRouter.module.css";
+import projectCaseBriefStyles from "@/components/projects/ProjectCaseBrief.module.css";
 
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
   loading: () => (
-    <div className={`projects-app ${projectExplorerStyles.archiveModuleLoading} ${projectActionsStyles.archiveCssAnchor} ${projectDemoRouterStyles.archiveCssAnchor}`}>
+    <div className={`projects-app ${projectExplorerStyles.archiveModuleLoading} ${projectActionsStyles.archiveCssAnchor} ${projectDemoRouterStyles.archiveCssAnchor} ${projectCaseBriefStyles.archiveCssAnchor}`}>
       <span className="eyebrow">OPENING PROJECT ARCHIVE…</span>
       <span className={projectExplorerStyles.archiveLoadingTrack} aria-hidden="true"><i /></span>
     </div>

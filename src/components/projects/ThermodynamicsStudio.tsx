@@ -647,8 +647,8 @@ export function ThermodynamicsStudio() {
             step="02"
             title="PACKING MOMENTS"
             left={<><var>ζ</var><sub>n</sub></>}
-            right={<>π<var>N</var><sub>A</sub><var>ρ</var>/6 · Σ<sub>i</sub> <var>x</var><sub>i</sub><var>m</var><sub>i</sub><var>d</var><sub>i</sub><sup>n</sup></>}
-            note="The third moment ζ₃ is the segment packing fraction η."
+            right={<>π<var>N</var><sub>A</sub><var>ρ</var>·10<sup>−30</sup>/6 · Σ<sub>i</sub> <var>x</var><sub>i</sub><var>m</var><sub>i</sub><var>d</var><sub>i</sub><sup>n</sup></>}
+            note="ρ is in mol m⁻³ and d is in Å, so 10⁻³⁰ converts the segment-volume factor to m³. The third moment ζ₃ is the packing fraction η."
           />
           <FormulaCard
             step="03"

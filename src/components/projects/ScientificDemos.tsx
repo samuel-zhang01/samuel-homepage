@@ -655,7 +655,7 @@ export function ReliabilityLabDemo() {
       }
     >
       <EvidenceNote tone="green" icon="✓" title="Results preserved with their trade-offs">
-        This port reads fixed outputs from the executed safety coursework. It does not refit the classifier or recompute conformal intervals in the browser.
+        This port reads fixed outputs from the executed safety coursework. It does not refit the classifier or recompute conformal intervals in the browser. The split-conformal coverage result relies on exchangeability; the source explicitly notes that covariate shift can break that guarantee.
       </EvidenceNote>
 
       <div className={styles.reliabilityLayout}>

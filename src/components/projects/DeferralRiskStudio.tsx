@@ -484,7 +484,7 @@ export function DeferralRiskStudio() {
                 value={lambda}
                 onChange={(event) => setLambda(Number(event.target.value))}
               />
-              <small>Objective = system accuracy − λ · CVaR</small>
+              <small>Current-policy score = system accuracy − λ · CVaR; this control does not optimise a threshold.</small>
             </label>
             <fieldset className={styles.deltaSwitch}>
               <legend>Worst-tail share δ</legend>
@@ -539,7 +539,7 @@ export function DeferralRiskStudio() {
             <small>{evaluation.tailCount} retained tail samples</small>
           </article>
           <article className={`${styles.metricCard} ${styles.objectiveCard}`}>
-            <span>Risk objective</span>
+            <span>Current-policy risk score</span>
             <strong>{evaluation.objective.toFixed(3)}</strong>
             <small>{percent(evaluation.systemAccuracy)} − {lambda.toFixed(1)} × {evaluation.cvar.toFixed(3)}</small>
           </article>
@@ -899,7 +899,7 @@ function TailLedger({
         </section>
 
         <aside className={styles.objectivePanel} aria-labelledby="deferral-objective-title">
-          <div className={styles.sectionHeading}><div><span>RISK-SENSITIVE SCORE</span><h3 id="deferral-objective-title">Threshold objective</h3></div></div>
+          <div className={styles.sectionHeading}><div><span>RISK-SENSITIVE SCORE</span><h3 id="deferral-objective-title">Current threshold score</h3></div></div>
           <div className={styles.objectiveEquation}>
             <strong>{evaluation.objective.toFixed(3)}</strong>
             <code>{evaluation.systemAccuracy.toFixed(3)} − {settings.lambda.toFixed(1)} × {evaluation.cvar.toFixed(3)}</code>
@@ -973,7 +973,7 @@ function ResearchNotes() {
             <li><b>Train.</b> Fit XGBoost, then calibrate class probabilities with 3-fold isotonic regression.</li>
             <li><b>Update.</b> Begin with π₀ = 0.247 and multiply odds by KDE class-conditional likelihood ratios.</li>
             <li><b>Reject.</b> Defer when entropy exceeds τ <em>or</em> classifier confidence falls below κ.</li>
-            <li><b>Score.</b> Sweep τ and subtract λ times empirical CVaR on non-deferred 0–1 losses.</li>
+            <li><b>Score.</b> Inspect a selected τ and subtract λ times empirical CVaR on non-deferred 0–1 losses; this browser control does not choose an optimum.</li>
           </ol>
           <div className={styles.formulaCard}>
             <code>H(π) = −π log₂π − (1−π) log₂(1−π)</code>

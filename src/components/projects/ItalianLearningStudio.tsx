@@ -239,7 +239,7 @@ function labelFor(skill: Skill, bilingual: boolean) {
 
 function AppMenu({ active, setActive, bilingual }: { active: StudioView; setActive: (view: StudioView) => void; bilingual: boolean }) {
   const views: { id: StudioView; it: string; en: string; icon: string }[] = [
-    { id: "practice", it: "Palestra", en: "Practice", icon: "✎" },
+    { id: "practice", it: "Oggi", en: "Today", icon: "✎" },
     { id: "recall", it: "Richiamo", en: "Recall", icon: "▱" },
     { id: "rubric", it: "Rubrica", en: "Rubric", icon: "✓" },
     { id: "evidence", it: "Prove", en: "Evidence", icon: "▥" },
@@ -402,7 +402,7 @@ function PracticeLab({
     <section className={styles.practiceLab}>
       <header className={styles.sectionIntro}>
         <div>
-          <span className={styles.kicker}>PALESTRA ADATTIVA · {EXERCISES.length} LIVE VARIATIONS</span>
+          <span className={styles.kicker}>OGGI / ADAPTIVE PRACTICE · {EXERCISES.length} REPRESENTATIVE VARIATIONS / 211 SOURCE EXERCISES</span>
           <h3>{bilingual ? "Misura con una prova, non con una sensazione." : "Misura con una prova."}</h3>
           <p lang={bilingual ? "en-GB" : "it"}>{bilingual ? "Each answer updates skill accuracy, response time and the next weak-area queue." : "Ogni risposta aggiorna abilità, tempo e prossima coda."}</p>
         </div>
@@ -604,8 +604,8 @@ function RubricLab({ bilingual }: { bilingual: boolean }) {
   const report = useMemo(() => localRubric(assessed), [assessed]);
   const dirty = draft !== assessed;
   const summary = report.score >= 70
-    ? "Buon tentativo: il messaggio è chiaro e contiene lessico pertinente."
-    : "Hai iniziato bene; ora rendi la risposta più completa e specifica.";
+    ? "Buona copertura del compito: sono presenti più segnali distinti."
+    : "Hai iniziato bene; aggiungi più segnali distinti del compito.";
 
   return (
     <section className={styles.rubricLab}>
@@ -648,7 +648,7 @@ function RubricLab({ bilingual }: { bilingual: boolean }) {
           <div className={`${styles.tutorNote} ${report.score >= 70 ? styles.tutorGood : ""}`}>
             <span>FEEDBACK RUBRICA LOCALE</span>
             <strong>{summary}</strong>
-            {bilingual ? <p>{report.score >= 70 ? "The message is clear and includes relevant task language." : "Build this into two complete, specific sentences."}</p> : null}
+            {bilingual ? <p>{report.score >= 70 ? "This heuristic found distinct task signals; it does not judge grammar, clarity or language level." : "Add distinct task signals, then revise for grammar and clarity separately."}</p> : null}
             <small>Next: riscrivi una volta senza guardare, poi leggila ad alta voce.</small>
           </div>
         </div>

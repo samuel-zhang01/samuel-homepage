@@ -312,15 +312,17 @@ export function CyberThresholdDemo() {
       className={styles.window}
       footer={
         <>
-          <span>Source anchor: 10,000 balanced flows</span>
-          <span>Reported RBF ROC-AUC 0.9343</span>
+          <span>Source audit: 10,000 labelled rows</span>
+          <span>Historical metric withheld pending leakage-safe rerun</span>
         </>
       }
     >
       <SourceNote title="Do not read this as validation" tone="amber">
         The adjustable confusion matrix is a deterministic teaching scenario, not a replay of held-out
-        predictions. The coursework threshold was optimised on its test set (reported ≈0.0203), which
-        makes that minimum optimistic; production selection needs untouched validation and calibration.
+        predictions. The coursework data include 4,904 duplicate rows beyond the first; 1,084 of 2,000
+        seeded test rows exactly recur in training. Its transform also fits during use and the threshold
+        was selected on the test set. A grouped or deduplicated rerun with train-only preprocessing,
+        validation selection and an untouched final test is required before reporting performance.
       </SourceNote>
 
       <div className={styles.cyberLayout}>
@@ -439,7 +441,7 @@ export function CyberThresholdDemo() {
           </svg>
           <div className={styles.legendRow}>
             <span><i className={styles.currentKey} /> Current scenario</span>
-            <span><i className={styles.referenceKey} /> Original test-optimised reference</span>
+            <span><i className={styles.referenceKey} /> Historical test-optimised threshold (not validation)</span>
           </div>
         </div>
       </section>
@@ -714,7 +716,7 @@ export function CausalOpeDemo() {
   return (
     <DemoWindow
       appName="Causal Sandbox"
-      title="DAG & off-policy weighting lab"
+      title="DAG & treatment-weighting lab"
       status="RE-AUTHORED TOY"
       statusTone="safe"
       className={styles.window}
@@ -727,7 +729,7 @@ export function CausalOpeDemo() {
     >
       <SourceNote title="Learning interface—not a causal claim">
         The graph, outcomes and propensities were newly authored for this portfolio. Click nodes to test
-        an adjustment set, then stress the same inverse-propensity mechanism used in OPE.
+        an adjustment set, then stress inverse-propensity treatment weighting in a small synthetic cohort.
       </SourceNote>
 
       <div className={styles.causalLayout}>
@@ -813,7 +815,7 @@ export function CausalOpeDemo() {
         <section className={styles.opePanel} aria-labelledby="ope-title">
           <div className={styles.chartHeading}>
             <div>
-              <span>IPS / IPW DIAGNOSTIC</span>
+              <span>IPW DIAGNOSTIC</span>
               <h3 id="ope-title">Overlap stress test</h3>
             </div>
             <span className={styles.hypothesisBadge}>TOY DATA</span>

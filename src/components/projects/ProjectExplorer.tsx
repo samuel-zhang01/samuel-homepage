@@ -12,6 +12,7 @@ import {
 } from "@/data/projects";
 import type { Locale } from "@/lib/i18n";
 import { ProjectActions } from "./ProjectActions";
+import { ProjectCaseBrief } from "./ProjectCaseBrief";
 import { ProjectDemoRouter } from "./ProjectDemoRouter";
 import {
   formatProjectArchiveCopy,
@@ -390,6 +391,7 @@ function ProjectDetail({
           <AccessBadge access={project.access} locale={locale} />
         </div>
         <div className={styles.demoBody} lang="en-GB">
+          <ProjectCaseBrief project={project} locale={locale} onSelectProject={onSelectProject} />
           <ProjectDemoRouter demoId={project.demo} />
         </div>
       </section>

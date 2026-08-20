@@ -598,10 +598,11 @@ export function RlAtlasDemo() {
         <div className={styles.snapshotCaveat} role="note">
           <span aria-hidden="true">!</span>
           <p>
-            <strong>Snapshot caveat:</strong> the checked-in QA tables include no generated-at time or commit.
-            “Recorded OK” is historical evidence, not a live rerun. PDF flags are margin-scan heuristics and
-            should be visually reviewed; the prose index’s “all notebooks execute” claim conflicts with the
-            Week 04 row.
+            <strong>Snapshot caveat:</strong> this atlas was audited against local source snapshot 1675f6a;
+            the checked-in QA tables themselves include no generated-at time or commit. “Recorded OK” is
+            historical evidence, not a live rerun. PDF flags are margin-scan heuristics and should be visually
+            reviewed; the prose index’s “all notebooks execute” claim conflicts with the Week 04 row. The
+            repository credits agent-authored bundles, so this map does not imply individual authorship of every module.
           </p>
         </div>
       </section>

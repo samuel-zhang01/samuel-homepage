@@ -72,6 +72,19 @@ export type ProjectArchiveCopy = {
     buildJourney: string;
     evidence: string;
     safeToShow: string;
+    caseBrief: {
+      eyebrow: string;
+      title: string;
+      purpose: string;
+      progression: string;
+      evidence: string;
+      walkthrough: string;
+      walkthroughCopy: string;
+      boundary: string;
+      relatedSuite: string;
+      relatedCopy: string;
+      discuss: string;
+    };
   };
   markers: {
     demo: string;
@@ -184,6 +197,19 @@ const enGB: ProjectArchiveCopy = {
     buildJourney: "Small → useful → polished",
     evidence: "EVIDENCE",
     safeToShow: "What is safe to show",
+    caseBrief: {
+      eyebrow: "CASE BRIEF / READ BEFORE INTERACTING",
+      title: "What this project is trying to establish",
+      purpose: "CONTEXT & PURPOSE",
+      progression: "WORK PROGRESSION",
+      evidence: "EVIDENCE CONTRACT",
+      walkthrough: "30-SECOND WALKTHROUGH",
+      walkthroughCopy: "Change one visible input, read the calculation or trace that changes with it, then use the method or evidence panel to distinguish the source record from this safe browser reconstruction.",
+      boundary: "BOUNDARY",
+      relatedSuite: "RELATED SUITE",
+      relatedCopy: "Open a connected chapter without losing this project’s individual evidence boundary.",
+      discuss: "Discuss this work →",
+    },
   },
   markers: { demo: "DEMO", live: "LIVE" },
   actions: {
@@ -352,6 +378,19 @@ const zhCN: ProjectArchiveCopy = {
     buildJourney: "从小开始 → 实用 → 完善",
     evidence: "可展示证据",
     safeToShow: "获准公开的内容",
+    caseBrief: {
+      eyebrow: "案例摘要 / 互动前请先阅读",
+      title: "此项目希望说明什么",
+      purpose: "背景与目标",
+      progression: "工作推进过程",
+      evidence: "证据范围",
+      walkthrough: "30 秒导览",
+      walkthroughCopy: "改变一个可见输入，查看随之变化的计算或轨迹，然后通过方法或证据面板区分来源记录与这个安全的浏览器重构版。",
+      boundary: "公开边界",
+      relatedSuite: "相关专题",
+      relatedCopy: "打开相关章节，同时保留此项目独立的证据边界。",
+      discuss: "讨论此项目 →",
+    },
   },
   markers: { demo: "演示", live: "在线" },
   actions: {
@@ -497,6 +536,19 @@ const zhTW: ProjectArchiveCopy = {
     buildJourney: "從小開始 → 實用 → 完善",
     evidence: "可展示證據",
     safeToShow: "獲准公開的內容",
+    caseBrief: {
+      eyebrow: "案例摘要 / 互動前請先閱讀",
+      title: "此專案希望說明什麼",
+      purpose: "背景與目標",
+      progression: "工作推進過程",
+      evidence: "證據範圍",
+      walkthrough: "30 秒導覽",
+      walkthroughCopy: "變更一個可見輸入，查看隨之改變的計算或軌跡，然後透過方法或證據面板區分來源記錄與這個安全的瀏覽器重構版。",
+      boundary: "公開邊界",
+      relatedSuite: "相關專題",
+      relatedCopy: "開啟相關章節，同時保留此專案獨立的證據邊界。",
+      discuss: "討論此專案 →",
+    },
   },
   markers: { demo: "展示", live: "線上" },
   actions: {

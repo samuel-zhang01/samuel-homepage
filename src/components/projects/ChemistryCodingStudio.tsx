@@ -20,7 +20,7 @@ type MonteCarloMove = {
 const labTabs: Array<{ id: LabId; number: string; label: string; short: string }> = [
   { id: "metropolis", number: "01", label: "Metropolis sampler", short: "MC" },
   { id: "polymer", number: "02", label: "Polymer walks", short: "3D" },
-  { id: "dynamics", number: "03", label: "Molecular dynamics", short: "MD" },
+  { id: "dynamics", number: "03", label: "Potential + Verlet", short: "VV" },
   { id: "quantum", number: "04", label: "Quantum ledger", short: "HF" },
   { id: "audit", number: "05", label: "Evidence trail", short: "LOG" },
 ];
@@ -111,6 +111,12 @@ const mdStages = [
 
 function clamp(value: number, minimum: number, maximum: number) {
   return Math.min(maximum, Math.max(minimum, value));
+}
+
+function reflectInto(value: number, minimum: number, maximum: number) {
+  const span = maximum - minimum;
+  const folded = ((value - minimum) % (2 * span) + 2 * span) % (2 * span);
+  return minimum + (folded <= span ? folded : 2 * span - folded);
 }
 
 function mulberry32(seed: number) {
@@ -305,8 +311,8 @@ function MetropolisLab() {
   const reset = (nextSeed = seed) => {
     const random = mulberry32(nextSeed);
     const jittered = initialParticles.map((particle) => ({
-      x: clamp(particle.x + (random() - 0.5) * 0.035, 0.06, 0.94),
-      y: clamp(particle.y + (random() - 0.5) * 0.035, 0.06, 0.94),
+      x: reflectInto(particle.x + (random() - 0.5) * 0.035, 0.06, 0.94),
+      y: reflectInto(particle.y + (random() - 0.5) * 0.035, 0.06, 0.94),
     }));
     setParticles(jittered);
     setStep(0);
@@ -327,8 +333,8 @@ function MetropolisLab() {
       const particle = Math.floor(random() * nextParticles.length);
       const proposal = nextParticles.map((point) => ({ ...point }));
       proposal[particle] = {
-        x: clamp(proposal[particle].x + (random() - 0.5) * 0.12, 0.045, 0.955),
-        y: clamp(proposal[particle].y + (random() - 0.5) * 0.12, 0.045, 0.955),
+        x: reflectInto(proposal[particle].x + (random() - 0.5) * 0.12, 0.045, 0.955),
+        y: reflectInto(proposal[particle].y + (random() - 0.5) * 0.12, 0.045, 0.955),
       };
       const before = configurationEnergy(nextParticles);
       const after = configurationEnergy(proposal);
@@ -361,7 +367,7 @@ function MetropolisLab() {
       <LabHeading
         kicker="STANDALONE REACT EXTENSION · 25 MAR 2025"
         title="Metropolis molecular sampler"
-        description="Move one particle, evaluate the Lennard–Jones energy change, then let temperature decide whether an uphill proposal survives. Every run is deterministic for its seed."
+        description="Move one particle with a symmetric reflected-boundary proposal, evaluate the Lennard–Jones energy change, then let temperature decide whether an uphill proposal survives. Every run is deterministic for its seed."
         evidence="LIVE REIMPLEMENTATION"
       />
 
@@ -628,8 +634,9 @@ function PolymerLab() {
   const [tilt, setTilt] = useState(22);
   const result = useMemo(() => generatePolymer(length, seed, mode), [length, seed, mode]);
   const projected = useMemo(() => projectPolymer(result.points, turn, tilt), [result.points, turn, tilt]);
-  const theoryEnd = Math.sqrt(length);
-  const theoryGyration = Math.sqrt(length / 6);
+  const bonds = Math.max(length - 1, 1);
+  const theoryEnd = Math.sqrt(bonds);
+  const theoryGyration = Math.sqrt(bonds / 6);
   const modeDescription = mode === "notebook"
     ? "Notebook polar-angle sampler"
     : mode === "isotropic"
@@ -697,7 +704,7 @@ function PolymerLab() {
                 <circle cx={projected.at(-1)?.x} cy={projected.at(-1)?.y} r="7" className={styles.polymerEnd} />
               </>
             ) : null}
-            <text x="24" y="34" className={styles.svgReadout}>START → END / {length} sites</text>
+            <text x="24" y="34" className={styles.svgReadout}>START → END / {length} sites · {bonds} bonds</text>
           </svg>
           <div className={styles.legendRow}>
             <span><i className={styles.startDot} /> start</span>
@@ -723,8 +730,8 @@ function PolymerLab() {
       </div>
 
       <div className={styles.metricsRow}>
-        <MetricCard label="END-TO-END R" value={result.endToEnd.toFixed(3)} detail={`Ideal reference √N = ${theoryEnd.toFixed(3)}`} />
-        <MetricCard label="RADIUS OF GYRATION" value={result.radiusGyration.toFixed(3)} detail={`Ideal reference √(N/6) = ${theoryGyration.toFixed(3)}`} />
+        <MetricCard label="END-TO-END R" value={result.endToEnd.toFixed(3)} detail={`Ideal reference √(N − 1) = ${theoryEnd.toFixed(3)}`} />
+        <MetricCard label="RADIUS OF GYRATION" value={result.radiusGyration.toFixed(3)} detail={`Ideal reference √((N − 1)/6) = ${theoryGyration.toFixed(3)}`} />
         <MetricCard label="MODEL" value={mode === "self-avoiding" ? "SAW / lattice" : "Random flight"} detail={modeDescription} />
       </div>
 
@@ -739,7 +746,7 @@ function PolymerLab() {
             <div className={styles.formulaCard}>
               <span>GYRATION</span>
               <p><var>R</var><sub>g</sub> = √[(1/<var>N</var>) Σ |<b>r</b><sub>i</sub> − <b>r</b><sub>cm</sub>|²]</p>
-              <small>The notebook compares ideal chains with R<sub>g</sub> ≈ √(N/6).</small>
+              <small>For this N-site display there are N − 1 bonds, so the ideal reference uses R<sub>g</sub> ≈ √((N − 1)/6).</small>
             </div>
           </div>
         }
@@ -820,8 +827,8 @@ function DynamicsLab() {
     <div className={styles.lab}>
       <LabHeading
         kicker="COMPUTATIONAL LAB 4 · 18–23 FEB 2025"
-        title="Lennard–Jones dynamics debugger"
-        description="Interrogate the shifted 12–6 potential, inspect the force at one separation and walk through the exact velocity-Verlet pipeline recorded in the molecular-dynamics notebook."
+        title="Lennard–Jones potential and Verlet explainer"
+        description="Interrogate the shifted 12–6 potential, inspect the force at one separation and walk through the velocity-Verlet pipeline recorded in the notebook. This is an explanatory kernel, not a molecular-dynamics trajectory simulation."
         evidence="FORMULA + PIPELINE"
       />
 
@@ -848,7 +855,7 @@ function DynamicsLab() {
           </svg>
           <div className={styles.legendRow}>
             <span><i className={styles.rawLegend} /> raw U(r)</span>
-            <span><i className={styles.shiftedLegend} /> shifted at cutoff</span>
+            <span><i className={styles.shiftedLegend} /> energy-shifted at cutoff</span>
             <span><i className={styles.markerLegend} /> inspected separation</span>
           </div>
         </section>
@@ -903,7 +910,7 @@ function DynamicsLab() {
             <div className={styles.formulaCard}>
               <span>SHIFTED CUTOFF</span>
               <p><var>U</var><sub>s</sub>(<var>r</var>) = <var>U</var>(<var>r</var>) − <var>U</var>(<var>r</var><sub>c</sub>)</p>
-              <small>For r &lt; r<sub>c</sub>; the browser generalises the notebook’s ε = σ = 1 expression.</small>
+              <small>For r &lt; r<sub>c</sub>; this makes energy continuous, but not force-continuous, at the cutoff. The browser generalises the notebook’s ε = σ = 1 expression.</small>
             </div>
             <div className={styles.formulaCard}>
               <span>RADIAL FORCE</span>
@@ -978,7 +985,7 @@ function QuantumLab() {
       <div className={styles.quantumGrid}>
         <section className={styles.orbitalCard}>
           <div className={styles.cardToolbar}>
-            <span>NORMALISED 1s RADIAL PROFILE</span>
+            <span>NORMALISED 1D 1s CROSS-SECTION</span>
             <strong>φ(r)</strong>
           </div>
           <svg viewBox="0 0 600 270" role="img" aria-label="Slater-type and Gaussian-type 1s orbital functions">
@@ -988,7 +995,7 @@ function QuantumLab() {
             </g>
             <path d={orbitalChart.sto} className={styles.stoCurve} />
             <path d={orbitalChart.gto} className={styles.gtoCurve} />
-            <text x="300" y="262" textAnchor="middle" className={styles.axisLabel}>radial displacement r</text>
+            <text x="300" y="262" textAnchor="middle" className={styles.axisLabel}>signed 1D displacement r through the nucleus</text>
             <text x="52" y="35" className={styles.svgReadout}>cusp at r = 0</text>
           </svg>
           <div className={styles.legendRow}>

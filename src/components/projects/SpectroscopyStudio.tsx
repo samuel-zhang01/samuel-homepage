@@ -11,7 +11,6 @@ type PlotColour = "red" | "green" | "blue" | "cyan" | "magenta" | "yellow" | "bl
 const SOURCE_URL =
   "https://github.com/samuel-zhang01/CPROT-Spec-Fast-Plotter/tree/9c6496d7b3c9f67dad163bf6f289de5e22ed3fd0";
 const TRACE_START = 2000;
-const TRACE_END = 8000;
 
 const colourOptions: Array<{ value: PlotColour; label: string; stroke: string }> = [
   { value: "red", label: "Red", stroke: "#c32d3c" },
@@ -199,14 +198,14 @@ export function SpectroscopyStudio() {
   const [showLegend, setShowLegend] = useState(true);
   const [legendText, setLegendText] = useState("Synthetic trace");
   const [plotColour, setPlotColour] = useState<PlotColour>("blue");
-  const [centreDraft, setCentreDraft] = useState("2000");
-  const [centre, setCentre] = useState(2000);
+  const [centreDraft, setCentreDraft] = useState("5175");
+  const [centre, setCentre] = useState(5175);
   const [fineRange, setFineRange] = useState(0.01);
   const [coarseRange, setCoarseRange] = useState(10);
-  const [lowerDraft, setLowerDraft] = useState(String(TRACE_START));
-  const [upperDraft, setUpperDraft] = useState(String(TRACE_END));
-  const [xRange, setXRange] = useState<[number, number]>([TRACE_START, TRACE_END]);
-  const [yRange, setYRange] = useState<[number, number]>(initialYRange);
+  const [lowerDraft, setLowerDraft] = useState("5140");
+  const [upperDraft, setUpperDraft] = useState("5210");
+  const [xRange, setXRange] = useState<[number, number]>([5140, 5210]);
+  const [yRange, setYRange] = useState<[number, number]>(() => autoYRange(syntheticTrace.filter((point) => point.x >= 5140 && point.x <= 5210)));
   const [format, setFormat] = useState<ExportFormat>("png");
   const [dpiDraft, setDpiDraft] = useState("600");
   const [exportOpen, setExportOpen] = useState(false);
@@ -267,16 +266,16 @@ export function SpectroscopyStudio() {
       return;
     }
     setLoaded(true);
-    setCentre(2000);
-    setCentreDraft("2000");
+    setCentre(5175);
+    setCentreDraft("5175");
     setFineRange(0.01);
     setCoarseRange(10);
-    setXRange([TRACE_START, TRACE_END]);
-    setLowerDraft(String(TRACE_START));
-    setUpperDraft(String(TRACE_END));
-    setYRange(initialYRange);
+    setXRange([5140, 5210]);
+    setLowerDraft("5140");
+    setUpperDraft("5210");
+    setYRange(autoYRange(syntheticTrace.filter((point) => point.x >= 5140 && point.x <= 5210)));
     setExportPrepared(false);
-    setMessage("Loaded 1,201 synthetic rows × 2 numeric columns. No repository data was read.");
+    setMessage("Loaded 1,201 synthetic rows × 2 numeric columns and focused the generated 5,175 MHz feature. No repository data was read.");
   }
 
   function applyCentre() {
@@ -335,15 +334,15 @@ export function SpectroscopyStudio() {
 
   function resetView() {
     setLoaded(true);
-    setCentre(2000);
-    setCentreDraft("2000");
+    setCentre(5175);
+    setCentreDraft("5175");
     setFineRange(0.01);
     setCoarseRange(10);
-    setLowerDraft(String(TRACE_START));
-    setUpperDraft(String(TRACE_END));
-    setXRange([TRACE_START, TRACE_END]);
-    setYRange(initialYRange);
-    setMessage("Full synthetic trace restored. Reset is a browser convenience, not a source control.");
+    setLowerDraft("5140");
+    setUpperDraft("5210");
+    setXRange([5140, 5210]);
+    setYRange(autoYRange(syntheticTrace.filter((point) => point.x >= 5140 && point.x <= 5210)));
+    setMessage("Generated 5,175 MHz focus window restored. Reset is a browser convenience, not a source control.");
   }
 
   function prepareExport() {

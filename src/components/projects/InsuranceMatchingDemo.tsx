@@ -591,6 +591,23 @@ export function InsuranceMatchingDemo() {
         </div>
       </aside>
 
+      <section className={styles.sourceRecord} aria-label="Source-recorded evaluation contracts">
+        <div className={styles.sourceRecordIntro}>
+          <span>SOURCE-RECORDED EVIDENCE / TWO SEPARATE CONTRACTS</span>
+          <p>These aggregate study results are context for the workbench, not values used by its fictional markets. They measure different targets and must not be combined into one headline score.</p>
+        </div>
+        <article>
+          <span>RISK-TO-MARKET RANKING</span>
+          <strong>148,140 rows · 37,844 UMRs · 46 features</strong>
+          <p>Temporal Hit@1 <b>0.758</b> versus random <b>0.596</b>; Hit@3 <b>0.945</b>. The final record also notes incumbency-dominated behaviour, so this is not a generic recommendation claim.</p>
+        </article>
+        <article>
+          <span>PLACEMENT-OUTCOME EVALUATION</span>
+          <strong>70,598 labelled rows</strong>
+          <p>Holdout Hit@1 <b>0.569</b> versus random <b>0.231</b>. This is a separate placement contract, not a validation of the synthetic browser scenarios or the retired composite.</p>
+        </article>
+      </section>
+
       <section className={styles.modeChooser} aria-labelledby="workbench-mode-title">
         <div>
           <span>SOURCE-FIDELITY SWITCH</span>
