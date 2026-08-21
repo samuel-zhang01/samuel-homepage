@@ -2,7 +2,7 @@ import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 
 export const metadata = {
   title: "Desk Arcade",
-  description: "A tiny System 7 desk arcade inside Samuel Zhang’s interactive portfolio.",
+  description: "Seven local-only profile, decision and science games inside Samuel Zhang’s System 7 portfolio.",
 };
 
 export default function GamesPage() {

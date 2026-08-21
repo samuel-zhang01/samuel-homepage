@@ -175,6 +175,11 @@
   gap: 7px;
 }
 
+.startLane:focus-visible {
+  outline: 3px double var(--guide-navy);
+  outline-offset: 3px;
+}
+
 .startCard {
   display: flex;
   min-width: 0;
@@ -264,6 +269,17 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   align-items: start;
+}
+
+/* Once a drawer opens, keep every drawer header on the same rail. This avoids
+   an empty half-row when an even-numbered drawer spans a two-column grid. */
+.shelfGrid[data-expanded="true"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.shelfGrid[data-expanded="true"]
+  > .shelfItem:not([data-open="true"]) .shelfButton {
+  min-height: 78px;
 }
 
 .shelfItem {
@@ -733,7 +749,7 @@
 .cardActions button,
 .recommended button,
 .standaloneActions button {
-  min-height: 38px;
+  min-height: 44px;
   padding: 7px 9px;
   font-size: 11px;
 }
@@ -875,11 +891,33 @@
   }
 
   .startLane {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: none;
+    grid-auto-columns: minmax(250px, 88%);
+    grid-auto-flow: column;
+    overflow-x: auto;
+    padding: 1px 2px 9px;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 2px;
+    scroll-snap-type: inline mandatory;
+    scrollbar-color: #777 #ddd;
+    scrollbar-width: thin;
+  }
+
+  .startLane > li {
+    scroll-snap-align: start;
   }
 
   .startCard {
     min-height: 0;
+  }
+
+  .hero .stats {
+    display: none;
+  }
+
+  .cardActions {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
   }
 
   .cardActions button,
@@ -977,11 +1015,29 @@
     outline: 3px solid Highlight;
   }
 
+  .startLane:focus-visible {
+    outline-color: Highlight;
+  }
+
   .primaryButton,
   .recommended button,
   .shelfItem[data-open="true"] > .shelfButton,
   .experienceIndex,
   .chapterNumber {
     border: 1px solid ButtonText;
+  }
+
+  .primaryButton,
+  .recommended button,
+  .shelfItem[data-open="true"] > .shelfButton {
+    color: HighlightText;
+    background: Highlight;
+  }
+
+  .startCard[data-selected="true"],
+  .experience[data-selected="true"],
+  .chapterList > li[data-selected="true"],
+  .resourceList > li[data-selected="true"] {
+    outline-color: Highlight;
   }
 }

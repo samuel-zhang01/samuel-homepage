@@ -33,6 +33,18 @@ function isTrustedProductionHost(request: NextRequest) {
     || isPrivateLanIpv4(hostname);
 }
 
+function applyCanonicalProductionHeaders(request: NextRequest, response: NextResponse) {
+  // COOP is meaningful only on a trustworthy origin; sending it on a direct
+  // HTTP LAN response makes browsers ignore it and emit a misleading warning.
+  // Keep both transport-scoped headers on the canonical TLS host while LAN
+  // troubleshooting retains the common security policy from next.config.ts.
+  if (process.env.NODE_ENV === "production" && requestHostname(request) === CANONICAL_PUBLIC_HOST) {
+    response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
+    response.headers.set("Strict-Transport-Security", "max-age=31536000");
+  }
+  return response;
+}
+
 export function middleware(request: NextRequest) {
   // The container is intentionally reachable from the private LAN so a TLS
   // reverse proxy can forward the canonical hostname to it. Refuse arbitrary
@@ -54,24 +66,24 @@ export function middleware(request: NextRequest) {
     if (localeSegment && CONTENT_LANGUAGES[localeSegment]) {
       response.headers.set("Content-Language", CONTENT_LANGUAGES[localeSegment]);
     }
-    return response;
+    return applyCanonicalProductionHeaders(request, response);
   }
 
   if (request.method === "OPTIONS") {
-    return new NextResponse(null, {
+    return applyCanonicalProductionHeaders(request, new NextResponse(null, {
       status: 204,
       headers: { Allow: ALLOWED_METHODS, "Cache-Control": "no-store" },
-    });
+    }));
   }
 
-  return new NextResponse("Method Not Allowed", {
+  return applyCanonicalProductionHeaders(request, new NextResponse("Method Not Allowed", {
     status: 405,
     headers: {
       Allow: ALLOWED_METHODS,
       "Cache-Control": "no-store",
       "Content-Type": "text/plain; charset=utf-8",
     },
-  });
+  }));
 }
 
 export const config = {

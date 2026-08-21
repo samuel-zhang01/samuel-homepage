@@ -88,7 +88,21 @@ const files = await collectFiles(projectRoot);
 const publicFiles = await collectFiles(publicRoot);
 const guardedPublicExtension = /\.(?:pdf|docx?|xlsx?|csv|tsv|parquet|db|sqlite[^/]*|ipynb|pt|pth|ckpt|pem|key|zip|7z|tar|gz)$/i;
 const sensitivePublicName = /(?:^|\/)(?:\.env(?:\.|$)|[^/]*(?:private|preshared)[-_]?key[^/]*|credentials?(?:\.|$)|secrets?(?:\.|$)|passwords?(?:\.|$)|keys\.json$)/i;
-const privateKeyMarker = /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/;
+const credentialMarkers = [
+  {
+    label: "private-key material",
+    pattern: /-----BEGIN (?:(?:[A-Z0-9][A-Z0-9 -]*) )?PRIVATE KEY-----|-----BEGIN PGP PRIVATE KEY BLOCK-----/,
+  },
+  { label: "AWS access key", pattern: /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/ },
+  { label: "GitHub token", pattern: /\b(?:gh[pousr]_[A-Za-z0-9_]{36,255}|github_pat_[A-Za-z0-9_]{22,255})\b/ },
+  { label: "GitLab token", pattern: /\bglpat-[A-Za-z0-9_-]{20,}\b/ },
+  { label: "Google API key", pattern: /\bAIza[A-Za-z0-9_-]{35}\b/ },
+  { label: "npm token", pattern: /\bnpm_[A-Za-z0-9]{36}\b/ },
+  { label: "Anthropic API key", pattern: /\bsk-ant-[A-Za-z0-9_-]{32,}\b/ },
+  { label: "OpenAI API key", pattern: /\bsk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{32,}\b/ },
+  { label: "Slack token", pattern: /\bxox[baprs]-[A-Za-z0-9-]{20,}\b/ },
+  { label: "Stripe live secret", pattern: /\bsk_live_[A-Za-z0-9]{20,}\b/ },
+];
 let totalBytes = 0;
 
 for (const path of files) {
@@ -107,12 +121,14 @@ for (const path of publicFiles) {
     throw new Error(`Unreviewed public document, data, model, or key artifact: ${publicPath}`);
   }
 
-  // Private-key PEM blocks can be hidden inside extensionless configuration,
-  // JSON or copied runtime files. Scan every public byte stream for the stable
-  // marker without attempting to print or otherwise inspect the key material.
+  // Credentials can be hidden inside extensionless configuration, JSON or a
+  // copied binary document. Scan every public byte stream for stable formats
+  // without printing or otherwise exposing the matched material.
   const bytes = await readFile(path);
-  if (privateKeyMarker.test(bytes.toString("latin1"))) {
-    throw new Error(`Private-key material is forbidden in public/: ${publicPath}`);
+  const content = bytes.toString("latin1");
+  const matchedCredential = credentialMarkers.find(({ pattern }) => pattern.test(content));
+  if (matchedCredential) {
+    throw new Error(`${matchedCredential.label} is forbidden in public/: ${publicPath}`);
   }
 }
 

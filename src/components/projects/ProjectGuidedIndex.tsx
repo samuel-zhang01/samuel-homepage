@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { projects, type Project } from "@/data/projects";
 import type { Locale } from "@/lib/i18n";
 import { getProjectArchiveCopy } from "./projectArchiveI18n";
@@ -157,11 +157,19 @@ export function ProjectGuidedIndex({
   const [openExperienceId, setOpenExperienceId] = useState<string | null>(
     () => selectedLocation?.experienceId ?? null,
   );
+  const selectedShelfRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     if (!selectedLocation) return;
     setOpenShelfId(selectedLocation.shelfId);
     setOpenExperienceId(selectedLocation.experienceId);
+    const frame = window.requestAnimationFrame(() => {
+      selectedShelfRef.current?.scrollIntoView({
+        block: "nearest",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [selectedLocation]);
 
   const toggleShelf = (shelfId: ProjectShelfId) => {
@@ -193,7 +201,11 @@ export function ProjectGuidedIndex({
           </div>
           <p>{copy.guided.startDescription}</p>
         </div>
-        <ol className={styles.startLane}>
+        <ol
+          className={styles.startLane}
+          tabIndex={0}
+          aria-label={`${copy.guided.startTitle}: ${copy.guided.startDescription}`}
+        >
           {START_PROJECTS.map((path, index) => {
             const pathCopy = copy.guided.startPaths[path.id];
             const isSelected = selectedSlug === path.slug;
@@ -220,7 +232,7 @@ export function ProjectGuidedIndex({
                       className={styles.primaryButton}
                       onClick={() => onOpenProjectDemo(path.slug)}
                     >
-                      ▶ {copy.guided.runDemo}
+                      <span aria-hidden="true">▶</span> {copy.guided.runDemo}
                     </button>
                   </div>
                 </article>
@@ -239,7 +251,7 @@ export function ProjectGuidedIndex({
           <p>{copy.guided.shelvesDescription}</p>
         </div>
 
-        <ol className={styles.shelfGrid}>
+        <ol className={styles.shelfGrid} data-expanded={openShelfId ? "true" : "false"}>
           {GUIDED_SHELVES.map((shelf, shelfIndex) => {
             const shelfCopy = copy.guided.shelves[shelf.id];
             const isOpen = openShelfId === shelf.id;
@@ -253,6 +265,7 @@ export function ProjectGuidedIndex({
             return (
               <li
                 key={shelf.id}
+                ref={selectedLocation?.shelfId === shelf.id ? selectedShelfRef : undefined}
                 className={styles.shelfItem}
                 data-open={isOpen ? "true" : "false"}
                 data-selected={selectedLocation?.shelfId === shelf.id ? "true" : "false"}
@@ -321,7 +334,7 @@ export function ProjectGuidedIndex({
                                   className={styles.primaryButton}
                                   onClick={() => onOpenProjectDemo(project.slug)}
                                 >
-                                  ▶ {copy.markers.demo}
+                                  <span aria-hidden="true">▶</span> {copy.guided.runDemo}
                                 </button>
                               </span>
                             </article>
@@ -379,7 +392,7 @@ export function ProjectGuidedIndex({
                                 type="button"
                                 onClick={() => onOpenProjectDemo(experience.recommended.slug)}
                               >
-                                ▶ {copy.guided.runDemo}
+                                <span aria-hidden="true">▶</span> {copy.guided.runDemo}
                               </button>
                             </aside>
                             <ol className={styles.chapterList}>
@@ -413,7 +426,7 @@ export function ProjectGuidedIndex({
                                       onClick={() => onOpenProjectDemo(project.slug)}
                                       aria-label={`${copy.guided.runDemo}: ${project.title}`}
                                     >
-                                      ▶ {copy.markers.demo}
+                                      <span aria-hidden="true">▶</span> {copy.markers.demo}
                                     </button>
                                   )}
                                 </li>

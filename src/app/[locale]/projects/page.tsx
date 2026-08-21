@@ -1,4 +1,5 @@
 import SystemSevenDesktop from "@/components/SystemSevenDesktop";
+import { getProjectArchiveCopy } from "@/components/projects/projectArchiveI18n";
 import { projects } from "@/data/projects";
 import { localeOptions, normaliseLocale } from "@/lib/i18n";
 import type { Metadata } from "next";
@@ -25,12 +26,15 @@ export async function generateMetadata({
   ]);
   const localeSlug = canonicalLocaleSlug(localeParam);
   if (!localeSlug) return {};
+  const locale = normaliseLocale(localeParam);
+  if (!locale) return {};
+  const copy = getProjectArchiveCopy(locale);
 
   const slug = typeof projectParam === "string" ? projectParam : undefined;
   const project = projects.find((item) => item.slug === slug);
-  const title = project ? `${project.title} — Project Archive` : "Project Archive";
+  const title = project ? `${project.title} — ${copy.header.title}` : copy.header.title;
   const description = project?.summary
-    ?? "Explore Samuel Zhang's products, applied AI research, machine-learning experiments and systems through public demos, case studies and clearly marked private work.";
+    ?? copy.header.description;
   const projectQuery = project ? `?project=${encodeURIComponent(project.slug)}` : "";
   const canonical = `/${localeSlug}/projects${projectQuery}`;
 

@@ -44,7 +44,7 @@ const sectionMetadata: Record<string, { title: string; description: string }> = 
   },
   games: {
     title: "Desk Arcade",
-    description: "Four small games with profile-themed easter eggs.",
+    description: "Seven local games with profile-themed puzzles and calculations.",
   },
   interests: {
     title: "Interests & Notes",

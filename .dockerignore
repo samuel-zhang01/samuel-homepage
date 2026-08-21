@@ -8,6 +8,7 @@ yarn-error.log*
 .next/
 .next-build/
 out/
+*.tsbuildinfo
 
 # Production build
 build/
@@ -30,6 +31,9 @@ Thumbs.db
 # IDE files
 .vscode/
 .idea/
+.github/
+.vercel/
+.codex/
 *.swp
 *.swo
 
@@ -41,6 +45,8 @@ Thumbs.db
 Dockerfile
 docker-compose.yml
 .dockerignore
+deploy.sh
+deploy.env.example
 
 # Documentation
 README.md
@@ -48,11 +54,16 @@ README.md
 others/
 
 # Local credentials and private keys never enter the build context
-.npmrc
-.yarnrc*
-.pnpmrc
-*.pem
-*.key
+**/.npmrc
+**/.yarnrc*
+**/.pnpmrc
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.crt
+**/*.p12
+**/*.pfx
 
 # Root-only source material is not part of the deployed site
 /Candidate Linkedin.txt
@@ -85,12 +96,37 @@ public/UndergradThesis.pdf
 marsh_contract_review_ai_editable.pdf
 MAC Phase 3 - Lead Matching - GRC.pdf
 
-# Never send raw portfolio data or model artifacts to the Docker build context
+# Deny document, raw-data, archive and model formats throughout the build
+# context. Re-include only the source fixture and hash-reviewed public files
+# required by the application; the prebuild gates verify each of them.
+**/*.pdf
+**/*.doc
+**/*.docx
+**/*.xls
+**/*.xlsx
+**/*.csv
+**/*.tsv
+**/*.parquet
+**/*.db
+**/*.sqlite*
+**/*.ipynb
+**/*.pth
+**/*.pt
+**/*.ckpt
+**/*.onnx
+**/*.safetensors
+**/*.zip
+**/*.7z
+**/*.tar
+**/*.gz
 public/projects/**/raw/
-public/projects/**/*.db
-public/projects/**/*.sqlite*
-public/projects/**/*.csv
-public/projects/**/*.ipynb
-public/projects/**/*.pth
-public/projects/**/*.pt
-public/projects/**/*.ckpt
+
+!src/data/project-fixtures/decision-ope-logs.csv
+!public/Samuel-Zhang-Applied-AI-CV.pdf
+!public/Samuel-Zhang-Applied-AI-CV-en-US.pdf
+!public/Samuel-Zhang-Applied-AI-CV-zh-CN.pdf
+!public/Samuel-Zhang-Applied-AI-CV-zh-TW.pdf
+!public/GROWMAT Showcase External Highest Quality.pdf
+!public/projects/parliamo/practice-workbook.pdf
+!public/projects/parliamo/reading-workbook.pdf
+!public/projects/study-rl/syllabus.pdf

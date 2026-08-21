@@ -66,11 +66,18 @@ function latestProjectYear(project: Project) {
   return Math.max(...years);
 }
 
-function replaceProjectQuery(slug: string) {
+function replaceArchiveQuery(view: ArchiveView, slug?: string) {
   if (!/\/projects\/?$/i.test(window.location.pathname)) return;
   const url = new URL(window.location.href);
-  url.searchParams.set("project", slug);
-  window.history.replaceState(null, "", `${url.pathname}${url.search}`);
+  if (view === "files" && slug) url.searchParams.set("project", slug);
+  else url.searchParams.delete("project");
+  if (view === "map") url.searchParams.set("view", "map");
+  else url.searchParams.delete("view");
+  window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function replaceProjectQuery(slug: string) {
+  replaceArchiveQuery("files", slug);
 }
 
 function revealProjectRow(list: HTMLDivElement | null, slug: string) {
@@ -352,6 +359,7 @@ function ProjectDetail({
   onOpenApp,
   onSelectProject,
   onOpenProjectDemo,
+  onBackToCatalogue,
   detailRef,
 }: {
   project: Project;
@@ -361,6 +369,7 @@ function ProjectDetail({
   onOpenApp: (id: SystemApp) => void;
   onSelectProject: (slug: string) => void;
   onOpenProjectDemo: (slug: string) => void;
+  onBackToCatalogue: () => void;
   detailRef: RefObject<HTMLElement | null>;
 }) {
   const copy = getProjectArchiveCopy(locale);
@@ -405,6 +414,9 @@ function ProjectDetail({
       tabIndex={0}
       lang={locale}
     >
+      <button type="button" className={styles.mobileCatalogueReturn} onClick={onBackToCatalogue}>
+        <span aria-hidden="true">↑</span> {copy.catalogue.aria}
+      </button>
       <div className={styles.detailHero}>
         <ProjectVisual project={project} />
         <div className={styles.detailIntro}>
@@ -562,8 +574,15 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   useEffect(() => {
     let frame = 0;
     const syncProjectQuery = () => {
-      const projectParam = new URL(window.location.href).searchParams.get("project");
-      if (!projectParam || !projects.some((project) => project.slug === projectParam)) return;
+      const url = new URL(window.location.href);
+      const projectParam = url.searchParams.get("project");
+      if (!projectParam || !projects.some((project) => project.slug === projectParam)) {
+        if (url.searchParams.get("view") === "map") {
+          setArchiveView("map");
+          setArchiveTabStop("map");
+        }
+        return;
+      }
       setQuery("");
       setAccess("all");
       setArea("all");
@@ -600,6 +619,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       event.preventDefault();
       setArchiveView("files");
       setArchiveTabStop("files");
+      replaceArchiveQuery("files", selectedSlug);
       window.requestAnimationFrame(() => {
         searchRef.current?.focus();
         searchRef.current?.select();
@@ -607,7 +627,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     };
     window.addEventListener("keydown", focusSearch);
     return () => window.removeEventListener("keydown", focusSearch);
-  }, []);
+  }, [selectedSlug]);
 
   const filteredProjects = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -685,6 +705,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     : layoutMode === "detail"
       ? copy.layout.detailFocus
       : copy.layout.balanced;
+  const metadataArchiveTitle = `${copy.header.title} · Samuel Zhang`;
 
   useEffect(() => {
     if (archiveView !== "files" || !activeCatalogueSlug) return;
@@ -695,21 +716,33 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   }, [activeCatalogueSlug, archiveView, filteredProjectOrder]);
 
   useEffect(() => {
-    if (archiveView !== "files" || !/\/projects\/?$/i.test(window.location.pathname)) return;
-    const originalTitle = document.title;
-    document.title = `${selectedProject.title} · Project Archive · Samuel Zhang`;
-    const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    const originalCanonical = canonical?.href;
-    if (canonical) {
+    if (!/\/projects\/?$/i.test(window.location.pathname)) return;
+    let metadataFrame = 0;
+    let settledMetadataFrame = 0;
+    const updateMetadata = () => {
+      document.title = archiveView === "files"
+        ? `${selectedProject.title} — ${metadataArchiveTitle}`
+        : metadataArchiveTitle;
+      const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      if (!canonical) return;
       const canonicalUrl = new URL(canonical.href);
-      canonicalUrl.searchParams.set("project", selectedProject.slug);
+      canonicalUrl.searchParams.delete("project");
+      canonicalUrl.searchParams.delete("view");
+      if (archiveView === "files") {
+        canonicalUrl.searchParams.set("project", selectedProject.slug);
+      }
       canonical.href = canonicalUrl.toString();
-    }
-    return () => {
-      document.title = originalTitle;
-      if (canonical && originalCanonical) canonical.href = originalCanonical;
     };
-  }, [archiveView, selectedProject]);
+    // App Router metadata settles after hydration, so apply the client view's
+    // exact address on the next painted frame rather than racing the head pass.
+    metadataFrame = window.requestAnimationFrame(() => {
+      settledMetadataFrame = window.requestAnimationFrame(updateMetadata);
+    });
+    return () => {
+      window.cancelAnimationFrame(metadataFrame);
+      window.cancelAnimationFrame(settledMetadataFrame);
+    };
+  }, [archiveView, metadataArchiveTitle, selectedProject]);
 
   useEffect(() => {
     if (!shouldFocusDetail.current) return;
@@ -858,6 +891,17 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     replaceProjectQuery(slug);
   };
 
+  const returnToCatalogue = () => {
+    const list = projectListRef.current;
+    if (!list) return;
+    list.parentElement?.scrollIntoView({ block: "start" });
+    window.requestAnimationFrame(() => {
+      Array.from(list.querySelectorAll<HTMLButtonElement>("[data-project-slug]"))
+        .find((row) => row.dataset.projectSlug === selectedProject.slug)
+        ?.focus({ preventScroll: true });
+    });
+  };
+
   const archiveViews: Array<{ id: ArchiveView; label: string; hint: string; glyph: string }> = [
     { id: "guided", label: copy.views.guided, hint: copy.views.guidedHint, glyph: "▦" },
     {
@@ -873,6 +917,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     setArchiveView(nextView);
     setArchiveTabStop(nextView);
     shouldFocusDetail.current = false;
+    replaceArchiveQuery(nextView, nextView === "files" ? selectedProject.slug : undefined);
   };
 
   const navigateArchiveViews = (
@@ -1095,7 +1140,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       )}
 
       <div className={`${styles.workspace} ${styles[`workspace_${layoutMode}`]}`}>
-        <aside className={styles.catalogue} aria-label={copy.catalogue.aria}>
+        <section className={styles.catalogue} aria-label={copy.catalogue.aria}>
           <div className={styles.catalogueHeader}>
             <span>{formatProjectArchiveCopy(copy.catalogue.objects, {
               shown: filteredProjects.length,
@@ -1125,7 +1170,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
             <span>•</span>
             <span>{counts.private} {copy.catalogue.protected}</span>
           </div>
-        </aside>
+        </section>
 
         {filteredProjects.length === 0 && detailView === "story" ? (
           <FilteredEmptyDetail
@@ -1147,6 +1192,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
             onOpenApp={onOpenApp}
             onSelectProject={selectProjectFromMap}
             onOpenProjectDemo={openProjectDemo}
+            onBackToCatalogue={returnToCatalogue}
             detailRef={detailRef}
           />
         )}

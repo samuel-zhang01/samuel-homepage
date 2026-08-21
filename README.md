@@ -10,7 +10,7 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
 - A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 independently lazy-loaded interactive chapters, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
-- Built-in PDF previews, four profile-themed games and desktop easter eggs.
+- Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
 - Responsive System 7 windows designed for 320 px mobile screens through large desktops, with pointer- and keyboard-resizable floating windows on desktop.
 
@@ -94,15 +94,17 @@ Before publishing, run:
 
 ```bash
 npm run check:artifacts
+npm run check:data
 npm run check:catalogue
 npm run check:styles
+npm run check:locales
 npm run lint
 npx tsc --noEmit
 npm run build
 npm audit --audit-level=moderate
 ```
 
-`npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves.
+`npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome from silently shipping.
 
 When a development server is already using `.next`, run `npm run build:isolated` instead. It writes the production checkpoint to `.next-build` so the live development cache is not replaced.
 

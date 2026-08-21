@@ -7,11 +7,12 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "form-action 'self'",
-  "frame-ancestors 'self'",
+  "frame-ancestors 'none'",
   "object-src 'none'",
   // Webpack's React Refresh runtime evaluates its development bundle. Keep
   // that allowance—and WebSocket HMR—strictly out of the production policy.
   `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""} https://static.cloudflareinsights.com`,
+  "script-src-attr 'none'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
@@ -32,6 +33,21 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   productionBrowserSourceMaps: false,
+  images: {
+    // Only three reviewed local assets use next/image. Constraining both the
+    // source path and quality prevents the optimiser becoming an open cache or
+    // CPU-amplification surface on the LAN-facing container.
+    localPatterns: [
+      { pathname: "/coverd-logo-black-on-transparent.png" },
+      { pathname: "/headshot.jpg" },
+      { pathname: "/projects/neural-cfd-surrogates/cylinder-wake.png" },
+    ],
+    remotePatterns: [],
+    qualities: [75],
+    minimumCacheTTL: 3_600,
+    maximumDiskCacheSize: 96 * 1024 * 1024,
+    maximumResponseBody: 2 * 1024 * 1024,
+  },
   webpack(config) {
     // Small, reviewed portfolio fixtures remain local CSV sources of truth.
     // Webpack embeds their text in the relevant lazy demo chunk; no runtime
@@ -47,25 +63,28 @@ const nextConfig: NextConfig = {
           { key: "Content-Security-Policy", value: contentSecurityPolicy },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
           { key: "X-XSS-Protection", value: "0" },
-          // Browsers ignore COOP on an HTTP LAN origin and emit a misleading
-          // console warning. Production is expected behind TLS and keeps it.
-          ...(!isDevelopment
-            ? [
-                { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-                // Browsers honour this only over HTTPS, so direct HTTP LAN
-                // troubleshooting remains possible while the public hostname
-                // is pinned to HTTPS after its first secure response.
-                { key: "Strict-Transport-Security", value: "max-age=31536000" },
-              ]
-            : []),
           { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+            value: "accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
           },
+        ],
+      },
+      {
+        // Public documents are hash-reviewed at build time but retain readable
+        // filenames, so cache them briefly rather than claiming immutability.
+        source: "/:path*.pdf",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" },
+        ],
+      },
+      {
+        source: "/:path*.:extension(avif|gif|ico|jpeg|jpg|png|svg|webp)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
         ],
       },
     ];

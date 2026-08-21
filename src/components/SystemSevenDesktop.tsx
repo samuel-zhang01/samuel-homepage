@@ -283,7 +283,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
-  { id: "games", label: "Desk Arcade", icon: "game", description: "Four small games with profile-themed easter eggs." },
+  { id: "games", label: "Desk Arcade", icon: "game", description: "Seven local games with profile-themed puzzles and calculations." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
   { id: "contact", label: "Contact", icon: "mail", description: "Email, LinkedIn and GitHub without leaving the desktop." },
@@ -1099,6 +1099,31 @@ type MineCell = {
   adjacent: number;
 };
 
+function mineCellLabel(locale: Locale, cell: MineCell, index: number) {
+  if (locale === "zh-CN") {
+    if (cell.flagged && !cell.revealed) return `格子 ${index + 1}，已标记`;
+    if (!cell.revealed) return `格子 ${index + 1}，未揭开`;
+    if (cell.mine) return `格子 ${index + 1}，地雷`;
+    return cell.adjacent
+      ? `格子 ${index + 1}，相邻 ${cell.adjacent} 枚地雷`
+      : `格子 ${index + 1}，已揭开，无相邻地雷`;
+  }
+  if (locale === "zh-TW") {
+    if (cell.flagged && !cell.revealed) return `格子 ${index + 1}，已標記`;
+    if (!cell.revealed) return `格子 ${index + 1}，未揭開`;
+    if (cell.mine) return `格子 ${index + 1}，地雷`;
+    return cell.adjacent
+      ? `格子 ${index + 1}，相鄰 ${cell.adjacent} 顆地雷`
+      : `格子 ${index + 1}，已揭開，無相鄰地雷`;
+  }
+  if (cell.flagged && !cell.revealed) return `Cell ${index + 1}, flagged`;
+  if (!cell.revealed) return `Cell ${index + 1}, hidden`;
+  if (cell.mine) return `Cell ${index + 1}, mine`;
+  return cell.adjacent
+    ? `Cell ${index + 1}, ${cell.adjacent} adjacent mines`
+    : `Cell ${index + 1}, revealed, no adjacent mines`;
+}
+
 function seededRandom(seed: number) {
   let value = seed % 2147483647;
   if (value <= 0) value += 2147483646;
@@ -1151,7 +1176,135 @@ const SAM_WORDS = [
   { answer: "PFIZER", clue: "Where Samuel worked on a private enterprise product.", fact: "At Pfizer, Samuel delivered GROWMAT; its external showcase is public while live data and source remain private." },
   { answer: "PYTHON", clue: "A language threading through Samuel’s research, teaching and AI work.", fact: "Samuel has taught programming and data analysis to more than 80 students." },
   { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "Samuel’s work spans research, insurance, education and responsible AI across London." },
+  { answer: "DOCKER", clue: "The container tool linking shipped products, the home lab and reproducible environments.", fact: "Samuel uses Docker across product systems, deployment workflows and a source-audited six-service home-lab slice." },
+  { answer: "BANDIT", clue: "A sequential-decision problem balancing exploration with exploitation.", fact: "The Sequential Decisions Lab compares epsilon-greedy, UCB1 and Thompson Sampling over paired synthetic seeds." },
+  { answer: "CAUSAL", clue: "The adjustment lens kept separate from off-policy evaluation.", fact: "The Causal Adjustment and OPE Lab distinguishes intervention questions from evaluation of a new logged policy." },
+  { answer: "POLICY", clue: "What the OPE workbench evaluates without deploying it.", fact: "The local OPE fixture exposes propensity support, effective sample size and estimator disagreement before any policy claim." },
+  { answer: "SENSOR", clue: "What the air-quality decision lab tries to choose economically.", fact: "The Air-Quality ML Decision Lab joins source data QA and model results to an explicit sensor-budget trade-off." },
+  { answer: "NEURAL", clue: "A family of scientific models Samuel makes inspectable rather than treating as a black box.", fact: "The archive traces neural architectures for microscopy, MRI reconstruction and CFD surrogates with provenance and evaluation limits." },
+  { answer: "BROKER", clue: "The human who retains authority in the insurance decision-support workflow.", fact: "The insurance matching work keeps evidence pillars separate and preserves broker judgement rather than forcing an aggregate recommendation." },
+  { answer: "MARKET", clue: "A candidate destination for an insurance risk—and the subject of a tiny Julia simulator.", fact: "Samuel’s archive includes both lead-market decision support and a source-audited stochastic market-impact simulation." },
+  { answer: "SOLUTE", clue: "The dissolved component in the solid–liquid equilibrium workbench.", fact: "The solubility exhibit solves an invented solute workflow in log-composition space and reconciles mole and mass reporting bases." },
+  { answer: "ENERGY", clue: "A quantity tracked in the chemistry lab’s molecular-dynamics receipt.", fact: "The computational-chemistry exhibit reports deterministic velocity-Verlet energy drift rather than hiding integrator error." },
+  { answer: "CAMERA", clue: "A tool from Samuel’s former professional life that is now kept for friends and nature.", fact: "Samuel previously photographed weddings professionally and now keeps photography playful and personal." },
+  { answer: "HIKING", clue: "An unhurried interest involving boots, conversation and somewhere new.", fact: "Samuel values long walks for curiosity, shared conversation and the story on the way home." },
+  { answer: "LAMBDA", clue: "A symbol connecting regularisation paths and an insurance ranking model.", fact: "The archive discusses lambda shrinkage in the air-quality companion and LambdaRank in insurance decision support." },
+  { answer: "TENSOR", clue: "The object followed through several rotatable model-architecture diagrams.", fact: "Scientific ML chapters expose tensor paths, skip connections, data consistency and checkpoint provenance." },
+  { answer: "RECALL", clue: "The spaced-practice loop inside the Italian learning portal.", fact: "Parliamo turns a 56-day plan into adaptive practice, four-way spaced recall and evidence-backed progress." },
+  { answer: "CARBON", clue: "The element named in the air-quality telemetry’s CO₂ signal.", fact: "Samuel’s home telemetry includes Bluetooth air-quality measurements flowing into SQL-backed dashboards." },
 ] as const;
+
+function validateSamWords() {
+  const answers = new Set<string>();
+  for (const entry of SAM_WORDS) {
+    if (!/^[A-Z]{6}$/.test(entry.answer)) {
+      throw new Error(`SamWord answer must contain exactly six A–Z letters: ${entry.answer}`);
+    }
+    if (answers.has(entry.answer)) throw new Error(`Duplicate SamWord answer: ${entry.answer}`);
+    if (!entry.clue.trim() || !entry.fact.trim()) throw new Error(`SamWord entry needs a clue and fact: ${entry.answer}`);
+    answers.add(entry.answer);
+  }
+}
+
+validateSamWords();
+
+type TriageRoute = "ready" | "review" | "abstain";
+
+type TriageCase = {
+  id: string;
+  confidence: number;
+  missingPillars: number;
+  conflict: boolean;
+};
+
+const TRIAGE_CASES: readonly TriageCase[] = [
+  { id: "Northstar", confidence: 92, missingPillars: 0, conflict: false },
+  { id: "Harbour", confidence: 76, missingPillars: 0, conflict: true },
+  { id: "Atlas", confidence: 54, missingPillars: 2, conflict: false },
+  { id: "Meridian", confidence: 88, missingPillars: 1, conflict: false },
+  { id: "Orchid", confidence: 91, missingPillars: 0, conflict: false },
+  { id: "Tangent", confidence: 61, missingPillars: 0, conflict: false },
+  { id: "Vela", confidence: 43, missingPillars: 0, conflict: true },
+  { id: "Beacon", confidence: 84, missingPillars: 0, conflict: false },
+] as const;
+
+function expectedTriageRoute(item: TriageCase): TriageRoute {
+  if (item.confidence < 60 || item.missingPillars >= 2) return "abstain";
+  if (item.confidence >= 85 && item.missingPillars === 0 && !item.conflict) return "ready";
+  return "review";
+}
+
+function triageReason(item: TriageCase) {
+  const route = expectedTriageRoute(item);
+  if (route === "ready") return "Complete, aligned evidence clears the inspection gate; the broker still decides.";
+  if (route === "abstain") return "Low support requires abstention rather than a forced recommendation.";
+  if (item.conflict) return "Conflicting evidence needs human reconciliation.";
+  if (item.missingPillars > 0) return "A missing evidence pillar needs human review.";
+  return "Confidence below the ready gate needs human review.";
+}
+
+const SPECTRUM_PEAKS = [2.48, 4.86, 7.12] as const;
+
+function spectrumSignal(frequency: number) {
+  const strongestPeak = Math.max(...SPECTRUM_PEAKS.map((peak) => (
+    Math.exp(-0.5 * ((frequency - peak) / 0.065) ** 2)
+  )));
+  const baseline = 3 + 1.5 * Math.sin(frequency * 8.2);
+  return Math.max(0, Math.min(100, Math.round(baseline + strongestPeak * 96)));
+}
+
+type SpectrumFeedback =
+  | { kind: "initial" }
+  | { kind: "captured"; frequency: number }
+  | { kind: "duplicate" }
+  | { kind: "miss"; distance: number }
+  | { kind: "complete" };
+
+type CapacityStageId = "intake" | "model" | "review";
+
+const CAPACITY_STAGES: readonly { id: CapacityStageId; label: string; rate: number }[] = [
+  { id: "intake", label: "Intake", rate: 4 },
+  { id: "model", label: "Model", rate: 3 },
+  { id: "review", label: "Review", rate: 2 },
+] as const;
+
+type ArcadeGameId = "minefield" | "puzzle" | "samword" | "memory" | "triage" | "spectrum" | "capacity";
+
+const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: string; label: string }[] = [
+  { id: "minefield", icon: "M", label: "Minefield" },
+  { id: "puzzle", icon: "15", label: "Sliding Puzzle" },
+  { id: "samword", icon: "SZ", label: "SamWord" },
+  { id: "memory", icon: "8", label: "Profile Pairs" },
+  { id: "triage", icon: "AI", label: "Evidence Triage" },
+  { id: "spectrum", icon: "GHz", label: "Spectrum Dial" },
+  { id: "capacity", icon: "FTE", label: "Capacity Desk" },
+] as const;
+
+function formatTriageProgress(locale: Locale, reviewed: number, score: number) {
+  if (locale === "zh-CN") return `${reviewed} / ${TRIAGE_CASES.length} 个案例 · ${score} 个正确`;
+  if (locale === "zh-TW") return `${reviewed} / ${TRIAGE_CASES.length} 個案例 · ${score} 個正確`;
+  return `${reviewed} of ${TRIAGE_CASES.length} cases · ${score} correct`;
+}
+
+function formatSpectrumValue(locale: Locale, frequency: number, strength: number) {
+  if (locale === "zh-CN") return `${frequency.toFixed(2)} GHz；信号强度 ${strength}%`;
+  if (locale === "zh-TW") return `${frequency.toFixed(2)} GHz；訊號強度 ${strength}%`;
+  return `${frequency.toFixed(2)} GHz; ${strength}% signal`;
+}
+
+function formatSpectrumFeedback(locale: Locale, feedback: SpectrumFeedback) {
+  if (feedback.kind === "initial") return translateText(locale, "Move the dial, then capture three synthetic peaks.");
+  if (feedback.kind === "duplicate") return translateText(locale, "That peak is already in the notebook.");
+  if (feedback.kind === "complete") return translateText(locale, "All three synthetic peaks captured. Assignment notebook complete.");
+  if (feedback.kind === "captured") {
+    if (locale === "zh-CN") return `已锁定 ${feedback.frequency.toFixed(2)} GHz 的峰。`;
+    if (locale === "zh-TW") return `已鎖定 ${feedback.frequency.toFixed(2)} GHz 的峰。`;
+    return `Peak locked at ${feedback.frequency.toFixed(2)} GHz.`;
+  }
+  if (locale === "zh-CN") return `未锁定。最近的峰相距 ${feedback.distance.toFixed(2)} GHz。`;
+  if (locale === "zh-TW") return `未鎖定。最近的峰相距 ${feedback.distance.toFixed(2)} GHz。`;
+  return `No lock. Nearest peak is ${feedback.distance.toFixed(2)} GHz away.`;
+}
 
 const MEMORY_PAIRS = [
   { id: "coverd", left: "ATS LAYER", right: "COVERD", fact: "COVERD reviews applications across specialist dimensions and uses voice interviews as an enrichment path." },
@@ -1201,8 +1354,28 @@ function scoreWordGuess(guess: string, answer: string) {
   return score;
 }
 
+function describeWordGuess(
+  locale: Locale,
+  guess: string,
+  score: Array<"correct" | "present" | "absent">,
+) {
+  const describeState = (state: "correct" | "present" | "absent") => {
+    if (locale === "zh-CN") {
+      return state === "correct" ? "位置正确" : state === "present" ? "答案中有这个字母，但位置不同" : "答案中没有这个字母";
+    }
+    if (locale === "zh-TW") {
+      return state === "correct" ? "位置正確" : state === "present" ? "答案中有這個字母，但位置不同" : "答案中沒有這個字母";
+    }
+    return state === "correct" ? "correct position" : state === "present" ? "present elsewhere" : "not in the answer";
+  };
+  const details = score.map((state, index) => `${index + 1}: ${guess[index]}, ${describeState(state)}`).join("; ");
+  if (locale === "zh-CN") return `猜词 ${guess}。${details}`;
+  if (locale === "zh-TW") return `猜詞 ${guess}。${details}`;
+  return `Guess ${guess}. ${details}`;
+}
+
 function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
-  const [game, setGame] = useState<"minefield" | "puzzle" | "samword" | "memory">("minefield");
+  const [game, setGame] = useState<ArcadeGameId>("minefield");
   const [minefield, setMinefield] = useState(() => createMinefield());
   const [mineStatus, setMineStatus] = useState<"playing" | "won" | "lost">("playing");
   const [flagMode, setFlagMode] = useState(false);
@@ -1217,14 +1390,25 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
   const [memoryMatched, setMemoryMatched] = useState<Set<string>>(() => new Set());
   const [memoryTurns, setMemoryTurns] = useState(0);
   const [memoryFact, setMemoryFact] = useState("");
+  const [triageIndex, setTriageIndex] = useState(0);
+  const [triageChoice, setTriageChoice] = useState<TriageRoute | null>(null);
+  const [triageScore, setTriageScore] = useState(0);
+  const [spectrumFrequency, setSpectrumFrequency] = useState(2);
+  const [capturedPeaks, setCapturedPeaks] = useState<Set<number>>(() => new Set());
+  const [spectrumFeedback, setSpectrumFeedback] = useState<SpectrumFeedback>({ kind: "initial" });
+  const [capacity, setCapacity] = useState<Record<CapacityStageId, number>>({ intake: 4, model: 4, review: 4 });
   const memoryTimer = useRef<number | null>(null);
+  const mineSeed = useRef(91);
+  const puzzleSeed = useRef(1991);
+  const memorySeed = useRef(1991);
 
   useEffect(() => () => {
     if (memoryTimer.current) window.clearTimeout(memoryTimer.current);
   }, []);
 
   const resetMines = () => {
-    setMinefield(createMinefield(Date.now()));
+    mineSeed.current += 1;
+    setMinefield(createMinefield(mineSeed.current));
     setMineStatus("playing");
     setFlagMode(false);
   };
@@ -1273,7 +1457,8 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
   };
 
   const resetPuzzle = () => {
-    setPuzzle(createPuzzle(Date.now()));
+    puzzleSeed.current += 1;
+    setPuzzle(createPuzzle(puzzleSeed.current));
     setMoves(0);
   };
 
@@ -1290,6 +1475,28 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
       return next;
     });
     setMoves((current) => current + 1);
+  };
+
+  const movePuzzleWithArrow = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const blank = puzzle.indexOf(0);
+    const row = Math.floor(blank / 4);
+    const column = blank % 4;
+    const targetByKey: Record<string, number | undefined> = {
+      ArrowUp: row > 0 ? blank - 4 : undefined,
+      ArrowDown: row < 3 ? blank + 4 : undefined,
+      ArrowLeft: column > 0 ? blank - 1 : undefined,
+      ArrowRight: column < 3 ? blank + 1 : undefined,
+    };
+    const target = targetByKey[event.key];
+    if (target === undefined) return;
+    event.preventDefault();
+    moveTile(target);
+  };
+
+  const canMovePuzzleTile = (index: number) => {
+    const blank = puzzle.indexOf(0);
+    return Math.abs(Math.floor(index / 4) - Math.floor(blank / 4))
+      + Math.abs((index % 4) - (blank % 4)) === 1;
   };
 
   const puzzleSolved = puzzle.every((tile, index) => tile === (index + 1) % 16);
@@ -1334,9 +1541,17 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
     setWordMessage("New profile file loaded. Six letters.");
   };
 
+  const previousWord = () => {
+    setWordIndex((current) => (current - 1 + SAM_WORDS.length) % SAM_WORDS.length);
+    setWordInput("");
+    setWordGuesses([]);
+    setWordMessage("New profile file loaded. Six letters.");
+  };
+
   const resetMemory = () => {
     if (memoryTimer.current) window.clearTimeout(memoryTimer.current);
-    setMemoryDeck(createMemoryDeck(Date.now()));
+    memorySeed.current += 1;
+    setMemoryDeck(createMemoryDeck(memorySeed.current));
     setMemoryOpen([]);
     setMemoryMatched(new Set());
     setMemoryTurns(0);
@@ -1365,15 +1580,109 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
     }, isMatch ? 420 : 780);
   };
 
+  const triageCase = TRIAGE_CASES[triageIndex];
+  const routeTriageCase = (route: TriageRoute) => {
+    if (!triageCase || triageChoice) return;
+    setTriageChoice(route);
+    if (route === expectedTriageRoute(triageCase)) setTriageScore((current) => current + 1);
+  };
+
+  const nextTriageCase = () => {
+    setTriageIndex((current) => current + 1);
+    setTriageChoice(null);
+  };
+
+  const resetTriage = () => {
+    setTriageIndex(0);
+    setTriageChoice(null);
+    setTriageScore(0);
+  };
+
+  const handleTriageKeys = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const routeByKey: Record<string, TriageRoute | undefined> = {
+      "1": "ready",
+      "2": "review",
+      "3": "abstain",
+    };
+    const route = routeByKey[event.key];
+    if (!route) return;
+    event.preventDefault();
+    routeTriageCase(route);
+  };
+
+  const signalStrength = spectrumSignal(spectrumFrequency);
+  const adjustSpectrum = (delta: number) => {
+    setSpectrumFrequency((current) => Math.max(2, Math.min(8, Number((current + delta).toFixed(2)))));
+    setSpectrumFeedback({ kind: "initial" });
+  };
+
+  const captureSpectrumPeak = () => {
+    const nearestIndex = SPECTRUM_PEAKS.reduce((best, peak, index) => (
+      Math.abs(peak - spectrumFrequency) < Math.abs(SPECTRUM_PEAKS[best] - spectrumFrequency) ? index : best
+    ), 0);
+    const distance = Math.abs(SPECTRUM_PEAKS[nearestIndex] - spectrumFrequency);
+    if (distance > 0.08) {
+      setSpectrumFeedback({ kind: "miss", distance });
+      return;
+    }
+    if (capturedPeaks.has(nearestIndex)) {
+      setSpectrumFeedback({ kind: "duplicate" });
+      return;
+    }
+    const next = new Set(capturedPeaks).add(nearestIndex);
+    setCapturedPeaks(next);
+    setSpectrumFeedback(next.size === SPECTRUM_PEAKS.length
+      ? { kind: "complete" }
+      : { kind: "captured", frequency: SPECTRUM_PEAKS[nearestIndex] });
+  };
+
+  const resetSpectrum = () => {
+    setSpectrumFrequency(2);
+    setCapturedPeaks(new Set());
+    setSpectrumFeedback({ kind: "initial" });
+  };
+
+  const totalCapacityTokens = CAPACITY_STAGES.reduce((total, stage) => total + capacity[stage.id], 0);
+  const stageCapacities = CAPACITY_STAGES.map((stage) => ({
+    ...stage,
+    output: capacity[stage.id] * stage.rate,
+  }));
+  const capacityThroughput = Math.min(...stageCapacities.map((stage) => stage.output));
+  const capacityBottlenecks = stageCapacities
+    .filter((stage) => stage.output === capacityThroughput)
+    .map((stage) => stage.label);
+  const capacitySolved = totalCapacityTokens === 12 && capacityThroughput >= 10;
+
+  const adjustCapacity = (stageId: CapacityStageId, delta: number) => {
+    setCapacity((current) => {
+      const used = CAPACITY_STAGES.reduce((total, stage) => total + current[stage.id], 0);
+      const nextValue = current[stageId] + delta;
+      if (nextValue < 1 || nextValue > 10 || (delta > 0 && used >= 12)) return current;
+      return { ...current, [stageId]: nextValue };
+    });
+  };
+
+  const resetCapacity = () => setCapacity({ intake: 4, model: 4, review: 4 });
+
   return (
     <TranslationBoundary locale={locale}><div className="games-app">
       <aside className="games-sidebar">
         <div className="games-logo"><PixelIcon kind="game" /><span>Desk<br />Arcade</span></div>
-        <button className={game === "minefield" ? "is-active" : ""} onClick={() => setGame("minefield")}><span className="game-mini-icon">M</span>Minefield</button>
-        <button className={game === "puzzle" ? "is-active" : ""} onClick={() => setGame("puzzle")}><span className="game-mini-icon">15</span>Sliding Puzzle</button>
-        <button className={game === "samword" ? "is-active" : ""} onClick={() => setGame("samword")}><span className="game-mini-icon">SZ</span>SamWord</button>
-        <button className={game === "memory" ? "is-active" : ""} onClick={() => setGame("memory")}><span className="game-mini-icon">8</span>Profile Pairs</button>
-        <p>Four tiny distractions.<br />No tracking. No coins.<br />One suspicious password.</p>
+        <nav className="games-menu" aria-label="Choose an arcade game">
+          {ARCADE_GAMES.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={game === item.id ? "is-active" : ""}
+              onClick={() => setGame(item.id)}
+              aria-pressed={game === item.id}
+            >
+              <span className="game-mini-icon" aria-hidden="true">{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </nav>
+        <p>Seven tiny distractions.<br />Local only. No tracking.<br />One suspicious password.</p>
       </aside>
       <section className="game-stage">
         {game === "minefield" && (
@@ -1386,8 +1695,13 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <strong aria-live="polite">{mineStatus === "playing"
                 ? locale === "zh-CN" ? `${10 - flagged} 枚地雷` : locale === "zh-TW" ? `${10 - flagged} 顆地雷` : `${10 - flagged} mines`
                 : mineStatus === "won" ? "You cleared it!" : "A small administrative error."}</strong>
-              <button className={flagMode ? "is-active" : ""} onClick={() => setFlagMode((current) => !current)}>F Flag mode</button>
-              <button onClick={resetMines}>New field</button>
+              <button
+                type="button"
+                className={flagMode ? "is-active" : ""}
+                aria-pressed={flagMode}
+                onClick={() => setFlagMode((current) => !current)}
+              >F Flag mode</button>
+              <button type="button" onClick={resetMines}>New field</button>
             </div>
             <div className="minefield" role="group" aria-label="Minefield game board">
               {minefield.map((cell, index) => (
@@ -1396,11 +1710,7 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
                   className={`${cell.revealed ? "is-revealed" : ""}${cell.mine && cell.revealed ? " is-mine" : ""}`}
                   onClick={() => revealCell(index)}
                   onContextMenu={(event) => { event.preventDefault(); flagCell(index); }}
-                  aria-label={locale === "zh-CN"
-                    ? `格子 ${index + 1}${cell.flagged ? "，已标记" : ""}`
-                    : locale === "zh-TW"
-                      ? `格子 ${index + 1}${cell.flagged ? "，已標記" : ""}`
-                      : `Cell ${index + 1}${cell.flagged ? ", flagged" : ""}`}
+                  aria-label={mineCellLabel(locale, cell, index)}
                 >
                   {cell.flagged && !cell.revealed ? "F" : cell.revealed && cell.mine ? "*" : cell.revealed && cell.adjacent ? cell.adjacent : ""}
                 </button>
@@ -1416,13 +1726,19 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <div className="puzzle-counter">{moves}<small>MOVES</small></div>
             </div>
             <div className="puzzle-message" role="status">{puzzleSolved ? "Solved. The Macintosh is impressed." : "Put the numbers back in order."}</div>
-            <div className="puzzle-board" role="group" aria-label="Sliding number puzzle">
+            <div
+              className="puzzle-board"
+              role="group"
+              tabIndex={0}
+              onKeyDown={movePuzzleWithArrow}
+              aria-label="Sliding number puzzle. Use arrow keys to move the empty space."
+            >
               {puzzle.map((tile, index) => (
                 <button
                   key={`${tile}-${index}`}
                   className={tile === 0 ? "is-empty" : ""}
                   onClick={() => moveTile(index)}
-                  disabled={tile === 0}
+                  disabled={tile === 0 || !canMovePuzzleTile(index)}
                   aria-label={tile === 0
                     ? locale === "zh-CN" ? "空白拼图位置" : locale === "zh-TW" ? "空白拼圖位置" : "Empty puzzle space"
                     : locale === "zh-CN" ? `拼图块 ${tile}` : locale === "zh-TW" ? `拼圖塊 ${tile}` : `Puzzle tile ${tile}`}
@@ -1446,9 +1762,18 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
                 const guess = wordGuesses[rowIndex] ?? "";
                 const score = guess ? scoreWordGuess(guess, activeWord.answer) : [];
                 return (
-                  <div className="samword-row" key={rowIndex}>
+                  <div
+                    className="samword-row"
+                    key={rowIndex}
+                    role={guess ? "img" : undefined}
+                    aria-label={guess ? describeWordGuess(locale, guess, score) : undefined}
+                  >
                     {Array.from({ length: activeWord.answer.length }, (_, columnIndex) => (
-                      <span className={score[columnIndex] ? `is-${score[columnIndex]}` : ""} key={columnIndex}>
+                      <span
+                        className={score[columnIndex] ? `is-${score[columnIndex]}` : ""}
+                        key={columnIndex}
+                        aria-hidden={guess ? true : undefined}
+                      >
                         {guess[columnIndex] ?? ""}
                       </span>
                     ))}
@@ -1462,12 +1787,17 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
                 onChange={(event) => setWordInput(event.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, activeWord.answer.length))}
                 maxLength={activeWord.answer.length}
                 aria-label="Six-letter guess"
+                inputMode="text"
+                spellCheck={false}
                 autoComplete="off"
                 disabled={wordSolved || wordGuesses.length >= 6}
               />
               <button className="mac-button" type="submit" disabled={wordSolved || wordGuesses.length >= 6}>Enter</button>
-              <button className="mac-button" type="button" onClick={nextWord}>Next file</button>
             </form>
+            <div className="samword-file-actions" aria-label="SamWord file navigation">
+              <button className="mac-button" type="button" onClick={previousWord}>Previous file</button>
+              <button className="mac-button" type="button" onClick={nextWord}>Next file</button>
+            </div>
             <p className={`samword-message${wordSolved ? " is-solved" : ""}`} role="status">{localiseGameMessage(locale, wordMessage)}</p>
           </>
         )}
@@ -1504,6 +1834,194 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             {memoryFact && (
               <p className="memory-fact" role="status">{memoryFact}</p>
             )}
+          </>
+        )}
+        {game === "triage" && (
+          <>
+            <div className="game-header">
+              <div><span>DECISION ACCESSORY 05</span><h3>Evidence Triage</h3></div>
+              <div className="puzzle-counter">
+                {Math.min(triageIndex + (triageChoice ? 1 : 0), TRIAGE_CASES.length)}
+                <small>OF {TRIAGE_CASES.length}</small>
+              </div>
+            </div>
+            <p className="triage-intro">
+              Route fictional evidence without automating the human decision. Ready requires ≥85% confidence, no missing pillars and no conflict.
+            </p>
+            {triageCase ? (
+              <div
+                className="triage-console"
+                tabIndex={0}
+                onKeyDown={handleTriageKeys}
+                aria-label="Evidence triage keyboard controls"
+              >
+                <div className="triage-case-header">
+                  <span>FICTIONAL CASE</span>
+                  <strong>{triageCase.id}</strong>
+                  <small>{formatTriageProgress(locale, triageIndex + (triageChoice ? 1 : 0), triageScore)}</small>
+                </div>
+                <dl className="triage-signals">
+                  <div>
+                    <dt>Confidence</dt>
+                    <dd>{triageCase.confidence}%</dd>
+                    <span aria-hidden="true"><i style={{ width: `${triageCase.confidence}%` }} /></span>
+                  </div>
+                  <div><dt>Missing pillars</dt><dd>{triageCase.missingPillars}</dd></div>
+                  <div><dt>Conflict</dt><dd>{triageCase.conflict ? "Yes" : "No"}</dd></div>
+                </dl>
+                <div className="triage-routes" role="group" aria-label="Choose an evidence route">
+                  {(["ready", "review", "abstain"] as const).map((route, index) => {
+                    const correctRoute = expectedTriageRoute(triageCase);
+                    const selected = triageChoice === route;
+                    const revealedCorrect = Boolean(triageChoice) && correctRoute === route;
+                    return (
+                      <button
+                        key={route}
+                        type="button"
+                        className={`${selected ? "is-selected" : ""}${revealedCorrect ? " is-correct" : ""}${selected && route !== correctRoute ? " is-wrong" : ""}`}
+                        onClick={() => routeTriageCase(route)}
+                        disabled={Boolean(triageChoice)}
+                        aria-pressed={selected}
+                        aria-keyshortcuts={String(index + 1)}
+                      >
+                        <span>{index + 1}</span>{route.toUpperCase()}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="triage-key-help">Keys 1–3 also route the selected case.</p>
+                <div className={`triage-feedback${triageChoice ? " is-revealed" : ""}`} role="status" aria-live="polite">
+                  {triageChoice ? (
+                    <>
+                      <strong>{triageChoice === expectedTriageRoute(triageCase) ? "Correct." : "Not quite."}</strong>
+                      <span>{triageReason(triageCase)}</span>
+                      <button className="mac-button" type="button" onClick={nextTriageCase}>
+                        {triageIndex === TRIAGE_CASES.length - 1 ? "Review score" : "Next case"}
+                      </button>
+                    </>
+                  ) : (
+                    <span>Choose the safest routing action.</span>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="triage-complete" role="status">
+                <span aria-hidden="true">✓</span>
+                <h4>Desk audit complete.</h4>
+                <p>{formatTriageProgress(locale, TRIAGE_CASES.length, triageScore)}</p>
+                <small>Ready means evidence is complete enough for a broker to inspect; it never means an automated placement decision.</small>
+                <button className="mac-button" type="button" onClick={resetTriage}>Run the cases again</button>
+              </div>
+            )}
+          </>
+        )}
+        {game === "spectrum" && (
+          <>
+            <div className="game-header">
+              <div><span>RESEARCH ACCESSORY 06</span><h3>Spectrum Dial</h3></div>
+              <div className="puzzle-counter">{capturedPeaks.size}<small>OF {SPECTRUM_PEAKS.length}</small></div>
+            </div>
+            <p className="spectrum-intro">
+              Tune a deterministic synthetic 2–8 GHz trace and capture all three peaks. No experimental rows are loaded.
+            </p>
+            <div className="spectrum-console">
+              <div className="spectrum-readout" aria-live="polite">
+                <output>{spectrumFrequency.toFixed(2)}<small>GHz</small></output>
+                <div>
+                  <span>Signal</span>
+                  <strong>{signalStrength}%</strong>
+                  <meter min="0" max="100" value={signalStrength}>{signalStrength}%</meter>
+                </div>
+              </div>
+              <div className="spectrum-trace" aria-hidden="true">
+                {SPECTRUM_PEAKS.map((peak, index) => (
+                  <i
+                    key={peak}
+                    className={capturedPeaks.has(index) ? "is-captured" : ""}
+                    style={{ left: `${((peak - 2) / 6) * 100}%` }}
+                  />
+                ))}
+                <b style={{ left: `${((spectrumFrequency - 2) / 6) * 100}%` }} />
+              </div>
+              <div className="spectrum-scale" aria-hidden="true"><span>2.00</span><span>5.00</span><span>8.00 GHz</span></div>
+              <label className="spectrum-slider">
+                <span>Spectrum tuning frequency</span>
+                <input
+                  type="range"
+                  min="2"
+                  max="8"
+                  step="0.01"
+                  value={spectrumFrequency}
+                  onChange={(event) => {
+                    setSpectrumFrequency(Number(event.target.value));
+                    setSpectrumFeedback({ kind: "initial" });
+                  }}
+                  aria-valuetext={formatSpectrumValue(locale, spectrumFrequency, signalStrength)}
+                />
+              </label>
+              <div className="spectrum-actions">
+                <button type="button" onClick={() => adjustSpectrum(-0.1)} aria-label="Decrease frequency by 0.10 GHz">−0.10</button>
+                <button className="is-capture" type="button" onClick={captureSpectrumPeak}>Capture peak</button>
+                <button type="button" onClick={() => adjustSpectrum(0.1)} aria-label="Increase frequency by 0.10 GHz">+0.10</button>
+              </div>
+              <p className="spectrum-feedback" role="status" aria-live="polite">
+                {formatSpectrumFeedback(locale, spectrumFeedback)}
+              </p>
+              <div className="spectrum-notebook">
+                <strong>Captured peaks</strong>
+                <ol>
+                  {SPECTRUM_PEAKS.map((peak, index) => (
+                    <li key={peak} className={capturedPeaks.has(index) ? "is-captured" : ""}>
+                      {capturedPeaks.has(index) ? `${peak.toFixed(2)} GHz` : "—"}
+                    </li>
+                  ))}
+                </ol>
+                <button className="mac-button" type="button" onClick={resetSpectrum}>Clear notebook</button>
+              </div>
+            </div>
+          </>
+        )}
+        {game === "capacity" && (
+          <>
+            <div className="game-header">
+              <div><span>PRODUCT ACCESSORY 07</span><h3>Capacity Desk</h3></div>
+              <div className={`game-face ${capacitySolved ? "game-face--won" : ""}`} aria-label={capacitySolved ? "Capacity plan solved" : "Capacity plan in progress"}>
+                {capacitySolved ? "^_^" : `${12 - totalCapacityTokens}`}
+              </div>
+            </div>
+            <p className="capacity-intro">
+              Reallocate exactly 12 fictional FTE tokens. Throughput is the smallest stage capacity; clear 10 cases without weakening review.
+            </p>
+            <div className="capacity-console">
+              <div className="capacity-summary">
+                <div><span>THROUGHPUT</span><strong>{capacityThroughput}</strong><small>cases / cycle</small></div>
+                <div><span>TOKENS USED</span><strong>{totalCapacityTokens}</strong><small>of 12</small></div>
+                <div><span>BOTTLENECK</span><strong>{capacityBottlenecks.map((label) => translateText(locale, label)).join(" + ")}</strong><small>lowest capacity</small></div>
+              </div>
+              <div className="capacity-stages">
+                {stageCapacities.map((stage) => (
+                  <section key={stage.id} className={stage.output === capacityThroughput ? "is-bottleneck" : ""}>
+                    <header><strong>{stage.label}</strong><span>{stage.rate} cases / token</span></header>
+                    <div className="capacity-meter" aria-hidden="true"><i style={{ width: `${Math.min(100, (stage.output / 16) * 100)}%` }} /></div>
+                    <output>{stage.output}<small>capacity</small></output>
+                    <div className="capacity-stepper" role="group" aria-label={`${stage.label} allocation`}>
+                      <button type="button" onClick={() => adjustCapacity(stage.id, -1)} aria-label={`Decrease ${stage.label} allocation`} disabled={capacity[stage.id] <= 1}>−</button>
+                      <strong>{capacity[stage.id]}<small>tokens</small></strong>
+                      <button type="button" onClick={() => adjustCapacity(stage.id, 1)} aria-label={`Increase ${stage.label} allocation`} disabled={totalCapacityTokens >= 12}>+</button>
+                    </div>
+                  </section>
+                ))}
+              </div>
+              <div className={`capacity-status${capacitySolved ? " is-solved" : ""}`} role="status" aria-live="polite">
+                <span>{capacitySolved
+                  ? "Balanced. Ten fictional cases clear every stage."
+                  : totalCapacityTokens < 12
+                    ? "Assign every token, then inspect the bottleneck."
+                    : "Move one token away from excess capacity and protect the limiting stage."}</span>
+                <button className="mac-button" type="button" onClick={resetCapacity}>Reset plan</button>
+              </div>
+              <p className="capacity-boundary">Fictional planning model; no employer data, storage or network calls.</p>
+            </div>
           </>
         )}
       </section>
@@ -2166,7 +2684,7 @@ export default function SystemSevenDesktop({
             {openMenu === "apple" && (
               <div className="menu-dropdown apple-dropdown" id="samuel-menu">
                 <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
-                <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder&apos;s Desk</button>
+                <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
                 <hr />
                 <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
                 <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>

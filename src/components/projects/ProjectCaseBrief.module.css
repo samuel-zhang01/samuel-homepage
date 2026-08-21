@@ -23,7 +23,7 @@
 .workspace span,
 .workspace small {
   color: #fff;
-  font: 700 8px/1.15 "Chicago", "Arial Narrow", sans-serif;
+  font: 700 11px/1.2 "Chicago", "Arial Narrow", sans-serif;
   letter-spacing: .08em;
 }
 
@@ -35,7 +35,7 @@
 .chapterLinks button {
   display: inline-flex;
   min-width: 0;
-  min-height: 27px;
+  min-height: 36px;
   align-items: center;
   gap: 5px;
   border: 1px solid #d6d9ff;
@@ -56,8 +56,8 @@
   color: #fff;
   cursor: default;
 }
-.chapterLinks span { color: inherit; font-size: 8px; }
-.chapterLinks b { min-width: 0; font: 700 9px/1.05 Geneva, Arial, sans-serif; }
+.chapterLinks span { color: inherit; font-size: 11px; }
+.chapterLinks b { min-width: 0; font: 700 11px/1.15 Geneva, Arial, sans-serif; }
 
 .header {
   padding: 12px 14px 11px;
@@ -68,7 +68,7 @@
 .brief span {
   display: block;
   color: #343434;
-  font: 700 9px/1.1 "Chicago", "Arial Narrow", sans-serif;
+  font: 700 11px/1.2 "Chicago", "Arial Narrow", sans-serif;
   letter-spacing: .07em;
 }
 
@@ -102,14 +102,14 @@
 
 .contact {
   display: inline-flex;
-  min-height: 25px;
+  min-height: 36px;
   align-items: center;
   margin-top: 8px;
   border: 1px solid #4f4f4f;
   background: #fafafa;
   box-shadow: inset 1px 1px #fff, inset -1px -1px #bbb;
   color: #11177a;
-  font: 700 10px/1 Geneva, Arial, sans-serif;
+  font: 700 11px/1.2 Geneva, Arial, sans-serif;
   padding: 5px 7px;
   text-decoration: none;
 }
@@ -190,13 +190,13 @@
 .relatedLinks { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
 
 .relatedLinks button {
-  min-height: 25px;
+  min-height: 36px;
   border: 1px solid #525252;
   background: #fafafa;
   box-shadow: inset 1px 1px #fff, inset -1px -1px #bbb;
   color: #111;
   cursor: pointer;
-  font: 700 10px/1.05 Geneva, Arial, sans-serif;
+  font: 700 11px/1.15 Geneva, Arial, sans-serif;
   padding: 5px 7px;
 }
 
@@ -215,6 +215,9 @@
   .storyGrid > .pipeline { grid-column: auto; border-bottom: 0; border-left: 0; border-top: 1px solid #aaa; }
   .storyGrid > section:first-child { border-top: 0; }
   .relatedLinks { justify-content: flex-start; }
+  .chapterLinks button,
+  .contact,
+  .relatedLinks button { min-height: 44px; }
 }
 
 @media (max-width: 520px) {
