@@ -1,9 +1,9 @@
 import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 
 export const metadata = {
-  title: "RUN/HACK — SideQuest",
+  title: "RUN/HACK — Running Hackathon Field Journal",
   description:
-    "Explore Samuel Zhang’s second-place Running Hackathon build: a voice-built social running loop with private Strava evidence, subsequent GPS runs, challenges and ephemeral live video.",
+    "Step inside Samuel Zhang’s rain-soaked Running Hackathon relay: 44 team kilometres, a runner-only build rule, the people behind the track and second-place app SideQuest.",
 };
 
 export default function SideQuestPage() {

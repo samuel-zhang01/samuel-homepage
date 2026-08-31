@@ -198,7 +198,7 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "sidequest",
-    title: "RUN/HACK — SideQuest",
+    title: "RUN/HACK — Field Journal",
     x: 54,
     y: 42,
     width: 1000,
@@ -299,10 +299,10 @@ const INITIAL_WINDOWS: WindowState[] = [
 
 const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "about", label: "Profile", icon: "profile", description: "Start here: biography, current work and highlights." },
+  { id: "sidequest", label: "RUN/HACK", icon: "runner", description: "Hackathon field journal: one wet track, a runner-only build rule, 44 team kilometres, 100+ builders and a second-place finish." },
   { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
   { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
-  { id: "sidequest", label: "RUN/HACK", icon: "runner", description: "A second-place running hackathon build: Strava evidence, subsequent runs, social challenges and live relay." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
@@ -714,6 +714,10 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             <b>CABINET OF CURIOSITIES</b>
             <p>Choose a drawer to open the corresponding part of the portfolio.</p>
           </div>
+          <button onClick={() => openApp("sidequest")}>
+            <PixelIcon kind="runner" small />
+            <span className="identity-copy"><b>Hackathon fieldbook</b><span className="identity-detail">RUN/HACK: 100+ builders, one 400-metre loop, 44 team kilometres in the rain and a second-place product built by phone.</span></span>
+          </button>
           <button onClick={() => openApp("coverd")}>
             <PixelIcon kind="coverd" small />
             <span className="identity-copy"><b>Founder</b><span className="identity-detail">Building COVERD: ATS-connected applicant review, voice enrichment, reasoned shortlists and human-owned decisions.</span></span>
@@ -725,10 +729,6 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <span className="identity-detail">Building polished tools from messy operational knowledge, with enough care that people adopt and keep using them.</span>
               <span className="identity-drawer-prompt">OPEN PROJECT ARCHIVE →</span>
             </span>
-          </button>
-          <button onClick={() => openApp("sidequest")}>
-            <PixelIcon kind="runner" small />
-            <span className="identity-copy"><b>Runner-builder</b><span className="identity-detail">Second place at RUN/HACK after a 5K race, a 44K team relay and a voice-built social running product.</span></span>
           </button>
           <button onClick={() => openApp("experience")}>
             <PixelIcon kind="university" small />
@@ -2722,7 +2722,7 @@ export default function SystemSevenDesktop({
               <div className="menu-dropdown apple-dropdown" id="samuel-menu">
                 <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
                 <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
-                <button onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />RUN/HACK — SideQuest</button>
+                <button onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />RUN/HACK — Field Journal</button>
                 <hr />
                 <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
                 <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>

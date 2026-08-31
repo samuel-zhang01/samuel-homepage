@@ -56,8 +56,8 @@ const sectionMetadata: Record<string, { title: string; description: string }> = 
     description: "Samuel’s self-hosted AI, storage and automation infrastructure.",
   },
   sidequest: {
-    title: "RUN/HACK — SideQuest",
-    description: "A second-place running hackathon build connecting private Strava evidence, subsequent GPS runs, social challenges and ephemeral live video.",
+    title: "RUN/HACK — Field Journal",
+    description: "A rain-soaked running hackathon field journal: the runner-only build rule, 44 team kilometres, a 100+ person track community and second-place app SideQuest.",
   },
   skills: {
     title: "Skills & Capabilities",
