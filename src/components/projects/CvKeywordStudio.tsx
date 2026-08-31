@@ -84,7 +84,7 @@ type RewriteSuggestion = {
 const SAMPLE_CV = `ALEX MORGAN — FICTIONAL SAMPLE
 
 PROFILE
-Product-minded data scientist who turns ambiguous questions into reliable analytical tools.
+Product-minded data scientist building reliable analytical tools for ambiguous questions.
 
 SELECTED EXPERIENCE
 • Built Python and SQL feature pipelines for 1.8 million synthetic records, reducing batch runtime by 38%.
@@ -98,7 +98,7 @@ PROJECTS
 EDUCATION
 MSc Data Science — Example University`;
 
-const SAMPLE_JOB = `Northstar Systems is hiring an Applied Machine Learning Engineer to turn ambiguous operational problems into reliable products.
+const SAMPLE_JOB = `Northstar Systems is hiring an Applied Machine Learning Engineer to solve ambiguous operational problems with reliable products.
 
 You will build production data pipelines with Python and SQL, train and evaluate machine-learning models with scikit-learn, and expose predictions through APIs. You will design experiments, partner with product and operations stakeholders, and communicate model trade-offs clearly.
 
@@ -825,7 +825,7 @@ export function CvKeywordStudio() {
 
             <article className={`${styles.panel} ${styles.signalPanel}`}>
               <div className={styles.panelTitle}>
-                <div><span>EXTRACTED SIGNALS</span><strong>Transparent term-by-term calculation</strong></div>
+                <div><span>EXTRACTED SIGNALS</span><strong>Term-by-term calculation</strong></div>
                 <small>base + specificity + repetition + essential boost</small>
               </div>
               <div className={styles.signalTableWrap}>
@@ -1026,7 +1026,7 @@ export function CvKeywordStudio() {
                   </header>
                   <section>
                     <h5>Profile</h5>
-                    <p>Product-minded data scientist who turns ambiguous questions into reliable analytical tools.</p>
+                    <p>Product-minded data scientist building reliable analytical tools for ambiguous questions.</p>
                   </section>
                   <section>
                     <h5>{template === "science" ? "Selected Research & Experience" : template === "product" ? "Product Experience" : "Selected Experience"}</h5>

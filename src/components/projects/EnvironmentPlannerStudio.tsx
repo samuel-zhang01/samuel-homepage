@@ -692,7 +692,7 @@ function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: 
       adapted: {
         outcome: "QUARANTINED",
         tone: "warning" as const,
-        headline: `18 of 19 core targets remain independently inspectable`,
+        headline: `18 of 19 core targets remain independently reviewable`,
         detail: "The browser adaptation records the failed target, continues the dry-run ledger and blocks release until the missing dependency is explicitly accepted or repaired.",
         trace: ["target → failed", "ledger → unresolved", "downstream plan → visible, not executed"],
       },
@@ -715,7 +715,7 @@ function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: 
         outcome: "CAPABILITY DOWNGRADE",
         tone: "warning" as const,
         headline: "The selected wheel and observed device are reconciled separately",
-        detail: "A fallback may import successfully yet provide no acceleration. The adapted check records the actual CUDA/MPS capability instead of treating package installation as sufficient.",
+        detail: "A fallback may import successfully yet provide no acceleration. The adapted check records actual CUDA/MPS capability alongside package availability.",
         trace: ["artifact → resolved", "import → required", "accelerator probe → required"],
       },
     };
@@ -752,7 +752,7 @@ function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: 
       outcome: "SUPPLY-CHAIN GATE",
       tone: "blocked" as const,
       headline: "Unreviewed remote execution is blocked before launch",
-      detail: "The adaptation requires an inspectable, versioned artifact and integrity evidence. It intentionally does not generate or execute a replacement command.",
+      detail: "The adaptation requires a versioned artifact that can be reviewed, plus integrity evidence. It intentionally does not generate or execute a replacement command.",
       trace: ["artifact provenance → missing", "checksum → missing", "execution → blocked"],
     },
   };
@@ -900,7 +900,7 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
           </div>
           <p>Core package targets + framework distributions + external CLI.</p>
           <div><span>23 Python import probes</span><span>+ 1 CLI presence probe</span></div>
-          <small>The source’s Grad-CAM verifier uses a hyphenated import token; the exhibit flags it instead of reporting a fabricated result.</small>
+          <small>The source’s Grad-CAM verifier uses a hyphenated import token; the exhibit flags the invalid check and withholds a result.</small>
         </section>
       </div>
     </div>

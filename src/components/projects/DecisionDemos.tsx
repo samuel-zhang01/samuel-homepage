@@ -621,7 +621,7 @@ export function RegularisationLabDemo() {
     >
       <SourceNote title="A mathematical miniature">
         This is a newly authored concept explorer, not the coursework fit. It assumes standardised,
-        orthogonal features so shrinkage has a transparent closed form; real correlated data requires
+        orthogonal features so shrinkage has a closed form; real correlated data requires
         fitting and validation.
       </SourceNote>
 

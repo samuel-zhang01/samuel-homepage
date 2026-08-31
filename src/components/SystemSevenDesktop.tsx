@@ -318,7 +318,7 @@ const experience = [
     role: "Senior Coordinator — Digital Transformation Strategy Internship",
     company: "Marsh · Strategy & Corporate Development Group",
     location: "London",
-    copy: "Conducted client-confidential applied-AI research in a regulated insurance setting, with emphasis on transparent evaluation, human oversight and safe deployment. Operational data, model design and findings remain private.",
+    copy: "Conducted client-confidential applied-AI research in a regulated insurance setting, with documented evaluation, human oversight and deployment safeguards. Operational data, model design and findings remain private.",
     tag: "CURRENT",
   },
   {
@@ -382,7 +382,7 @@ const experience = [
 const skillGroups = [
   {
     title: "Applied AI & Recruitment Systems",
-    summary: "Designing inspectable AI products that combine application evidence, specialist evaluation, voice enrichment and human-owned decisions.",
+    summary: "Designing AI products that keep application evidence, specialist evaluation, voice enrichment and final human decisions open to review.",
     evidence: "COVERD — an ATS-connected intelligence layer that reviews applications, retains evidence and returns reasoned shortlists; automated voice interviews add signal when needed.",
     items: [
       "Multi-agent orchestration & graph workflows",
@@ -410,8 +410,8 @@ const skillGroups = [
   },
   {
     title: "Search, Data & Evaluation",
-    summary: "Treating evaluation as an engineering discipline: explicit baselines, provenance, failure analysis and honest limits.",
-    evidence: "Client-confidential research — applies careful evaluation, transparent recommendations and human oversight in a regulated setting.",
+    summary: "Treating evaluation as an engineering discipline: stated baselines, provenance, failure analysis and clear limits.",
+    evidence: "Client-confidential research uses documented evaluation, qualified recommendations and human oversight in a regulated setting.",
     items: [
       "Learning-to-rank & recommendation systems",
       "Document extraction & intelligence",
@@ -449,7 +449,7 @@ const skillGroups = [
   },
   {
     title: "Product, Leadership & Adoption",
-    summary: "Turning ambiguous technical opportunities into trusted products by listening closely, making trade-offs and bringing people with the work.",
+    summary: "Building trusted products for ambiguous technical problems through close listening, clear trade-offs and shared ownership.",
     evidence: "GROWMAT and COVERD — turned ambiguous needs into adopted products through discovery, roadmap ownership and stakeholder communication.",
     items: [
       "Customer discovery & problem framing",
@@ -699,11 +699,10 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           </div>
         </div>
         <p className="hero-copy">
-          I&apos;m an applied AI engineer and founder who turns ambiguous, domain-heavy
-          problems into useful products people trust. My current work spans responsible AI
-          research and COVERD, an ATS-connected recruitment-intelligence product that can
-          enrich application evidence through automated voice interviews. Previously, I delivered
-          GROWMAT—an internal enterprise product documented through an external showcase;
+          I&apos;m an applied AI engineer and founder. I build products for ambiguous, domain-heavy
+          problems. My current work covers responsible AI research and COVERD, an ATS-connected
+          recruitment product that can add evidence through automated voice interviews. I previously
+          delivered GROWMAT, an internal enterprise product documented in an external showcase;
           live company data, source code, credentials and non-public operating context remain private.
         </p>
         <fieldset className="about-panel">
@@ -723,7 +722,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             <PixelIcon kind="briefcase" small />
             <span className="identity-copy identity-copy--product">
               <b>Product</b>
-              <span className="identity-detail">Turning messy operational knowledge into polished tools that people trust, adopt and keep using.</span>
+              <span className="identity-detail">Building polished tools from messy operational knowledge, with enough care that people adopt and keep using them.</span>
               <span className="identity-drawer-prompt">OPEN PROJECT ARCHIVE →</span>
             </span>
           </button>
@@ -733,7 +732,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           </button>
           <button onClick={() => openApp("experience")}>
             <PixelIcon kind="university" small />
-            <span className="identity-copy"><b>Scientist</b><span className="identity-detail">Chemistry-trained thinking: expose uncertainty, test assumptions honestly and learn from failed experiments.</span></span>
+            <span className="identity-copy"><b>Scientist</b><span className="identity-detail">Chemistry-trained thinking: expose uncertainty, test assumptions against evidence and learn from failed experiments.</span></span>
           </button>
           <button onClick={() => openApp("lab")}>
             <PixelIcon kind="network" small />
@@ -774,7 +773,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
     {
       code: "02",
       title: "Six Specialist Reviews",
-      copy: "Examines skills, experience, domain knowledge, trajectory, communication and culture as distinct evidence dimensions rather than one opaque score.",
+      copy: "Examines skills, experience, domain knowledge, trajectory, communication and culture as separate evidence dimensions, each with its own rationale.",
     },
     {
       code: "03",
@@ -784,12 +783,12 @@ function CoverdApp({ locale }: { locale: Locale }) {
     {
       code: "04",
       title: "Candidate Compass",
-      copy: "Maps the applicant pool into an inspectable shortlist, review set and rejection set so recruiters can see the whole pipeline at once.",
+      copy: "Maps the applicant pool into a shortlist, review set and rejection set so recruiters can examine the whole pipeline at once.",
     },
     {
       code: "05",
       title: "Reasons & Review",
-      copy: "Retains the evidence behind each assessment, flags uncertainty for human review and gives recruiters context instead of an unexplained model verdict.",
+      copy: "Retains the evidence behind each assessment, flags uncertainty for human review and shows recruiters the basis for every judgement.",
     },
     {
       code: "06",
@@ -803,7 +802,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
     ["02", "Read every application", "Apply the same structured review to every candidate without reviewer-fatigue shortcuts."],
     ["03", "Separate the evidence", "Run specialist assessments across six dimensions and retain the reasons behind each result."],
     ["04", "Enrich when useful", "Use voice interviews, portfolio review or follow-ups when the existing record leaves material gaps."],
-    ["05", "Shortlist with reasons", "Return an inspectable pipeline; recruiters review uncertainty and make the final decision."],
+    ["05", "Shortlist with reasons", "Return a reviewable pipeline; recruiters examine uncertainty and make the final decision."],
   ];
 
   return (
@@ -848,7 +847,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
           Application volume makes consistent review difficult. COVERD applies specialist
           evaluation across six dimensions, keeps the evidence behind each assessment and
           adds automated voice interviews when another signal would help. The result is a
-          ranked, inspectable pipeline—not a replacement for recruiter judgement. Candidate
+          ranked pipeline that recruiters can inspect. It does not replace recruiter judgement. Candidate
           records, prompts and production internals remain outside this public portfolio.
         </p>
       </section>
@@ -863,7 +862,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
       <section className="coverd-section" id="coverd-products">
         <div className="coverd-section__heading">
           <span>PRODUCT SYSTEM</span>
-          <h4>One inspectable layer across the hiring pipeline.</h4>
+          <h4>One review layer across the hiring pipeline.</h4>
         </div>
         <div className="coverd-product-grid">
           {products.map((product) => (
@@ -898,11 +897,11 @@ function CoverdApp({ locale }: { locale: Locale }) {
           <p>Trust comes from evidence, visible uncertainty, candidate agency and accountable human decisions.</p>
         </div>
         <div className="coverd-principles">
-          <article><strong>Every score has a reason</strong><p>Recruiters receive the evidence and reasoning behind an assessment, not an unexplained algorithmic verdict.</p></article>
+          <article><strong>Every score has a reason</strong><p>Recruiters receive the evidence, reasoning and supporting record behind each assessment.</p></article>
           <article><strong>Candidate agency matters</strong><p>The public product commits to evaluation visibility, correction requests and consent withdrawal.</p></article>
-          <article><strong>Enrichment is purposeful</strong><p>Voice interviews and follow-ups should resolve a real evidence gap rather than merely add friction.</p></article>
-          <article><strong>Uncertainty triggers review</strong><p>Low-confidence or conflicting evidence is surfaced for human attention instead of converted into false certainty.</p></article>
-          <article><strong>Consistency is testable</strong><p>Specialist dimensions, audit trails and fairness testing make the review process inspectable.</p></article>
+          <article><strong>Enrichment is purposeful</strong><p>Voice interviews and follow-ups should address a specific evidence gap and earn their place in the workflow.</p></article>
+          <article><strong>Uncertainty triggers review</strong><p>Low-confidence or conflicting evidence is routed to human attention, with the uncertainty left visible.</p></article>
+          <article><strong>Consistency is testable</strong><p>Specialist dimensions, audit trails and fairness testing give recruiters a reviewable process.</p></article>
           <article><strong>Recruiters remain accountable</strong><p>AI carries repetition and context; people retain the judgement and responsibility.</p></article>
         </div>
         <div className="coverd-values">
@@ -961,7 +960,7 @@ function SkillsApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="skills-app">
       <div className="control-panel-intro">
         <PixelIcon kind="controls" />
-        <div><h3>Capabilities, with receipts.</h3><p>A broader engineering toolkit, connected to the products and systems where Samuel has actually used it.</p></div>
+        <div><h3>Capabilities, with receipts.</h3><p>A broader engineering toolkit, connected to the products and systems where Samuel has used it.</p></div>
       </div>
       <div className="control-groups">
         {skillGroups.map((group) => (
@@ -1218,16 +1217,16 @@ const SAM_WORDS = [
   { answer: "CAUSAL", clue: "The adjustment lens kept separate from off-policy evaluation.", fact: "The Causal Adjustment and OPE Lab distinguishes intervention questions from evaluation of a new logged policy." },
   { answer: "POLICY", clue: "What the OPE workbench evaluates without deploying it.", fact: "The local OPE fixture exposes propensity support, effective sample size and estimator disagreement before any policy claim." },
   { answer: "SENSOR", clue: "What the air-quality decision lab tries to choose economically.", fact: "The Air-Quality ML Decision Lab joins source data QA and model results to an explicit sensor-budget trade-off." },
-  { answer: "NEURAL", clue: "A family of scientific models Samuel makes inspectable rather than treating as a black box.", fact: "The archive traces neural architectures for microscopy, MRI reconstruction and CFD surrogates with provenance and evaluation limits." },
-  { answer: "BROKER", clue: "The human who retains authority in the insurance decision-support workflow.", fact: "The insurance matching work keeps evidence pillars separate and preserves broker judgement rather than forcing an aggregate recommendation." },
+  { answer: "NEURAL", clue: "A family of scientific models whose internal structure Samuel opens for inspection.", fact: "The archive traces neural architectures for microscopy, MRI reconstruction and CFD surrogates with provenance and evaluation limits." },
+  { answer: "BROKER", clue: "The human who retains authority in the insurance decision-support workflow.", fact: "The insurance matching work keeps evidence pillars separate and leaves their final synthesis to broker judgement." },
   { answer: "MARKET", clue: "A candidate destination for an insurance risk—and the subject of a tiny Julia simulator.", fact: "Samuel’s archive includes both lead-market decision support and a source-audited stochastic market-impact simulation." },
   { answer: "SOLUTE", clue: "The dissolved component in the solid–liquid equilibrium workbench.", fact: "The solubility exhibit solves an invented solute workflow in log-composition space and reconciles mole and mass reporting bases." },
-  { answer: "ENERGY", clue: "A quantity tracked in the chemistry lab’s molecular-dynamics receipt.", fact: "The computational-chemistry exhibit reports deterministic velocity-Verlet energy drift rather than hiding integrator error." },
+  { answer: "ENERGY", clue: "A quantity tracked in the chemistry lab’s molecular-dynamics receipt.", fact: "The computational-chemistry exhibit reports deterministic velocity-Verlet energy drift so integrator error stays visible." },
   { answer: "CAMERA", clue: "A tool from Samuel’s former professional life that is now kept for friends and nature.", fact: "Samuel previously photographed weddings professionally and now keeps photography playful and personal." },
   { answer: "HIKING", clue: "An unhurried interest involving boots, conversation and somewhere new.", fact: "Samuel values long walks for curiosity, shared conversation and the story on the way home." },
   { answer: "LAMBDA", clue: "A symbol connecting regularisation paths and an insurance ranking model.", fact: "The archive discusses lambda shrinkage in the air-quality companion and LambdaRank in insurance decision support." },
   { answer: "TENSOR", clue: "The object followed through several rotatable model-architecture diagrams.", fact: "Scientific ML chapters expose tensor paths, skip connections, data consistency and checkpoint provenance." },
-  { answer: "RECALL", clue: "The spaced-practice loop inside the Italian learning portal.", fact: "Parliamo turns a 56-day plan into adaptive practice, four-way spaced recall and evidence-backed progress." },
+  { answer: "RECALL", clue: "The spaced-practice loop inside the Italian learning portal.", fact: "Parliamo structures a 56-day plan around adaptive practice, four-way spaced recall and progress records." },
   { answer: "CARBON", clue: "The element named in the air-quality telemetry’s CO₂ signal.", fact: "Samuel’s home telemetry includes Bluetooth air-quality measurements flowing into SQL-backed dashboards." },
 ] as const;
 
@@ -1274,7 +1273,7 @@ function expectedTriageRoute(item: TriageCase): TriageRoute {
 function triageReason(item: TriageCase) {
   const route = expectedTriageRoute(item);
   if (route === "ready") return "Complete, aligned evidence clears the inspection gate; the broker still decides.";
-  if (route === "abstain") return "Low support requires abstention rather than a forced recommendation.";
+  if (route === "abstain") return "Low support triggers abstention and human review.";
   if (item.conflict) return "Conflicting evidence needs human reconciliation.";
   if (item.missingPillars > 0) return "A missing evidence pillar needs human review.";
   return "Confidence below the ready gate needs human review.";

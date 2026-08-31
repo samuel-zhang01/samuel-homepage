@@ -114,7 +114,7 @@ const EVIDENCE_LEVELS: Array<{
   factor: number;
   description: string;
 }> = [
-  { id: 0, short: "CLAIM", label: "Assertion only", factor: 0, description: "A sentence exists, but no inspectable support is attached." },
+  { id: 0, short: "CLAIM", label: "Assertion only", factor: 0, description: "A sentence exists, but no supporting artifact is attached." },
   { id: 1, short: "SIGNAL", label: "Directional signal", factor: 0.35, description: "Qualitative or early evidence points in a direction without a stable denominator." },
   { id: 2, short: "MEASURE", label: "Measured", factor: 0.7, description: "A defined measure, sample and observation window are available for review." },
   { id: 3, short: "CHECKED", label: "Corroborated", factor: 1, description: "The measure is independently checkable or repeated outside the founding team." },
@@ -143,7 +143,7 @@ const SCENARIOS: Scenario[] = [
     accent: "#9a4d2b",
     customer: "Small multi-site manufacturers with lean maintenance teams",
     job: "Turn fragmented shift notes into a cited maintenance hand-off before the next stoppage.",
-    distinction: "A constrained evidence trail and escalation route, rather than an unrestricted maintenance chatbot.",
+    distinction: "A constrained evidence trail with a defined escalation route for maintenance questions.",
     claims: {
       problem: "Maintenance context is lost across shifts, extending the search for previous faults.",
       difference: "Every suggested diagnostic path is linked to an approved local note or marked unknown.",
@@ -164,14 +164,14 @@ const SCENARIOS: Scenario[] = [
     accent: "#376849",
     customer: "Independent grocery groups balancing availability and fresh-food waste",
     job: "Surface an explainable ordering exception before a buyer commits the next replenishment cycle.",
-    distinction: "Exception-first recommendations expose demand inputs and buyer overrides rather than automating every order.",
+    distinction: "Exception-first recommendations expose demand inputs and keep every order under buyer control.",
     claims: {
       problem: "Buyers repeatedly trade stock availability against waste with incomplete local demand context.",
       difference: "The workflow ranks only material exceptions and shows the inputs behind each recommendation.",
-      market: "A store-level subscription model makes the reachable revenue calculation inspectable.",
+      market: "A store-level subscription model exposes the reachable revenue calculation.",
       traction: "Synthetic discovery sessions show workflow fit; no production deployment is represented.",
       delivery: "Data freshness, seasonal drift and override logging are treated as release conditions.",
-      funding: "The proposed ask targets paid repeatability rather than a generic growth narrative.",
+      funding: "The proposed ask is tied to paid repeatability.",
     },
     levels: { problem: 2, difference: 2, market: 1, traction: 1, delivery: 2, funding: 1 },
     market: { accounts: 2400, sites: 3.2, monthlyPrice: 420, penetration: 7, closeRate: 18, monthlyChurn: 1.8, grossMargin: 71 },
@@ -216,7 +216,7 @@ const SOURCE_LEDGER: Array<{
     state: "source",
     label: "SOURCE STRUCTURE",
     title: "Prompt, output and model disclosure",
-    detail: "The submission retains the instruction, generated response and model identification as distinct artifacts rather than blending authorship.",
+    detail: "The submission retains the instruction, generated response and model identification as distinct artifacts with clear authorship boundaries.",
   },
   {
     state: "source",
@@ -418,9 +418,9 @@ function ClaimDesk({
             <span>INVESTOR QUESTION</span><p>{selected.investorQuestion}</p>
           </section>
           <section className={styles.nextEvidence}>
-            <span>NEXT INSPECTABLE EVIDENCE</span><p>{selected.nextEvidence}</p>
+            <span>NEXT EVIDENCE TO CHECK</span><p>{selected.nextEvidence}</p>
           </section>
-          <p className={styles.modelCaveat}>The weights and factors are transparent exhibit assumptions. This is an evidence-coverage lens, not an investment score.</p>
+          <p className={styles.modelCaveat}>The exhibit shows every assumed weight and factor. It measures evidence coverage, not investment quality.</p>
         </aside>
       </div>
     </div>
@@ -634,7 +634,7 @@ function SourceLedger() {
           <p>The local archive supports a human-in-the-loop critique pattern. This exhibit re-authors that pattern around fictional ventures and labels every added calculation.</p>
         </div>
         <dl>
-          <div><dt>Source-backed themes</dt><dd>{sourceCount}</dd></div>
+          <div><dt>Themes tied to sources</dt><dd>{sourceCount}</dd></div>
           <div><dt>Browser reconstructions</dt><dd>{reconstructedCount}</dd></div>
           <div><dt>Excluded / absent</dt><dd>{guardedCount}</dd></div>
         </dl>

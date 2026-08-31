@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { normaliseLocale } from "@/lib/i18n";
 
 const descriptions = {
-  "en-GB": "Samuel Zhang is an applied AI engineer, product builder and COVERD founder turning ambiguous problems into useful, human-centred systems.",
-  "en-US": "Samuel Zhang is an applied AI engineer, product builder, and COVERD founder turning ambiguous problems into useful, human-centered systems.",
-  "zh-CN": "Samuel Zhang 是应用人工智能工程师、产品构建者与 COVERD 创始人，致力于把模糊的问题转化为真正有用、以人为本的系统。",
-  "zh-TW": "Samuel Zhang 是應用人工智慧工程師、產品構建者與 COVERD 創辦人，致力於把模糊的問題轉化為真正有用、以人為本的系統。",
+  "en-GB": "Samuel Zhang is an applied AI engineer, product builder and COVERD founder who builds useful, human-centred systems for ambiguous problems.",
+  "en-US": "Samuel Zhang is an applied AI engineer, product builder, and COVERD founder who builds useful, human-centered systems for ambiguous problems.",
+  "zh-CN": "Samuel Zhang 是应用人工智能工程师、产品构建者与 COVERD 创始人，为定义模糊的问题构建实用、以人为本的系统。",
+  "zh-TW": "Samuel Zhang 是應用人工智慧工程師、產品構建者與 COVERD 創辦人，為定義模糊的問題構建實用、以人為本的系統。",
 } as const;
 
 export async function generateMetadata({

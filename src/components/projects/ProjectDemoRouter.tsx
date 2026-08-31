@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 
 import type { ProjectDemoId } from "@/data/projects";
+import type { Locale } from "@/lib/i18n";
 import styles from "./ProjectDemoRouter.module.css";
 
 function DemoLoading() {
@@ -123,7 +124,7 @@ const VentureReasoningStudio = dynamic(
   { loading: DemoLoading },
 );
 
-export function ProjectDemoRouter({ demoId }: { demoId: ProjectDemoId }) {
+export function ProjectDemoRouter({ demoId, locale = "en-GB" }: { demoId: ProjectDemoId; locale?: Locale }) {
   switch (demoId) {
     case "bandits":
       return <BanditStudio />;
@@ -162,7 +163,7 @@ export function ProjectDemoRouter({ demoId }: { demoId: ProjectDemoId }) {
     case "rl-atlas":
       return <RlAtlasDemo />;
     case "microrobot-vision":
-      return <MicrorobotShowcase />;
+      return <MicrorobotShowcase locale={locale} />;
     case "mri-trust":
       return <MriTrustStudio />;
     case "cfd-surrogates":

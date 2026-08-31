@@ -197,13 +197,13 @@ const enGB: ProjectArchiveCopy = {
   header: {
     eyebrow: "SAMUEL HD / PROJECTS / INDEX",
     title: "Project Archive",
-    description: "Products, experiments and research—shown at the boundary each project permits.",
+    description: "Products, experiments and research, shown only within each project’s publication boundary.",
     summaryAria: "Archive summary",
     files: "files",
     interactive: "experiences",
     suites: "suites",
     redacted: "redacted",
-    languageNotice: "Project titles and source-grounded descriptions remain in British English; archive controls follow your selected language.",
+    languageNotice: "Project titles and descriptions traced to source remain in British English; archive controls follow your selected language.",
   },
   views: {
     aria: "Project Archive views",
@@ -224,7 +224,7 @@ const enGB: ProjectArchiveCopy = {
     filesStat: "Evidence files",
     startEyebrow: "START HERE · ABOUT 30 SECONDS",
     startTitle: "Pick one question",
-    startDescription: "Four useful entry points; each opens a real, self-contained chapter.",
+    startDescription: "Four entry points. Each opens a self-contained chapter.",
     shelvesEyebrow: "CABINET / SIX THEMED DRAWERS",
     shelvesTitle: "Browse by the problem being solved",
     shelvesDescription: "Open one shelf, then inspect an experience and its individual evidence files.",
@@ -242,15 +242,15 @@ const enGB: ProjectArchiveCopy = {
     runDemo: "Run interactive demo",
     referenceFile: "Reference file",
     supportingFiles: "Supporting files",
-    supportingDescription: "Original outputs and protected stories remain visible without being padded into artificial demos.",
+    supportingDescription: "Original outputs and protected stories remain available as reference files.",
     viewProject: "View project file",
     selected: "Selected file",
-    reconciliationLead: "Nothing is hidden:",
-    reconciliation: "14 guided experiences organise all 27 interactive chapters; four non-demo files remain inspectable; all 31 canonical project links stay intact.",
+    reconciliationLead: "Coverage check:",
+    reconciliation: "14 guided experiences organise all 27 interactive chapters; four non-demo files remain available; all 31 canonical project links stay intact.",
     shelves: {
       "products-operations": {
         title: "Products & Operations",
-        description: "Working products that turn documents, calendars, financial records and market evidence into reviewable decisions.",
+        description: "Working products for decisions based on documents, calendars, financial records and market evidence.",
       },
       "decision-intelligence": {
         title: "Decision Intelligence & RL",
@@ -262,7 +262,7 @@ const enGB: ProjectArchiveCopy = {
       },
       "molecular-computational": {
         title: "Molecular & Computational Science",
-        description: "Inspectable paths through spectral assignment, thermodynamic modelling and computational-chemistry kernels.",
+        description: "Worked examples in spectral assignment, thermodynamic modelling and computational-chemistry kernels.",
       },
       "systems-reproducibility": {
         title: "Systems & Reproducibility",
@@ -270,7 +270,7 @@ const enGB: ProjectArchiveCopy = {
       },
       "learning-strategy": {
         title: "Learning, Strategy & Ventures",
-        description: "Learning systems and reasoning tools that separate inspectable evidence from attractive but unsupported claims.",
+        description: "Learning systems and reasoning tools that separate evidence a reader can check from unsupported claims.",
       },
     },
     startPaths: {
@@ -323,7 +323,7 @@ const enGB: ProjectArchiveCopy = {
     aria: "Project files",
     objects: "{shown} of {total} objects",
     archiveMap: "Portfolio map · 6 views",
-    inspectable: "inspectable",
+    inspectable: "available",
     protected: "protected",
     emptyTitle: "No matching project files",
     emptyDescription: "Try another discipline or clear the search.",
@@ -457,17 +457,17 @@ const enUS: ProjectArchiveCopy = {
   ...enGB,
   header: {
     ...enGB.header,
-    languageNotice: "Project titles and source-grounded descriptions remain in British English; archive controls use your selected US English.",
+    languageNotice: "Project titles and descriptions traced to source remain in British English; archive controls use your selected US English.",
   },
   guided: {
     ...enGB.guided,
     heroDescription: "Start with one short walkthrough, then open a themed shelf. Suites organize related chapters without merging their evidence or changing any project address.",
-    reconciliation: "14 guided experiences organize all 27 interactive chapters; four non-demo files remain inspectable; all 31 canonical project links stay intact.",
+    reconciliation: "14 guided experiences organize all 27 interactive chapters; four non-demo files remain available; all 31 canonical project links stay intact.",
     shelves: {
       ...enGB.guided.shelves,
       "molecular-computational": {
         ...enGB.guided.shelves["molecular-computational"],
-        description: "Inspectable paths through spectral assignment, thermodynamic modeling and computational-chemistry kernels.",
+        description: "Worked examples in spectral assignment, thermodynamic modeling and computational-chemistry kernels.",
       },
     },
   },
@@ -498,7 +498,7 @@ const zhCN: ProjectArchiveCopy = {
     interactive: "个专题体验",
     suites: "个专题",
     redacted: "项已隐去",
-    languageNotice: "项目标题与经来源核实的说明保留英式英语；档案界面使用您选择的语言。",
+    languageNotice: "项目标题及可追溯到来源的说明保留英式英语；档案界面使用您选择的语言。",
   },
   views: {
     aria: "项目档案视图",
@@ -519,7 +519,7 @@ const zhCN: ProjectArchiveCopy = {
     filesStat: "证据档案",
     startEyebrow: "从这里开始 · 约 30 秒",
     startTitle: "选择一个问题",
-    startDescription: "四个实用入口；每个入口都会打开一个真实且独立的章节。",
+    startDescription: "提供四个入口，每个入口对应一个独立章节。",
     shelvesEyebrow: "陈列柜 / 六个主题抽屉",
     shelvesTitle: "按待解决的问题浏览",
     shelvesDescription: "打开一个抽屉，再查看其中的体验及各自的证据档案。",
@@ -537,15 +537,15 @@ const zhCN: ProjectArchiveCopy = {
     runDemo: "运行互动演示",
     referenceFile: "参考档案",
     supportingFiles: "支撑档案",
-    supportingDescription: "原始成果与受保护的项目故事保持可见，不会被勉强包装成演示。",
+    supportingDescription: "原始成果与受保护的项目故事以参考档案形式保留。",
     viewProject: "查看项目档案",
     selected: "已选档案",
-    reconciliationLead: "没有内容被隐藏：",
+    reconciliationLead: "覆盖范围：",
     reconciliation: "14 个引导式体验组织全部 27 个互动章节；四份非演示档案仍可查看；31 个项目直达链接全部保持不变。",
     shelves: {
       "products-operations": {
         title: "产品与运营",
-        description: "把文档、日历、财务记录与市场证据转化为可审查决策的实际产品。",
+        description: "基于文档、日历、财务记录与市场证据提供决策支持的产品。",
       },
       "decision-intelligence": {
         title: "决策智能与强化学习",
@@ -557,7 +557,7 @@ const zhCN: ProjectArchiveCopy = {
       },
       "molecular-computational": {
         title: "分子与计算科学",
-        description: "以可检查的方式串联光谱归属、热力学建模与计算化学核心。",
+        description: "包含光谱归属、热力学建模与计算化学核心的实例。",
       },
       "systems-reproducibility": {
         title: "系统与可复现性",
@@ -565,7 +565,7 @@ const zhCN: ProjectArchiveCopy = {
       },
       "learning-strategy": {
         title: "学习、战略与创业",
-        description: "用学习系统与推理工具区分可检查证据和看似吸引人但缺乏支撑的主张。",
+        description: "用学习系统与推理工具区分可核对的证据和缺乏支撑的主张。",
       },
     },
     startPaths: {
@@ -582,7 +582,7 @@ const zhCN: ProjectArchiveCopy = {
       mri: {
         eyebrow: "科学机器学习",
         title: "检查 MRI 可信关卡",
-        description: "连接重建、数据一致性、不确定性与下游评估，而不是把单一指标当作证明。",
+        description: "联合检查重建、数据一致性、不确定性与下游评估；单一指标不足以构成证明。",
       },
       molecular: {
         eyebrow: "分子研究",
@@ -758,7 +758,7 @@ const zhTW: ProjectArchiveCopy = {
     interactive: "個專題體驗",
     suites: "個專題",
     redacted: "項已隱去",
-    languageNotice: "專案標題與經來源核實的說明保留英式英語；檔案介面使用您選擇的語言。",
+    languageNotice: "專案標題及可追溯至來源的說明保留英式英語；檔案介面使用您選擇的語言。",
   },
   views: {
     aria: "專案檔案檢視",
@@ -779,7 +779,7 @@ const zhTW: ProjectArchiveCopy = {
     filesStat: "證據檔案",
     startEyebrow: "從這裡開始 · 約 30 秒",
     startTitle: "選擇一個問題",
-    startDescription: "四個實用入口；每個入口都會開啟一個真實且獨立的章節。",
+    startDescription: "提供四個入口，每個入口對應一個獨立章節。",
     shelvesEyebrow: "陳列櫃 / 六個主題抽屜",
     shelvesTitle: "依待解決的問題瀏覽",
     shelvesDescription: "開啟一個抽屜，再查看其中的體驗及各自的證據檔案。",
@@ -797,15 +797,15 @@ const zhTW: ProjectArchiveCopy = {
     runDemo: "執行互動展示",
     referenceFile: "參考檔案",
     supportingFiles: "支撐檔案",
-    supportingDescription: "原始成果與受保護的專案故事保持可見，不會被勉強包裝成展示。",
+    supportingDescription: "原始成果與受保護的專案故事以參考檔案形式保留。",
     viewProject: "查看專案檔案",
     selected: "已選檔案",
-    reconciliationLead: "沒有內容被隱藏：",
+    reconciliationLead: "涵蓋範圍：",
     reconciliation: "14 個引導式體驗組織全部 27 個互動章節；四份非展示檔案仍可查看；31 個專案直達連結全部保持不變。",
     shelves: {
       "products-operations": {
         title: "產品與營運",
-        description: "把文件、行事曆、財務記錄與市場證據轉化為可審查決策的實際產品。",
+        description: "根據文件、行事曆、財務記錄與市場證據提供決策支援的產品。",
       },
       "decision-intelligence": {
         title: "決策智慧與強化學習",
@@ -817,7 +817,7 @@ const zhTW: ProjectArchiveCopy = {
       },
       "molecular-computational": {
         title: "分子與計算科學",
-        description: "以可檢查的方式串聯光譜指認、熱力學建模與計算化學核心。",
+        description: "包含光譜指認、熱力學建模與計算化學核心的實例。",
       },
       "systems-reproducibility": {
         title: "系統與可重現性",
@@ -825,7 +825,7 @@ const zhTW: ProjectArchiveCopy = {
       },
       "learning-strategy": {
         title: "學習、策略與新創",
-        description: "運用學習系統與推理工具，區分可檢查的證據與看似吸引人但缺乏支持的主張。",
+        description: "運用學習系統與推理工具，區分可核對的證據與缺乏支持的主張。",
       },
     },
     startPaths: {

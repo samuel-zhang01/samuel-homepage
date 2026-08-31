@@ -640,7 +640,7 @@ export function MolecularRecognitionStudio() {
   const [focusedFrequency, setFocusedFrequency] = useState<number | null>(null);
   const [runNumber, setRunNumber] = useState(1);
   const [message, setMessage] = useState(
-    "Synthetic line catalog loaded. E-01 is the hidden reference candidate; run the transparent matcher or test a decoy.",
+    "Synthetic line catalog loaded. E-01 is the hidden reference candidate; run the documented matcher or test a decoy.",
   );
   const [yaw, setYaw] = useState(-24);
   const [pitch, setPitch] = useState(24);
@@ -763,7 +763,7 @@ export function MolecularRecognitionStudio() {
       <section className={styles.hero} aria-labelledby="recognition-studio-title">
         <div className={styles.heroCopy}>
           <span>MOLECULAR SHAPE → ROTATIONAL SIGNATURE</span>
-          <h2 id="recognition-studio-title">A transparent desk for comparing what theory predicts with what the spectrometer sees.</h2>
+          <h2 id="recognition-studio-title">Compare theoretical predictions with the observed spectrum.</h2>
           <p>
             Reconstructed from a public MATLAB artifact and the 2025 ISMS conference record that names Samuel as a co-author.
             Every number you can manipulate below is synthetic; the research facts are kept separate and cited.
@@ -808,7 +808,7 @@ export function MolecularRecognitionStudio() {
             className={styles.assignmentPanel}
           >
             <div className={styles.sectionHeading}>
-              <div><span>OBSERVED ↔ CALCULATED</span><h3>Greedy line-assignment sandbox</h3><p>Change the tolerance, add a calibration offset, test decoys and inspect every accepted residual. The matcher is a transparent ordered nearest-neighbour heuristic—not a global bipartite fit or the group&apos;s expert assignment workflow.</p></div>
+              <div><span>OBSERVED ↔ CALCULATED</span><h3>Greedy line-assignment sandbox</h3><p>Change the tolerance, add a calibration offset, test decoys and inspect every accepted residual. The matcher uses a documented ordered nearest-neighbour heuristic. It is neither a global bipartite fit nor the group&apos;s expert assignment workflow.</p></div>
               <div className={styles.recordBadge}><small>RESEARCH BAND</small><strong>2–8 GHz</strong><span>publicly documented</span></div>
             </div>
 
@@ -1142,7 +1142,7 @@ export function MolecularRecognitionStudio() {
               <div className={styles.auditSeal}><span>2 SOURCES</span><strong>0 RAW ROWS</strong><small>SHIPPED</small></div>
             </div>
 
-            <div className={styles.pipeline} aria-label="Source-backed molecular recognition pipeline">
+            <div className={styles.pipeline} aria-label="Molecular recognition pipeline traced to source">
               {pipeline.map((stage, index) => (
                 <button key={stage.number} type="button" aria-pressed={pipelineStage === index} onClick={() => setPipelineStage(index)}>
                   <span>{stage.number}</span><strong>{stage.title}</strong><small>{stage.tag}</small>
@@ -1178,7 +1178,7 @@ export function MolecularRecognitionStudio() {
                   <div><span>SAMPLE SHAPE</span><strong>240k × 2</strong></div>
                   <div><span>LICENCE</span><strong>NONE</strong></div>
                 </div>
-                <p className={styles.licenceWarning}><strong>No explicit repository licence:</strong> inspectable is not the same as reusable. This exhibit links the commit and rebuilds concepts; it does not redistribute source or experiment rows.</p>
+                <p className={styles.licenceWarning}><strong>No explicit repository licence:</strong> public access does not grant reuse rights. This exhibit links the commit and rebuilds concepts; it does not redistribute source or experiment rows.</p>
                 <a href={CPROT_URL} target="_blank" rel="noreferrer">Inspect pinned repository <span aria-hidden="true">↗</span></a>
               </section>
             </div>

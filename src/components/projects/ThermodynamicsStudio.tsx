@@ -632,7 +632,7 @@ export function ThermodynamicsStudio() {
 
       <section className={styles.equationPanel}>
         <div className={styles.sectionHeading}>
-          <div><span>PUBLIC EQUATION IMPLEMENTATION</span><h3>What is actually being evaluated</h3></div>
+          <div><span>PUBLIC EQUATION IMPLEMENTATION</span><h3>Equations evaluated in the browser</h3></div>
           <a href={CLAPEYRON_PC_SAFT_SOURCE} target="_blank" rel="noreferrer">Open pinned PC-SAFT source ↗</a>
         </div>
         <div className={styles.equationGrid}>

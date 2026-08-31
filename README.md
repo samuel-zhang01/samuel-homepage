@@ -18,9 +18,8 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 ## Project archive
 
 Small interactive evidence fixtures use reviewed local CSV files under
-`src/data/project-fixtures/`. They are embedded into the relevant lazy chunk at
-build time rather than fetched from a third party or exposed as raw public
-downloads. `npm run check:data` pins their schema, size, row grain, domains,
+`src/data/project-fixtures/`. The relevant lazy chunk embeds them at build time;
+third-party fetching and raw public downloads are disabled. `npm run check:data` pins their schema, size, row grain, domains,
 uniqueness and SHA-256 before every production build.
 
 The Projects folder opens in **Guided Workspaces**: four short “start here” routes and six themed shelves progressively reveal 14 visitor-facing experiences. Eight multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture and Supporting Audits—while six flagship experiences remain standalone. Every one of the 31 source records appears exactly once in this guided structure; the 27 interactive chapters keep their canonical `?project=` links and remain independently lazy-loaded.
@@ -31,11 +30,11 @@ Every executable chapter opens with a typed case brief: audience, human problem,
 
 Each record also retains its `Start small → Move forward → Polish` history. Five reviewed external-or-artifact actions expose supporting PDFs, workbooks or a primary public record. Live websites and immutable source snapshots remain separately labelled, and public visibility is never presented as a licence.
 
-The **Portfolio Map** top-level tab provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Guided chrome, archive search, filters, sorting, layouts, actions and status announcements follow the selected locale; project titles and source-grounded descriptions remain in British English.
+The **Portfolio Map** top-level tab provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Guided chrome, archive search, filters, sorting, layouts, actions and status announcements follow the selected locale; project titles and source-traced descriptions remain in British English.
 
 Dedicated project routes open the archive maximised and can shift between catalogue, balanced and detail-focused layouts. On desktop, the System 7 project window supports pointer and keyboard resizing; its title-bar zoom control toggles the maximised and floating presentations. Small screens use the same content in a constrained responsive layout.
 
-The source-faithful architecture studios expose engineering evidence without inventing model results. The microrobot-vision studio includes an optional rotatable tensor graph, an accessible two-dimensional fallback, layer-shape and parameter ledgers, task-head adaptations, checkpoint-definition drift and a sanitised Git timeline. The CFD atlas separates Fourier operators, message-passing depth and U-Net skip routes; the MRI studio traces its residual reconstruction U-Net, frozen segmentation evaluator and learned data-consistency cascade. Differently evaluated runs remain separate rather than being turned into a manufactured leaderboard.
+The source-faithful architecture studios expose engineering evidence without inventing model results. The microrobot-vision studio includes an optional rotatable tensor graph, an accessible two-dimensional fallback, layer-shape and parameter ledgers, task-head adaptations, checkpoint-definition drift and a sanitised Git timeline. The CFD atlas separates Fourier operators, message-passing depth and U-Net skip routes; the MRI studio traces its residual reconstruction U-Net, frozen segmentation evaluator and learned data-consistency cascade. Differently evaluated runs remain separate; no cross-run leaderboard is synthesised.
 
 Disclosure is explicit:
 

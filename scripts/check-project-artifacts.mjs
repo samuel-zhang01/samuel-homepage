@@ -7,22 +7,22 @@ const projectRoot = join(publicRoot, "projects");
 const allowlist = new Map([
   ["Samuel-Zhang-Applied-AI-CV.pdf", {
     maximumBytes: 500_000,
-    sha256: "4f5a51d820e4a52e354b07929271dc55706251b80c277586482135e9c7840c72",
+    sha256: "9417909d249b70cdc16b711a4bca9e91abacb3b172f4d33578a49977d39a14aa",
     type: "pdf",
   }],
   ["Samuel-Zhang-Applied-AI-CV-en-US.pdf", {
     maximumBytes: 500_000,
-    sha256: "c8e8c4c7d4c49b81b044d37b48612822f6cb0b373263cc10263f856cead828d8",
+    sha256: "f0d5899f57d9dedba8ee198c6654394d635a5d2c3fd3a798e0ab8a154d7beff4",
     type: "pdf",
   }],
   ["Samuel-Zhang-Applied-AI-CV-zh-CN.pdf", {
     maximumBytes: 500_000,
-    sha256: "7fcd82fca925dfef7fa7b7fd8d91d566e056b2cfc31c6378d95ba393bc112324",
+    sha256: "a0637630fd85f71278ec75b25bc4caaeaad16a170f3ea0f208635d55869d9795",
     type: "pdf",
   }],
   ["Samuel-Zhang-Applied-AI-CV-zh-TW.pdf", {
     maximumBytes: 500_000,
-    sha256: "8528eb5e1b0cd95c658ac527f5ac3306c50983fbf73975539a41057f7270a79e",
+    sha256: "bc91b2f1ad6eaecb9b0c76f411fed411fcdc408f4e844ac76ac1945a89d1e0ef",
     type: "pdf",
   }],
   ["GROWMAT Showcase External Highest Quality.pdf", {

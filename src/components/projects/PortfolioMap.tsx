@@ -206,7 +206,7 @@ function TimelineView({
         <div>
           <span>CHRONOLOGY FILTER</span>
           <strong id="portfolio-timeline-heading">Declared project spans</strong>
-          <p>Ranges include every named year. “Ongoing” remains a separate source label rather than being assigned an invented start date.</p>
+          <p>Ranges include every named year. “Ongoing” remains a separate source label; no start date is inferred.</p>
         </div>
         <label><span>Year</span><select value={yearFilter} onChange={(event) => setYearFilter(event.target.value)}><option value="all">All declared spans</option>{YEAR_AXIS.map((year) => <option key={year} value={year}>{year}</option>)}<option value="ongoing">Ongoing label</option></select></label>
         <label><span>Status</span><select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as "all" | ProjectStatus)}><option value="all">All statuses</option>{STATUS_VALUES.map((status) => <option key={status} value={status}>{status}</option>)}</select></label>

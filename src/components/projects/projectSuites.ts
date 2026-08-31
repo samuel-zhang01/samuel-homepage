@@ -58,7 +58,7 @@ export const projectSuites: readonly ProjectSuite[] = [
   {
     id: "molecular-recognition",
     title: "Molecular Recognition Workbench",
-    description: "From conformer assignment to the plotting utility that made spectral evidence inspectable.",
+    description: "From conformer assignment to the plotting utility used to examine spectral evidence.",
     slugs: ["molecular-recognition", "cprot-spectroscopy-plotter"],
   },
   {
@@ -70,13 +70,13 @@ export const projectSuites: readonly ProjectSuite[] = [
   {
     id: "strategy-venture",
     title: "Strategy & Venture Reasoning",
-    description: "Structured reflection and synthetic evidence workbenches, presented as reasoning exercises rather than products.",
+    description: "Structured reflection and synthetic-evidence workbenches for practising explicit reasoning.",
     slugs: ["innovation-models-reflection", "ai-venture-reasoning"],
   },
   {
     id: "supporting-audits",
     title: "Supporting Prototype & Code Audits",
-    description: "Small source projects presented as transparent audits of what the code does—and does not—establish.",
+    description: "Small source projects presented as audits of what the code establishes and where its limits lie.",
     slugs: ["course-recommender-audit", "cost-sensitive-cyber-detection", "stock-market-engine"],
   },
 ] as const;

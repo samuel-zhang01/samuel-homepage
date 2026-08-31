@@ -496,7 +496,7 @@ function MetropolisLab() {
         }
         record={
           <div className={styles.recordNote}>
-            <strong>What the private archive actually contains</strong>
+            <strong>Contents of the private archive</strong>
             <p>A 492-line React/D3 experiment committed on 25 March 2025 models five particles, a 12–6 potential, single-particle displacements and the Metropolis gate. The archived component does not compile as committed and records proposal energy after rejected moves; this safe demo preserves the method while fixing both defects.</p>
             <span>Private repository · no explicit licence · source is intentionally not linked.</span>
           </div>
@@ -758,7 +758,7 @@ function PolymerLab() {
         record={
           <div className={styles.recordNote}>
             <strong>Two source stages, one visible correction</strong>
-            <p>The February polymer notebook implements 2D/3D random flights, R<sub>e</sub>, R<sub>g</sub> and the √N scaling comparison. A separate 22 March Julia file adds a six-neighbour self-avoiding walk with restart-on-trap and Makie 3D output. The browser control also exposes the notebook’s non-isotropic φ sampler instead of concealing it.</p>
+            <p>The February polymer notebook implements 2D/3D random flights, R<sub>e</sub>, R<sub>g</sub> and the √N scaling comparison. A separate 22 March Julia file adds a six-neighbour self-avoiding walk with restart-on-trap and Makie 3D output. The browser control also exposes the notebook’s non-isotropic φ sampler.</p>
             <span>Teaching notebook attributes SciPython and TU Delft material; this page does not reproduce its questions or supplied solutions.</span>
           </div>
         }
@@ -1345,7 +1345,7 @@ export function ChemistryCodingStudio() {
         <section className={styles.studioHero}>
           <div>
             <span>COMPUTATIONAL CHEMISTRY / EVIDENCE WORKBENCH</span>
-            <h2>From notebook cells to inspectable scientific instruments.</h2>
+            <h2>From notebook cells to scientific instruments you can test.</h2>
             <p>Four deterministic browser labs expose the mathematics, algorithm and recorded evidence separately—so the interesting work is visible without distributing private coursework.</p>
           </div>
           <div className={styles.heroSeal} aria-label="Source audit complete">

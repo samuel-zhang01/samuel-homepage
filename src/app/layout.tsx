@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s · Samuel Zhang",
   },
   description:
-    "Samuel Zhang is an applied AI engineer, product builder and COVERD founder turning ambiguous problems into useful, human-centred systems.",
+    "Samuel Zhang is an applied AI engineer, product builder and COVERD founder who builds useful, human-centred systems for ambiguous problems.",
   keywords: [
     "Samuel Zhang",
     "Artificial Intelligence",

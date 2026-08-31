@@ -590,7 +590,7 @@ function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; s
             <code>interval[q] = [0, 1, max(3, round(i×1.8)), max(7, round(i×2.5))]</code>
           </div>
         ) : (
-          <div><span>SCHEDULER READY</span><strong>{bilingual ? "Reveal the answer, then choose an honest recall quality." : "Gira la carta, poi valuta il richiamo."}</strong><code>ease′ = max(1.3, ease + (quality − 1.5) × 0.1)</code></div>
+          <div><span>SCHEDULER READY</span><strong>{bilingual ? "Reveal the answer, then rate how well you recalled it." : "Gira la carta, poi valuta il richiamo."}</strong><code>ease′ = max(1.3, ease + (quality − 1.5) × 0.1)</code></div>
         )}
         <span className={styles.traceXp}>{xp} XP</span>
       </div>
@@ -656,7 +656,7 @@ function RubricLab({ bilingual }: { bilingual: boolean }) {
 
       <aside className={styles.rubricCaveat} role="note">
         <span aria-hidden="true">i</span>
-        <p><strong>Transparent fallback, not a language certificate.</strong> This public reconstruction hardens the source heuristic by capping every repeated token and target signal at one scoring contribution. The production portal can optionally request richer feedback, while local mode works without a key or metered service.</p>
+        <p><strong>Local fallback with bounded claims.</strong> This public reconstruction hardens the source heuristic by capping every repeated token and target signal at one scoring contribution. The production portal can optionally request richer feedback, while local mode works without a key or metered service. The score is not a language certificate.</p>
       </aside>
     </section>
   );

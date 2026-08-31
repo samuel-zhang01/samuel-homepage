@@ -552,7 +552,7 @@ export function SpectroscopyStudio() {
             </table>
           </div>
           <p>
-            This ledger makes the SVG inspectable without sight. It computes simple viewport summaries;
+            This ledger describes the SVG without relying on sight. It computes simple viewport summaries;
             it is not baseline correction, smoothing, normalisation or peak picking.
           </p>
         </div>

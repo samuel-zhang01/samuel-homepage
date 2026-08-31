@@ -90,7 +90,7 @@ const MILESTONES = ([
     family: "Vision",
     kind: "run",
     title: "Five model families are reconciled",
-    detail: "SimpleCNN, ResNet18, ResNet34, MobileNetV3-Small and ViT-B/16 run directories, plots and the comparison CSV are consolidated as one inspectable experiment snapshot.",
+    detail: "SimpleCNN, ResNet18, ResNet34, MobileNetV3-Small and ViT-B/16 run directories, plots and the comparison CSV are consolidated into one experiment snapshot with traceable inputs.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -112,7 +112,7 @@ const MILESTONES = ([
     family: "Vision",
     kind: "release",
     title: "Final report and architecture revision",
-    detail: "Final ResNet outputs, the roll–pitch grid, deployment notes and model documentation are revised. Internally conflicting final regression RMSE values remain quarantined rather than promoted.",
+    detail: "Final ResNet outputs, the roll–pitch grid, deployment notes and model documentation are revised. Internally conflicting final regression RMSE values remain quarantined.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -123,7 +123,7 @@ const MILESTONES = ([
     family: "Vision",
     kind: "drift",
     title: "Audited head closes with loader and checkpoint caveats",
-    detail: "The last audited change updates the deployment loader. Weight files seen during the local audit are Git-ignored rather than tracked at this head; SimpleCNN keys also predate later skip-layer definitions.",
+    detail: "The last audited change updates the deployment loader. Weight files seen during the local audit are Git-ignored at this head; SimpleCNN keys also predate later skip-layer definitions.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -214,7 +214,7 @@ const CONFIGS = ([
     role: "40-class pose classifier",
     origin: "ImageNet backbone; fresh grayscale stem and authored head",
     artifact: "Executed notebook output · named weight file absent",
-    note: "The parameter total comes from executed output; the pretrained backbone is fine-tuned rather than designed locally.",
+    note: "The parameter total comes from executed output; the implementation fine-tunes a pretrained backbone.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -225,7 +225,7 @@ const CONFIGS = ([
     role: "40-class pose classifier",
     origin: "ImageNet backbone; fresh grayscale stem and authored head",
     artifact: "Local ignored state dictionary · not tracked at audited head",
-    note: "The notebook replaces, rather than RGB-averages, the pretrained first convolution; the distinction is preserved.",
+    note: "The notebook replaces the pretrained first convolution outright; RGB averaging is absent.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -452,7 +452,7 @@ export function ModelLineageMap({
             <aside className={`${styles.inspector} ${styles.emptyInspector}`} aria-live="polite">
               <div className={styles.inspectorTop}><span>FILTERED VIEW</span><b>0 MATCHES</b></div>
               <h4>No milestone selected</h4>
-              <p>This family has no milestone with the chosen evidence type. Change either filter to inspect a source-backed event.</p>
+              <p>This family has no milestone with the chosen evidence type. Change either filter to inspect an event tied to a source artifact.</p>
             </aside>
           )}
         </div>
@@ -519,7 +519,7 @@ export function ModelLineageMap({
             <section><span>01 · AUTHORED</span><strong>Project-specific implementation</strong><p>An architecture, adapter, head or experiment branch is present locally; dependency backbones stay attributed.</p></section>
             <section><span>02 · EXECUTED</span><strong>Output supports the run</strong><p>Notebook or report output exists, but that does not imply a matching deployable checkpoint.</p></section>
             <section><span>03 · LOCAL ARTIFACT</span><strong>Inspected, not tracked</strong><p>A local checkpoint can prove tensor keys and parameter count without being reproducible from repository HEAD.</p></section>
-            <section><span>04 · DRIFT</span><strong>Artifacts do not form one pair</strong><p>Code, checkpoint or prose differ; the mismatch remains visible instead of being silently reconciled.</p></section>
+            <section><span>04 · DRIFT</span><strong>Artifacts diverge</strong><p>Code, checkpoint or prose differ; the mismatch remains visible throughout reconciliation.</p></section>
             <section><span>05 · SCALE</span><strong>Exact parameter lookup</strong><p>The logarithmic chart compares architecture magnitude only—not quality, effort, efficiency or originality.</p></section>
             <section><span>06 · PRIVACY</span><strong>Metadata reconstruction</strong><p>No training row, microscope frame, CFD array, MRI slice, checkpoint or private source is fetched by this view.</p></section>
           </div>

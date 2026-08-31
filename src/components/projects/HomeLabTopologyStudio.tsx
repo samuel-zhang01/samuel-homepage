@@ -618,7 +618,7 @@ function AuditView() {
             <li><time dateTime="2025-05-03">03 MAY 2025</time><span>93dfd64</span><strong>Compose update</strong><p>The core orchestration file changes during the stack’s expansion.</p></li>
             <li><time dateTime="2025-06-03">03 JUN 2025</time><span>851b6d4</span><strong>Network and homepage configuration</strong><p>Remote-access and service-directory configuration are added to the tracked stack.</p></li>
             <li><time dateTime="2025-09-20">20 SEP 2025</time><span>90f77a4</span><strong>Configuration upload</strong><p>A later Compose snapshot is retained in main history.</p></li>
-            <li><time dateTime="2026-02-12">12 FEB 2026</time><span>{AUDITED_COMMIT}</span><strong>Clean-main merge</strong><p>The current comprehensive Docker configuration becomes HEAD.</p></li>
+            <li><time dateTime="2026-02-12">12 FEB 2026</time><span>{AUDITED_COMMIT}</span><strong>Clean-main merge</strong><p>The full Docker configuration becomes HEAD.</p></li>
           </ol>
         </aside>
       </div>
@@ -651,7 +651,7 @@ export function HomeLabTopologyStudio() {
     >
       <div className={styles.provenanceBanner} role="note">
         <span>STRUCTURE, NOT SECRETS</span>
-        <p>A source-grounded reconstruction of one private Compose snapshot. Every visible host alias is synthetic; all operational identity and runtime state stay outside the browser.</p>
+        <p>Reconstructed from one private Compose snapshot. Every visible host alias is synthetic; all operational identity and runtime state stay outside the browser.</p>
         <strong>NO NETWORK CALLS</strong>
       </div>
 

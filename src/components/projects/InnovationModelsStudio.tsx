@@ -115,7 +115,7 @@ const SOURCE_LEDGER = [
     state: "adapted",
     label: "ADAPTED",
     title: "Portfolio calculator",
-    detail: "Normalised experiment tokens, concentration and effective-model calculations are new, transparent browser mechanics—not claims from the paper.",
+    detail: "Normalised experiment tokens, concentration and effective-model calculations are new browser mechanics with visible formulas. They are not claims from the paper.",
   },
   {
     state: "adapted",
@@ -363,7 +363,7 @@ function TransitionView() {
     <div className={styles.transitionView}>
       <div className={styles.transitionBanner} role="note">
         <span>ILLUSTRATIVE EXTENSION</span>
-        <p>The source asks when exploration should become exploitation but supplies no equation. This view turns that omission into a transparent question generator.</p>
+        <p>The source asks when exploration should become exploitation but supplies no equation. This view uses that gap to generate questions, with its assumptions shown beside each result.</p>
         <strong>NOT A VALIDATED DECISION RULE</strong>
       </div>
 
@@ -482,7 +482,7 @@ export function InnovationModelsStudio() {
       status="SYNTHETIC SCENARIOS · READ ONLY"
       statusTone="safe"
       className={styles.studio}
-      footer={<><span>Audited {AUDITED_REF} · private source · no licence · assessed prose excluded</span><span>4 models · 2 source axes · transparent adapted heuristics</span></>}
+      footer={<><span>Audited {AUDITED_REF} · private source · no licence · assessed prose excluded</span><span>4 models · 2 source axes · adapted heuristics with visible weights</span></>}
     >
       <div className={styles.provenanceBanner} role="note">
         <span>CONCEPTS RE-AUTHORED</span>

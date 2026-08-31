@@ -817,7 +817,7 @@ export function BanditStudio() {
         {view === "regret" ? (
           <section id="bandit-panel-regret" role="tabpanel" aria-labelledby="bandit-tab-regret" className={styles.regretPanel}>
             <div className={styles.sectionHeading}>
-              <div><span>MEAN GAP ≠ SAMPLED OUTCOME</span><h3>Regret and oracle comparison</h3><p>One trace accounts for chosen means; the other compares the rewards actually drawn from a fixed counterfactual table.</p></div>
+              <div><span>MEAN GAP ≠ SAMPLED OUTCOME</span><h3>Regret and oracle comparison</h3><p>One trace accounts for chosen means; the other compares rewards drawn from a fixed counterfactual table.</p></div>
               <div className={styles.oracleBadge}><small>TOY ORACLE</small><strong>{revealTruth ? bestArm.id : "μ*"}</strong><span>{revealTruth ? `mean ${formatMean(bestMean, scenario.kind)}` : "truth hidden in policy view"}</span></div>
             </div>
 

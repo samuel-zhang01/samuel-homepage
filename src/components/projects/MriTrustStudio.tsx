@@ -731,7 +731,7 @@ function ArchitectureView() {
         className={styles.architectureTableFrame}
         tabIndex={0}
         role="region"
-        aria-label="Source-grounded architecture tensor ledger"
+        aria-label="Architecture tensor ledger traced to source"
       >
         <table className={styles.architectureTable}>
           <caption>Semantic tensor ledger · final base_features=32 configuration</caption>
@@ -982,7 +982,7 @@ function RobustnessView() {
             <p>
               The report states +77% using unrounded experiment values, alongside a 0.9 dB PSNR drop.
               The displayed 0.004 and 0.007 means are rounded and imply 75%, so the reported percentage
-              is preserved rather than recomputed.
+              remains as reported in the source.
             </p>
           </div>
         </div>
@@ -1101,7 +1101,7 @@ function AuditView() {
           <span className={styles.kicker}>METHOD + EVIDENCE BOUNDARY</span>
           <h3 id="mri-audit-heading">Show the mechanism—and the limits.</h3>
           <p>
-            A source-grounded map of the study. This portfolio demo contains no MM-WHS data, weights,
+            This map is traced to the study source. The portfolio demo contains no MM-WHS data, weights,
             assessed paper PDF, notebook output or reproduced repository figures.
           </p>
         </div>

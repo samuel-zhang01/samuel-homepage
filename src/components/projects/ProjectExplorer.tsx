@@ -399,7 +399,7 @@ function ProjectDetail({
             onSelectProject={onSelectProject}
             onOpenProjectDemo={onOpenProjectDemo}
           />
-          <ProjectDemoRouter demoId={project.demo} />
+          <ProjectDemoRouter demoId={project.demo} locale={locale} />
         </div>
       </section>
     );
@@ -734,7 +734,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       canonical.href = canonicalUrl.toString();
     };
     // App Router metadata settles after hydration, so apply the client view's
-    // exact address on the next painted frame rather than racing the head pass.
+    // exact address on the next painted frame, once the head pass has settled.
     metadataFrame = window.requestAnimationFrame(() => {
       settledMetadataFrame = window.requestAnimationFrame(updateMetadata);
     });

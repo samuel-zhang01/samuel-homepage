@@ -2,17 +2,20 @@
 
 import { useState } from "react";
 
+import type { Locale } from "@/lib/i18n";
 import { ModelArchitectureStudio } from "./ModelArchitectureStudio";
+import { ProjectTranslationBoundary } from "./ProjectTranslationBoundary";
 import { MicrorobotVisionDemo } from "./ScientificDemos";
 import styles from "./MicrorobotShowcase.module.css";
 
 type ShowcaseView = "architecture" | "benchmark";
 
-export function MicrorobotShowcase() {
+export function MicrorobotShowcase({ locale = "en-GB" }: { locale?: Locale }) {
   const [view, setView] = useState<ShowcaseView>("architecture");
 
   return (
-    <div className={styles.showcase}>
+    <ProjectTranslationBoundary locale={locale}>
+    <div className={styles.showcase} lang={locale}>
       <div className={styles.viewSwitch} role="group" aria-label="Microrobot project view">
         <div>
           <span>PROJECT LENS</span>
@@ -37,9 +40,10 @@ export function MicrorobotShowcase() {
       </div>
 
       <div className={styles.viewPanel} aria-label={view === "architecture" ? "Model architecture and experiment lineage" : "Microrobot visual benchmark"}>
-        {view === "architecture" ? <ModelArchitectureStudio /> : <MicrorobotVisionDemo />}
+        {view === "architecture" ? <ModelArchitectureStudio locale={locale} /> : <MicrorobotVisionDemo locale={locale} />}
       </div>
     </div>
+    </ProjectTranslationBoundary>
   );
 }
 

@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
+import { ProjectTranslationBoundary } from "./ProjectTranslationBoundary";
 import styles from "./ScientificDemos.module.css";
 
 type TabOption<T extends string> = {
@@ -449,7 +450,7 @@ function MicrorobotScene({ view, frameIndex }: { view: VisionView; frameIndex: n
   );
 }
 
-export function MicrorobotVisionDemo() {
+export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/lib/i18n").Locale }) {
   const [model, setModel] = useState<VisionModelId>("resnet34");
   const [benchmark, setBenchmark] = useState<VisionBenchmark>("pose");
   const [view, setView] = useState<VisionView>("pose");
@@ -459,6 +460,7 @@ export function MicrorobotVisionDemo() {
   const primaryLabel = benchmark === "pose" ? "POSE ACCURACY" : "DEPTH RMSE";
 
   return (
+    <ProjectTranslationBoundary locale={locale}>
     <DemoWindow
       appName="MicroVision Archive"
       title="Microrobot Pose & Depth Bench"
@@ -557,6 +559,7 @@ export function MicrorobotVisionDemo() {
         ))}
       </section>
     </DemoWindow>
+    </ProjectTranslationBoundary>
   );
 }
 
@@ -688,7 +691,7 @@ export function ReliabilityLabDemo() {
           </div>
           <div className={styles.calibrationFinding}>
             <span aria-hidden="true">↳</span>
-            <p><strong>Honest read:</strong> ECE and Brier improved marginally, while test NLL moved from 0.547396 to 0.547561 (+0.000165).</p>
+            <p><strong>Recorded result:</strong> ECE and Brier improved marginally, while test NLL moved from 0.547396 to 0.547561 (+0.000165).</p>
           </div>
         </section>
 

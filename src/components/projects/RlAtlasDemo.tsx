@@ -62,7 +62,7 @@ const WEEKS: readonly Week[] = [
     shortTitle: "Bellman",
     title: "Bellman equations & dynamic programming",
     track: "foundations",
-    focus: "Turn recursive value identities into exact planning algorithms for known environments.",
+    focus: "Implement exact planning algorithms for known environments from recursive value identities.",
     methods: ["Policy evaluation", "Value iteration", "Policy iteration", "Dynamic programming"],
     project: "Gridworld and car-rental planning",
     disclosure: "public",
@@ -253,7 +253,7 @@ const WEEKS: readonly Week[] = [
     shortTitle: "World models",
     title: "Model-based RL",
     track: "model-based",
-    focus: "Plan through learned dynamics and latent world models rather than relying only on real experience.",
+    focus: "Plan through learned dynamics and latent world models to reduce dependence on real experience.",
     methods: ["Dreamer V3", "MuZero", "TD-MPC2", "Latent dynamics"],
     project: "Dreamer-lite world model",
     disclosure: "public",
@@ -764,7 +764,7 @@ export function RlAtlasDemo() {
                 <header>
                   <div>
                     <span className={styles.kicker}>ARTIFACT MANIFEST</span>
-                    <h4 id="artifact-heading">What the snapshot actually records</h4>
+                    <h4 id="artifact-heading">What the snapshot records</h4>
                   </div>
                   <span className={styles.artifactCount}>6 ITEMS</span>
                 </header>

@@ -501,7 +501,7 @@ function ExplainView({
             </article>
           ))}
         </div>
-        <div className={styles.boundaryNote}><strong>Model boundary</strong><p>The duration component is only a transparent course-length proxy because the source catalog has no weekly workload. Mock rating and enrollment counts are not verified quality or popularity evidence.</p></div>
+        <div className={styles.boundaryNote}><strong>Model boundary</strong><p>The duration component is only a documented course-length proxy because the source catalog has no weekly workload. Mock rating and enrollment counts are not verified quality or popularity evidence.</p></div>
       </section>
 
       <aside className={`${styles.panel} ${styles.comparisonPanel}`} aria-labelledby="model-comparison-title">
@@ -689,7 +689,7 @@ export function CourseRecommenderStudio() {
   return (
     <DemoWindow
       appName="Course Recommender — Audit Workbench"
-      title="Inspectable Learning Path Recommender"
+      title="Learning Path Recommender Audit"
       status="SYNTHETIC · LOCAL ONLY"
       statusTone="safe"
       className={styles.courseStudio}

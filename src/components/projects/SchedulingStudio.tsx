@@ -507,7 +507,7 @@ export function SchedulingStudio() {
     <DemoWindow
       appName="YASA · AVAILABILITY ENGINE"
       title="Multi-host Scheduling Lab"
-      status="SOURCE-GROUNDED SANDBOX"
+      status="SOURCE-TRACED SANDBOX"
       statusTone="safe"
       footer={
         <>
@@ -523,7 +523,7 @@ export function SchedulingStudio() {
 
       <section className={styles.bookingJourney} aria-labelledby="booking-journey-title">
         <div>
-          <span>SOURCE APPLICATION JOURNEY</span>
+          <span>SOURCE APPLICATION FLOW</span>
           <h3 id="booking-journey-title">From public page to managed calendar event</h3>
           <p>The live repository carries the booking beyond slot display. This sandbox executes the middle scheduling transaction and documents the excluded integrations.</p>
         </div>

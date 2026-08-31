@@ -395,7 +395,7 @@ export function DeferralRiskStudio() {
           <strong>Fictional research simulator — never adjudicate a real claim with this page.</strong>
           <p>
             Records are synthetic and contain no claimant data; the 200-row outcomes are deliberately shaped to expose
-            the reported aggregate arithmetic, not to independently validate it. The repository is publicly inspectable,
+            the reported aggregate arithmetic, not to independently validate it. The repository is publicly available,
             but the inspected source snapshot has <em>no explicit licence</em>; public visibility does not grant reuse rights.
           </p>
         </div>
@@ -816,7 +816,7 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
         </section>
 
         <aside className={styles.benchmarkPanel} aria-label="Reported benchmark results">
-          <div className={styles.sectionHeading}><div><span>FIXED REPORTED RESULTS</span><h3>What the small study actually found</h3></div></div>
+          <div className={styles.sectionHeading}><div><span>FIXED REPORTED RESULTS</span><h3>Results reported by the small study</h3></div></div>
           <article className={styles.benchmarkHero}>
             <span>Safe-L2D-Fraud</span>
             <strong>89.5%</strong>

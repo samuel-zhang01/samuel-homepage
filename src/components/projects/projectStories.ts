@@ -11,12 +11,12 @@ export type ProjectStory = {
 
 // Editorial records for every executable chapter. They stay separate from the
 // catalogue card so the archive can explain the human problem before launching
-// a dense workbench, while the source-grounded technical copy remains reusable.
+// a dense workbench, while technical copy tied to source artifacts remains reusable.
 export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   "insurance-matching": {
     audience: "Specialty-insurance brokers reviewing a candidate market panel.",
     problem: "Relevant evidence arrives from incompatible, incomplete and time-sensitive sources; a single unexplained rank can conceal missingness and leakage.",
-    objective: "Make each evidence pillar inspectable and preserve broker authority until a joint decision objective is validated.",
+    objective: "Expose each evidence pillar and preserve broker authority until a joint decision objective is validated.",
     contribution: "Formalised the risk/panel contract, built temporal ranking and historical-evidence paths, integrated wording evidence, provenance, nulls and review gates.",
     pipeline: "risk + candidate panel → three independent evidence agents → confidence / provenance / abstention → broker review",
     walkthrough: "Keep Evidence view active, select a market with a missing pillar, raise the minimum-signal gate, then inspect why it becomes unavailable. Open the retired composite only to see its sensitivity.",
@@ -30,7 +30,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     walkthrough: "Edit one CV sentence, run analysis, inspect a missing high-priority signal, stage a factual rewrite and verify how the output manifest changes.",
   },
   finance: {
-    audience: "A household that wants local, auditable financial intelligence rather than cloud-first aggregation.",
+    audience: "A household that wants local, auditable financial intelligence with self-hosted data.",
     problem: "Statements from several providers disagree in format and can double-count transfers, recurring charges or balances.",
     objective: "Reconcile every import before deriving patterns, anomalies, transfers and investment views.",
     contribution: "Built provider parsers, reconciliation and idempotent import contracts, then exposed each derived calculation over a fictional ledger.",
@@ -48,7 +48,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   "italian-learning": {
     audience: "A beginner following an eight-week Italian A1 plan across intermittent connectivity.",
     problem: "A long curriculum becomes unusable when daily work, recall scheduling, writing evidence and offline state are disconnected.",
-    objective: "Turn the verified course sequence into one dated daily loop with durable mastery evidence.",
+    objective: "Organise the verified course sequence as one dated daily loop with durable mastery evidence.",
     contribution: "Modelled 56 agendas and 28 hubs, built adaptive practice, spaced recall, writing feedback, CEFR lanes and conflict-safe D1/offline state.",
     pipeline: "dated plan → lesson hub → adaptive practice / recall → writing evidence → mastery + CEFR lanes → revision-safe sync",
     walkthrough: "Answer a Today question, review the mastery update, grade a Recall card, then open System architecture and trigger the revision-conflict recovery.",
@@ -56,9 +56,9 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   "course-recommender": {
     audience: "A product team deciding whether a prototype deserves to be called a recommender.",
     problem: "Random ordering behind a polished form can masquerade as personalised ranking while UI, API and database contracts drift.",
-    objective: "Audit the source baseline honestly and show what a decomposable, testable ranking contract would require.",
+    objective: "Audit the source baseline against its own contract and show what a decomposable, testable ranking model would require.",
     contribution: "Replayed the random baseline deterministically, mapped six-versus-two field drift and added a clearly separated safety-improved scoring lens.",
-    pipeline: "mock learner preferences → source gate / random order → contract audit → optional transparent scoring adaptation",
+    pipeline: "mock learner preferences → source gate / random order → contract audit → optional scoring adaptation with visible weights",
     walkthrough: "Run Source baseline twice with different observability seeds, inspect the reason strings, then open Source map to see where the six-field UI collapses to two API fields.",
   },
   "rl-atlas": {
@@ -72,7 +72,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   bandits: {
     audience: "A learner comparing exploration policies under uncertain rewards.",
     problem: "A single lucky trajectory can make a policy look better and realised regret can be confused with mean-gap pseudo-regret.",
-    objective: "Make decisions, updates, oracle accounting and multi-seed policy comparison reproducible and inspectable.",
+    objective: "Make decisions, updates, oracle accounting and multi-seed policy comparison reproducible, with each step open to review.",
     contribution: "Rebuilt the Week 01 mechanics with deterministic reward streams, exact ledgers and a browser comparison of epsilon-greedy, UCB1 and Thompson Sampling.",
     pipeline: "synthetic arms → forced observations → policy selection → reward / incremental update → two regret accounts → paired-seed comparison",
     walkthrough: "Step through the forced pulls, run 100 rounds, compare both regret traces, then inspect the twelve-seed UCB1/Thompson/epsilon bake-off.",
@@ -89,14 +89,14 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     audience: "MRI researchers deciding whether an accelerated reconstruction is reliable enough for downstream use.",
     problem: "A plausible image can still violate measured k-space, erase anatomy or present unjustified confidence.",
     objective: "Join reconstruction quality, data consistency, uncertainty and frozen downstream evaluation in one trust contract.",
-    contribution: "Designed the residual U-Net and soft data-consistency cascades, ensemble/MC-dropout analysis and a source-honest interactive audit.",
+    contribution: "Designed the residual U-Net and soft data-consistency cascades, ensemble/MC-dropout analysis and an interactive audit tied to the source artifacts.",
     pipeline: "undersampled k-space → zero-filled input → residual U-Net → three soft-DC cascades → uncertainty + segmentation checks",
     walkthrough: "Move the acceleration and uncertainty controls, inspect the trust gate, then open Architecture and follow one encoder skip through reconstruction and data consistency.",
   },
   "cfd-surrogates": {
     audience: "Scientific-ML reviewers comparing surrogate families for flow-field prediction.",
     problem: "Model scores are easily misranked when architectures, splits, checkpoints and source revisions are not comparable.",
-    objective: "Explain what each FNO, graph and U-Net experiment actually establishes without inventing a common leaderboard.",
+    objective: "Explain what evidence each FNO, graph and U-Net experiment establishes without inventing a common leaderboard.",
     contribution: "Completed and trained multiple surrogate implementations, then reconciled exact tensor paths, parameters, checkpoints and split limitations.",
     pipeline: "mesh/grid flow state → FNO or message passing or encoder-decoder → future fields → per-run evaluation receipt",
     walkthrough: "Compare the FNO variants, switch spatial/FFT inspection, step through a graph processor block, then trace a U-Net skip and read why scores cannot form one leaderboard.",
@@ -104,7 +104,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   reliability: {
     audience: "Model owners deciding when a scientific prediction should be accepted, recalibrated or escalated.",
     problem: "Point accuracy does not reveal uncertainty calibration, exchangeability failures or subgroup reliability.",
-    objective: "Turn calibration and conformal diagnostics into explicit operating boundaries rather than universal guarantees.",
+    objective: "Use calibration and conformal diagnostics to set operating boundaries without implying universal guarantees.",
     contribution: "Reconstructed reliability diagrams, ECE and split-conformal sets with visible assumptions and covariate-shift failure analysis.",
     pipeline: "scores + labels → calibration bins → conformal calibration set → prediction set / abstention → shift diagnostics",
     walkthrough: "Change calibration and shift settings, inspect ECE and set size, then deliberately break exchangeability to see why nominal coverage is no longer guaranteed.",
@@ -121,7 +121,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     audience: "A security or model-risk reviewer assessing a cost-sensitive classifier claim.",
     problem: "Duplicate leakage, transform refitting and test-selected thresholds can turn an impressive curve into invalid evidence.",
     objective: "Make the historical workflow’s failure modes visible and specify the rerun required before any performance claim.",
-    contribution: "Profiled exact duplicates and split overlap, traced preprocessing/threshold leakage and reframed the result as an audit rather than a benchmark.",
+    contribution: "Profiled exact duplicates and split overlap, traced preprocessing/threshold leakage and documented the result as an audit with benchmark claims withheld.",
     pipeline: "10,000 coursework rows → duplicate / split audit → historical model outputs → cost lens → leakage-safe rerun specification",
     walkthrough: "Inspect duplicate overlap first, then alter the cost threshold only as a historical sensitivity view and finish on the required grouped/deduplicated validation plan.",
   },
@@ -129,7 +129,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     audience: "A learner interpreting how shrinkage changes a correlated air-quality regression.",
     problem: "A coefficient path can look authoritative even when its browser derivation and source-fitted model are different objects.",
     objective: "Expose soft-threshold mechanics and model-selection trade-offs without pretending to reproduce the notebook fit.",
-    contribution: "Built an inspectable orthonormal-path reconstruction and attached it as a companion to the richer air-quality workflow.",
+    contribution: "Built an orthonormal-path reconstruction with visible intermediate steps and attached it to the richer air-quality workflow.",
     pipeline: "standardised illustrative coefficients → lambda threshold → active set / path → bias-variance interpretation",
     walkthrough: "Raise lambda until a coefficient becomes zero, compare the path and active-set count, then return to the Air-Quality chapter for the source model evidence.",
   },
@@ -144,7 +144,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   "causal-ope": {
     audience: "A decision scientist separating intervention effects from evaluation of a new logged policy.",
     problem: "Causal adjustment and off-policy evaluation answer different questions, and both fail under weak overlap.",
-    objective: "Make identification, propensities, support and estimator disagreement inspectable in two distinct chapters.",
+    objective: "Expose identification, propensities, support and estimator disagreement in two distinct chapters.",
     contribution: "Authored the causal fixture and rebuilt the tested Week 11 IPS/SNIPS/Direct/DR/SWITCH-DR contract over synthetic logs.",
     pipeline: "Local synthetic CSV → logged context-action-reward → valid adjustment or policy ratio → weighted / model-assisted estimate → ESS + support audit",
     walkthrough: "First open a collider path in the DAG, then switch to OPE, choose Challenger, reduce overlap and watch ESS and estimator disagreement change.",
@@ -152,8 +152,8 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   "innovation-models": {
     audience: "Leaders deciding where exploratory ventures should sit inside an incumbent organisation.",
     problem: "Ownership and resource authority are often discussed abstractly, without testing portfolio concentration or transition timing.",
-    objective: "Turn four corporate-entrepreneurship models into inspectable structure and scenario questions.",
-    contribution: "Re-authored the assessed reflection as a synthetic matrix, portfolio calculator and timing lab with transparent heuristic boundaries.",
+    objective: "Represent four corporate-entrepreneurship models as a structured comparison and a set of scenario questions.",
+    contribution: "Re-authored the assessed reflection as a synthetic matrix, portfolio calculator and timing lab with documented heuristic boundaries.",
     pipeline: "ownership + authority → four-model topology → allocation mix / concentration → transition readiness questions",
     walkthrough: "Choose ownership and authority, rebalance the 100-token portfolio, then stress evidence, integration and runway in the Transition lab.",
   },
@@ -190,7 +190,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     walkthrough: "Offset the synthetic spectrum, compare E-01 with the decoy assignment, focus one matched transition, then rotate the conformer atlas and inspect the method boundary.",
   },
   spectroscopy: {
-    audience: "A spectroscopy researcher turning a two-column instrument export into an inspectable figure.",
+    audience: "A spectroscopy researcher turning a two-column instrument export into a figure with visible calculations.",
     problem: "Rapid frequency-window navigation and consistent export are tedious in general-purpose plotting tools.",
     objective: "Preserve the small desktop utility’s exact plotting controls as the tooling chapter of the molecular workflow.",
     contribution: "Built the MATLAB App Designer utility and reconstructed its viewport/export arithmetic over a deterministic synthetic trace.",
@@ -200,7 +200,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   "dl-environment": {
     audience: "A developer preparing a cross-platform deep-learning environment with optional GPU acceleration.",
     problem: "OS, architecture, driver and framework compatibility branches can silently produce a CPU-only or partially broken install.",
-    objective: "Make the source resolver’s branches and its reproducibility gaps inspectable before any command is run.",
+    objective: "Expose the source resolver’s branches and reproducibility gaps before any command is run.",
     contribution: "Authored a 968-line installer, audited its target manifest and added a non-executing safety-improved planner with deterministic failure injection.",
     pipeline: "host facts → OS / architecture / CUDA resolver → package route + fallbacks → import / device probes → reconciliation",
     walkthrough: "Choose an Apple Silicon or CUDA host, inject one framework failure, compare Source and Guarded routes, then inspect the 19+4+1 target reconciliation.",
@@ -214,7 +214,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     walkthrough: "Trace the scheduler-to-database path, fail PostgreSQL, inspect declared blast paths, then size a backup scenario and read which recovery claims remain unverified.",
   },
   "stock-market-engine": {
-    audience: "A reviewer learning what a small stochastic-price script actually implements.",
+    audience: "A reviewer learning what a small stochastic-price script implements.",
     problem: "Names such as ‘market engine’ invite unsupported claims about books, matching and persistence that the source does not contain.",
     objective: "Reproduce the single-stock impact mechanics and expose the original daily-window bug without inventing exchange behavior.",
     contribution: "Audited the Julia loops, built a seeded browser replay and separated legacy from corrected statistics.",
@@ -223,10 +223,10 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   },
   "chemistry-coding": {
     audience: "A chemistry learner connecting statistical mechanics, polymers, dynamics and quantum calculations to code.",
-    problem: "Notebook outputs can obscure proposal bias, indexing conventions, integrator steps and what was actually recomputed.",
-    objective: "Turn the recorded exercises and later extensions into inspectable scientific kernels with explicit attribution.",
+    problem: "Notebook outputs can obscure proposal bias, indexing conventions, integrator steps and which values were recomputed.",
+    objective: "Rebuild the recorded exercises and later extensions as scientific kernels with clear attribution.",
     contribution: "Completed and iterated the calculations, added independent Julia/React extensions and corrected the public sampler, polymer and dynamics explanations.",
-    pipeline: "model parameters → seeded configuration / analytic kernel → inspectable update or arithmetic → source-versus-browser audit",
+    pipeline: "model parameters → seeded configuration / analytic kernel → visible update or arithmetic → source-versus-browser audit",
     walkthrough: "Run the Metropolis sampler, compare polymer generation modes, step through velocity Verlet, then recompute one basis-set or cation–π energy difference.",
   },
 };

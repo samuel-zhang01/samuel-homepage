@@ -515,8 +515,8 @@
   min-height: 355px;
   align-items: center;
   justify-content: center;
-  gap: 25px;
-  padding: 58px 42px 82px;
+  gap: 16px;
+  padding: 58px 28px 82px;
   transform: rotateX(var(--scene-tilt)) rotateY(var(--scene-turn));
   transform-origin: 50% 48%;
   transform-style: preserve-3d;
@@ -536,9 +536,9 @@
 .stageShell {
   position: relative;
   display: flex;
-  width: 76px;
+  width: 68px;
   min-height: 230px;
-  flex: 0 0 76px;
+  flex: 0 0 68px;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
@@ -548,7 +548,7 @@
 .connector {
   position: absolute;
   top: 50%;
-  left: -24px;
+  left: -17px;
   color: #8f98b6;
   font-family: "Courier New", monospace;
   font-size: 28px;
@@ -567,9 +567,7 @@
     color-mix(in srgb, var(--tensor-colour) 80%, #0d0e12);
   box-shadow:
     inset 1px 1px rgba(255, 255, 255, 0.28),
-    9px -8px 0 color-mix(in srgb, var(--tensor-colour) 42%, #0b0c10),
-    10px -9px 0 rgba(255, 255, 255, 0.22),
-    13px 12px 14px rgba(0, 0, 0, 0.34);
+    9px 10px 14px rgba(0, 0, 0, 0.34);
   cursor: pointer;
   transform: translateZ(2px);
   transform-style: preserve-3d;
@@ -577,24 +575,28 @@
 
 .tensorBlock::before {
   position: absolute;
-  inset: -9px -10px auto -1px;
+  z-index: -1;
+  top: -8px;
+  left: -1px;
+  width: calc(100% + 2px);
   height: 8px;
   border: 1px solid rgba(255, 255, 255, 0.34);
   content: "";
   background: color-mix(in srgb, var(--tensor-colour) 48%, #090a0d);
-  transform: skewX(-48deg);
-  transform-origin: bottom;
+  clip-path: polygon(0 100%, 9px 0, 100% 0, 100% 100%);
 }
 
 .tensorBlock::after {
   position: absolute;
-  inset: -5px -11px -9px auto;
+  z-index: -1;
+  top: -8px;
+  right: -10px;
   width: 9px;
+  height: calc(100% + 9px);
   border: 1px solid rgba(255, 255, 255, 0.28);
   content: "";
   background: color-mix(in srgb, var(--tensor-colour) 36%, #08090c);
-  transform: skewY(-42deg);
-  transform-origin: left;
+  clip-path: polygon(0 8px, 100% 0, 100% calc(100% - 8px), 0 100%);
 }
 
 .tensorBlock span {
@@ -621,7 +623,7 @@
   position: absolute;
   top: calc(50% + 93px);
   left: 50%;
-  width: 108px;
+  width: 94px;
   color: #fff;
   transform: translateX(-50%) translateZ(6px);
   text-align: center;

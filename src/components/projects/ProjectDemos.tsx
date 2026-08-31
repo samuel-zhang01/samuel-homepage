@@ -26,7 +26,7 @@ const SAMPLE_CV = `Product-minded data scientist with experience shipping intern
 • Presented experimental results to technical and non-technical partners.
 • Delivered containerised applications with Docker and Git.`;
 
-const SAMPLE_JOB = `We are looking for an applied machine-learning engineer who can turn ambiguous problems into reliable products. The role uses Python, SQL, scikit-learn and Docker. You will design experiments, communicate with stakeholders, deploy services, and monitor model performance. Experience with cloud infrastructure is useful.`;
+const SAMPLE_JOB = `We are looking for an applied machine-learning engineer who can solve ambiguous problems with reliable products. The role uses Python, SQL, scikit-learn and Docker. You will design experiments, communicate with stakeholders, deploy services, and monitor model performance. Experience with cloud infrastructure is useful.`;
 
 const KEYWORD_LIBRARY = [
   { label: "Python", group: "Engineering", variants: ["python"] },
@@ -134,7 +134,7 @@ export function CvKeywordDemo() {
             onChange={(event) => setJobText(event.target.value)}
             spellCheck="true"
           />
-          <small>Role signals are detected against a transparent, inspectable keyword library.</small>
+          <small>Role signals are detected against a documented keyword library shown below.</small>
         </label>
       </div>
 

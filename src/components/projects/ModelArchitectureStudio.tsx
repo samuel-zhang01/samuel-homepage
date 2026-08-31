@@ -1,7 +1,9 @@
 "use client";
 
 import { type CSSProperties, useMemo, useState } from "react";
+import type { Locale } from "@/lib/i18n";
 import { DemoWindow } from "./DemoChrome";
+import { ProjectTranslationBoundary } from "./ProjectTranslationBoundary";
 import styles from "./ModelArchitectureStudio.module.css";
 
 type Task = "classification" | "depth";
@@ -549,7 +551,7 @@ function statusClass(state: EvidenceState) {
   return styles.outputOnly;
 }
 
-export function ModelArchitectureStudio() {
+export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale }) {
   const [modelId, setModelId] = useState<ModelId>("simple");
   const [task, setTask] = useState<Task>("classification");
   const [selectedStageId, setSelectedStageId] = useState("block2");
@@ -589,6 +591,7 @@ export function ModelArchitectureStudio() {
   } as CSSProperties;
 
   return (
+    <ProjectTranslationBoundary locale={locale}>
     <DemoWindow
       appName="MODEL LINEAGE LAB 1.0"
       title="Microrobot Architecture & Experiment Atlas"
@@ -861,6 +864,7 @@ export function ModelArchitectureStudio() {
         </div>
       </section>
     </DemoWindow>
+    </ProjectTranslationBoundary>
   );
 }
 

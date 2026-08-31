@@ -612,7 +612,7 @@ export function InsuranceMatchingDemo() {
         <div>
           <span>SOURCE-FIDELITY SWITCH</span>
           <strong id="workbench-mode-title">Choose what the workbench demonstrates</strong>
-          <p>The current design keeps Trading, historical lead share and Wording separate. The weighted composite is retained only as an inspectable sensitivity experiment showing why premature aggregation is risky.</p>
+          <p>The current design keeps Trading, historical lead share and Wording separate. The weighted composite remains only as a sensitivity experiment; its visible weights show why premature aggregation is risky.</p>
         </div>
         <div className={styles.modeButtons}>
           <button type="button" className={workbenchMode === "evidence" ? styles.modeActive : ""} aria-pressed={workbenchMode === "evidence"} onClick={() => setWorkbenchMode("evidence")}>
@@ -962,12 +962,12 @@ export function InsuranceMatchingDemo() {
         </summary>
         <div className={styles.modelCardGrid}>
           <section>
-            <span className={styles.groundedLabel}>SOURCE-GROUNDED CONCEPTS</span>
+            <span className={styles.groundedLabel}>SOURCE-TRACED CONCEPTS</span>
             <ul>
               <li>A risk-layer candidate contract with broker-supplied market order and three separate evidence agents.</li>
               <li>Historical trading performance as a LightGBM/LambdaRank risk-to-market signal with temporal evidence discipline.</li>
               <li>Availability-attested, recency-aware lead-share evidence and explicit confidence.</li>
-              <li>Wording as inspectable evidence inside Quality—not a duplicate fourth vote.</li>
+              <li>Wording remains visible inside Quality; it is not counted again as a fourth vote.</li>
               <li>Cold-start fallbacks, market identity checks, null handling and broker review boundaries.</li>
               <li>The current audited implementation retires the cross-pillar composite until a shared objective is validated.</li>
             </ul>
