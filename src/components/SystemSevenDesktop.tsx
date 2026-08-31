@@ -37,11 +37,21 @@ const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplo
   ),
 });
 
+const SideQuestCabinetApp = dynamic(() => import("@/components/SideQuestCabinetApp"), {
+  loading: () => (
+    <div className="sidequest-app-loading" role="status">
+      <span className="eyebrow">OPENING FIELD OBJECT…</span>
+      <strong>Rewinding the RUN/HACK relay.</strong>
+    </div>
+  ),
+});
+
 export type AppId =
   | "about"
   | "coverd"
   | "experience"
   | "projects"
+  | "sidequest"
   | "skills"
   | "education"
   | "documents"
@@ -81,6 +91,7 @@ type IconKind =
   | "university"
   | "network"
   | "photos"
+  | "runner"
   | "game"
   | "pdf"
   | "mail"
@@ -186,6 +197,17 @@ const INITIAL_WINDOWS: WindowState[] = [
     maximized: false,
   },
   {
+    id: "sidequest",
+    title: "RUN/HACK — SideQuest",
+    x: 54,
+    y: 42,
+    width: 1000,
+    height: 690,
+    z: 17,
+    open: false,
+    maximized: false,
+  },
+  {
     id: "skills",
     title: "Skills & Capabilities",
     x: 206,
@@ -280,6 +302,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
   { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
+  { id: "sidequest", label: "RUN/HACK", icon: "runner", description: "A second-place running hackathon build: Strava evidence, subsequent runs, social challenges and live relay." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
@@ -535,6 +558,15 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
         <path d="M2 12V4h36" stroke="#888" />
       </g>
     ),
+    runner: (
+      <g {...common}>
+        <path d="M5 39h38" stroke="#777" strokeWidth="2" />
+        <circle cx="28" cy="9" r="5" fill="#f2ca59" />
+        <path d="m24 15-7 11 10 5 5-12z" fill="#d7ff55" />
+        <path d="m21 20-9 2-5 7m19 2-8 10m9-10 11 8m-5-18 8 4" />
+        <path d="M7 12h9M4 17h11" stroke="#67a8b8" strokeWidth="2" />
+      </g>
+    ),
     game: (
       <g {...common}>
         <path d="M13 17h22l8 18-5 7-10-8h-8l-10 8-5-7z" fill="#d7d7d1" />
@@ -694,6 +726,10 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <span className="identity-detail">Turning messy operational knowledge into polished tools that people trust, adopt and keep using.</span>
               <span className="identity-drawer-prompt">OPEN PROJECT ARCHIVE →</span>
             </span>
+          </button>
+          <button onClick={() => openApp("sidequest")}>
+            <PixelIcon kind="runner" small />
+            <span className="identity-copy"><b>Runner-builder</b><span className="identity-detail">Second place at RUN/HACK after a 5K race, a 44K team relay and a voice-built social running product.</span></span>
           </button>
           <button onClick={() => openApp("experience")}>
             <PixelIcon kind="university" small />
@@ -964,6 +1000,7 @@ function EducationApp({ locale }: { locale: Locale }) {
         <section>
           <h4>Honours &amp; awards</h4>
           <ul>
+            <li>RUN/HACK 2026 — Second place</li>
             <li>King&apos;s Research Experience Award</li>
             <li>Associate of King&apos;s College London (AKC)</li>
             <li>SCDF Service Excellence Award</li>
@@ -2227,6 +2264,7 @@ function AppContent({
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
     case "projects": return <ProjectsApp openApp={openApp} locale={locale} initialSlug={initialProjectSlug} />;
+    case "sidequest": return <SideQuestCabinetApp locale={locale} />;
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
     case "documents": return <DocumentsApp locale={locale} />;
@@ -2255,12 +2293,12 @@ export default function SystemSevenDesktop({
     INITIAL_WINDOWS.map((windowState) => ({
       ...windowState,
       open: windowState.id === initialApp,
-      // A direct project permalink is a working surface rather than a small
-      // desktop preview. Give its diagrams and evidence tables the available
-      // canvas immediately; the title-bar zoom box still restores the classic
-      // floating-window size. Projects opened later from the desktop retain
-      // that normal floating-window behaviour.
-      maximized: windowState.id === "projects" && initialApp === "projects",
+      // Direct project and SideQuest permalinks are working surfaces rather
+      // than small desktop previews. Give their interactive evidence views the
+      // available canvas immediately; apps opened later from the desktop keep
+      // their classic floating-window sizes.
+      maximized: (windowState.id === "projects" || windowState.id === "sidequest")
+        && initialApp === windowState.id,
     })),
   );
   const [activeId, setActiveId] = useState<AppId>(initialApp);
@@ -2685,6 +2723,7 @@ export default function SystemSevenDesktop({
               <div className="menu-dropdown apple-dropdown" id="samuel-menu">
                 <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
                 <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
+                <button onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />RUN/HACK — SideQuest</button>
                 <hr />
                 <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
                 <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>

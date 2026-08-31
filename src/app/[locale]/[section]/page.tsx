@@ -13,6 +13,7 @@ const sections: Record<string, AppId> = {
   games: "games",
   interests: "scrapbook",
   lab: "lab",
+  sidequest: "sidequest",
   resume: "documents",
   skills: "skills",
 };
@@ -53,6 +54,10 @@ const sectionMetadata: Record<string, { title: string; description: string }> = 
   lab: {
     title: "Home Lab Network",
     description: "Samuel’s self-hosted AI, storage and automation infrastructure.",
+  },
+  sidequest: {
+    title: "RUN/HACK — SideQuest",
+    description: "A second-place running hackathon build connecting private Strava evidence, subsequent GPS runs, social challenges and ephemeral live video.",
   },
   skills: {
     title: "Skills & Capabilities",

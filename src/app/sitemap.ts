@@ -15,6 +15,7 @@ const sections = [
   "interests",
   "lab",
   "projects",
+  "sidequest",
   "skills",
 ] as const;
 

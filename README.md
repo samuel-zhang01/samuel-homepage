@@ -11,6 +11,7 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
 - A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 independently lazy-loaded interactive chapters, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
+- A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
 - Responsive System 7 windows designed for 320 px mobile screens through large desktops, with pointer- and keyboard-resizable floating windows on desktop.
 
@@ -46,6 +47,12 @@ Disclosure is explicit:
 The current repository audit found no Samuel-authored project with an explicit repository-level licence, so the Open source count intentionally remains zero. Nested licences belonging to copied dependencies or teaching infrastructure do not licence their parent repositories.
 
 Private entries use labels, lock icons and patterns as well as colour. Insurance lead matching and other organisational work use synthetic or high-level public reconstructions. GROWMAT links its original external showcase by owner request; live company data, credentials and source remain private.
+
+## RUN/HACK cabinet exhibit
+
+The `/sidequest` route opens a first-class System 7 app about the 29 August 2026 Running Hackathon. It separates Samuel’s 5K race and the team’s additional 44K relay from the product evidence: the documented 209-run Strava source profile belongs to teammate Javiera Rubio. The exhibit shows only reviewed aggregate counts and a browser-local hypothetical-run sandbox; raw Strava activities and GPS coordinates are not published.
+
+The Live room is an explicit interactive replay. It demonstrates the original camera/GPS, spectator-cheer and runner-controlled challenge flow without requesting camera, microphone or location permission from portfolio visitors. Links to the original SideQuest deployment and source remain external, and deployment availability is not guaranteed; the source repository has no declared licence, and ephemeral prototype video was not recorded.
 
 ## Privacy boundaries
 
@@ -158,6 +165,7 @@ src/
 │   └── projects/page.tsx
 ├── components/
 │   ├── PdfPreview.tsx
+│   ├── SideQuestCabinetApp.tsx
 │   ├── SystemSevenDesktop.tsx
 │   └── projects/
 │       ├── DemoChrome.tsx

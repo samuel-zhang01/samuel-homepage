@@ -860,6 +860,21 @@ body {
   box-shadow: none;
 }
 
+.sidequest-app-loading {
+  display: grid;
+  min-height: 100%;
+  place-content: center;
+  gap: 8px;
+  padding: 28px;
+  color: #f4f4ec;
+  background: #10120f;
+  text-align: center;
+}
+
+.sidequest-app-loading .eyebrow {
+  color: #d7ff55;
+}
+
 /* About */
 
 .about-app {

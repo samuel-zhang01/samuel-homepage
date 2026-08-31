@@ -69,6 +69,9 @@ others/
 /Candidate Linkedin.txt
 /CVtemplateProduct.pdf
 
+# Local hackathon source is evidence for authoring, not production input
+/hackathon/
+
 # Test files
 __tests__/
 *.test.js
