@@ -2903,78 +2903,218 @@ html:lang(zh-TW) .career-record {
 }
 
 .snake-game__board {
-  display: grid;
-  width: min(100%, 430px);
+  position: relative;
+  display: block;
+  width: min(100%, 420px);
   aspect-ratio: 1;
-  grid-template-columns: repeat(12, 1fr);
+  contain: layout paint;
+  overflow: hidden;
   margin: 0 auto;
-  padding: 7px;
+  padding: 8px;
   border: 3px double #111;
-  background: #111;
-  box-shadow: inset 2px 2px #050505, 3px 3px #777;
-  gap: 1px;
+  background: #8d9582;
+  box-shadow: inset 2px 2px #dfe4d5, inset -2px -2px #3f473b, 3px 3px #777;
 }
 
-.snake-game__cell {
-  min-width: 0;
-  background: #dbe0bf;
+.snake-game__playfield {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #263228;
+  background: #d8dfc6;
+  box-shadow: inset 1px 1px 0 #737f69, inset -1px -1px 0 #f3f6e8;
 }
 
-.snake-game__cell--snake {
-  border: 1px solid #102917;
-  background: #3e9a58;
-  box-shadow: inset 1px 1px #a7e3ad;
+.snake-game__grid {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(34, 51, 38, .11) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 51, 38, .11) 1px, transparent 1px);
+  background-size: calc(100% / 12) calc(100% / 12);
+  pointer-events: none;
 }
 
-.snake-game__cell--head {
+.snake-game__segment,
+.snake-game__food {
+  --snake-x: 0;
+  --snake-y: 0;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: calc(100% / 12);
+  aspect-ratio: 1;
+  transform: translate(calc(var(--snake-x) * 100%), calc(var(--snake-y) * 100%));
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.snake-game__playfield.is-running .snake-game__segment {
+  transition: transform 145ms linear;
+  will-change: transform;
+}
+
+.snake-game__segment::before {
+  position: absolute;
+  content: "";
+  inset: 1px;
+  border: 1px solid #173b25;
+  border-radius: 34%;
+  background: linear-gradient(145deg, #74bd7c 0 18%, #34844d 20% 72%, #286d40 74%);
+  box-shadow: inset 1px 1px rgba(239, 255, 228, .72), inset -1px -1px rgba(13, 53, 28, .65);
+}
+
+.snake-game__segment--head::before {
+  border-color: #102d1c;
+  background: linear-gradient(145deg, #8bd18b, #2c7745 68%);
+  box-shadow: inset 1px 1px #ccecc4, inset -2px -2px #184d2d, 0 0 0 1px rgba(216, 255, 55, .58);
+}
+
+.snake-game__segment--head::after {
+  position: absolute;
+  z-index: 1;
+  content: "";
+  inset: 2px;
+  border-radius: 30%;
+  background-repeat: no-repeat;
+}
+
+.snake-game__segment--right::after {
+  background-image: radial-gradient(circle at 76% 28%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px), radial-gradient(circle at 76% 72%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px);
+}
+
+.snake-game__segment--left::after {
+  background-image: radial-gradient(circle at 24% 28%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px), radial-gradient(circle at 24% 72%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px);
+}
+
+.snake-game__segment--up::after {
+  background-image: radial-gradient(circle at 28% 24%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px), radial-gradient(circle at 72% 24%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px);
+}
+
+.snake-game__segment--down::after {
+  background-image: radial-gradient(circle at 28% 76%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px), radial-gradient(circle at 72% 76%, #f7f5dd 0 2px, #111 2px 3px, transparent 3px);
+}
+
+.snake-game__food {
+  z-index: 1;
+}
+
+.snake-game__food::before {
+  position: absolute;
+  content: "";
+  inset: 18%;
+  border: 2px solid #5b1432;
+  border-radius: 42% 42% 48% 48%;
+  background: #e36b9c;
+  box-shadow: inset 2px 2px #ffd4e7, inset -1px -1px #9b315f, 1px 1px #294132;
+}
+
+.brick-game__machine {
+  width: min(100%, 400px);
+  margin: 0 auto;
+  padding: 5px;
+  border: 3px double #111;
+  background: #c9c9c4;
+  box-shadow: inset 2px 2px #fff, inset -2px -2px #777, 3px 3px #777;
+}
+
+.brick-game__machine-bar {
+  display: flex;
+  height: 20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7px;
+  border: 1px solid #111;
+  color: #333;
+  background: #eeeeea;
+  font: 900 7px/1 var(--system-mono);
+  letter-spacing: .1em;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #888;
+}
+
+.brick-game__lamp {
+  width: 7px;
+  height: 7px;
+  border: 1px solid #111;
+  border-radius: 50%;
+  background: #777;
+  box-shadow: inset 1px 1px rgba(255,255,255,.7);
+}
+
+.brick-game__lamp.is-live {
   background: #dfff37;
-  box-shadow: inset 2px 0 #111, inset -2px 0 #111;
-}
-
-.snake-game__cell--food {
-  border: 2px solid #5e1534;
-  background: #f09ac4;
-  box-shadow: inset 1px 1px #fff;
+  box-shadow: 0 0 5px #dfff37, inset 1px 1px #fff;
 }
 
 .brick-game__board {
-  display: grid;
-  width: min(100%, 390px);
-  aspect-ratio: 15 / 18;
-  grid-template-columns: repeat(15, 1fr);
-  margin: 0 auto;
-  padding: 6px;
-  border: 3px double #111;
-  background: #11172b;
-  box-shadow: inset 2px 2px #030712, 3px 3px #777;
-  gap: 1px;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 6;
+  overflow: hidden;
+  contain: strict;
+  border: 2px solid #111;
+  border-top: 0;
+  background:
+    radial-gradient(circle at 18% 72%, rgba(115,198,223,.18) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 74% 61%, rgba(240,154,196,.16) 0 1px, transparent 1.5px),
+    linear-gradient(#161d38, #080c1c 78%, #11152a);
+  background-size: 53px 47px, 71px 67px, auto;
+  box-shadow: inset 0 0 24px #02040c;
+  isolation: isolate;
 }
 
-.brick-game__cell {
-  min-width: 0;
-  background: #11172b;
+.brick-game__scanlines {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(255,255,255,.025) 4px
+  );
+  pointer-events: none;
 }
 
-.brick-game__cell--brick {
-  border: 1px solid #111;
+.brick-game__brick,
+.brick-game__ball,
+.brick-game__paddle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  will-change: transform;
+}
+
+.brick-game__brick {
+  z-index: 2;
+  border: 1px solid #080a14;
   background: #73c6df;
-  box-shadow: inset 1px 1px rgba(255,255,255,.7), inset -1px -1px rgba(0,0,0,.45);
+  box-shadow: inset 1px 1px rgba(255,255,255,.82), inset -2px -2px rgba(0,0,0,.4), 0 1px 2px #000;
 }
 
-.brick-game__cell--brick-1 { background: #f09ac4; }
-.brick-game__cell--brick-2 { background: #f1c95e; }
-.brick-game__cell--brick-3 { background: #7bcf87; }
+.brick-game__brick--1 { background: #f09ac4; }
+.brick-game__brick--2 { background: #f1c95e; }
+.brick-game__brick--3 { background: #7bcf87; }
+.brick-game__brick--4 { background: #a89ce1; }
 
-.brick-game__cell--paddle {
-  border: 1px solid #111;
-  background: #f4f4ef;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+.brick-game__paddle {
+  z-index: 2;
+  border: 1px solid #05070d;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #fff, #d7d7d2 50%, #85858f 51%, #eee);
+  box-shadow: 0 0 0 1px #fff, 0 3px 6px #000;
 }
 
-.brick-game__cell--ball {
+.brick-game__ball {
+  z-index: 3;
   border: 1px solid #fff;
+  border-radius: 50%;
   background: #dfff37;
-  box-shadow: 0 0 0 1px #111;
+  box-shadow: 0 0 0 1px #111, 0 0 8px rgba(223,255,55,.8);
 }
 
 .arcade-game__status {
@@ -3031,6 +3171,11 @@ html:lang(zh-TW) .career-record {
 .arcade-game__actions button,
 .brick-game__move-controls button {
   padding: 5px 12px;
+}
+
+.brick-game__move-controls button {
+  touch-action: none;
+  user-select: none;
 }
 
 .arcade-game__actions button:first-child {
