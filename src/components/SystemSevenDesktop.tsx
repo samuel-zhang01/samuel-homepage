@@ -1304,7 +1304,7 @@ const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: string; label: string; de
   { id: "puzzle", icon: "15", label: "Sliding Puzzle", description: "Put every number back where it belongs." },
   { id: "samword", icon: "SZ", label: "SamWord", description: "Six letters, profile clues and one suspicious password." },
   { id: "memory", icon: "8", label: "Profile Pairs", description: "Match the work to the story behind it." },
-  { id: "spectrum", icon: "UV", label: "Peak Dock", description: "Fit three synthetic HPLC–UV peaks, then read the elution order." },
+  { id: "spectrum", icon: "UV", label: "Peak Dock", description: "Fit randomised HPLC–UV peaks across three difficulty levels." },
 ] as const;
 
 const MEMORY_PAIRS = [
