@@ -1332,6 +1332,9 @@ export function ChemistryCodingStudio() {
       appName="CHEMLAB.OS / NOTEBOOK ATLAS"
       title="Chemistry coding workbench"
       status="4 LIVE LABS · SOURCE AUDITED"
+      purpose="Turn four computational-chemistry notebook topics into inspectable numerical kernels with their assumptions and update rules exposed."
+      tryThis="Run the sampler, change polymer generation, step molecular dynamics or recompute a quantum-energy comparison."
+      watchFor="Seeded configurations, acceptance, energy drift and derived differences update locally; each lab labels what is recomputed versus archived."
       statusTone="safe"
       className={styles.window}
       footer={

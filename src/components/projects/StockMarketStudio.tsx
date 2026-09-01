@@ -424,6 +424,9 @@ export function StockMarketStudio() {
       appName="Stockmarket.jl · audited browser port"
       title="Stochastic Market Impact Lab"
       status="SOURCE-AUDITED"
+      purpose="Show exactly what a small stochastic price script implements without presenting it as a full exchange or forecasting engine."
+      tryThis="Run a seeded day, trigger the price floor and switch between legacy and corrected metric windows."
+      watchFor="The event tape and summary arithmetic change together, exposing the original daily-window bug over a fictional process."
       statusTone="safe"
       className={styles.studio}
       footer={

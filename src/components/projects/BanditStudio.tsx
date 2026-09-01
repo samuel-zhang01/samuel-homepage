@@ -622,6 +622,9 @@ export function BanditStudio() {
       appName="STUDY-RL · BANDIT LAB"
       title="Sequential Decisions Console"
       status={rounds ? `${rounds} SEEDED ROUNDS` : "READY AT ROUND 0"}
+      purpose="See how a learning policy balances trying uncertain options against repeatedly choosing the current best option."
+      tryThis="Run 100 seeded rounds, then change epsilon or the reward scenario."
+      watchFor="The chosen arms, learned value estimates and regret trace change together; the oracle is a comparison, not information available to the policy."
       statusTone={rounds ? "working" : "safe"}
       className={styles.studio}
       footer={

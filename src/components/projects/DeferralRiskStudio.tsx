@@ -380,6 +380,9 @@ export function DeferralRiskStudio() {
       appName="SAFE-L2D LAB"
       title="Fraud-risk deferral workbench"
       status={isReportedSettings ? "PAPER POINT LOADED" : "SYNTHETIC POLICY ACTIVE"}
+      purpose="Explore when an automated fraud classifier should hand a case to a human instead of forcing a prediction."
+      tryThis="Move the score and uncertainty deferral thresholds, then compare system accuracy, retained risk and review volume."
+      watchFor="Coverage and tail risk move in opposite directions; every output comes from deterministic fictional claims."
       statusTone="safe"
       className={styles.studio}
       footer={(

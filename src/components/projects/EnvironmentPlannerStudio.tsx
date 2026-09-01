@@ -982,6 +982,9 @@ export function EnvironmentPlannerStudio() {
       appName="DL Environment Resolver — Case Study"
       title="Accelerator Environment Planner"
       status="SYNTHETIC · DRY RUN"
+      purpose="Turn host, architecture and accelerator facts into an explainable deep-learning installation route before commands are run."
+      tryThis="Choose a host, inject a framework failure and compare the source route with the guarded plan."
+      watchFor="Compatibility branches, fallbacks and validation probes change; this is a dry-run planner and executes nothing."
       statusTone="safe"
       className={styles.studio}
       footer={

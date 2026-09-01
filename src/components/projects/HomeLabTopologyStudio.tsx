@@ -640,6 +640,9 @@ export function HomeLabTopologyStudio() {
       appName="Home Lab Topology — Private Case Study"
       title="Infrastructure Evidence Workbench"
       status="SYNTHETIC HOSTS · READ ONLY"
+      purpose="Audit what a six-service Compose snapshot declares—and separate configuration intent from proven availability or recovery."
+      tryThis="Trace a dependency path, fail PostgreSQL and size a backup-retention scenario."
+      watchFor="Blast paths and capacity change, while absent health checks and unverified restore evidence remain explicit."
       statusTone="safe"
       className={styles.studio}
       footer={

@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import type { ProjectDemoId } from "@/data/projects";
 import type { Locale } from "@/lib/i18n";
 import styles from "./ProjectDemoRouter.module.css";
+import { ProjectTranslationBoundary } from "./ProjectTranslationBoundary";
 
 function DemoLoading() {
   return (
@@ -125,66 +126,96 @@ const VentureReasoningStudio = dynamic(
 );
 
 export function ProjectDemoRouter({ demoId, locale = "en-GB" }: { demoId: ProjectDemoId; locale?: Locale }) {
+  let demo: React.ReactNode;
   switch (demoId) {
     case "bandits":
-      return <BanditStudio />;
+      demo = <BanditStudio />;
+      break;
     case "finance":
-      return <FinanceStudio />;
+      demo = <FinanceStudio />;
+      break;
     case "cv-keywords":
-      return <CvKeywordStudio />;
+      demo = <CvKeywordStudio />;
+      break;
     case "scheduling":
-      return <SchedulingStudio />;
+      demo = <SchedulingStudio />;
+      break;
     case "insurance-matching":
-      return <InsuranceMatchingDemo />;
+      demo = <InsuranceMatchingDemo />;
+      break;
     case "italian-learning":
-      return <ItalianLearningStudio />;
+      demo = <ItalianLearningStudio />;
+      break;
     case "course-recommender":
-      return <CourseRecommenderStudio />;
+      demo = <CourseRecommenderStudio />;
+      break;
     case "spectroscopy":
-      return <SpectroscopyStudio />;
+      demo = <SpectroscopyStudio />;
+      break;
     case "thermodynamics":
-      return <ThermodynamicsStudio />;
+      demo = <ThermodynamicsStudio />;
+      break;
     case "dl-environment":
-      return <EnvironmentPlannerStudio />;
+      demo = <EnvironmentPlannerStudio />;
+      break;
     case "home-lab-topology":
-      return <HomeLabTopologyStudio />;
+      demo = <HomeLabTopologyStudio />;
+      break;
     case "chemistry-coding":
-      return <ChemistryCodingStudio />;
+      demo = <ChemistryCodingStudio />;
+      break;
     case "stock-market-engine":
-      return <StockMarketStudio />;
+      demo = <StockMarketStudio />;
+      break;
     case "innovation-models":
-      return <InnovationModelsStudio />;
+      demo = <InnovationModelsStudio />;
+      break;
     case "molecular-recognition":
-      return <MolecularRecognitionStudio />;
+      demo = <MolecularRecognitionStudio />;
+      break;
     case "solubility-workflow":
-      return <DrugSolubilityStudio />;
+      demo = <DrugSolubilityStudio />;
+      break;
     case "venture-reasoning":
-      return <VentureReasoningStudio />;
+      demo = <VentureReasoningStudio />;
+      break;
     case "rl-atlas":
-      return <RlAtlasDemo />;
+      demo = <RlAtlasDemo />;
+      break;
     case "microrobot-vision":
-      return <MicrorobotShowcase locale={locale} />;
+      demo = <MicrorobotShowcase locale={locale} />;
+      break;
     case "mri-trust":
-      return <MriTrustStudio />;
+      demo = <MriTrustStudio />;
+      break;
     case "cfd-surrogates":
-      return <CfdShowcase />;
+      demo = <CfdShowcase />;
+      break;
     case "reliability":
-      return <ReliabilityLabDemo />;
+      demo = <ReliabilityLabDemo />;
+      break;
     case "deferral-risk":
-      return <DeferralRiskStudio />;
+      demo = <DeferralRiskStudio />;
+      break;
     case "air-quality":
-      return <AirQualityBudgetDemo />;
+      demo = <AirQualityBudgetDemo />;
+      break;
     case "cyber-threshold":
-      return <CyberThresholdDemo />;
+      demo = <CyberThresholdDemo />;
+      break;
     case "regularisation":
-      return <RegularisationLabDemo />;
+      demo = <RegularisationLabDemo />;
+      break;
     case "causal-ope":
-      return <CausalOpeDemo />;
+      demo = <CausalOpeDemo />;
+      break;
     default: {
       const unhandledDemo: never = demoId;
-      return unhandledDemo;
+      demo = unhandledDemo;
     }
   }
+
+  return <ProjectTranslationBoundary locale={locale}>{demo}</ProjectTranslationBoundary>;
 }
 
 export default ProjectDemoRouter;

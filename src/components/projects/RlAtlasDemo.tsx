@@ -526,6 +526,9 @@ export function RlAtlasDemo() {
       appName="RL Atlas 1.0"
       title="STUDY-RL Learning Atlas"
       status="QA SNAPSHOT · REVIEW"
+      purpose="Map a 24-week reinforcement-learning curriculum to the notes, code, tests and applied evidence that support each topic."
+      tryThis="Filter by track or method, then select a week to open its evidence ledger."
+      watchFor="This is a curriculum and provenance atlas—not an agent simulation. It shows what was studied, executed and quality-checked."
       statusTone="working"
       className={styles.atlasWindow}
       footer={

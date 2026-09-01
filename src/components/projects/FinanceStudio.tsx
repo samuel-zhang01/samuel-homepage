@@ -923,6 +923,9 @@ export function FinanceStudio() {
       appName="Finance App — Ocean Depths"
       title="Bank Statement Intelligence Control Room"
       status="SYNTHETIC · LOCAL-FIRST"
+      purpose="Show how inconsistent statement files become one auditable household ledger before any financial pattern is trusted."
+      tryThis="Replay the staged import, then change a recurring-charge or transfer-matching rule."
+      watchFor="Deduplication, reconciliation and derived views update together over fictional accounts; no bank connection is used."
       statusTone="safe"
       className={styles.financeStudio}
       footer={

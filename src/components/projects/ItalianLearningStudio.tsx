@@ -850,6 +850,9 @@ export function ItalianLearningStudio() {
       appName="Parliamo! 7"
       title="Local-first Italian Learning Studio"
       status="SYNTHETIC LEARNER · LOCAL"
+      purpose="Connect a 56-day beginner curriculum to daily practice, spaced recall and durable progress evidence."
+      tryThis="Answer a Today prompt, grade a Recall card, then open the sync-conflict exercise."
+      watchFor="Mastery and the next-review schedule change locally while revision handling protects progress across devices."
       statusTone="safe"
       className={styles.studioWindow}
       footer={

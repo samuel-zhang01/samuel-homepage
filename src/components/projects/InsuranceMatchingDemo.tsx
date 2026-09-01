@@ -570,6 +570,9 @@ export function InsuranceMatchingDemo() {
       appName="Lead Match Workbench"
       title="Insurance lead-market evidence lab"
       status={workbenchMode === "evidence" ? "CURRENT DESIGN · BROKER ORDER" : "RETIRED COMPOSITE · WHAT-IF"}
+      purpose="Help a broker compare candidate insurance markets without hiding missing evidence inside one unexplained score."
+      tryThis="Select a market, raise the evidence gate and inspect why a candidate becomes ready, review-only or unavailable."
+      watchFor="Independent evidence pillars and review gates change; the broker—not the ranking—retains the final decision."
       statusTone="safe"
       className={styles.window}
       footer={

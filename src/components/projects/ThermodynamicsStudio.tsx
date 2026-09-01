@@ -479,6 +479,9 @@ export function ThermodynamicsStudio() {
       appName="PC-SAFT WORKBENCH · SAFE EXHIBIT"
       title="Synthetic Thermodynamics Studio"
       status="PUBLIC EQUATIONS · SYNTHETIC PARAMETERS"
+      purpose="Open a PC-SAFT state calculation so the effect of molecular parameters, mixing and density is visible term by term."
+      tryThis="Change density, composition or the binary interaction parameter, then open the equation tape."
+      watchFor="Compressibility, pressure and the isotherm are recalculated in the browser using invented fluids—not validated property data."
       statusTone="safe"
       className={styles.studio}
       footer={

@@ -396,6 +396,9 @@ export function DrugSolubilityStudio() {
       appName="SLE_SOLVER.jl · privacy-safe workflow port"
       title="Solid–Liquid Solubility Workflow"
       status="SYNTHETIC · NOT VALIDATED"
+      purpose="Expose the full solid–liquid equilibrium workflow from fusion inputs to a solved composition and laboratory reporting basis."
+      tryThis="Move temperature, inspect the root residual, then switch reporting basis or fit the synthetic calibration rows."
+      watchFor="The log-space root and unit conversion update while calibration and untouched holdout rows stay visibly separate."
       statusTone="safe"
       className={styles.studio}
       footer={<><span>PRIVATE RESEARCH WORKFLOW · NO COMPOUNDS OR RESULTS SHIPPED</span><span>OPEN EQUATIONS · INVENTED Q/L PARAMETERS · EDUCATIONAL ONLY</span></>}

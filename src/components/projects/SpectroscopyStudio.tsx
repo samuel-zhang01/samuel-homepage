@@ -356,6 +356,9 @@ export function SpectroscopyStudio() {
       appName="CPROT SPEC PLOTTER · WEB RECONSTRUCTION"
       title="Fast Spectroscopy Plotter"
       status={loaded ? "SYNTHETIC TRACE LOADED" : "WAITING FOR TRACE"}
+      purpose="Recreate a small lab utility for turning a two-column spectrum into a navigable, consistently exportable figure."
+      tryThis="Load the synthetic trace, choose a centre frequency, pan the window and change export settings."
+      watchFor="The viewport and pixel dimensions update from the same plotting arithmetic; no experimental trace is bundled."
       statusTone={loaded ? "safe" : "working"}
       className={styles.studio}
       footer={

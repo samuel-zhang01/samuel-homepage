@@ -480,6 +480,9 @@ export function InnovationModelsStudio() {
       appName="Innovation Models — Re-authored Case Study"
       title="Innovation Governance Workbench"
       status="SYNTHETIC SCENARIOS · READ ONLY"
+      purpose="Make ownership and resource authority concrete when deciding how exploratory ventures should sit inside an incumbent."
+      tryThis="Choose a governance model, rebalance the portfolio and stress the transition-readiness inputs."
+      watchFor="Concentration and readiness heuristics move with visible weights; they structure a discussion rather than prescribe an answer."
       statusTone="safe"
       className={styles.studio}
       footer={<><span>Audited {AUDITED_REF} · private source · no licence · assessed prose excluded</span><span>4 models · 2 source axes · adapted heuristics with visible weights</span></>}

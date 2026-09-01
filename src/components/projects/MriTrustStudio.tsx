@@ -1194,6 +1194,9 @@ export function MriTrustStudio() {
       appName="TRUST LAB 1.0"
       title="Trustworthy MRI Reconstruction"
       status="REPORTED METRICS · SYNTHETIC VISUALS"
+      purpose="Test whether an accelerated MRI reconstruction is not only visually plausible but also data-consistent, calibrated and safe for downstream use."
+      tryThis="Change acceleration and uncertainty settings, then inspect the trust gate and architecture path."
+      watchFor="Quality, consistency, uncertainty and downstream checks can disagree; visuals are synthetic and metrics are reported source results."
       statusTone="safe"
       className={styles.studio}
       footer={

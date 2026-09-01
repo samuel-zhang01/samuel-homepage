@@ -593,6 +593,9 @@ export function CfdArchitectureStudio() {
       appName="CFD Architecture Atlas"
       title="Neural surrogate architecture & experiment studio"
       status="SOURCE-AUDITED"
+      purpose="Explain how three neural CFD surrogate families represent flow fields and what the archived experiments actually establish."
+      tryThis="Choose an architecture, inspect its tensor path, then change the experiment or checkpoint lens."
+      watchFor="Shapes, parameter counts and provenance update; this view audits architecture and lineage rather than running a fluid simulation in the browser."
       statusTone="safe"
       className={styles.studio}
       footer={<><span>PRIVATE SOURCE · DERIVED ARCHITECTURE METADATA ONLY</span><span>NO LICENCE DECLARED · NO DATASETS OR WEIGHTS PUBLISHED</span></>}

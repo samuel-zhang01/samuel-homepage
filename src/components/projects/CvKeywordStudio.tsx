@@ -633,6 +633,9 @@ export function CvKeywordStudio() {
       appName="CV Keyword Studio"
       title="Role-tailored CV build lab"
       status={isDirty ? "EDITING · RUN TO REFRESH" : "ANALYSIS CURRENT"}
+      purpose="Map role language to truthful CV evidence without silently injecting unsupported keywords."
+      tryThis="Edit a sentence, run the analysis and stage one factual rewrite for a missing signal."
+      watchFor="Signal coverage and the output manifest change only after review; the demo never fabricates experience."
       statusTone={isDirty ? "working" : "safe"}
       className={styles.studio}
       footer={

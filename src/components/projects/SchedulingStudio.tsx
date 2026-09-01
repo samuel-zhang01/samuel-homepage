@@ -508,6 +508,9 @@ export function SchedulingStudio() {
       appName="YASA · AVAILABILITY ENGINE"
       title="Multi-host Scheduling Lab"
       status="SOURCE-TRACED SANDBOX"
+      purpose="Explain how multi-host availability, time zones, buffers and collision protection become bookable slots."
+      tryThis="Switch allocation policy, inspect a blocked slot, then reserve a free time and replay a collision."
+      watchFor="Host assignment and slot state update while final revalidation prevents a stale choice from becoming a double-booking."
       statusTone="safe"
       footer={
         <>

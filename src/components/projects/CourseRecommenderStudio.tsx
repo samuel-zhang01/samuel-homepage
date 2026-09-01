@@ -691,6 +691,9 @@ export function CourseRecommenderStudio() {
       appName="Course Recommender — Audit Workbench"
       title="Learning Path Recommender Audit"
       status="SYNTHETIC · LOCAL ONLY"
+      purpose="Reveal when a polished ‘recommender’ is only random ordering, then show what an explicit scoring contract would add."
+      tryThis="Replay the source baseline with another seed, inspect its reasons, then compare the adapted rubric."
+      watchFor="Random order, field-contract gaps and declared scoring weights stay visibly separate so personalisation is not implied."
       statusTone="safe"
       className={styles.courseStudio}
       footer={

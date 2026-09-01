@@ -22,6 +22,8 @@ import {
   type Locale,
 } from "@/lib/i18n";
 import PdfPreview from "@/components/PdfPreview";
+import { BrickBreakerGame, SnakeGame } from "@/components/ArcadeClassicGames";
+import HplcPeakDock from "@/components/HplcPeakDock";
 import projectExplorerStyles from "@/components/projects/ProjectExplorer.module.css";
 import projectActionsStyles from "@/components/projects/ProjectActions.module.css";
 import projectDemoRouterStyles from "@/components/projects/ProjectDemoRouter.module.css";
@@ -242,10 +244,10 @@ const INITIAL_WINDOWS: WindowState[] = [
   {
     id: "games",
     title: "Desk Arcade",
-    x: 204,
-    y: 72,
-    width: 720,
-    height: 560,
+    x: 164,
+    y: 54,
+    width: 760,
+    height: 650,
     z: 15,
     open: false,
     maximized: false,
@@ -302,6 +304,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
   { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
+  { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of Samuel’s work." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
@@ -777,6 +780,23 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             <span className="identity-copy"><b>Interests &amp; notes</b><span className="identity-detail">Music, photography, hiking, teaching and the stories behind the technical work.</span></span>
           </button>
         </nav>
+        <section className="arcade-invite" aria-labelledby="arcade-invite-title">
+          <div className="arcade-invite__mark" aria-hidden="true">
+            <PixelIcon kind="game" />
+            <span className="arcade-invite__count">7</span>
+          </div>
+          <div className="arcade-invite__copy">
+            <span>AFTER HOURS · LOCAL PLAY</span>
+            <h2 id="arcade-invite-title">Play a little.</h2>
+            <p>Seven small games with hints of Samuel&apos;s work and old-Mac mischief. No account, no tracking, no stakes.</p>
+            <ul className="arcade-invite__games" aria-label="Games in Desk Arcade">
+              {ARCADE_GAMES.map((item) => (
+                <li key={item.id}><b aria-hidden="true">{item.icon}</b><span>{item.label}</span></li>
+              ))}
+            </ul>
+          </div>
+          <button type="button" onClick={() => openApp("games")}>Open Desk Arcade →</button>
+        </section>
         <fieldset className="about-panel about-evidence">
           <legend>Selected evidence</legend>
           <dl>
@@ -1275,103 +1295,17 @@ function validateSamWords() {
 
 validateSamWords();
 
-type TriageRoute = "ready" | "review" | "abstain";
+type ArcadeGameId = "minefield" | "snake" | "brickbreaker" | "puzzle" | "samword" | "memory" | "spectrum";
 
-type TriageCase = {
-  id: string;
-  confidence: number;
-  missingPillars: number;
-  conflict: boolean;
-};
-
-const TRIAGE_CASES: readonly TriageCase[] = [
-  { id: "Northstar", confidence: 92, missingPillars: 0, conflict: false },
-  { id: "Harbour", confidence: 76, missingPillars: 0, conflict: true },
-  { id: "Atlas", confidence: 54, missingPillars: 2, conflict: false },
-  { id: "Meridian", confidence: 88, missingPillars: 1, conflict: false },
-  { id: "Orchid", confidence: 91, missingPillars: 0, conflict: false },
-  { id: "Tangent", confidence: 61, missingPillars: 0, conflict: false },
-  { id: "Vela", confidence: 43, missingPillars: 0, conflict: true },
-  { id: "Beacon", confidence: 84, missingPillars: 0, conflict: false },
+const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: string; label: string; description: string }[] = [
+  { id: "minefield", icon: "M", label: "Minefield", description: "Clear the desk. Mind the paperwork." },
+  { id: "snake", icon: "S", label: "Snake", description: "Eat pixels, dodge the walls, become inconveniently long." },
+  { id: "brickbreaker", icon: "BB", label: "Brick Breaker", description: "One paddle, one ball and a very breakable filing cabinet." },
+  { id: "puzzle", icon: "15", label: "Sliding Puzzle", description: "Put every number back where it belongs." },
+  { id: "samword", icon: "SZ", label: "SamWord", description: "Six letters, profile clues and one suspicious password." },
+  { id: "memory", icon: "8", label: "Profile Pairs", description: "Match the work to the story behind it." },
+  { id: "spectrum", icon: "UV", label: "Peak Dock", description: "Fit three synthetic HPLC–UV peaks, then read the elution order." },
 ] as const;
-
-function expectedTriageRoute(item: TriageCase): TriageRoute {
-  if (item.confidence < 60 || item.missingPillars >= 2) return "abstain";
-  if (item.confidence >= 85 && item.missingPillars === 0 && !item.conflict) return "ready";
-  return "review";
-}
-
-function triageReason(item: TriageCase) {
-  const route = expectedTriageRoute(item);
-  if (route === "ready") return "Complete, aligned evidence clears the inspection gate; the broker still decides.";
-  if (route === "abstain") return "Low support triggers abstention and human review.";
-  if (item.conflict) return "Conflicting evidence needs human reconciliation.";
-  if (item.missingPillars > 0) return "A missing evidence pillar needs human review.";
-  return "Confidence below the ready gate needs human review.";
-}
-
-const SPECTRUM_PEAKS = [2.48, 4.86, 7.12] as const;
-
-function spectrumSignal(frequency: number) {
-  const strongestPeak = Math.max(...SPECTRUM_PEAKS.map((peak) => (
-    Math.exp(-0.5 * ((frequency - peak) / 0.065) ** 2)
-  )));
-  const baseline = 3 + 1.5 * Math.sin(frequency * 8.2);
-  return Math.max(0, Math.min(100, Math.round(baseline + strongestPeak * 96)));
-}
-
-type SpectrumFeedback =
-  | { kind: "initial" }
-  | { kind: "captured"; frequency: number }
-  | { kind: "duplicate" }
-  | { kind: "miss"; distance: number }
-  | { kind: "complete" };
-
-type CapacityStageId = "intake" | "model" | "review";
-
-const CAPACITY_STAGES: readonly { id: CapacityStageId; label: string; rate: number }[] = [
-  { id: "intake", label: "Intake", rate: 4 },
-  { id: "model", label: "Model", rate: 3 },
-  { id: "review", label: "Review", rate: 2 },
-] as const;
-
-type ArcadeGameId = "minefield" | "puzzle" | "samword" | "memory" | "triage" | "spectrum" | "capacity";
-
-const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: string; label: string }[] = [
-  { id: "minefield", icon: "M", label: "Minefield" },
-  { id: "puzzle", icon: "15", label: "Sliding Puzzle" },
-  { id: "samword", icon: "SZ", label: "SamWord" },
-  { id: "memory", icon: "8", label: "Profile Pairs" },
-  { id: "triage", icon: "AI", label: "Evidence Triage" },
-  { id: "spectrum", icon: "GHz", label: "Spectrum Dial" },
-  { id: "capacity", icon: "FTE", label: "Capacity Desk" },
-] as const;
-
-function formatTriageProgress(locale: Locale, reviewed: number, score: number) {
-  if (locale === "zh-CN") return `${reviewed} / ${TRIAGE_CASES.length} 个案例 · ${score} 个正确`;
-  if (locale === "zh-TW") return `${reviewed} / ${TRIAGE_CASES.length} 個案例 · ${score} 個正確`;
-  return `${reviewed} of ${TRIAGE_CASES.length} cases · ${score} correct`;
-}
-
-function formatSpectrumValue(locale: Locale, frequency: number, strength: number) {
-  if (locale === "zh-CN") return `${frequency.toFixed(2)} GHz；信号强度 ${strength}%`;
-  if (locale === "zh-TW") return `${frequency.toFixed(2)} GHz；訊號強度 ${strength}%`;
-  return `${frequency.toFixed(2)} GHz; ${strength}% signal`;
-}
-
-function formatSpectrumFeedback(locale: Locale, feedback: SpectrumFeedback) {
-  if (feedback.kind === "initial") return translateText(locale, "Move the dial, then capture three synthetic peaks.");
-  if (feedback.kind === "duplicate") return translateText(locale, "That peak is already in the notebook.");
-  if (feedback.kind === "complete") return translateText(locale, "All three synthetic peaks captured. Assignment notebook complete.");
-  if (feedback.kind === "captured") {
-    if (locale === "zh-CN") return `已锁定 ${feedback.frequency.toFixed(2)} GHz 的峰。`;
-    if (locale === "zh-TW") return `已鎖定 ${feedback.frequency.toFixed(2)} GHz 的峰。`;
-    return `Peak locked at ${feedback.frequency.toFixed(2)} GHz.`;
-  }
-  if (locale === "zh-CN") return `未锁定。最近的峰相距 ${feedback.distance.toFixed(2)} GHz。`;
-  if (locale === "zh-TW") return `未鎖定。最近的峰相距 ${feedback.distance.toFixed(2)} GHz。`;
-  return `No lock. Nearest peak is ${feedback.distance.toFixed(2)} GHz away.`;
-}
 
 const MEMORY_PAIRS = [
   { id: "coverd", left: "ATS LAYER", right: "COVERD", fact: "COVERD reviews applications across specialist dimensions and uses voice interviews as an enrichment path." },
@@ -1457,20 +1391,47 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
   const [memoryMatched, setMemoryMatched] = useState<Set<string>>(() => new Set());
   const [memoryTurns, setMemoryTurns] = useState(0);
   const [memoryFact, setMemoryFact] = useState("");
-  const [triageIndex, setTriageIndex] = useState(0);
-  const [triageChoice, setTriageChoice] = useState<TriageRoute | null>(null);
-  const [triageScore, setTriageScore] = useState(0);
-  const [spectrumFrequency, setSpectrumFrequency] = useState(2);
-  const [capturedPeaks, setCapturedPeaks] = useState<Set<number>>(() => new Set());
-  const [spectrumFeedback, setSpectrumFeedback] = useState<SpectrumFeedback>({ kind: "initial" });
-  const [capacity, setCapacity] = useState<Record<CapacityStageId, number>>({ intake: 4, model: 4, review: 4 });
+  const [gamesMenuCue, setGamesMenuCue] = useState<"left" | "right" | "both" | "none">("right");
   const memoryTimer = useRef<number | null>(null);
+  const gamesMenuRef = useRef<HTMLElement | null>(null);
   const mineSeed = useRef(91);
   const puzzleSeed = useRef(1991);
   const memorySeed = useRef(1991);
 
   useEffect(() => () => {
     if (memoryTimer.current) window.clearTimeout(memoryTimer.current);
+  }, []);
+
+  useEffect(() => {
+    const activeGameButton = gamesMenuRef.current?.querySelector<HTMLElement>(`[data-game-id="${game}"]`);
+    activeGameButton?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }, [game]);
+
+  useEffect(() => {
+    const menu = gamesMenuRef.current;
+    if (!menu) return;
+    const updateCue = () => {
+      const maximum = Math.max(0, menu.scrollWidth - menu.clientWidth);
+      setGamesMenuCue(maximum <= 2
+        ? "none"
+        : menu.scrollLeft <= 2
+          ? "right"
+          : menu.scrollLeft >= maximum - 2
+            ? "left"
+            : "both");
+    };
+    const frame = window.requestAnimationFrame(updateCue);
+    menu.addEventListener("scroll", updateCue, { passive: true });
+    window.addEventListener("resize", updateCue);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      menu.removeEventListener("scroll", updateCue);
+      window.removeEventListener("resize", updateCue);
+    };
   }, []);
 
   const resetMines = () => {
@@ -1647,99 +1608,18 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
     }, isMatch ? 420 : 780);
   };
 
-  const triageCase = TRIAGE_CASES[triageIndex];
-  const routeTriageCase = (route: TriageRoute) => {
-    if (!triageCase || triageChoice) return;
-    setTriageChoice(route);
-    if (route === expectedTriageRoute(triageCase)) setTriageScore((current) => current + 1);
-  };
-
-  const nextTriageCase = () => {
-    setTriageIndex((current) => current + 1);
-    setTriageChoice(null);
-  };
-
-  const resetTriage = () => {
-    setTriageIndex(0);
-    setTriageChoice(null);
-    setTriageScore(0);
-  };
-
-  const handleTriageKeys = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const routeByKey: Record<string, TriageRoute | undefined> = {
-      "1": "ready",
-      "2": "review",
-      "3": "abstain",
-    };
-    const route = routeByKey[event.key];
-    if (!route) return;
-    event.preventDefault();
-    routeTriageCase(route);
-  };
-
-  const signalStrength = spectrumSignal(spectrumFrequency);
-  const adjustSpectrum = (delta: number) => {
-    setSpectrumFrequency((current) => Math.max(2, Math.min(8, Number((current + delta).toFixed(2)))));
-    setSpectrumFeedback({ kind: "initial" });
-  };
-
-  const captureSpectrumPeak = () => {
-    const nearestIndex = SPECTRUM_PEAKS.reduce((best, peak, index) => (
-      Math.abs(peak - spectrumFrequency) < Math.abs(SPECTRUM_PEAKS[best] - spectrumFrequency) ? index : best
-    ), 0);
-    const distance = Math.abs(SPECTRUM_PEAKS[nearestIndex] - spectrumFrequency);
-    if (distance > 0.08) {
-      setSpectrumFeedback({ kind: "miss", distance });
-      return;
-    }
-    if (capturedPeaks.has(nearestIndex)) {
-      setSpectrumFeedback({ kind: "duplicate" });
-      return;
-    }
-    const next = new Set(capturedPeaks).add(nearestIndex);
-    setCapturedPeaks(next);
-    setSpectrumFeedback(next.size === SPECTRUM_PEAKS.length
-      ? { kind: "complete" }
-      : { kind: "captured", frequency: SPECTRUM_PEAKS[nearestIndex] });
-  };
-
-  const resetSpectrum = () => {
-    setSpectrumFrequency(2);
-    setCapturedPeaks(new Set());
-    setSpectrumFeedback({ kind: "initial" });
-  };
-
-  const totalCapacityTokens = CAPACITY_STAGES.reduce((total, stage) => total + capacity[stage.id], 0);
-  const stageCapacities = CAPACITY_STAGES.map((stage) => ({
-    ...stage,
-    output: capacity[stage.id] * stage.rate,
-  }));
-  const capacityThroughput = Math.min(...stageCapacities.map((stage) => stage.output));
-  const capacityBottlenecks = stageCapacities
-    .filter((stage) => stage.output === capacityThroughput)
-    .map((stage) => stage.label);
-  const capacitySolved = totalCapacityTokens === 12 && capacityThroughput >= 10;
-
-  const adjustCapacity = (stageId: CapacityStageId, delta: number) => {
-    setCapacity((current) => {
-      const used = CAPACITY_STAGES.reduce((total, stage) => total + current[stage.id], 0);
-      const nextValue = current[stageId] + delta;
-      if (nextValue < 1 || nextValue > 10 || (delta > 0 && used >= 12)) return current;
-      return { ...current, [stageId]: nextValue };
-    });
-  };
-
-  const resetCapacity = () => setCapacity({ intake: 4, model: 4, review: 4 });
+  const activeArcadeGame = ARCADE_GAMES.find((item) => item.id === game) ?? ARCADE_GAMES[0];
 
   return (
-    <TranslationBoundary locale={locale}><div className="games-app">
-      <aside className="games-sidebar">
+    <TranslationBoundary locale={locale}><div className="games-app" data-game={game}>
+      <div className="games-sidebar">
         <div className="games-logo"><PixelIcon kind="game" /><span>Desk<br />Arcade</span></div>
-        <nav className="games-menu" aria-label="Choose an arcade game">
+        <nav ref={gamesMenuRef} className="games-menu" aria-label="Choose an arcade game">
           {ARCADE_GAMES.map((item) => (
             <button
               key={item.id}
               type="button"
+              data-game-id={item.id}
               className={game === item.id ? "is-active" : ""}
               onClick={() => setGame(item.id)}
               aria-pressed={game === item.id}
@@ -1749,9 +1629,20 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             </button>
           ))}
         </nav>
+        {gamesMenuCue !== "none" && (
+          <span className="games-scroll-cue" aria-hidden="true">
+            {gamesMenuCue === "right" ? "MORE →" : gamesMenuCue === "left" ? "← GAMES" : "↔ GAMES"}
+          </span>
+        )}
         <p>Seven tiny distractions.<br />Local only. No tracking.<br />One suspicious password.</p>
-      </aside>
+      </div>
       <section className="game-stage">
+        <div className="arcade-now-playing" aria-live="polite">
+          <span><i aria-hidden="true" /> NOW PLAYING</span>
+          <strong>{activeArcadeGame.label}</strong>
+          <p>{activeArcadeGame.description}</p>
+          <b aria-hidden="true">{activeArcadeGame.icon}</b>
+        </div>
         {game === "minefield" && (
           <>
             <div className="game-header">
@@ -1903,194 +1794,9 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             )}
           </>
         )}
-        {game === "triage" && (
-          <>
-            <div className="game-header">
-              <div><span>DECISION ACCESSORY 05</span><h3>Evidence Triage</h3></div>
-              <div className="puzzle-counter">
-                {Math.min(triageIndex + (triageChoice ? 1 : 0), TRIAGE_CASES.length)}
-                <small>OF {TRIAGE_CASES.length}</small>
-              </div>
-            </div>
-            <p className="triage-intro">
-              Route fictional evidence without automating the human decision. Ready requires ≥85% confidence, no missing pillars and no conflict.
-            </p>
-            {triageCase ? (
-              <div
-                className="triage-console"
-                tabIndex={0}
-                onKeyDown={handleTriageKeys}
-                aria-label="Evidence triage keyboard controls"
-              >
-                <div className="triage-case-header">
-                  <span>FICTIONAL CASE</span>
-                  <strong>{triageCase.id}</strong>
-                  <small>{formatTriageProgress(locale, triageIndex + (triageChoice ? 1 : 0), triageScore)}</small>
-                </div>
-                <dl className="triage-signals">
-                  <div>
-                    <dt>Confidence</dt>
-                    <dd>{triageCase.confidence}%</dd>
-                    <span aria-hidden="true"><i style={{ width: `${triageCase.confidence}%` }} /></span>
-                  </div>
-                  <div><dt>Missing pillars</dt><dd>{triageCase.missingPillars}</dd></div>
-                  <div><dt>Conflict</dt><dd>{triageCase.conflict ? "Yes" : "No"}</dd></div>
-                </dl>
-                <div className="triage-routes" role="group" aria-label="Choose an evidence route">
-                  {(["ready", "review", "abstain"] as const).map((route, index) => {
-                    const correctRoute = expectedTriageRoute(triageCase);
-                    const selected = triageChoice === route;
-                    const revealedCorrect = Boolean(triageChoice) && correctRoute === route;
-                    return (
-                      <button
-                        key={route}
-                        type="button"
-                        className={`${selected ? "is-selected" : ""}${revealedCorrect ? " is-correct" : ""}${selected && route !== correctRoute ? " is-wrong" : ""}`}
-                        onClick={() => routeTriageCase(route)}
-                        disabled={Boolean(triageChoice)}
-                        aria-pressed={selected}
-                        aria-keyshortcuts={String(index + 1)}
-                      >
-                        <span>{index + 1}</span>{route.toUpperCase()}
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="triage-key-help">Keys 1–3 also route the selected case.</p>
-                <div className={`triage-feedback${triageChoice ? " is-revealed" : ""}`} role="status" aria-live="polite">
-                  {triageChoice ? (
-                    <>
-                      <strong>{triageChoice === expectedTriageRoute(triageCase) ? "Correct." : "Not quite."}</strong>
-                      <span>{triageReason(triageCase)}</span>
-                      <button className="mac-button" type="button" onClick={nextTriageCase}>
-                        {triageIndex === TRIAGE_CASES.length - 1 ? "Review score" : "Next case"}
-                      </button>
-                    </>
-                  ) : (
-                    <span>Choose the safest routing action.</span>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="triage-complete" role="status">
-                <span aria-hidden="true">✓</span>
-                <h4>Desk audit complete.</h4>
-                <p>{formatTriageProgress(locale, TRIAGE_CASES.length, triageScore)}</p>
-                <small>Ready means evidence is complete enough for a broker to inspect; it never means an automated placement decision.</small>
-                <button className="mac-button" type="button" onClick={resetTriage}>Run the cases again</button>
-              </div>
-            )}
-          </>
-        )}
-        {game === "spectrum" && (
-          <>
-            <div className="game-header">
-              <div><span>RESEARCH ACCESSORY 06</span><h3>Spectrum Dial</h3></div>
-              <div className="puzzle-counter">{capturedPeaks.size}<small>OF {SPECTRUM_PEAKS.length}</small></div>
-            </div>
-            <p className="spectrum-intro">
-              Tune a deterministic synthetic 2–8 GHz trace and capture all three peaks. No experimental rows are loaded.
-            </p>
-            <div className="spectrum-console">
-              <div className="spectrum-readout" aria-live="polite">
-                <output>{spectrumFrequency.toFixed(2)}<small>GHz</small></output>
-                <div>
-                  <span>Signal</span>
-                  <strong>{signalStrength}%</strong>
-                  <meter min="0" max="100" value={signalStrength}>{signalStrength}%</meter>
-                </div>
-              </div>
-              <div className="spectrum-trace" aria-hidden="true">
-                {SPECTRUM_PEAKS.map((peak, index) => (
-                  <i
-                    key={peak}
-                    className={capturedPeaks.has(index) ? "is-captured" : ""}
-                    style={{ left: `${((peak - 2) / 6) * 100}%` }}
-                  />
-                ))}
-                <b style={{ left: `${((spectrumFrequency - 2) / 6) * 100}%` }} />
-              </div>
-              <div className="spectrum-scale" aria-hidden="true"><span>2.00</span><span>5.00</span><span>8.00 GHz</span></div>
-              <label className="spectrum-slider">
-                <span>Spectrum tuning frequency</span>
-                <input
-                  type="range"
-                  min="2"
-                  max="8"
-                  step="0.01"
-                  value={spectrumFrequency}
-                  onChange={(event) => {
-                    setSpectrumFrequency(Number(event.target.value));
-                    setSpectrumFeedback({ kind: "initial" });
-                  }}
-                  aria-valuetext={formatSpectrumValue(locale, spectrumFrequency, signalStrength)}
-                />
-              </label>
-              <div className="spectrum-actions">
-                <button type="button" onClick={() => adjustSpectrum(-0.1)} aria-label="Decrease frequency by 0.10 GHz">−0.10</button>
-                <button className="is-capture" type="button" onClick={captureSpectrumPeak}>Capture peak</button>
-                <button type="button" onClick={() => adjustSpectrum(0.1)} aria-label="Increase frequency by 0.10 GHz">+0.10</button>
-              </div>
-              <p className="spectrum-feedback" role="status" aria-live="polite">
-                {formatSpectrumFeedback(locale, spectrumFeedback)}
-              </p>
-              <div className="spectrum-notebook">
-                <strong>Captured peaks</strong>
-                <ol>
-                  {SPECTRUM_PEAKS.map((peak, index) => (
-                    <li key={peak} className={capturedPeaks.has(index) ? "is-captured" : ""}>
-                      {capturedPeaks.has(index) ? `${peak.toFixed(2)} GHz` : "—"}
-                    </li>
-                  ))}
-                </ol>
-                <button className="mac-button" type="button" onClick={resetSpectrum}>Clear notebook</button>
-              </div>
-            </div>
-          </>
-        )}
-        {game === "capacity" && (
-          <>
-            <div className="game-header">
-              <div><span>PRODUCT ACCESSORY 07</span><h3>Capacity Desk</h3></div>
-              <div className={`game-face ${capacitySolved ? "game-face--won" : ""}`} aria-label={capacitySolved ? "Capacity plan solved" : "Capacity plan in progress"}>
-                {capacitySolved ? "^_^" : `${12 - totalCapacityTokens}`}
-              </div>
-            </div>
-            <p className="capacity-intro">
-              Reallocate exactly 12 fictional FTE tokens. Throughput is the smallest stage capacity; clear 10 cases without weakening review.
-            </p>
-            <div className="capacity-console">
-              <div className="capacity-summary">
-                <div><span>THROUGHPUT</span><strong>{capacityThroughput}</strong><small>cases / cycle</small></div>
-                <div><span>TOKENS USED</span><strong>{totalCapacityTokens}</strong><small>of 12</small></div>
-                <div><span>BOTTLENECK</span><strong>{capacityBottlenecks.map((label) => translateText(locale, label)).join(" + ")}</strong><small>lowest capacity</small></div>
-              </div>
-              <div className="capacity-stages">
-                {stageCapacities.map((stage) => (
-                  <section key={stage.id} className={stage.output === capacityThroughput ? "is-bottleneck" : ""}>
-                    <header><strong>{stage.label}</strong><span>{stage.rate} cases / token</span></header>
-                    <div className="capacity-meter" aria-hidden="true"><i style={{ width: `${Math.min(100, (stage.output / 16) * 100)}%` }} /></div>
-                    <output>{stage.output}<small>capacity</small></output>
-                    <div className="capacity-stepper" role="group" aria-label={`${stage.label} allocation`}>
-                      <button type="button" onClick={() => adjustCapacity(stage.id, -1)} aria-label={`Decrease ${stage.label} allocation`} disabled={capacity[stage.id] <= 1}>−</button>
-                      <strong>{capacity[stage.id]}<small>tokens</small></strong>
-                      <button type="button" onClick={() => adjustCapacity(stage.id, 1)} aria-label={`Increase ${stage.label} allocation`} disabled={totalCapacityTokens >= 12}>+</button>
-                    </div>
-                  </section>
-                ))}
-              </div>
-              <div className={`capacity-status${capacitySolved ? " is-solved" : ""}`} role="status" aria-live="polite">
-                <span>{capacitySolved
-                  ? "Balanced. Ten fictional cases clear every stage."
-                  : totalCapacityTokens < 12
-                    ? "Assign every token, then inspect the bottleneck."
-                    : "Move one token away from excess capacity and protect the limiting stage."}</span>
-                <button className="mac-button" type="button" onClick={resetCapacity}>Reset plan</button>
-              </div>
-              <p className="capacity-boundary">Fictional planning model; no employer data, storage or network calls.</p>
-            </div>
-          </>
-        )}
+        {game === "snake" && <SnakeGame locale={locale} />}
+        {game === "brickbreaker" && <BrickBreakerGame locale={locale} />}
+        {game === "spectrum" && <HplcPeakDock locale={locale} />}
       </section>
     </div></TranslationBoundary>
   );
@@ -2943,7 +2649,7 @@ export default function SystemSevenDesktop({
               <strong id="mobile-guide-title">How to get around</strong>
             </div>
             <p id="mobile-guide-copy">
-              Start Here is already open. Use Menu for every destination, tap an icon to open
+              Your current window is already open. Use Menu for every destination, tap an icon to open
               it, and use the bar along the bottom to switch between open windows. The small
               square at a window’s top-left closes it.
             </p>

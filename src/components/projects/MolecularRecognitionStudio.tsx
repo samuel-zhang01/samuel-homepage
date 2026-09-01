@@ -751,6 +751,9 @@ export function MolecularRecognitionStudio() {
       appName="MOLECULAR RECOGNITION · LAB"
       title="Macrocycle Assignment Workbench"
       status="PUBLIC RECORD + SYNTHETIC DATA"
+      purpose="Demonstrate how rotational spectroscopists distinguish plausible molecular conformers by matching several predicted and observed transitions."
+      tryThis="Offset the synthetic spectrum, compare a candidate with the decoy, then focus a matched transition."
+      watchFor="Residuals and assignment confidence change across multiple lines; a single nearby peak is not treated as proof."
       statusTone="safe"
       className={styles.studio}
       footer={

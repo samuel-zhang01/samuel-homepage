@@ -704,6 +704,9 @@ export function VentureReasoningStudio() {
       appName="VENTURE REASONING DESK · PRIVATE CASE STUDY"
       title="Venture Proof Workbench"
       status="SYNTHETIC RECONSTRUCTION"
+      purpose="Connect a venture claim, its evidence, bottom-up market arithmetic and the capital needed to reach the next milestone."
+      tryThis="Strengthen one traction claim, stress the qualified pipeline and change the funding ask."
+      watchFor="Evidence coverage, market sizing and runway gates update together so polished prose cannot hide a broken chain."
       statusTone="safe"
       className={styles.studio}
       footer={<><span>{scenario.name} · {view.toUpperCase()}</span><span>All ventures, inputs and outputs fictional · assessed prose excluded</span></>}

@@ -136,6 +136,9 @@ export function AirQualityBudgetDemo() {
       appName="Monitor Planner"
       title="Air-quality sensor budget"
       status="COURSEWORK · HYPOTHETICAL"
+      purpose="Turn source data quality and model evidence into an explicit trade-off between sensor cost, predictive value and interpretability."
+      tryThis="Change the sensor budget and interpretability preference, then compare the feasible choices."
+      watchFor="The browser-only recommendation moves along a constrained frontier; it is not a live procurement or deployment decision."
       statusTone="safe"
       className={styles.window}
       footer={
@@ -432,6 +435,9 @@ export function CyberThresholdDemo() {
       appName="Threshold Workbench"
       title="Cyber-risk cost simulator"
       status="SYNTHETIC SCENARIO"
+      purpose="Show how false-positive and false-negative costs change a classifier threshold—and why leaked historical evidence cannot validate it."
+      tryThis="Change the cost assumptions and threshold, then inspect the audit and rerun requirements."
+      watchFor="The hypothetical cost balance changes, while the performance claim remains withheld until a leakage-safe evaluation exists."
       statusTone="working"
       className={styles.window}
       footer={
@@ -610,6 +616,9 @@ export function RegularisationLabDemo() {
       appName="Shrinkage Lab"
       title="Ridge & LASSO coefficient paths"
       status="CONCEPT EXPLORER"
+      purpose="Make regularisation visible: Ridge continuously shrinks coefficients, while LASSO can remove them from the active model."
+      tryThis="Raise lambda and switch between Ridge and LASSO."
+      watchFor="Coefficient magnitudes and the active set change through real in-browser toy calculations, not a replay of the source notebook fit."
       statusTone="safe"
       className={styles.window}
       footer={
@@ -1064,6 +1073,9 @@ export function CausalOpeDemo() {
       appName="Decision Evidence Lab"
       title="Causal adjustment & off-policy evaluation"
       status="SOURCE-ALIGNED REBUILD"
+      purpose="Separate two often-confused questions: estimating an intervention effect and evaluating a new policy from logged decisions."
+      tryThis="Open a causal path, then switch to OPE and reduce overlap for the challenger policy."
+      watchFor="Invalid adjustment paths, effective sample size and estimator disagreement reveal when a decision claim loses support."
       statusTone="safe"
       className={styles.window}
       footer={

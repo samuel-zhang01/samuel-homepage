@@ -93,6 +93,9 @@ export function CvKeywordDemo() {
       appName="Keyword Assistant"
       title="CV Keyword Automator"
       status="LOCAL-ONLY ANALYSIS"
+      purpose="Compare role language with explicit CV evidence without creating unsupported claims."
+      tryThis="Edit the role text and run the analysis."
+      watchFor="Requested signals and evidence gaps update locally."
       statusTone="safe"
       footer={
         <>
@@ -265,6 +268,9 @@ export function FinanceIntelligenceDemo() {
       appName="Statement Intelligence"
       title="Bank Statement Explorer"
       status="100% SYNTHETIC DATA"
+      purpose="Explore how normalised statement rows support auditable household-finance views."
+      tryThis="Change the date or transaction filters."
+      watchFor="The visible ledger and summaries update over fictional data."
       statusTone="safe"
       footer={
         <>
@@ -526,6 +532,9 @@ export function RlBanditDemo() {
       appName="STUDY-RL Lab"
       title="Multi-Armed Bandit Playground"
       status={totalPulls ? `${totalPulls} SIMULATED ROUNDS` : "READY TO LEARN"}
+      purpose="Show how an epsilon-greedy policy learns which uncertain option pays best."
+      tryThis="Pull arms or run a batch of simulated rounds."
+      watchFor="Value estimates and exploration history change after every reward."
       statusTone={totalPulls ? "working" : "ready"}
       footer={
         <>
@@ -813,6 +822,9 @@ export function CoverdYasaDemo() {
       appName="COVERD · YASA"
       title="Availability & Interview Scheduler"
       status="SYNTHETIC SANDBOX"
+      purpose="Explain how candidate and host constraints become conflict-safe interview slots."
+      tryThis="Change the candidate or select a free slot."
+      watchFor="Relevant holds and bookable times update together."
       statusTone="safe"
       footer={
         <>
