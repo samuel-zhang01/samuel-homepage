@@ -8,6 +8,16 @@ const CONTENT_LANGUAGES: Record<string, string> = {
   "zh-cn": "zh-CN",
   "zh-tw": "zh-TW",
 };
+const CANONICAL_LOCALE_ALIASES: Record<string, string> = {
+  en_uk: "en-gb",
+  uk: "en-gb",
+  en_us: "en-us",
+  us: "en-us",
+  "zh-hans": "zh-cn",
+  zh_cn: "zh-cn",
+  "zh-hant": "zh-tw",
+  zh_tw: "zh-tw",
+};
 
 function requestHostname(request: NextRequest) {
   const host = request.headers.get("host")?.trim().toLowerCase() ?? "";
@@ -61,11 +71,21 @@ export function middleware(request: NextRequest) {
   }
 
   if (request.method === "GET" || request.method === "HEAD") {
-    const response = NextResponse.next();
     const localeSegment = request.nextUrl.pathname.split("/")[1]?.toLowerCase();
-    if (localeSegment && CONTENT_LANGUAGES[localeSegment]) {
-      response.headers.set("Content-Language", CONTENT_LANGUAGES[localeSegment]);
+    const canonicalLocale = localeSegment ? CANONICAL_LOCALE_ALIASES[localeSegment] : undefined;
+    if (canonicalLocale) {
+      const redirectUrl = request.nextUrl.clone();
+      const pathSegments = redirectUrl.pathname.split("/");
+      pathSegments[1] = canonicalLocale;
+      redirectUrl.pathname = pathSegments.join("/");
+      return applyCanonicalProductionHeaders(request, NextResponse.redirect(redirectUrl, 308));
     }
+    const contentLanguage = localeSegment ? CONTENT_LANGUAGES[localeSegment] : undefined;
+    const responseLanguage = contentLanguage ?? "en-GB";
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-samuel-locale", responseLanguage);
+    const response = NextResponse.next({ request: { headers: requestHeaders } });
+    response.headers.set("Content-Language", responseLanguage);
     return applyCanonicalProductionHeaders(request, response);
   }
 

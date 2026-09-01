@@ -56,6 +56,7 @@ const zhCN: Record<string, string> = {
   "RUN/HACK": "跑步黑客松",
   "RUN/HACK — SideQuest": "跑步黑客松 — SideQuest",
   "RUN/HACK — Field Journal": "跑步黑客松 — 现场记录",
+  "A rain-soaked running hackathon field journal: the runner-only build rule, 44 team kilometres, a 100+ person track community and second-place app SideQuest.": "一份雨中跑步黑客松现场记录：仅限跑者构建的规则、44 公里团队里程、100 多人的跑道社区，以及获得第二名的应用 SideQuest。",
   "Contact Samuel": "联系 Samuel",
   "Home Lab Network": "家庭实验室网络",
   "Interests & Notes": "兴趣与札记",
@@ -112,8 +113,11 @@ const zhCN: Record<string, string> = {
   "Almost ready. Pretending this took serious computing power…": "即将完成。假装这消耗了大量算力…",
   "Starting Samuel System 7": "正在启动 Samuel System 7",
   "Click anywhere to skip startup": "点击任意位置跳过启动",
+  "Enter the portfolio now": "立即进入作品集",
   "Select an icon to learn what it opens · Double-click to launch · Drag title bars to move · Drag lower-right corners to resize": "选择图标查看说明 · 双击打开 · 拖动标题栏移动窗口 · 拖动右下角调整大小",
   "Double-click to open.": "双击打开。",
+  "Click to open.": "点击打开。",
+  "Click an icon to open it · Use the menu for every destination · Drag title bars to move · Drag lower-right corners to resize": "点击图标即可打开 · 菜单包含所有页面 · 拖动标题栏移动窗口 · 拖动右下角调整大小",
   "A second-place running hackathon build: Strava evidence, subsequent runs, social challenges and live relay.": "获得第二名的跑步黑客松作品：连接 Strava 证据、后续跑步、社交挑战与直播接力。",
   "Runner-builder": "跑者兼构建者",
   "Second place at RUN/HACK after a 5K race, a 44K team relay and a voice-built social running product.": "完成 5 公里比赛、44 公里团队接力，并通过语音构建社交跑步产品后，获得跑步黑客松第二名。",
@@ -125,6 +129,8 @@ const zhCN: Record<string, string> = {
   "Windows on a small screen": "小屏幕上的窗口",
   "Tap the small square at a window’s top-left to close it. Mobile windows stay full-screen, so dragging is disabled; use the bar along the bottom to switch between anything that is open.": "点击窗口左上角的小方块即可关闭。移动端窗口保持全屏，因此无法拖动；请使用底部栏在已打开的窗口之间切换。",
   "Got it": "知道了",
+  "How to get around": "如何浏览",
+  "Start Here is already open. Use Menu for every destination, tap an icon to open it, and use the bar along the bottom to switch between open windows. The small square at a window’s top-left closes it.": "“从这里开始”已打开。使用菜单前往所有页面，点击图标即可打开，并使用底部栏在已打开的窗口之间切换。窗口左上角的小方块用于关闭窗口。",
   "Reality restored to 32 MB.": "现实已恢复为 32 MB。",
   "Memory upgraded to an irresponsible amount.": "内存已升级到不负责任的容量。",
   "Time is an implementation detail.": "时间只是一个实现细节。",
@@ -133,9 +139,31 @@ const zhCN: Record<string, string> = {
   "I'm an applied AI engineer and founder. I build products for ambiguous, domain-heavy problems. My current work covers responsible AI research and COVERD, an ATS-connected recruitment product that can add evidence through automated voice interviews. I previously delivered GROWMAT, an internal enterprise product documented in an external showcase; live company data, source code, credentials and non-public operating context remain private.": "我是一名应用人工智能工程师与创业者，专门处理定义模糊、依赖领域知识的产品问题。目前，我从事负责任人工智能研究，并开发 COVERD。这款产品接入现有招聘管理系统，并可通过自动语音面试补充申请信息。我此前交付了内部企业产品 GROWMAT，外部展示记录了它的架构与成果；实时公司数据、源代码、凭据及未公开的运营信息仍保持保密。",
   "Working style": "工作方式",
   "Technically curious, attentive in a room, and happiest when helping other people do their best work.": "对技术保持好奇，在团队中认真倾听；最开心的时刻，是帮助他人发挥出最佳水平。",
+  "Start Here": "从这里开始",
+  "Biography, current work, a recent field note and clear routes through the portfolio.": "个人经历、当前工作、最新现场记录，以及清晰的作品集浏览路径。",
+  "Samuel and another participant using their phones while moving around the London Stadium Community Track.": "Samuel 与另一位参与者在伦敦体育场社区跑道上边移动边使用手机。",
+  "LATEST FIELD NOTE": "最新现场记录",
+  "29 AUG 2026": "2026 年 8 月 29 日",
+  "What happens when only the runner can build?": "如果只有正在跑步的人才能构建产品，会发生什么？",
+  "A rain-soaked 44 km team relay, more than 100 builders, a voice-built social running app and a second-place finish.": "雨中完成 44 公里团队接力，100 多名开发者参与，用语音构建一款社交跑步应用，并最终获得第二名。",
+  "Read the RUN/HACK story →": "阅读 RUN/HACK 故事 →",
   "CABINET OF CURIOSITIES": "好奇心陈列柜",
   "Choose a drawer to open the corresponding part of the portfolio.": "选择一个抽屉，打开作品集中的相应内容。",
   "Samuel’s cabinet of curiosities": "Samuel 的好奇心陈列柜",
+  "Explore Samuel's work": "探索 Samuel 的作品",
+  "Each button opens one clear destination. Projects is the quickest tour.": "每个按钮对应一个清晰页面；“项目”是最快的浏览入口。",
+  "Products, applied AI, scientific research and interactive technical walkthroughs.": "产品、应用人工智能、科学研究与互动技术导览。",
+  "OPEN PROJECTS →": "打开项目 →",
+  "COVERD · Founder's desk": "COVERD · 创始人工作台",
+  "The startup, product thesis and approach to evidence-led recruitment decisions.": "了解这家创业公司、产品理念，以及以证据支持招聘决策的方法。",
+  "Experience & career": "经历与职业生涯",
+  "Professional history across applied AI, product, research, teaching and public service.": "涵盖应用人工智能、产品、研究、教学与公共服务的职业经历。",
+  "CV & documents": "简历与文档",
+  "Read or download the current CV and supporting public documents.": "阅读或下载最新简历及相关公开文档。",
+  "Home lab & systems": "家庭实验室与系统",
+  "Self-hosted services, infrastructure boundaries and recovery lessons.": "自托管服务、基础设施边界与恢复经验。",
+  "Interests & notes": "兴趣与札记",
+  "Music, photography, hiking, teaching and the stories behind the technical work.": "音乐、摄影、徒步、教学，以及技术工作背后的故事。",
   "Founder": "创业者",
   "Building COVERD: ATS-connected applicant review, voice enrichment, reasoned shortlists and human-owned decisions.": "构建 COVERD：连接招聘管理系统的申请审查、语音证据补充、可解释候选名单，以及由人负责的最终决定。",
   "Product": "产品",
@@ -156,6 +184,9 @@ const zhCN: Record<string, string> = {
   "View Work": "查看项目",
   "View CV": "查看简历",
   "Download CV": "下载简历",
+  "Menu": "菜单",
+  "Latest field note · RUN/HACK": "最新现场记录 · RUN/HACK",
+  "Language:": "语言：",
 
   "PROFESSIONAL HISTORY": "职业历程",
   "Building useful intelligence.": "构建有用的智能。",
@@ -931,6 +962,16 @@ const zhCN: Record<string, string> = {
 };
 
 const traditionalPhrases: Array<[string, string]> = [
+  ["训练", "訓練"],
+  ["失败", "失敗"],
+  ["联系", "聯繫"],
+  ["关闭", "關閉"],
+  ["底部栏", "底部列"],
+  ["标签页", "分頁標籤"],
+  ["这款", "這款"],
+  ["依赖", "依賴"],
+  ["抽屉", "抽屜"],
+  ["凭据", "憑證"],
   ["恢复", "恢復"],
   ["创始人", "創辦人"],
   ["高级协调员", "資深協調員"],
@@ -995,7 +1036,8 @@ const traditionalChars: Record<string, string> = {
   "与": "與", "专": "專", "业": "業", "东": "東", "丝": "絲", "两": "兩", "严": "嚴", "个": "個",
   "为": "為", "义": "義", "乐": "樂", "习": "習", "书": "書", "买": "買", "乱": "亂", "争": "爭",
   "无": "無", "游": "遊", "踪": "蹤", "绪": "緒", "载": "載", "径": "徑", "槛": "檻",
-  "谜": "謎", "陈": "陳", "柜": "櫃",
+  "谜": "謎", "陈": "陳", "柜": "櫃", "这": "這", "赖": "賴", "练": "練", "败": "敗",
+  "闭": "閉", "栏": "欄", "签": "簽", "屉": "屜", "凭": "憑",
   "于": "於", "亚": "亞", "产": "產", "亲": "親", "仅": "僅", "从": "從", "仓": "倉", "仪": "儀",
   "们": "們", "优": "優", "会": "會", "传": "傳", "伤": "傷", "体": "體", "余": "餘", "来": "來",
   "侦": "偵", "侧": "側", "侣": "侶", "侨": "僑", "侠": "俠",
@@ -1052,11 +1094,14 @@ const traditionalChars: Record<string, string> = {
 };
 
 function toTraditionalMandarin(value: string): string {
-  let translated = value;
+  let translated = value.replaceAll("公里", "__KILOMETRE__");
   for (const [simplified, traditional] of traditionalPhrases) {
     translated = translated.replaceAll(simplified, traditional);
   }
-  return [...translated].map((character) => traditionalChars[character] ?? character).join("");
+  return [...translated]
+    .map((character) => traditionalChars[character] ?? character)
+    .join("")
+    .replaceAll("__KILOMETRE__", "公里");
 }
 
 function toAmericanEnglish(value: string): string {
@@ -1065,7 +1110,26 @@ function toAmericanEnglish(value: string): string {
     .replaceAll("__FIRST_CLASS_HONOURS__", "First-Class Honours")
     .replaceAll("judgement", "judgment")
     .replaceAll("behaviour", "behavior")
+    .replaceAll("kilometres", "kilometers")
+    .replaceAll("kilometre", "kilometer")
+    .replaceAll("metres", "meters")
+    .replaceAll("metre", "meter")
+    .replaceAll("ARTEFACTS", "ARTIFACTS")
+    .replaceAll("ARTEFACT", "ARTIFACT")
+    .replaceAll("Artefacts", "Artifacts")
+    .replaceAll("Artefact", "Artifact")
+    .replaceAll("artefacts", "artifacts")
+    .replaceAll("artefact", "artifact")
     .replaceAll("modelling", "modeling")
+    .replaceAll("Normalised", "Normalized")
+    .replaceAll("normalised", "normalized")
+    .replaceAll("Normalise", "Normalize")
+    .replaceAll("normalise", "normalize")
+    .replaceAll("Organisers", "Organizers")
+    .replaceAll("organisers", "organizers")
+    .replaceAll("Organiser", "Organizer")
+    .replaceAll("organiser", "organizer")
+    .replaceAll("Organised", "Organized")
     .replaceAll("organised", "organized")
     .replaceAll("organisational", "organizational")
     .replaceAll("regularisation", "regularization")

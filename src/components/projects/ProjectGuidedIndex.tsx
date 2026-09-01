@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { projects, type Project } from "@/data/projects";
 import type { Locale } from "@/lib/i18n";
@@ -18,6 +19,7 @@ export type ProjectGuidedIndexProps = {
   selectedSlug?: string;
   onSelectProject: (slug: string) => void;
   onOpenProjectDemo: (slug: string) => void;
+  onOpenLatestStory: () => void;
 };
 
 type GuidedExperience = {
@@ -147,6 +149,7 @@ export function ProjectGuidedIndex({
   selectedSlug,
   onSelectProject,
   onOpenProjectDemo,
+  onOpenLatestStory,
 }: ProjectGuidedIndexProps) {
   const copy = getProjectArchiveCopy(locale);
   const idPrefix = useId();
@@ -194,6 +197,30 @@ export function ProjectGuidedIndex({
       </header>
 
       <section className={styles.start} aria-labelledby={`${idPrefix}-start-title`}>
+        <article className={styles.latestStory} aria-labelledby={`${idPrefix}-latest-title`}>
+          <div className={styles.latestVisual}>
+            <Image
+              src="/hackathons/runhack/building-in-motion.jpg"
+              alt={copy.guided.latestImageAlt}
+              fill
+              sizes="(max-width: 700px) 100vw, 42vw"
+              unoptimized
+            />
+            <span className={styles.trackLines} aria-hidden="true" />
+          </div>
+          <div className={styles.latestCopy} lang={locale}>
+            <div className={styles.latestMeta}>
+              <span>{copy.guided.latestEyebrow}</span>
+              <time dateTime="2026-08-29">{copy.guided.latestDate}</time>
+            </div>
+            <h3 id={`${idPrefix}-latest-title`}>{copy.guided.latestTitle}</h3>
+            <p>{copy.guided.latestDescription}</p>
+            <button type="button" onClick={onOpenLatestStory}>
+              <span aria-hidden="true">↗</span> {copy.guided.latestAction}
+            </button>
+          </div>
+        </article>
+
         <div className={styles.sectionHeading} lang={locale}>
           <div>
             <span className={styles.attention}><i aria-hidden="true" /> {copy.guided.startEyebrow}</span>
@@ -203,7 +230,6 @@ export function ProjectGuidedIndex({
         </div>
         <ol
           className={styles.startLane}
-          tabIndex={0}
           aria-label={`${copy.guided.startTitle}: ${copy.guided.startDescription}`}
         >
           {START_PROJECTS.map((path, index) => {
@@ -211,7 +237,11 @@ export function ProjectGuidedIndex({
             const isSelected = selectedSlug === path.slug;
             return (
               <li key={path.slug}>
-                <article className={styles.startCard} data-selected={isSelected ? "true" : "false"}>
+                <article
+                  className={styles.startCard}
+                  data-start={path.id}
+                  data-selected={isSelected ? "true" : "false"}
+                >
                   <div className={styles.cardTopline}>
                     <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                     <span lang={locale}>{pathCopy.eyebrow}</span>
@@ -267,6 +297,7 @@ export function ProjectGuidedIndex({
                 key={shelf.id}
                 ref={selectedLocation?.shelfId === shelf.id ? selectedShelfRef : undefined}
                 className={styles.shelfItem}
+                data-shelf={shelf.id}
                 data-open={isOpen ? "true" : "false"}
                 data-selected={selectedLocation?.shelfId === shelf.id ? "true" : "false"}
               >

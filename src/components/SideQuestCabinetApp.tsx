@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useState, type FormEvent, type KeyboardEvent } from "react";
 import type { Locale } from "@/lib/i18n";
 import styles from "./SideQuestCabinetApp.module.css";
+import { localizeSideQuestTree } from "./sideQuestI18n";
 
 type PanelId = "day" | "rules" | "people" | "build";
 type BuildView = "evidence" | "question" | "live";
@@ -90,11 +91,11 @@ function ChapterHeading({ chapter, title, intro }: { chapter: string; title: str
   return <div className={styles.chapterHeading}><div><span>{chapter}</span><h2>{title}</h2></div><p>{intro}</p></div>;
 }
 
-function DayPanel() {
+function DayPanel({ locale }: { locale: Locale }) {
   const [dayMoment, setDayMoment] = useState(2);
   const moment = dayMoments[dayMoment];
 
-  return <>
+  return <>{localizeSideQuestTree(locale, <>
     <ChapterHeading chapter="CHAPTER 01 · ON THE TRACK" title="One very long Saturday" intro="The product is the artefact. The relay, the constraint and the people are the story." />
     <div className={styles.dayGrid}>
       <article className={styles.timelineCard}>
@@ -119,10 +120,10 @@ function DayPanel() {
       <article><span>03 · AROUND IT</span><h3>Music, founders, puddles</h3><p>A brilliant DJ and an improbable group of builders turned physical fatigue into communal momentum.</p></article>
       <article><span>04 · AFTER</span><h3>Something real by sundown</h3><p>Six event-day commits, one working social running app and a second-place finish.</p></article>
     </div>
-  </>;
+  </>)}</>;
 }
 
-function RulesPanel() {
+function RulesPanel({ locale }: { locale: Locale }) {
   const [activeRunner, setActiveRunner] = useState(0);
   const [runnerMoving, setRunnerMoving] = useState(true);
   const [buildScore, setBuildScore] = useState(30);
@@ -132,7 +133,7 @@ function RulesPanel() {
   const finalScore = buildScore + teamDistance / 2;
   const handOff = () => { setActiveRunner((current) => (current + 1) % teammates.length); setRunnerMoving(true); };
 
-  return <>
+  return <>{localizeSideQuestTree(locale, <>
     <ChapterHeading chapter="CHAPTER 02 · THE MECHANIC" title="Your agents only run when you do" intro="Originality mattered twice. Distance was not decoration; it was part of the score." />
     <div className={styles.rulesGrid}>
       <article className={styles.relaySimulator}>
@@ -173,14 +174,14 @@ function RulesPanel() {
       </div>
     </div>
     <div className={styles.scheduleStrip} aria-label="Event schedule">{schedule.map(([time, label]) => <div key={time}><strong>{time}</strong><span>{label}</span></div>)}</div>
-  </>;
+  </>)}</>;
 }
 
-function PeoplePanel() {
+function PeoplePanel({ locale }: { locale: Locale }) {
   const [creditGroup, setCreditGroup] = useState<keyof typeof creditGroups>("team");
   const activeCredits = creditGroups[creditGroup];
 
-  return <>
+  return <>{localizeSideQuestTree(locale, <>
     <ChapterHeading chapter="CHAPTER 03 · THE CROWD" title="The best part was everybody else" intro="A hackathon can produce a product. This one also produced a temporary little city on a running track." />
     <figure className={styles.communityPhoto}>
       <Image src="/hackathons/runhack/community-track-group.jpg" alt="More than 100 runners and builders celebrating together on the London Stadium Community Track." width={800} height={533} sizes="100vw" unoptimized />
@@ -210,10 +211,10 @@ function PeoplePanel() {
         <section><span>TRACKSIDE CONNECTIONS</span><p>Anshul Yadav · Joseph Anthony · Samuel Klacman · Joakim Talling-Smith · Luke Balabanovic · Jack Rees · and many more</p></section>
       </div>
     </details>
-  </>;
+  </>)}</>;
 }
 
-function BuildPanel() {
+function BuildPanel({ locale }: { locale: Locale }) {
   const [view, setView] = useState<BuildView>("live");
   const [sandboxDistance, setSandboxDistance] = useState("5.0");
   const [sandboxMinutes, setSandboxMinutes] = useState("30");
@@ -257,7 +258,7 @@ function BuildPanel() {
   const routePolyline = visibleRoute.map(([x, y]) => `${x},${y}`).join(" ");
   const runnerPoint = visibleRoute[visibleRoute.length - 1];
 
-  return <>
+  return <>{localizeSideQuestTree(locale, <>
     <ChapterHeading chapter="CHAPTER 04 · THE ARTEFACT" title="SideQuest, built between laps" intro="A social running app that turns private activity evidence into measurable friend challenges and a privacy-aware live run." />
     <div className={styles.buildSummary}>
       <article><span>01</span><div><strong>Read the evidence</strong><p>Owner-scoped Strava aggregates; raw routes never became portfolio assets.</p></div></article>
@@ -341,7 +342,7 @@ function BuildPanel() {
       </div>
     </details>
     <div className={styles.buildLinks}><a href="https://genesis.hiddenlayers.co.uk" target="_blank" rel="noreferrer">Original event deployment ↗</a><a href="https://github.com/samuel-zhang01/sidequest" target="_blank" rel="noreferrer">SideQuest source ↗</a></div>
-  </>;
+  </>)}</>;
 }
 
 export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
@@ -378,10 +379,10 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
     document.getElementById(`runhack-tab-${panels[next].id}`)?.focus();
   };
 
-  return (
-    <div className={styles.app} data-locale={locale} lang="en-GB">
+  return <>{localizeSideQuestTree(locale, (
+    <div className={styles.app} data-locale={locale} lang={locale}>
       <header className={styles.masthead}>
-        <div className={styles.identity}><span className={styles.mark} aria-hidden="true">RH</span><div><span>Sam&apos;s Cabinet of Curiosities · Hackathon Object 01</span><strong>RUN/HACK FIELD JOURNAL</strong></div></div>
+        <div className={styles.identity}><span className={styles.mark} aria-hidden="true">RH</span><div><span>Sam&apos;s Cabinet of Curiosities · Latest field note</span><strong>RUN/HACK FIELD JOURNAL</strong></div></div>
         <div className={styles.releaseStamp}><span>29 AUG 2026</span><strong>2ND PLACE</strong></div>
       </header>
 
@@ -411,17 +412,17 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
         {panels.map((item) => <button key={item.id} type="button" role="tab" id={`runhack-tab-${item.id}`} aria-controls={`runhack-panel-${item.id}`} aria-selected={panel === item.id} tabIndex={panel === item.id ? 0 : -1} onClick={() => selectPanel(item.id)} onKeyDown={(event) => handleTabKey(event, item.id)}><span>{item.index}</span>{item.label}</button>)}
       </nav>
 
-      <main className={styles.workspace}>
-        <section className={styles.panel} id="runhack-panel-day" role="tabpanel" aria-labelledby="runhack-tab-day" hidden={panel !== "day"}><DayPanel /></section>
-        <section className={styles.panel} id="runhack-panel-rules" role="tabpanel" aria-labelledby="runhack-tab-rules" hidden={panel !== "rules"}><RulesPanel /></section>
-        <section className={styles.panel} id="runhack-panel-people" role="tabpanel" aria-labelledby="runhack-tab-people" hidden={panel !== "people"}><PeoplePanel /></section>
-        <section className={styles.panel} id="runhack-panel-build" role="tabpanel" aria-labelledby="runhack-tab-build" hidden={panel !== "build"}><BuildPanel /></section>
-      </main>
+      <div className={styles.workspace}>
+        <section className={styles.panel} id="runhack-panel-day" role="tabpanel" aria-labelledby="runhack-tab-day" hidden={panel !== "day"}><DayPanel locale={locale} /></section>
+        <section className={styles.panel} id="runhack-panel-rules" role="tabpanel" aria-labelledby="runhack-tab-rules" hidden={panel !== "rules"}><RulesPanel locale={locale} /></section>
+        <section className={styles.panel} id="runhack-panel-people" role="tabpanel" aria-labelledby="runhack-tab-people" hidden={panel !== "people"}><PeoplePanel locale={locale} /></section>
+        <section className={styles.panel} id="runhack-panel-build" role="tabpanel" aria-labelledby="runhack-tab-build" hidden={panel !== "build"}><BuildPanel locale={locale} /></section>
+      </div>
 
       <footer className={styles.footer}>
         <span>Source-grounded RUN/HACK field journal · documentary photos shared by Samuel Zhang</span>
         <div><a href="https://www.therunninghackathon.com/" target="_blank" rel="noreferrer">Official event ↗</a><a href="https://www.linkedin.com/feed/update/urn:li:activity:7500232962580353024/" target="_blank" rel="noreferrer">Samuel&apos;s field note ↗</a></div>
       </footer>
     </div>
-  );
+  ))}</>;
 }

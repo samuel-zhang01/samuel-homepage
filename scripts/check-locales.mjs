@@ -250,7 +250,13 @@ for (const property of traditionalCharsObject.properties) {
 
 const traditionalResiduals = [...visibleStrings].flatMap(([value, line]) => {
   const translated = coreModule.translateText("zh-TW", value);
-  const residual = [...translated].find((character) => simplifiedCharacters.has(character));
+  const translatedCharacters = [...translated];
+  const residual = translatedCharacters.find((character, index) => (
+    simplifiedCharacters.has(character)
+    // 公里 is the standard Traditional Chinese unit spelling; 裡 denotes
+    // "inside" and would be incorrect in a distance measurement.
+    && !(character === "里" && translatedCharacters[index - 1] === "公")
+  ));
   if (residual) return [`${systemPath}:${line}: ${residual} remains in ${translated}`];
   if (translated.includes("恢複")) return [`${systemPath}:${line}: contextually incorrect 恢複 in ${translated}`];
   return [];

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -70,13 +71,20 @@ export const viewport: Viewport = {
 
 const localeBootstrap = `(()=>{try{const p=location.pathname.split('/')[1]?.toLowerCase();const q=new URLSearchParams(location.search).get('lang')?.toLowerCase();const s=localStorage.getItem('samuel-system7-locale')?.toLowerCase();const m={'en-gb':'en-GB','en-us':'en-US','zh-cn':'zh-CN','zh-hans':'zh-CN','zh-tw':'zh-TW','zh-hant':'zh-TW'};const l=m[p]||m[q]||m[s]||'en-GB';document.documentElement.lang=l;document.documentElement.dataset.locale=l}catch{}})()`;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestLocale = (await headers()).get("x-samuel-locale");
+  const documentLocale = requestLocale === "en-US"
+    || requestLocale === "zh-CN"
+    || requestLocale === "zh-TW"
+    ? requestLocale
+    : "en-GB";
+
   return (
-    <html lang="en-GB" suppressHydrationWarning>
+    <html lang={documentLocale} suppressHydrationWarning>
       <head><script id="locale-bootstrap" dangerouslySetInnerHTML={{ __html: localeBootstrap }} /></head>
       <body>
         <div className="legacy-browser-notice" role="document">

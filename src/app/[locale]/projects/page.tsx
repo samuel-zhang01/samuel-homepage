@@ -51,7 +51,7 @@ export async function generateMetadata({
         "zh-Hant": `/zh-tw/projects${projectQuery}`,
       },
     },
-    openGraph: { title, description, type: "website", url: canonical },
+    openGraph: { title, description, type: "website", url: canonical, locale: locale.replace("-", "_") },
     twitter: { card: "summary", title, description },
   };
 }

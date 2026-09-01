@@ -15,6 +15,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: localeSlug } = await params;
   const locale = normaliseLocale(localeSlug) ?? "en-GB";
+  const canonicalLocale = locale === "en-GB"
+    ? "en-gb"
+    : locale === "en-US"
+      ? "en-us"
+      : locale === "zh-CN"
+        ? "zh-cn"
+        : "zh-tw";
   const title = locale === "zh-CN"
     ? "Samuel System 7 — Samuel Zhang 的个人网站"
     : locale === "zh-TW"
@@ -24,7 +31,9 @@ export async function generateMetadata({
     title: { absolute: title },
     description: descriptions[locale],
     alternates: {
+      canonical: `/${canonicalLocale}`,
       languages: {
+        "x-default": "/",
         "en-GB": "/en-gb",
         "en-US": "/en-us",
         "zh-Hans": "/zh-cn",

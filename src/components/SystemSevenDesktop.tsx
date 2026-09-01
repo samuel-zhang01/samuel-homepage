@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 import {
   Children,
   cloneElement,
@@ -138,7 +137,7 @@ function localiseGameMessage(locale: Locale, message: string): string {
   return translateText(locale, message);
 }
 
-const BOOT_DURATION = 5600;
+const BOOT_DURATION = 2800;
 const BOOT_MESSAGES = [
   "Buying the last Apple computer on eBay…",
   "RAM prices too high — caching to paper instead…",
@@ -298,19 +297,33 @@ const INITIAL_WINDOWS: WindowState[] = [
 ];
 
 const DESKTOP_ICONS: DesktopIcon[] = [
-  { id: "about", label: "Profile", icon: "profile", description: "Start here: biography, current work and highlights." },
-  { id: "sidequest", label: "RUN/HACK", icon: "runner", description: "Hackathon field journal: one wet track, a runner-only build rule, 44 team kilometres, 100+ builders and a second-place finish." },
+  { id: "about", label: "Start Here", icon: "profile", description: "Biography, current work, a recent field note and clear routes through the portfolio." },
+  { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
   { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
-  { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
+  { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
-  { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
-  { id: "games", label: "Desk Arcade", icon: "game", description: "Seven local games with profile-themed puzzles and calculations." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
   { id: "contact", label: "Contact", icon: "mail", description: "Email, LinkedIn and GitHub without leaving the desktop." },
 ];
+
+const APP_ROUTES: Record<AppId, string> = {
+  about: "",
+  coverd: "coverd",
+  experience: "experience",
+  projects: "projects",
+  sidequest: "sidequest",
+  skills: "skills",
+  education: "education",
+  documents: "documents",
+  games: "games",
+  contact: "contact",
+  lab: "lab",
+  scrapbook: "interests",
+  secret: "about",
+};
 
 const experience = [
   {
@@ -709,38 +722,59 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           <legend>Working style</legend>
           <p>Technically curious, attentive in a room, and happiest when helping other people do their best work.</p>
         </fieldset>
+        <article className="latest-update-card" aria-labelledby="latest-update-title">
+          <div className="latest-update-card__photo">
+            <Image
+              src="/hackathons/runhack/building-in-motion.jpg"
+              alt="Samuel and another participant using their phones while moving around the London Stadium Community Track."
+              fill
+              sizes="(max-width: 720px) 100vw, 240px"
+              unoptimized
+            />
+          </div>
+          <div className="latest-update-card__copy">
+            <div className="latest-update-card__meta">
+              <span>LATEST FIELD NOTE</span>
+              <time dateTime="2026-08-29">29 AUG 2026</time>
+            </div>
+            <h2 id="latest-update-title">What happens when only the runner can build?</h2>
+            <p>A rain-soaked 44 km team relay, more than 100 builders, a voice-built social running app and a second-place finish.</p>
+            <button type="button" onClick={() => openApp("sidequest")}>Read the RUN/HACK story →</button>
+          </div>
+        </article>
         <nav className="identity-switchboard" aria-label="Samuel’s cabinet of curiosities">
           <div className="identity-switchboard__heading">
-            <b>CABINET OF CURIOSITIES</b>
-            <p>Choose a drawer to open the corresponding part of the portfolio.</p>
+            <span>CABINET OF CURIOSITIES</span>
+            <b>Explore Samuel&apos;s work</b>
+            <p>Each button opens one clear destination. Projects is the quickest tour.</p>
           </div>
-          <button onClick={() => openApp("sidequest")}>
-            <PixelIcon kind="runner" small />
-            <span className="identity-copy"><b>Hackathon fieldbook</b><span className="identity-detail">RUN/HACK: 100+ builders, one 400-metre loop, 44 team kilometres in the rain and a second-place product built by phone.</span></span>
+          <button className="identity-drawer--projects" onClick={() => openApp("projects")}>
+            <PixelIcon kind="folder" small />
+            <span className="identity-copy identity-copy--product">
+              <b>Selected projects</b>
+              <span className="identity-detail">Products, applied AI, scientific research and interactive technical walkthroughs.</span>
+              <span className="identity-drawer-prompt">OPEN PROJECTS →</span>
+            </span>
           </button>
           <button onClick={() => openApp("coverd")}>
             <PixelIcon kind="coverd" small />
-            <span className="identity-copy"><b>Founder</b><span className="identity-detail">Building COVERD: ATS-connected applicant review, voice enrichment, reasoned shortlists and human-owned decisions.</span></span>
-          </button>
-          <button className="identity-drawer--projects" onClick={() => openApp("projects")}>
-            <PixelIcon kind="briefcase" small />
-            <span className="identity-copy identity-copy--product">
-              <b>Product</b>
-              <span className="identity-detail">Building polished tools from messy operational knowledge, with enough care that people adopt and keep using them.</span>
-              <span className="identity-drawer-prompt">OPEN PROJECT ARCHIVE →</span>
-            </span>
+            <span className="identity-copy"><b>COVERD · Founder&apos;s desk</b><span className="identity-detail">The startup, product thesis and approach to evidence-led recruitment decisions.</span></span>
           </button>
           <button onClick={() => openApp("experience")}>
-            <PixelIcon kind="university" small />
-            <span className="identity-copy"><b>Scientist</b><span className="identity-detail">Chemistry-trained thinking: expose uncertainty, test assumptions against evidence and learn from failed experiments.</span></span>
+            <PixelIcon kind="briefcase" small />
+            <span className="identity-copy"><b>Experience &amp; career</b><span className="identity-detail">Professional history across applied AI, product, research, teaching and public service.</span></span>
+          </button>
+          <button onClick={() => openApp("documents")}>
+            <PixelIcon kind="pdf" small />
+            <span className="identity-copy"><b>CV &amp; documents</b><span className="identity-detail">Read or download the current CV and supporting public documents.</span></span>
           </button>
           <button onClick={() => openApp("lab")}>
             <PixelIcon kind="network" small />
-            <span className="identity-copy"><b>Builder</b><span className="identity-detail">A private Proxmox/Docker lab with self-hosted services, cross-architecture CI and recovery lessons made explicit.</span></span>
+            <span className="identity-copy"><b>Home lab &amp; systems</b><span className="identity-detail">Self-hosted services, infrastructure boundaries and recovery lessons.</span></span>
           </button>
           <button onClick={() => openApp("scrapbook")}>
             <PixelIcon kind="photos" small />
-            <span className="identity-copy"><b>Musician &amp; maker</b><span className="identity-detail">Fourth-place UniBrass euphonium, three musicals and a former life photographing weddings.</span></span>
+            <span className="identity-copy"><b>Interests &amp; notes</b><span className="identity-detail">Music, photography, hiking, teaching and the stories behind the technical work.</span></span>
           </button>
         </nav>
         <fieldset className="about-panel about-evidence">
@@ -752,11 +786,8 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           </dl>
         </fieldset>
         <div className="button-row">
-          <button className="mac-button is-default" onClick={() => openApp("coverd")}>Explore COVERD</button>
-          <button className="mac-button" onClick={() => openApp("projects")}>View Work</button>
-          <button className="mac-button" onClick={() => openApp("documents")}>View CV</button>
           <a className="mac-button" href={localeCvAssets[locale].src} download>Download CV</a>
-          <button className="mac-button" onClick={() => openApp("contact")}>Contact</button>
+          <button className="mac-button is-default" onClick={() => openApp("contact")}>Contact Samuel</button>
         </div>
       </div>
     </div></TranslationBoundary>
@@ -2286,7 +2317,6 @@ export default function SystemSevenDesktop({
   initialLocale?: Locale;
   initialProjectSlug?: string;
 }) {
-  const router = useRouter();
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const [windows, setWindows] = useState(() =>
     INITIAL_WINDOWS.map((windowState) => ({
@@ -2326,6 +2356,7 @@ export default function SystemSevenDesktop({
   const languageMenuRef = useRef<HTMLDivElement | null>(null);
   const mobileGuideButtonRef = useRef<HTMLButtonElement | null>(null);
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
+  const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({});
 
   useEffect(() => {
     const pathLocale = normaliseLocale(window.location.pathname.split("/")[1]);
@@ -2497,10 +2528,54 @@ export default function SystemSevenDesktop({
   const openWindows = useMemo(() => windows.filter((item) => item.open), [windows]);
   const selectedDesktopItem = DESKTOP_ICONS.find((item) => item.id === selectedIcon);
 
+  const syncAddress = useCallback((id: AppId, nextLocale = locale, forceLocalePrefix = false) => {
+    const currentUrl = new URL(window.location.href);
+    const currentSearch = new URLSearchParams(currentUrl.search);
+    currentSearch.delete("lang");
+    const currentRouteState = {
+      search: currentSearch.size ? `?${currentSearch.toString()}` : "",
+      hash: currentUrl.hash,
+    };
+
+    if (activeId === "projects" || activeId === "sidequest") {
+      routeStateByApp.current[activeId] = currentRouteState;
+    }
+
+    // The secret window is an overlay rather than a public destination. Keep
+    // the visible page address while still allowing its language to change.
+    if (id === "secret" && !forceLocalePrefix) return;
+
+    const currentLocale = normaliseLocale(currentUrl.pathname.split("/")[1]);
+    const localePrefix = forceLocalePrefix || currentLocale || nextLocale !== "en-GB"
+      ? `/${localeSlug(nextLocale)}`
+      : "";
+    const currentPublicRoute = currentUrl.pathname
+      .split("/")
+      .filter(Boolean)
+      .filter((segment, index) => !(index === 0 && normaliseLocale(segment)))
+      .join("/");
+    const appRoute = id === "secret" ? currentPublicRoute : APP_ROUTES[id];
+    const nextPath = appRoute ? `${localePrefix}/${appRoute}` : localePrefix || "/";
+    const savedRouteState = id === activeId ? currentRouteState : routeStateByApp.current[id];
+    const nextSearch = id === "projects" ? savedRouteState?.search ?? "" : "";
+    const nextHash = id === "sidequest" ? savedRouteState?.hash ?? "" : "";
+    const nextAddress = `${nextPath}${nextSearch}${nextHash}`;
+
+    if (`${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}` !== nextAddress) {
+      // Native history replacement keeps the System 7 desktop mounted. A
+      // Next router navigation would recreate it and discard open windows.
+      window.history.replaceState(window.history.state, "", nextAddress);
+    }
+
+    const nextWindowTitle = INITIAL_WINDOWS.find((item) => item.id === id)?.title;
+    if (nextWindowTitle) document.title = `${translateText(nextLocale, nextWindowTitle)} · Samuel Zhang`;
+  }, [activeId, locale]);
+
   const focusWindow = (id: AppId) => {
     const nextZ = ++zCounter.current;
     setActiveId(id);
     setWindows((current) => current.map((item) => item.id === id ? { ...item, z: nextZ } : item));
+    syncAddress(id);
   };
 
   const openApp = useCallback((id: AppId) => {
@@ -2510,10 +2585,11 @@ export default function SystemSevenDesktop({
     setActiveId(id);
     setSelectedIcon(id);
     setOpenMenu(null);
+    syncAddress(id);
     window.requestAnimationFrame(() => {
       document.querySelector<HTMLButtonElement>(`[data-app-id="${id}"] .window-close`)?.focus();
     });
-  }, []);
+  }, [syncAddress]);
 
   const showToast = useCallback((message: string) => {
     setToast(message);
@@ -2524,22 +2600,15 @@ export default function SystemSevenDesktop({
   const chooseLocale = (nextLocale: Locale) => {
     setLocale(nextLocale);
     setOpenMenu(null);
-    const url = new URL(window.location.href);
-    const segments = url.pathname.split("/").filter(Boolean);
-    if (segments[0] && normaliseLocale(segments[0])) {
-      segments[0] = localeSlug(nextLocale);
-      url.pathname = `/${segments.join("/")}`;
-      url.searchParams.delete("lang");
-    } else {
-      url.searchParams.set("lang", nextLocale);
-    }
-    router.replace(`${url.pathname}${url.search}${url.hash}`, { scroll: false });
+    syncAddress(activeId, nextLocale, true);
   };
 
   const closeApp = (id: AppId) => {
     setWindows((current) => current.map((item) => item.id === id ? { ...item, open: false } : item));
     const remaining = windows.filter((item) => item.open && item.id !== id).sort((a, b) => b.z - a.z);
-    setActiveId(remaining[0]?.id ?? "about");
+    const nextActiveId = remaining[0]?.id ?? "about";
+    setActiveId(nextActiveId);
+    syncAddress(nextActiveId);
     window.requestAnimationFrame(() => {
       const returnTarget = returnFocusByApp.current[id];
       if (returnTarget?.isConnected) returnTarget.focus();
@@ -2596,6 +2665,7 @@ export default function SystemSevenDesktop({
     setMemoryMagic(false);
     setToast(null);
     setBooting(true);
+    syncAddress("about");
   };
 
   const dismissMobileGuide = () => {
@@ -2693,7 +2763,7 @@ export default function SystemSevenDesktop({
         >
           <span style={{ width: `${BOOT_PROGRESS[bootMessageIndex]}%` }} />
         </div>
-        <button>Click anywhere to skip startup</button>
+        <button type="button" onClick={completeBoot}>Enter the portfolio now</button>
       </main></TranslationBoundary>
     );
   }
@@ -2717,18 +2787,23 @@ export default function SystemSevenDesktop({
                 <circle cx="9" cy="5" r="3" />
                 <path d="M3 17v-3c0-3.2 2.4-5 6-5s6 1.8 6 5v3z" />
               </svg>
+              <span className="menu-label">Menu</span>
             </button>
             {openMenu === "apple" && (
               <div className="menu-dropdown apple-dropdown" id="samuel-menu">
                 <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
+                <button onClick={() => openApp("projects")}><PixelIcon kind="folder" small />Project Archive</button>
                 <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
-                <button onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />RUN/HACK — Field Journal</button>
-                <hr />
-                <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
+                <button onClick={() => openApp("experience")}><PixelIcon kind="briefcase" small />Career</button>
                 <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
-                <button onClick={() => openApp("games")}><PixelIcon kind="game" small />Desk Arcade</button>
                 <button onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
+                <hr />
+                <button onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />Latest field note · RUN/HACK</button>
+                <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
+                <button onClick={() => openApp("education")}><PixelIcon kind="university" small />Education &amp; Awards</button>
+                <button onClick={() => openApp("lab")}><PixelIcon kind="network" small />Home Lab Network</button>
                 <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Interests &amp; Notes</button>
+                <button onClick={() => openApp("games")}><PixelIcon kind="game" small />Desk Arcade</button>
                 <hr />
                 <button onClick={restart}>Restart…</button>
               </div>
@@ -2779,8 +2854,8 @@ export default function SystemSevenDesktop({
               aria-label={`${translateText(locale, "Language")}: ${activeLocaleOption.label}`}
               title="Language"
             >
-              <span className="language-label">Language</span>
-              <span className="language-short">文/A</span>
+              <span className="language-label">Language: {activeLocaleOption.short}</span>
+              <span className="language-short">{activeLocaleOption.short}</span>
             </button>
             {openMenu === "language" && (
               <div ref={languageMenuRef} className="menu-dropdown language-dropdown" id="language-menu" role="menu" aria-label="Language" onKeyDown={handleLanguageMenuKeyDown}>
@@ -2814,12 +2889,9 @@ export default function SystemSevenDesktop({
             key={item.id}
             className={`desktop-icon${selectedIcon === item.id ? " is-selected" : ""}`}
             title={`${translateText(locale, item.label)}: ${translateText(locale, item.description)}`}
-            aria-label={`${translateText(locale, item.label)}. ${translateText(locale, item.description)} ${translateText(locale, "Double-click to open.")}`}
+            aria-label={`${translateText(locale, item.label)}. ${translateText(locale, item.description)} ${translateText(locale, "Click to open.")}`}
             aria-pressed={selectedIcon === item.id}
-            onClick={() => setSelectedIcon(item.id)}
-            onDoubleClick={() => openApp(item.id)}
-            onPointerUp={(event) => { if (event.pointerType === "touch") openApp(item.id); }}
-            onKeyDown={(event) => { if (event.key === "Enter") openApp(item.id); }}
+            onClick={() => { setSelectedIcon(item.id); openApp(item.id); }}
           >
             <span className="desktop-icon__graphic"><PixelIcon kind={item.icon} /></span>
             <span className="desktop-icon__label">{item.label}</span>
@@ -2848,10 +2920,10 @@ export default function SystemSevenDesktop({
         {selectedDesktopItem ? (
           <>
             <strong>{translateText(locale, selectedDesktopItem.label)}</strong>
-            <span>{translateText(locale, selectedDesktopItem.description)} {translateText(locale, "Double-click to open.")}</span>
+            <span>{translateText(locale, selectedDesktopItem.description)} {translateText(locale, "Click to open.")}</span>
           </>
         ) : (
-          <span>Select an icon to learn what it opens · Double-click to launch · Drag title bars to move · Drag lower-right corners to resize</span>
+          <span>Click an icon to open it · Use the menu for every destination · Drag title bars to move · Drag lower-right corners to resize</span>
         )}
       </div>
       <div className="window-switcher" role="navigation" aria-label="Open applications">
@@ -2868,12 +2940,12 @@ export default function SystemSevenDesktop({
           <aside className="mobile-window-guide" role="dialog" aria-modal="true" aria-labelledby="mobile-guide-title" aria-describedby="mobile-guide-copy">
             <div className="mobile-window-guide__title">
               <span className="mobile-guide-window-box" aria-hidden="true" />
-              <strong id="mobile-guide-title">Windows on a small screen</strong>
+              <strong id="mobile-guide-title">How to get around</strong>
             </div>
             <p id="mobile-guide-copy">
-              Tap the small square at a window’s top-left to close it. Mobile windows stay
-              full-screen, so dragging is disabled; use the bar along the bottom to switch
-              between anything that is open.
+              Start Here is already open. Use Menu for every destination, tap an icon to open
+              it, and use the bar along the bottom to switch between open windows. The small
+              square at a window’s top-left closes it.
             </p>
             <button ref={mobileGuideButtonRef} onClick={dismissMobileGuide}>Got it</button>
           </aside>

@@ -404,6 +404,10 @@ body {
   display: none;
 }
 
+.menu-label {
+  display: none;
+}
+
 .language-dropdown {
   min-width: 214px;
 }
@@ -460,7 +464,7 @@ body {
   display: grid;
   grid-auto-columns: 84px;
   grid-auto-flow: column;
-  grid-template-rows: repeat(7, 74px);
+  grid-template-rows: repeat(5, 74px);
   gap: 3px 8px;
   align-content: start;
   justify-content: flex-end;
@@ -479,7 +483,7 @@ body {
   background: transparent;
   text-align: center;
   text-shadow: 1px 1px 0 #111, -1px -1px 0 rgba(0,0,0,.25);
-  cursor: default;
+  cursor: pointer;
 }
 
 .desktop-icon {
@@ -1003,7 +1007,97 @@ body {
   line-height: 1.4;
 }
 
+.latest-update-card {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(155px, .72fr) minmax(0, 1.28fr);
+  margin-top: 14px;
+  overflow: hidden;
+  border: 2px solid #111;
+  background: #fbfbf4;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777, 3px 3px #888;
+}
+
+.latest-update-card__photo {
+  position: relative;
+  min-height: 168px;
+  overflow: hidden;
+  border-right: 2px solid #111;
+  background: #dfff37;
+}
+
+.latest-update-card__photo img {
+  object-fit: cover;
+  object-position: 50% 52%;
+  filter: saturate(.86) contrast(1.03);
+}
+
+.latest-update-card__copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 13px 14px 12px;
+  border-left: 6px solid #dfff37;
+}
+
+.latest-update-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 10px;
+  color: #465000;
+  font: 700 9px/1.25 var(--system-mono);
+  letter-spacing: .07em;
+}
+
+.latest-update-card__meta time {
+  padding: 1px 4px;
+  border: 1px solid #6f7900;
+  color: #111;
+  background: #efffb2;
+  letter-spacing: .02em;
+}
+
+.latest-update-card h2 {
+  margin: 7px 0 4px;
+  font: 700 19px/1.02 Georgia, "Times New Roman", serif;
+  letter-spacing: -.025em;
+}
+
+.latest-update-card p {
+  margin: 0;
+  color: #444;
+  font-size: 11px;
+  line-height: 1.38;
+}
+
+.latest-update-card button {
+  align-self: flex-start;
+  min-height: 32px;
+  margin-top: 9px;
+  padding: 4px 8px;
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #dfff37;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #6f7900, 2px 2px #111;
+  font: 700 10px/1.2 var(--system-font);
+}
+
+.latest-update-card button:hover,
+.latest-update-card button:focus-visible {
+  background: #efffa0;
+}
+
+.latest-update-card button:active {
+  transform: translate(2px, 2px);
+  box-shadow: inset 1px 1px #6f7900;
+}
+
 .identity-switchboard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 14px;
   border: 1px solid #777;
   background: #fff;
@@ -1011,11 +1105,19 @@ body {
 
 .identity-switchboard__heading {
   display: grid;
-  grid-template-columns: 142px 1fr;
-  align-items: baseline;
-  padding: 5px 8px;
+  grid-column: 1 / -1;
+  grid-template-columns: 168px 148px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 7px 8px;
   border-bottom: 1px solid #777;
   background: #d8d8d2;
+}
+
+.identity-switchboard__heading > span {
+  color: var(--selection);
+  font: 800 9px/1.2 var(--system-mono);
+  letter-spacing: .07em;
 }
 
 .identity-switchboard__heading b {
@@ -1033,7 +1135,7 @@ body {
   display: grid;
   width: 100%;
   min-width: 0;
-  min-height: 58px;
+  min-height: 82px;
   grid-template-columns: 24px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
@@ -1044,18 +1146,20 @@ body {
   background: #fff;
   font-family: inherit;
   text-align: left;
+  cursor: pointer;
 }
 
-.identity-switchboard button:last-child {
+.identity-switchboard button:nth-of-type(odd) {
+  border-right: 1px solid #aaa;
+}
+
+.identity-switchboard button:nth-last-of-type(-n + 2) {
   border-bottom: 0;
 }
 
 .identity-switchboard button > .identity-copy {
-  display: grid;
+  display: block;
   min-width: 0;
-  grid-template-columns: 110px minmax(0, 1fr);
-  align-items: baseline;
-  gap: 8px;
 }
 
 /* The Project Archive is the deepest drawer in the cabinet. Give it a
@@ -1063,7 +1167,7 @@ body {
 .identity-switchboard button.identity-drawer--projects {
   position: relative;
   width: calc(100% - 6px);
-  min-height: 66px;
+  min-height: 82px;
   margin: 3px;
   border: 2px solid var(--selection);
   background: #eef0ff;
@@ -1137,7 +1241,7 @@ body {
 
 .identity-detail {
   display: block;
-  margin: 0;
+  margin: 3px 0 0;
   color: #333;
   font-size: 11px;
   line-height: 1.35;
@@ -3934,7 +4038,7 @@ html:lang(zh-TW) .career-record {
 
 @media (max-width: 900px) {
   .desktop-icons {
-    grid-template-rows: repeat(7, 74px);
+    grid-template-rows: repeat(5, 74px);
   }
 
   .mac-window:not(.is-maximized) {
@@ -4011,8 +4115,26 @@ html:lang(zh-TW) .career-record {
     font-weight: 700;
   }
 
+  .apple-menu .menu-label {
+    display: inline;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .menu-root > .apple-menu {
+    display: flex;
+    min-width: 61px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .apple-menu .human-mark {
+    margin: 0;
+  }
+
   .menu-language > button {
-    min-width: 42px;
+    min-width: 48px;
     padding-right: 5px;
     padding-left: 5px;
   }
@@ -4214,8 +4336,47 @@ html:lang(zh-TW) .career-record {
     font-size: 12px;
   }
 
+  .latest-update-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .latest-update-card__photo {
+    min-height: 190px;
+    border-right: 0;
+    border-bottom: 2px solid #111;
+  }
+
+  .latest-update-card__copy {
+    border-left-width: 5px;
+  }
+
   .identity-switchboard__heading {
     display: block;
+  }
+
+  .identity-switchboard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .identity-switchboard button:nth-of-type(odd) {
+    border-right: 0;
+  }
+
+  .identity-switchboard button:nth-last-of-type(-n + 2) {
+    border-bottom: 1px solid #aaa;
+  }
+
+  .identity-switchboard button:last-of-type {
+    border-bottom: 0;
+  }
+
+  .identity-switchboard__heading > span,
+  .identity-switchboard__heading > b {
+    display: block;
+  }
+
+  .identity-switchboard__heading > b {
+    margin-top: 3px;
   }
 
   .identity-switchboard__heading p {

@@ -15,7 +15,7 @@ export type ProjectShelfId =
   | "systems-reproducibility"
   | "learning-strategy";
 
-export type GuidedStartId = "finance" | "insurance" | "mri" | "molecular";
+export type GuidedStartId = "insurance" | "mri" | "microrobot" | "molecular";
 
 export type ProjectGuidedExperienceReference =
   | { kind: "suite"; id: string; recommendedSlug: string }
@@ -139,9 +139,9 @@ export const projectShelfSpecs: readonly ProjectShelfSpec[] = [
 ] as const;
 
 export const projectStartPaths: readonly { id: GuidedStartId; slug: string }[] = [
-  { id: "finance", slug: "ocean-depths-finance" },
   { id: "insurance", slug: "insurance-lead-matching" },
   { id: "mri", slug: "trustworthy-mri-reconstruction" },
+  { id: "microrobot", slug: "microrobot-vision" },
   { id: "molecular", slug: "molecular-recognition" },
 ] as const;
 

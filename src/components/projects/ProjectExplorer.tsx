@@ -22,7 +22,7 @@ import {
 import { getProjectSuite } from "./projectSuites";
 import styles from "./ProjectExplorer.module.css";
 
-type SystemApp = NonNullable<Project["systemApp"]>;
+type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";
 type AccessFilter = ProjectAccess | "all";
 type AreaFilter = ProjectArea | "all";
 type ArchiveView = "guided" | "files" | "map";
@@ -999,6 +999,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
             selectedSlug={guidedSelectedSlug}
             onSelectProject={selectProjectFromMap}
             onOpenProjectDemo={openProjectDemo}
+            onOpenLatestStory={() => onOpenApp("sidequest")}
           />
         </section>
       )}
