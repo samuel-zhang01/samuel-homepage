@@ -9,6 +9,8 @@ tab—without an account, tracking API or server-side personal-data store.
 **[Browse the project archive](https://me.samuelzhang.co.uk/projects)** ·
 **[Read the release audit](docs/RELEASE_AUDIT.md)**
 
+Latest: [5 September interaction and reliability follow-up](docs/INTERACTION_AUDIT_2026-09-05.md).
+
 ![Samuel System 7 desktop showing the About Samuel Zhang window and classic desktop icons](public/readme-system7-desktop.png)
 
 ## What is included
@@ -17,6 +19,8 @@ tab—without an account, tracking API or server-side personal-data store.
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
 - Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.
+- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches all 21 apps and 31 project files, including translated summaries; arrow keys choose a result and Return opens it.
+- Three persistent desktop patterns and a menu-bar clock that opens Pocket Calendar with one click.
 - A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 interactive chapters lazy-loaded by exhibit module, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
@@ -51,7 +55,7 @@ uniqueness and SHA-256 before every production build.
 
 The Projects folder opens in **Guided Workspaces**: four short “start here” routes and six themed shelves progressively reveal 14 visitor-facing experiences. Eight multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture and Supporting Audits—while six flagship experiences remain standalone. Every one of the 31 source records appears exactly once in this guided structure; the 27 interactive chapters keep their canonical `?project=` links and load on demand through their exhibit modules.
 
-**All 31 Files** is the secondary expert view, with discipline, access and featured-work filters plus curated, newest-first and title sorting. Press `/` anywhere in the archive to open that view and focus search. Valid project deep links open the exact file directly, and switching back to Guided Workspaces reveals its parent shelf and suite.
+**All 31 Files** is the secondary expert view, with discipline, access and featured-work filters plus curated, newest-first and title sorting. Search matches multiple terms across names, tools and translated summaries, including fullwidth text and accented spellings. Press `/` while the archive is active to open that view and focus search; Enter or the down arrow moves into its results. Valid project deep links open the exact file directly, and switching back to Guided Workspaces reveals its parent shelf and suite.
 
 Every executable chapter opens with a typed case brief: audience, human problem, objective, Samuel's precise contribution, input-to-output pipeline, evidence boundary and a concrete 30-second walkthrough. Suite navigation switches directly between lazy-loaded chapters while preserving each chapter's `?project=` deep link. The catalogue gate requires all 27 demos to have this story record, validates suite membership and enforces the 14-experience structure.
 
@@ -80,11 +84,15 @@ The `/sidequest` route opens a first-class System 7 app about the 29 August 2026
 
 The Live room is an explicit interactive replay. It demonstrates the original camera/GPS, spectator-cheer and runner-controlled challenge flow without requesting camera, microphone or location permission from portfolio visitors. Links to the original SideQuest deployment and source remain external, and deployment availability is not guaranteed; the source repository has no declared licence, and ephemeral prototype video was not recorded.
 
+Replay transport supports pause/resume, rewind and single-point stepping. It pauses when its chapter, demo or browser tab is hidden; reduced-motion visitors start in manual mode. Repeated cheers remain responsive without accumulating an unbounded event feed.
+
 ## Privacy boundaries
 
 Browser exhibits use deterministic, generated or clearly labelled synthetic inputs where private data or runnable source cannot be published. Source evidence, independently implemented reconstruction and illustrative behaviour are identified separately; demos make no live third-party calls or unsupported performance claims.
 
 The Desk Accessories are deliberately device-local. Note pages, focus progress and calculator tape use versioned browser storage with no account, API or server database. They therefore work the same in local development and the read-only production container, but do not sync between browsers or devices.
+
+Open tabs in the same browser receive saved-state updates. This is last-observed-save behaviour, not collaborative editing or conflict merging. Export a Desk Accessories backup to keep a portable copy; a validated restore asks before replacing the current accessory data. Calendar notes also require a second click to clear. Calendar navigation supports arrows, Home/End, Page Up/Down and Shift + Page Up/Down for years.
 
 - Finance examples use invented transactions. Raw statements, databases, identifiers, holdings and upload APIs are not shipped.
 - The CV demo uses sample text and deterministic browser-side matching. Personal applications and third-party model calls are excluded.
@@ -134,6 +142,7 @@ Before publishing, run:
 ```bash
 npm run check:artifacts
 npm run check:data
+npm run check:desk
 npm run check:catalogue
 npm run check:styles
 npm run check:locales
@@ -143,7 +152,7 @@ npm run build
 npm audit --audit-level=moderate
 ```
 
-`npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome, project summaries or suite descriptions from silently shipping.
+`npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the desk-behaviour gate covers timer rollover and numeric-entry regressions against the actual shared helpers; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome, project summaries or suite descriptions from silently shipping.
 
 When a development server is already using `.next`, run `npm run build:isolated` instead. It writes the production checkpoint to `.next-build` so the live development cache is not replaced.
 
