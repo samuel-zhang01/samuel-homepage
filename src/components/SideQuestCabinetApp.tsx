@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import type { Locale } from "@/lib/i18n";
 import styles from "./SideQuestCabinetApp.module.css";
 import { localizeSideQuestTree } from "./sideQuestI18n";
 
 type PanelId = "day" | "rules" | "people" | "build";
 type BuildView = "evidence" | "question" | "live";
-type ReplayState = "idle" | "live" | "finished";
+type ReplayState = "idle" | "live" | "paused" | "finished";
 type ChallengeState = "draft" | "sent" | "accepted" | "declined";
 
 const panels: Array<{ id: PanelId; label: string; index: string }> = [
@@ -219,7 +219,7 @@ function PeoplePanel({ locale }: { locale: Locale }) {
   </>)}</>;
 }
 
-function BuildPanel({ locale }: { locale: Locale }) {
+function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
   const [view, setView] = useState<BuildView>("live");
   const [sandboxDistance, setSandboxDistance] = useState("5.0");
   const [sandboxMinutes, setSandboxMinutes] = useState("30");
@@ -228,22 +228,52 @@ function BuildPanel({ locale }: { locale: Locale }) {
   const [loopStep, setLoopStep] = useState(0);
   const [challengeKey, setChallengeKey] = useState<keyof typeof challengeOptions>("effort");
   const [challengeState, setChallengeState] = useState<ChallengeState>("draft");
-  const [replayState, setReplayState] = useState<ReplayState>("idle");
-  const [replayTick, setReplayTick] = useState(0);
-  const [cheerFeed, setCheerFeed] = useState<string[]>([]);
+  const [replay, setReplay] = useState<{ state: ReplayState; tick: number }>({ state: "idle", tick: 0 });
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [lastCheer, setLastCheer] = useState<{ id: number; text: string } | null>(null);
+  const cheerSequence = useRef(0);
   const [liveChallenge, setLiveChallenge] = useState<ChallengeState>("draft");
   const activeChallenge = challengeOptions[challengeKey];
+  const replayState = replay.state;
+  const replayTick = replay.tick;
+
+  useEffect(() => {
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => {
+      setReducedMotion(motionPreference.matches);
+      if (motionPreference.matches) {
+        setReplay((current) => current.state === "live" ? { ...current, state: "paused" } : current);
+      }
+    };
+    const pauseHiddenReplay = () => {
+      if (document.hidden) {
+        setReplay((current) => current.state === "live" ? { ...current, state: "paused" } : current);
+      }
+    };
+    updateMotionPreference();
+    motionPreference.addEventListener("change", updateMotionPreference);
+    document.addEventListener("visibilitychange", pauseHiddenReplay);
+    return () => {
+      motionPreference.removeEventListener("change", updateMotionPreference);
+      document.removeEventListener("visibilitychange", pauseHiddenReplay);
+    };
+  }, []);
 
   useEffect(() => {
     if (replayState !== "live") return;
+    if (!active || view !== "live" || document.hidden) {
+      setReplay((current) => ({ ...current, state: "paused" }));
+      return;
+    }
     const timer = window.setInterval(() => {
-      setReplayTick((current) => {
-        if (current >= routePoints.length - 1) { window.clearInterval(timer); setReplayState("finished"); return routePoints.length - 1; }
-        return current + 1;
+      setReplay((current) => {
+        if (current.state !== "live") return current;
+        const tick = Math.min(current.tick + 1, routePoints.length - 1);
+        return { tick, state: tick === routePoints.length - 1 ? "finished" : "live" };
       });
     }, 780);
     return () => window.clearInterval(timer);
-  }, [replayState]);
+  }, [active, replayState, view]);
 
   const normaliseRun = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -256,7 +286,26 @@ function BuildPanel({ locale }: { locale: Locale }) {
     setSandboxResult(`${distance.toFixed(1)} km · ${formatPace(minutes, distance)} · RPE ${effort}/10`);
   };
 
-  const startReplay = () => { setReplayTick(0); setCheerFeed([]); setLiveChallenge("draft"); setReplayState("live"); };
+  const startReplay = () => {
+    setLastCheer(null);
+    setLiveChallenge("draft");
+    setReplay({ tick: 0, state: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "paused" : "live" });
+  };
+  const toggleReplay = () => {
+    if (replayState === "idle" || replayState === "finished") startReplay();
+    else setReplay((current) => ({ ...current, state: current.state === "live" ? "paused" : "live" }));
+  };
+  const rewindReplay = () => {
+    setLastCheer(null);
+    setLiveChallenge("draft");
+    setReplay({ tick: 0, state: "paused" });
+  };
+  const stepReplay = () => setReplay((current) => {
+    const tick = Math.min(current.tick + 1, routePoints.length - 1);
+    return { tick, state: tick === routePoints.length - 1 ? "finished" : "paused" };
+  });
+  const sendCheer = (text: string) => setLastCheer({ id: ++cheerSequence.current, text });
+  const replayStarted = replayState === "live" || replayState === "paused";
   const distance = replayTick * 0.11;
   const elapsed = replayTick * 38;
   const visibleRoute = routePoints.slice(0, Math.max(1, replayTick + 1));
@@ -320,19 +369,26 @@ function BuildPanel({ locale }: { locale: Locale }) {
         <figcaption><span>EVENT-DAY PROTOTYPE</span> Javi live on the track, with a camera, GPS metrics and an abstract route.</figcaption>
       </figure>
       <article className={styles.replayCard}>
-        <div className={styles.cardLabel}><span>INTERACTIVE PORTFOLIO REPLAY</span><strong>{replayState === "live" ? "● LIVE" : replayState === "finished" ? "FINISHED" : "READY"}</strong></div>
+        <div className={styles.cardLabel}><span>INTERACTIVE PORTFOLIO REPLAY</span><strong role="status">{replayState === "live" ? "● LIVE" : replayState === "paused" ? "PAUSED" : replayState === "finished" ? "FINISHED" : "READY"}</strong></div>
         <p className={styles.replayDisclosure}>This reconstruction never requests camera, microphone or location. The original camera relay was ephemeral and the external event deployment may not always be online.</p>
         <div className={styles.replayMap}>
           <svg viewBox="0 0 100 86" role="img" aria-label={`Abstract replay route with ${visibleRoute.length} points`}><rect width="100" height="86" /><path d="M-5 21 C18 4 36 29 58 14 S82 8 108 25M-8 72 C17 54 37 82 60 65 S84 50 109 68" /><polyline points={routePolyline} /><circle cx={runnerPoint[0]} cy={runnerPoint[1]} r="4" /></svg>
           <span>ROTATED, COARSENED GEOMETRY</span>
-          {cheerFeed.length > 0 && <b className={styles.reaction} key={`${cheerFeed.length}-${cheerFeed.at(-1)}`}>{cheerFeed.at(-1)}</b>}
+          {lastCheer && <b className={styles.reaction} key={lastCheer.id} role="status">{lastCheer.text}</b>}
           {liveChallenge !== "draft" && <div className={styles.liveOverlay}><span>NEXT-KILOMETRE CHALLENGE</span><strong>Hold an even pace · £9 pledge to Mind</strong><small>No payment is charged.</small>{liveChallenge === "sent" && <div><button type="button" onClick={() => setLiveChallenge("accepted")}>Accept</button><button type="button" onClick={() => setLiveChallenge("declined")}>Decline</button></div>}{liveChallenge === "accepted" && <b>ACCEPTED</b>}{liveChallenge === "declined" && <b>DECLINED</b>}</div>}
         </div>
         <dl className={styles.replayStats}><div><dt>Distance</dt><dd>{distance.toFixed(2)} km</dd></div><div><dt>Live pace</dt><dd>{replayTick ? `${5 + Math.floor(replayTick / 9)}:${String(42 + (replayTick % 9)).padStart(2, "0")}` : "—"}</dd></div><div><dt>Time</dt><dd>{formatTime(elapsed)}</dd></div></dl>
         <div className={styles.replayControls}>
-          <button type="button" onClick={startReplay}>{replayState === "live" ? "Restart replay" : replayState === "finished" ? "Run replay again" : "Start live replay"}</button>
-          <div><span>Send a cheer</span>{cheersByLocale[locale].map((cheer) => <button key={cheer} type="button" disabled={replayState !== "live"} onClick={() => setCheerFeed((current) => [...current.slice(-4), cheer])} aria-label={locale === "zh-CN" ? `发送助威：${cheer}` : locale === "zh-TW" ? `傳送加油訊息：${cheer}` : `Send ${cheer} cheer`}>{cheer}</button>)}</div>
-          <button type="button" disabled={replayState !== "live" || liveChallenge !== "draft"} onClick={() => setLiveChallenge("sent")}>Send challenge</button>
+          <div className={styles.replayTransport} role="group" aria-label="Replay controls">
+            <button type="button" onClick={toggleReplay}><span aria-hidden="true">{replayState === "live" ? "Ⅱ" : "▶"}</span>{replayState === "live" ? "Pause replay" : replayState === "paused" ? "Resume replay" : replayState === "finished" ? "Run replay again" : "Start live replay"}</button>
+            <button type="button" disabled={replayTick === 0} onClick={rewindReplay}>Rewind</button>
+            <button type="button" disabled={replayState === "live" || replayState === "finished"} onClick={stepReplay}>Next point</button>
+          </div>
+          {reducedMotion && <p className={styles.replayMotionNote}>Reduced motion: use Next point, or Resume replay to play.</p>}
+          <div className={styles.replaySocial}>
+            <div className={styles.cheerControls}><span>Send a cheer</span>{cheersByLocale[locale].map((cheer) => <button key={cheer} type="button" disabled={!replayStarted} onClick={() => sendCheer(cheer)} aria-label={locale === "zh-CN" ? `发送助威：${cheer}` : locale === "zh-TW" ? `傳送加油訊息：${cheer}` : `Send ${cheer} cheer`}>{cheer}</button>)}</div>
+            <button type="button" disabled={!replayStarted || liveChallenge !== "draft"} onClick={() => setLiveChallenge("sent")}>Send challenge</button>
+          </div>
         </div>
       </article>
     </div>}
@@ -421,7 +477,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
         <section className={styles.panel} id="runhack-panel-day" role="tabpanel" aria-labelledby="runhack-tab-day" hidden={panel !== "day"}><DayPanel locale={locale} /></section>
         <section className={styles.panel} id="runhack-panel-rules" role="tabpanel" aria-labelledby="runhack-tab-rules" hidden={panel !== "rules"}><RulesPanel locale={locale} /></section>
         <section className={styles.panel} id="runhack-panel-people" role="tabpanel" aria-labelledby="runhack-tab-people" hidden={panel !== "people"}><PeoplePanel locale={locale} /></section>
-        <section className={styles.panel} id="runhack-panel-build" role="tabpanel" aria-labelledby="runhack-tab-build" hidden={panel !== "build"}><BuildPanel locale={locale} /></section>
+        <section className={styles.panel} id="runhack-panel-build" role="tabpanel" aria-labelledby="runhack-tab-build" hidden={panel !== "build"}><BuildPanel locale={locale} active={panel === "build"} /></section>
       </div>
 
       <footer className={styles.footer}>

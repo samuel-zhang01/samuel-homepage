@@ -247,6 +247,7 @@ const zhCN: Record<string, string> = {
   "INTERACTIVE PORTFOLIO REPLAY": "互动作品集回放",
   "● LIVE": "● 直播中",
   "FINISHED": "已结束",
+  "PAUSED": "已暂停",
   "READY": "就绪",
   "This reconstruction never requests camera, microphone or location. The original camera relay was ephemeral and the external event deployment may not always be online.": "此重建演示绝不会请求摄像头、麦克风或位置权限。原始摄像接力是临时传输，外部活动部署也不保证始终在线。",
   "ROTATED, COARSENED GEOMETRY": "旋转并粗化的几何路线",
@@ -258,6 +259,12 @@ const zhCN: Record<string, string> = {
   "Restart replay": "重新开始回放",
   "Run replay again": "再次运行回放",
   "Start live replay": "开始实时回放",
+  "Replay controls": "回放控制",
+  "Pause replay": "暂停回放",
+  "Resume replay": "继续回放",
+  "Rewind": "回到起点",
+  "Next point": "下一个节点",
+  "Reduced motion: use Next point, or Resume replay to play.": "已减少动态效果：请选择“下一个节点”逐步查看，或“继续回放”自动播放。",
   "Send a cheer": "发送喝彩",
   "Send challenge": "发送挑战",
   "Open technical field notes & prototype boundaries": "展开技术现场笔记与原型边界",
@@ -359,7 +366,7 @@ export function translateSideQuestText(locale: Locale, text: string) {
   if (!translated) {
     const timelineMatch = source.match(/^(.+): (.+)$/);
     if (timelineMatch && zhCN[timelineMatch[2]]) {
-      translated = `${timelineMatch[1]}：${zhCN[timelineMatch[2]]}`;
+      translated = `${zhCN[timelineMatch[1]] ?? timelineMatch[1]}：${zhCN[timelineMatch[2]]}`;
     } else if (/^Abstract replay route with \d+ points$/.test(source)) {
       const points = source.match(/\d+/)?.[0] ?? "0";
       translated = `包含 ${points} 个节点的抽象回放路线`;

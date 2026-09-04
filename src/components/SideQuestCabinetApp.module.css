@@ -161,7 +161,7 @@
 }
 .heroActions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 17px; }
 .heroActions button, .relayActions button, .runForm > button, .challengeActions button,
-.replayControls > button, .liveOverlay button, .buildLinks a {
+.replayTransport button, .replaySocial > button, .liveOverlay button, .buildLinks a {
   display: inline-flex;
   min-height: 30px;
   align-items: center;
@@ -183,9 +183,9 @@
   background: #e5e5e1;
 }
 .heroActions button:hover, .relayActions button:hover, .runForm > button:hover,
-.challengeActions button:hover, .replayControls > button:hover, .liveOverlay button:hover { background: #fff; color: #111; }
+.challengeActions button:hover, .replayTransport button:hover, .replaySocial > button:hover, .liveOverlay button:hover { background: #fff; color: #111; }
 .heroActions button:active, .relayActions button:active, .runForm > button:active,
-.challengeActions button:active, .replayControls > button:active, .liveOverlay button:active,
+.challengeActions button:active, .replayTransport button:active, .replaySocial > button:active, .liveOverlay button:active,
 .buildLinks a:active { color: #fff; background: #111; box-shadow: none; }
 .heroActions .secondaryAction:hover, .relayActions button + button:hover, .buildLinks a + a:hover { border-color: #111; color: #111; background: #fff; }
 .heroFacts {
@@ -481,10 +481,15 @@
 .replayStats dt, .replayStats dd { margin: 0; }
 .replayStats dt { color: #555; font-size: 8px; text-transform: uppercase; }
 .replayStats dd { margin-top: 5px; color: var(--sky); font-size: 18px; font-weight: 700; }
-.replayControls { display: grid; grid-template-columns: auto minmax(200px, 1fr) auto; gap: 8px; align-items: center; margin-top: 10px; }
-.replayControls > div { display: flex; align-items: center; justify-content: center; gap: 5px; }
-.replayControls > div > span { margin-right: 4px; color: #555; font-size: 9px; }
-.replayControls > div button { width: 38px; height: 38px; border: 2px solid #111; border-radius: 0; color: #111; background: var(--raised); box-shadow: inset 1px 1px #fff, inset -1px -1px #777; cursor: pointer; }
+.replayControls { display: grid; min-width: 0; gap: 10px; margin-top: 10px; }
+.replayTransport { display: flex; min-width: 0; flex-wrap: wrap; gap: 5px; padding: 7px; border: 1px solid #777; background: var(--raised); }
+.replayTransport button { min-height: 36px; flex: 1 1 auto; gap: 7px; padding: 7px 9px; }
+.replayTransport button > span { font-family: var(--system-mono); font-size: 12px; }
+.replayMotionNote { margin: 0; color: #555; font-size: 10px; line-height: 1.45; }
+.replaySocial { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.cheerControls { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; gap: 5px; }
+.cheerControls > span { margin-right: 4px; color: #555; font-size: 9px; }
+.cheerControls button { width: 38px; height: 38px; border: 2px solid #111; border-radius: 0; color: #111; background: var(--raised); box-shadow: inset 1px 1px #fff, inset -1px -1px #777; cursor: pointer; }
 .replayControls button:disabled { opacity: .35; cursor: not-allowed; }
 .technicalNotes > div { grid-template-columns: repeat(4, 1fr); }
 .buildLinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
@@ -526,7 +531,7 @@
   .heroPhoto { transform: none; }
   .hero h1 { font-size: clamp(22px, 7.5vw, 30px); }
   .heroActions button, .relayActions button, .runForm > button, .challengeActions button,
-  .replayControls > button, .liveOverlay button, .buildLinks a { min-height: 44px; }
+  .replayTransport button, .replaySocial > button, .liveOverlay button, .buildLinks a { min-height: 44px; }
   .heroFacts { grid-template-columns: repeat(2, 1fr); }
   .heroFacts div:nth-child(2) { border-right: 0; }
   .heroFacts div:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
@@ -564,8 +569,6 @@
   .buildTabs { width: 100%; }
   .liveDemo { grid-template-columns: 1fr; }
   .phoneProof { max-width: 380px; justify-self: center; }
-  .replayControls { grid-template-columns: 1fr; }
-  .replayControls > div { order: 3; flex-wrap: wrap; }
   .technicalNotes > div { grid-template-columns: 1fr; }
   .technicalNotes section:nth-child(2), .technicalNotes section:nth-last-child(-n + 2) { border-bottom: 1px solid var(--line); }
   .technicalNotes section:last-child { border-bottom: 0; }
@@ -594,6 +597,8 @@
   .loopSteps button { min-height: 58px; }
   .replayMap, .replayMap svg { min-height: 320px; height: 320px; }
   .replayStats dd { font-size: 16px; }
+  .cheerControls { width: 100%; }
+  .cheerControls > span { flex-basis: 100%; margin-right: 0; }
 }
 
 /* A short tablet/phone held sideways still has ample horizontal room. Keep
@@ -618,11 +623,12 @@
 
 @media (pointer: coarse) {
   .heroActions button, .relayActions button, .runForm > button, .challengeActions button,
-  .replayControls > button, .liveOverlay button, .buildLinks a, .tabs button,
+  .replayTransport button, .replaySocial > button, .liveOverlay button, .buildLinks a, .tabs button,
   .creditTabs button, .buildTabs button, .runnerRail button, .loopSteps button,
   .app select, .app summary {
     min-height: 44px;
   }
+  .cheerControls button { width: 44px; height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
