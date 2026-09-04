@@ -3,6 +3,7 @@
 set -euo pipefail
 
 service_name="samuel-homepage"
+deployment_image="samuel-homepage:production"
 
 # Docker Compose reads .env itself, but this script also needs the harmless
 # endpoint values for its post-deploy probes. Parse only the allowlisted keys;
@@ -54,6 +55,35 @@ else
   exit 1
 fi
 
+"${compose[@]}" config --quiet
+
+previous_container_id=$("${compose[@]}" ps -q "$service_name" 2>/dev/null || true)
+previous_image=""
+if [[ -n "$previous_container_id" ]]; then
+  previous_image=$(docker inspect --format '{{.Image}}' "$previous_container_id" 2>/dev/null || true)
+fi
+replacement_started=0
+deployment_verified=0
+
+rollback_on_failure() {
+  status=$?
+  trap - EXIT
+  if (( status != 0 && replacement_started == 1 && deployment_verified == 0 )) && [[ -n "$previous_image" ]]; then
+    echo "Deployment verification failed; restoring the previous image..." >&2
+    if docker tag "$previous_image" "$deployment_image" \
+      && "${compose[@]}" up -d --no-build --force-recreate "$service_name"; then
+      echo "Previous production image restored. Inspect its health before retrying." >&2
+    else
+      echo "Automatic rollback failed; inspect Compose and image ${previous_image}." >&2
+    fi
+  elif (( status != 0 && replacement_started == 1 && deployment_verified == 0 )); then
+    echo "Deployment verification failed with no previous image; removing the failed first deployment..." >&2
+    "${compose[@]}" rm --stop --force "$service_name" >/dev/null 2>&1 || true
+  fi
+  exit "$status"
+}
+trap rollback_on_failure EXIT
+
 echo "Checking dependencies, source boundaries, catalogue metadata and project styles..."
 npm run audit:dependencies
 npm run lint
@@ -63,8 +93,12 @@ npm run check:catalogue
 npm run check:styles
 npm run check:locales
 
-echo "Building and starting Samuel System 7..."
-"${compose[@]}" up -d --build "$service_name"
+echo "Building Samuel System 7..."
+"${compose[@]}" build "$service_name"
+
+echo "Starting the verified image candidate..."
+replacement_started=1
+"${compose[@]}" up -d --no-build "$service_name"
 
 container_id=$("${compose[@]}" ps -q "$service_name")
 if [[ -z "$container_id" ]]; then
@@ -78,11 +112,13 @@ for _ in {1..45}; do
   health=$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$container_id")
   case "$health" in
     healthy)
-      if ! docker exec "$container_id" wget --no-verbose --tries=1 --spider \
-        --header="Host: ${public_host}" http://127.0.0.1:3000 >/dev/null; then
-        echo "The container is healthy but rejected the canonical host probe." >&2
-        exit 1
-      fi
+      for required_route in / /desk /projects /sidequest /en-gb/desk; do
+        if ! docker exec "$container_id" wget --no-verbose --tries=1 --spider \
+          --header="Host: ${public_host}" "http://127.0.0.1:3000${required_route}" >/dev/null; then
+          echo "The container is healthy but failed the canonical ${required_route} route probe." >&2
+          exit 1
+        fi
+      done
 
       response_headers=$(docker exec "$container_id" wget --server-response --tries=1 --spider \
         --header="Host: ${public_host}" http://127.0.0.1:3000 2>&1)
@@ -159,10 +195,22 @@ for _ in {1..45}; do
           echo "The public production CSP unexpectedly permits unsafe-eval." >&2
           exit 1
         fi
+        for required_route in /desk /projects /sidequest /en-gb/desk; do
+          route_status=$(curl --silent --show-error --head --location \
+            --proto "=https" --proto-redir "=https" --tlsv1.2 \
+            --max-redirs 3 --max-time 20 --retry 3 --retry-delay 2 \
+            --output /dev/null --write-out '%{http_code}' \
+            "${homepage_public_origin}${required_route}")
+          if [[ "$route_status" != 2* ]]; then
+            echo "The public ${required_route} route returned HTTP ${route_status}." >&2
+            exit 1
+          fi
+        done
         echo "Public HTTPS origin is responding."
       else
         echo "Set VERIFY_PUBLIC_ORIGIN=1 to verify the public HTTPS route after proxy/DNS changes."
       fi
+      deployment_verified=1
       exit 0
       ;;
     unhealthy|exited|dead)

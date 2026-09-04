@@ -27,20 +27,24 @@ const nextConfig: NextConfig = {
   ...(isolatedDistDir ? { distDir: isolatedDistDir } : {}),
   // Permit the canonical HTTPS hostname as well as trusted LAN development
   // origins. Production requests are additionally host-checked in middleware.
-  allowedDevOrigins: ["127.0.0.1", "192.168.*.*", "10.*.*.*", "me.samuelzhang.co.uk"],
+  allowedDevOrigins: ["127.0.0.1", "host.docker.internal", "192.168.*.*", "10.*.*.*", "me.samuelzhang.co.uk"],
   output: "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,
   productionBrowserSourceMaps: false,
   images: {
-    // Only three reviewed local assets use next/image. Constraining both the
+    // Only reviewed local assets use next/image. Constraining both the
     // source path and quality prevents the optimiser becoming an open cache or
     // CPU-amplification surface on the LAN-facing container.
     localPatterns: [
       { pathname: "/coverd-logo-black-on-transparent.png" },
       { pathname: "/headshot.jpg" },
       { pathname: "/projects/neural-cfd-surrogates/cylinder-wake.png" },
+      { pathname: "/hackathons/runhack/building-in-motion.jpg" },
+      { pathname: "/hackathons/runhack/community-track-group.jpg" },
+      { pathname: "/hackathons/runhack/samuel-rain-lap.jpg" },
+      { pathname: "/hackathons/runhack/sidequest-live.jpg" },
     ],
     remotePatterns: [],
     qualities: [75],

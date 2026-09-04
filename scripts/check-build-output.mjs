@@ -4,6 +4,11 @@ import { join, relative, resolve, sep } from "node:path";
 const outputRoot = resolve(process.cwd(), process.argv[2] || process.env.NEXT_DIST_DIR?.trim() || ".next");
 const staticRoot = join(outputRoot, "static");
 const standaloneRoot = join(outputRoot, "standalone");
+const MAX_BROWSER_FILES = 120;
+const MAX_BROWSER_BYTES = 4 * 1024 * 1024;
+const MAX_RUNTIME_FILES = 2_500;
+const MAX_APPLICATION_RUNTIME_BYTES = 4 * 1024 * 1024;
+const formatMiB = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MiB`;
 
 const credentialMarkers = [
   {
@@ -98,7 +103,22 @@ for (const path of standaloneFiles) {
   }
 }
 
-const formatMiB = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MiB`;
+if (staticFiles.length > MAX_BROWSER_FILES) {
+  throw new Error(`Browser output contains ${staticFiles.length} files; budget is ${MAX_BROWSER_FILES}.`);
+}
+if (staticBytes > MAX_BROWSER_BYTES) {
+  throw new Error(`Browser output is ${formatMiB(staticBytes)}; budget is ${formatMiB(MAX_BROWSER_BYTES)}.`);
+}
+if (standaloneFiles.length > MAX_RUNTIME_FILES) {
+  throw new Error(`Standalone output contains ${standaloneFiles.length} traced files; budget is ${MAX_RUNTIME_FILES}.`);
+}
+if (applicationRuntimeBytes > MAX_APPLICATION_RUNTIME_BYTES) {
+  throw new Error(
+    `Application runtime is ${formatMiB(applicationRuntimeBytes)}; `
+    + `budget is ${formatMiB(MAX_APPLICATION_RUNTIME_BYTES)}.`,
+  );
+}
+
 console.log(
   `Production output gate: ${staticFiles.length} browser files (${formatMiB(staticBytes)}), `
   + `${standaloneFiles.length} traced runtime files; application runtime ${formatMiB(applicationRuntimeBytes)}.`,

@@ -50,7 +50,9 @@ function applyCanonicalProductionHeaders(request: NextRequest, response: NextRes
   // troubleshooting retains the common security policy from next.config.ts.
   if (process.env.NODE_ENV === "production" && requestHostname(request) === CANONICAL_PUBLIC_HOST) {
     response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
-    response.headers.set("Strict-Transport-Security", "max-age=31536000");
+    // Match the edge policy so duplicate proxy/app headers cannot weaken the
+    // browser's effective HSTS directive depending on header ordering.
+    response.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
   }
   return response;
 }

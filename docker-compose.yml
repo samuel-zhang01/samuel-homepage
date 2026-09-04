@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: samuel-homepage:production
     container_name: samuel-homepage
     ports:
       # Bind to the LAN interface on the deployment host so the HTTPS reverse
@@ -22,6 +23,7 @@ services:
     cap_drop:
       - ALL
     pids_limit: 100
+    cpus: "${HOMEPAGE_CPU_LIMIT:-1.0}"
     mem_limit: 512m
     logging:
       driver: json-file

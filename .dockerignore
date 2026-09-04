@@ -7,6 +7,7 @@ yarn-error.log*
 # Next.js
 .next/
 .next-build/
+.next-*/
 out/
 *.tsbuildinfo
 
@@ -51,7 +52,14 @@ deploy.env.example
 # Documentation
 README.md
 *.md
-others/
+
+# Locale validation reads only these reviewed source CVs during the builder
+# stage. Keep every other authoring document out of the Docker context.
+others/*
+!others/localised-cv/
+others/localised-cv/*
+!others/localised-cv/Samuel-Zhang-Applied-AI-CV-en-US.tex
+!others/localised-cv/Samuel-Zhang-Applied-AI-CV-zh-TW.tex
 
 # Local credentials and private keys never enter the build context
 **/.npmrc
