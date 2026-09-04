@@ -109,6 +109,7 @@ export type ProjectArchiveCopy = {
     resultsStatus: string;
   };
   detail: {
+    skipToInteractive: string;
     interactiveDemoAria: string;
     detailsAria: string;
     archiveMapAria: string;
@@ -209,7 +210,7 @@ const enGB: ProjectArchiveCopy = {
     interactive: "experiences",
     suites: "suites",
     redacted: "redacted",
-    languageNotice: "Interface: English (UK) · Source-derived project titles remain in British English.",
+    languageNotice: "Interface: English (UK) · Project titles, Portfolio Map analysis, evidence narratives and interactive labs remain in British English.",
   },
   views: {
     aria: "Project Archive views",
@@ -343,6 +344,7 @@ const enGB: ProjectArchiveCopy = {
     resultsStatus: "{count} projects shown. {title} selected. Its project details are ready.",
   },
   detail: {
+    skipToInteractive: "Skip to interactive lab ↓",
     interactiveDemoAria: "Interactive project view: {title}",
     detailsAria: "{title} project details",
     archiveMapAria: "Interactive project archive map",
@@ -469,10 +471,11 @@ const enUS: ProjectArchiveCopy = {
   ...enGB,
   header: {
     ...enGB.header,
-    languageNotice: "Interface: English (US) · Source-derived project titles remain in British English.",
+    languageNotice: "Interface: English (US) · Project titles, Portfolio Map analysis, evidence narratives and interactive labs remain in British English.",
   },
   guided: {
     ...enGB.guided,
+    latestDate: "AUG 29, 2026",
     heroDescription: "Read the latest field note, try a stand-out interactive project, or browse the complete archive by the problem being solved.",
     reconciliation: "14 guided experiences organize all 27 interactive chapters; four non-demo files remain available; all 31 canonical project links stay intact.",
     shelves: {
@@ -482,6 +485,14 @@ const enUS: ProjectArchiveCopy = {
         description: "Worked examples in spectral assignment, thermodynamic modeling and computational-chemistry kernels.",
       },
     },
+  },
+  layout: {
+    ...enGB.layout,
+    catalogueFocus: "Catalog focus",
+  },
+  detail: {
+    ...enGB.detail,
+    skipToInteractive: "Skip to interactive lab ↓",
   },
   actions: {
     ...enGB.actions,
@@ -510,7 +521,7 @@ const zhCN: ProjectArchiveCopy = {
     interactive: "个专题体验",
     suites: "个专题",
     redacted: "项已隐去",
-    languageNotice: "界面：简体中文 · 源自原始资料的项目标题保留英式英语。",
+    languageNotice: "界面：简体中文 · 项目标题、Portfolio Map 分析说明、证据叙述与互动实验室保留英式英语原文。",
   },
   views: {
     aria: "项目档案视图",
@@ -537,7 +548,7 @@ const zhCN: ProjectArchiveCopy = {
     latestTitle: "如果只有正在跑步的人才能构建产品，会发生什么？",
     latestDescription: "雨中完成 44 公里团队接力，100 多名开发者参与，用语音构建一款社交跑步应用，并最终获得第二名。",
     latestAction: "阅读 RUN/HACK 现场记录",
-    latestImageAlt: "Samuel 与另一位参与者在伦敦体育场社区跑道上边移动边使用手机。",
+    latestImageAlt: "Samuel 与另一位参与者在伦敦体育场社区跑道上一边移动，一边使用手机。",
     shelvesEyebrow: "浏览全部项目 / 六类问题",
     shelvesTitle: "按待解决的问题浏览",
     shelvesDescription: "打开一个抽屉，再查看其中的体验及各自的证据档案。",
@@ -644,6 +655,7 @@ const zhCN: ProjectArchiveCopy = {
     resultsStatus: "当前显示 {count} 个项目。已选择 {title}，其项目详情已就绪。",
   },
   detail: {
+    skipToInteractive: "跳至互动实验室 ↓",
     interactiveDemoAria: "互动项目视图：{title}",
     detailsAria: "{title} 项目详情",
     archiveMapAria: "互动项目档案地图",
@@ -776,7 +788,7 @@ const zhTW: ProjectArchiveCopy = {
     interactive: "個專題體驗",
     suites: "個專題",
     redacted: "項已隱去",
-    languageNotice: "介面：繁體中文 · 源自原始資料的專案標題保留英式英語。",
+    languageNotice: "介面：繁體中文 · 專案標題、Portfolio Map 分析說明、證據敘述與互動實驗室保留英式英語原文。",
   },
   views: {
     aria: "專案檔案檢視",
@@ -798,12 +810,12 @@ const zhTW: ProjectArchiveCopy = {
     startEyebrow: "精選專案 · 建議從這裡開始",
     startTitle: "透過一個問題選擇專案",
     startDescription: "四個代表性互動導覽；每個問題都會開啟一個獨立專案。",
-    latestEyebrow: "最新現場記錄 · 跑步黑客松",
+    latestEyebrow: "最新現場記錄 · 跑步駭客松",
     latestDate: "2026 年 8 月 29 日",
     latestTitle: "如果只有正在跑步的人才能建構產品，會發生什麼？",
     latestDescription: "在雨中完成 44 公里團隊接力，100 多名開發者參與，以語音建構一款社交跑步應用程式，最終獲得第二名。",
     latestAction: "閱讀 RUN/HACK 現場記錄",
-    latestImageAlt: "Samuel 與另一位參與者在倫敦體育場社區跑道上邊移動邊使用手機。",
+    latestImageAlt: "Samuel 與另一位參與者在倫敦體育場社區跑道上一邊移動，一邊使用手機。",
     shelvesEyebrow: "瀏覽全部專案 / 六類問題",
     shelvesTitle: "依待解決的問題瀏覽",
     shelvesDescription: "開啟一個抽屜，再查看其中的體驗及各自的證據檔案。",
@@ -845,7 +857,7 @@ const zhTW: ProjectArchiveCopy = {
       },
       "systems-reproducibility": {
         title: "讓技術系統可以重現",
-        description: "透過環境解析、基礎設施邊界與小型程式碼稽核，明確說明可重現性可以及無法證明的內容。",
+        description: "透過環境解析、基礎設施邊界與小型程式碼稽核，明確說明可重現性可以證明及無法證明的內容。",
       },
       "learning-strategy": {
         title: "學習、解釋並檢驗新創想法",
@@ -910,6 +922,7 @@ const zhTW: ProjectArchiveCopy = {
     resultsStatus: "目前顯示 {count} 個專案。已選擇 {title}，其專案詳情已就緒。",
   },
   detail: {
+    skipToInteractive: "跳至互動實驗室 ↓",
     interactiveDemoAria: "互動專案檢視：{title}",
     detailsAria: "{title} 專案詳情",
     archiveMapAria: "互動專案檔案地圖",
@@ -960,7 +973,7 @@ const zhTW: ProjectArchiveCopy = {
     systemSeven: "SYSTEM 7",
     inDesktop: "在桌面中",
     emptyTitle: "此專案檔案即為公開展示頁面。",
-    emptyDescription: "此項目未附帶外部材料。",
+    emptyDescription: "此專案未附帶外部材料。",
     shareTitle: "分享此專案",
     shareDescription: "建立此專案的直接連結，同時保留目前語言路徑。",
     directAddress: "直接網址",
@@ -974,7 +987,7 @@ const zhTW: ProjectArchiveCopy = {
     visitCoverd: "造訪 COVERD",
     visitWebsite: "造訪專案網站",
     sourceNoLicence: "查看來源快照 · 未聲明授權條款",
-    viewRepository: "查看程式碼倉庫",
+    viewRepository: "查看程式碼儲存庫",
     openLab: "開啟 {title}",
     openSuite: "開啟 {title}",
     suiteChapter: "專題章節 {chapter} / {total}",
@@ -1028,7 +1041,7 @@ const zhTW: ProjectArchiveCopy = {
     NOTEBOOK: "筆記本",
     "CASE STUDY": "案例研究",
     SOURCE: "原始碼",
-    "PUBLIC REPO": "公開倉庫",
+    "PUBLIC REPO": "公開儲存庫",
   },
 };
 

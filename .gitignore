@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /.next-build/
+/.next-*/
 /out/
 
 # production
@@ -79,3 +80,6 @@ next-env.d.ts
 /public/projects/**/*.pth
 /public/projects/**/*.pt
 /public/projects/**/*.ckpt
+
+# Generated from the pinned pdfjs-dist dependency for native browser loading.
+/public/_vendor/pdfjs/

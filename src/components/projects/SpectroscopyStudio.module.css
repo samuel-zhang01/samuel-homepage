@@ -766,7 +766,6 @@
   place-items: center;
   padding: 20px;
   background: rgba(10, 11, 16, 0.62);
-  backdrop-filter: blur(2px);
 }
 
 .exportDialog {

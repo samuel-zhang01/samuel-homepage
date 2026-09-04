@@ -792,7 +792,7 @@ export function MolecularRecognitionStudio() {
             type="button"
             role="tab"
             aria-selected={activeTab === tab.id}
-            aria-controls={`recognition-panel-${tab.id}`}
+            aria-controls={activeTab === tab.id ? `recognition-panel-${tab.id}` : undefined}
             tabIndex={activeTab === tab.id ? 0 : -1}
             onClick={() => setActiveTab(tab.id)}
             onKeyDown={(event) => handleStudioTabKey(event, index)}

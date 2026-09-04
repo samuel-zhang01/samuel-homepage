@@ -1,5 +1,5 @@
 import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
-import { translateText, type Locale } from "@/lib/i18n";
+import { toTraditionalMandarin, translateText, type Locale } from "@/lib/i18n";
 
 /**
  * RUN/HACK is deliberately self-contained: the field journal can be opened as a
@@ -339,22 +339,10 @@ const traditionalPhrases: Array<[string, string]> = [
   ["报道", "報導"],
 ];
 
-const traditionalCharacterPairs = "这這规規则則与與计計围圍们們产產里裡摄攝园園赛賽后後过過伦倫赶趕条條线線开開发發体體场場区區现現实實时時说說复復风風断斷袭襲来來边邊个個环環队隊挥揮须須暂暫检檢点點双雙轮輪机機换換让讓续續进進动動当當码碼间間离離约約钟鍾历歷结結随隨评評选選决決块塊团團获獲奖獎项項难難达達并並从從兰蘭飞飛仅僅数數据據访訪问問处處压壓组組犹猶为為证證战戰题題户戶创創权權标標准準却卻胜勝预預见見仪儀竞競潜潛愿願执執运運讲講签籤热熱余餘键鍵盘盤继繼织織验驗变變尝嘗试試带帶顺順畅暢转轉记記响響湿溼寻尋对對伙夥语語云雲踪蹤网網络絡连連广廣业業乐樂补補齐齊观觀轻輕谈談录錄强強内內鲜鮮测測稳穩绩績匀勻视視护護训訓练練缩縮坚堅干幹请請导導汇匯总總经經较較确確盖蓋范範诊診给給认認诺諾际際将將长長尔爾轨軌着著势勢尽盡设設绕繞员員还還静靜笔筆电電脑腦传傳递遞洼窪议議惫憊东東应應装裝饰飾输輸许許于於会會启啟话話负負责責门門槛檻资資审審没沒报報贡貢献獻称稱赞贊临臨庆慶鸣鳴谢謝额額励勵务務识識隐隱读讀画畫绝絕适適构構浏瀏覽覽储儲协協择擇头頭晕暈异異气氣担擔忧憂惩懲罚罰绪緒麦麥终終几幾赠贈术術属屬样樣众眾级級陈陳柜櫃参參号號欧歐届屆台臺纪紀";
-
-const traditionalCharacters = new Map<string, string>(
-  Array.from({ length: traditionalCharacterPairs.length / 2 }, (_, index) => [
-    traditionalCharacterPairs[index * 2],
-    traditionalCharacterPairs[index * 2 + 1],
-  ]),
-);
-
 function toTraditional(text: string) {
-  let translated = text.replaceAll("公里", "\uE000");
+  let translated = text;
   traditionalPhrases.forEach(([from, to]) => { translated = translated.replaceAll(from, to); });
-  return [...translated]
-    .map((character) => traditionalCharacters.get(character) ?? character)
-    .join("")
-    .replaceAll("\uE000", "公里")
+  return toTraditionalMandarin(translated)
     .replaceAll("“", "「")
     .replaceAll("”", "」");
 }

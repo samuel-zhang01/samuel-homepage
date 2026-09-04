@@ -664,7 +664,7 @@ export function BanditStudio() {
             type="button"
             role="tab"
             aria-selected={view === tab.id}
-            aria-controls={`bandit-panel-${tab.id}`}
+            aria-controls={view === tab.id ? `bandit-panel-${tab.id}` : undefined}
             tabIndex={view === tab.id ? 0 : -1}
             onClick={() => setView(tab.id)}
             onKeyDown={(event) => handleViewKey(event, index)}

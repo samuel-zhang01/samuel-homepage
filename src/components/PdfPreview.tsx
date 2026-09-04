@@ -171,12 +171,14 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
 
     void (async () => {
       try {
-        const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
+        // Load the pinned browser bundle natively. Sending PDF.js through the
+        // current Next development-module wrapper corrupts its ESM namespace
+        // before getDocument() runs. `prepare:pdfjs` copies this exact package
+        // asset to same-origin public storage for both dev and production.
+        const pdfJsUrl = "/_vendor/pdfjs/pdf.min.mjs";
+        const pdfjs = await import(/* webpackIgnore: true */ pdfJsUrl) as typeof import("pdfjs-dist");
         if (!pdfjs.GlobalWorkerOptions.workerSrc) {
-          pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-            "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
-            import.meta.url,
-          ).toString();
+          pdfjs.GlobalWorkerOptions.workerSrc = "/_vendor/pdfjs/pdf.worker.min.mjs";
         }
         const loadingTask = pdfjs.getDocument({
           url: src,
@@ -277,7 +279,12 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
           />
         ))}
         {!documentProxy && !error && <p className="pdf-reader__loading">{translateText(locale, "Loading document…")}</p>}
-        {error && <p className="pdf-reader__error">{translateText(locale, "The built-in preview could not render this file.")}</p>}
+        {error && (
+          <p className="pdf-reader__error">
+            <span>{translateText(locale, "The built-in preview could not render this file.")}</span>
+            <a href={src}>{translateText(locale, "Open this document in the current tab")}</a>
+          </p>
+        )}
       </div>
     </div>
   );

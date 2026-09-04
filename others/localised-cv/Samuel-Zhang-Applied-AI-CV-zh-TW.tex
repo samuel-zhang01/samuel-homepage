@@ -3,8 +3,12 @@
 
 % Samuel Zhang 的應用人工智慧履歷（繁體中文）。使用 XeLaTeX 編譯。
 \usepackage{fontspec}
-\setmainfont{TeX Gyre Termes}
-\setCJKmainfont[AutoFakeBold=2.2,AutoFakeSlant=.16]{AR PL Mingti2L Big5}
+\IfFontExistsTF{TeX Gyre Termes}
+  {\setmainfont{TeX Gyre Termes}}
+  {\setmainfont{Times New Roman}}
+\IfFontExistsTF{AR PL Mingti2L Big5}
+  {\setCJKmainfont[AutoFakeBold=2.2,AutoFakeSlant=.16]{AR PL Mingti2L Big5}}
+  {\setCJKmainfont[AutoFakeBold=2.2,AutoFakeSlant=.16]{Songti TC}}
 \usepackage[top=1.35cm,bottom=1.35cm,left=1.45cm,right=1.45cm]{geometry}
 \usepackage{enumitem}
 \usepackage{tabularx}
@@ -55,7 +59,7 @@
 
 \begin{center}
   {\huge\bfseries Samuel Zhang}\\[2pt]
-  {\large\bfseries 應用人工智慧工程師 \textperiodcentered{} 產品構建者 \textperiodcentered{} 創辦人}\\[4pt]
+  {\large\bfseries 應用人工智慧工程師 \textperiodcentered{} 產品開發者 \textperiodcentered{} 創辦人}\\[4pt]
   \small
   英國倫敦 \enspace\textbullet\enspace
   \href{tel:+447502118207}{+44 7502 118207} \enspace\textbullet\enspace
@@ -68,7 +72,7 @@
 \end{center}
 
 \section{個人簡介}
-應用人工智慧工程師與創業者，專門處理定義模糊、仰賴領域知識的產品問題。目前從事客戶保密的負責任人工智慧研究，並開發 COVERD。這款產品接入現有 ATS，審閱申請資料、保留證據，並向招募方提供附有理由的候選人排序；語音面試可在資料不足時補充證據。此前交付了內部企業產品 GROWMAT，外部展示記錄了它的架構與成果；即時公司資料、原始碼、憑據及未公開的營運資訊仍保持保密。
+應用人工智慧工程師與創業者，專門處理定義模糊、仰賴領域知識的產品問題。目前從事客戶保密的負責任人工智慧研究，並開發 COVERD。這款產品串接現有 ATS，審閱申請資料、保留證據，並向招募方提供附有理由的候選人排序；語音面試可在資料不足時補充證據。先前交付了內部企業產品 GROWMAT，外部展示記錄了它的架構與成果；即時公司資料、原始碼、憑證及未公開的營運資訊仍保持保密。
 
 \section{核心能力}
 \textbf{人工智慧與機器學習：}多智慧代理系統、檢索增強生成與資訊檢索、大語言模型與嵌入評估、文件智慧、學習排序、建模與實驗設計
@@ -82,13 +86,13 @@
 \primaryrole{資深協調員——數位轉型策略實習}{Marsh \textperiodcentered{} 策略與企業發展集團}{2026 年 5 月—至今}{英國倫敦}
 \begin{itemize}
   \item 在受監管的保險環境中開展客戶保密的應用人工智慧研究，採用有記錄的評估方法、人工監督與部署保護措施。
-  \item 將證據轉化為決策支持，同時對營運資料、模型設計與研究結果保密。
+  \item 將證據轉化為決策支援，同時對營運資料、模型設計與研究結果保密。
 \end{itemize}
 
 \role{\href{https://coverd.ai}{COVERD}}{創辦人兼產品負責人（兼職）}{2026 年 3 月—至今}{英國倫敦}
 \begin{itemize}
   \item 帶領四家早期設計合作夥伴的客戶探索並從候選人端履歷工具轉型；截至 2026 年 4 月，曾在 20 場候選人面試中測試三種語音面試架構。
-  \item 將 COVERD 重構為接入現有 ATS 的招募智慧層，按專業面向審閱每份申請，並保留證據供招募方核查。
+  \item 將 COVERD 重構為串接現有 ATS 的招募智慧層，按專業面向審閱每份申請，並保留證據供招募方查核。
   \item 產生附有理由的候選人排序，最終決定由招募方作出；自動語音面試為可選功能，用於補充申請資料中缺少的資訊。
 \end{itemize}
 
@@ -99,8 +103,8 @@
 
 \role{輝瑞分析研發}{大學部資料分析實習生}{2023 年 9 月—2024 年 8 月}{英國桑威奇}
 \begin{itemize}
-  \item 在受監管的研發環境中構建並交付 GROWMAT，改進內部規劃流程並推動更廣泛的產品採用。
-  \item 參與產品探索、全棧交付、可靠性與變更管理；外部展示已公開，而即時公司資料、原始碼、憑據及未公開的營運背景仍保持保密。
+  \item 在受監管的研發環境中建置並交付 GROWMAT，改進內部規劃流程並推動更廣泛的產品採用。
+  \item 參與產品探索、全端交付、可靠性與變更管理；外部展示已公開，而即時公司資料、原始碼、憑證及未公開的營運背景仍保持保密。
   \item 探索面向藥物研究的科學建模流程；資料集、參數與研究結果均保持保密。
 \end{itemize}
 
@@ -108,7 +112,7 @@
 
 \section{教育}
 \role{帝國理工學院}{人工智慧應用與創新理學碩士——預計優秀等級}{2025 年 9 月—2026 年 9 月}{英國倫敦}
-深度學習、人工智慧安全、創新管理、醫學影像機器學習、氣候變化機器學習
+深度學習、人工智慧安全、創新管理、醫學影像機器學習、氣候變遷機器學習
 
 \role{倫敦國王學院}{化學與生物醫學理學學士——一等榮譽學位}{2021 年 9 月—2025 年 5 月}{英國倫敦}
 專業實習；計算化學、分子生物學、化學生物學、有機化學；倫敦國王學院 AKC 資格
@@ -123,24 +127,24 @@
 
 \role{倫敦國王學院}{暑期研究計畫}{2023 年 6—7 月}{英國倫敦}
 \begin{itemize}
-  \item 配置並記錄支援 GPU 的 WSL 2/CUDA/Docker 環境，完成容器化 GROMACS 拓撲預處理檢查點，並明確審計可重現性缺口。
+  \item 設定並記錄支援 GPU 的 WSL 2/CUDA/Docker 環境，完成容器化 GROMACS 拓撲預處理檢查點，並明確稽核可重現性缺口。
 \end{itemize}
 
 \role{倫敦國王學院}{大學部研究員}{2022 年 6—7 月}{英國倫敦}
 \begin{itemize}
-  \item 為轉動光譜分析建構 MATLAB、Python 與 Excel 工具；以共同作者身分列入 \href{https://isms.illinois.edu/2025/schedule/schedule_session.php?sID=1669}{2025 年國際分子光譜學研討會（ISMS）會議紀錄}。
+  \item 為轉動光譜分析開發 MATLAB、Python 與 Excel 工具；以共同作者身分列入 \href{https://isms.illinois.edu/2025/schedule/schedule_session.php?sID=1669}{2025 年國際分子光譜學研討會（ISMS）會議紀錄}。
 \end{itemize}
 
 \role{新加坡民防部隊}{指揮官私人助理 / 中士}{2019 年 7 月—2021 年 7 月}{新加坡}
 \begin{itemize}
-  \item 在新冠應急行動期間，基於公開流行病學資料構建決策支持與流程自動化；人員記錄、營運流程與規模資訊均受保護。
-  \item 在時間緊迫的行動中支持高級領導，在資訊不完整的情況下兼顧快速排序、執行責任與大規模人員運作。
+  \item 在新冠應變行動期間，運用公開流行病學資料建置決策支援與流程自動化；人員記錄、營運流程與規模資訊均受保護。
+  \item 在時間緊迫的行動中支援高階主管，在資訊不完整的情況下兼顧快速排序、執行責任與大規模人員運作。
 \end{itemize}
 
 \section{精選技術專案}
 \begin{itemize}
   \item \project{家庭實驗室與私有人工智慧基礎設施——}{維護私有 Proxmox/Docker 家庭實驗室；公開稽核僅涵蓋一個六服務 Compose 切片、一項宣告的每日 PostgreSQL 備份工作，並明確列出復原演練、健康檢查與復原證據缺口。}
-  \item \project{隨機市場衝擊模擬器——}{建構 Julia 單一股票模擬，涵蓋情緒偏置的買賣事件、按數量縮放的隨機價格衝擊、累計成交量與價格歷史統計；另以固定種子的瀏覽器審計發現並修正原始每日指標視窗錯誤。}
+  \item \project{隨機市場衝擊模擬器——}{建置 Julia 單一股票模擬，涵蓋情緒偏置的買賣事件、按數量縮放的隨機價格衝擊、累計成交量與價格歷史統計；另以固定種子的瀏覽器稽核發現並修正原始每日指標視窗錯誤。}
 \end{itemize}
 
 \section{獎項與其他資訊}
@@ -152,7 +156,7 @@
 \begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.7em}}X@{}}
 音樂 & 競技銅管樂團次中音號手，所在樂團獲 UniBrass 第四名；參與三部音樂劇，其中一部由自己執導、編寫並作曲。\\[1pt]
 攝影 & 曾是專業婚禮攝影師；如今為創作本身，也為自然、朋友與人們臉上的笑容而攝影。\\[1pt]
-構建 & 組裝電腦並維護私有家庭基礎設施，電費也日益顯眼。\\[1pt]
+動手創作 & 組裝電腦並維護私有家庭基礎設施，電費也日益顯眼。\\[1pt]
 其他 & 徒步、攀登、科幻與旅行。
 \end{tabularx}
 

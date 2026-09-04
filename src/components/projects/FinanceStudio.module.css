@@ -1511,3 +1511,242 @@
     border-bottom: 1px solid var(--ocean-line);
   }
 }
+
+/* System 7 surface pass: preserve financial status colours and chart marks,
+   but move the control room from a dark glass dashboard to a light utility. */
+.financeStudio {
+  --ocean-abyss: #111;
+  --ocean-deep: #e5e5e0;
+  --ocean-surface: #f4f4ef;
+  --ocean-surface-2: #d8d8d3;
+  --ocean-line: #666;
+  --ocean-foam: #111;
+  --ocean-mist: #4d5b60;
+  --ocean-teal: #087f78;
+  --ocean-cyan: #087b91;
+  --ocean-blue: #28669e;
+  --ocean-kelp: #1e754f;
+  --ocean-coral: #a52f42;
+  --ocean-amber: #8a5a00;
+  color: #111;
+  font-family: var(--system-font);
+}
+
+.sourceScale dd,
+.financeStudio code,
+.financeStudio output {
+  font-family: var(--system-mono);
+}
+
+.privacyBanner,
+.sourceScale {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #e8e8e3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
+}
+
+.privacyBanner > span,
+.privacyBanner code,
+.sourceScale dl > div {
+  border-color: #777;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #bbb;
+}
+
+.privacyBanner strong,
+.privacyBanner p,
+.sourceScale p,
+.sourceScale dt {
+  color: #333;
+}
+
+.viewTabs {
+  border: 2px solid #111;
+  border-bottom: 0;
+  background: #bfbfba;
+}
+
+.viewTabs button {
+  border-color: #555;
+  border-radius: 0;
+  color: #333;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.viewTabs .activeView {
+  color: #111;
+  background: #fff;
+  box-shadow: inset 0 3px 0 var(--ocean-teal), inset 1px 1px 0 #777;
+}
+
+.viewTabs .activeView span {
+  color: #555;
+}
+
+.oceanCanvas {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #e8e8e3;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.scopeBar,
+.ledgerFilters,
+.controlPanel,
+.checkControl {
+  border-color: #777;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.scopeBar select,
+.ledgerFilters select,
+.ledgerFilters input {
+  border-color: #555;
+  color: #111;
+  background: #fff;
+}
+
+.rangeSwitch button,
+.importMode button,
+.thresholdStrip button,
+.panelTitle > button,
+.runButton {
+  border-color: #555;
+  border-radius: 0;
+  color: #111;
+  background: #e5e5e0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.rangeSwitch .active,
+.importMode .active,
+.thresholdStrip .active,
+.runButton {
+  border-color: #111;
+  color: #fff;
+  background: var(--selection);
+  box-shadow: inset 1px 1px 0 #777, 2px 2px 0 #555;
+}
+
+.metricCard {
+  border-color: #777;
+  border-radius: 0;
+  color: #111;
+  background: #f4f4ef;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
+}
+
+.metricCard.teal {
+  border-color: var(--ocean-teal);
+  background: #e5f1ee;
+}
+
+.oceanPanel {
+  border: 1px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 0 #777;
+}
+
+.panelTitle {
+  border-color: #111;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.panelTitle h3,
+.panelTitle > button,
+.legend,
+.flowPeriod,
+.reconcileBar,
+.accountList article > div strong,
+.accountList article > strong,
+.ledgerTotals,
+.inspector,
+.methodNote,
+.transferFootnote,
+.importReceipt,
+.auditNotes p {
+  color: #111;
+}
+
+.flowChart {
+  background: repeating-linear-gradient(to top, #e2e2dd 0 1px, transparent 1px 42px), #fff;
+}
+
+.reconcileBar,
+.ledgerFilters,
+.ledgerTotals,
+.signatureBox,
+.matchFormula,
+.checkControl,
+.transferFootnote,
+.importReceipt,
+.auditNotes p {
+  border-color: #777;
+  background: #f4f4ef;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.signalGood {
+  color: #174c34;
+  background: #e4f1e8;
+}
+
+.signalWarn {
+  color: #5d4200;
+  background: #fff4cc;
+}
+
+.categoryBars > div > div {
+  border: 1px solid #777;
+  background: #d8d8d3;
+}
+
+.ledgerTable thead,
+.patternTable thead,
+.auditTable thead,
+.ledgerTable th,
+.patternTable th,
+.auditTable th {
+  color: #111;
+  background: #d8d8d3;
+}
+
+.ledgerTable td,
+.patternTable td,
+.auditTable td {
+  border-color: #bbb;
+  color: #333;
+  background: #fff;
+}
+
+.ledgerTable tbody tr:nth-child(even),
+.patternTable tbody tr:nth-child(even),
+.auditTable tbody tr:nth-child(even) {
+  background: #f0f0eb;
+}
+
+.ledgerTable tbody tr:hover,
+.patternTable tbody tr:hover,
+.auditTable tbody tr:hover,
+.ledgerTable .selectedRow {
+  background: #e1e1f2;
+}
+
+.ledgerTotals,
+.signatureBox,
+.matchFormula,
+.transferFootnote,
+.importReceipt {
+  border: 2px solid #111;
+}

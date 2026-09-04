@@ -503,7 +503,7 @@ function TabButton({
       type="button"
       role="tab"
       aria-selected={active}
-      aria-controls={`cv-studio-panel-${tab.id}`}
+      aria-controls={active ? `cv-studio-panel-${tab.id}` : undefined}
       tabIndex={active ? 0 : -1}
       onClick={onSelect}
       onKeyDown={onKeyDown}

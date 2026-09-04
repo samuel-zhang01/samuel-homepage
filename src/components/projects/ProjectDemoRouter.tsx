@@ -3,15 +3,16 @@
 import dynamic from "next/dynamic";
 
 import type { ProjectDemoId } from "@/data/projects";
-import type { Locale } from "@/lib/i18n";
+import { translateText, type Locale } from "@/lib/i18n";
 import styles from "./ProjectDemoRouter.module.css";
-import { ProjectTranslationBoundary } from "./ProjectTranslationBoundary";
+import { ProjectTranslationBoundary, useProjectLocale } from "./ProjectTranslationBoundary";
 
 function DemoLoading() {
+  const locale = useProjectLocale();
   return (
     <div className={styles.loading} role="status" aria-live="polite">
       <span aria-hidden="true" />
-      <strong>OPENING INTERACTIVE FILE…</strong>
+      <strong>{translateText(locale, "OPENING INTERACTIVE FILE…")}</strong>
     </div>
   );
 }

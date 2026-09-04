@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { projects, type Project } from "@/data/projects";
-import type { Locale } from "@/lib/i18n";
+import { translateText, type Locale } from "@/lib/i18n";
 import { getProjectArchiveCopy } from "./projectArchiveI18n";
 import {
   projectShelfSpecs,
@@ -204,7 +204,6 @@ export function ProjectGuidedIndex({
               alt={copy.guided.latestImageAlt}
               fill
               sizes="(max-width: 700px) 100vw, 42vw"
-              unoptimized
             />
             <span className={styles.trackLines} aria-hidden="true" />
           </div>
@@ -348,8 +347,8 @@ export function ProjectGuidedIndex({
                               </span>
                               <span className={styles.experienceCopy}>
                                 <span className={styles.experienceMarker} lang={locale}>{copy.markers.demo}</span>
-                                <strong lang="en-GB">{experience.title}</strong>
-                                <span lang="en-GB">{experience.description}</span>
+                                <strong lang={experience.kind === "project" ? "en-GB" : locale}>{translateText(locale, experience.title)}</strong>
+                                <span lang={locale}>{translateText(locale, experience.description)}</span>
                               </span>
                               <span className={styles.standaloneActions} lang={locale}>
                                 <button
@@ -398,8 +397,8 @@ export function ProjectGuidedIndex({
                             </span>
                             <span className={styles.experienceCopy}>
                               <span className={styles.experienceMarker} lang={locale}>{copy.markers.suite}</span>
-                              <strong lang="en-GB">{experience.title}</strong>
-                              <span lang="en-GB">{experience.description}</span>
+                              <strong lang={locale}>{translateText(locale, experience.title)}</strong>
+                              <span lang={locale}>{translateText(locale, experience.description)}</span>
                             </span>
                             <span className={styles.experienceMeta} lang={locale}>
                               {experience.chapters.length}{" "}
@@ -489,7 +488,7 @@ export function ProjectGuidedIndex({
                               <span className={styles.resourceGlyph} aria-hidden="true">▤</span>
                               <span className={styles.resourceCopy}>
                                 <strong lang="en-GB">{project.title}</strong>
-                                <span lang="en-GB">{project.summary}</span>
+                                <span lang={locale}>{translateText(locale, project.summary)}</span>
                               </span>
                               <span className={styles.resourceMeta} lang={locale}>
                                 {copy.access[project.access].short} · {projectReferenceLabel(project, locale)}

@@ -10,8 +10,10 @@
   --desktop: #8587a8;
   --accent: #db2f3d;
   --amber: #f2c14f;
-  --system-font: Geneva, Charcoal, Chicago, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --system-mono: "Courier New", Courier, monospace;
+  --chrome-font: Chicago, Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
+  --system-font: Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
+  --system-mono: Monaco, "Courier New", Courier, monospace;
+  --label-tracking: .08em;
 }
 
 * {
@@ -85,7 +87,7 @@ body {
 .mac-titlebar,
 .system-toast,
 .mobile-window-guide {
-  font-family: var(--system-font);
+  font-family: var(--chrome-font);
 }
 
 ::selection {
@@ -444,14 +446,22 @@ body {
 
 [data-locale="zh-CN"],
 [data-locale="zh-TW"] {
-  --system-font: Geneva, Charcoal, Chicago, "Droid Sans Fallback", "AR PL KaitiM GB", Arial, sans-serif;
-  --system-mono: "Droid Sans Fallback", "AR PL KaitiM GB", "Courier New", monospace;
+  --chrome-font: Chicago, Geneva, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+  --system-font: Geneva, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+  --system-mono: Monaco, "PingFang SC", "Microsoft YaHei", "Noto Sans Mono CJK SC", monospace;
+  --label-tracking: 0;
   letter-spacing: 0;
 }
 
+[data-locale="zh-CN"] *,
+[data-locale="zh-TW"] * {
+  letter-spacing: 0 !important;
+}
+
 [data-locale="zh-TW"] {
-  --system-font: Geneva, Charcoal, Chicago, "Droid Sans Fallback", "AR PL KaitiM Big5", Arial, sans-serif;
-  --system-mono: "Droid Sans Fallback", "AR PL KaitiM Big5", "Courier New", monospace;
+  --chrome-font: Chicago, Geneva, "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "Source Han Sans TC", sans-serif;
+  --system-font: Geneva, "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", "Source Han Sans TC", sans-serif;
+  --system-mono: Monaco, "PingFang TC", "Microsoft JhengHei", "Noto Sans Mono CJK TC", monospace;
 }
 
 /* Desktop */
@@ -521,27 +531,60 @@ body {
 .desktop-hint {
   position: fixed;
   z-index: 1;
-  bottom: 13px;
-  left: 14px;
+  bottom: 18px;
+  left: 16px;
   display: flex;
   max-width: min(560px, calc(100vw - 28px));
   flex-direction: column;
   gap: 2px;
-  padding: 5px 8px;
-  color: rgba(255,255,255,.88);
-  background: rgba(0,0,0,.26);
+  padding: 6px 9px;
+  border: 1px solid #111;
+  border-radius: 7px;
+  color: #111;
+  background: #ffffcc;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 0 #555;
   font-size: 10px;
   letter-spacing: .03em;
 }
 
+.desktop-hint::before,
+.desktop-hint::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.desktop-hint::before {
+  bottom: -10px;
+  left: 18px;
+  border-width: 10px 10px 0 0;
+  border-color: #111 transparent transparent transparent;
+}
+
+.desktop-hint::after {
+  bottom: -7px;
+  left: 19px;
+  border-width: 8px 8px 0 0;
+  border-color: #ffffcc transparent transparent transparent;
+}
+
 .desktop-hint strong {
-  color: #fff;
+  color: #111;
   font-size: 11px;
 }
 
 .desktop-hint.has-selection {
-  background: rgba(17,23,122,.76);
-  box-shadow: 2px 2px 0 rgba(0,0,0,.35);
+  background: #ffffcc;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 0 #555;
+}
+
+.desktop-hint.has-selection strong {
+  align-self: flex-start;
+  padding: 1px 3px;
+  color: #fff;
+  background: var(--selection);
 }
 
 .window-switcher {
@@ -561,15 +604,15 @@ body {
 .pixel-icon {
   display: inline-grid;
   flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   filter: drop-shadow(1px 1px 0 rgba(0,0,0,.75));
 }
 
 .pixel-icon--small {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   filter: none;
 }
 
@@ -601,8 +644,8 @@ body {
 }
 
 .pixel-icon--coverd.pixel-icon--small .coverd-icon-plate {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-width: 1px;
   box-shadow: none;
 }
@@ -676,6 +719,10 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(-50%,-50%);
+}
+
+.mac-window.is-active .mac-titlebar h2 {
+  background: #fff;
 }
 
 .window-box {
@@ -893,6 +940,40 @@ body {
 
 .productivity-app-loading .eyebrow {
   color: #11177a;
+}
+
+.classic-module-loading {
+  display: grid;
+  width: 100%;
+  min-height: 180px;
+  flex: 1;
+  place-content: center;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.035) 0 1px, transparent 1px 4px),
+    #efefea;
+}
+
+.classic-module-loading > span {
+  display: block;
+  width: min(220px, 62vw);
+  height: 14px;
+  padding: 2px;
+  overflow: hidden;
+  border: 2px solid #111;
+  background: #fff;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
+}
+
+.classic-module-loading i {
+  display: block;
+  width: 44%;
+  height: 100%;
+  background: repeating-linear-gradient(135deg, #11177a 0 5px, #d9dcff 5px 10px);
+  animation: classic-module-loading 900ms steps(8, end) infinite alternate;
+}
+
+@keyframes classic-module-loading {
+  to { transform: translateX(127%); }
 }
 
 /* About */
@@ -1197,10 +1278,8 @@ body {
 .identity-switchboard button.identity-drawer--projects::before {
   position: absolute;
   z-index: 0;
-  inset: -5px;
+  inset: 3px;
   border: 1px dotted var(--selection);
-  outline: 1px solid #fff;
-  outline-offset: 1px;
   content: "";
   pointer-events: none;
 }
@@ -1246,8 +1325,8 @@ body {
 }
 
 .identity-switchboard button > .pixel-icon {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   justify-self: center;
 }
 
@@ -1288,7 +1367,6 @@ body {
 .identity-switchboard button.identity-drawer--projects:hover::before,
 .identity-switchboard button.identity-drawer--projects:focus-visible::before {
   border-color: #fff;
-  outline-color: var(--selection);
   animation: none;
 }
 
@@ -1491,23 +1569,22 @@ body {
 
 .coverd-app {
   min-height: 100%;
-  color: #131820;
-  background: #f7f7f4;
+  color: #111;
+  background: #efefea;
 }
 
 .coverd-hero {
   display: grid;
   grid-template-columns: 1.45fr .8fr;
-  color: #fff;
+  color: #111;
   background:
-    radial-gradient(circle at 12% 13%, rgba(73,128,255,.23), transparent 27%),
-    radial-gradient(circle at 78% 72%, rgba(225,118,38,.19), transparent 27%),
-    #10141c;
-  border-bottom: 4px solid #de712a;
+    repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 1px, transparent 1px 4px),
+    #deded9;
+  border-bottom: 3px double #111;
 }
 
 .coverd-brand {
-  padding: 35px 34px 32px;
+  padding: 22px 24px;
 }
 
 .coverd-kicker {
@@ -1520,11 +1597,11 @@ body {
 
 .coverd-brand h3 {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: clamp(49px, 7vw, 76px);
-  font-weight: 900;
-  line-height: .91;
-  letter-spacing: -.08em;
+  font-family: var(--system-font);
+  font-size: clamp(25px, 3.2vw, 34px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.02em;
 }
 
 .coverd-wordmark {
@@ -1535,9 +1612,8 @@ body {
 }
 
 .coverd-wordmark > img {
-  width: 58px;
-  height: 58px;
-  filter: invert(1);
+  width: 42px;
+  height: 42px;
 }
 
 .coverd-brand h3 span {
@@ -1547,10 +1623,10 @@ body {
 .coverd-brand > p {
   max-width: 570px;
   margin: 0;
-  color: #d9dde5;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 17px;
-  line-height: 1.42;
+  color: #333;
+  font-family: var(--system-font);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .coverd-actions {
@@ -1558,12 +1634,12 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 17px;
-  margin-top: 25px;
+  margin-top: 17px;
 }
 
 .coverd-actions > span {
-  color: #8f99aa;
-  font-family: "Courier New", monospace;
+  color: #555;
+  font-family: var(--system-mono);
   font-size: 8px;
   font-weight: 700;
   letter-spacing: .08em;
@@ -1574,36 +1650,42 @@ body {
   min-height: 29px;
   align-items: center;
   padding: 4px 12px;
-  border: 2px solid #fff;
+  border: 2px solid #111;
+  border-radius: 2px;
   color: #111;
-  background: #fff;
-  box-shadow: 3px 3px 0 #e4782e;
+  background: #e5e5e1;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
   font-size: 11px;
   font-weight: 700;
   text-decoration: none;
 }
 
 .coverd-link:hover {
+  background: #fff;
+}
+
+.coverd-link:active {
   color: #fff;
-  background: #e4782e;
+  background: #111;
+  box-shadow: none;
 }
 
 .founder-note {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 28px;
-  border-left: 1px solid rgba(255,255,255,.16);
-  background: rgba(255,255,255,.045);
+  padding: 20px;
+  border-left: 2px solid #111;
+  background: #fff4b8;
 }
 
 .founder-note > span {
   display: inline-block;
   width: fit-content;
   padding-bottom: 5px;
-  border-bottom: 2px solid #e4782e;
-  color: #e9a777;
-  font-family: "Courier New", monospace;
+  border-bottom: 2px solid #111;
+  color: #8a3f0b;
+  font-family: var(--system-mono);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: .08em;
@@ -1611,18 +1693,17 @@ body {
 
 .founder-note p {
   margin: 13px 0 0;
-  color: #dde0e6;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 13px;
-  font-style: italic;
-  line-height: 1.55;
+  color: #222;
+  font-family: var(--system-font);
+  font-size: 11px;
+  line-height: 1.48;
 }
 
 .coverd-thesis {
   display: grid;
   grid-template-columns: .9fr 1.1fr;
-  gap: 35px;
-  padding: 30px 34px;
+  gap: 24px;
+  padding: 22px 24px;
   border-bottom: 2px solid #111;
   background:
     repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0 1px, transparent 1px 4px),
@@ -1631,10 +1712,10 @@ body {
 
 .coverd-thesis h4 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(24px, 3.5vw, 35px);
-  line-height: 1.06;
-  letter-spacing: -.035em;
+  font-family: var(--system-font);
+  font-size: clamp(18px, 2.5vw, 24px);
+  line-height: 1.12;
+  letter-spacing: -.015em;
 }
 
 .coverd-thesis > p {
@@ -1647,12 +1728,12 @@ body {
   display: grid;
   grid-template-columns: repeat(4,1fr);
   border-bottom: 2px solid #111;
-  background: #e7ecf3;
+  background: #deded9;
 }
 
 .coverd-numbers div {
   display: flex;
-  min-height: 78px;
+  min-height: 66px;
   flex-direction: column;
   justify-content: center;
   padding: 11px 18px;
@@ -1664,15 +1745,15 @@ body {
 }
 
 .coverd-numbers strong {
-  font-family: Georgia, serif;
-  font-size: 27px;
+  font-family: var(--system-font);
+  font-size: 20px;
   line-height: 1;
 }
 
 .coverd-numbers span {
   margin-top: 5px;
   color: #59616c;
-  font-family: "Courier New", monospace;
+  font-family: var(--system-mono);
   font-size: 8px;
   font-weight: 700;
   letter-spacing: .05em;
@@ -1680,7 +1761,7 @@ body {
 }
 
 .coverd-section {
-  padding: 29px 34px 34px;
+  padding: 22px 24px 26px;
   border-bottom: 2px solid #111;
 }
 
@@ -1697,7 +1778,7 @@ body {
 }
 
 .coverd-section__heading > span {
-  font-family: "Courier New", monospace;
+  font-family: var(--system-mono);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: .12em;
@@ -1705,9 +1786,9 @@ body {
 
 .coverd-section__heading h4 {
   margin: 0;
-  font-family: Georgia, serif;
-  font-size: 25px;
-  letter-spacing: -.025em;
+  font-family: var(--system-font);
+  font-size: 20px;
+  letter-spacing: -.01em;
 }
 
 .coverd-product-grid {
@@ -1722,7 +1803,7 @@ body {
   padding: 17px 15px 14px;
   border: 2px solid #111;
   background: #fff;
-  box-shadow: 3px 3px 0 #a8adb7;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #999, 2px 2px 0 #777;
 }
 
 .coverd-product-grid article > span {
@@ -1730,7 +1811,7 @@ body {
   top: 8px;
   right: 9px;
   color: #e4782e;
-  font-family: "Courier New", monospace;
+  font-family: var(--system-mono);
   font-size: 10px;
   font-weight: 700;
 }
@@ -1738,7 +1819,7 @@ body {
 .coverd-product-grid h5,
 .coverd-pipeline h5 {
   margin: 0;
-  font-family: Georgia, serif;
+  font-family: var(--system-font);
   font-size: 16px;
 }
 
@@ -1755,7 +1836,7 @@ body {
   grid-template-columns: repeat(5,minmax(0,1fr));
   border: 2px solid #111;
   background: #fff;
-  box-shadow: 3px 3px 0 #aaa;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #999, 2px 2px 0 #777;
 }
 
 .coverd-pipeline article {
@@ -1790,14 +1871,14 @@ body {
   display: block;
   margin-bottom: 14px;
   color: #e4782e;
-  font-family: "Courier New", monospace;
+  font-family: var(--system-mono);
   font-size: 12px;
 }
 
 .coverd-ethics {
-  padding: 31px 34px 38px;
-  color: #fff;
-  background: #151a23;
+  padding: 24px;
+  color: #111;
+  background: #d9dcff;
 }
 
 .coverd-ethics {
@@ -1807,18 +1888,18 @@ body {
 }
 
 .coverd-ethics__intro .eyebrow {
-  color: #e9a777;
+  color: var(--selection);
 }
 
 .coverd-ethics__intro h4 {
   margin: 0;
-  font-family: Georgia, serif;
-  font-size: 28px;
-  line-height: 1.05;
+  font-family: var(--system-font);
+  font-size: 21px;
+  line-height: 1.12;
 }
 
 .coverd-ethics__intro p {
-  color: #aeb6c3;
+  color: #333;
   font-size: 10px;
   line-height: 1.5;
 }
@@ -1831,17 +1912,17 @@ body {
 
 .coverd-principles article {
   padding: 0 0 10px 12px;
-  border-left: 2px solid #e4782e;
+  border-left: 2px solid var(--selection);
 }
 
 .coverd-principles strong {
-  font-family: Georgia, serif;
+  font-family: var(--system-font);
   font-size: 13px;
 }
 
 .coverd-principles p {
   margin: 4px 0 0;
-  color: #aeb6c3;
+  color: #333;
   font-size: 9px;
   line-height: 1.42;
 }
@@ -1852,14 +1933,15 @@ body {
   flex-wrap: wrap;
   gap: 5px;
   padding-top: 16px;
-  border-top: 1px solid #46505e;
+  border-top: 1px solid #777;
 }
 
 .coverd-values span {
   padding: 3px 6px;
-  border: 1px solid #818b99;
-  color: #dfe3e9;
-  font-family: "Courier New", monospace;
+  border: 1px solid #555;
+  color: #111;
+  background: #f5f5f1;
+  font-family: var(--system-mono);
   font-size: 8px;
 }
 
@@ -2154,13 +2236,14 @@ html:lang(zh-TW) .career-record {
 }
 
 .skill-items li::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  flex: 0 0 7px;
-  margin-top: 3px;
-  border: 1px solid #111;
-  background: #d8d8d8;
+  content: "◆";
+  width: 8px;
+  flex: 0 0 8px;
+  margin-top: 2px;
+  color: #111;
+  font-size: 7px;
+  line-height: 1;
+  text-align: center;
 }
 
 .skill-evidence {
@@ -2665,6 +2748,31 @@ html:lang(zh-TW) .career-record {
   text-align: center;
 }
 
+.pdf-reader__error span {
+  display: block;
+}
+
+.pdf-reader__error a {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 4px 10px;
+  border: 2px solid #111;
+  border-radius: 2px;
+  color: #111;
+  background: #e5e5e1;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pdf-reader__error a:active {
+  color: #fff;
+  background: #111;
+  box-shadow: none;
+}
+
 .documents-fallback {
   margin: 0;
   padding: 6px 10px;
@@ -2802,6 +2910,15 @@ html:lang(zh-TW) .career-record {
   .games-sidebar,
   .game-stage {
     min-height: 0;
+  }
+}
+
+/* The archive owns its two desktop scroll regions. Letting the generic window
+   scroller participate creates a third, invisible scroll range from the tall
+   detail pane even though the explorer itself is correctly clipped. */
+@media (min-width: 721px) and (min-height: 521px) {
+  .mac-window[data-app-id="projects"] .mac-window__content {
+    overflow: clip;
   }
 }
 
@@ -3062,7 +3179,7 @@ html:lang(zh-TW) .career-record {
 
 .brick-game__lamp.is-live {
   background: #dfff37;
-  box-shadow: 0 0 5px #dfff37, inset 1px 1px #fff;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #6f7900;
 }
 
 .brick-game__board {
@@ -4108,8 +4225,8 @@ html:lang(zh-TW) .career-record {
 }
 
 .secret-app > .pixel-icon {
-  width: 58px;
-  height: 58px;
+  width: 48px;
+  height: 48px;
   margin-bottom: 4px;
   filter: drop-shadow(2px 2px 0 #000);
 }
@@ -4273,8 +4390,8 @@ html:lang(zh-TW) .career-record {
 
 .lab-summary dt {
   color: #777;
-  font-family: "Courier New", monospace;
-  font-size: 7px;
+  font-family: var(--system-mono);
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: .05em;
   text-transform: uppercase;
@@ -4295,13 +4412,13 @@ html:lang(zh-TW) .career-record {
 }
 
 .lab-filters button {
-  min-height: 24px;
-  padding: 2px 8px;
+  min-height: 28px;
+  padding: 3px 9px;
   border: 1px solid #777;
   background: #e6e6e1;
   box-shadow: inset 1px 1px #fff, inset -1px -1px #999;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--system-mono);
+  font-size: 10px;
   font-weight: 700;
 }
 
@@ -4370,8 +4487,8 @@ html:lang(zh-TW) .career-record {
   align-items: center;
   gap: 3px;
   color: #5d646b;
-  font-family: "Courier New", monospace;
-  font-size: 7px;
+  font-family: var(--system-mono);
+  font-size: 9px;
   font-weight: 700;
 }
 
@@ -4387,14 +4504,14 @@ html:lang(zh-TW) .career-record {
   display: block;
   margin-top: 2px;
   color: var(--selection);
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--system-mono);
+  font-size: 10px;
 }
 
 .service-card p {
   margin: 7px 0 0;
   color: #555;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.4;
 }
 
@@ -4641,7 +4758,10 @@ html:lang(zh-TW) .career-record {
     top: calc(26px + env(safe-area-inset-top));
     right: calc(4px + env(safe-area-inset-right));
     left: calc(4px + env(safe-area-inset-left));
+    max-height: calc(100dvh - 34px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     min-width: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .menu-status .language-dropdown {
@@ -4914,7 +5034,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .coverd-brand h3 {
-    font-size: 48px;
+    font-size: 28px;
   }
 
   .coverd-wordmark {
@@ -4927,7 +5047,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .founder-note {
-    border-top: 1px solid rgba(255,255,255,.28);
+    border-top: 2px solid #111;
     border-left: 0;
   }
 
@@ -5111,7 +5231,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .documents-preview {
-    min-height: 480px;
+    min-height: 0;
     flex: 1;
   }
 
@@ -5121,13 +5241,44 @@ html:lang(zh-TW) .career-record {
 
   .pdf-reader__controls {
     justify-content: flex-start;
-    overflow-x: auto;
+    gap: 2px;
+    overflow: hidden;
+    padding-inline: 4px;
+  }
+
+  .pdf-reader__controls output {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .pdf-reader__separator {
+    display: none;
+  }
+
+  .pdf-reader__controls button {
+    flex: 0 0 44px;
+    padding-inline: 3px;
+  }
+
+  .documents-toolbar {
+    min-height: 44px;
+  }
+
+  .documents-toolbar a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 4px 10px;
+  }
+
+  .documents-fallback a {
+    min-height: 44px;
   }
 
   .pdf-reader__controls button,
-  .pdf-reader__controls output,
-  .pdf-reader__separator {
-    flex: 0 0 auto;
+  .pdf-reader__error a {
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .games-app {
@@ -5168,8 +5319,8 @@ html:lang(zh-TW) .career-record {
   }
 
   .games-logo .pixel-icon {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
   }
 
   .games-menu button {
@@ -5543,10 +5694,57 @@ html:lang(zh-TW) .career-record {
 
 }
 
-.system-desktop :where(button, a, input):focus-visible {
+.system-desktop :where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid #111;
   outline-offset: 2px;
   box-shadow: 0 0 0 2px #fff;
+}
+
+@media (pointer: coarse) {
+  .mac-button,
+  .button-row .mac-button,
+  .latest-update-card button,
+  .arcade-invite > button,
+  .documents-fallback a,
+  .coverd-link,
+  .coverd-actions a,
+  .system-menubar button,
+  .menu-dropdown button,
+  .chooser-list button,
+  .window-switcher button,
+  .mobile-window-guide button {
+    min-height: 44px;
+  }
+
+  .lab-filters button {
+    min-height: 44px;
+    padding-inline: 12px;
+  }
+
+  .window-box {
+    width: 44px;
+    height: 44px;
+    margin-top: -9px;
+    margin-bottom: -9px;
+  }
+}
+
+@media (max-height: 520px) and (min-width: 701px) {
+  .about-sidebar {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 5px 10px;
+    padding: 8px 12px;
+  }
+
+  .quick-facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px 8px;
+  }
+
+  .portrait-caption { font-size: 9px; }
+  .quick-facts div { padding: 2px 0; }
+  .quick-facts dt { font-size: 8px; }
+  .quick-facts dd { font-size: 10px; }
 }
 
 .system-menubar :where(button, a):focus-visible,

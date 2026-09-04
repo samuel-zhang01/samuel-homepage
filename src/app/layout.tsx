@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import { localeCvAssets, type Locale } from "@/lib/i18n";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -71,6 +72,53 @@ export const viewport: Viewport = {
 
 const localeBootstrap = `(()=>{try{const p=location.pathname.split('/')[1]?.toLowerCase();const q=new URLSearchParams(location.search).get('lang')?.toLowerCase();const s=localStorage.getItem('samuel-system7-locale')?.toLowerCase();const m={'en-gb':'en-GB','en-us':'en-US','zh-cn':'zh-CN','zh-hans':'zh-CN','zh-tw':'zh-TW','zh-hant':'zh-TW'};const l=m[p]||m[q]||m[s]||'en-GB';document.documentElement.lang=l;document.documentElement.dataset.locale=l}catch{}})()`;
 
+const legacyBrowserCopy: Record<Locale, {
+  notice: string;
+  essentials: string;
+  document: string;
+  beforeDocument: string;
+  betweenLinks: string;
+  email: string;
+  terminal: string;
+}> = {
+  "en-GB": {
+    notice: "This interactive System 7 portfolio needs a modern browser.",
+    essentials: "Internet Explorer can still access the essentials:",
+    document: "read Samuel's CV",
+    beforeDocument: " ",
+    betweenLinks: " or ",
+    email: "send an email",
+    terminal: ".",
+  },
+  "en-US": {
+    notice: "This interactive System 7 portfolio needs a modern browser.",
+    essentials: "Internet Explorer can still access the essentials:",
+    document: "read Samuel's resume",
+    beforeDocument: " ",
+    betweenLinks: " or ",
+    email: "send an email",
+    terminal: ".",
+  },
+  "zh-CN": {
+    notice: "这个交互式 System 7 作品集需要现代浏览器。",
+    essentials: "Internet Explorer 仍可访问基本内容：",
+    document: "阅读 Samuel 的简历",
+    beforeDocument: "",
+    betweenLinks: "，或",
+    email: "发送电子邮件",
+    terminal: "。",
+  },
+  "zh-TW": {
+    notice: "這個互動式 System 7 作品集需要現代瀏覽器。",
+    essentials: "Internet Explorer 仍可存取基本內容：",
+    document: "閱讀 Samuel 的履歷",
+    beforeDocument: "",
+    betweenLinks: "，或",
+    email: "傳送電子郵件",
+    terminal: "。",
+  },
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -82,6 +130,7 @@ export default async function RootLayout({
     || requestLocale === "zh-TW"
     ? requestLocale
     : "en-GB";
+  const legacyCopy = legacyBrowserCopy[documentLocale];
 
   return (
     <html lang={documentLocale} suppressHydrationWarning>
@@ -89,9 +138,9 @@ export default async function RootLayout({
       <body>
         <div className="legacy-browser-notice" role="document">
           <h1>Samuel Zhang</h1>
-          <p>This interactive System 7 portfolio needs a modern browser.</p>
+          <p>{legacyCopy.notice}</p>
           <p>
-            Internet Explorer can still access the essentials: <a href="/Samuel-Zhang-Applied-AI-CV.pdf?v=4f5a51d8">read Samuel&apos;s CV</a> or <a href="mailto:sam.xiaojian.zhang@outlook.com">send an email</a>.
+            {legacyCopy.essentials}{legacyCopy.beforeDocument}<a href={localeCvAssets[documentLocale].src}>{legacyCopy.document}</a>{legacyCopy.betweenLinks}<a href="mailto:sam.xiaojian.zhang@outlook.com">{legacyCopy.email}</a>{legacyCopy.terminal}
           </p>
         </div>
         {children}

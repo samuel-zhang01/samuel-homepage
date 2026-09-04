@@ -789,3 +789,271 @@
   .studio *::before,
   .studio *::after { scroll-behavior: auto !important; }
 }
+
+/* System 7 surface pass: retain molecular/spectral colour as information,
+   while replacing the glassy dark shell with a light desktop workbench. */
+.studio {
+  font-family: var(--system-font);
+}
+
+.hero {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #e8e8e3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
+}
+
+.hero::before {
+  display: none;
+}
+
+.heroCopy > span,
+.sectionHeading > div > span,
+.panelTitle span,
+.moleculeCard > span,
+.chartReadout > span,
+.tableHeader span,
+.equationCard > span,
+.candidateHeading > div > span,
+.geometryHeader span,
+.constantBlock > span,
+.landscapeHeading span,
+.stageDetail > span,
+.cardCap > span,
+.claimHeader span,
+.boundaryGrid section > span,
+.studioTabs button > span,
+.studioTabs button > small {
+  color: #075f69;
+  font-family: var(--system-mono);
+}
+
+.hero h2,
+.heroInstrument > span,
+.sectionHeading h3,
+.recordBadge strong,
+.moleculeCard > strong,
+.metricRail strong,
+.tableHeader h4,
+.candidateHeading h4,
+.landscapeHeading h4,
+.claimHeader h4,
+.formula,
+.hitScore strong,
+.geometryHeader strong,
+.constantBlock strong,
+.geometryNote strong,
+.auditSeal strong,
+.stageDetail > strong,
+.publicRecord h4,
+.sourceArtifact h4,
+.artifactStats strong,
+.boundaryGrid strong {
+  font-family: var(--system-font);
+  font-weight: 700;
+}
+
+.hero h2 {
+  color: #111;
+  font-size: clamp(22px, 3.2cqi, 32px);
+  letter-spacing: -0.02em;
+}
+
+.hero p {
+  color: #333;
+}
+
+.heroInstrument {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777, 3px 3px 0 #555;
+}
+
+.heroInstrument > span,
+.heroInstrument > b,
+.heroInstrument > em {
+  color: #111;
+  font-family: var(--system-mono);
+}
+
+.instrumentRing {
+  border-color: #555;
+}
+
+.instrumentRing i {
+  border-color: #111;
+  background: #777;
+}
+
+.studioTabs {
+  border: 2px solid #111;
+  background: #bfbfba;
+}
+
+.studioTabs button {
+  border-right: 1px solid #555;
+  border-radius: 0;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.studioTabs button[aria-selected="true"] {
+  color: #111;
+  background: #fff;
+  box-shadow: inset 2px 2px 0 #777;
+}
+
+.workbench {
+  border-color: #111;
+  background: #fff;
+}
+
+.assignmentGrid,
+.atlasGrid,
+.energyLandscape,
+.publicRecord,
+.sourceArtifact,
+.claimLedger,
+.equationCard,
+.candidateBoard {
+  border-color: #111;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: 3px 3px 0 #777;
+}
+
+.controlPanel,
+.analysisDesk,
+.viewerCard,
+.geometryLedger {
+  background: #f4f4ef;
+}
+
+.panelTitle,
+.deskToolbar,
+.viewerToolbar,
+.geometryHeader,
+.cardCap {
+  border-color: #111;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.panelTitle b,
+.geometryHeader strong,
+.cardCap > strong {
+  color: #111;
+  font-family: var(--system-mono);
+}
+
+.segmentField button,
+.moleculeButtons button,
+.viewSwitch button,
+.bandSwitch button,
+.controlActions button,
+.rotationControls > button,
+.candidateGrid > button,
+.pipeline button {
+  border-radius: 0;
+  background: #e5e5e0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.segmentField button[aria-pressed="true"],
+.moleculeButtons button[aria-pressed="true"],
+.viewSwitch button[aria-pressed="true"],
+.bandSwitch button[aria-pressed="true"],
+.candidateGrid > button[aria-pressed="true"],
+.pipeline button[aria-pressed="true"],
+.controlActions .runButton {
+  color: #fff;
+  background: var(--selection);
+  box-shadow: inset 1px 1px 0 #777, 2px 2px 0 #555;
+}
+
+.spectrum,
+.conformerSvg {
+  border: 2px solid #111;
+  border-radius: 0;
+  background: #f4f4ef;
+  box-shadow: 3px 3px 0 #777;
+}
+
+.spectrum > rect,
+.conformerSvg > rect {
+  fill: #f4f4ef;
+  stroke: #777;
+}
+
+.spectrum path[fill^="url"] {
+  fill: none;
+}
+
+.spectrum line[stroke="#fff"] {
+  stroke: #111;
+}
+
+.chartGrid {
+  stroke: #aaa;
+  opacity: 1;
+}
+
+.chartTick,
+.chartLabel,
+.chartLegend,
+.chartAxis,
+.stickLabel,
+.projectionTitle,
+.projectionFooter,
+.axisGlyph text {
+  fill: #333;
+  font-family: var(--system-mono);
+}
+
+.projectionWrap {
+  background: #d8d8d3;
+}
+
+.orbitGrid ellipse,
+.orbitGrid line {
+  stroke: #888;
+  opacity: 1;
+}
+
+.conformerSvg circle[fill*="carbon"] {
+  fill: #777;
+  stroke: #111;
+}
+
+.conformerSvg circle[fill*="oxygen"] {
+  fill: var(--mr-red);
+  stroke: #111;
+}
+
+.conformerSvg circle[opacity] {
+  fill: #bbb;
+  opacity: .55;
+}
+
+.atomLabel {
+  fill: #fff;
+  font-family: var(--system-mono);
+}
+
+.tableWrap thead,
+.claimTableWrap thead {
+  color: #111;
+  background: #d8d8d3;
+}
+
+.runReceipt {
+  border: 2px solid #111;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #bbb;
+  font-family: var(--system-mono);
+}

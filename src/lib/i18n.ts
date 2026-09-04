@@ -16,7 +16,7 @@ export const localeCvAssets: Record<Locale, { title: string; meta: string; src: 
   "en-US": {
     title: "Samuel Zhang — Applied AI Resume",
     meta: "AI roles · 2 pages · English (US)",
-    src: "/Samuel-Zhang-Applied-AI-CV-en-US.pdf?v=f0d5899f",
+    src: "/Samuel-Zhang-Applied-AI-CV-en-US.pdf?v=7bece352",
   },
   "zh-CN": {
     title: "Samuel Zhang — 应用人工智能简历",
@@ -26,7 +26,7 @@ export const localeCvAssets: Record<Locale, { title: string; meta: string; src: 
   "zh-TW": {
     title: "Samuel Zhang — 應用人工智慧履歷",
     meta: "人工智慧職位 · 2 頁 · 繁體中文",
-    src: "/Samuel-Zhang-Applied-AI-CV-zh-TW.pdf?v=bc91b2f1",
+    src: "/Samuel-Zhang-Applied-AI-CV-zh-TW.pdf?v=1d7101d0",
   },
 };
 
@@ -35,9 +35,13 @@ const usOverrides: Record<string, string> = {
   "Download CV": "Download Resume",
   "Current Applied AI CV and reviewed learning material in one continuous reader.":
     "Current Applied AI resume and reviewed learning material in one continuous reader.",
+  "CV & documents": "Resume & documents",
   "Samuel Zhang — Applied AI CV": "Samuel Zhang — Applied AI Resume",
   "Honours & awards": "Honors & awards",
   "Selected evidence": "Selected evidence",
+  "Hardware catalogue": "Hardware catalog",
+  "PRIVATE REPOSITORY · NO EXPLICIT LICENCE": "PRIVATE REPOSITORY · NO EXPLICIT LICENSE",
+  "29 AUG 2026": "AUG 29, 2026",
 };
 
 const zhCN: Record<string, string> = {
@@ -63,17 +67,23 @@ const zhCN: Record<string, string> = {
   "Unit Converter": "单位换算器",
   "Colour Studio": "色彩工作室",
   "OPENING DESK ACCESSORY…": "正在打开桌面附件…",
+  "OPENING INTERACTIVE FILE…": "正在打开交互文件…",
+  "INDEXING PROJECT FILES…": "正在建立项目文件索引…",
   "Making a little room on the desk.": "正在桌面上腾出一点空间。",
   "RUN/HACK": "跑步黑客松",
   "RUN/HACK — SideQuest": "跑步黑客松 — SideQuest",
   "RUN/HACK — Field Journal": "跑步黑客松 — 现场记录",
   "A rain-soaked running hackathon field journal: the runner-only build rule, 44 team kilometres, a 100+ person track community and second-place app SideQuest.": "一份雨中跑步黑客松现场记录：仅限跑者构建的规则、44 公里团队里程、100 多人的跑道社区，以及获得第二名的应用 SideQuest。",
   "Contact Samuel": "联系 Samuel",
+  "Email is the most direct way to start a useful conversation.": "电子邮件是开启有价值交流最直接的方式。",
+  "Open Samuel’s professional profile for experience, projects and shared connections.": "打开 Samuel 的职业档案，查看他的经历、项目与共同人脉。",
+  "Write Email": "撰写邮件",
+  "Open LinkedIn": "打开 LinkedIn",
   "Home Lab Network": "家庭实验室网络",
   "Interests & Notes": "兴趣与札记",
   "OPENING FIELD OBJECT…": "正在打开田野档案…",
   "Rewinding the RUN/HACK relay.": "正在回放跑步黑客松接力。",
-  "The Secret About Box": "秘密关于窗口",
+  "The Secret About Box": "秘密“关于”窗口",
   "Profile": "个人简介",
   "Experience": "工作经历",
   "Projects": "项目",
@@ -97,6 +107,7 @@ const zhCN: Record<string, string> = {
   "Photography, hiking, music, teaching and life outside work.": "摄影、徒步、音乐、教学，以及工作之外的生活。",
   "Email, LinkedIn and GitHub without leaving the desktop.": "无需离开桌面即可查看电子邮件、LinkedIn 与 GitHub。",
   "Current Applied AI CV and reviewed learning material in one continuous reader.": "在连续阅读器中查看最新应用人工智能简历与经过审核的学习材料。",
+  "Reviewed learning atlas · PDF": "经审核的学习图谱 · PDF",
 
   "File": "文件",
   "Edit": "编辑",
@@ -347,7 +358,7 @@ const zhCN: Record<string, string> = {
   "Technically curious, attentive in a room, and happiest when helping other people do their best work.": "对技术保持好奇，在团队中认真倾听；最开心的时刻，是帮助他人发挥出最佳水平。",
   "Start Here": "从这里开始",
   "Biography, current work, a recent field note and clear routes through the portfolio.": "个人经历、当前工作、最新现场记录，以及清晰的作品集浏览路径。",
-  "Samuel and another participant using their phones while moving around the London Stadium Community Track.": "Samuel 与另一位参与者在伦敦体育场社区跑道上边移动边使用手机。",
+  "Samuel and another participant using their phones while moving around the London Stadium Community Track.": "Samuel 与另一位参与者在伦敦体育场社区跑道上一边移动，一边使用手机。",
   "LATEST FIELD NOTE": "最新现场记录",
   "29 AUG 2026": "2026 年 8 月 29 日",
   "What happens when only the runner can build?": "如果只有正在跑步的人才能构建产品，会发生什么？",
@@ -869,6 +880,7 @@ const zhCN: Record<string, string> = {
   "Electronic Mail": "电子邮件",
   "Copy Email": "复制邮箱",
   "Address Copied!": "地址已复制！",
+  "Copy Failed": "复制失败",
   "Open to useful conversations": "欢迎有价值的交流",
   "Location:": "地点：",
   "Network:": "联络状态：",
@@ -1379,6 +1391,55 @@ const zhCN: Record<string, string> = {
   "2,002 source frames · 40 observed pose classes": "2,002 个源视频帧 · 40 个已观察姿态类别",
   "Illustrative browser view · no source images shipped": "浏览器示意视图 · 不包含源图像",
 
+  "Decision & RL Methods": "决策与强化学习方法",
+  "From learning exercises to policy evidence, causal adjustment and deferral limits.": "从学习练习到策略证据、因果调整与延迟决策边界。",
+  "Scientific ML & Trust": "科学机器学习与可信性",
+  "Architecture, uncertainty and evaluation provenance for scientific machine-learning systems.": "面向科学机器学习系统的架构、不确定性与评估溯源。",
+  "Systems & Reproducibility": "系统与可复现性",
+  "Environment setup, operational evidence and recovery boundaries for private systems.": "私有系统的环境配置、运营证据与恢复边界。",
+  "Air-Quality ML Decision Lab": "空气质量机器学习决策实验室",
+  "Sensor selection and regularisation experiments viewed as one environmental decision workflow.": "将传感器选择与正则化实验整合为一套环境决策流程。",
+  "Molecular Recognition Workbench": "分子识别工作台",
+  "From conformer assignment to the plotting utility used to examine spectral evidence.": "从构象归属到用于检查光谱证据的绘图工具。",
+  "Thermodynamic Modelling Suite": "热力学建模套件",
+  "A state-evaluation workbench and a distinct solid–liquid equilibrium workflow with explicit model boundaries.": "状态评估工作台，以及具有明确模型边界的独立固液平衡流程。",
+  "Strategy & Venture Reasoning": "战略与创业推理",
+  "Structured reflection and synthetic-evidence workbenches for practising explicit reasoning.": "用于练习显式推理的结构化反思与合成证据工作台。",
+  "Supporting Prototype & Code Audits": "配套原型与代码审计",
+  "Small source projects presented as audits of what the code establishes and where its limits lie.": "将小型源代码项目呈现为审计，说明代码能证明什么以及其边界在哪里。",
+
+  "An ATS-connected recruitment intelligence layer that evaluates every applicant, retains evidence and returns a reasoned shortlist while recruiters keep the decision.": "一个接入招聘管理系统的招聘智能层，可评估每位申请者、保留证据并返回可解释的候选名单，同时由招聘人员保留最终决定权。",
+  "A seven-component workload modelling platform designed to replace a fragile spreadsheet workflow with scheduled calculation, governed editing and live capacity views.": "一个由七个组件构成的工作负载建模平台，旨在用定时计算、受控编辑和实时容量视图取代脆弱的电子表格流程。",
+  "An auditable lead-market decision-support system combining temporal learning-to-rank, point-in-time historical lead-share evidence and market-conditional wording analysis.": "一个可审计的商机—市场决策支持系统，结合时序学习排序、基于当时信息的历史商机份额证据，以及随市场条件变化的措辞分析。",
+  "A Python and LaTeX workflow that extracts role language, selects a pre-authored CV template and compiles a targeted application document.": "一个 Python 与 LaTeX 工作流，可提取职位用语、选择预先撰写的简历模板，并编译针对特定职位的求职文档。",
+  "A local-first statement intelligence system covering import audit, reconciliation, recurring patterns, transfer matching, anomalies and investments.": "一个本地优先的账单智能系统，涵盖导入审计、核对、周期性模式、转账匹配、异常和投资。",
+  "A self-hosted scheduling platform with four allocation modes, timezone-safe availability, calendar sync and race-resistant booking.": "一个自托管排期平台，提供四种分配模式、时区安全的可用时段、日历同步及可避免竞态冲突的预约机制。",
+  "A private, bilingual Italian A1 portal that structures a 56-day curriculum around adaptive practice, spaced recall and progress records.": "一个私密的意大利语 A1 双语学习门户，围绕自适应练习、间隔复习和进度记录组织 56 天课程。",
+  "An interactive audit of a four-step course-prototype scaffold: replay hard filters and random ranking, then inspect a deterministic, privacy-safe repair sketch.": "对四步课程原型脚手架的互动审计：重放硬性筛选与随机排序，再检查一个确定性且保护隐私的修复方案。",
+  "A test-backed curriculum from bandits and Bellman equations through offline RL, LLM alignment, safe matching and a final applied audit.": "一套由测试支撑的课程，内容从多臂老虎机与贝尔曼方程延伸至离线强化学习、大语言模型对齐、安全匹配和最终应用审计。",
+  "A browser-native policy laboratory for seeing how epsilon-greedy, UCB1 and Beta-Bernoulli Thompson Sampling learn from uncertain rewards.": "一个浏览器原生的策略实验室，用于观察 ε-贪心、UCB1 与 Beta-Bernoulli 汤普森采样如何从不确定奖励中学习。",
+  "A model study for estimating microrobot pose classes and continuous depth from grayscale microscope frames—two signals needed to reason about position in a manipulation or monitoring workflow.": "一项模型研究，从灰度显微镜帧估计微型机器人的姿态类别与连续深度——这是操控或监测流程中判断位置所需的两类信号。",
+  "A physics-informed cardiac MRI reconstruction study evaluating fidelity, calibration, robustness, distribution shift and downstream segmentation.": "一项物理信息驱动的心脏 MRI 重建研究，评估保真度、校准、稳健性、分布偏移和下游分割。",
+  "A comparative study of spectral, mesh-native and convolutional surrogates for forecasting pressure and velocity fields.": "一项对比研究，比较用于预测压力场与速度场的谱方法、网格原生方法和卷积代理模型。",
+  "A three-stage ML decision lab connecting air-quality data QA, regression-family comparison and a hypothetical physical-sensor budget.": "一个三阶段机器学习决策实验室，将空气质量数据质检、回归模型族比较和假设的实体传感器预算连接起来。",
+  "A coursework classifier audit showing how duplicate leakage, transform fitting and test-set threshold selection can invalidate apparently strong cyber-detection results.": "一项课程分类器审计，展示重复样本泄漏、变换拟合和基于测试集选择阈值如何使看似强劲的网络检测结果失效。",
+  "The mathematical companion to the Air-Quality ML Decision Lab, isolating how L1 and L2 penalties alter standardised coefficient paths.": "空气质量机器学习决策实验室的数学配套项目，用于单独展示 L1 与 L2 惩罚如何改变标准化系数路径。",
+  "An executed reliability lab spanning predictive uncertainty, temperature scaling and split-conformal coverage under exchangeability, with an explicit analysis of how covariate shift can break that guarantee.": "一个已执行的可靠性实验室，涵盖预测不确定性、温度缩放及可交换性条件下的拆分保形覆盖，并明确分析协变量偏移如何破坏这一保证。",
+  "A Bayesian and calibrated-confidence deferral framework that exposes the trade-off between automated coverage, system accuracy and retained tail risk.": "一个结合贝叶斯方法与校准置信度的延迟决策框架，呈现自动化覆盖率、系统准确率和保留尾部风险之间的权衡。",
+  "A two-chapter decision lab separating causal adjustment from counterfactual policy evaluation over logged bandit feedback.": "一个分为两章的决策实验室，将因果调整与基于已记录老虎机反馈的反事实策略评估分开。",
+  "A private innovation-management reflection connecting incumbent disruption, organisational ambidexterity and four corporate-entrepreneurship structures, rebuilt as a synthetic strategy workbench.": "一份私密的创新管理反思，连接在位企业颠覆、组织双元性和四种企业创业结构，并重建为合成策略工作台。",
+  "An assessed venture-writing archive rebuilt as a synthetic claim-evidence, bottom-up market and ask-to-milestone reasoning workbench.": "一份经评分的创业写作档案，重建为合成推理工作台，用于梳理主张与证据、自下而上的市场测算，以及融资诉求与里程碑。",
+  "A Julia and Clapeyron thermodynamics study spanning bulk properties, phase-equilibrium workflows and model comparison, rebuilt as a privacy-safe PC-SAFT sensitivity lab.": "一项使用 Julia 与 Clapeyron 的热力学研究，涵盖体相性质、相平衡工作流和模型比较，并重建为保护隐私的 PC-SAFT 敏感性实验室。",
+  "A privacy-safe reconstruction of a Julia solid–liquid equilibrium workflow, from fusion thermodynamics and activity correction to reporting-basis reconciliation.": "对 Julia 固液平衡工作流的隐私安全重建，涵盖熔融热力学、活度修正和报告基准核对。",
+  "Conference-record-backed research comparing 2–8 GHz rotational spectra with theory-predicted spectroscopic parameters to distinguish flexible Exaltenone and Muscone conformers.": "一项有会议记录支持的研究，通过比较 2–8 GHz 转动光谱与理论预测的光谱参数，区分柔性 Exaltenone 和 Muscone 构象。",
+  "A compact MATLAB App Designer tool for turning two-column spectroscopy exports into presentation-ready plots with precise frequency navigation and high-resolution export.": "一个紧凑的 MATLAB App Designer 工具，可将双列光谱导出数据转换为适合演示的图表，并提供精确频率导航和高分辨率导出。",
+  "A reconstruction of a deep-learning environment installer that exposes platform, accelerator and framework routes, injects failures and audits every package and verification boundary before running anything.": "一个深度学习环境安装器的重建版本，可展示平台、加速器与框架路径，注入故障，并在执行任何操作前审计每个软件包和验证边界。",
+  "A compact public record of configuring WSL 2, CUDA, NVIDIA Container Toolkit and Docker, followed by one containerised GROMACS topology-preparation checkpoint.": "一份简洁的公开记录，涵盖 WSL 2、CUDA、NVIDIA Container Toolkit 与 Docker 的配置，以及随后完成的容器化 GROMACS 拓扑准备检查点。",
+  "A topology and recovery lab reconstructed from one six-service Docker Compose snapshot, with declared dependencies kept separate from runtime assumptions.": "一个根据六服务 Docker Compose 快照重建的拓扑与恢复实验室，将已声明依赖与运行时假设明确分开。",
+  "An audit of a single-instrument Julia toy simulation: sentiment-biased buy/sell events, quantity-scaled stochastic price impact and cumulative volume.": "对单一标的 Julia 玩具模拟的审计：包含受情绪偏置影响的买卖事件、按数量缩放的随机价格冲击和累计成交量。",
+  "Decision support and workflow automation developed for pandemic-era emergency operations.": "为疫情期间应急行动开发的决策支持与工作流自动化。",
+  "Completed and iterated computational-chemistry notebooks plus later standalone experiments, rebuilt as deterministic browser instruments.": "已完成并多次迭代的计算化学笔记本及后续独立实验，现重建为确定性的浏览器工具。",
+
   "UNREASONABLE CORNER DETECTED": "检测到不讲道理的角落",
   "Welcome, power user.": "欢迎，高级用户。",
   "You found the part of the portfolio that contributes nothing to conversion metrics.": "你找到了作品集中对转化指标毫无贡献的部分。",
@@ -1387,6 +1448,18 @@ const zhCN: Record<string, string> = {
 };
 
 const zhTWOverrides: Record<string, string> = {
+  "The Secret About Box": "秘密「關於」視窗",
+  "Documents": "文件",
+  "Open Documents…": "開啟文件…",
+  "CV & documents": "履歷與文件",
+  "Read or download the current CV and supporting public documents.": "閱讀或下載最新履歷及相關公開文件。",
+  "Current Applied AI CV and reviewed learning material in one continuous reader.": "在連續閱讀器中查看最新應用人工智慧履歷與經過審閱的學習材料。",
+  "An ATS-connected recruitment intelligence layer that evaluates every applicant, retains evidence and returns a reasoned shortlist while recruiters keep the decision.": "一個與招募管理系統串接的招募智慧層，可評估每位申請者、保留證據並回傳附有理由的候選名單，同時由招募人員保留最終決定權。",
+  "A three-stage ML decision lab connecting air-quality data QA, regression-family comparison and a hypothetical physical-sensor budget.": "一個三階段機器學習決策實驗室，串連空氣品質資料檢查、迴歸模型系列比較，以及假設性的實體感測器預算。",
+  "A private innovation-management reflection connecting incumbent disruption, organisational ambidexterity and four corporate-entrepreneurship structures, rebuilt as a synthetic strategy workbench.": "一份私密的創新管理反思，連結既有企業的顛覆議題、組織雙元性與四種企業內創業架構，並重建為合成策略工作台。",
+  "A reconstruction of a deep-learning environment installer that exposes platform, accelerator and framework routes, injects failures and audits every package and verification boundary before running anything.": "一個深度學習環境安裝工具的重建版本，可呈現平台、加速器與框架路徑、注入故障，並在執行前稽核每個套件及驗證邊界。",
+  "PRIVATE REPOSITORY · NO EXPLICIT LICENCE": "私有程式碼儲存庫 · 未明確授權條款",
+  "Apps": "應用程式",
   "Desk Accessories": "桌面工具",
   "DESK ACCESSORIES": "桌面工具",
   "Current time": "目前時間",
@@ -1406,9 +1479,10 @@ const zhTWOverrides: Record<string, string> = {
   "Megabytes": "MB",
   "Gigabytes": "GB",
   "Terabytes": "TB",
-  "Celsius": "攝氏度",
-  "Fahrenheit": "華氏度",
-  "Kelvin": "開爾文",
+  "Celsius": "攝氏",
+  "Fahrenheit": "華氏",
+  "Kelvin": "克耳文",
+  "Reviewed learning atlas · PDF": "經審閱的學習圖譜 · PDF",
   "Set": "設定",
   "15 min reset": "重設 15 分鐘",
   "Restore backup…": "還原備份…",
@@ -1455,9 +1529,117 @@ const zhTWOverrides: Record<string, string> = {
   "Quick List holds up to 80 tasks. Complete or remove one first.": "快速清單最多可儲存 80 項任務。請先完成或移除一項。",
   "Calendar holds notes for up to 370 days. Clear an older note first.": "日曆最多可儲存 370 天的備註。請先清除較早的備註。",
   "Colour Studio holds 12 swatches. Remove one before saving another.": "色彩工作室最多可儲存 12 個色樣。請先移除一個再儲存新色樣。",
+  "Private cloud": "私有雲",
 };
 
 const traditionalPhrases: Array<[string, string]> = [
+  ["应用 SideQuest", "應用程式 SideQuest"],
+  ["招聘管理系统", "招募管理系統"],
+  ["招聘人员", "招募人員"],
+  ["招聘", "招募"],
+  ["400 米", "400 公尺"],
+  ["高性能计算", "高效能運算"],
+  ["高级用户", "進階使用者"],
+  ["无响应", "無回應"],
+  ["调谐台", "調諧臺"],
+  ["基准台", "基準臺"],
+  ["一台", "一臺"],
+  ["源代码", "原始碼"],
+  ["源文件", "原始檔"],
+  ["传感器", "感測器"],
+  ["交互式", "互動式"],
+  ["黑客松", "駭客松"],
+  ["工作台", "工作臺"],
+  ["自托管", "自託管"],
+  ["分辨率", "解析度"],
+  ["虚拟机", "虛擬機器"],
+  ["互联网", "網際網路"],
+  ["可视化", "視覺化"],
+  ["持续集成", "持續整合"],
+  ["集成", "整合"],
+  ["托管", "託管"],
+  ["视图", "檢視"],
+  ["回归", "迴歸"],
+  ["系数", "係數"],
+  ["取舍", "取捨"],
+  ["标注", "標註"],
+  ["标签", "標籤"],
+  ["分布", "分佈"],
+  ["修复", "修復"],
+  ["精致", "精緻"],
+  ["制造", "製造"],
+  ["轻松", "輕鬆"],
+  ["合并", "合併"],
+  ["汇总", "彙總"],
+  ["集群", "叢集"],
+  ["平台", "平臺"],
+  ["舞台", "舞臺"],
+  ["一周", "一週"],
+  ["泄漏", "洩漏"],
+  ["传感", "感測"],
+  ["代码", "程式碼"],
+  ["连接", "連線"],
+  ["打开", "開啟"],
+  ["支持", "支援"],
+  ["查看", "檢視"],
+  ["点击", "點選"],
+  ["信号", "訊號"],
+  ["图像", "影像"],
+  ["模块", "模組"],
+  ["控件", "控制項"],
+  ["声明", "宣告"],
+  ["像素", "畫素"],
+  ["界面", "介面"],
+  ["远程", "遠端"],
+  ["加载", "載入"],
+  ["采样", "取樣"],
+  ["脚本", "指令碼"],
+  ["对象", "物件"],
+  ["性能", "效能"],
+  ["映射", "對映"],
+  ["硬件", "硬體"],
+  ["社区", "社群"],
+  ["组件", "元件"],
+  ["变量", "變數"],
+  ["交互", "互動"],
+  ["位图", "點陣圖"],
+  ["内核", "核心"],
+  ["内置", "內建"],
+  ["兼容", "相容"],
+  ["刷新", "重新整理"],
+  ["剪切", "剪下"],
+  ["在线", "線上"],
+  ["字段", "欄位"],
+  ["字节", "位元組"],
+  ["屏幕", "螢幕"],
+  ["循环", "迴圈"],
+  ["数组", "陣列"],
+  ["激活", "啟用"],
+  ["异步", "非同步"],
+  ["网关", "閘道器"],
+  ["缓存", "快取"],
+  ["调度", "排程"],
+  ["调用", "呼叫"],
+  ["调试", "除錯"],
+  ["录像", "錄影"],
+  ["链接", "連結"],
+  ["镜像", "映像"],
+  ["日志", "日誌"],
+  ["周期", "週期"],
+  ["可复现性", "可重現性"],
+  ["可复现", "可重現"],
+  ["复现", "重現"],
+  ["对数组成", "對數組成"],
+  ["质量报告基准", "質量報告基準"],
+  ["转账", "轉帳"],
+  ["账单", "帳單"],
+  ["账本", "帳本"],
+  ["账户", "帳戶"],
+  ["账号", "帳號"],
+  ["并为", "並為"],
+  ["构建", "建構"],
+  ["运营", "營運"],
+  ["心脏", "心臟"],
   ["备份文件", "備份檔案"],
   ["十六进制", "十六進位"],
   ["自定义", "自訂"],
@@ -1517,7 +1699,7 @@ const traditionalPhrases: Array<[string, string]> = [
   ["身份", "身分"],
   ["训练", "訓練"],
   ["失败", "失敗"],
-  ["联系", "聯繫"],
+  ["联系", "聯絡"],
   ["关闭", "關閉"],
   ["底部栏", "底部列"],
   ["标签页", "分頁標籤"],
@@ -1539,6 +1721,7 @@ const traditionalPhrases: Array<[string, string]> = [
   ["文档智能", "文件智慧"],
   ["智能系统", "智慧系統"],
   ["智能程度", "智慧程度"],
+  ["智能", "智慧"],
   ["编程", "程式設計"],
   ["本科数据分析实习生", "大學部資料分析實習生"],
   ["本科研究员", "大學部研究員"],
@@ -1585,7 +1768,10 @@ const traditionalPhrases: Array<[string, string]> = [
   ["登录", "登入"],
 ];
 
-const traditionalChars: Record<string, string> = {
+// Static runtime conversion keeps the client bundle small. scripts/check-locales.mjs
+// checks this map against OpenCC's complete Simplified-character dictionary so a
+// newly introduced character cannot silently leak into zh-TW copy.
+export const traditionalChars: Record<string, string> = {
   "与": "與", "专": "專", "业": "業", "东": "東", "丝": "絲", "两": "兩", "严": "嚴", "个": "個",
   "为": "為", "义": "義", "乐": "樂", "习": "習", "书": "書", "买": "買", "乱": "亂", "争": "爭",
   "无": "無", "游": "遊", "踪": "蹤", "绪": "緒", "载": "載", "径": "徑", "槛": "檻",
@@ -1648,17 +1834,40 @@ const traditionalChars: Record<string, string> = {
   "团": "團", "钟": "鐘", "滚": "滾", "药": "藥", "硕": "碩", "医": "醫", "荣": "榮",
   "誉": "譽", "达": "達", "织": "織", "谱": "譜", "旧": "舊", "础": "礎", "响": "響",
   "话": "話", "铜": "銅", "脸": "臉", "费": "費", "钮": "鈕", "颈": "頸",
+  "价": "價", "凑": "湊", "占": "佔", "叠": "疊", "墙": "牆", "声": "聲", "寻": "尋", "尔": "爾",
+  "尝": "嘗", "尽": "盡", "帧": "幀", "库": "庫", "征": "徵", "惩": "懲", "战": "戰", "枢": "樞",
+  "横": "橫", "汤": "湯", "洁": "潔", "湿": "溼", "滞": "滯", "滤": "濾", "灾": "災", "筹": "籌",
+  "纲": "綱", "给": "給", "绝": "絕", "综": "綜", "缘": "緣", "罗": "羅", "脚": "腳", "腾": "騰",
+  "舰": "艦", "荐": "薦", "诈": "詐", "诺": "諾", "谊": "誼", "贡": "貢", "财": "財", "贯": "貫",
+  "赔": "賠", "践": "踐", "轨": "軌", "轻": "輕", "较": "較", "辅": "輔", "辞": "辭", "逻": "邏",
+  "遥": "遙", "采": "採", "银": "銀", "链": "鏈", "锁": "鎖", "镜": "鏡", "闲": "閒", "阅": "閱",
+  "阈": "閾", "隐": "隱", "雇": "僱", "韧": "韌", "顽": "頑", "颠": "顛", "驱": "驅",
+  "赌": "賭", "迹": "跡", "献": "獻", "遗": "遺", "伪": "偽", "扰": "擾", "谨": "謹", "脏": "髒",
+  "劲": "勁", "罚": "罰",
+  "临": "臨", "云": "雲", "匀": "勻", "惫": "憊", "晕": "暈", "欧": "歐", "洼": "窪", "潜": "潛",
+  "犹": "猶", "绩": "績", "袭": "襲", "诊": "診", "递": "遞", "飞": "飛", "饰": "飾", "鲜": "鮮",
+  "鸣": "鳴", "谢": "謝", "忧": "憂", "赠": "贈", "众": "眾", "脉": "脈",
 };
 
-function toTraditionalMandarin(value: string): string {
+export function toTraditionalMandarin(value: string): string {
   let translated = value.replaceAll("公里", "__KILOMETRE__");
   for (const [simplified, traditional] of traditionalPhrases) {
     translated = translated.replaceAll(simplified, traditional);
   }
-  return [...translated]
-    .map((character) => traditionalChars[character] ?? character)
-    .join("")
-    .replaceAll("__KILOMETRE__", "公里");
+  return Array.from(translated, (character) => traditionalChars[character] ?? character).join("")
+    .replaceAll("__KILOMETRE__", "公里")
+    .replaceAll("對陣列成", "對數組成")
+    .replaceAll("英裡", "英里")
+    .replaceAll("裡程", "里程")
+    .replaceAll("上遊", "上游")
+    .replaceAll("中遊", "中游")
+    .replaceAll("下遊", "下游")
+    .replaceAll("遊離", "游離")
+    .replaceAll("獲準", "獲准")
+    .replaceAll("批準", "批准")
+    .replaceAll("準許", "准許")
+    .replaceAll("“", "「")
+    .replaceAll("”", "」");
 }
 
 function toAmericanEnglish(value: string): string {
@@ -1691,7 +1900,16 @@ function toAmericanEnglish(value: string): string {
     .replaceAll("organisational", "organizational")
     .replaceAll("regularisation", "regularization")
     .replaceAll("prioritisation", "prioritization")
+    .replaceAll("MODELLING", "MODELING")
+    .replaceAll("Randomised", "Randomized")
+    .replaceAll("randomised", "randomized")
     .replaceAll("recognisably", "recognizably")
+    .replaceAll("Virtualisation", "Virtualization")
+    .replaceAll("virtualisation", "virtualization")
+    .replaceAll("synchronisation", "synchronization")
+    .replaceAll("containerised", "containerized")
+    .replaceAll("theatre", "theater")
+    .replaceAll("energised", "energized")
     .replaceAll("CENTRE", "CENTER")
     .replaceAll("Centre", "Center")
     .replaceAll("Kilometres", "Kilometers")
@@ -1719,7 +1937,11 @@ export function translateText(locale: Locale, source: string): string {
   if (locale === "en-US") {
     return preserveWhitespace(source, usOverrides[compact] ?? toAmericanEnglish(compact));
   }
-  const simplified = zhCN[compact] ?? compact;
+  const simplified = zhCN[compact];
+  // Translation boundaries can nest, and several accessibility labels are
+  // assembled from already-localised pieces. Treat non-source strings as final
+  // copy so a second pass cannot reinterpret valid Taiwan terminology.
+  if (simplified === undefined) return source;
   const translated = locale === "zh-TW"
     ? zhTWOverrides[compact] ?? toTraditionalMandarin(simplified)
     : simplified;

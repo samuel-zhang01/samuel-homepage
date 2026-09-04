@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import simplifiedToTraditionalCharacters from "opencc-js/dict/STCharacters";
 import ts from "typescript";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -9,13 +10,37 @@ const productivityPath = resolve(projectRoot, "src/components/ProductivityApps.t
 const productivityExtrasPath = resolve(projectRoot, "src/components/ProductivityExtras.tsx");
 const i18nPath = resolve(projectRoot, "src/lib/i18n.ts");
 const archiveI18nPath = resolve(projectRoot, "src/components/projects/projectArchiveI18n.ts");
+const projectsPath = resolve(projectRoot, "src/data/projects.ts");
+const projectSuitesPath = resolve(projectRoot, "src/components/projects/projectSuites.ts");
+const enUsCvPath = resolve(projectRoot, "others/localised-cv/Samuel-Zhang-Applied-AI-CV-en-US.tex");
+const zhTwCvPath = resolve(projectRoot, "others/localised-cv/Samuel-Zhang-Applied-AI-CV-zh-TW.tex");
+const sideQuestPath = resolve(projectRoot, "src/components/SideQuestCabinetApp.tsx");
+const sideQuestI18nPath = resolve(projectRoot, "src/components/sideQuestI18n.tsx");
 
-const [systemSource, productivitySource, productivityExtrasSource, i18nSource, archiveI18nSource] = await Promise.all([
+const [
+  systemSource,
+  productivitySource,
+  productivityExtrasSource,
+  i18nSource,
+  archiveI18nSource,
+  projectsSource,
+  projectSuitesSource,
+  enUsCvSource,
+  zhTwCvSource,
+  sideQuestSource,
+  sideQuestI18nSource,
+] = await Promise.all([
   readFile(systemPath, "utf8"),
   readFile(productivityPath, "utf8"),
   readFile(productivityExtrasPath, "utf8"),
   readFile(i18nPath, "utf8"),
   readFile(archiveI18nPath, "utf8"),
+  readFile(projectsPath, "utf8"),
+  readFile(projectSuitesPath, "utf8"),
+  readFile(enUsCvPath, "utf8"),
+  readFile(zhTwCvPath, "utf8"),
+  readFile(sideQuestPath, "utf8"),
+  readFile(sideQuestI18nPath, "utf8"),
 ]);
 
 function compileModule(source, fileName) {
@@ -47,6 +72,33 @@ const archiveCopies = Object.fromEntries(
 const archiveKeys = Object.keys(archiveCopies["en-GB"]);
 const archiveErrors = [];
 const acceptedArchiveIdentity = new Set(["SYSTEM 7", "PDF"]);
+const regionalisationChecks = [
+  ["en-US", "CV & documents", "Resume & documents"],
+  ["en-US", "Virtualisation cluster", "Virtualization cluster"],
+  ["en-US", "Self-hosted document access and synchronisation across personal devices.", "Self-hosted document access and synchronization across personal devices."],
+  ["en-US", "A containerised environment for exploring open-source ERP and workflow software.", "A containerized environment for exploring open-source ERP and workflow software."],
+  ["en-US", "Musical theatre", "Musical theater"],
+  ["en-US", "Fit randomised HPLC–UV peaks across three difficulty levels.", "Fit randomized HPLC–UV peaks across three difficulty levels."],
+  ["en-US", "MODELLING", "MODELING"],
+  ["zh-TW", "Celsius", "攝氏"],
+  ["zh-TW", "Fahrenheit", "華氏"],
+  ["zh-TW", "Kelvin", "克耳文"],
+];
+const regionalisationErrors = regionalisationChecks.flatMap(([locale, source, expected]) => {
+  const actual = coreModule.translateText(locale, source);
+  return actual === expected
+    ? []
+    : [`${locale} regionalisation mismatch for ${source}: expected ${expected}, received ${actual}`];
+});
+const regionalSourceErrors = [];
+const enUsCvBritishMatch = enUsCvSource.match(/\b(?:containerised|virtualisation|synchronisation|energised|theatre)\b/i);
+if (enUsCvBritishMatch) {
+  regionalSourceErrors.push(`${enUsCvPath} retains British spelling: ${enUsCvBritishMatch[0]}`);
+}
+const zhTwMainlandMatch = zhTwCvSource.match(/(?:構建|支持|審計|接入|此前|核查|全棧|高級領導|應急|配置|憑據|氣候變化|攝氏度|華氏度|開爾文)/);
+if (zhTwMainlandMatch) {
+  regionalSourceErrors.push(`${zhTwCvPath} retains non-Taiwan terminology: ${zhTwMainlandMatch[0]}`);
+}
 
 for (const locale of archiveLocales.slice(1)) {
   const copy = archiveCopies[locale];
@@ -103,7 +155,59 @@ findZhObject(i18nFile);
 if (!zhObject) throw new Error("Could not find the zhCN translation dictionary.");
 if (!traditionalCharsObject) throw new Error("Could not find the Traditional Chinese character map.");
 
+const sideQuestI18nFile = ts.createSourceFile(
+  sideQuestI18nPath,
+  sideQuestI18nSource,
+  ts.ScriptTarget.Latest,
+  true,
+  ts.ScriptKind.TSX,
+);
+let sideQuestZhObject;
+let sideQuestTraditionalPhrasesArray;
+
+function findSideQuestObjects(node) {
+  if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
+    if (node.name.text === "zhCN" && ts.isObjectLiteralExpression(node.initializer)) {
+      sideQuestZhObject = node.initializer;
+    }
+    if (node.name.text === "traditionalPhrases" && ts.isArrayLiteralExpression(node.initializer)) {
+      sideQuestTraditionalPhrasesArray = node.initializer;
+    }
+  }
+  ts.forEachChild(node, findSideQuestObjects);
+}
+
+findSideQuestObjects(sideQuestI18nFile);
+if (!sideQuestZhObject) throw new Error("Could not find the SideQuest zhCN translation dictionary.");
+if (!sideQuestTraditionalPhrasesArray) throw new Error("Could not find the SideQuest Taiwan phrase map.");
+
+const sideQuestZhValues = sideQuestZhObject.properties.flatMap((property) => {
+  if (!ts.isPropertyAssignment(property) || !ts.isStringLiteralLike(property.initializer)) return [];
+  return [{
+    value: property.initializer.text,
+    line: sideQuestI18nFile.getLineAndCharacterOfPosition(property.getStart(sideQuestI18nFile)).line + 1,
+  }];
+});
+const sideQuestZhKeys = new Set();
+const duplicateSideQuestZhKeys = [];
+for (const property of sideQuestZhObject.properties) {
+  if (!ts.isPropertyAssignment(property)) continue;
+  const key = ts.isStringLiteralLike(property.name) || ts.isIdentifier(property.name)
+    ? property.name.text
+    : null;
+  if (!key) continue;
+  if (sideQuestZhKeys.has(key)) duplicateSideQuestZhKeys.push(key);
+  sideQuestZhKeys.add(key);
+}
+const sideQuestTraditionalPhrases = sideQuestTraditionalPhrasesArray.elements.flatMap((element) => {
+  if (!ts.isArrayLiteralExpression(element) || element.elements.length !== 2) return [];
+  const [from, to] = element.elements;
+  if (!ts.isStringLiteralLike(from) || !ts.isStringLiteralLike(to)) return [];
+  return [[from.text, to.text]];
+});
+
 const zhKeys = new Set();
+const zhKeyLocations = new Map();
 const duplicateZhKeys = [];
 for (const property of zhObject.properties) {
   if (!ts.isPropertyAssignment(property)) continue;
@@ -113,6 +217,7 @@ for (const property of zhObject.properties) {
   if (!key) continue;
   if (zhKeys.has(key)) duplicateZhKeys.push(key);
   zhKeys.add(key);
+  zhKeyLocations.set(key, i18nFile.getLineAndCharacterOfPosition(property.getStart(i18nFile)).line + 1);
 }
 
 const systemFile = ts.createSourceFile(
@@ -139,6 +244,7 @@ const visibleRecordFields = new Set([
   "tag",
   "name",
   "eyebrow",
+  "meta",
 ]);
 const acceptedCoreIdentity = new Set([
   "Samuel Zhang",
@@ -231,6 +337,138 @@ function addVisible(value, node, sourceFile, sourcePath, allowLowercase = false)
   }
 }
 
+const sideQuestFile = ts.createSourceFile(
+  sideQuestPath,
+  sideQuestSource,
+  ts.ScriptTarget.Latest,
+  true,
+  ts.ScriptKind.TSX,
+);
+const translatedSideQuestAttributes = new Set([
+  "alt",
+  "aria-label",
+  "title",
+  "placeholder",
+  "chapter",
+  "intro",
+]);
+const visibleSideQuestCollections = new Set([
+  "panels",
+  "dayMoments",
+  "teammates",
+  "judgingCriteria",
+  "schedule",
+  "creditGroups",
+  "challengeOptions",
+  "loopSteps",
+  "loopDetails",
+]);
+const acceptedSideQuestIdentity = new Set([
+  "SZ",
+  "Samuel Zhang",
+  "JR",
+  "Javiera Rubio",
+  "AG",
+  "Andrés Daniel Godoy Ortiz",
+  "Tijs",
+  "Siena",
+  "Luke",
+  "Rachel",
+  "Zizou",
+  "Aruzhan",
+  "Cognition",
+  "Healf",
+  "ElevenLabs",
+  "Wispr Flow",
+  "ROXFIT",
+  "Deepline",
+  "Tavily",
+  "Thrad",
+  "km",
+  "KM ÷ 2",
+  "min",
+  "5K",
+  "RH",
+  "44 km",
+  "SideQuest",
+]);
+const sideQuestSourceStrings = new Map();
+
+function addSideQuestSource(value, node, allowLowercase = false) {
+  const compact = decodeJsx(value);
+  if (!compact || !/[A-Za-z]/.test(compact)) return;
+  if (acceptedSideQuestIdentity.has(compact)) return;
+  if (/^(?:https?:|mailto:|\/)/i.test(compact)) return;
+  if (!allowLowercase && /^[a-z\d_-]+$/i.test(compact) && compact[0] === compact[0].toLowerCase()) return;
+  if (!sideQuestSourceStrings.has(compact)) {
+    sideQuestSourceStrings.set(compact, {
+      path: sideQuestPath,
+      line: sideQuestFile.getLineAndCharacterOfPosition(node.getStart(sideQuestFile)).line + 1,
+    });
+  }
+}
+
+function visitSideQuest(node, renderedExpression = false) {
+  if (ts.isJsxText(node)) addSideQuestSource(node.text, node, true);
+
+  if (ts.isJsxAttribute(node)) {
+    const name = node.name.text;
+    if (
+      translatedSideQuestAttributes.has(name)
+      && node.initializer
+      && ts.isStringLiteral(node.initializer)
+    ) {
+      addSideQuestSource(node.initializer.text, node.initializer, true);
+    }
+    if (node.initializer && ts.isJsxExpression(node.initializer) && node.initializer.expression) {
+      visitSideQuest(node.initializer.expression, translatedSideQuestAttributes.has(name));
+    }
+    return;
+  }
+
+  if (ts.isJsxExpression(node)) {
+    if (node.expression) visitSideQuest(node.expression, true);
+    return;
+  }
+
+  if (renderedExpression && ts.isStringLiteralLike(node)) {
+    addSideQuestSource(node.text, node);
+  }
+
+  ts.forEachChild(node, (child) => visitSideQuest(child, renderedExpression));
+}
+
+function collectSideQuestSources(node) {
+  if (
+    ts.isVariableDeclaration(node)
+    && ts.isIdentifier(node.name)
+    && visibleSideQuestCollections.has(node.name.text)
+    && node.initializer
+  ) {
+    visitSideQuest(node.initializer, true);
+  }
+  if (
+    ts.isCallExpression(node)
+    && ts.isIdentifier(node.expression)
+    && node.expression.text === "localizeSideQuestTree"
+    && node.arguments[1]
+  ) {
+    visitSideQuest(node.arguments[1]);
+  }
+  if (
+    ts.isCallExpression(node)
+    && ts.isIdentifier(node.expression)
+    && node.expression.text === "setSandboxResult"
+  ) {
+    for (const argument of node.arguments) {
+      if (ts.isStringLiteralLike(argument)) addSideQuestSource(argument.text, argument, true);
+    }
+  }
+  ts.forEachChild(node, collectSideQuestSources);
+}
+
+collectSideQuestSources(sideQuestFile);
+
 function visitSystem(node, sourceFile, sourcePath, renderedExpression = false) {
   if (ts.isJsxText(node)) addVisible(node.text, node, sourceFile, sourcePath);
 
@@ -309,41 +547,142 @@ const productivityExtrasFile = ts.createSourceFile(
   ts.ScriptKind.TSX,
 );
 
+const projectsFile = ts.createSourceFile(
+  projectsPath,
+  projectsSource,
+  ts.ScriptTarget.Latest,
+  true,
+  ts.ScriptKind.TS,
+);
+const projectSuitesFile = ts.createSourceFile(
+  projectSuitesPath,
+  projectSuitesSource,
+  ts.ScriptTarget.Latest,
+  true,
+  ts.ScriptKind.TS,
+);
+const projectTranslationSources = new Map();
+
+function addProjectTranslationSource(value, node, sourceFile, sourcePath) {
+  if (!projectTranslationSources.has(value)) {
+    projectTranslationSources.set(value, {
+      path: sourcePath,
+      line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+    });
+  }
+}
+
+function collectProjectSummaries(node) {
+  if (
+    ts.isPropertyAssignment(node)
+    && ts.isIdentifier(node.name)
+    && node.name.text === "summary"
+    && ts.isStringLiteralLike(node.initializer)
+  ) {
+    addProjectTranslationSource(node.initializer.text, node.initializer, projectsFile, projectsPath);
+  }
+  ts.forEachChild(node, collectProjectSummaries);
+}
+
+function collectSuiteCopy(node) {
+  if (
+    ts.isPropertyAssignment(node)
+    && ts.isIdentifier(node.name)
+    && (node.name.text === "title" || node.name.text === "description")
+    && ts.isStringLiteralLike(node.initializer)
+  ) {
+    addProjectTranslationSource(node.initializer.text, node.initializer, projectSuitesFile, projectSuitesPath);
+  }
+  ts.forEachChild(node, collectSuiteCopy);
+}
+
+collectProjectSummaries(projectsFile);
+for (const statement of projectSuitesFile.statements) {
+  if (!ts.isVariableStatement(statement)) continue;
+  for (const declaration of statement.declarationList.declarations) {
+    if (
+      ts.isIdentifier(declaration.name)
+      && declaration.name.text === "projectSuites"
+      && declaration.initializer
+    ) {
+      collectSuiteCopy(declaration.initializer);
+    }
+  }
+}
+
 visitSystem(systemFile, systemFile, systemPath);
 visitSystem(productivityFile, productivityFile, productivityPath);
 visitSystem(productivityExtrasFile, productivityExtrasFile, productivityExtrasPath);
 
-const simplifiedCharacters = new Set();
-for (const property of traditionalCharsObject.properties) {
-  if (!ts.isPropertyAssignment(property) || !ts.isStringLiteralLike(property.name)) continue;
-  if (!ts.isStringLiteralLike(property.initializer)) continue;
-  if (property.name.text !== property.initializer.text) simplifiedCharacters.add(property.name.text);
+const comprehensiveSimplifiedCharacters = new Set(
+  simplifiedToTraditionalCharacters
+    .split("|")
+    .map((entry) => entry.slice(0, entry.indexOf(" ")))
+    .filter((character) => [...character].length === 1),
+);
+const validTraditionalVariants = new Set(["吃", "台", "峰", "秘", "群"]);
+
+function isContextuallyTraditional(value, character, index) {
+  if (validTraditionalVariants.has(character)) return true;
+  const context = value.slice(Math.max(0, index - 2), index + 3);
+  if (character === "里" && /(?:(?:公|英)里|里程)/.test(context)) return true;
+  if (character === "干" && /干(?:預|擾|涉|係)/.test(context)) return true;
+  if (character === "准" && /(?:獲准|批准|准許)/.test(context)) return true;
+  if (character === "游" && /(?:上游|中游|下游|游離)/.test(context)) return true;
+  return false;
 }
-for (const character of ["错", "蓝", "红", "绿", "细", "辑", "马", "么", "筛", "静", "胆", "适", "携", "备", "历", "绘", "导", "迁", "荧"]) {
-  simplifiedCharacters.add(character);
+
+function findTraditionalResidue(value) {
+  for (let index = 0; index < value.length;) {
+    const character = String.fromCodePoint(value.codePointAt(index));
+    if (comprehensiveSimplifiedCharacters.has(character) && !isContextuallyTraditional(value, character, index)) {
+      return character;
+    }
+    index += character.length;
+  }
+  return null;
 }
 
 const traditionalResiduals = [...visibleStrings].flatMap(([value, location]) => {
   const translated = coreModule.translateText("zh-TW", value);
-  const translatedCharacters = [...translated];
-  const residual = translatedCharacters.find((character, index) => (
-    simplifiedCharacters.has(character)
-    // 公里 is the standard Traditional Chinese unit spelling; 裡 denotes
-    // "inside" and would be incorrect in a distance measurement.
-    && !(character === "里" && ["公", "英"].includes(translatedCharacters[index - 1]))
-  ));
+  const residual = findTraditionalResidue(translated);
   if (residual) return [`${location.path}:${location.line}: ${residual} remains in ${translated}`];
   if (translated.includes("恢複")) return [`${location.path}:${location.line}: contextually incorrect 恢複 in ${translated}`];
   return [];
 });
 
-const obviousArchiveSimplifiedCharacters = new Set(["点", "键", "频", "钮", "颈"]);
+for (const [value, location] of projectTranslationSources) {
+  const translated = coreModule.translateText("zh-TW", value);
+  const residual = findTraditionalResidue(translated);
+  if (residual) traditionalResiduals.push(`${location.path}:${location.line}: ${residual} remains in ${translated}`);
+  if (translated.includes("恢複")) {
+    traditionalResiduals.push(`${location.path}:${location.line}: contextually incorrect 恢複 in ${translated}`);
+  }
+}
+
+for (const [value, line] of zhKeyLocations) {
+  const translated = coreModule.translateText("zh-TW", value);
+  const residual = findTraditionalResidue(translated);
+  if (residual) traditionalResiduals.push(`${i18nPath}:${line}: ${residual} remains in ${translated}`);
+  if (translated.includes("恢複")) traditionalResiduals.push(`${i18nPath}:${line}: contextually incorrect 恢複 in ${translated}`);
+}
+
+for (const { value, line } of sideQuestZhValues) {
+  let phraseAdjusted = value;
+  for (const [from, to] of sideQuestTraditionalPhrases) {
+    phraseAdjusted = phraseAdjusted.replaceAll(from, to);
+  }
+  const translated = coreModule.toTraditionalMandarin(phraseAdjusted);
+  const residual = findTraditionalResidue(translated);
+  if (residual) traditionalResiduals.push(`${sideQuestI18nPath}:${line}: ${residual} remains in ${translated}`);
+  if (translated.includes("恢複")) {
+    traditionalResiduals.push(`${sideQuestI18nPath}:${line}: contextually incorrect 恢複 in ${translated}`);
+  }
+}
+
 for (const [key, value] of Object.entries(archiveCopies["zh-TW"])) {
   if (typeof value !== "string") continue;
-  // Archive copy is independently translated rather than mechanically
-  // converted. Restrict this check to unambiguous residue: characters such as
-  // 游 are valid Traditional Chinese in 下游 even though 游泳 may become 遊泳.
-  const residual = [...value].find((character) => obviousArchiveSimplifiedCharacters.has(character));
+  const residual = findTraditionalResidue(value);
   if (residual) traditionalResiduals.push(`zh-TW archive key ${key}: ${residual} remains in ${value}`);
   if (value.includes("恢複")) traditionalResiduals.push(`zh-TW archive key ${key}: contextually incorrect 恢複`);
 }
@@ -351,11 +690,22 @@ for (const [key, value] of Object.entries(archiveCopies["zh-TW"])) {
 const missingCoreKeys = [...visibleStrings]
   .filter(([value]) => !zhKeys.has(value))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
+const missingSideQuestKeys = [...sideQuestSourceStrings]
+  .filter(([value]) => !sideQuestZhKeys.has(value))
+  .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
+const missingProjectKeys = [...projectTranslationSources]
+  .filter(([value]) => !zhKeys.has(value))
+  .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 
 const errors = [
   ...archiveErrors,
+  ...regionalisationErrors,
+  ...regionalSourceErrors,
   ...duplicateZhKeys.map((key) => `duplicate zhCN key: ${key}`),
+  ...duplicateSideQuestZhKeys.map((key) => `duplicate SideQuest zhCN key: ${key}`),
   ...missingCoreKeys.map((entry) => `missing zhCN translation: ${entry}`),
+  ...missingSideQuestKeys.map((entry) => `missing SideQuest zhCN translation: ${entry}`),
+  ...missingProjectKeys.map((entry) => `missing project zhCN translation: ${entry}`),
   ...traditionalResiduals.map((entry) => `Traditional Chinese residue: ${entry}`),
 ];
 
@@ -366,5 +716,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Locale gate: ${archiveKeys.length} archive keys match across 4 locales; ${visibleStrings.size} core System 7 strings have Mandarin coverage.`,
+  `Locale gate: ${archiveKeys.length} archive keys match across 4 locales; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project summaries/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
 );

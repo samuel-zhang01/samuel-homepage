@@ -37,9 +37,9 @@ const CALCULATOR_STORAGE_KEY = "samuel-system7-calculator-v1";
 const DESK_RESTORE_EVENT = "samuel-desk-storage-restored";
 const DESK_FLUSH_EVENT = "samuel-desk-storage-flush";
 const MAX_BACKUP_FILE_BYTES = 12_000_000;
-// The canonical maximum Sketch (250 × 1,000 quantised points) is just over
-// six million characters; keep a measured safety margin below the 12 MB file cap.
-const MAX_BACKUP_ENTRY_CHARS = 6_250_000;
+// The bounded Sketch Pad is the largest entry (120 × 500 quantised points).
+// Two million characters leaves headroom below common per-origin storage caps.
+const MAX_BACKUP_ENTRY_CHARS = 2_000_000;
 const DESK_STORAGE_KEYS = [
   NOTE_STORAGE_KEY,
   FOCUS_STORAGE_KEY,
@@ -98,19 +98,26 @@ function normaliseDeskBackupEntry(key: string, raw: string): string | null {
     if (key === CALCULATOR_STORAGE_KEY) {
       if (!Array.isArray(parsed.tape) || parsed.tape.length > 8) return null;
       const seenIds = new Set<number>();
-      const tape = parsed.tape.filter((entry): entry is TapeEntry => (
-        typeof entry === "object"
-        && entry !== null
-        && typeof (entry as TapeEntry).id === "number"
-        && Number.isFinite((entry as TapeEntry).id)
-        && !seenIds.has((entry as TapeEntry).id)
-        && Boolean(seenIds.add((entry as TapeEntry).id))
-        && typeof (entry as TapeEntry).expression === "string"
-        && (entry as TapeEntry).expression.length <= 80
-        && typeof (entry as TapeEntry).result === "string"
-        && (entry as TapeEntry).result.length <= 40
-      ));
-      if (tape.length !== parsed.tape.length) return null;
+      const tape: TapeEntry[] = [];
+      for (const entry of parsed.tape) {
+        if (typeof entry !== "object" || entry === null) return null;
+        const candidate = entry as Partial<TapeEntry>;
+        if (
+          typeof candidate.id !== "number"
+          || !Number.isFinite(candidate.id)
+          || seenIds.has(candidate.id)
+          || typeof candidate.expression !== "string"
+          || candidate.expression.length > 80
+          || typeof candidate.result !== "string"
+          || candidate.result.length > 40
+        ) return null;
+        seenIds.add(candidate.id);
+        tape.push({
+          id: candidate.id,
+          expression: candidate.expression,
+          result: candidate.result,
+        });
+      }
       return JSON.stringify({ version: 1, tape });
     }
   } catch {
@@ -985,17 +992,10 @@ function DeskCalculator({ locale }: { locale: Locale }) {
     try {
       const stored = window.localStorage.getItem(CALCULATOR_STORAGE_KEY);
       if (stored) {
-        const parsed = JSON.parse(stored) as { version?: number; tape?: unknown };
-        if (parsed.version === 1 && Array.isArray(parsed.tape)) {
-          const restored = parsed.tape
-            .filter((entry): entry is TapeEntry => (
-              typeof entry === "object"
-              && entry !== null
-              && typeof (entry as TapeEntry).id === "number"
-              && typeof (entry as TapeEntry).expression === "string"
-              && typeof (entry as TapeEntry).result === "string"
-            ))
-            .slice(-8);
+        const normalised = normaliseDeskBackupEntry(CALCULATOR_STORAGE_KEY, stored);
+        if (normalised) {
+          const parsed = JSON.parse(normalised) as { tape: TapeEntry[] };
+          const restored = parsed.tape;
           latestTapeRef.current = restored;
           setTape(restored);
         }

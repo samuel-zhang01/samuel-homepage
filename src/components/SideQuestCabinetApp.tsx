@@ -73,7 +73,12 @@ const loopDetails = [
   "Store the outcome as new evidence and run the loop again.",
 ] as const;
 
-const cheers = ["🔥", "👏", "⚡", "💚"] as const;
+const cheersByLocale: Record<Locale, readonly string[]> = {
+  "en-GB": ["GO!", "NICE", "+", "!"],
+  "en-US": ["GO!", "NICE", "+", "!"],
+  "zh-CN": ["加油", "好棒", "+", "!"],
+  "zh-TW": ["加油", "好棒", "+", "!"],
+};
 const routePoints = [[8,70],[13,62],[20,65],[25,54],[33,49],[39,53],[46,41],[53,44],[58,34],[66,28],[73,32],[79,22],[88,26],[92,16]] as const;
 
 function formatTime(totalSeconds: number) {
@@ -109,7 +114,7 @@ function DayPanel({ locale }: { locale: Locale }) {
         </div>
       </article>
       <figure className={styles.portraitCard}>
-        <Image src="/hackathons/runhack/samuel-rain-lap.jpg" alt="Samuel smiling and making a peace sign while moving on the wet track beneath the ArcelorMittal Orbit." width={1024} height={1536} sizes="(max-width: 760px) 100vw, 34vw" unoptimized />
+        <Image src="/hackathons/runhack/samuel-rain-lap.jpg" alt="Samuel smiling and making a peace sign while moving on the wet track beneath the ArcelorMittal Orbit." width={1024} height={1536} sizes="(max-width: 760px) 100vw, 34vw" />
         <figcaption><span>RAIN LAP · LONDON STADIUM</span><blockquote>“I left with far more energy than I arrived with, despite my legs strongly disagreeing.”</blockquote></figcaption>
       </figure>
     </div>
@@ -184,7 +189,7 @@ function PeoplePanel({ locale }: { locale: Locale }) {
   return <>{localizeSideQuestTree(locale, <>
     <ChapterHeading chapter="CHAPTER 03 · THE CROWD" title="The best part was everybody else" intro="A hackathon can produce a product. This one also produced a temporary little city on a running track." />
     <figure className={styles.communityPhoto}>
-      <Image src="/hackathons/runhack/community-track-group.jpg" alt="More than 100 runners and builders celebrating together on the London Stadium Community Track." width={800} height={533} sizes="100vw" unoptimized />
+      <Image src="/hackathons/runhack/community-track-group.jpg" alt="More than 100 runners and builders celebrating together on the London Stadium Community Track." width={800} height={533} sizes="100vw" />
       <figcaption><span>ONE LOOP · 100+ PEOPLE</span><strong>Together on the London Stadium Community Track.</strong><small>Photo shared by Samuel Zhang.</small></figcaption>
     </figure>
     <div className={styles.peopleGrid}>
@@ -311,7 +316,7 @@ function BuildPanel({ locale }: { locale: Locale }) {
 
     {view === "live" && <div className={styles.liveDemo}>
       <figure className={styles.phoneProof}>
-        <Image src="/hackathons/runhack/sidequest-live.jpg" alt="The SideQuest live prototype showing a runner’s camera, GPS distance, pace, time and privacy-safe abstract route." width={781} height={1532} sizes="(max-width: 700px) 80vw, 330px" unoptimized />
+        <Image src="/hackathons/runhack/sidequest-live.jpg" alt="The SideQuest live prototype showing a runner’s camera, GPS distance, pace, time and privacy-safe abstract route." width={781} height={1532} sizes="(max-width: 700px) 80vw, 330px" />
         <figcaption><span>EVENT-DAY PROTOTYPE</span> Javi live on the track, with a camera, GPS metrics and an abstract route.</figcaption>
       </figure>
       <article className={styles.replayCard}>
@@ -326,7 +331,7 @@ function BuildPanel({ locale }: { locale: Locale }) {
         <dl className={styles.replayStats}><div><dt>Distance</dt><dd>{distance.toFixed(2)} km</dd></div><div><dt>Live pace</dt><dd>{replayTick ? `${5 + Math.floor(replayTick / 9)}:${String(42 + (replayTick % 9)).padStart(2, "0")}` : "—"}</dd></div><div><dt>Time</dt><dd>{formatTime(elapsed)}</dd></div></dl>
         <div className={styles.replayControls}>
           <button type="button" onClick={startReplay}>{replayState === "live" ? "Restart replay" : replayState === "finished" ? "Run replay again" : "Start live replay"}</button>
-          <div><span>Send a cheer</span>{cheers.map((cheer) => <button key={cheer} type="button" disabled={replayState !== "live"} onClick={() => setCheerFeed((current) => [...current.slice(-4), cheer])} aria-label={`Send ${cheer} cheer`}>{cheer}</button>)}</div>
+          <div><span>Send a cheer</span>{cheersByLocale[locale].map((cheer) => <button key={cheer} type="button" disabled={replayState !== "live"} onClick={() => setCheerFeed((current) => [...current.slice(-4), cheer])} aria-label={locale === "zh-CN" ? `发送助威：${cheer}` : locale === "zh-TW" ? `傳送加油訊息：${cheer}` : `Send ${cheer} cheer`}>{cheer}</button>)}</div>
           <button type="button" disabled={replayState !== "live" || liveChallenge !== "draft"} onClick={() => setLiveChallenge("sent")}>Send challenge</button>
         </div>
       </article>
@@ -403,7 +408,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
           </dl>
         </div>
         <figure className={styles.heroPhoto}>
-          <Image src="/hackathons/runhack/building-in-motion.jpg" alt="Samuel and another participant using their phones while moving around the London Stadium Community Track." width={800} height={533} sizes="(max-width: 800px) 100vw, 48vw" priority unoptimized />
+          <Image src="/hackathons/runhack/building-in-motion.jpg" alt="Samuel and another participant using their phones while moving around the London Stadium Community Track." width={800} height={533} sizes="(max-width: 800px) 100vw, 48vw" priority />
           <figcaption><span>BUILDING IN MOTION</span> The track was the workstation. Photo shared by Samuel Zhang.</figcaption>
         </figure>
       </section>

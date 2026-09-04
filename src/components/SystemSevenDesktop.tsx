@@ -5,8 +5,10 @@ import dynamic from "next/dynamic";
 import {
   Children,
   cloneElement,
+  createContext,
   isValidElement,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -21,31 +23,65 @@ import {
   translateText,
   type Locale,
 } from "@/lib/i18n";
-import PdfPreview from "@/components/PdfPreview";
-import { BrickBreakerGame, SnakeGame } from "@/components/ArcadeClassicGames";
-import HplcPeakDock from "@/components/HplcPeakDock";
 import projectExplorerStyles from "@/components/projects/ProjectExplorer.module.css";
 import projectActionsStyles from "@/components/projects/ProjectActions.module.css";
 import projectDemoRouterStyles from "@/components/projects/ProjectDemoRouter.module.css";
 import projectCaseBriefStyles from "@/components/projects/ProjectCaseBrief.module.css";
-import ProductivityApps from "@/components/ProductivityApps";
+
+const SystemLocaleContext = createContext<Locale>("en-GB");
+
+function useSystemLocale() {
+  return useContext(SystemLocaleContext);
+}
+
+function ClassicModuleLoading() {
+  return <div className="classic-module-loading" aria-hidden="true"><span><i /></span></div>;
+}
+
+const PdfPreview = dynamic(() => import("@/components/PdfPreview"), {
+  loading: ClassicModuleLoading,
+});
+
+const SnakeGame = dynamic(
+  () => import("@/components/ArcadeClassicGames").then((module) => module.SnakeGame),
+  { loading: ClassicModuleLoading },
+);
+
+const BrickBreakerGame = dynamic(
+  () => import("@/components/ArcadeClassicGames").then((module) => module.BrickBreakerGame),
+  { loading: ClassicModuleLoading },
+);
+
+const HplcPeakDock = dynamic(() => import("@/components/HplcPeakDock"), {
+  loading: ClassicModuleLoading,
+});
+
+const ProductivityApps = dynamic(() => import("@/components/ProductivityApps"), {
+  loading: ClassicModuleLoading,
+});
 
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
-  loading: () => (
-    <div className={`projects-app ${projectExplorerStyles.archiveModuleLoading} ${projectActionsStyles.archiveCssAnchor} ${projectDemoRouterStyles.archiveCssAnchor} ${projectCaseBriefStyles.archiveCssAnchor}`}>
-      <span className="eyebrow">OPENING PROJECT ARCHIVE…</span>
-      <span className={projectExplorerStyles.archiveLoadingTrack} aria-hidden="true"><i /></span>
-    </div>
-  ),
+  loading: function ProjectExplorerLoading() {
+    const locale = useSystemLocale();
+    return (
+      <div className={`projects-app ${projectExplorerStyles.archiveModuleLoading} ${projectActionsStyles.archiveCssAnchor} ${projectDemoRouterStyles.archiveCssAnchor} ${projectCaseBriefStyles.archiveCssAnchor}`} role="status">
+        <span className="eyebrow">{translateText(locale, "OPENING PROJECT ARCHIVE…")}</span>
+        <span className={projectExplorerStyles.archiveLoadingTrack} aria-hidden="true"><i /></span>
+      </div>
+    );
+  },
 });
 
 const SideQuestCabinetApp = dynamic(() => import("@/components/SideQuestCabinetApp"), {
-  loading: () => (
-    <div className="sidequest-app-loading" role="status">
-      <span className="eyebrow">OPENING FIELD OBJECT…</span>
-      <strong>Rewinding the RUN/HACK relay.</strong>
-    </div>
-  ),
+  loading: function SideQuestLoading() {
+    const locale = useSystemLocale();
+    return (
+      <div className="sidequest-app-loading" role="status">
+        <span className="eyebrow">{translateText(locale, "OPENING FIELD OBJECT…")}</span>
+        <strong>{translateText(locale, "Rewinding the RUN/HACK relay.")}</strong>
+      </div>
+    );
+  },
 });
 
 export type AppId =
@@ -117,6 +153,17 @@ type IconKind =
   | "mail"
   | "secret";
 
+type SystemMenuId = "apple" | "file" | "edit" | "view" | "special" | "language";
+
+const SYSTEM_MENU_ELEMENT_IDS: Record<SystemMenuId, string> = {
+  apple: "samuel-menu",
+  file: "file-menu",
+  edit: "edit-menu",
+  view: "view-menu",
+  special: "special-menu",
+  language: "language-menu",
+};
+
 const TRANSLATED_ATTRIBUTES = ["aria-label", "title", "placeholder", "alt"] as const;
 
 function localiseNode(node: ReactNode, locale: Locale): ReactNode {
@@ -141,7 +188,11 @@ function localiseNode(node: ReactNode, locale: Locale): ReactNode {
 }
 
 function TranslationBoundary({ locale, children }: { locale: Locale; children: ReactNode }) {
-  return <>{localiseNode(children, locale)}</>;
+  return (
+    <SystemLocaleContext.Provider value={locale}>
+      {localiseNode(children, locale)}
+    </SystemLocaleContext.Provider>
+  );
 }
 
 function localiseGameMessage(locale: Locale, message: string): string {
@@ -173,6 +224,23 @@ const BOOT_PROGRESS = [8, 17, 29, 42, 56, 70, 85, 100] as const;
 
 function isCompactCanvasViewport(): boolean {
   return window.innerWidth <= 720 || (window.innerHeight <= 520 && window.innerWidth <= 1000);
+}
+
+function fitWindowToViewport(item: WindowState, viewportWidth: number, viewportHeight: number): WindowState {
+  const compactCanvas = viewportWidth <= 720 || (viewportHeight <= 520 && viewportWidth <= 1000);
+  if (compactCanvas || item.maximized) return item;
+  const minTop = 30;
+  const maxWidth = Math.max(280, viewportWidth - 20);
+  const maxHeight = Math.max(190, viewportHeight - minTop - 8);
+  const width = Math.min(item.width, maxWidth);
+  const height = Math.min(item.height, maxHeight);
+  return {
+    ...item,
+    width,
+    height,
+    x: Math.min(Math.max(5, item.x), Math.max(5, viewportWidth - width - 5)),
+    y: Math.min(Math.max(minTop, item.y), Math.max(minTop, viewportHeight - height - 7)),
+  };
 }
 
 const INITIAL_WINDOWS: WindowState[] = [
@@ -631,7 +699,7 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
             src="/coverd-logo-black-on-transparent.png"
             alt=""
             fill
-            sizes={small ? "18px" : "34px"}
+            sizes={small ? "16px" : "32px"}
             loading="eager"
           />
         </span>
@@ -949,7 +1017,6 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               alt="Samuel and another participant using their phones while moving around the London Stadium Community Track."
               fill
               sizes="(max-width: 720px) 100vw, 240px"
-              unoptimized
             />
           </div>
           <div className="latest-update-card__copy">
@@ -1289,50 +1356,108 @@ function EducationApp({ locale }: { locale: Locale }) {
 }
 
 function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [activeService, setActiveService] = useState<"internet" | "email" | "linkedin">("internet");
+  const copyResetTimer = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (copyResetTimer.current !== null) window.clearTimeout(copyResetTimer.current);
+  }, []);
+
+  const handleServiceTabsKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const services = ["internet", "email", "linkedin"] as const;
+    const currentIndex = services.indexOf(activeService);
+    let nextIndex: number | null = null;
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % services.length;
+    else if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + services.length) % services.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = services.length - 1;
+    if (nextIndex === null) return;
+    event.preventDefault();
+    const nextService = services[nextIndex];
+    setActiveService(nextService);
+    window.requestAnimationFrame(() => document.getElementById(`contact-tab-${nextService}`)?.focus());
+  };
 
   const copyEmail = async () => {
     const email = "sam.xiaojian.zhang@outlook.com";
-    let copiedWithClipboard = false;
+    let copySucceeded = false;
     try {
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(email);
-        copiedWithClipboard = true;
+        copySucceeded = true;
       }
     } catch {
       // Firefox and Safari can deny clipboard access outside a trusted gesture.
     }
-    if (!copiedWithClipboard) {
+    if (!copySucceeded) {
+      const previouslyFocused = document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
       const input = document.createElement("textarea");
       input.value = email;
       input.style.position = "fixed";
       input.style.opacity = "0";
       document.body.appendChild(input);
-      input.select();
-      document.execCommand("copy");
-      input.remove();
+      try {
+        input.select();
+        copySucceeded = document.execCommand("copy");
+      } catch {
+        copySucceeded = false;
+      } finally {
+        input.remove();
+        if (previouslyFocused?.isConnected) previouslyFocused.focus({ preventScroll: true });
+      }
     }
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    setCopyState(copySucceeded ? "copied" : "failed");
+    if (copyResetTimer.current !== null) window.clearTimeout(copyResetTimer.current);
+    copyResetTimer.current = window.setTimeout(() => {
+      setCopyState("idle");
+      copyResetTimer.current = null;
+    }, 2_500);
   };
+
+  const copyLabel = copyState === "copied"
+    ? translateText(locale, "Address Copied!")
+    : copyState === "failed"
+      ? translateText(locale, "Copy Failed")
+      : translateText(locale, "Copy Email");
 
   return (
     <TranslationBoundary locale={locale}><div className="chooser-app">
       <div className="chooser-columns">
-        <div className="chooser-list" role="group" aria-label="Contact services">
-          <button className="is-selected"><PixelIcon kind="network" small />Internet</button>
-          <button><PixelIcon kind="document" small />Electronic Mail</button>
-          <button><PixelIcon kind="computer" small />LinkedIn</button>
+        <div className="chooser-list" role="tablist" aria-label="Contact services" onKeyDown={handleServiceTabsKeyDown}>
+          <button id="contact-tab-internet" type="button" role="tab" tabIndex={activeService === "internet" ? 0 : -1} aria-selected={activeService === "internet"} aria-controls="contact-service-panel" className={activeService === "internet" ? "is-selected" : ""} onClick={() => setActiveService("internet")}><PixelIcon kind="network" small />Internet</button>
+          <button id="contact-tab-email" type="button" role="tab" tabIndex={activeService === "email" ? 0 : -1} aria-selected={activeService === "email"} aria-controls="contact-service-panel" className={activeService === "email" ? "is-selected" : ""} onClick={() => setActiveService("email")}><PixelIcon kind="document" small />Electronic Mail</button>
+          <button id="contact-tab-linkedin" type="button" role="tab" tabIndex={activeService === "linkedin" ? 0 : -1} aria-selected={activeService === "linkedin"} aria-controls="contact-service-panel" className={activeService === "linkedin" ? "is-selected" : ""} onClick={() => setActiveService("linkedin")}><PixelIcon kind="computer" small />LinkedIn</button>
         </div>
-        <div className="chooser-detail">
+        <div id="contact-service-panel" className="chooser-detail" role="tabpanel" aria-labelledby={`contact-tab-${activeService}`}>
           <div className="contact-machine"><PixelIcon kind="computer" /><span className="machine-light" /></div>
-          <h3>Samuel Zhang</h3>
-          <p>Available for conversations about applied AI, responsible technology, product leadership, and ambitious early-stage ventures.</p>
-          <div className="contact-links">
-            <button className="mac-button is-default" onClick={copyEmail}>{copied ? "Address Copied!" : "Copy Email"}</button>
-            <a className="mac-button" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <button className="mac-button" onClick={() => openApp("coverd")}>COVERD</button>
-          </div>
+          <h3>{activeService === "internet" ? "Samuel Zhang" : activeService === "email" ? "Electronic Mail" : "LinkedIn"}</h3>
+          <p>{activeService === "email"
+            ? "Email is the most direct way to start a useful conversation."
+            : activeService === "linkedin"
+              ? "Open Samuel’s professional profile for experience, projects and shared connections."
+              : "Available for conversations about applied AI, responsible technology, product leadership, and ambitious early-stage ventures."}</p>
+          {activeService === "internet" && (
+            <div className="contact-links">
+              <button className="mac-button is-default" aria-live="polite" onClick={copyEmail}>{copyLabel}</button>
+              <a className="mac-button" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a className="mac-button" href="https://github.com/samuel-zhang01" target="_blank" rel="noreferrer">GitHub</a>
+              <button className="mac-button" onClick={() => openApp("coverd")}>COVERD</button>
+            </div>
+          )}
+          {activeService === "email" && (
+            <div className="contact-links">
+              <a className="mac-button is-default" href="mailto:sam.xiaojian.zhang@outlook.com">Write Email</a>
+              <button className="mac-button" aria-live="polite" onClick={copyEmail}>{copyLabel}</button>
+            </div>
+          )}
+          {activeService === "linkedin" && (
+            <div className="contact-links">
+              <a className="mac-button is-default" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">Open LinkedIn</a>
+            </div>
+          )}
           <dl><div><dt>Location:</dt><dd>London, UK</dd></div><div><dt>Network:</dt><dd>Open to useful conversations</dd></div></dl>
         </div>
       </div>
@@ -2264,7 +2389,7 @@ export default function SystemSevenDesktop({
   );
   const [activeId, setActiveId] = useState<AppId>(initialApp);
   const [selectedIcon, setSelectedIcon] = useState<AppId | null>(null);
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openMenu, setOpenMenu] = useState<SystemMenuId | null>(null);
   const [booting, setBooting] = useState(!skipBoot);
   const [bootMessageIndex, setBootMessageIndex] = useState(0);
   const [clock, setClock] = useState("--:--");
@@ -2284,8 +2409,7 @@ export default function SystemSevenDesktop({
     originY: number;
   } | null>(null);
   const toastTimer = useRef<number | null>(null);
-  const languageButtonRef = useRef<HTMLButtonElement | null>(null);
-  const languageMenuRef = useRef<HTMLDivElement | null>(null);
+  const menuButtonRefs = useRef<Partial<Record<SystemMenuId, HTMLButtonElement | null>>>({});
   const mobileGuideButtonRef = useRef<HTMLButtonElement | null>(null);
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
   const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({});
@@ -2318,22 +2442,13 @@ export default function SystemSevenDesktop({
 
   useEffect(() => {
     const clampWindowsToViewport = () => {
-      const compactCanvas = isCompactCanvasViewport();
-      if (compactCanvas) return;
-      const minTop = 30;
-      const maxWidth = Math.max(280, window.innerWidth - 20);
-      const maxHeight = Math.max(190, window.innerHeight - minTop - 8);
       setWindows((current) => {
         let changed = false;
         const next = current.map((item) => {
-          if (item.maximized) return item;
-          const width = Math.min(item.width, maxWidth);
-          const height = Math.min(item.height, maxHeight);
-          const x = Math.min(Math.max(5, item.x), Math.max(5, window.innerWidth - width - 5));
-          const y = Math.min(Math.max(minTop, item.y), Math.max(minTop, window.innerHeight - height - 7));
-          if (width === item.width && height === item.height && x === item.x && y === item.y) return item;
+          const fitted = fitWindowToViewport(item, window.innerWidth, window.innerHeight);
+          if (fitted.width === item.width && fitted.height === item.height && fitted.x === item.x && fitted.y === item.y) return item;
           changed = true;
-          return { ...item, width, height, x, y };
+          return fitted;
         });
         return changed ? next : current;
       });
@@ -2379,12 +2494,17 @@ export default function SystemSevenDesktop({
   }, [booting, completeBoot]);
 
   useEffect(() => {
+    if (!openMenu) return;
+    const activeMenu = openMenu;
     const closeMenus = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpenMenu(null);
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setOpenMenu(null);
+      window.requestAnimationFrame(() => menuButtonRefs.current[activeMenu]?.focus());
     };
     window.addEventListener("keydown", closeMenus);
     return () => window.removeEventListener("keydown", closeMenus);
-  }, []);
+  }, [openMenu]);
 
   useEffect(() => {
     const updateClock = () => setClock(new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
@@ -2532,7 +2652,10 @@ export default function SystemSevenDesktop({
       if (document.title !== translatedTitle) document.title = translatedTitle;
       const deskAccessoryIds: AppId[] = ["notepad", "sketch", "tasks", "focus", "calendar", "calculator", "converter", "palette"];
       const metadataId: AppId = deskAccessoryIds.includes(id) ? "desk" : id;
-      const sourceDescription = DESKTOP_ICONS.find((item) => item.id === metadataId)?.description ?? "";
+      const sourceDescription = DESKTOP_ICONS.find((item) => item.id === metadataId)?.description
+        ?? (metadataId === "sidequest"
+          ? "A rain-soaked running hackathon field journal: the runner-only build rule, 44 team kilometres, a 100+ person track community and second-place app SideQuest."
+          : "");
       const translatedDescription = translateText(nextLocale, sourceDescription);
       const setMeta = (attribute: "name" | "property", key: string, value: string) => {
         let meta = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
@@ -2602,10 +2725,27 @@ export default function SystemSevenDesktop({
     toastTimer.current = window.setTimeout(() => setToast(null), 2600);
   }, []);
 
+  const restoreMenuTriggerFocus = (menuId: SystemMenuId) => {
+    window.requestAnimationFrame(() => menuButtonRefs.current[menuId]?.focus());
+  };
+
   const chooseLocale = (nextLocale: Locale) => {
     setLocale(nextLocale);
     setOpenMenu(null);
     syncAddress(activeId, nextLocale, true);
+    restoreMenuTriggerFocus("language");
+  };
+
+  const choosePattern = (nextPattern: "classic" | "blue") => {
+    setPattern(nextPattern);
+    setOpenMenu(null);
+    restoreMenuTriggerFocus("view");
+  };
+
+  const hideAllWindows = () => {
+    setWindows((current) => current.map((item) => ({ ...item, open: false })));
+    setOpenMenu(null);
+    restoreMenuTriggerFocus("special");
   };
 
   const closeApp = (id: AppId) => {
@@ -2621,27 +2761,53 @@ export default function SystemSevenDesktop({
     });
   };
 
-  const focusLanguageOption = (position: "first" | "last") => {
+  const focusMenuOption = (menuId: SystemMenuId, position: "first" | "last") => {
     window.requestAnimationFrame(() => {
-      const options = languageMenuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]');
+      const menu = document.getElementById(SYSTEM_MENU_ELEMENT_IDS[menuId]);
+      const options = menu?.querySelectorAll<HTMLButtonElement>('[role^="menuitem"]:not(:disabled)');
       if (!options?.length) return;
       options[position === "first" ? 0 : options.length - 1].focus();
     });
   };
 
-  const handleLanguageMenuKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const options = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]'));
+  const toggleSystemMenu = (menuId: SystemMenuId) => {
+    if (openMenu === menuId) {
+      setOpenMenu(null);
+      return;
+    }
+    setOpenMenu(menuId);
+    focusMenuOption(menuId, "first");
+  };
+
+  const handleMenuButtonKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    menuId: SystemMenuId,
+  ) => {
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+    event.preventDefault();
+    setOpenMenu(menuId);
+    focusMenuOption(menuId, event.key === "ArrowDown" ? "first" : "last");
+  };
+
+  const handleSystemMenuKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    menuId: SystemMenuId,
+  ) => {
+    const options = Array.from(
+      event.currentTarget.querySelectorAll<HTMLButtonElement>('[role^="menuitem"]:not(:disabled)'),
+    );
     if (options.length === 0) return;
     const currentIndex = options.indexOf(document.activeElement as HTMLButtonElement);
     let nextIndex: number | null = null;
-    if (event.key === "ArrowDown") nextIndex = (currentIndex + 1) % options.length;
-    else if (event.key === "ArrowUp") nextIndex = (currentIndex - 1 + options.length) % options.length;
+    if (event.key === "ArrowDown") nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % options.length;
+    else if (event.key === "ArrowUp") nextIndex = currentIndex < 0 ? options.length - 1 : (currentIndex - 1 + options.length) % options.length;
     else if (event.key === "Home") nextIndex = 0;
     else if (event.key === "End") nextIndex = options.length - 1;
     else if (event.key === "Escape") {
       event.preventDefault();
+      event.stopPropagation();
       setOpenMenu(null);
-      languageButtonRef.current?.focus();
+      menuButtonRefs.current[menuId]?.focus();
       return;
     }
     if (nextIndex === null) return;
@@ -2665,7 +2831,11 @@ export default function SystemSevenDesktop({
 
   const restart = () => {
     setOpenMenu(null);
-    setWindows(INITIAL_WINDOWS.map((item) => ({ ...item, open: item.id === "about" })));
+    setWindows(INITIAL_WINDOWS.map((item) => fitWindowToViewport(
+      { ...item, open: item.id === "about" },
+      window.innerWidth,
+      window.innerHeight,
+    )));
     setActiveId("about");
     setMemoryMagic(false);
     setToast(null);
@@ -2778,16 +2948,27 @@ export default function SystemSevenDesktop({
       className={`system-desktop desktop-pattern--${pattern}`}
       data-locale={locale}
       onPointerDown={(event) => {
+        const target = event.target;
+        if (target instanceof Element && !target.closest(".menu-root")) setOpenMenu(null);
         if (event.target === event.currentTarget) {
           setSelectedIcon(null);
-          setOpenMenu(null);
         }
       }}
     >
       <nav className="system-menubar" aria-label="System menu bar">
         <div className="menu-cluster">
           <div className="menu-root">
-            <button className={openMenu === "apple" ? "is-open apple-menu" : "apple-menu"} onClick={() => setOpenMenu(openMenu === "apple" ? null : "apple")} aria-label="Samuel menu" aria-controls="samuel-menu" aria-expanded={openMenu === "apple"}>
+            <button
+              ref={(element) => { menuButtonRefs.current.apple = element; }}
+              type="button"
+              className={openMenu === "apple" ? "is-open apple-menu" : "apple-menu"}
+              onClick={() => toggleSystemMenu("apple")}
+              onKeyDown={(event) => handleMenuButtonKeyDown(event, "apple")}
+              aria-label="Samuel menu"
+              aria-haspopup="menu"
+              aria-controls={openMenu === "apple" ? SYSTEM_MENU_ELEMENT_IDS.apple : undefined}
+              aria-expanded={openMenu === "apple"}
+            >
               <svg className="human-mark" viewBox="0 0 18 18" aria-hidden="true" shapeRendering="crispEdges">
                 <circle cx="9" cy="5" r="3" />
                 <path d="M3 17v-3c0-3.2 2.4-5 6-5s6 1.8 6 5v3z" />
@@ -2795,42 +2976,42 @@ export default function SystemSevenDesktop({
               <span className="menu-label">Menu</span>
             </button>
             {openMenu === "apple" && (
-              <div className="menu-dropdown apple-dropdown" id="samuel-menu">
-                <button onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
-                <button onClick={() => openApp("projects")}><PixelIcon kind="folder" small />Project Archive</button>
-                <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
-                <button onClick={() => openApp("experience")}><PixelIcon kind="briefcase" small />Career</button>
-                <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
-                <button onClick={() => openApp("desk")}><PixelIcon kind="accessories" small />Desk Accessories</button>
-                <button onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
+              <div className="menu-dropdown apple-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.apple} role="menu" aria-label="Samuel menu" onKeyDown={(event) => handleSystemMenuKeyDown(event, "apple")}>
+                <button type="button" role="menuitem" onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
+                <button type="button" role="menuitem" onClick={() => openApp("projects")}><PixelIcon kind="folder" small />Project Archive</button>
+                <button type="button" role="menuitem" onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
+                <button type="button" role="menuitem" onClick={() => openApp("experience")}><PixelIcon kind="briefcase" small />Career</button>
+                <button type="button" role="menuitem" onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
+                <button type="button" role="menuitem" onClick={() => openApp("desk")}><PixelIcon kind="accessories" small />Desk Accessories</button>
+                <button type="button" role="menuitem" onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
                 <hr />
-                <button onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />Latest field note · RUN/HACK</button>
-                <button onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
-                <button onClick={() => openApp("education")}><PixelIcon kind="university" small />Education &amp; Awards</button>
-                <button onClick={() => openApp("lab")}><PixelIcon kind="network" small />Home Lab Network</button>
-                <button onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Interests &amp; Notes</button>
-                <button onClick={() => openApp("games")}><PixelIcon kind="game" small />Desk Arcade</button>
+                <button type="button" role="menuitem" onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />Latest field note · RUN/HACK</button>
+                <button type="button" role="menuitem" onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
+                <button type="button" role="menuitem" onClick={() => openApp("education")}><PixelIcon kind="university" small />Education &amp; Awards</button>
+                <button type="button" role="menuitem" onClick={() => openApp("lab")}><PixelIcon kind="network" small />Home Lab Network</button>
+                <button type="button" role="menuitem" onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Interests &amp; Notes</button>
+                <button type="button" role="menuitem" onClick={() => openApp("games")}><PixelIcon kind="game" small />Desk Arcade</button>
                 <hr />
-                <button onClick={restart}>Restart…</button>
+                <button type="button" role="menuitem" onClick={restart}>Restart…</button>
               </div>
             )}
           </div>
           <strong className="active-application">{activeTitle}</strong>
           <div className="menu-root">
-            <button className={openMenu === "file" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "file" ? null : "file")} aria-controls="file-menu" aria-expanded={openMenu === "file"}>File</button>
-            {openMenu === "file" && <div className="menu-dropdown" id="file-menu"><button onClick={() => openApp("documents")}>Open Documents…</button><hr /><button onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
+            <button ref={(element) => { menuButtonRefs.current.file = element; }} type="button" className={openMenu === "file" ? "is-open" : ""} onClick={() => toggleSystemMenu("file")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "file")} aria-haspopup="menu" aria-controls={openMenu === "file" ? SYSTEM_MENU_ELEMENT_IDS.file : undefined} aria-expanded={openMenu === "file"}>File</button>
+            {openMenu === "file" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.file} role="menu" aria-label="File" onKeyDown={(event) => handleSystemMenuKeyDown(event, "file")}><button type="button" role="menuitem" onClick={() => openApp("documents")}>Open Documents…</button><hr /><button type="button" role="menuitem" onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "edit" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "edit" ? null : "edit")} aria-controls="edit-menu" aria-expanded={openMenu === "edit"}>Edit</button>
-            {openMenu === "edit" && <div className="menu-dropdown" id="edit-menu"><button className="is-disabled" disabled>Undo <kbd>⌘Z</kbd></button><hr /><button className="is-disabled" disabled>Cut <kbd>⌘X</kbd></button><button className="is-disabled" disabled>Copy <kbd>⌘C</kbd></button><button className="is-disabled" disabled>Paste <kbd>⌘V</kbd></button></div>}
+            <button ref={(element) => { menuButtonRefs.current.edit = element; }} type="button" className={openMenu === "edit" ? "is-open" : ""} onClick={() => toggleSystemMenu("edit")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "edit")} aria-haspopup="menu" aria-controls={openMenu === "edit" ? SYSTEM_MENU_ELEMENT_IDS.edit : undefined} aria-expanded={openMenu === "edit"}>Edit</button>
+            {openMenu === "edit" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.edit} role="menu" aria-label="Edit" onKeyDown={(event) => handleSystemMenuKeyDown(event, "edit")}><button type="button" role="menuitem" className="is-disabled" disabled>Undo <kbd>⌘Z</kbd></button><hr /><button type="button" role="menuitem" className="is-disabled" disabled>Cut <kbd>⌘X</kbd></button><button type="button" role="menuitem" className="is-disabled" disabled>Copy <kbd>⌘C</kbd></button><button type="button" role="menuitem" className="is-disabled" disabled>Paste <kbd>⌘V</kbd></button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "view" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "view" ? null : "view")} aria-controls="view-menu" aria-expanded={openMenu === "view"}>View</button>
-            {openMenu === "view" && <div className="menu-dropdown" id="view-menu"><button onClick={() => setPattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button onClick={() => setPattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button></div>}
+            <button ref={(element) => { menuButtonRefs.current.view = element; }} type="button" className={openMenu === "view" ? "is-open" : ""} onClick={() => toggleSystemMenu("view")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "view")} aria-haspopup="menu" aria-controls={openMenu === "view" ? SYSTEM_MENU_ELEMENT_IDS.view : undefined} aria-expanded={openMenu === "view"}>View</button>
+            {openMenu === "view" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.view} role="menu" aria-label="View" onKeyDown={(event) => handleSystemMenuKeyDown(event, "view")}><button type="button" role="menuitemradio" aria-checked={pattern === "classic"} onClick={() => choosePattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "blue"} onClick={() => choosePattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button></div>}
           </div>
           <div className="menu-root menu-optional">
-            <button className={openMenu === "special" ? "is-open" : ""} onClick={() => setOpenMenu(openMenu === "special" ? null : "special")} aria-controls="special-menu" aria-expanded={openMenu === "special"}>Special</button>
-            {openMenu === "special" && <div className="menu-dropdown" id="special-menu"><button onClick={() => openApp("games")}>Desk Arcade</button><hr /><button onClick={() => { setWindows((current) => current.map((item) => ({ ...item, open: false }))); setOpenMenu(null); }}>Hide All Windows</button><button onClick={() => openApp("secret")}>About This Secret…</button><button onClick={restart}>Restart</button></div>}
+            <button ref={(element) => { menuButtonRefs.current.special = element; }} type="button" className={openMenu === "special" ? "is-open" : ""} onClick={() => toggleSystemMenu("special")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "special")} aria-haspopup="menu" aria-controls={openMenu === "special" ? SYSTEM_MENU_ELEMENT_IDS.special : undefined} aria-expanded={openMenu === "special"}>Special</button>
+            {openMenu === "special" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.special} role="menu" aria-label="Special" onKeyDown={(event) => handleSystemMenuKeyDown(event, "special")}><button type="button" role="menuitem" onClick={() => openApp("games")}>Desk Arcade</button><hr /><button type="button" role="menuitem" onClick={hideAllWindows}>Hide All Windows</button><button type="button" role="menuitem" onClick={() => openApp("secret")}>About This Secret…</button><button type="button" role="menuitem" onClick={restart}>Restart</button></div>}
           </div>
         </div>
         <div className="menu-status">
@@ -2845,15 +3026,11 @@ export default function SystemSevenDesktop({
           </button>
           <div className="menu-root menu-language">
             <button
-              ref={languageButtonRef}
+              ref={(element) => { menuButtonRefs.current.language = element; }}
+              type="button"
               className={openMenu === "language" ? "is-open" : ""}
-              onClick={() => setOpenMenu(openMenu === "language" ? null : "language")}
-              onKeyDown={(event) => {
-                if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
-                event.preventDefault();
-                setOpenMenu("language");
-                focusLanguageOption(event.key === "ArrowDown" ? "first" : "last");
-              }}
+              onClick={() => toggleSystemMenu("language")}
+              onKeyDown={(event) => handleMenuButtonKeyDown(event, "language")}
               aria-haspopup="menu"
               aria-expanded={openMenu === "language"}
               aria-controls={openMenu === "language" ? "language-menu" : undefined}
@@ -2864,10 +3041,11 @@ export default function SystemSevenDesktop({
               <span className="language-short">{activeLocaleOption.short}</span>
             </button>
             {openMenu === "language" && (
-              <div ref={languageMenuRef} className="menu-dropdown language-dropdown" id="language-menu" role="menu" aria-label="Language" onKeyDown={handleLanguageMenuKeyDown}>
+              <div className="menu-dropdown language-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.language} role="menu" aria-label="Language" onKeyDown={(event) => handleSystemMenuKeyDown(event, "language")}>
                 {localeOptions.map((option) => (
                   <button
                     key={option.locale}
+                    type="button"
                     onClick={() => chooseLocale(option.locale)}
                     lang={option.locale}
                     role="menuitemradio"

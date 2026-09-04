@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { projects, type Project } from "@/data/projects";
-import { localeSlug, type Locale } from "@/lib/i18n";
+import { localeSlug, translateText, type Locale } from "@/lib/i18n";
 import { getProjectArchiveCopy } from "./projectArchiveI18n";
 import { getProjectSuite } from "./projectSuites";
 import { getProjectStory } from "./projectStories";
@@ -39,10 +39,10 @@ export function ProjectCaseBrief({
   return (
     <section className={styles.brief} aria-labelledby={`case-brief-${project.slug}`}>
       {suite ? (
-        <nav className={styles.workspace} aria-label={`${copy.workspace}: ${suite.title}`}>
+        <nav className={styles.workspace} aria-label={`${copy.workspace}: ${translateText(locale, suite.title)}`}>
           <div>
             <span>{copy.workspace}</span>
-            <strong lang="en-GB">{suite.title}</strong>
+            <strong lang={locale}>{translateText(locale, suite.title)}</strong>
             <small>{formatChapter(copy.chapter, suite.slugs.indexOf(project.slug) + 1, suite.slugs.length)}</small>
           </div>
           <div className={styles.chapterLinks}>
@@ -70,7 +70,7 @@ export function ProjectCaseBrief({
       <header className={styles.header}>
         <span>{copy.eyebrow}</span>
         <h4 id={`case-brief-${project.slug}`}>{copy.title}</h4>
-        <p>{project.summary}</p>
+        <p lang={locale}>{translateText(locale, project.summary)}</p>
         {story ? <div className={styles.audience}><span>{copy.audience}</span><p lang="en-GB">{story.audience}</p></div> : null}
         <Link className={styles.contact} href={`/${localeSlug(locale)}/contact`}>{copy.discuss}</Link>
       </header>
@@ -115,10 +115,10 @@ export function ProjectCaseBrief({
       ) : null}
 
       {suite && related.length > 0 ? (
-        <section className={styles.related} aria-label={`${copy.relatedSuite}: ${suite.title}`}>
+        <section className={styles.related} aria-label={`${copy.relatedSuite}: ${translateText(locale, suite.title)}`}>
           <div>
-            <span>{copy.relatedSuite} / {suite.title}</span>
-            <p>{suite.description} {copy.relatedCopy}</p>
+            <span>{copy.relatedSuite} / <b lang={locale}>{translateText(locale, suite.title)}</b></span>
+            <p><span lang={locale}>{translateText(locale, suite.description)}</span> {copy.relatedCopy}</p>
           </div>
           <div className={styles.relatedLinks}>
             {related.map((relatedProject) => (

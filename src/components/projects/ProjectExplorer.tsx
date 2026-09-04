@@ -10,7 +10,7 @@ import {
   type ProjectAccess,
   type ProjectArea,
 } from "@/data/projects";
-import type { Locale } from "@/lib/i18n";
+import { translateText, type Locale } from "@/lib/i18n";
 import { ProjectActions } from "./ProjectActions";
 import { ProjectCaseBrief } from "./ProjectCaseBrief";
 import { ProjectDemoRouter } from "./ProjectDemoRouter";
@@ -20,6 +20,7 @@ import {
   getProjectArchiveCopy,
 } from "./projectArchiveI18n";
 import { getProjectSuite } from "./projectSuites";
+import { ProjectLocaleProvider, useProjectLocale } from "./ProjectTranslationBoundary";
 import styles from "./ProjectExplorer.module.css";
 
 type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";
@@ -48,16 +49,19 @@ const filterAccessOrder = accessOrder.filter((access) =>
 );
 const curatedOrder = new Map(projects.map((project, index) => [project.slug, index]));
 
+function PortfolioMapLoading() {
+  const locale = useProjectLocale();
+  return (
+    <div className={styles.mapLoading} role="status">
+      <span aria-hidden="true" />
+      <strong>{translateText(locale, "INDEXING PROJECT FILES…")}</strong>
+    </div>
+  );
+}
+
 const PortfolioMap = dynamic(
   () => import("./PortfolioMap").then((module) => module.PortfolioMap),
-  {
-    loading: () => (
-      <div className={styles.mapLoading} role="status">
-        <span aria-hidden="true" />
-        <strong>INDEXING PROJECT FILES…</strong>
-      </div>
-    ),
-  },
+  { loading: PortfolioMapLoading },
 );
 
 function latestProjectYear(project: Project) {
@@ -164,7 +168,7 @@ function ProjectRow({
           <time>{project.year}</time>
         </span>
         <strong lang="en-GB">{project.title}</strong>
-        <span className={styles.rowSummary} lang="en-GB">{project.summary}</span>
+        <span className={styles.rowSummary} lang={locale}>{translateText(locale, project.summary)}</span>
         <span className={styles.rowFooter} lang={locale}>
           <span className={`${styles.miniAccess} ${styles[`access_${project.access}`]}`}>
             {copy.access[project.access].short}
@@ -258,14 +262,22 @@ function FilteredEmptyDetail({
   );
 }
 
-function ProjectTitleTemplate({ template, title }: { template: string; title: string }) {
+function ProjectTitleTemplate({
+  template,
+  title,
+  titleLang = "en-GB",
+}: {
+  template: string;
+  title: string;
+  titleLang?: Locale;
+}) {
   const marker = "{title}";
   const markerIndex = template.indexOf(marker);
-  if (markerIndex < 0) return <span lang="en-GB">{title}</span>;
+  if (markerIndex < 0) return <span lang={titleLang}>{title}</span>;
   return (
     <>
       {template.slice(0, markerIndex)}
-      <span lang="en-GB">{title}</span>
+      <span lang={titleLang}>{title}</span>
       {template.slice(markerIndex + marker.length)}
     </>
   );
@@ -297,7 +309,8 @@ function HeroAction({
           <strong>
             <ProjectTitleTemplate
               template={suite ? copy.actions.openSuite : copy.actions.openLab}
-              title={suite?.title ?? project.shortTitle ?? project.title}
+              title={suite ? translateText(locale, suite.title) : project.shortTitle ?? project.title}
+              titleLang={suite ? locale : "en-GB"}
             />
           </strong>
         </span>
@@ -375,6 +388,25 @@ function ProjectDetail({
   const copy = getProjectArchiveCopy(locale);
 
   if (view === "demo" && project.demo) {
+    const interactiveLabId = `interactive-lab-${project.slug}`;
+    const revealInteractiveLab = () => {
+      const interactiveLab = document.getElementById(interactiveLabId);
+      const detail = detailRef.current;
+      if (!interactiveLab || !detail) return;
+      const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+      if (usesStackedProjectLayout(detail)) {
+        interactiveLab.scrollIntoView({ behavior, block: "start" });
+        interactiveLab.focus({ preventScroll: true });
+        return;
+      }
+      const detailBounds = detail.getBoundingClientRect();
+      const labBounds = interactiveLab.getBoundingClientRect();
+      detail.scrollTo({
+        top: detail.scrollTop + labBounds.top - detailBounds.top - 66,
+        behavior,
+      });
+      interactiveLab.focus({ preventScroll: true });
+    };
     return (
       <section
         ref={detailRef}
@@ -390,6 +422,7 @@ function ProjectDetail({
             <span>{copy.detail.safePort}</span>
             <strong lang="en-GB">{project.title}</strong>
           </div>
+          <button type="button" className={styles.demoSkip} onClick={revealInteractiveLab}>{copy.detail.skipToInteractive}</button>
           <AccessBadge access={project.access} locale={locale} />
         </div>
         <div className={styles.demoBody} lang="en-GB">
@@ -399,7 +432,9 @@ function ProjectDetail({
             onSelectProject={onSelectProject}
             onOpenProjectDemo={onOpenProjectDemo}
           />
-          <ProjectDemoRouter demoId={project.demo} locale={locale} />
+          <div id={interactiveLabId} className={styles.demoAnchor} tabIndex={-1}>
+            <ProjectDemoRouter demoId={project.demo} locale={locale} />
+          </div>
         </div>
       </section>
     );
@@ -427,7 +462,7 @@ function ProjectDetail({
           </div>
           <span className={styles.eyebrow} lang="en-GB">{project.eyebrow}</span>
           <h3 lang="en-GB">{project.title}</h3>
-          <p lang="en-GB">{project.summary}</p>
+          <p lang={locale}>{translateText(locale, project.summary)}</p>
           <HeroAction
             project={project}
             locale={locale}
@@ -942,6 +977,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   };
 
   return (
+    <ProjectLocaleProvider locale={locale}>
     <div className={styles.explorer} lang={locale}>
       <header className={styles.explorerHeader}>
         <div>
@@ -970,7 +1006,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
             type="button"
             role="tab"
             className={styles.archiveViewTab}
-            aria-controls={`${viewId}-${item.id}-panel`}
+            aria-controls={archiveView === item.id ? `${viewId}-${item.id}-panel` : undefined}
             aria-selected={archiveView === item.id}
             tabIndex={archiveTabStop === item.id ? 0 : -1}
             onFocus={() => setArchiveTabStop(item.id)}
@@ -1012,7 +1048,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
           aria-labelledby={`${viewId}-map-tab`}
           tabIndex={0}
         >
-          <PortfolioMap initialSlug={selectedProject.slug} onSelectProject={selectProjectFromMap} />
+          <PortfolioMap initialSlug={selectedProject.slug} locale={locale} onSelectProject={selectProjectFromMap} />
         </section>
       )}
 
@@ -1201,6 +1237,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       </section>
       )}
     </div>
+    </ProjectLocaleProvider>
   );
 }
 

@@ -17,6 +17,7 @@ import {
   type ProjectAccess,
   type ProjectArea,
 } from "../../data/projects";
+import { translateText, type Locale } from "@/lib/i18n";
 import { ModelLineageMap } from "./ModelLineageMap";
 import styles from "./PortfolioMap.module.css";
 
@@ -278,7 +279,7 @@ function MatrixView({
       ? `${focus.area} · ${accessMeta[focus.access].label}`
       : `${focus.area} · all access levels`;
 
-  function cellButton(area: ProjectArea, count: number, nextFocus: typeof focus, label: string) {
+  function cellButton(count: number, nextFocus: typeof focus, label: string) {
     const selected = nextFocus.area === focus.area && nextFocus.access === focus.access && nextFocus.demo === focus.demo;
     return count > 0 ? (
       <button type="button" aria-label={`${label}: ${count} projects`} aria-pressed={selected} onClick={() => setFocus(nextFocus)}>{count}</button>
@@ -309,10 +310,10 @@ function MatrixView({
                       <th scope="row"><i style={{ background: AREA_COLOURS[area] }} />{area}</th>
                       {ACCESS_VALUES.map((access) => {
                         const count = areaProjects.filter((project) => project.access === access).length;
-                        return <td key={access}>{cellButton(area, count, { area, access }, `${area}, ${accessMeta[access].label}`)}</td>;
+                        return <td key={access}>{cellButton(count, { area, access }, `${area}, ${accessMeta[access].label}`)}</td>;
                       })}
-                      <td className={styles.demoColumn}>{cellButton(area, areaProjects.filter((project) => project.demo).length, { area, demo: true }, `${area}, interactive`)}</td>
-                      <td>{cellButton(area, areaProjects.length, { area }, `${area}, total`)}</td>
+                      <td className={styles.demoColumn}>{cellButton(areaProjects.filter((project) => project.demo).length, { area, demo: true }, `${area}, interactive`)}</td>
+                      <td>{cellButton(areaProjects.length, { area }, `${area}, total`)}</td>
                     </tr>
                   );
                 })}
@@ -407,12 +408,22 @@ function ToolIndexView({
   );
 }
 
-function ProjectCompareCard({ label, project, onOpen }: { label: string; project: Project; onOpen: () => void }) {
+function ProjectCompareCard({
+  label,
+  project,
+  locale,
+  onOpen,
+}: {
+  label: string;
+  project: Project;
+  locale: Locale;
+  onOpen: () => void;
+}) {
   return (
     <article className={styles.compareCard} style={{ "--area-colour": AREA_COLOURS[project.area] } as CSSProperties}>
       <span>{label} · {project.area}</span>
       <h3>{project.shortTitle ?? project.title}</h3>
-      <p>{project.summary}</p>
+      <p lang={locale}>{translateText(locale, project.summary)}</p>
       <dl>
         <div><dt>Year</dt><dd>{project.year}</dd></div>
         <div><dt>Status</dt><dd>{project.status}</dd></div>
@@ -428,9 +439,11 @@ function ProjectCompareCard({ label, project, onOpen }: { label: string; project
 function ComparisonView({
   onPreview,
   onOpen,
+  locale,
 }: {
   onPreview: (project: Project) => void;
   onOpen: (project: Project) => void;
+  locale: Locale;
 }) {
   const [leftSlug, setLeftSlug] = useState(DEFAULT_PAIR[0].slug);
   const [rightSlug, setRightSlug] = useState(DEFAULT_PAIR[1].slug);
@@ -468,8 +481,8 @@ function ComparisonView({
       </section>
 
       <div className={styles.compareCards}>
-        <ProjectCompareCard label="A" project={left} onOpen={() => onOpen(left)} />
-        <ProjectCompareCard label="B" project={right} onOpen={() => onOpen(right)} />
+        <ProjectCompareCard label="A" project={left} locale={locale} onOpen={() => onOpen(left)} />
+        <ProjectCompareCard label="B" project={right} locale={locale} onOpen={() => onOpen(right)} />
       </div>
 
       <div className={styles.relationshipWorkspace}>
@@ -546,7 +559,15 @@ function LedgerView() {
   );
 }
 
-function ProjectInspector({ project, onOpen }: { project: Project; onOpen: (project: Project) => void }) {
+function ProjectInspector({
+  project,
+  locale,
+  onOpen,
+}: {
+  project: Project;
+  locale: Locale;
+  onOpen: (project: Project) => void;
+}) {
   return (
     <aside className={styles.projectInspector} aria-live="polite">
       <div className={styles.inspectorHeading}><span>SELECTED FILE</span><b>{project.year}</b></div>
@@ -556,7 +577,7 @@ function ProjectInspector({ project, onOpen }: { project: Project; onOpen: (proj
       <div className={styles.inspectorFlags}>
         <span data-kind="status">{project.status}</span><span data-kind="access">{accessMeta[project.access].label}</span>{project.demo && <span data-kind="demo">Interactive</span>}{project.artifacts?.length ? <span data-kind="artifact">{project.artifacts.length} artifact{project.artifacts.length === 1 ? "" : "s"}</span> : null}
       </div>
-      <p className={styles.inspectorSummary}>{project.summary}</p>
+      <p className={styles.inspectorSummary} lang={locale}>{translateText(locale, project.summary)}</p>
       <section className={styles.inspectorTools}><span>DECLARED TOOLS · {project.tools.length}</span><div>{project.tools.map((tool) => <i key={tool}>{tool}</i>)}</div></section>
       <button type="button" className={styles.openProject} onClick={() => onOpen(project)}>Open project file <span aria-hidden="true">›</span></button>
       <small className={styles.inspectorBoundary}>Selection previews catalogue metadata only. Opening delegates to the archive’s existing project handler.</small>
@@ -567,9 +588,11 @@ function ProjectInspector({ project, onOpen }: { project: Project; onOpen: (proj
 export function PortfolioMap({
   onSelectProject,
   initialSlug,
+  locale = "en-GB",
 }: {
   onSelectProject: (slug: string) => void;
   initialSlug?: string;
+  locale?: Locale;
 }) {
   const [view, setView] = useState<ViewId>("timeline");
   const [selectedSlug, setSelectedSlug] = useState(() => (
@@ -612,11 +635,11 @@ export function PortfolioMap({
           {view === "timeline" && <TimelineView onPreview={preview} onOpen={open} />}
           {view === "matrix" && <MatrixView onPreview={preview} onOpen={open} />}
           {view === "tools" && <ToolIndexView onPreview={preview} onOpen={open} />}
-          {view === "compare" && <ComparisonView onPreview={preview} onOpen={open} />}
+          {view === "compare" && <ComparisonView onPreview={preview} onOpen={open} locale={locale} />}
           {view === "models" && <ModelLineageMap initialSlug={selectedProject.slug} onSelectProject={onSelectProject} />}
           {view === "ledger" && <LedgerView />}
         </div>
-        <ProjectInspector project={selectedProject} onOpen={open} />
+        <ProjectInspector project={selectedProject} locale={locale} onOpen={open} />
       </div>
 
       <footer className={styles.mapFooter}>

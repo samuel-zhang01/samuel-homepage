@@ -19,6 +19,16 @@ export function useProjectLocale() {
   return useContext(ProjectLocaleContext);
 }
 
+export function ProjectLocaleProvider({
+  locale,
+  children,
+}: {
+  locale: Locale;
+  children: ReactNode;
+}) {
+  return <ProjectLocaleContext.Provider value={locale}>{children}</ProjectLocaleContext.Provider>;
+}
+
 function localiseNode(node: ReactNode, locale: Locale): ReactNode {
   if (typeof node === "string") return translateText(locale, node);
   if (Array.isArray(node)) {
@@ -46,8 +56,8 @@ export function ProjectTranslationBoundary({
   children: ReactNode;
 }) {
   return (
-    <ProjectLocaleContext.Provider value={locale}>
+    <ProjectLocaleProvider locale={locale}>
       {localiseNode(children, locale)}
-    </ProjectLocaleContext.Provider>
+    </ProjectLocaleProvider>
   );
 }

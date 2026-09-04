@@ -1527,3 +1527,287 @@
     transition: none !important;
   }
 }
+
+/* System 7 surface pass: the risk encodings remain coloured, but the large
+   dashboard canvas and its instruments now read as a classic light utility. */
+.studio {
+  --risk-ink: #111;
+  --risk-deep: #e5e5e0;
+  --risk-panel: #f4f4ef;
+  --risk-panel-soft: #fff;
+  --risk-line: #666;
+  --risk-paper: #111;
+  --risk-muted: #555;
+  --risk-cyan: #087f78;
+  --risk-blue: #245f9b;
+  --risk-purple: #6b4789;
+  --risk-amber: #8a5a00;
+  --risk-red: #a52f42;
+  --risk-green: #216e43;
+  --risk-shadow: #111;
+  color: #111;
+  font-family: var(--system-font);
+}
+
+.researchIcon,
+.sliderGrid output,
+.metricCard > strong,
+.pipeline article > span,
+.traceRow code,
+.traceRow > strong,
+.queuePanel table,
+.benchmarkHero > strong,
+.benchmarkPair strong,
+.comparisonCards strong,
+.tailFormula code,
+.objectiveEquation strong,
+.objectiveEquation code,
+.objectivePanel dd,
+.significancePanel strong,
+.formulaCard code,
+.opeBadge {
+  font-family: var(--system-mono);
+}
+
+.researchIcon {
+  border-color: #111;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
+}
+
+.viewTabs {
+  border: 2px solid #111;
+  border-bottom: 0;
+  background: #bfbfba;
+}
+
+.viewTabs button {
+  border-color: #555;
+  border-radius: 0;
+  color: #333;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.viewTabs .activeView {
+  color: #111;
+  background: #fff;
+  box-shadow: inset 0 3px 0 var(--risk-purple), inset 1px 1px 0 #777;
+}
+
+.viewTabs .activeView span {
+  color: #555;
+}
+
+.labCanvas {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #e8e8e3;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.policyPanel,
+.plotPanel,
+.claimInspector,
+.queuePanel,
+.benchmarkPanel,
+.policyComparison,
+.tailPanel,
+.objectivePanel,
+.provenancePanel,
+.methodColumns > article,
+.opePanel,
+.licencePanel {
+  border-color: #111;
+  border-radius: 0;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 0 #777;
+}
+
+.panelHeading h3,
+.sectionHeading h3,
+.methodColumns h3,
+.opePanel h3,
+.licencePanel h3 {
+  color: #111;
+}
+
+.modeSwitch button,
+.deltaSwitch button,
+.sliderGrid > label,
+.deltaSwitch {
+  border-color: #777;
+  border-radius: 0;
+  color: #444;
+  background: #e5e5e0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.modeSwitch .activeMode,
+.deltaSwitch .activeMode {
+  border-color: #111;
+  color: #fff;
+  background: var(--selection);
+  box-shadow: inset 1px 1px 0 #777;
+}
+
+.ruleReadout,
+.metricCard,
+.objectiveCard,
+.pipeline article {
+  border-color: #777;
+  color: #111;
+  background: #f4f4ef;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
+}
+
+.ruleReadout code,
+.metricCard > strong,
+.objectiveCard > strong {
+  color: #111;
+}
+
+.matchBanner {
+  border-color: #2f6b4d;
+  color: #173d2a;
+  background: #e4f1e8;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.matchBanner strong {
+  color: #173d2a;
+}
+
+.uncertaintyMap,
+.coverageChart {
+  border: 2px solid #111;
+  background: #f4f4ef;
+  box-shadow: inset 1px 1px 0 #bbb;
+}
+
+.plotBack {
+  fill: #fff;
+  stroke: #777;
+}
+
+.gridLine {
+  stroke: #aaa;
+}
+
+.uncertaintyMap text,
+.coverageChart text,
+.axisLabel,
+.coverageChart .annotation {
+  fill: #333 !important;
+  font-family: var(--system-mono);
+}
+
+.retainedDot,
+.deferredDot,
+.selectedDot,
+.curveDot,
+.currentPoint,
+.reportedPoint,
+.baselinePoint,
+.xgbPoint {
+  stroke: #111;
+}
+
+.deferBadge,
+.deferCell {
+  color: #5b3270;
+  background: #eee2f4;
+}
+
+.retainBadge,
+.retainCell {
+  color: #1f5b4f;
+  background: #dff1eb;
+}
+
+.claimFacts,
+.claimFacts > div,
+.bayesTrace,
+.signalPair article,
+.traceRow > div,
+.queuePanel table,
+.queuePanel th,
+.benchmarkHero,
+.benchmarkPair article,
+.comparisonCards article,
+.tailFormula > div,
+.objectiveEquation,
+.significancePanel,
+.significancePanel > div,
+.provenanceGrid article,
+.formulaCard,
+.opeBadge,
+.licencePanel {
+  border-color: #777;
+  color: #111;
+  background: #f4f4ef;
+}
+
+.claimFacts {
+  background: #777;
+}
+
+.traceRow > div,
+.lossRail {
+  background: #d8d8d3;
+}
+
+.signalPair .signalHot,
+.cautionBox,
+.objectiveEquation,
+.significancePanel,
+.significancePanel > div,
+.licencePanel {
+  border-color: #8a6a24;
+  color: #332500;
+  background: #fff4cc;
+}
+
+.queuePanel th {
+  color: #111;
+  background: #d8d8d3;
+}
+
+.queuePanel td {
+  border-color: #bbb;
+  color: #444;
+}
+
+.queuePanel tbody tr:nth-child(even) td {
+  background: #f0f0eb;
+}
+
+.queuePanel tbody tr:hover td,
+.queuePanel tbody .selectedRow td {
+  background: #e1e1f2;
+}
+
+.benchmarkHero,
+.benchmarkPair article,
+.comparisonCards article,
+.provenanceGrid article,
+.formulaCard,
+.opeBadge {
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
+}
+
+.benchmarkPair strong,
+.comparisonCards p,
+.methodColumns b,
+.licencePanel p,
+.objectiveEquation code {
+  color: #333;
+}
+
+.opeBadge {
+  border-color: var(--risk-purple);
+  color: var(--risk-purple);
+}

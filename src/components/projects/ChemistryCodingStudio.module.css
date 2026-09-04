@@ -1216,3 +1216,272 @@
     animation-iteration-count: 1 !important;
   }
 }
+
+/* System 7 surface pass: scientific colour remains in the plots and status
+   marks, while the surrounding workbench uses light, hard-edged chrome. */
+.window,
+.studio {
+  font-family: var(--system-font);
+}
+
+.studioHero {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #e8e8e3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
+}
+
+.studioHero > div:first-child > span,
+.labHeading > div > span,
+.cardToolbar > span,
+.moveReceipt > span,
+.historyCard > div > span,
+.samplerDiagnostic > span,
+.forceDial > span,
+.cuspCard > span,
+.bindingCard label > span,
+.basisHeader > div > span,
+.integratorHeader > div > span,
+.attributionPanel > span,
+.auditHero span,
+.labTabs button > span,
+.labTabs button > small {
+  color: #075f69;
+  font-family: var(--system-mono);
+}
+
+.studioHero h2,
+.heroSeal strong,
+.labHeading h3,
+.moveReceipt > strong,
+.samplerDiagnostic > strong,
+.forceDial > strong,
+.bindingCard > strong,
+.metricCard strong,
+.recordNote strong,
+.trajectoryHeader h4,
+.trajectoryHeader > div:last-child strong,
+.integratorHeader > div > strong,
+.basisHeader > div > strong,
+.auditHero strong {
+  font-family: var(--system-font);
+  font-weight: 700;
+}
+
+.studioHero h2 {
+  color: #111;
+  font-size: clamp(22px, 3.2cqi, 31px);
+  letter-spacing: -0.02em;
+}
+
+.studioHero p {
+  color: #333;
+}
+
+.heroSeal {
+  width: 116px;
+  height: 96px;
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777, 3px 3px 0 #555;
+}
+
+.heroSeal::before,
+.heroSeal::after {
+  border-radius: 0;
+  background: var(--chem-cyan);
+}
+
+.heroSeal span,
+.heroSeal small,
+.heroSeal strong {
+  color: #111;
+}
+
+.labTabs {
+  border: 2px solid #111;
+  background: #bfbfba;
+}
+
+.labTabs button {
+  border-right: 1px solid #555;
+  border-radius: 0;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.labTabs button[aria-selected="true"] {
+  color: #111;
+  background: #fff;
+  box-shadow: inset 2px 2px 0 #777;
+}
+
+.labPanel {
+  border-color: #111;
+  background: #fff;
+}
+
+.canvasCard,
+.polymerViewport,
+.potentialCard,
+.orbitalCard,
+.basisCard,
+.integratorCard,
+.timelineCard,
+.boundaryCard,
+.claimLedger,
+.historyCard,
+.methodDrawer,
+.trajectoryLab {
+  border-color: #111;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: 3px 3px 0 #777;
+}
+
+.cardToolbar,
+.simActions,
+.historyCard > div,
+.methodTabs,
+.trajectoryHeader,
+.integratorHeader,
+.basisHeader,
+.orbitalControls {
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.particleCanvas,
+.polymerViewport svg,
+.trajectoryGrid > svg {
+  background: #f4f4ef;
+}
+
+.chamberGrid line {
+  stroke: #aaa;
+}
+
+.particle,
+.activeParticle .particle {
+  stroke: #111;
+  filter: none;
+}
+
+.particleCanvas g text,
+.svgReadout,
+.axisLabel,
+.axisTripod text {
+  fill: #333;
+  font-family: var(--system-mono);
+}
+
+.simActions button,
+.seedButton,
+.integratorHeader button {
+  border-color: #111;
+  border-radius: 0;
+  background: #e5e5e0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888, 2px 2px 0 #777;
+  font-family: var(--system-mono);
+}
+
+.simActions .primaryAction {
+  border-color: #111;
+  color: #fff;
+  background: var(--selection);
+  box-shadow: inset 1px 1px 0 #777, 2px 2px 0 #555;
+}
+
+.moveReceipt,
+.samplerDiagnostic,
+.forceDial,
+.cuspCard,
+.bindingCard {
+  border-color: #111;
+  color: #111;
+  background: #f4f4ef;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.moveReceipt > strong,
+.samplerDiagnostic > strong,
+.forceDial > strong,
+.bindingCard > strong,
+.moveReceipt dd,
+.cuspCard dd {
+  color: #111;
+}
+
+.moveReceipt dt,
+.cuspCard dt,
+.samplerDiagnostic p,
+.forceDial p,
+.bindingCard p {
+  color: #555;
+}
+
+.moveReceipt dl > div,
+.cuspCard dl > div {
+  border-color: #aaa;
+}
+
+.methodTabs button,
+.modeSwitch button,
+.rangeControl > span,
+.codeBlock,
+.formulaCard p,
+.stageReadout code {
+  font-family: var(--system-mono);
+}
+
+.methodTabs button[aria-selected="true"],
+.modeSwitch button[aria-pressed="true"],
+.integratorTrack button[aria-current="step"] {
+  color: #fff;
+  background: var(--selection);
+}
+
+.codeBlock {
+  border: 2px solid #111;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #bbb;
+}
+
+.trajectoryHeader > div:last-child,
+.bindingCard > code,
+.auditHero > div {
+  border-color: #111;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #bbb;
+}
+
+.trajectoryHeader > div:last-child span,
+.trajectoryHeader > div:last-child strong,
+.trajectoryHeader > div:last-child small,
+.bindingCard > code,
+.auditHero p,
+.auditHero strong {
+  color: #111;
+}
+
+.periodicBox {
+  fill: #e5e5e0;
+  stroke: var(--chem-cyan);
+}
+
+.trajectoryParticle,
+.polymerStart,
+.polymerEnd {
+  stroke: #111;
+}
+
+.tableScroll thead th {
+  color: #111;
+  background: #d8d8d3;
+}

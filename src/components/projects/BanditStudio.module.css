@@ -109,7 +109,7 @@
 
 .machineDial { position: relative; width: 76px; height: 76px; border: 1px solid #64808d; border-radius: 50%; background: repeating-conic-gradient(from -120deg, #71919d 0deg 2deg, transparent 2deg 20deg), radial-gradient(circle, #173444 0 47%, #081621 48% 100%); }
 .machineDial::after { position: absolute; inset: 20px; border: 1px solid #7ca3ad; border-radius: 50%; background: #0d202e; content: ""; }
-.machineDial i { position: absolute; top: 36px; left: 36px; z-index: 1; width: 30px; height: 2px; background: var(--bandit-gold-bright); box-shadow: 0 0 7px rgba(241, 190, 82, 0.7); transform-origin: left center; }
+.machineDial i { position: absolute; top: 36px; left: 36px; z-index: 1; width: 30px; height: 2px; background: var(--bandit-gold-bright); box-shadow: 1px 1px 0 #111; transform-origin: left center; }
 .machineReadout { text-align: center; }
 .machineReadout span,
 .machineReadout strong,
@@ -119,7 +119,7 @@
 .machineReadout small { color: #70d2d9; font: 7px "Courier New", monospace; letter-spacing: 0.08em; }
 .machineLamps { grid-column: 1 / -1; display: flex; justify-content: center; gap: 12px; padding-top: 9px; border-top: 1px solid #36505d; }
 .machineLamps i { width: 8px; height: 8px; border: 1px solid #617985; border-radius: 50%; background: #243a45; }
-.machineLamps .lampOn { border-color: #bff7f8; background: var(--bandit-bright); box-shadow: 0 0 8px var(--bandit-bright); }
+.machineLamps .lampOn { border-color: #111; background: var(--bandit-bright); box-shadow: inset 1px 1px #bff7f8; }
 
 .boundaryStrip { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 9px 13px; border: 1px solid #26343c; border-top: 0; background: #e8eae5; }
 .boundaryStrip strong,
@@ -471,4 +471,197 @@
   .studio *,
   .studio *::before,
   .studio *::after { scroll-behavior: auto !important; }
+}
+
+/* System 7 surface pass: keep the policy visualisation, but present it as a
+   classic desktop instrument instead of a luminous web dashboard. */
+.studio {
+  font-family: var(--system-font);
+}
+
+.hero {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #e8e8e3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
+}
+
+.hero::after {
+  display: none;
+}
+
+.heroCopy > span,
+.sectionHeading > div > span,
+.panelCap span,
+.scenarioCard > span,
+.mapReceipt > span,
+.boardHeading > div > span,
+.chartCap span,
+.definitionGrid section > span,
+.cardCap span,
+.initialisationAudit > div > span,
+.boundaryGrid section > span,
+.machineReadout small,
+.viewTabs button > span,
+.viewTabs button > small {
+  color: #075f69;
+  font-family: var(--system-mono);
+}
+
+.hero h2,
+.sectionHeading h3,
+.phaseBadge strong,
+.oracleBadge strong,
+.scenarioCard > strong,
+.metricRail strong,
+.boardHeading h4,
+.armHeader > span,
+.estimateReadout strong,
+.traceSummary strong,
+.oracleNote strong,
+.definitionGrid strong,
+.inlineFormula,
+.bakeoffGrid article > strong,
+.bakeoffUnavailable strong,
+.equationDeck h4,
+.sourceLedger h4,
+.equationRow > div,
+.initialisationAudit h4,
+.initSequence span,
+.boundaryGrid strong {
+  font-family: var(--system-font);
+  font-weight: 700;
+}
+
+.hero h2 {
+  color: #111;
+  font-size: clamp(22px, 3.2cqi, 32px);
+  letter-spacing: -0.02em;
+}
+
+.hero p {
+  color: #333;
+}
+
+.heroMachine {
+  border: 2px solid #111;
+  border-radius: 0;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777, 3px 3px 0 #555;
+}
+
+.machineDial {
+  border: 2px solid #111;
+  background: #f4f4ef;
+}
+
+.machineDial::after {
+  border-color: #555;
+  background: #fff;
+}
+
+.machineReadout span,
+.machineReadout strong {
+  color: #111;
+  font-family: var(--system-font);
+  font-weight: 700;
+}
+
+.machineLamps {
+  border-color: #777;
+}
+
+.machineLamps i {
+  border-color: #555;
+  background: #aaa;
+}
+
+.viewTabs {
+  border: 2px solid #111;
+  background: #bfbfba;
+}
+
+.viewTabs button {
+  border-right: 1px solid #555;
+  border-radius: 0;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.viewTabs button[aria-selected="true"] {
+  color: #111;
+  background: #fff;
+  box-shadow: inset 2px 2px 0 #777;
+}
+
+.workspace,
+.controlDesk,
+.liveDesk,
+.armCard,
+.bakeoff {
+  background: #f4f4ef;
+}
+
+.consoleGrid,
+.regretGrid,
+.armBoard,
+.dataLedger,
+.checkpointLedger,
+.definitionGrid section,
+.bakeoff,
+.bakeoffGrid article,
+.algorithmFlow,
+.equationDeck,
+.sourceLedger {
+  border-color: #111;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #777;
+}
+
+.panelCap,
+.chartCap,
+.cardCap {
+  border-bottom: 1px solid #111;
+  color: #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.panelCap b,
+.chartCap strong,
+.cardCap strong {
+  color: #111;
+  font-family: var(--system-mono);
+}
+
+.transport button,
+.armCard {
+  background: #e5e5e0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888, 2px 2px 0 #777;
+}
+
+.transport .stepButton {
+  border-color: #111;
+  color: #fff;
+  background: var(--selection);
+  box-shadow: inset 1px 1px 0 #777, 2px 2px 0 #555;
+}
+
+.estimateTrack i {
+  background: var(--bandit-cyan);
+}
+
+.tableWrap thead {
+  color: #111;
+  background: #d8d8d3;
+}
+
+.auditReceipt {
+  border: 2px solid #111;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #bbb;
+  font-family: var(--system-mono);
 }

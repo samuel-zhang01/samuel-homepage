@@ -35,16 +35,9 @@ export function DemoWindow({
 
   return (
     <section className={`${styles.demoWindow} ${className}`} aria-label={`${t(title)} — ${t("interactive demo")}`}>
-      <div className={styles.titleBar}>
-        <span className={styles.windowControl} aria-hidden="true" />
-        <span className={styles.titleRule} aria-hidden="true" />
-        <strong title={t(appName)}>{t(appName)}</strong>
-        <span className={styles.titleRule} aria-hidden="true" />
-        <span className={`${styles.windowControl} ${styles.windowControlRight}`} aria-hidden="true" />
-      </div>
       <header className={styles.demoHeader}>
         <div>
-          <span className={styles.eyebrow}>{t("INTERACTIVE PROJECT FILE")}</span>
+          <span className={styles.eyebrow}>{t(appName)} · {t("INTERACTIVE PROJECT FILE")}</span>
           <h2>{t(title)}</h2>
         </div>
         <span className={`${styles.statusBadge} ${styles[statusTone]}`}>
@@ -52,20 +45,23 @@ export function DemoWindow({
           {t(status)}
         </span>
       </header>
-      <aside className={styles.demoContract} aria-label={t("How to use this interactive demo")} lang={locale}>
-        <div className={styles.contractPurpose}>
-          <span>{t("WHY THIS EXISTS")}</span>
-          <strong>{t(purpose)}</strong>
+      <details className={styles.demoContract} lang={locale}>
+        <summary>{t("How to use this interactive demo")}</summary>
+        <div className={styles.contractGrid}>
+          <div className={styles.contractPurpose}>
+            <span>{t("WHY THIS EXISTS")}</span>
+            <strong>{t(purpose)}</strong>
+          </div>
+          <div>
+            <span><i aria-hidden="true">01</i> {t("TRY THIS")}</span>
+            <p>{t(tryThis)}</p>
+          </div>
+          <div>
+            <span><i aria-hidden="true">02</i> {t("WATCH")}</span>
+            <p>{t(watchFor)}</p>
+          </div>
         </div>
-        <div>
-          <span><i aria-hidden="true">01</i> {t("TRY THIS")}</span>
-          <p>{t(tryThis)}</p>
-        </div>
-        <div>
-          <span><i aria-hidden="true">02</i> {t("WATCH")}</span>
-          <p>{t(watchFor)}</p>
-        </div>
-      </aside>
+      </details>
       <div className={styles.demoBody}>{children}</div>
       {footer ? <footer className={styles.statusBar}>{footer}</footer> : null}
     </section>

@@ -42,7 +42,6 @@ function usePersistentState<T>(
   const latestValue = useRef(value);
   const initialValueRef = useRef(initialValue);
   const readyRef = useRef(false);
-  const storageAvailable = useRef(true);
   const validateRef = useRef(validate);
 
   latestValue.current = value;
@@ -74,7 +73,6 @@ function usePersistentState<T>(
       load(window.localStorage.getItem(key));
       setSaveState("saved");
     } catch {
-      storageAvailable.current = false;
       setSaveState("unavailable");
     } finally {
       readyRef.current = true;
@@ -88,7 +86,6 @@ function usePersistentState<T>(
       try {
         load(window.localStorage.getItem(key));
       } catch {
-        storageAvailable.current = false;
         setSaveState("unavailable");
       }
     };
@@ -96,10 +93,8 @@ function usePersistentState<T>(
       if (!readyRef.current) return;
       try {
         window.localStorage.setItem(key, JSON.stringify({ version: 1, data: latestValue.current }));
-        storageAvailable.current = true;
         setSaveState("saved");
       } catch {
-        storageAvailable.current = false;
         setSaveState("unavailable");
         reportFlushFailure(event, key);
       }
@@ -124,10 +119,8 @@ function usePersistentState<T>(
     const timer = window.setTimeout(() => {
       try {
         window.localStorage.setItem(key, JSON.stringify({ version: 1, data: value }));
-        storageAvailable.current = true;
         setSaveState("saved");
       } catch {
-        storageAvailable.current = false;
         setSaveState("unavailable");
       }
     }, 180);
@@ -167,8 +160,12 @@ type DrawStroke = {
   points: DrawPoint[];
 };
 type SketchData = { strokes: DrawStroke[] };
-const MAX_SKETCH_STROKES = 250;
-const MAX_POINTS_PER_STROKE = 1_000;
+// Keep the worst-case drawing comfortably inside the storage budget shared by
+// all eight accessories. Pointer samples are also frame-limited below, so this
+// still permits hours of ordinary sketching without repainting on every raw
+// hardware event.
+const MAX_SKETCH_STROKES = 120;
+const MAX_POINTS_PER_STROKE = 500;
 
 const PAINT_COLOURS = [
   { name: "Ink black", value: "#111111" },
@@ -214,7 +211,10 @@ function validateSketch(value: unknown): SketchData | null {
     ) return null;
     seenIds.add(stroke.id);
     strokes.push({
-      ...stroke,
+      id: stroke.id,
+      colour: stroke.colour,
+      width: stroke.width,
+      erase: stroke.erase,
       // v1 drawings created before point quantisation can contain long
       // floating-point coordinates. Rounding is a lossless visual migration
       // that keeps the largest valid drawing below the backup entry limit.
@@ -291,6 +291,8 @@ function SketchPad({ locale }: { locale: Locale }) {
   const [clearArmed, setClearArmed] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const activeStroke = useRef<{ pointerId: number; strokeId: string } | null>(null);
+  const pendingPoint = useRef<DrawPoint | null>(null);
+  const drawFrame = useRef<number | null>(null);
   const strokesRef = useRef(drawing.strokes);
   strokesRef.current = drawing.strokes;
 
@@ -318,6 +320,9 @@ function SketchPad({ locale }: { locale: Locale }) {
       const active = activeStroke.current;
       const canvas = canvasRef.current;
       if (active && canvas?.hasPointerCapture(active.pointerId)) canvas.releasePointerCapture(active.pointerId);
+      if (drawFrame.current !== null) window.cancelAnimationFrame(drawFrame.current);
+      drawFrame.current = null;
+      pendingPoint.current = null;
       activeStroke.current = null;
       setRedo([]);
       setClearArmed(false);
@@ -328,6 +333,9 @@ function SketchPad({ locale }: { locale: Locale }) {
     window.addEventListener(RESTORE_EVENT, resetHistory);
     window.addEventListener("storage", resetHistoryFromStorage);
     return () => {
+      if (drawFrame.current !== null) window.cancelAnimationFrame(drawFrame.current);
+      drawFrame.current = null;
+      pendingPoint.current = null;
       window.removeEventListener(RESTORE_EVENT, resetHistory);
       window.removeEventListener("storage", resetHistoryFromStorage);
     };
@@ -359,14 +367,10 @@ function SketchPad({ locale }: { locale: Locale }) {
     setClearArmed(false);
   };
 
-  const continueStroke = (event: ReactPointerEvent<HTMLCanvasElement>) => {
-    const active = activeStroke.current;
-    if (!active || active.pointerId !== event.pointerId) return;
-    event.preventDefault();
-    const point = pointFromEvent(event);
+  const appendPoint = (strokeId: string, point: DrawPoint) => {
     setDrawing((current) => ({
       strokes: current.strokes.map((stroke) => (
-        stroke.id === active.strokeId
+        stroke.id === strokeId
           ? (() => {
               const previous = stroke.points.at(-1)!;
               const distance = Math.hypot(point.x - previous.x, point.y - previous.y);
@@ -381,8 +385,29 @@ function SketchPad({ locale }: { locale: Locale }) {
     }));
   };
 
+  const continueStroke = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+    const active = activeStroke.current;
+    if (!active || active.pointerId !== event.pointerId) return;
+    event.preventDefault();
+    pendingPoint.current = pointFromEvent(event);
+    if (drawFrame.current !== null) return;
+    const strokeId = active.strokeId;
+    drawFrame.current = window.requestAnimationFrame(() => {
+      drawFrame.current = null;
+      const point = pendingPoint.current;
+      pendingPoint.current = null;
+      if (point) appendPoint(strokeId, point);
+    });
+  };
+
   const finishStroke = (event: ReactPointerEvent<HTMLCanvasElement>) => {
-    if (!activeStroke.current || activeStroke.current.pointerId !== event.pointerId) return;
+    const active = activeStroke.current;
+    if (!active || active.pointerId !== event.pointerId) return;
+    if (drawFrame.current !== null) window.cancelAnimationFrame(drawFrame.current);
+    drawFrame.current = null;
+    const finalPoint = pendingPoint.current;
+    pendingPoint.current = null;
+    if (finalPoint) appendPoint(active.strokeId, finalPoint);
     activeStroke.current = null;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   };
@@ -518,7 +543,13 @@ function validateTasks(value: unknown): TaskData | null {
       && Number.isFinite(item.createdAt)
     )) return null;
     seenIds.add(item.id);
-    items.push(item);
+    items.push({
+      id: item.id,
+      text: item.text,
+      done: item.done,
+      priority: item.priority,
+      createdAt: item.createdAt,
+    });
   }
   return { items };
 }
@@ -892,7 +923,12 @@ function validateConverter(value: unknown): ConverterData | null {
   if (typeof candidate.category !== "string" || !Object.hasOwn(CONVERTER_GROUPS, candidate.category) || typeof candidate.input !== "string" || candidate.input.length > 40) return null;
   const units = CONVERTER_GROUPS[candidate.category].units;
   if (!units.some((unit) => unit.id === candidate.from) || !units.some((unit) => unit.id === candidate.to)) return null;
-  return candidate;
+  return {
+    category: candidate.category,
+    from: candidate.from,
+    to: candidate.to,
+    input: candidate.input,
+  };
 }
 
 function UnitConverter({ locale }: { locale: Locale }) {
