@@ -8,6 +8,7 @@ const sections = [
   "about",
   "contact",
   "coverd",
+  "desk",
   "documents",
   "education",
   "experience",

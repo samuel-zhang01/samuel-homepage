@@ -9,6 +9,7 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 - Four routed locales: British English, American English, Simplified Chinese and Traditional Chinese.
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
+- Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.
 - A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 independently lazy-loaded interactive chapters, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
@@ -57,6 +58,8 @@ The Live room is an explicit interactive replay. It demonstrates the original ca
 
 Browser exhibits use deterministic, generated or clearly labelled synthetic inputs where private data or runnable source cannot be published. Source evidence, independently implemented reconstruction and illustrative behaviour are identified separately; demos make no live third-party calls or unsupported performance claims.
 
+The Desk Accessories are deliberately device-local. Note pages, focus progress and calculator tape use versioned browser storage with no account, API or server database. They therefore work the same in local development and the read-only production container, but do not sync between browsers or devices.
+
 - Finance examples use invented transactions. Raw statements, databases, identifiers, holdings and upload APIs are not shipped.
 - The CV demo uses sample text and deterministic browser-side matching. Personal applications and third-party model calls are excluded.
 - Scheduling examples use fictional people and never connect to calendars, email or a database.
@@ -93,6 +96,10 @@ npm run dev:lan
 `dev:lan` binds the development server to `0.0.0.0`, so use it only on a trusted network. Host firewall rules still apply.
 
 For the default loopback-only Next.js development server, use `npm run dev` and open `http://localhost:3000`.
+
+### VS Code quick loop
+
+Run **Tasks: Run Task** from the Command Palette, then choose **Homepage: dev preview**. The task keeps the Next.js server in a dedicated terminal and hot-reloads edits at `http://localhost:3000`; `/desk` opens the productivity-app launcher directly. **Homepage: validate release** is the default build task for a full lint, dependency and isolated-production check.
 
 ## Validation
 
@@ -132,6 +139,8 @@ docker compose logs -f samuel-homepage
 ```
 
 The runtime container is read-only, runs as an unprivileged user, drops Linux capabilities and uses `no-new-privileges`. Use a reverse proxy with TLS for public deployment.
+
+The pinned container base and native Next.js dependencies include `linux/arm64` support for a 64-bit Raspberry Pi OS. The current image does not target 32-bit `arm/v7`. Because the site is stateless on the server, the same image can sit behind a multi-node reverse proxy without shared application storage; Desk Accessory data remains in each visitor’s browser profile.
 
 ### Canonical HTTPS route
 

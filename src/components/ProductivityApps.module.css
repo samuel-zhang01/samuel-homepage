@@ -1,0 +1,2127 @@
+.eyebrow {
+  display: block;
+  color: #4c4c4c;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.accessoryIcon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 3rem;
+  place-items: center;
+  filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, .42));
+}
+
+.accessoryIcon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.accessoryIconCompact {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-basis: 1.25rem;
+  filter: none;
+}
+
+/* Desk Accessories launcher */
+
+.launcher {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: auto;
+  padding: 1.25rem;
+  color: #111;
+  background:
+    linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)),
+    repeating-linear-gradient(0deg, #d9d9d4 0 1px, #c9c9c4 1px 2px);
+  font-size: .875rem;
+}
+
+.launcherHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0 1rem;
+  border-bottom: 3px double #111;
+}
+
+.launcherHeader h3 {
+  margin: .3rem 0 0;
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.launcherIntro {
+  max-width: 45rem;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+
+.accessoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: .75rem;
+}
+
+.accessoryCard {
+  position: relative;
+  display: flex;
+  min-height: 9.6rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: 1rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #fff;
+  box-shadow: inset 1px 1px #fff, inset -2px -2px #888, 3px 3px 0 rgba(0, 0, 0, .22);
+  text-align: left;
+  cursor: pointer;
+}
+
+.accessoryCard:hover,
+.accessoryCard:focus-visible {
+  color: #fff;
+  background: #11177a;
+  outline: 2px dotted #fff;
+  outline-offset: -6px;
+}
+
+.accessoryCard:hover .eyebrow,
+.accessoryCard:focus-visible .eyebrow,
+.accessoryCard:hover small,
+.accessoryCard:focus-visible small {
+  color: #fff;
+}
+
+.accessoryCardCopy {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.accessoryCardCopy small {
+  display: block;
+  min-height: 2.05em;
+  color: #555;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1.05;
+}
+
+.accessoryCardCopy strong {
+  font-size: 1.05rem;
+}
+
+.accessoryCardCopy > span {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 1.4;
+}
+
+.openGlyph {
+  position: absolute;
+  top: .65rem;
+  right: .7rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.launcherFootnote {
+  margin: auto 0 0;
+  padding-top: 1rem;
+  color: #4b4b4b;
+  font-size: .78rem;
+  line-height: 1.4;
+}
+
+.storageStrip {
+  display: grid;
+  grid-template-columns: auto minmax(10rem, 1fr) auto;
+  align-items: center;
+  gap: .45rem .7rem;
+  margin: 0 0 1rem;
+  padding: .55rem .65rem;
+  border: 1px solid #111;
+  background: rgba(255, 255, 255, .72);
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #888;
+}
+
+.storageLamp {
+  width: .72rem;
+  height: .72rem;
+  border: 1px solid #111;
+  border-radius: 50%;
+  background: #48a665;
+  box-shadow: inset 1px 1px rgba(255, 255, 255, .75);
+}
+
+.storageStrip > div:not(.storageActions) {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .1rem;
+}
+
+.storageStrip small {
+  color: #505050;
+  font-size: .72rem;
+  line-height: 1.25;
+}
+
+.storageActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: .35rem;
+}
+
+.storageActions button {
+  min-height: 2rem;
+  padding: .25rem .55rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  font: inherit;
+  font-size: .72rem;
+  cursor: pointer;
+}
+
+.backupStatus {
+  min-height: 1em;
+  grid-column: 2 / -1;
+  color: #3e3e3e;
+  font-size: .7rem;
+}
+
+/* Note Pad */
+
+.notePad {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  color: #111;
+  background: #bdbdb8;
+  font-size: .875rem;
+}
+
+.noteToolbar {
+  display: flex;
+  min-height: 2.7rem;
+  align-items: center;
+  gap: .45rem;
+  padding: .4rem .5rem;
+  border-bottom: 2px solid #111;
+  background: #d8d8d3;
+}
+
+.noteToolbar button,
+.paperTape button,
+.focusClock button {
+  min-height: 2rem;
+  padding: .25rem .65rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  cursor: pointer;
+}
+
+.noteToolbar button:active,
+.paperTape button:active,
+.focusClock button:active {
+  background: #bbb;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
+}
+
+.noteToolbar button:focus-visible,
+.paperTape button:focus-visible,
+.focusClock button:focus-visible {
+  outline: 2px dotted #11177a;
+  outline-offset: 2px;
+}
+
+.noteToolbar button:disabled,
+.paperTape button:disabled,
+.focusClock button:disabled {
+  color: #777;
+  cursor: not-allowed;
+}
+
+.toolbarSpacer {
+  flex: 1;
+}
+
+.noteToolbar .dangerButton {
+  color: #fff;
+  background: #7b2028;
+  box-shadow: inset 1px 1px #d8848c, inset -1px -1px #3b080d;
+}
+
+.notePaper {
+  position: relative;
+  min-height: 0;
+  margin: .75rem .9rem .45rem;
+  overflow: hidden;
+  border: 2px solid #111;
+  background:
+    linear-gradient(90deg, transparent 0 3.1rem, rgba(185, 69, 69, .44) 3.1rem 3.2rem, transparent 3.2rem),
+    repeating-linear-gradient(0deg, #fffef2 0 1.65rem, #aeb9d6 1.65rem calc(1.65rem + 1px));
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .28);
+}
+
+.noteBinding {
+  position: absolute;
+  z-index: 2;
+  top: .45rem;
+  bottom: .45rem;
+  left: .65rem;
+  width: .75rem;
+  background: repeating-linear-gradient(0deg, #111 0 2px, transparent 2px 12px);
+  opacity: .55;
+  pointer-events: none;
+}
+
+.notePaper textarea {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  padding: 1rem 2.7rem 2.8rem 3.65rem;
+  border: 0;
+  outline: 0;
+  color: #171717;
+  background: transparent;
+  font-family: var(--system-mono);
+  font-size: 1rem;
+  line-height: 1.65rem;
+  tab-size: 2;
+}
+
+.notePaper textarea::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+.pageTurn {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  width: 2.7rem;
+  height: 2.7rem;
+  padding: 0;
+  border: 0;
+  color: #111;
+  background: linear-gradient(135deg, #fffef2 0 48%, #111 49% 52%, #d7cb83 53% 100%);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pageTurn:hover,
+.pageTurn:focus-visible {
+  color: #fff;
+  background: linear-gradient(135deg, #fffef2 0 48%, #111 49% 52%, #11177a 53% 100%);
+  outline: 2px dotted #111;
+  outline-offset: -5px;
+}
+
+.pageTurnPrevious {
+  right: 2.8rem;
+}
+
+.pageTurnNext {
+  right: 0;
+}
+
+.noteStatus {
+  display: grid;
+  min-height: 2.2rem;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: .7rem;
+  padding: .35rem .65rem;
+  border-top: 2px solid #111;
+  background: #dfdfda;
+  font-size: .75rem;
+}
+
+.noteStatus strong {
+  font-size: .78rem;
+}
+
+.noteStatus span:last-child {
+  text-align: right;
+}
+
+/* Focus Clock */
+
+.focusClock {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: auto;
+  padding: 1rem;
+  color: #111;
+  background:
+    radial-gradient(circle at 78% 12%, rgba(242, 193, 79, .34), transparent 25%),
+    #d6d6d1;
+  font-size: .875rem;
+}
+
+.clockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 .2rem .85rem;
+  border-bottom: 3px double #111;
+}
+
+.clockHeader > div {
+  display: flex;
+  flex-direction: column;
+  gap: .18rem;
+}
+
+.clockHeader strong {
+  font-family: var(--system-mono);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .06em;
+}
+
+.clockHeader small {
+  color: #4d4d4d;
+  font-size: .78rem;
+}
+
+.timerPanel {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-top: .85rem;
+  padding: .85rem;
+  border: 2px solid #111;
+  background: #f7f7f2;
+  box-shadow: inset 1px 1px #fff, inset -2px -2px #888, 3px 3px 0 rgba(0, 0, 0, .22);
+}
+
+.timerTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.localBadge {
+  padding: .15rem .42rem;
+  border: 1px solid #111;
+  background: #fff;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.timerFace {
+  display: grid;
+  min-height: 8.6rem;
+  place-items: center;
+  align-content: center;
+  gap: .3rem;
+  border: 3px double #111;
+  background:
+    linear-gradient(rgba(211, 229, 194, .84), rgba(211, 229, 194, .84)),
+    repeating-linear-gradient(90deg, #111 0 1px, transparent 1px 4px);
+  box-shadow: inset 0 0 0 4px rgba(17, 17, 17, .08);
+}
+
+.timerFace > span {
+  font-family: var(--system-mono);
+  font-size: clamp(2.35rem, 10vw, 4.4rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.08em;
+  line-height: 1;
+}
+
+.timerFace small {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.timerComplete {
+  background: repeating-linear-gradient(135deg, #f2c14f 0 8px, #fff4c9 8px 16px);
+  animation: timer-alert .55s steps(2, end) 3;
+}
+
+@keyframes timer-alert {
+  50% { filter: invert(1); }
+}
+
+.presetRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .4rem;
+}
+
+.presetRow button {
+  min-height: 2.6rem;
+  padding-inline: .35rem;
+  font-size: .78rem;
+}
+
+.presetRow .isSelected {
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 1px 1px #6269c4, inset -1px -1px #05062f;
+}
+
+.customTimer {
+  display: grid;
+  grid-template-columns: 1fr 4.6rem auto;
+  align-items: center;
+  gap: .45rem;
+}
+
+.customTimer label {
+  font-weight: 700;
+}
+
+.customTimer input {
+  width: 100%;
+  min-height: 2rem;
+  padding: .25rem .4rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #fff;
+  font-family: var(--system-mono);
+  font-size: 1rem;
+  text-align: right;
+}
+
+.timerActions {
+  display: flex;
+  justify-content: center;
+  gap: .55rem;
+  padding-top: .1rem;
+}
+
+.timerActions button {
+  min-width: 6.2rem;
+}
+
+.timerActions .defaultButton {
+  border: 3px double #111;
+  font-weight: 800;
+}
+
+.sessionTally {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: .7rem;
+  margin-top: auto;
+  padding: 1rem .2rem .2rem;
+  font-size: .78rem;
+}
+
+.sessionTally > span {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.sessionTally > div {
+  display: flex;
+  gap: .35rem;
+}
+
+.sessionTally i {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #111;
+  background: #fff;
+}
+
+.sessionTally .isFilled {
+  background: #11177a;
+  box-shadow: inset 2px 2px #4d55b3;
+}
+
+/* Desk Calculator */
+
+.calculator {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  grid-template-columns: minmax(14rem, .9fr) minmax(13rem, 1.1fr);
+  gap: .7rem;
+  overflow: auto;
+  padding: .75rem;
+  color: #111;
+  background: #bdbdb8;
+  font-size: .875rem;
+  outline: 0;
+}
+
+.calculator:focus-visible {
+  box-shadow: inset 0 0 0 3px #11177a;
+}
+
+.calculatorMachine {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: .55rem;
+  padding: .7rem;
+  border: 2px solid #111;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px #fff, inset -2px -2px #777, 3px 3px 0 rgba(0, 0, 0, .25);
+}
+
+.calculatorDisplay {
+  display: grid;
+  min-height: 6rem;
+  grid-template-columns: 1.2rem minmax(0, 1fr);
+  align-content: center;
+  padding: .55rem .65rem;
+  border: 3px double #111;
+  background: #d3e5c2;
+  font-family: var(--system-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.calculatorDisplay > span {
+  align-self: start;
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.calculatorDisplay strong {
+  overflow: hidden;
+  font-size: clamp(1.7rem, 5vw, 2.8rem);
+  line-height: 1.05;
+  text-align: right;
+  text-overflow: ellipsis;
+}
+
+.calculatorDisplay small {
+  grid-column: 1 / -1;
+  margin-top: .35rem;
+  color: #3f4d36;
+  font-size: .75rem;
+  text-align: right;
+}
+
+.memoryRow,
+.functionRow,
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .4rem;
+}
+
+.calculatorMachine button {
+  min-height: 2.75rem;
+  padding: .2rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #f5f5f0;
+  box-shadow: inset 2px 2px #fff, inset -2px -2px #777;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.calculatorMachine button:active {
+  background: #aaa;
+  box-shadow: inset 2px 2px #666, inset -1px -1px #fff;
+}
+
+.calculatorMachine button:focus-visible {
+  outline: 2px dotted #11177a;
+  outline-offset: 2px;
+}
+
+.memoryRow button {
+  min-height: 2rem;
+  font-size: .75rem;
+}
+
+.functionRow button {
+  background: #e3ded0;
+}
+
+.functionRow .equalsButton,
+.keypad .operatorKey {
+  background: #f2c14f;
+}
+
+.keypad {
+  flex: 1;
+}
+
+.keypad .wideKey {
+  grid-column: span 2;
+}
+
+.paperTape {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  border: 2px solid #111;
+  background:
+    repeating-linear-gradient(0deg, #fffef2 0 1.6rem, #d5d9e5 1.6rem calc(1.6rem + 1px));
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .25);
+}
+
+.paperTape header,
+.paperTape footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .55rem;
+  background: rgba(255, 254, 242, .94);
+}
+
+.paperTape header {
+  border-bottom: 2px solid #111;
+}
+
+.paperTape header > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.paperTape header strong {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.paperTape header button,
+.paperTape footer button {
+  min-height: 1.9rem;
+  padding: .2rem .5rem;
+  font-size: .75rem;
+}
+
+.paperTape ol {
+  min-height: 0;
+  margin: 0;
+  overflow: auto;
+  padding: .65rem .8rem .65rem 2.2rem;
+  font-family: var(--system-mono);
+  font-size: .78rem;
+  line-height: 1.6rem;
+}
+
+.paperTape li {
+  padding-left: .1rem;
+}
+
+.paperTape li:not(.emptyTape) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .5rem;
+}
+
+.paperTape li span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.emptyTape {
+  color: #666;
+  font-family: var(--system-font);
+  line-height: 1.45;
+}
+
+.paperTape footer {
+  min-height: 2.75rem;
+  border-top: 2px solid #111;
+}
+
+.paperTape footer span {
+  min-height: 1rem;
+  color: #444;
+  font-size: .72rem;
+}
+
+/* Shared utility chrome */
+
+.sketchPad,
+.quickList,
+.pocketCalendar,
+.unitConverter,
+.colourStudio {
+  height: 100%;
+  min-height: 0;
+  color: #111;
+  background:
+    linear-gradient(rgba(255, 255, 255, .38), rgba(255, 255, 255, .38)),
+    repeating-linear-gradient(0deg, #d1d1cc 0 1px, #deded9 1px 3px);
+  font-size: .875rem;
+}
+
+.sketchPad button,
+.quickList button,
+.pocketCalendar button,
+.unitConverter button,
+.colourStudio button,
+.quickList input,
+.quickList select,
+.pocketCalendar textarea,
+.unitConverter input,
+.unitConverter select,
+.colourStudio input {
+  font: inherit;
+}
+
+.sketchPad button,
+.quickList button,
+.pocketCalendar button,
+.unitConverter button,
+.colourStudio button {
+  min-height: 2.15rem;
+  padding: .25rem .6rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  cursor: pointer;
+}
+
+.sketchPad button:active,
+.quickList button:active,
+.pocketCalendar button:active,
+.unitConverter button:active,
+.colourStudio button:active {
+  background: #bdbdb8;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
+}
+
+.sketchPad button:disabled,
+.quickList button:disabled,
+.pocketCalendar button:disabled,
+.unitConverter button:disabled,
+.colourStudio button:disabled {
+  color: #737373;
+  cursor: not-allowed;
+}
+
+.defaultButton {
+  border: 3px double #111 !important;
+  font-weight: 800 !important;
+}
+
+.dangerButton {
+  color: #fff !important;
+  background: #7b2028 !important;
+  box-shadow: inset 1px 1px #d8848c, inset -1px -1px #3b080d !important;
+}
+
+.utilityHeader {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .7rem .8rem;
+  border-bottom: 3px double #111;
+  background: rgba(239, 239, 235, .94);
+}
+
+.utilityHeader > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.utilityHeader strong {
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+}
+
+.saveBadge {
+  display: inline-flex;
+  min-width: max-content;
+  align-items: center;
+  gap: .35rem;
+  padding: .25rem .45rem;
+  border: 1px solid #111;
+  background: #fff;
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.saveBadge i {
+  width: .55rem;
+  height: .55rem;
+  border: 1px solid #111;
+  border-radius: 50%;
+  background: #48a665;
+}
+
+.saveBadge_loading i,
+.saveBadge_saving i {
+  background: #f2c14f;
+}
+
+.saveBadge_unavailable i {
+  background: #b83b3b;
+}
+
+.utilityFooter {
+  display: flex;
+  min-height: 2.2rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  padding: .35rem .7rem;
+  border-top: 2px solid #111;
+  background: #dfdfda;
+  font-size: .72rem;
+}
+
+.inlineStatus {
+  display: block;
+  padding: 0.2rem 0.75rem;
+  color: #8b1f1f;
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+.inlineStatus:empty {
+  display: none;
+}
+
+.segmentedControl {
+  display: inline-flex;
+  min-width: 0;
+}
+
+.segmentedControl button {
+  margin-left: -2px;
+  box-shadow: inset 1px 1px #fff;
+}
+
+.segmentedControl button:first-child {
+  margin-left: 0;
+}
+
+.segmentedControl .isSelected,
+.converterCategories .isSelected {
+  z-index: 1;
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 1px 1px #555fc1;
+}
+
+.utilityEmpty {
+  display: grid;
+  min-height: 12rem;
+  place-items: center;
+  align-content: center;
+  gap: .35rem;
+  padding: 1.5rem;
+  color: #555;
+  text-align: center;
+}
+
+.utilityEmpty > span {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  border: 2px solid #111;
+  color: #fff;
+  background: #237747;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.utilityEmpty p {
+  max-width: 23rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Sketch Pad */
+
+.sketchPad {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.sketchToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem;
+  padding: .45rem .55rem;
+  border-bottom: 2px solid #111;
+  background: #d7d7d2;
+}
+
+.paintColours {
+  display: flex;
+  gap: .3rem;
+  padding: .25rem;
+  border: 1px solid #777;
+  background: #bcbcb7;
+}
+
+.paintColours button {
+  width: 1.65rem;
+  min-height: 1.65rem;
+  padding: 0;
+  border-width: 1px;
+  box-shadow: inset 1px 1px rgba(255, 255, 255, .65);
+}
+
+.paintColours .isSelectedColour {
+  outline: 3px double #111;
+  outline-offset: 2px;
+}
+
+.brushSize {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.brushSize input {
+  width: 5.4rem;
+  accent-color: #11177a;
+}
+
+.sketchActions {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: .3rem;
+}
+
+.sketchActions button,
+.segmentedControl button {
+  min-height: 1.9rem;
+  padding: .2rem .5rem;
+  font-size: .72rem;
+}
+
+.sketchStage {
+  position: relative;
+  min-height: 17rem;
+  flex: 1;
+  margin: .65rem;
+  overflow: hidden;
+  border: 2px solid #111;
+  background-color: #fff;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .25);
+}
+
+.sketchStageGrid {
+  background-image:
+    linear-gradient(rgba(17, 23, 122, .1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 23, 122, .1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.sketchCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 17rem;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* Quick List */
+
+.quickList {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.taskComposer {
+  padding: .65rem .7rem;
+  border-bottom: 1px solid #777;
+  background: #f6f6f1;
+}
+
+.taskComposer > label {
+  display: block;
+  margin-bottom: .3rem;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.taskComposer > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.4rem auto;
+  gap: .4rem;
+}
+
+.taskComposer input,
+.taskComposer select {
+  min-width: 0;
+  min-height: 2.2rem;
+  padding: .3rem .45rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #fff;
+}
+
+.listToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .45rem .7rem;
+  border-bottom: 2px solid #111;
+  background: #d7d7d2;
+}
+
+.listToolbar > button {
+  min-height: 1.9rem;
+  padding-block: .2rem;
+  font-size: .72rem;
+}
+
+.taskListWrap {
+  min-height: 0;
+  overflow: auto;
+  background: #fffef2;
+}
+
+.taskList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.taskList li {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: .55rem;
+  min-height: 3rem;
+  padding: .45rem .65rem;
+  border-bottom: 1px solid #aaa;
+  background: repeating-linear-gradient(0deg, #fffef2 0 1.5rem, #e4e6ec 1.5rem calc(1.5rem + 1px));
+}
+
+.taskCheck {
+  display: grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  cursor: pointer;
+}
+
+.taskCheck input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: #11177a;
+}
+
+.taskList li > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.taskList li > small {
+  padding: .15rem .35rem;
+  border: 1px solid #7b2028;
+  color: #7b2028;
+  background: #fff;
+  font-size: .62rem;
+  font-weight: 800;
+}
+
+.taskList li > button {
+  width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+.taskDone > span {
+  color: #666;
+  text-decoration: line-through;
+}
+
+.taskImportant {
+  box-shadow: inset 4px 0 #b83b3b;
+}
+
+/* Pocket Calendar */
+
+.pocketCalendar {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.calendarLayout {
+  display: grid;
+  min-height: 31rem;
+  flex: 1;
+  grid-template-columns: minmax(22rem, 1fr) minmax(13rem, .65fr);
+  gap: .65rem;
+  padding: .65rem;
+}
+
+.monthPanel,
+.dayNote {
+  min-width: 0;
+  border: 2px solid #111;
+  background: #f7f7f2;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .2);
+}
+
+.monthPanel {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.monthToolbar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: .35rem;
+  padding: .45rem;
+  border-bottom: 2px solid #111;
+  background: #d7d7d2;
+}
+
+.monthToolbar h3 {
+  margin: 0;
+  overflow: hidden;
+  font-size: 1rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.monthToolbar button {
+  min-width: 2.2rem;
+}
+
+.weekdays,
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.weekdays {
+  border-bottom: 1px solid #111;
+  background: #efefeb;
+}
+
+.weekdays span {
+  overflow: hidden;
+  padding: .35rem .1rem;
+  font-size: .66rem;
+  font-weight: 800;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.calendarGrid {
+  grid-template-rows: repeat(6, minmax(2.5rem, 1fr));
+}
+
+.calendarGrid button {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: .25rem;
+  border-width: 0 1px 1px 0;
+  background: #fff;
+  box-shadow: none;
+  font-family: var(--system-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.calendarGrid button:nth-child(7n) {
+  border-right: 0;
+}
+
+.calendarGrid button:nth-last-child(-n + 7) {
+  border-bottom: 0;
+}
+
+.calendarGrid button:hover,
+.calendarGrid button:focus-visible {
+  z-index: 2;
+  color: #fff;
+  background: #11177a;
+}
+
+.calendarGrid .outsideMonth {
+  color: #858585;
+  background: #e8e8e3;
+}
+
+.calendarGrid .selectedDay {
+  z-index: 1;
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px #11177a;
+}
+
+.calendarGrid button[aria-current="date"] > span {
+  border-bottom: 2px solid #b83b3b;
+  font-weight: 800;
+}
+
+.calendarGrid i {
+  position: absolute;
+  right: .22rem;
+  bottom: .2rem;
+  width: .38rem;
+  height: .38rem;
+  border: 1px solid #111;
+  border-radius: 50%;
+  background: #f2c14f;
+}
+
+.dayNote {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  padding: .65rem;
+  background: #fffdf0;
+}
+
+.dayNote h3 {
+  margin: .3rem 0 .65rem;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.dayNote textarea {
+  width: 100%;
+  min-height: 12rem;
+  flex: 1;
+  resize: none;
+  padding: .65rem;
+  border: 2px solid #111;
+  color: #111;
+  background: repeating-linear-gradient(0deg, #fffef2 0 1.55rem, #d5d9e5 1.55rem calc(1.55rem + 1px));
+  font-family: var(--system-mono);
+  line-height: 1.55rem;
+}
+
+.dayNote footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding-top: .45rem;
+  color: #555;
+  font-size: .7rem;
+}
+
+/* Unit Converter */
+
+.unitConverter {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.converterCategories {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: .65rem .65rem 0;
+}
+
+.converterCategories button {
+  min-width: 0;
+  margin-left: -2px;
+  overflow: hidden;
+  font-size: .76rem;
+  text-overflow: ellipsis;
+}
+
+.converterCategories button:first-child {
+  margin-left: 0;
+}
+
+.converterWorkbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: .65rem;
+  padding: .8rem .65rem;
+}
+
+.converterWorkbench > label,
+.converterOutput {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: auto 1fr auto;
+  gap: .4rem;
+  min-height: 11.5rem;
+  padding: .7rem;
+  border: 2px solid #111;
+  background: #f7f7f2;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .2);
+}
+
+.converterWorkbench > label > span,
+.converterOutput > span {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.converterWorkbench input,
+.converterOutput strong {
+  min-width: 0;
+  align-self: center;
+  padding: .55rem;
+  overflow: hidden;
+  border: 3px double #111;
+  background: #d3e5c2;
+  font-family: var(--system-mono);
+  font-size: clamp(1.5rem, 5cqw, 2.5rem);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  text-overflow: ellipsis;
+}
+
+.converterWorkbench select {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.2rem;
+  padding: .3rem;
+  border: 2px solid #111;
+  background: #fff;
+}
+
+.converterOutput {
+  grid-template-columns: 1fr auto;
+}
+
+.converterOutput > span,
+.converterOutput select {
+  grid-column: 1 / -1;
+}
+
+.converterOutput strong {
+  border: 0;
+  background: transparent;
+}
+
+.converterOutput small {
+  align-self: center;
+  font-family: var(--system-mono);
+  font-weight: 800;
+}
+
+.swapButton {
+  width: 2.8rem;
+  min-height: 2.8rem !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  color: #fff !important;
+  background: #11177a !important;
+  font-size: 1.35rem !important;
+}
+
+.conversionReadout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .3rem .65rem;
+  margin: 0 .65rem .65rem;
+  padding: .7rem;
+  border: 2px solid #111;
+  background: #fffef2;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .2);
+}
+
+.conversionReadout .eyebrow,
+.conversionReadout p {
+  grid-column: 1 / -1;
+}
+
+.conversionReadout p {
+  margin: .25rem 0 .5rem;
+  overflow-wrap: anywhere;
+  font-family: var(--system-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.conversionReadout > span:last-child {
+  min-height: 1em;
+  color: #555;
+  font-size: .72rem;
+}
+
+/* Colour Studio */
+
+.colourStudio {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.colourLayout {
+  display: grid;
+  grid-template-columns: minmax(12rem, .85fr) minmax(15rem, 1.15fr);
+  gap: .65rem;
+  padding: .65rem;
+}
+
+.colourPreview {
+  display: grid;
+  min-height: 13rem;
+  grid-template-rows: 1fr 1fr;
+  border: 2px solid #111;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .25);
+}
+
+.colourPreview > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .8rem;
+}
+
+.colourPreview > div:first-child {
+  border-bottom: 1px dashed currentColor;
+}
+
+.colourPreview span {
+  font-family: var(--system-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.colourControls {
+  display: grid;
+  align-content: start;
+  gap: .55rem;
+  padding: .7rem;
+  border: 2px solid #111;
+  background: #f7f7f2;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .2);
+}
+
+.nativeColourPicker,
+.hexField {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.5rem;
+  align-items: center;
+  gap: .6rem;
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.nativeColourPicker input,
+.hexField input {
+  width: 100%;
+  min-height: 2.35rem;
+  padding: .15rem;
+  border: 2px solid #111;
+  color: #111;
+  background: #fff;
+  font-family: var(--system-mono);
+  text-align: center;
+}
+
+.colourValues {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .4rem;
+  margin: 0;
+}
+
+.colourValues > div {
+  min-width: 0;
+  padding: .45rem;
+  border: 1px solid #777;
+  background: #fff;
+}
+
+.colourValues dt {
+  font-size: .65rem;
+  font-weight: 800;
+}
+
+.colourValues dd {
+  margin: .2rem 0 0;
+  overflow: hidden;
+  font-family: var(--system-mono);
+  font-size: .75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.colourButtons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .35rem;
+}
+
+.colourButtons button {
+  min-width: 0;
+  padding-inline: .3rem;
+  overflow: hidden;
+  font-size: .72rem;
+  text-overflow: ellipsis;
+}
+
+.colourCopyStatus {
+  min-height: 1em;
+  color: #555;
+  font-size: .7rem;
+}
+
+.contrastResult {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .25rem .8rem;
+  margin: 0 .65rem .65rem;
+  padding: .55rem .7rem;
+  border: 2px solid #111;
+  background: #d3e5c2;
+}
+
+.contrastResult .eyebrow {
+  grid-column: 1 / -1;
+}
+
+.contrastResult > span:last-child {
+  font-family: var(--system-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.savedSwatches {
+  margin: 0 .65rem .65rem;
+  padding: .6rem;
+  border: 2px solid #111;
+  background: #f7f7f2;
+}
+
+.savedSwatches header {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-bottom: .5rem;
+  font-size: .75rem;
+}
+
+.savedSwatches > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: .35rem;
+}
+
+.savedSwatches article {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 1.7rem minmax(0, 1fr) 1.7rem;
+  align-items: center;
+  gap: .3rem;
+  padding: .25rem;
+  border: 1px solid #777;
+  background: #fff;
+  font-family: var(--system-mono);
+  font-size: .68rem;
+}
+
+.savedSwatches article button {
+  width: 1.7rem;
+  min-height: 1.7rem;
+  padding: 0;
+}
+
+.savedSwatches article span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@container (max-width: 620px) {
+  .launcher,
+  .focusClock {
+    padding: .85rem;
+  }
+
+  .accessoryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .accessoryCard {
+    min-height: 9rem;
+    padding: .7rem;
+  }
+
+  .launcherFootnote {
+    margin-top: .8rem;
+  }
+
+  .noteToolbar {
+    flex-wrap: wrap;
+  }
+
+  .noteToolbar button {
+    flex: 0 0 auto;
+  }
+
+  .notePaper {
+    margin: .45rem;
+  }
+
+  .notePaper textarea {
+    padding-right: 1rem;
+    padding-left: 2.7rem;
+    font-size: .95rem;
+  }
+
+  .noteStatus {
+    grid-template-columns: 1fr auto;
+  }
+
+  .noteStatus span:last-child {
+    display: none;
+  }
+
+  .calculator {
+    grid-template-columns: 1fr;
+    align-content: start;
+  }
+
+  .calculatorMachine {
+    min-height: 29rem;
+  }
+
+  .paperTape {
+    min-height: 15rem;
+  }
+
+  .storageStrip {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .storageActions,
+  .backupStatus {
+    grid-column: 1 / -1;
+  }
+
+  .storageActions {
+    justify-content: flex-start;
+  }
+
+  .utilityHeader {
+    align-items: flex-start;
+  }
+
+  .saveBadge {
+    max-width: 9.8rem;
+    min-width: 0;
+  }
+
+  .sketchToolbar {
+    align-items: flex-start;
+  }
+
+  .sketchActions {
+    flex-basis: 100%;
+    justify-content: flex-start;
+  }
+
+  .taskComposer > div {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .taskComposer select {
+    grid-column: 1;
+  }
+
+  .taskComposer button {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+
+  .calendarLayout {
+    min-height: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .monthPanel {
+    min-height: 24rem;
+  }
+
+  .dayNote {
+    min-height: 18rem;
+  }
+
+  .converterWorkbench {
+    grid-template-columns: 1fr;
+  }
+
+  .converterWorkbench > label,
+  .converterOutput {
+    min-height: 9rem;
+  }
+
+  .swapButton {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .colourLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container (max-width: 420px) {
+  .launcherHeader h3 {
+    font-size: 1.12rem;
+  }
+
+  .launcherIntro {
+    margin: .75rem 0;
+  }
+
+  .accessoryCardCopy > span {
+    font-size: .76rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .accessoryCard {
+    min-height: 8.2rem;
+  }
+
+  .accessoryIcon {
+    width: 2.45rem;
+    height: 2.45rem;
+    flex-basis: 2.45rem;
+  }
+
+  .presetRow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .2rem;
+  }
+
+  .presetRow button {
+    padding-inline: .15rem;
+    font-size: .65rem;
+  }
+
+  .customTimer {
+    grid-template-columns: minmax(0, 1fr) 4rem auto;
+    gap: .25rem;
+  }
+
+  .customTimer button {
+    grid-column: auto;
+  }
+
+  .timerFace {
+    min-height: 5.8rem;
+  }
+
+  .timerFace > span {
+    font-size: 2.55rem;
+  }
+
+  .focusClock {
+    padding: .55rem;
+  }
+
+  .clockHeader {
+    padding-bottom: .45rem;
+  }
+
+  .timerPanel {
+    gap: .4rem;
+    margin-top: .45rem;
+    padding: .55rem;
+  }
+
+  .sessionTally {
+    padding-top: .55rem;
+  }
+
+  .sessionTally {
+    grid-template-columns: auto 1fr;
+  }
+
+  .sessionTally strong {
+    grid-column: 1 / -1;
+  }
+
+  .utilityHeader {
+    flex-direction: column;
+  }
+
+  .saveBadge {
+    max-width: 100%;
+  }
+
+  .listToolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .listToolbar > button {
+    align-self: flex-start;
+  }
+
+  .taskList li {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .taskList li > small {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .taskList li > button {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+
+  .monthToolbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .monthToolbar button:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .converterCategories {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .conversionReadout,
+  .contrastResult {
+    grid-template-columns: 1fr;
+  }
+
+  .colourButtons {
+    grid-template-columns: 1fr;
+  }
+
+  .nativeColourPicker,
+  .hexField {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (pointer: coarse) {
+  .noteToolbar button,
+  .paperTape button,
+  .focusClock button,
+  .storageActions button,
+  .sketchPad button,
+  .quickList button,
+  .pocketCalendar button,
+  .unitConverter button,
+  .colourStudio button {
+    min-height: 2.75rem;
+  }
+
+  .paintColours button,
+  .savedSwatches article button {
+    width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  .savedSwatches article {
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+  }
+
+  .taskCheck {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+@media (max-height: 520px) and (max-width: 1000px) and (min-aspect-ratio: 4 / 3) {
+  .focusClock {
+    display: grid;
+    grid-template-columns: minmax(9rem, .55fr) minmax(0, 1.45fr);
+    grid-template-rows: auto 1fr;
+    gap: .5rem;
+    padding: .5rem;
+  }
+
+  .clockHeader {
+    grid-column: 1;
+    align-self: start;
+    padding: .25rem .25rem .55rem;
+  }
+
+  .timerPanel {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    gap: .35rem;
+    margin: 0;
+    padding: .5rem;
+  }
+
+  .timerFace {
+    min-height: 4.8rem;
+  }
+
+  .timerFace > span {
+    font-size: 2.5rem;
+  }
+
+  .presetRow,
+  .customTimer {
+    gap: .25rem;
+  }
+
+  .presetRow button,
+  .timerActions button {
+    min-height: 2.15rem;
+  }
+
+  .sessionTally {
+    grid-column: 1;
+    grid-row: 2;
+    align-content: start;
+    margin: 0;
+    padding: .6rem .25rem;
+  }
+
+  .utilityHeader {
+    padding: .4rem .6rem;
+  }
+
+  .sketchToolbar {
+    gap: .3rem;
+    padding: .3rem .45rem;
+  }
+
+  .sketchStage,
+  .sketchCanvas {
+    min-height: 9rem;
+  }
+
+  .sketchStage {
+    margin: .4rem;
+  }
+
+  .calendarLayout {
+    min-height: 17rem;
+    gap: .4rem;
+    padding: .4rem;
+  }
+
+  .calendarGrid {
+    grid-template-rows: repeat(6, minmax(1.75rem, 1fr));
+  }
+
+  .dayNote {
+    padding: .45rem;
+  }
+
+  .dayNote h3 {
+    margin: .2rem 0 .35rem;
+  }
+
+  .dayNote textarea {
+    min-height: 7.5rem;
+  }
+}
+
+@media (min-width: 760px) and (max-height: 520px) and (max-width: 1000px) and (min-aspect-ratio: 4 / 3) {
+  .sketchToolbar,
+  .sketchActions {
+    flex-wrap: nowrap;
+  }
+
+  .sketchActions button,
+  .segmentedControl button {
+    padding-inline: .35rem;
+    font-size: .68rem;
+  }
+
+  .brushSize input {
+    width: 4.5rem;
+  }
+}
+
+@media (pointer: coarse) and (max-height: 520px) and (max-width: 1000px) and (min-aspect-ratio: 4 / 3) {
+  .presetRow button,
+  .timerActions button {
+    min-height: 2.75rem;
+  }
+}
+
+:global([data-locale^="zh-"]) .eyebrow,
+:global([data-locale^="zh-"]) .accessoryCardCopy small,
+:global([data-locale^="zh-"]) .taskComposer > label,
+:global([data-locale^="zh-"]) .timerFace small,
+:global([data-locale^="zh-"]) .sessionTally > span,
+:global([data-locale^="zh-"]) .converterWorkbench > label > span,
+:global([data-locale^="zh-"]) .converterOutput > span {
+  letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timerComplete {
+    animation: none;
+  }
+}

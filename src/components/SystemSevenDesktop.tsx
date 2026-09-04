@@ -28,6 +28,7 @@ import projectExplorerStyles from "@/components/projects/ProjectExplorer.module.
 import projectActionsStyles from "@/components/projects/ProjectActions.module.css";
 import projectDemoRouterStyles from "@/components/projects/ProjectDemoRouter.module.css";
 import projectCaseBriefStyles from "@/components/projects/ProjectCaseBrief.module.css";
+import ProductivityApps from "@/components/ProductivityApps";
 
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
   loading: () => (
@@ -57,6 +58,15 @@ export type AppId =
   | "education"
   | "documents"
   | "games"
+  | "desk"
+  | "notepad"
+  | "sketch"
+  | "tasks"
+  | "focus"
+  | "calendar"
+  | "calculator"
+  | "converter"
+  | "palette"
   | "contact"
   | "lab"
   | "scrapbook"
@@ -94,11 +104,20 @@ type IconKind =
   | "photos"
   | "runner"
   | "game"
+  | "accessories"
+  | "note"
+  | "sketch"
+  | "tasks"
+  | "clock"
+  | "calendar"
+  | "calculator"
+  | "converter"
+  | "palette"
   | "pdf"
   | "mail"
   | "secret";
 
-const TRANSLATED_ATTRIBUTES = ["aria-label", "title", "placeholder"] as const;
+const TRANSLATED_ATTRIBUTES = ["aria-label", "title", "placeholder", "alt"] as const;
 
 function localiseNode(node: ReactNode, locale: Locale): ReactNode {
   if (typeof node === "string") return translateText(locale, node);
@@ -151,6 +170,10 @@ const BOOT_MESSAGES = [
   "Almost ready. Pretending this took serious computing power…",
 ] as const;
 const BOOT_PROGRESS = [8, 17, 29, 42, 56, 70, 85, 100] as const;
+
+function isCompactCanvasViewport(): boolean {
+  return window.innerWidth <= 720 || (window.innerHeight <= 520 && window.innerWidth <= 1000);
+}
 
 const INITIAL_WINDOWS: WindowState[] = [
   {
@@ -253,6 +276,105 @@ const INITIAL_WINDOWS: WindowState[] = [
     maximized: false,
   },
   {
+    id: "desk",
+    title: "Desk Accessories",
+    x: 140,
+    y: 45,
+    width: 820,
+    height: 760,
+    z: 18,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "notepad",
+    title: "Note Pad",
+    x: 296,
+    y: 58,
+    width: 610,
+    height: 540,
+    z: 19,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "sketch",
+    title: "Sketch Pad",
+    x: 110,
+    y: 44,
+    width: 780,
+    height: 610,
+    z: 20,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "tasks",
+    title: "Quick List",
+    x: 260,
+    y: 80,
+    width: 590,
+    height: 540,
+    z: 21,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "focus",
+    title: "Focus Clock",
+    x: 358,
+    y: 68,
+    width: 490,
+    height: 590,
+    z: 22,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "calendar",
+    title: "Pocket Calendar",
+    x: 150,
+    y: 50,
+    width: 760,
+    height: 600,
+    z: 23,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "calculator",
+    title: "Desk Calculator",
+    x: 310,
+    y: 76,
+    width: 650,
+    height: 560,
+    z: 24,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "converter",
+    title: "Unit Converter",
+    x: 245,
+    y: 88,
+    width: 640,
+    height: 520,
+    z: 25,
+    open: false,
+    maximized: false,
+  },
+  {
+    id: "palette",
+    title: "Colour Studio",
+    x: 200,
+    y: 64,
+    width: 700,
+    height: 570,
+    z: 26,
+    open: false,
+    maximized: false,
+  },
+  {
     id: "contact",
     title: "Contact Samuel",
     x: 286,
@@ -305,12 +427,25 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
   { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
   { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of Samuel’s work." },
+  { id: "desk", label: "Desk Accessories", icon: "accessories", description: "Eight private, browser-local tools for notes, drawing, planning, focus, calculations, conversions and colour." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
   { id: "contact", label: "Contact", icon: "mail", description: "Email, LinkedIn and GitHub without leaving the desktop." },
 ];
+
+const UTILITY_ICONS: Partial<Record<AppId, IconKind>> = {
+  desk: "accessories",
+  notepad: "note",
+  sketch: "sketch",
+  tasks: "tasks",
+  focus: "clock",
+  calendar: "calendar",
+  calculator: "calculator",
+  converter: "converter",
+  palette: "palette",
+};
 
 const APP_ROUTES: Record<AppId, string> = {
   about: "",
@@ -322,6 +457,15 @@ const APP_ROUTES: Record<AppId, string> = {
   education: "education",
   documents: "documents",
   games: "games",
+  desk: "desk",
+  notepad: "desk",
+  sketch: "desk",
+  tasks: "desk",
+  focus: "desk",
+  calendar: "desk",
+  calculator: "desk",
+  converter: "desk",
+  palette: "desk",
   contact: "contact",
   lab: "lab",
   scrapbook: "interests",
@@ -590,6 +734,79 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
         <rect x="31" y="23" width="4" height="4" fill="#f26b3d" />
         <rect x="36" y="29" width="4" height="4" fill="#3458a5" />
         <path d="M20 17V8h8" />
+      </g>
+    ),
+    accessories: (
+      <g {...common}>
+        <path d="M3 14h16l4-6h10l4 6h8v29H3z" fill="#f2ca59" />
+        <path d="M8 20h13v17H8z" fill="#fff" strokeWidth="2" />
+        <path d="M12 25h5m-5 5h5" stroke="#6b78a8" strokeWidth="2" />
+        <circle cx="34" cy="29" r="8" fill="#d8d8d2" strokeWidth="2" />
+        <path d="M34 24v6l4 2" strokeWidth="2" />
+      </g>
+    ),
+    note: (
+      <g {...common}>
+        <path d="M8 4h31v40H8z" fill="#fffdf0" />
+        <path d="M14 13h19M14 20h19M14 27h19M14 34h13" stroke="#6b78a8" strokeWidth="2" />
+        <path d="M31 44v-9h8" fill="#f2ca59" />
+        <path d="M13 4v6M21 4v6M29 4v6" strokeWidth="2" />
+      </g>
+    ),
+    sketch: (
+      <g {...common}>
+        <path d="M5 7h31l7 7v28H5z" fill="#fff" />
+        <path d="M36 7v8h7" fill="#d8d8d2" />
+        <path d="m12 34 4-9 17-17 6 6-17 17z" fill="#f2ca59" />
+        <path d="m16 25 6 6" strokeWidth="2" />
+        <path d="M11 36c7-2 14-1 21 2" stroke="#11177a" strokeWidth="2" />
+      </g>
+    ),
+    tasks: (
+      <g {...common}>
+        <path d="M7 5h34v39H7z" fill="#fffdf0" />
+        <path d="m12 15 3 3 6-7M12 27l3 3 6-7" stroke="#237747" />
+        <path d="M24 15h11M24 27h11M12 38h23" stroke="#6b78a8" strokeWidth="2" />
+      </g>
+    ),
+    clock: (
+      <g {...common}>
+        <circle cx="24" cy="26" r="17" fill="#fff" />
+        <path d="M18 4h12M24 4v5M37 12l4 4M11 12l-4 4" />
+        <path d="M24 15v12l8 5" stroke="#11177a" />
+        <circle cx="24" cy="26" r="2" fill="#111" />
+      </g>
+    ),
+    calendar: (
+      <g {...common}>
+        <path d="M5 9h38v34H5z" fill="#fff" />
+        <path d="M5 9h38v10H5z" fill="#b83b3b" />
+        <path d="M14 4v10M34 4v10" />
+        <path d="M12 25h6v6h-6zm9 0h6v6h-6zm9 0h6v6h-6zM12 34h6v5h-6zm9 0h6v5h-6z" fill="#d8d8d2" strokeWidth="2" />
+      </g>
+    ),
+    calculator: (
+      <g {...common}>
+        <rect x="7" y="3" width="34" height="42" fill="#d8d8d2" />
+        <rect x="12" y="8" width="24" height="8" fill="#cfe0b8" strokeWidth="2" />
+        <path d="M12 22h6v5h-6zm9 0h6v5h-6zm9 0h6v5h-6zM12 31h6v5h-6zm9 0h6v5h-6zm9 0h6v5h-6z" fill="#fff" strokeWidth="2" />
+      </g>
+    ),
+    converter: (
+      <g {...common}>
+        <path d="M7 13h29M30 7l6 6-6 6" stroke="#11177a" />
+        <path d="M41 35H12M18 29l-6 6 6 6" stroke="#b83b3b" />
+        <rect x="5" y="6" width="8" height="14" fill="#f2ca59" strokeWidth="2" />
+        <rect x="35" y="28" width="8" height="14" fill="#d3e5c2" strokeWidth="2" />
+      </g>
+    ),
+    palette: (
+      <g {...common}>
+        <path d="M24 5c-12 0-20 8-20 18 0 8 7 16 15 16h4c3 0 4-3 2-5-2-3 0-7 4-7h7c5 0 8-4 8-8C44 11 35 5 24 5z" fill="#fff" />
+        <circle cx="13" cy="19" r="3" fill="#ef5647" strokeWidth="2" />
+        <circle cx="22" cy="13" r="3" fill="#f2ca59" strokeWidth="2" />
+        <circle cx="32" cy="16" r="3" fill="#4e9a61" strokeWidth="2" />
+        <circle cx="16" cy="29" r="3" fill="#4568b2" strokeWidth="2" />
       </g>
     ),
     pdf: (
@@ -2005,6 +2222,15 @@ function AppContent({
     case "education": return <EducationApp locale={locale} />;
     case "documents": return <DocumentsApp locale={locale} />;
     case "games": return <GamesApp openApp={openApp} locale={locale} />;
+    case "desk": return <ProductivityApps app="desk" openApp={openApp} locale={locale} />;
+    case "notepad": return <ProductivityApps app="notepad" openApp={openApp} locale={locale} />;
+    case "sketch": return <ProductivityApps app="sketch" openApp={openApp} locale={locale} />;
+    case "tasks": return <ProductivityApps app="tasks" openApp={openApp} locale={locale} />;
+    case "focus": return <ProductivityApps app="focus" openApp={openApp} locale={locale} />;
+    case "calendar": return <ProductivityApps app="calendar" openApp={openApp} locale={locale} />;
+    case "calculator": return <ProductivityApps app="calculator" openApp={openApp} locale={locale} />;
+    case "converter": return <ProductivityApps app="converter" openApp={openApp} locale={locale} />;
+    case "palette": return <ProductivityApps app="palette" openApp={openApp} locale={locale} />;
     case "contact": return <ContactApp openApp={openApp} locale={locale} />;
     case "lab": return <LabApp locale={locale} />;
     case "scrapbook": return <ScrapbookApp locale={locale} />;
@@ -2046,7 +2272,7 @@ export default function SystemSevenDesktop({
   const [memoryMagic, setMemoryMagic] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [mobileGuide, setMobileGuide] = useState(false);
-  const zCounter = useRef(20);
+  const zCounter = useRef(Math.max(...INITIAL_WINDOWS.map((item) => item.z)));
   const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
   const resizeState = useRef<{
     id: AppId;
@@ -2089,6 +2315,33 @@ export default function SystemSevenDesktop({
       // Language switching remains available for this session.
     }
   }, [locale]);
+
+  useEffect(() => {
+    const clampWindowsToViewport = () => {
+      const compactCanvas = isCompactCanvasViewport();
+      if (compactCanvas) return;
+      const minTop = 30;
+      const maxWidth = Math.max(280, window.innerWidth - 20);
+      const maxHeight = Math.max(190, window.innerHeight - minTop - 8);
+      setWindows((current) => {
+        let changed = false;
+        const next = current.map((item) => {
+          if (item.maximized) return item;
+          const width = Math.min(item.width, maxWidth);
+          const height = Math.min(item.height, maxHeight);
+          const x = Math.min(Math.max(5, item.x), Math.max(5, window.innerWidth - width - 5));
+          const y = Math.min(Math.max(minTop, item.y), Math.max(minTop, window.innerHeight - height - 7));
+          if (width === item.width && height === item.height && x === item.x && y === item.y) return item;
+          changed = true;
+          return { ...item, width, height, x, y };
+        });
+        return changed ? next : current;
+      });
+    };
+    clampWindowsToViewport();
+    window.addEventListener("resize", clampWindowsToViewport);
+    return () => window.removeEventListener("resize", clampWindowsToViewport);
+  }, []);
 
   const completeBoot = useCallback(() => {
     try {
@@ -2141,7 +2394,7 @@ export default function SystemSevenDesktop({
   }, [locale]);
 
   useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    const isMobile = isCompactCanvasViewport();
     if (!isMobile) return;
     try {
       if (window.sessionStorage.getItem("samuel-mobile-window-guide") !== "seen") setMobileGuide(true);
@@ -2188,7 +2441,7 @@ export default function SystemSevenDesktop({
   useEffect(() => {
     const move = (event: PointerEvent) => {
       const resize = resizeState.current;
-      if (resize && window.innerWidth > 720) {
+      if (resize && !isCompactCanvasViewport()) {
         setWindows((current) => current.map((windowState) => {
           if (windowState.id !== resize.id || windowState.maximized) return windowState;
           const maximumWidth = Math.max(320, window.innerWidth - resize.originX - (window.innerWidth <= 900 ? 10 : 5));
@@ -2202,7 +2455,7 @@ export default function SystemSevenDesktop({
         return;
       }
       const drag = dragState.current;
-      if (!drag || window.innerWidth <= 720) return;
+      if (!drag || isCompactCanvasViewport()) return;
       setWindows((current) =>
         current.map((windowState) =>
           windowState.id === drag.id
@@ -2274,8 +2527,54 @@ export default function SystemSevenDesktop({
     }
 
     const nextWindowTitle = INITIAL_WINDOWS.find((item) => item.id === id)?.title;
-    if (nextWindowTitle) document.title = `${translateText(nextLocale, nextWindowTitle)} · Samuel Zhang`;
+    if (nextWindowTitle) {
+      const translatedTitle = `${translateText(nextLocale, nextWindowTitle)} · Samuel Zhang`;
+      if (document.title !== translatedTitle) document.title = translatedTitle;
+      const deskAccessoryIds: AppId[] = ["notepad", "sketch", "tasks", "focus", "calendar", "calculator", "converter", "palette"];
+      const metadataId: AppId = deskAccessoryIds.includes(id) ? "desk" : id;
+      const sourceDescription = DESKTOP_ICONS.find((item) => item.id === metadataId)?.description ?? "";
+      const translatedDescription = translateText(nextLocale, sourceDescription);
+      const setMeta = (attribute: "name" | "property", key: string, value: string) => {
+        let meta = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+        if (!meta) {
+          meta = document.createElement("meta");
+          meta.setAttribute(attribute, key);
+          document.head.appendChild(meta);
+        }
+        if (meta.content !== value) meta.content = value;
+      };
+      setMeta("name", "description", translatedDescription);
+      setMeta("property", "og:title", translatedTitle);
+      setMeta("property", "og:description", translatedDescription);
+      setMeta("property", "og:locale", nextLocale.replace("-", "_"));
+      setMeta("name", "twitter:title", translatedTitle);
+      setMeta("name", "twitter:description", translatedDescription);
+      let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = document.createElement("link");
+        canonical.rel = "canonical";
+        document.head.appendChild(canonical);
+      }
+      const canonicalHref = new URL(nextPath, window.location.origin).href;
+      if (canonical.href !== canonicalHref) canonical.href = canonicalHref;
+    }
   }, [activeId, locale]);
+
+  useEffect(() => {
+    const pathHasLocale = Boolean(normaliseLocale(window.location.pathname.split("/")[1]));
+    const sync = () => syncAddress(activeId, locale, pathHasLocale || locale !== "en-GB");
+    sync();
+    const frame = window.requestAnimationFrame(sync);
+    const headObserver = new MutationObserver(sync);
+    // Next may stream or replace title/meta nodes after hydration. Watching
+    // structural/text changes keeps the locale metadata stable without
+    // reacting to our own guarded attribute updates.
+    headObserver.observe(document.head, { childList: true, characterData: true, subtree: true });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      headObserver.disconnect();
+    };
+  }, [activeId, locale, syncAddress]);
 
   const focusWindow = (id: AppId) => {
     const nextZ = ++zCounter.current;
@@ -2353,7 +2652,7 @@ export default function SystemSevenDesktop({
   const toggleZoom = (id: AppId) => {
     // Small-screen windows already occupy the fixed usable canvas; toggling
     // the desktop maximize bit cannot produce a meaningful visual state.
-    if (window.innerWidth <= 720) return;
+    if (isCompactCanvasViewport()) return;
     setWindows((current) => current.map((item) => item.id === id ? { ...item, maximized: !item.maximized } : item));
     focusWindow(id);
   };
@@ -2386,7 +2685,7 @@ export default function SystemSevenDesktop({
   const handleDragStart = (event: React.PointerEvent<HTMLDivElement>, id: AppId) => {
     if ((event.target as HTMLElement).closest("button")) return;
     const target = windows.find((item) => item.id === id);
-    if (!target || target.maximized) return;
+    if (!target || target.maximized || isCompactCanvasViewport()) return;
     focusWindow(id);
     dragState.current = {
       id,
@@ -2399,7 +2698,7 @@ export default function SystemSevenDesktop({
     event.preventDefault();
     event.stopPropagation();
     const target = windows.find((item) => item.id === id);
-    if (!target || target.maximized || window.innerWidth <= 720) return;
+    if (!target || target.maximized || isCompactCanvasViewport()) return;
     const renderedWindow = event.currentTarget.closest<HTMLElement>(".mac-window")?.getBoundingClientRect();
     focusWindow(id);
     resizeState.current = {
@@ -2502,6 +2801,7 @@ export default function SystemSevenDesktop({
                 <button onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
                 <button onClick={() => openApp("experience")}><PixelIcon kind="briefcase" small />Career</button>
                 <button onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
+                <button onClick={() => openApp("desk")}><PixelIcon kind="accessories" small />Desk Accessories</button>
                 <button onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
                 <hr />
                 <button onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />Latest field note · RUN/HACK</button>
@@ -2635,7 +2935,7 @@ export default function SystemSevenDesktop({
       <div className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
           <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, item.title)}`}>
-            <PixelIcon kind={DESKTOP_ICONS.find((icon) => icon.id === item.id)?.icon ?? "document"} small />
+            <PixelIcon kind={UTILITY_ICONS[item.id] ?? DESKTOP_ICONS.find((icon) => icon.id === item.id)?.icon ?? "document"} small />
             <span>{item.title}</span>
           </button>
         ))}

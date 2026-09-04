@@ -5,11 +5,15 @@ import ts from "typescript";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const systemPath = resolve(projectRoot, "src/components/SystemSevenDesktop.tsx");
+const productivityPath = resolve(projectRoot, "src/components/ProductivityApps.tsx");
+const productivityExtrasPath = resolve(projectRoot, "src/components/ProductivityExtras.tsx");
 const i18nPath = resolve(projectRoot, "src/lib/i18n.ts");
 const archiveI18nPath = resolve(projectRoot, "src/components/projects/projectArchiveI18n.ts");
 
-const [systemSource, i18nSource, archiveI18nSource] = await Promise.all([
+const [systemSource, productivitySource, productivityExtrasSource, i18nSource, archiveI18nSource] = await Promise.all([
   readFile(systemPath, "utf8"),
+  readFile(productivityPath, "utf8"),
+  readFile(productivityExtrasPath, "utf8"),
   readFile(i18nPath, "utf8"),
   readFile(archiveI18nPath, "utf8"),
 ]);
@@ -133,6 +137,8 @@ const visibleRecordFields = new Set([
   "period",
   "location",
   "tag",
+  "name",
+  "eyebrow",
 ]);
 const acceptedCoreIdentity = new Set([
   "Samuel Zhang",
@@ -151,6 +157,20 @@ const acceptedCoreIdentity = new Set([
   "Frappe / ERPNext",
   "Odoo Lab",
   "BLE → SQL → Grafana",
+  "Proxmox",
+  "GLKVM",
+  "WireGuard",
+  "Pi-hole",
+  "Fail2ban",
+  "Guacamole",
+  "Portainer",
+  "Homepage",
+  "Ofelia",
+  "PostgreSQL",
+  "Aranet Air Quality",
+  "Nextcloud",
+  "Jellyfin",
+  "Kiwix",
   "ATS",
   "CV + VOICE",
   "ICL",
@@ -171,7 +191,19 @@ const acceptedCoreIdentity = new Set([
   "⌘V",
   "∞ MB",
   "32 MB",
+  "MC",
+  "MR",
+  "M+",
+  "M−",
+  "M",
+  "AC",
+  "C",
   "文/A",
+  "HEX",
+  "RGB",
+  "HSL",
+  "AAA",
+  "AA",
 ]);
 const visibleStrings = new Map();
 
@@ -185,37 +217,40 @@ function decodeJsx(value) {
     .trim();
 }
 
-function addVisible(value, node) {
+function addVisible(value, node, sourceFile, sourcePath, allowLowercase = false) {
   const compact = decodeJsx(value);
   if (!compact || !/[A-Za-z]/.test(compact)) return;
   if (acceptedCoreIdentity.has(compact)) return;
   if (/^(?:https?:|mailto:|\/)/i.test(compact)) return;
-  if (/^[a-z\d_-]+$/i.test(compact) && compact[0] === compact[0].toLowerCase()) return;
+  if (!allowLowercase && /^[a-z\d_-]+$/i.test(compact) && compact[0] === compact[0].toLowerCase()) return;
   if (!visibleStrings.has(compact)) {
-    visibleStrings.set(compact, systemFile.getLineAndCharacterOfPosition(node.getStart(systemFile)).line + 1);
+    visibleStrings.set(compact, {
+      path: sourcePath,
+      line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+    });
   }
 }
 
-function visitSystem(node, renderedExpression = false) {
-  if (ts.isJsxText(node)) addVisible(node.text, node);
+function visitSystem(node, sourceFile, sourcePath, renderedExpression = false) {
+  if (ts.isJsxText(node)) addVisible(node.text, node, sourceFile, sourcePath);
 
   if (ts.isJsxAttribute(node)) {
     const name = node.name.text;
     if (translatedAttributes.has(name) && node.initializer && ts.isStringLiteral(node.initializer)) {
-      addVisible(node.initializer.text, node.initializer);
+      addVisible(node.initializer.text, node.initializer, sourceFile, sourcePath);
     }
     if (node.initializer && ts.isJsxExpression(node.initializer) && node.initializer.expression) {
-      visitSystem(node.initializer.expression, translatedAttributes.has(name));
+      visitSystem(node.initializer.expression, sourceFile, sourcePath, translatedAttributes.has(name));
     }
     return;
   }
 
   if (ts.isJsxExpression(node)) {
-    if (node.expression) visitSystem(node.expression, true);
+    if (node.expression) visitSystem(node.expression, sourceFile, sourcePath, true);
     return;
   }
 
-  if (renderedExpression && ts.isStringLiteralLike(node)) addVisible(node.text, node);
+  if (renderedExpression && ts.isStringLiteralLike(node)) addVisible(node.text, node, sourceFile, sourcePath);
 
   if (
     ts.isPropertyAssignment(node)
@@ -223,7 +258,7 @@ function visitSystem(node, renderedExpression = false) {
     && visibleRecordFields.has(node.name.text)
     && ts.isStringLiteralLike(node.initializer)
   ) {
-    addVisible(node.initializer.text, node.initializer);
+    addVisible(node.initializer.text, node.initializer, sourceFile, sourcePath);
   }
 
   if (
@@ -232,14 +267,51 @@ function visitSystem(node, renderedExpression = false) {
     && node.expression.text === "setWordMessage"
   ) {
     for (const argument of node.arguments) {
-      if (ts.isStringLiteralLike(argument)) addVisible(argument.text, argument);
+      if (ts.isStringLiteralLike(argument)) addVisible(argument.text, argument, sourceFile, sourcePath);
     }
   }
 
-  ts.forEachChild(node, (child) => visitSystem(child, renderedExpression));
+  if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+    const argumentIndex = node.expression.text === "t"
+      ? 0
+      : node.expression.text === "translateText"
+        ? 1
+        : -1;
+    const argument = argumentIndex >= 0 ? node.arguments[argumentIndex] : null;
+    if (argument && ts.isStringLiteralLike(argument)) addVisible(argument.text, argument, sourceFile, sourcePath, true);
+  }
+
+  if (
+    ts.isCallExpression(node)
+    && ts.isIdentifier(node.expression)
+    && node.expression.text === "factorUnit"
+    && node.arguments[1]
+    && ts.isStringLiteralLike(node.arguments[1])
+  ) {
+    addVisible(node.arguments[1].text, node.arguments[1], sourceFile, sourcePath, true);
+  }
+
+  ts.forEachChild(node, (child) => visitSystem(child, sourceFile, sourcePath, renderedExpression));
 }
 
-visitSystem(systemFile);
+const productivityFile = ts.createSourceFile(
+  productivityPath,
+  productivitySource,
+  ts.ScriptTarget.Latest,
+  true,
+  ts.ScriptKind.TSX,
+);
+const productivityExtrasFile = ts.createSourceFile(
+  productivityExtrasPath,
+  productivityExtrasSource,
+  ts.ScriptTarget.Latest,
+  true,
+  ts.ScriptKind.TSX,
+);
+
+visitSystem(systemFile, systemFile, systemPath);
+visitSystem(productivityFile, productivityFile, productivityPath);
+visitSystem(productivityExtrasFile, productivityExtrasFile, productivityExtrasPath);
 
 const simplifiedCharacters = new Set();
 for (const property of traditionalCharsObject.properties) {
@@ -247,18 +319,21 @@ for (const property of traditionalCharsObject.properties) {
   if (!ts.isStringLiteralLike(property.initializer)) continue;
   if (property.name.text !== property.initializer.text) simplifiedCharacters.add(property.name.text);
 }
+for (const character of ["错", "蓝", "红", "绿", "细", "辑", "马", "么", "筛", "静", "胆", "适", "携", "备", "历", "绘", "导", "迁", "荧"]) {
+  simplifiedCharacters.add(character);
+}
 
-const traditionalResiduals = [...visibleStrings].flatMap(([value, line]) => {
+const traditionalResiduals = [...visibleStrings].flatMap(([value, location]) => {
   const translated = coreModule.translateText("zh-TW", value);
   const translatedCharacters = [...translated];
   const residual = translatedCharacters.find((character, index) => (
     simplifiedCharacters.has(character)
     // 公里 is the standard Traditional Chinese unit spelling; 裡 denotes
     // "inside" and would be incorrect in a distance measurement.
-    && !(character === "里" && translatedCharacters[index - 1] === "公")
+    && !(character === "里" && ["公", "英"].includes(translatedCharacters[index - 1]))
   ));
-  if (residual) return [`${systemPath}:${line}: ${residual} remains in ${translated}`];
-  if (translated.includes("恢複")) return [`${systemPath}:${line}: contextually incorrect 恢複 in ${translated}`];
+  if (residual) return [`${location.path}:${location.line}: ${residual} remains in ${translated}`];
+  if (translated.includes("恢複")) return [`${location.path}:${location.line}: contextually incorrect 恢複 in ${translated}`];
   return [];
 });
 
@@ -275,7 +350,7 @@ for (const [key, value] of Object.entries(archiveCopies["zh-TW"])) {
 
 const missingCoreKeys = [...visibleStrings]
   .filter(([value]) => !zhKeys.has(value))
-  .map(([value, line]) => `${systemPath}:${line}: ${value}`);
+  .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 
 const errors = [
   ...archiveErrors,

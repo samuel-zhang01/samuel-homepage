@@ -757,6 +757,7 @@ body {
   min-height: 0;
   flex: 1;
   overflow: auto;
+  container-type: inline-size;
   color: var(--ink);
   background: #fff;
   user-select: text;
@@ -877,6 +878,21 @@ body {
 
 .sidequest-app-loading .eyebrow {
   color: #d7ff55;
+}
+
+.productivity-app-loading {
+  display: grid;
+  min-height: 100%;
+  place-content: center;
+  gap: 8px;
+  padding: 28px;
+  color: #111;
+  background: #d8d8d3;
+  text-align: center;
+}
+
+.productivity-app-loading .eyebrow {
+  color: #11177a;
 }
 
 /* About */
@@ -4547,7 +4563,7 @@ html:lang(zh-TW) .career-record {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 720px), (max-height: 520px) and (max-width: 1000px) {
   html,
   body {
     overflow: hidden;

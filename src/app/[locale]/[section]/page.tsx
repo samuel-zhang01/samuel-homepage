@@ -7,6 +7,7 @@ const sections: Record<string, AppId> = {
   about: "about",
   contact: "contact",
   coverd: "coverd",
+  desk: "desk",
   documents: "documents",
   education: "education",
   experience: "experience",
@@ -30,6 +31,10 @@ const sectionMetadata: Record<string, { title: string; description: string }> = 
   coverd: {
     title: "COVERD — Founder’s Desk",
     description: "Samuel’s startup, product thesis and responsible-AI principles.",
+  },
+  desk: {
+    title: "Desk Accessories",
+    description: "Eight private, browser-local tools for notes, drawing, planning, focus, calculations, conversions and colour.",
   },
   documents: {
     title: "Documents",
