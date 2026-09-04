@@ -1,8 +1,15 @@
 # Samuel System 7
 
-Samuel Zhang's personal portfolio, presented as a playful System 7-inspired desktop. Biography, experience, projects, COVERD, games, CVs and supporting documents open as movable desktop windows inside one browser tab.
+Samuel Zhang's personal portfolio, presented as a carefully researched
+System 7-inspired desktop. Biography, experience, projects, COVERD, games, CVs
+and supporting documents open as movable desktop windows inside one browser
+tab—without an account, tracking API or server-side personal-data store.
 
-Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
+**[Open the live desktop](https://me.samuelzhang.co.uk)** ·
+**[Browse the project archive](https://me.samuelzhang.co.uk/projects)** ·
+**[Read the release audit](docs/RELEASE_AUDIT.md)**
+
+![Samuel System 7 desktop showing the About Samuel Zhang window and classic desktop icons](public/readme-system7-desktop.png)
 
 ## What is included
 
@@ -10,11 +17,30 @@ Production site: [me.samuelzhang.co.uk](https://me.samuelzhang.co.uk)
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
 - Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.
-- A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 independently lazy-loaded interactive chapters, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
+- A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 interactive chapters lazy-loaded by exhibit module, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
 - Responsive System 7 windows designed for 320 px mobile screens through large desktops, with pointer- and keyboard-resizable floating windows on desktop.
+
+## System 7 design contract
+
+This is an interpretation for the modern web, not a claim of pixel-for-pixel
+emulation. The interface follows the useful constraints in Apple's 1992
+Macintosh guidance: consistency, direct manipulation, progressive disclosure,
+clean black-and-white structure, and familiar visual metaphors.
+
+- Chicago-first window/menu chrome, Geneva-first content and Monaco/Courier
+  machine readouts, with language-appropriate CJK fallbacks.
+- 32 × 32 desktop icon plates and 16 × 16 menu artwork.
+- Square controls, hard keylines, one-pixel bevels, dotted focus and restrained
+  project colour—no glass panels, pill buttons, blur or soft UI glow.
+- Compact layouts keep the content and hierarchy but replace floating windows
+  with one usable app surface, safe-area handling and coarse-pointer targets.
+
+The detailed evidence, viewport matrix and known boundaries live in the
+[release audit](docs/RELEASE_AUDIT.md). The visual reference is the
+[Macintosh Human Interface Guidelines (1992)](https://tecfa.unige.ch/tecfa/teaching/LME/lombard/HIGuidelines.pdf).
 
 ## Project archive
 
@@ -23,7 +49,7 @@ Small interactive evidence fixtures use reviewed local CSV files under
 third-party fetching and raw public downloads are disabled. `npm run check:data` pins their schema, size, row grain, domains,
 uniqueness and SHA-256 before every production build.
 
-The Projects folder opens in **Guided Workspaces**: four short “start here” routes and six themed shelves progressively reveal 14 visitor-facing experiences. Eight multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture and Supporting Audits—while six flagship experiences remain standalone. Every one of the 31 source records appears exactly once in this guided structure; the 27 interactive chapters keep their canonical `?project=` links and remain independently lazy-loaded.
+The Projects folder opens in **Guided Workspaces**: four short “start here” routes and six themed shelves progressively reveal 14 visitor-facing experiences. Eight multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture and Supporting Audits—while six flagship experiences remain standalone. Every one of the 31 source records appears exactly once in this guided structure; the 27 interactive chapters keep their canonical `?project=` links and load on demand through their exhibit modules.
 
 **All 31 Files** is the secondary expert view, with discipline, access and featured-work filters plus curated, newest-first and title sorting. Press `/` anywhere in the archive to open that view and focus search. Valid project deep links open the exact file directly, and switching back to Guided Workspaces reveals its parent shelf and suite.
 
@@ -31,7 +57,7 @@ Every executable chapter opens with a typed case brief: audience, human problem,
 
 Each record also retains its `Start small → Move forward → Polish` history. Five reviewed external-or-artifact actions expose supporting PDFs, workbooks or a primary public record. Live websites and immutable source snapshots remain separately labelled, and public visibility is never presented as a licence.
 
-The **Portfolio Map** top-level tab provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Guided chrome, archive search, filters, sorting, layouts, actions and status announcements follow the selected locale; project titles and source-traced descriptions remain in British English.
+The **Portfolio Map** top-level tab provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Guided chrome, archive search, filters, sorting, layouts, actions, status announcements, project summaries and suite descriptions follow the selected locale. Project titles, Portfolio Map analytical copy, longer source-traced evidence narratives and interactive lab copy remain in British English so technical claims are not silently rewritten by a partial translation layer; the interface states that boundary explicitly.
 
 Dedicated project routes open the archive maximised and can shift between catalogue, balanced and detail-focused layouts. On desktop, the System 7 project window supports pointer and keyboard resizing; its title-bar zoom control toggles the maximised and floating presentations. Small screens use the same content in a constrained responsive layout.
 
@@ -117,7 +143,7 @@ npm run build
 npm audit --audit-level=moderate
 ```
 
-`npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome from silently shipping.
+`npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome, project summaries or suite descriptions from silently shipping.
 
 When a development server is already using `.next`, run `npm run build:isolated` instead. It writes the production checkpoint to `.next-build` so the live development cache is not replaced.
 
@@ -129,7 +155,10 @@ Compose binds the production container to `0.0.0.0:5174` by default. This makes 
 ./deploy.sh
 ```
 
-The deployment script supports both `docker compose` and the legacy `docker-compose` binary. It checks project artifacts, builds the image, starts the service and waits for its health check.
+The deployment script supports both `docker compose` and the legacy
+`docker-compose` binary. It checks project artifacts, builds the image, starts
+the service, validates the core routes and security headers, and restores the
+previous image automatically if post-start verification fails.
 
 Equivalent manual commands:
 
