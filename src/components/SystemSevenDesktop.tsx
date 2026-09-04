@@ -62,6 +62,7 @@ const ProductivityApps = dynamic(() => import("@/components/ProductivityApps"), 
 });
 
 const DesktopFinder = dynamic(() => import("./DesktopFinder"), { ssr: false });
+const OrbitalLab = dynamic(() => import("./OrbitalLab"), { loading: ClassicModuleLoading });
 
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
   loading: function ProjectExplorerLoading() {
@@ -106,6 +107,7 @@ export type AppId =
   | "calculator"
   | "converter"
   | "palette"
+  | "orbitals"
   | "contact"
   | "lab"
   | "scrapbook"
@@ -152,6 +154,7 @@ type IconKind =
   | "calculator"
   | "converter"
   | "palette"
+  | "orbital"
   | "pdf"
   | "mail"
   | "secret";
@@ -448,6 +451,17 @@ const INITIAL_WINDOWS: WindowState[] = [
     maximized: false,
   },
   {
+    id: "orbitals",
+    title: "Orbital Lab",
+    x: 60,
+    y: 50,
+    width: 1050,
+    height: 730,
+    z: 27,
+    open: false,
+    maximized: false,
+  },
+  {
     id: "contact",
     title: "Contact Samuel",
     x: 286,
@@ -500,7 +514,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
   { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
   { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of Samuel’s work." },
-  { id: "desk", label: "Desk Accessories", icon: "accessories", description: "Eight private, browser-local tools for notes, drawing, planning, focus, calculations, conversions and colour." },
+  { id: "desk", label: "Desk Accessories", icon: "accessories", description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
@@ -518,6 +532,7 @@ const UTILITY_ICONS: Partial<Record<AppId, IconKind>> = {
   calculator: "calculator",
   converter: "converter",
   palette: "palette",
+  orbitals: "orbital",
 };
 
 const APP_ROUTES: Record<AppId, string> = {
@@ -539,6 +554,7 @@ const APP_ROUTES: Record<AppId, string> = {
   calculator: "desk",
   converter: "desk",
   palette: "desk",
+  orbitals: "orbitals",
   contact: "contact",
   lab: "lab",
   scrapbook: "interests",
@@ -882,6 +898,14 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
         <circle cx="16" cy="29" r="3" fill="#4568b2" strokeWidth="2" />
       </g>
     ),
+    orbital: (
+      <g {...common}>
+        <path d="M7 7h34v34H7z" fill="#fffdf0" />
+        <path d="M23 23C3 22 6 4 17 10c5 3 7 8 6 13ZM25 25c20 1 17 19 6 13-5-3-7-8-6-13Z" fill="#11177a" strokeWidth="2" />
+        <path d="M25 23c1-20 19-17 13-6-3 5-8 7-13 6ZM23 25C22 45 4 42 10 31c3-5 8-7 13-6Z" fill="#bd674b" strokeWidth="2" />
+        <circle cx="24" cy="24" r="2" fill="#111" />
+      </g>
+    ),
     pdf: (
       <g {...common}>
         <path d="M8 3h23l9 9v33H8z" fill="#fff" />
@@ -921,7 +945,7 @@ const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
     return {
       id: item.id,
       title: item.title,
-      description: desktopItem?.description ?? (item.id === "sidequest" ? "Latest field note · RUN/HACK" : "Desk Accessories"),
+      description: desktopItem?.description ?? (item.id === "sidequest" ? "Latest field note · RUN/HACK" : item.id === "orbitals" ? "Explore atomic orbitals in a fast, browser-local ASCII laboratory." : "Desk Accessories"),
       icon: <PixelIcon kind={UTILITY_ICONS[item.id] ?? desktopItem?.icon ?? "runner"} small />,
     };
   });
@@ -2349,11 +2373,13 @@ function AppContent({
   openApp,
   locale,
   initialProjectSlug,
+  active,
 }: {
   id: AppId;
   openApp: (id: AppId) => void;
   locale: Locale;
   initialProjectSlug?: string;
+  active: boolean;
 }) {
   switch (id) {
     case "about": return <AboutApp openApp={openApp} locale={locale} />;
@@ -2374,6 +2400,7 @@ function AppContent({
     case "calculator": return <ProductivityApps app="calculator" openApp={openApp} locale={locale} />;
     case "converter": return <ProductivityApps app="converter" openApp={openApp} locale={locale} />;
     case "palette": return <ProductivityApps app="palette" openApp={openApp} locale={locale} />;
+    case "orbitals": return <OrbitalLab locale={locale} active={active} />;
     case "contact": return <ContactApp openApp={openApp} locale={locale} />;
     case "lab": return <LabApp locale={locale} />;
     case "scrapbook": return <ScrapbookApp locale={locale} />;
@@ -2401,7 +2428,7 @@ export default function SystemSevenDesktop({
       // than small desktop previews. Give their interactive evidence views the
       // available canvas immediately; apps opened later from the desktop keep
       // their classic floating-window sizes.
-      maximized: (windowState.id === "projects" || windowState.id === "sidequest")
+      maximized: (windowState.id === "projects" || windowState.id === "sidequest" || windowState.id === "orbitals")
         && initialApp === windowState.id,
     })),
   );
@@ -2702,7 +2729,7 @@ export default function SystemSevenDesktop({
       const sourceDescription = DESKTOP_ICONS.find((item) => item.id === metadataId)?.description
         ?? (metadataId === "sidequest"
           ? "A rain-soaked running hackathon field journal: the runner-only build rule, 44 team kilometres, a 100+ person track community and second-place app SideQuest."
-          : "");
+          : metadataId === "orbitals" ? "Explore atomic orbitals in a fast, browser-local ASCII laboratory." : "");
       const translatedDescription = translateText(nextLocale, sourceDescription);
       const setMeta = (attribute: "name" | "property", key: string, value: string) => {
         let meta = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
@@ -3085,6 +3112,7 @@ export default function SystemSevenDesktop({
                 <button type="button" role="menuitem" onClick={() => openApp("experience")}><PixelIcon kind="briefcase" small />Career</button>
                 <button type="button" role="menuitem" onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
                 <button type="button" role="menuitem" onClick={() => openApp("desk")}><PixelIcon kind="accessories" small />Desk Accessories</button>
+                <button type="button" role="menuitem" onClick={() => openApp("orbitals")}><PixelIcon kind="orbital" small />Orbital Lab</button>
                 <button type="button" role="menuitem" onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
                 <hr />
                 <button type="button" role="menuitem" onClick={openFinder}><PixelIcon kind="folder" small />Find…</button>
@@ -3201,7 +3229,7 @@ export default function SystemSevenDesktop({
           onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} />
+          <AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} active={windowState.id === activeId} />
         </WindowChrome>
       ))}
 

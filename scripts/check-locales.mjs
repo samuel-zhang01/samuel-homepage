@@ -68,12 +68,24 @@ function flatten(value, prefix = "", result = {}) {
 
 const archiveModule = await compileModule(archiveI18nSource, archiveI18nPath);
 const coreModule = await compileModule(i18nSource, i18nPath);
+const orbitalI18nPath = resolve(projectRoot, "src/components/orbitalI18n.ts");
+const orbitalModule = await compileModule(await readFile(orbitalI18nPath, "utf8"), orbitalI18nPath);
 const archiveLocales = ["en-GB", "en-US", "zh-CN", "zh-TW"];
 const archiveCopies = Object.fromEntries(
   archiveLocales.map((locale) => [locale, flatten(archiveModule.getProjectArchiveCopy(locale))]),
 );
 const archiveKeys = Object.keys(archiveCopies["en-GB"]);
 const archiveErrors = [];
+const orbitalErrors = [];
+const orbitalKeys = Object.keys(orbitalModule.orbitalCopies["en-GB"]);
+for (const locale of archiveLocales) {
+  const copy = orbitalModule.orbitalCopies[locale];
+  if (Object.keys(copy).length !== orbitalKeys.length) orbitalErrors.push(`${locale} orbital key count differs`);
+  for (const key of orbitalKeys) {
+    if (typeof copy[key] !== "string" || !copy[key].trim()) orbitalErrors.push(`${locale} missing orbital key: ${key}`);
+    if (locale.startsWith("zh-") && key !== "radialAxis" && copy[key] === orbitalModule.orbitalCopies["en-GB"][key]) orbitalErrors.push(`${locale} untranslated orbital key: ${key}`);
+  }
+}
 const acceptedArchiveIdentity = new Set(["SYSTEM 7", "PDF"]);
 const regionalisationChecks = [
   ["en-US", "CV & documents", "Resume & documents"],
@@ -695,6 +707,10 @@ for (const [key, value] of Object.entries(archiveCopies["zh-TW"])) {
 const missingCoreKeys = [...visibleStrings]
   .filter(([value]) => !zhKeys.has(value))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
+for (const [key, value] of Object.entries(orbitalModule.orbitalCopies["zh-TW"])) {
+  const residual = findTraditionalResidue(value);
+  if (residual) traditionalResiduals.push(`zh-TW orbital key ${key}: ${residual} remains in ${value}`);
+}
 const missingSideQuestKeys = [...sideQuestSourceStrings]
   .filter(([value]) => !sideQuestZhKeys.has(value))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
@@ -703,6 +719,7 @@ const missingProjectKeys = [...projectTranslationSources]
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 
 const errors = [
+  ...orbitalErrors,
   ...archiveErrors,
   ...regionalisationErrors,
   ...regionalSourceErrors,
@@ -721,5 +738,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Locale gate: ${archiveKeys.length} archive keys match across 4 locales; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project summaries/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
+  `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project summaries/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
 );

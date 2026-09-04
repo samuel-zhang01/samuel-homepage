@@ -14,12 +14,17 @@ const sections: Record<string, AppId> = {
   games: "games",
   interests: "scrapbook",
   lab: "lab",
+  orbitals: "orbitals",
   sidequest: "sidequest",
   resume: "documents",
   skills: "skills",
 };
 
 const sectionMetadata: Record<string, { title: string; description: string }> = {
+  orbitals: {
+    title: "Orbital Lab",
+    description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory.",
+  },
   about: {
     title: "About Samuel Zhang",
     description: "Start here: biography, current work and highlights.",
@@ -34,7 +39,7 @@ const sectionMetadata: Record<string, { title: string; description: string }> = 
   },
   desk: {
     title: "Desk Accessories",
-    description: "Eight private, browser-local tools for notes, drawing, planning, focus, calculations, conversions and colour.",
+    description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser.",
   },
   documents: {
     title: "Documents",

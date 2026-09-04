@@ -26,10 +26,10 @@ export type ProductivityAppId =
 type ProductivityAppsProps = {
   app: ProductivityAppId;
   locale: Locale;
-  openApp: (id: ProductivityAppId) => void;
+  openApp: (id: ProductivityAppId | "orbitals") => void;
 };
 
-type AccessoryKind = ProductivityAppId;
+type AccessoryKind = ProductivityAppId | "orbitals";
 
 const NOTE_PAGE_COUNT = 8;
 const NOTE_STORAGE_KEY = "samuel-system7-notepad-v1";
@@ -138,6 +138,14 @@ function AccessoryIcon({ kind, compact = false }: { kind: AccessoryKind; compact
   };
 
   const artwork: Record<AccessoryKind, React.ReactNode> = {
+    orbitals: (
+      <g {...common}>
+        <path d="M5 5h38v38H5z" fill="#fffdf0" />
+        <path d="M23 23C3 22 6 4 17 10c5 3 7 8 6 13ZM25 25c20 1 17 19 6 13-5-3-7-8-6-13Z" fill="#11177a" strokeWidth="2" />
+        <path d="M25 23c1-20 19-17 13-6-3 5-8 7-13 6ZM23 25C22 45 4 42 10 31c3-5 8-7 13-6Z" fill="#bd674b" strokeWidth="2" />
+        <circle cx="24" cy="24" r="2" fill="#111" />
+      </g>
+    ),
     desk: (
       <g {...common}>
         <path d="M4 14h15l4-6h10l4 6h7v29H4z" fill="#f2ca59" />
@@ -234,11 +242,17 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
   const restoreInputRef = useRef<HTMLInputElement | null>(null);
   const [backupStatus, setBackupStatus] = useState("");
   const accessories: Array<{
-    id: Exclude<ProductivityAppId, "desk">;
+    id: Exclude<ProductivityAppId, "desk"> | "orbitals";
     name: string;
     eyebrow: string;
     description: string;
   }> = [
+    {
+      id: "orbitals",
+      name: "Orbital Lab",
+      eyebrow: "A SMALL QUANTUM LABORATORY",
+      description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory.",
+    },
     {
       id: "notepad",
       name: "Note Pad",
@@ -376,7 +390,7 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         <AccessoryIcon kind="desk" />
       </header>
       <p className={styles.launcherIntro}>
-        {t("Eight useful tools work entirely in this browser. Your notes, drawings and plans stay on this device; nothing is uploaded or synced.")}
+        {t("Eight everyday tools and an orbital lab, all in this browser. Your notes, drawings and plans stay on this device; nothing is uploaded or synced.")}
       </p>
       <section className={styles.storageStrip} aria-label={t("Desk data and backup")}>
         <span className={styles.storageLamp} aria-hidden="true" />

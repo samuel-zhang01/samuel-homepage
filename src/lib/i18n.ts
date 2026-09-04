@@ -45,6 +45,11 @@ const usOverrides: Record<string, string> = {
 };
 
 const zhCN: Record<string, string> = {
+  "Orbital Lab": "原子轨道实验室",
+  "Eight everyday tools and a fast atomic-orbital lab, all in your browser.": "八款日常工具和一个快速的原子轨道实验室，均在浏览器中运行。",
+  "A SMALL QUANTUM LABORATORY": "一个小小的量子实验室",
+  "Explore atomic orbitals in a fast, browser-local ASCII laboratory.": "在快速、本地运行的 ASCII 实验室中探索原子轨道。",
+  "Eight everyday tools and an orbital lab, all in this browser. Your notes, drawings and plans stay on this device; nothing is uploaded or synced.": "八款日常工具和一个原子轨道实验室，均在此浏览器中运行。笔记、绘图和计划只保存在此设备上，不会上传或同步。",
   "Language": "语言",
   "Current time": "当前时间",
   "About Samuel Zhang": "关于 Samuel Zhang",
@@ -1464,6 +1469,11 @@ const zhCN: Record<string, string> = {
 };
 
 const zhTWOverrides: Record<string, string> = {
+  "Orbital Lab": "原子軌域實驗室",
+  "Eight everyday tools and a fast atomic-orbital lab, all in your browser.": "八款日常工具和一個快速的原子軌域實驗室，均在瀏覽器中執行。",
+  "A SMALL QUANTUM LABORATORY": "一個小小的量子實驗室",
+  "Explore atomic orbitals in a fast, browser-local ASCII laboratory.": "在快速、本機執行的 ASCII 實驗室中探索原子軌域。",
+  "Eight everyday tools and an orbital lab, all in this browser. Your notes, drawings and plans stay on this device; nothing is uploaded or synced.": "八款日常工具和一個原子軌域實驗室，均在此瀏覽器中執行。筆記、繪圖和計畫只儲存在此裝置上，不會上傳或同步。",
   "Find…": "尋找…",
   "Close Find": "關閉尋找視窗",
   "Find an app, a project, or a useful little distraction.": "找個應用程式、專案，或讓自己放鬆一下的小遊戲。",

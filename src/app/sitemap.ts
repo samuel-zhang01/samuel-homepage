@@ -15,6 +15,7 @@ const sections = [
   "games",
   "interests",
   "lab",
+  "orbitals",
   "projects",
   "sidequest",
   "skills",

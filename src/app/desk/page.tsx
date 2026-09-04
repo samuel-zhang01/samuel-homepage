@@ -2,7 +2,7 @@ import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 
 export const metadata = {
   title: "Desk Accessories",
-  description: "Eight private, browser-local tools for notes, drawing, planning, focus, calculations, conversions and colour inside Samuel Zhang’s System 7 desktop.",
+  description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser.",
 };
 
 export default function DeskAccessoriesPage() {
