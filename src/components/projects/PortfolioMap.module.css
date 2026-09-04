@@ -13,7 +13,7 @@
   min-width: 0;
   color: var(--pm-ink);
   background: #d1cfc7;
-  font-size: 9px;
+  font: 11px/1.4 var(--system-font);
 }
 
 .portfolioMap *,
@@ -45,9 +45,7 @@
   gap: 14px;
   padding: 16px 18px;
   border: 1px solid var(--pm-line);
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.12)),
-    #eceae2;
+  background: #eceae2;
   box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa9a2;
 }
 
@@ -62,13 +60,13 @@
 
 .mapHeader > div > span {
   color: var(--pm-blue);
-  font: 900 8px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
   letter-spacing: 0.14em;
 }
 
 .mapHeader h2 {
   margin: 4px 0 2px;
-  font: 800 31px/1 Georgia, serif;
+  font: 800 31px/1 var(--system-font);
   letter-spacing: -0.025em;
 }
 
@@ -109,14 +107,14 @@
 
 .mapHeader dt {
   color: #c7d4ca;
-  font: 800 7px/1.2 "Courier New", monospace;
+  font: 800 9px/1.2 var(--system-mono);
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
 .mapHeader dd {
   margin: 4px 0 0;
-  font: 800 23px/1 Georgia, serif;
+  font: 800 23px/1 var(--system-font);
 }
 
 .viewTabs {
@@ -151,7 +149,7 @@
   background: #f7f5ee;
 }
 
-.viewTabs button[aria-current="page"] {
+.viewTabs button[aria-selected="true"] {
   color: #fff;
   background:
     repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.06) 5px 6px),
@@ -167,7 +165,7 @@
   place-items: center;
   align-self: center;
   border: 1px solid currentColor;
-  font: 900 8px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
 }
 
 .viewTabs strong,
@@ -186,7 +184,7 @@
 
 .viewTabs small {
   align-self: start;
-  font-size: 7px;
+  font-size: 9px;
   opacity: 0.72;
 }
 
@@ -232,18 +230,18 @@
 
 .panelHeading > span {
   color: #b9d0bf;
-  font: 900 8px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
 }
 
 .panelHeading > strong {
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.11em;
 }
 
 .panelHeading > em {
   margin-left: auto;
   color: #c4d0c6;
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
   font-style: normal;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -269,7 +267,7 @@
 
 .filterDeck > div > span {
   color: var(--pm-blue);
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.1em;
 }
 
@@ -282,7 +280,7 @@
 .filterDeck > div > p {
   margin: 0;
   color: #5b5f58;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.35;
 }
 
@@ -299,7 +297,7 @@
 
 .filterDeck label > span {
   color: #5a5e57;
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
   text-transform: uppercase;
 }
 
@@ -310,7 +308,7 @@
   border: 1px solid #555851;
   border-radius: 0;
   background: #fff;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .filterDeck output {
@@ -326,11 +324,11 @@
 }
 
 .filterDeck output strong {
-  font: 800 20px Georgia, serif;
+  font: 800 20px var(--system-font);
 }
 
 .filterDeck output span {
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .timelinePanel,
@@ -356,13 +354,13 @@
   border-bottom: 1px solid #8c8e87;
   color: #555951;
   background: #efede5;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.4;
 }
 
 .keyboardHelp strong {
   color: var(--pm-blue);
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.06em;
 }
 
@@ -378,7 +376,7 @@
 .timelineAxis > span {
   padding: 6px 10px;
   border-right: 1px solid #777a72;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.08em;
 }
 
@@ -393,7 +391,7 @@
   place-items: center;
   padding: 6px 2px;
   border-right: 1px dotted #92948d;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
 }
 
 .timelineAxis b:last-child {
@@ -453,7 +451,7 @@
 
 .timelineIdentity small {
   color: #686c65;
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
 }
 
 .timelineIdentity strong {
@@ -463,7 +461,7 @@
 
 .timelineIdentity i {
   color: var(--pm-blue);
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
   font-style: normal;
 }
 
@@ -495,7 +493,7 @@
 .timelineGraph b {
   overflow: hidden;
   padding: 0 4px;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -505,7 +503,7 @@
   place-items: center;
   border-left: 1px dotted #a2a39d;
   color: var(--pm-blue);
-  font: 800 17px Georgia, serif;
+  font: 800 17px var(--system-font);
 }
 
 .emptyState {
@@ -524,7 +522,7 @@
 .emptyState p {
   margin: 4px auto 0;
   max-width: 440px;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.4;
 }
 
@@ -549,7 +547,7 @@
 
 .matrixIntro span {
   color: #696d66;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.08em;
 }
 
@@ -562,7 +560,7 @@
 .matrixIntro p {
   margin: 0;
   color: #5b5f58;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.35;
 }
 
@@ -595,7 +593,7 @@
   padding: 7px 9px;
   color: #5c6059;
   background: #e5e3db;
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
   text-align: left;
 }
 
@@ -617,7 +615,7 @@
 .matrixPanel thead th {
   color: #fff;
   background: var(--pm-blue);
-  font-size: 7px;
+  font-size: 9px;
   font-weight: 700;
 }
 
@@ -629,7 +627,7 @@
 .matrixPanel thead th span {
   display: block;
   margin-bottom: 2px;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
 }
 
 .matrixPanel tbody th,
@@ -659,7 +657,7 @@
   border: 1px solid #6f726a;
   color: #333732;
   background: #fff;
-  font: 900 9px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
 }
 
 .matrixPanel td button {
@@ -689,7 +687,7 @@
 .matrixPanel tfoot {
   color: #fff;
   background: var(--pm-dark);
-  font: 900 8px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
 }
 
 .focusedProjects {
@@ -729,7 +727,7 @@
 
 .focusedProjects button > small {
   color: #646861;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .focusedProjects button > b {
@@ -741,7 +739,7 @@
   border: 1px solid #757870;
   color: var(--pm-blue);
   background: #fff;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
 }
 
 .toolSummary {
@@ -772,18 +770,18 @@
 
 .toolSummary span {
   color: #686c65;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.07em;
 }
 
 .toolSummary strong {
   margin: 3px 0;
-  font: 800 19px Georgia, serif;
+  font: 800 19px var(--system-font);
 }
 
 .toolSummary small {
   color: #686c65;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .toolSummary > label {
@@ -799,7 +797,7 @@
   border: 1px solid #4f524c;
   border-radius: 0;
   background: #fff;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .toolWorkspace {
@@ -847,7 +845,7 @@
 .toolRows > button > span {
   min-width: 0;
   overflow: hidden;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -871,7 +869,7 @@
 }
 
 .toolRows > button > strong {
-  font: 900 8px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
   text-align: right;
 }
 
@@ -883,7 +881,7 @@
   color: var(--pm-blue);
   background: #e4e2da;
   cursor: pointer;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
 }
 
@@ -913,7 +911,7 @@
   align-items: center;
   gap: 4px;
   color: #565a53;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .toolAreaMix dt i {
@@ -924,7 +922,7 @@
 
 .toolAreaMix dd {
   margin: 0;
-  font: 900 8px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
 }
 
 .toolProjects {
@@ -953,7 +951,7 @@
 .toolProjects span {
   min-width: 0;
   overflow: hidden;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -961,7 +959,7 @@
 
 .toolProjects small {
   color: #646861;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .toolProjects b {
@@ -978,7 +976,7 @@
   border-left: 4px solid var(--pm-orange);
   color: #555951;
   background: #f6ecdf;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.4;
 }
 
@@ -1002,7 +1000,7 @@
 
 .compareSelectors > div > span {
   color: var(--pm-blue);
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.08em;
 }
 
@@ -1013,7 +1011,7 @@
   border: 1px solid #4f524c;
   border-radius: 0;
   background: #fff;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .overlapDial {
@@ -1033,12 +1031,12 @@
 }
 
 .overlapDial strong {
-  font: 800 22px Georgia, serif;
+  font: 800 22px var(--system-font);
 }
 
 .overlapDial small {
   color: #d5e5ee;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .compareCards {
@@ -1059,20 +1057,20 @@
 
 .compareCard > span {
   color: var(--area-colour);
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.08em;
 }
 
 .compareCard h3 {
   margin: 4px 0;
-  font: 800 17px/1.05 Georgia, serif;
+  font: 800 17px/1.05 var(--system-font);
 }
 
 .compareCard > p {
   min-height: 43px;
   margin: 0 0 8px;
   color: #575b54;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.4;
 }
 
@@ -1095,14 +1093,14 @@
 
 .compareCard dt {
   color: #6a6e67;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .compareCard dd {
   margin: 3px 0 0;
   overflow: hidden;
   color: #30342f;
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1116,7 +1114,7 @@
   background: var(--pm-dark);
   box-shadow: inset 1px 1px rgba(255, 255, 255, 0.22), inset -1px -1px rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
 }
 
@@ -1149,7 +1147,7 @@
   min-height: 32px;
   padding: 6px;
   background: #f8f6ef;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .signalPanel > ul li > span {
@@ -1160,7 +1158,7 @@
   border: 1px solid var(--pm-green);
   color: #fff;
   background: var(--pm-green);
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
 }
 
 .toolDelta {
@@ -1181,7 +1179,7 @@
 
 .toolDelta section > span {
   color: #656962;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
 }
 
 .toolDelta section > div {
@@ -1197,7 +1195,7 @@
   border: 1px solid #84877f;
   color: #4e524b;
   background: #fff;
-  font: 700 7px "Courier New", monospace;
+  font: 700 9px var(--system-mono);
   font-style: normal;
 }
 
@@ -1207,7 +1205,7 @@
   border-bottom: 1px solid #999b94;
   color: #5b5f58;
   background: #eeece5;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.35;
 }
 
@@ -1236,7 +1234,7 @@
 .neighbourPanel button > span {
   min-width: 0;
   overflow: hidden;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1244,7 +1242,7 @@
 
 .neighbourPanel button > small {
   color: #646861;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .neighbourPanel button > b {
@@ -1258,7 +1256,7 @@
   border: 1px solid #555851;
   color: #fff;
   background: var(--pm-blue);
-  font: 900 8px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
 }
 
 .ledgerHero {
@@ -1277,7 +1275,7 @@
 
 .ledgerHero > div > span {
   color: #b9d0bf;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.1em;
 }
 
@@ -1288,13 +1286,13 @@
 
 .ledgerHero h3 code {
   color: #fff;
-  font-family: "Courier New", monospace;
+  font-family: var(--system-mono);
 }
 
 .ledgerHero p {
   margin: 0;
   color: #d4ddd6;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.45;
 }
 
@@ -1321,12 +1319,12 @@
 
 .ledgerHero dt {
   color: #cbd7cd;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .ledgerHero dd {
   margin: 3px 0 0;
-  font: 800 21px Georgia, serif;
+  font: 800 21px var(--system-font);
 }
 
 .reconciliationPanel {
@@ -1340,7 +1338,7 @@
 .reconciliationPanel thead th {
   color: #fff;
   background: var(--pm-blue);
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .reconciliationPanel thead th:first-child { width: 22%; }
@@ -1351,19 +1349,19 @@
 .reconciliationPanel tbody td {
   text-align: left;
   vertical-align: top;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.35;
 }
 
 .reconciliationPanel tbody td:nth-child(2) {
   color: var(--pm-blue);
-  font: 900 10px "Courier New", monospace;
+  font: 900 10px var(--system-mono);
   text-align: center;
 }
 
 .reconciliationPanel tbody td code {
   color: var(--pm-blue);
-  font: 800 8px "Courier New", monospace;
+  font: 800 10px var(--system-mono);
 }
 
 .reconciliationPanel tbody tr:nth-child(even) {
@@ -1395,7 +1393,7 @@
 
 .definitionGrid span {
   color: #686c65;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.08em;
 }
 
@@ -1408,7 +1406,7 @@
 .definitionGrid p {
   margin: 0;
   color: #575b54;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.42;
 }
 
@@ -1437,7 +1435,7 @@
 
 .inspectorHeading span,
 .inspectorHeading b {
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.08em;
 }
 
@@ -1453,19 +1451,19 @@
 
 .inspectorTitle > span {
   color: var(--area-colour);
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.1em;
 }
 
 .inspectorTitle h2 {
   margin: 4px 0;
-  font: 800 20px/1.05 Georgia, serif;
+  font: 800 20px/1.05 var(--system-font);
 }
 
 .inspectorTitle p {
   margin: 0;
   color: #646861;
-  font: 800 7px/1.35 "Courier New", monospace;
+  font: 800 9px/1.35 var(--system-mono);
 }
 
 .inspectorFlags {
@@ -1481,7 +1479,7 @@
   padding: 3px 5px;
   border: 1px solid #777a72;
   background: #fff;
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
 }
 
 .inspectorFlags span[data-kind="demo"] { color: var(--pm-green); border-color: var(--pm-green); }
@@ -1492,7 +1490,7 @@
   margin: 0;
   padding: 10px;
   color: #50544d;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.45;
 }
 
@@ -1505,7 +1503,7 @@
   padding: 6px 0;
   border-top: 1px solid #999b94;
   color: #666a63;
-  font: 900 7px "Courier New", monospace;
+  font: 900 9px var(--system-mono);
   letter-spacing: 0.07em;
 }
 
@@ -1531,7 +1529,7 @@
   padding-top: 8px;
   border-top: 1px dotted #999b94;
   color: #686c65;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.4;
 }
 
@@ -1546,7 +1544,7 @@
   color: #4f534d;
   background: #e4e2da;
   box-shadow: inset 1px 1px #fff;
-  font: 800 7px "Courier New", monospace;
+  font: 800 9px var(--system-mono);
 }
 
 @container portfolio-map (max-width: 1050px) {

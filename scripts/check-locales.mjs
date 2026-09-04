@@ -8,6 +8,7 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const systemPath = resolve(projectRoot, "src/components/SystemSevenDesktop.tsx");
 const productivityPath = resolve(projectRoot, "src/components/ProductivityApps.tsx");
 const productivityExtrasPath = resolve(projectRoot, "src/components/ProductivityExtras.tsx");
+const finderPath = resolve(projectRoot, "src/components/DesktopFinder.tsx");
 const i18nPath = resolve(projectRoot, "src/lib/i18n.ts");
 const archiveI18nPath = resolve(projectRoot, "src/components/projects/projectArchiveI18n.ts");
 const projectsPath = resolve(projectRoot, "src/data/projects.ts");
@@ -21,6 +22,7 @@ const [
   systemSource,
   productivitySource,
   productivityExtrasSource,
+  finderSource,
   i18nSource,
   archiveI18nSource,
   projectsSource,
@@ -33,6 +35,7 @@ const [
   readFile(systemPath, "utf8"),
   readFile(productivityPath, "utf8"),
   readFile(productivityExtrasPath, "utf8"),
+  readFile(finderPath, "utf8"),
   readFile(i18nPath, "utf8"),
   readFile(archiveI18nPath, "utf8"),
   readFile(projectsPath, "utf8"),
@@ -613,6 +616,8 @@ for (const statement of projectSuitesFile.statements) {
 visitSystem(systemFile, systemFile, systemPath);
 visitSystem(productivityFile, productivityFile, productivityPath);
 visitSystem(productivityExtrasFile, productivityExtrasFile, productivityExtrasPath);
+const finderFile = ts.createSourceFile(finderPath, finderSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+visitSystem(finderFile, finderFile, finderPath);
 
 const comprehensiveSimplifiedCharacters = new Set(
   simplifiedToTraditionalCharacters

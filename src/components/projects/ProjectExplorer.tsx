@@ -66,8 +66,13 @@ const PortfolioMap = dynamic(
 
 function latestProjectYear(project: Project) {
   if (/ongoing/i.test(project.year)) return Number.MAX_SAFE_INTEGER;
-  const years = project.year.match(/\d{4}/g)?.map(Number) ?? [0];
-  return Math.max(...years);
+  const years = project.year.match(/\d{2,4}/g)?.map(Number) ?? [0];
+  const century = Math.floor(years[0] / 100) * 100;
+  return Math.max(...years.map((year) => year < 100 ? century + year : year));
+}
+
+function normaliseSearchText(value: string) {
+  return value.normalize("NFKD").replace(/\p{M}/gu, "").toLocaleLowerCase();
 }
 
 function replaceArchiveQuery(view: ArchiveView, slug?: string) {
@@ -599,23 +604,26 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   const [showLegend, setShowLegend] = useState(false);
   const [layoutMode, setLayoutMode] = useState<LayoutMode>("balanced");
   const [sortMode, setSortMode] = useState<SortMode>("curated");
+  const [externalOpenRequest, setExternalOpenRequest] = useState(0);
   const detailRef = useRef<HTMLElement>(null);
   const projectListRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const viewTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const shouldFocusDetail = useRef(false);
+  const shouldFocusDetail = useRef(hasInitialProject);
   const layoutBeforeDetailView = useRef<LayoutMode | null>(null);
+  const previousInitialSlug = useRef(initialSlug);
 
   useEffect(() => {
     let frame = 0;
     const syncProjectQuery = () => {
       const url = new URL(window.location.href);
+      if (!/\/projects\/?$/i.test(url.pathname)) return;
+      window.cancelAnimationFrame(frame);
       const projectParam = url.searchParams.get("project");
       if (!projectParam || !projects.some((project) => project.slug === projectParam)) {
-        if (url.searchParams.get("view") === "map") {
-          setArchiveView("map");
-          setArchiveTabStop("map");
-        }
+        const nextView = url.searchParams.get("view") === "map" ? "map" : "guided";
+        setArchiveView(nextView);
+        setArchiveTabStop(nextView);
         return;
       }
       setQuery("");
@@ -624,6 +632,10 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       setFeaturedOnly(false);
       setSelectedSlug(projectParam);
       setGuidedSelectedSlug(projectParam);
+      if (layoutBeforeDetailView.current) {
+        setLayoutMode(layoutBeforeDetailView.current);
+        layoutBeforeDetailView.current = null;
+      }
       setDetailView("story");
       setArchiveView("files");
       setArchiveTabStop("files");
@@ -642,8 +654,44 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   }, []);
 
   useEffect(() => {
+    const openRequestedProject = (slug: unknown) => {
+      if (typeof slug !== "string" || !projects.some((project) => project.slug === slug)) return;
+      shouldFocusDetail.current = true;
+      setExternalOpenRequest((request) => request + 1);
+      setQuery("");
+      setAccess("all");
+      setArea("all");
+      setFeaturedOnly(false);
+      setSelectedSlug(slug);
+      setGuidedSelectedSlug(slug);
+      setDetailView("story");
+      setArchiveView("files");
+      setArchiveTabStop("files");
+      if (layoutBeforeDetailView.current) {
+        setLayoutMode(layoutBeforeDetailView.current);
+        layoutBeforeDetailView.current = null;
+      }
+      replaceProjectQuery(slug);
+    };
+    const handleProjectOpen = (event: Event) => {
+      if (!(event instanceof CustomEvent)) return;
+      const detail: unknown = event.detail;
+      if (!detail || typeof detail !== "object" || !("slug" in detail)) return;
+      openRequestedProject(detail.slug);
+    };
+    if (previousInitialSlug.current !== initialSlug) {
+      previousInitialSlug.current = initialSlug;
+      openRequestedProject(initialSlug);
+    }
+    window.addEventListener("samuel-project-open", handleProjectOpen);
+    return () => {
+      window.removeEventListener("samuel-project-open", handleProjectOpen);
+    };
+  }, [initialSlug]);
+
+  useEffect(() => {
     const focusSearch = (event: globalThis.KeyboardEvent) => {
-      if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey || event.defaultPrevented || event.isComposing) return;
       const target = event.target;
       if (
         target instanceof HTMLInputElement
@@ -651,6 +699,11 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
         || target instanceof HTMLSelectElement
         || (target instanceof HTMLElement && target.isContentEditable)
       ) return;
+      const explorer = detailRef.current?.closest(`.${styles.explorer}`)
+        ?? viewTabRefs.current[0]?.closest(`.${styles.explorer}`);
+      const projectWindow = explorer?.closest(".mac-window");
+      if (projectWindow && !projectWindow.classList.contains("is-active") && !(target instanceof Node && explorer?.contains(target))) return;
+      if (document.querySelector('dialog[open], [role="dialog"][aria-modal="true"]')) return;
       event.preventDefault();
       setArchiveView("files");
       setArchiveTabStop("files");
@@ -665,17 +718,23 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
   }, [selectedSlug]);
 
   const filteredProjects = useMemo(() => {
-    const needle = query.trim().toLowerCase();
+    const needles = normaliseSearchText(query).trim().split(/\s+/).filter(Boolean);
     const matchingProjects = projects.filter((project) => {
       if (featuredOnly && !project.featured) return false;
       if (access !== "all" && project.access !== access) return false;
       if (area !== "all" && project.area !== area) return false;
-      if (!needle) return true;
+      if (!needles.length) return true;
+      const suite = getProjectSuite(project);
       const haystack = [
         project.title,
         project.shortTitle ?? "",
         project.eyebrow,
         project.summary,
+        translateText(locale, project.summary),
+        project.year,
+        suite?.title ?? "",
+        suite ? translateText(locale, suite.title) : "",
+        suite ? translateText(locale, suite.description) : "",
         project.detail,
         project.privacyNote ?? "",
         project.area,
@@ -686,8 +745,9 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
         ...project.tools,
         ...project.highlights,
         ...project.phases.map((phase) => phase.text),
-      ].join(" ").toLowerCase();
-      return haystack.includes(needle);
+      ].join(" ");
+      const searchableText = normaliseSearchText(haystack);
+      return needles.every((needle) => searchableText.includes(needle));
     });
     return [...matchingProjects].sort((left, right) => {
       if (sortMode === "recent") {
@@ -697,7 +757,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
       if (sortMode === "title") return left.title.localeCompare(right.title, "en-GB");
       return (curatedOrder.get(left.slug) ?? 0) - (curatedOrder.get(right.slug) ?? 0);
     });
-  }, [access, area, copy, featuredOnly, query, sortMode]);
+  }, [access, area, copy, featuredOnly, locale, query, sortMode]);
 
   useEffect(() => {
     if (filteredProjects.length === 0) {
@@ -789,7 +849,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     if (usesStackedProjectLayout(detail)) {
       detail.scrollIntoView({ block: "start" });
     }
-  }, [archiveView, detailView, selectedSlug]);
+  }, [archiveView, detailView, externalOpenRequest, selectedSlug]);
 
   const selectProject = (slug: string) => {
     const stackedLayout = usesStackedProjectLayout(detailRef.current);
@@ -1078,9 +1138,17 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={(event) => {
-              if (event.key !== "Escape" || !query) return;
-              event.preventDefault();
-              setQuery("");
+              if (event.nativeEvent.isComposing) return;
+              if (event.key === "Escape" && query) {
+                event.preventDefault();
+                event.stopPropagation();
+                setQuery("");
+              } else if (event.key === "Enter" || event.key === "ArrowDown") {
+                const firstRow = projectListRef.current?.querySelector<HTMLButtonElement>("[data-project-slug]");
+                if (!firstRow) return;
+                event.preventDefault();
+                firstRow.focus();
+              }
             }}
             placeholder={copy.filters.searchPlaceholder}
             aria-keyshortcuts="/ Escape"

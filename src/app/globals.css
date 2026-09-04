@@ -124,6 +124,12 @@ body {
   background-size: 6px 6px;
 }
 
+.desktop-pattern--paper {
+  background-color: #c7c7bc;
+  background-image: repeating-conic-gradient(#77776c 0 25%, transparent 0 50%);
+  background-size: 4px 4px;
+}
+
 /* Boot */
 
 .boot-screen {
@@ -4680,6 +4686,20 @@ html:lang(zh-TW) .career-record {
   }
 }
 
+/* Touch-sized controls need equally tall chrome on tablets as well as phones.
+   Keep this before the compact canvas rules so their safe-area offsets win. */
+@media (pointer: coarse) {
+  .system-menubar { height: 46px; }
+  .menu-dropdown {
+    top: 43px;
+    max-height: calc(100dvh - 51px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .desktop-icons { top: 63px; }
+  .mac-window.is-maximized { top: 49px !important; }
+}
+
 @media (max-width: 720px), (max-height: 520px) and (max-width: 1000px) {
   html,
   body {
@@ -4687,7 +4707,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .system-menubar {
-    height: calc(27px + env(safe-area-inset-top));
+    height: calc(46px + env(safe-area-inset-top));
     padding-top: env(safe-area-inset-top);
     padding-right: env(safe-area-inset-right);
     padding-left: env(safe-area-inset-left);
@@ -4742,7 +4762,7 @@ html:lang(zh-TW) .career-record {
     min-width: 0;
     overflow: hidden;
     padding-right: 5px;
-    line-height: 27px;
+    line-height: 44px;
     font-size: 11px;
     text-overflow: ellipsis;
   }
@@ -4755,10 +4775,10 @@ html:lang(zh-TW) .career-record {
 
   .menu-dropdown {
     position: fixed;
-    top: calc(26px + env(safe-area-inset-top));
+    top: calc(45px + env(safe-area-inset-top));
     right: calc(4px + env(safe-area-inset-right));
     left: calc(4px + env(safe-area-inset-left));
-    max-height: calc(100dvh - 34px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 53px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     min-width: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -4774,7 +4794,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .desktop-icons {
-    top: calc(43px + env(safe-area-inset-top));
+    top: calc(62px + env(safe-area-inset-top));
     right: calc(10px + env(safe-area-inset-right));
     left: calc(10px + env(safe-area-inset-left));
     grid-auto-flow: row;
@@ -4797,9 +4817,9 @@ html:lang(zh-TW) .career-record {
   .mac-window:not(.is-maximized),
   .mac-window.is-maximized {
     position: fixed;
-    top: calc(32px + env(safe-area-inset-top)) !important;
+    top: calc(51px + env(safe-area-inset-top)) !important;
     right: calc(5px + env(safe-area-inset-right)) !important;
-    bottom: calc(47px + env(safe-area-inset-bottom)) !important;
+    bottom: calc(59px + env(safe-area-inset-bottom)) !important;
     left: calc(5px + env(safe-area-inset-left)) !important;
     width: auto !important;
     min-width: 0;
@@ -4849,7 +4869,7 @@ html:lang(zh-TW) .career-record {
     bottom: 0;
     left: 0;
     display: flex;
-    height: calc(42px + env(safe-area-inset-bottom));
+    height: calc(54px + env(safe-area-inset-bottom));
     gap: 2px;
     overflow-x: auto;
     padding: 4px max(4px, env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
@@ -5657,7 +5677,7 @@ html:lang(zh-TW) .career-record {
 
   .system-toast {
     right: 8px;
-    bottom: 50px;
+    bottom: calc(62px + env(safe-area-inset-bottom));
     max-width: calc(100vw - 16px);
   }
 

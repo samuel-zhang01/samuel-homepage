@@ -4,6 +4,7 @@ import {
   type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -352,7 +353,7 @@ function ToolIndexView({
   const [selectedTool, setSelectedTool] = useState(TOOL_ROWS[0]?.label ?? "");
   const matching = TOOL_ROWS.filter((row) => row.label.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
   const visible = query.trim() || showAll ? matching : matching.slice(0, 18);
-  const selected = TOOL_ROWS.find((row) => row.label === selectedTool) ?? TOOL_ROWS[0];
+  const selected = visible.find((row) => row.label === selectedTool) ?? visible[0];
   const maximum = TOOL_ROWS[0]?.projects.length ?? 1;
   const repeated = TOOL_ROWS.filter((row) => row.projects.length > 1).length;
   const selectedAreas = AREA_VALUES
@@ -386,7 +387,7 @@ function ToolIndexView({
         </section>
 
         <aside className={styles.toolInspector} aria-live="polite">
-          <div className={styles.panelHeading}><span>TOOL</span><strong>{selected?.label.toUpperCase()}</strong><em>{selected?.projects.length ?? 0} RECORDS</em></div>
+          <div className={styles.panelHeading}><span>TOOL</span><strong>{selected?.label.toUpperCase() ?? "—"}</strong><em>{selected?.projects.length ?? 0} RECORDS</em></div>
           {selected ? (
             <>
               <dl className={styles.toolAreaMix}>
@@ -595,6 +596,9 @@ export function PortfolioMap({
   locale?: Locale;
 }) {
   const [view, setView] = useState<ViewId>("timeline");
+  const [tabStop, setTabStop] = useState<ViewId>("timeline");
+  const viewId = useId();
+  const viewTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [selectedSlug, setSelectedSlug] = useState(() => (
     projects.some((project) => project.slug === initialSlug) ? initialSlug! : projects[0]?.slug ?? ""
   ));
@@ -609,8 +613,20 @@ export function PortfolioMap({
     onSelectProject(project.slug);
   }
 
+  function navigateViews(event: ReactKeyboardEvent<HTMLButtonElement>, currentIndex: number) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? VIEWS.length - 1
+        : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + VIEWS.length) % VIEWS.length;
+    setTabStop(VIEWS[nextIndex].id);
+    viewTabRefs.current[nextIndex]?.focus();
+  }
+
   return (
-    <section className={styles.portfolioMap} aria-label="Portfolio map">
+    <section className={styles.portfolioMap} aria-label="Portfolio map" lang="en-GB">
       <header className={styles.mapHeader}>
         <div><span>SAMUEL HD / PROJECTS / MAP</span><h2>Portfolio Map</h2><p>Source-derived views across chronology, access, tools, declared relationships and model experiment lineage.</p></div>
         <dl aria-label="Portfolio catalogue summary">
@@ -622,16 +638,34 @@ export function PortfolioMap({
         </dl>
       </header>
 
-      <nav className={styles.viewTabs} aria-label="Portfolio map views">
+      <div className={styles.viewTabs} role="tablist" aria-label="Portfolio map views">
         {VIEWS.map((item, index) => (
-          <button type="button" key={item.id} aria-current={view === item.id ? "page" : undefined} onClick={() => setView(item.id)}>
+          <button
+            type="button"
+            key={item.id}
+            ref={(element) => { viewTabRefs.current[index] = element; }}
+            role="tab"
+            id={`${viewId}-${item.id}-tab`}
+            aria-selected={view === item.id}
+            aria-controls={view === item.id ? `${viewId}-${item.id}-panel` : undefined}
+            tabIndex={tabStop === item.id ? 0 : -1}
+            onFocus={() => setTabStop(item.id)}
+            onClick={() => { setView(item.id); setTabStop(item.id); }}
+            onKeyDown={(event) => navigateViews(event, index)}
+          >
             <span>0{index + 1}</span><strong>{item.label}</strong><small>{item.hint}</small>
           </button>
         ))}
-      </nav>
+      </div>
 
       <div className={styles.mapWorkspace}>
-        <div className={styles.mapCanvas}>
+        <div
+          className={styles.mapCanvas}
+          role="tabpanel"
+          id={`${viewId}-${view}-panel`}
+          aria-labelledby={`${viewId}-${view}-tab`}
+          tabIndex={0}
+        >
           {view === "timeline" && <TimelineView onPreview={preview} onOpen={open} />}
           {view === "matrix" && <MatrixView onPreview={preview} onOpen={open} />}
           {view === "tools" && <ToolIndexView onPreview={preview} onOpen={open} />}

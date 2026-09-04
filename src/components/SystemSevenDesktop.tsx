@@ -27,6 +27,7 @@ import projectExplorerStyles from "@/components/projects/ProjectExplorer.module.
 import projectActionsStyles from "@/components/projects/ProjectActions.module.css";
 import projectDemoRouterStyles from "@/components/projects/ProjectDemoRouter.module.css";
 import projectCaseBriefStyles from "@/components/projects/ProjectCaseBrief.module.css";
+import type { FinderApplication } from "./DesktopFinder";
 
 const SystemLocaleContext = createContext<Locale>("en-GB");
 
@@ -59,6 +60,8 @@ const HplcPeakDock = dynamic(() => import("@/components/HplcPeakDock"), {
 const ProductivityApps = dynamic(() => import("@/components/ProductivityApps"), {
   loading: ClassicModuleLoading,
 });
+
+const DesktopFinder = dynamic(() => import("./DesktopFinder"), { ssr: false });
 
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
   loading: function ProjectExplorerLoading() {
@@ -154,6 +157,8 @@ type IconKind =
   | "secret";
 
 type SystemMenuId = "apple" | "file" | "edit" | "view" | "special" | "language";
+type DesktopPattern = "classic" | "blue" | "paper";
+const PATTERN_STORAGE_KEY = "samuel-system7-pattern";
 
 const SYSTEM_MENU_ELEMENT_IDS: Record<SystemMenuId, string> = {
   apple: "samuel-menu",
@@ -229,7 +234,7 @@ function isCompactCanvasViewport(): boolean {
 function fitWindowToViewport(item: WindowState, viewportWidth: number, viewportHeight: number): WindowState {
   const compactCanvas = viewportWidth <= 720 || (viewportHeight <= 520 && viewportWidth <= 1000);
   if (compactCanvas || item.maximized) return item;
-  const minTop = 30;
+  const minTop = window.matchMedia("(pointer: coarse)").matches ? 50 : 30;
   const maxWidth = Math.max(280, viewportWidth - 20);
   const maxHeight = Math.max(190, viewportHeight - minTop - 8);
   const width = Math.min(item.width, maxWidth);
@@ -909,6 +914,18 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
   );
 }
 
+const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
+  .filter((item) => item.id !== "secret")
+  .map((item) => {
+    const desktopItem = DESKTOP_ICONS.find((icon) => icon.id === item.id);
+    return {
+      id: item.id,
+      title: item.title,
+      description: desktopItem?.description ?? (item.id === "sidequest" ? "Latest field note · RUN/HACK" : "Desk Accessories"),
+      icon: <PixelIcon kind={UTILITY_ICONS[item.id] ?? desktopItem?.icon ?? "runner"} small />,
+    };
+  });
+
 function WindowChrome({
   windowState,
   active,
@@ -943,7 +960,8 @@ function WindowChrome({
         height: windowState.height,
         zIndex: windowState.z,
       }}
-      onPointerDown={onFocus}
+      onPointerDown={() => { if (!active) onFocus(); }}
+      onFocusCapture={() => { if (!active) onFocus(); }}
       aria-label={`${translateText(locale, windowState.title)} ${translateText(locale, "window")}`}
     >
       <div
@@ -2393,7 +2411,9 @@ export default function SystemSevenDesktop({
   const [booting, setBooting] = useState(!skipBoot);
   const [bootMessageIndex, setBootMessageIndex] = useState(0);
   const [clock, setClock] = useState("--:--");
-  const [pattern, setPattern] = useState<"classic" | "blue">("classic");
+  const [pattern, setPattern] = useState<DesktopPattern>("classic");
+  const [finderOpen, setFinderOpen] = useState(false);
+  const [requestedProjectSlug, setRequestedProjectSlug] = useState(initialProjectSlug);
   const [memoryMagic, setMemoryMagic] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [mobileGuide, setMobileGuide] = useState(false);
@@ -2413,6 +2433,28 @@ export default function SystemSevenDesktop({
   const mobileGuideButtonRef = useRef<HTMLButtonElement | null>(null);
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
   const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({});
+  const finderReturnFocus = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const loadPattern = () => {
+      try {
+        const saved = window.localStorage.getItem(PATTERN_STORAGE_KEY);
+        setPattern(saved === "blue" || saved === "paper" ? saved : "classic");
+      } catch {
+        // Desktop appearance still works for this visit without storage.
+      }
+    };
+    const syncPattern = (event: StorageEvent) => {
+      if (event.storageArea === window.localStorage && (event.key === PATTERN_STORAGE_KEY || event.key === null)) loadPattern();
+    };
+    loadPattern();
+    window.addEventListener("storage", syncPattern);
+    return () => window.removeEventListener("storage", syncPattern);
+  }, []);
+
+  useEffect(() => () => {
+    if (toastTimer.current !== null) window.clearTimeout(toastTimer.current);
+  }, []);
 
   useEffect(() => {
     const pathLocale = normaliseLocale(window.location.pathname.split("/")[1]);
@@ -2454,8 +2496,13 @@ export default function SystemSevenDesktop({
       });
     };
     clampWindowsToViewport();
+    const pointerMode = window.matchMedia("(pointer: coarse)");
+    pointerMode.addEventListener("change", clampWindowsToViewport);
     window.addEventListener("resize", clampWindowsToViewport);
-    return () => window.removeEventListener("resize", clampWindowsToViewport);
+    return () => {
+      pointerMode.removeEventListener("change", clampWindowsToViewport);
+      window.removeEventListener("resize", clampWindowsToViewport);
+    };
   }, []);
 
   const completeBoot = useCallback(() => {
@@ -2582,7 +2629,7 @@ export default function SystemSevenDesktop({
             ? {
                 ...windowState,
                 x: Math.max(4, Math.min(window.innerWidth - 180, event.clientX - drag.offsetX)),
-                y: Math.max(26, Math.min(window.innerHeight - 80, event.clientY - drag.offsetY)),
+                y: Math.max(window.matchMedia("(pointer: coarse)").matches ? 50 : 26, Math.min(window.innerHeight - 80, event.clientY - drag.offsetY)),
               }
             : windowState,
         ),
@@ -2719,6 +2766,53 @@ export default function SystemSevenDesktop({
     });
   }, [syncAddress]);
 
+  const openFinder = useCallback(() => {
+    if (booting || mobileGuide || finderOpen) return;
+    finderReturnFocus.current = openMenu
+      ? menuButtonRefs.current[openMenu] ?? null
+      : document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setOpenMenu(null);
+    setFinderOpen(true);
+  }, [booting, finderOpen, mobileGuide, openMenu]);
+
+  const closeFinder = () => {
+    setFinderOpen(false);
+    window.requestAnimationFrame(() => {
+      if (finderReturnFocus.current?.isConnected) finderReturnFocus.current.focus();
+      else menuButtonRefs.current.file?.focus();
+    });
+  };
+
+  const openFoundApplication = (id: AppId) => {
+    setFinderOpen(false);
+    openApp(id);
+    if (finderReturnFocus.current) returnFocusByApp.current[id] = finderReturnFocus.current;
+  };
+
+  const openFoundProject = (slug: string) => {
+    setRequestedProjectSlug(slug);
+    openFoundApplication("projects");
+    window.requestAnimationFrame(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("view");
+      url.searchParams.set("project", slug);
+      window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}`);
+      window.dispatchEvent(new CustomEvent("samuel-project-open", { detail: { slug } }));
+    });
+  };
+
+  useEffect(() => {
+    const handleFindShortcut = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.isComposing || event.altKey || event.shiftKey) return;
+      if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "k") return;
+      if (booting || mobileGuide || document.querySelector('dialog[open], [role="dialog"][aria-modal="true"]')) return;
+      event.preventDefault();
+      openFinder();
+    };
+    window.addEventListener("keydown", handleFindShortcut);
+    return () => window.removeEventListener("keydown", handleFindShortcut);
+  }, [booting, mobileGuide, openFinder]);
+
   const showToast = useCallback((message: string) => {
     setToast(message);
     if (toastTimer.current) window.clearTimeout(toastTimer.current);
@@ -2736,8 +2830,13 @@ export default function SystemSevenDesktop({
     restoreMenuTriggerFocus("language");
   };
 
-  const choosePattern = (nextPattern: "classic" | "blue") => {
+  const choosePattern = (nextPattern: DesktopPattern) => {
     setPattern(nextPattern);
+    try {
+      window.localStorage.setItem(PATTERN_STORAGE_KEY, nextPattern);
+    } catch {
+      // The selected pattern remains available until the next reload.
+    }
     setOpenMenu(null);
     restoreMenuTriggerFocus("view");
   };
@@ -2910,6 +3009,9 @@ export default function SystemSevenDesktop({
     const sequence = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
     let position = 0;
     const listen = (event: KeyboardEvent) => {
+      const target = event.target;
+      if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.metaKey || event.altKey
+        || (target instanceof Element && target.closest('input, textarea, select, [contenteditable="true"], dialog[open]'))) return;
       const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
       position = key === sequence[position] ? position + 1 : key === sequence[0] ? 1 : 0;
       if (position === sequence.length) {
@@ -2985,6 +3087,8 @@ export default function SystemSevenDesktop({
                 <button type="button" role="menuitem" onClick={() => openApp("desk")}><PixelIcon kind="accessories" small />Desk Accessories</button>
                 <button type="button" role="menuitem" onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
                 <hr />
+                <button type="button" role="menuitem" onClick={openFinder}><PixelIcon kind="folder" small />Find…</button>
+                <hr />
                 <button type="button" role="menuitem" onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />Latest field note · RUN/HACK</button>
                 <button type="button" role="menuitem" onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
                 <button type="button" role="menuitem" onClick={() => openApp("education")}><PixelIcon kind="university" small />Education &amp; Awards</button>
@@ -2999,7 +3103,7 @@ export default function SystemSevenDesktop({
           <strong className="active-application">{activeTitle}</strong>
           <div className="menu-root">
             <button ref={(element) => { menuButtonRefs.current.file = element; }} type="button" className={openMenu === "file" ? "is-open" : ""} onClick={() => toggleSystemMenu("file")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "file")} aria-haspopup="menu" aria-controls={openMenu === "file" ? SYSTEM_MENU_ELEMENT_IDS.file : undefined} aria-expanded={openMenu === "file"}>File</button>
-            {openMenu === "file" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.file} role="menu" aria-label="File" onKeyDown={(event) => handleSystemMenuKeyDown(event, "file")}><button type="button" role="menuitem" onClick={() => openApp("documents")}>Open Documents…</button><hr /><button type="button" role="menuitem" onClick={closeActive}>Close Window <kbd>⌘W</kbd></button></div>}
+            {openMenu === "file" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.file} role="menu" aria-label="File" onKeyDown={(event) => handleSystemMenuKeyDown(event, "file")}><button type="button" role="menuitem" onClick={openFinder} aria-keyshortcuts="Meta+k Control+k">Find…</button><button type="button" role="menuitem" onClick={() => openApp("documents")}>Open Documents…</button><hr /><button type="button" role="menuitem" disabled={!openWindows.length} onClick={closeActive}>Close Window</button></div>}
           </div>
           <div className="menu-root menu-optional">
             <button ref={(element) => { menuButtonRefs.current.edit = element; }} type="button" className={openMenu === "edit" ? "is-open" : ""} onClick={() => toggleSystemMenu("edit")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "edit")} aria-haspopup="menu" aria-controls={openMenu === "edit" ? SYSTEM_MENU_ELEMENT_IDS.edit : undefined} aria-expanded={openMenu === "edit"}>Edit</button>
@@ -3007,7 +3111,7 @@ export default function SystemSevenDesktop({
           </div>
           <div className="menu-root menu-optional">
             <button ref={(element) => { menuButtonRefs.current.view = element; }} type="button" className={openMenu === "view" ? "is-open" : ""} onClick={() => toggleSystemMenu("view")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "view")} aria-haspopup="menu" aria-controls={openMenu === "view" ? SYSTEM_MENU_ELEMENT_IDS.view : undefined} aria-expanded={openMenu === "view"}>View</button>
-            {openMenu === "view" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.view} role="menu" aria-label="View" onKeyDown={(event) => handleSystemMenuKeyDown(event, "view")}><button type="button" role="menuitemradio" aria-checked={pattern === "classic"} onClick={() => choosePattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "blue"} onClick={() => choosePattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button></div>}
+            {openMenu === "view" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.view} role="menu" aria-label="View" onKeyDown={(event) => handleSystemMenuKeyDown(event, "view")}><button type="button" role="menuitemradio" aria-checked={pattern === "classic"} onClick={() => choosePattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "blue"} onClick={() => choosePattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "paper"} onClick={() => choosePattern("paper")}>{pattern === "paper" ? "✓ " : ""}Paper Pattern</button></div>}
           </div>
           <div className="menu-root menu-optional">
             <button ref={(element) => { menuButtonRefs.current.special = element; }} type="button" className={openMenu === "special" ? "is-open" : ""} onClick={() => toggleSystemMenu("special")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "special")} aria-haspopup="menu" aria-controls={openMenu === "special" ? SYSTEM_MENU_ELEMENT_IDS.special : undefined} aria-expanded={openMenu === "special"}>Special</button>
@@ -3061,8 +3165,9 @@ export default function SystemSevenDesktop({
           </div>
           <button
             className="menu-clock"
-            aria-label={`${translateText(locale, "Current time")}: ${clock}`}
-            onDoubleClick={() => { openApp("secret"); showToast("Time is an implementation detail."); }}
+            aria-label={`${translateText(locale, "Open Pocket Calendar")}. ${translateText(locale, "Current time")}: ${clock}`}
+            title="Open Pocket Calendar"
+            onClick={() => openApp("calendar")}
           >{clock}</button>
         </div>
       </nav>
@@ -3096,7 +3201,7 @@ export default function SystemSevenDesktop({
           onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={initialProjectSlug} />
+          <AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} />
         </WindowChrome>
       ))}
 
@@ -3135,6 +3240,7 @@ export default function SystemSevenDesktop({
           </aside>
         </>
       )}
+      {finderOpen && <DesktopFinder applications={FINDER_APPLICATIONS} locale={locale} onClose={closeFinder} onOpenApplication={openFoundApplication} onOpenProject={openFoundProject} />}
       {toast && <div className="system-toast" role="status"><PixelIcon kind="computer" small /><span>{toast}</span></div>}
     </main></TranslationBoundary>
   );
