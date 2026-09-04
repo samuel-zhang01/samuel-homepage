@@ -10,6 +10,7 @@ tab—without an account, tracking API or server-side personal-data store.
 **[Read the release audit](docs/RELEASE_AUDIT.md)**
 
 Latest: [5 September interaction and reliability follow-up](docs/INTERACTION_AUDIT_2026-09-05.md).
+Detail pass: [ruled paper, classic menus and Orbital Lab](docs/ORBITAL_AND_DETAIL_AUDIT.md).
 
 ![Samuel System 7 desktop showing the About Samuel Zhang window and classic desktop icons](public/readme-system7-desktop.png)
 
@@ -19,7 +20,9 @@ Latest: [5 September interaction and reliability follow-up](docs/INTERACTION_AUD
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
 - Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.
-- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches all 21 apps and 31 project files, including translated summaries; arrow keys choose a result and Return opens it.
+- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches all 22 apps and 31 project files, including translated summaries; arrow keys choose a result and Return opens it.
+- A browser-native Orbital Lab: all 118 elements, real s/p/d/f orbital probability clouds rendered in ASCII, rotation, subshell inspection, radial curves, node counts and text export.
+- Shared System 7 pop-up menus throughout accessories, project filters and interactive labs, with keyboard/typeahead navigation and bounded touch-friendly lists.
 - Three persistent desktop patterns and a menu-bar clock that opens Pocket Calendar with one click.
 - A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 interactive chapters lazy-loaded by exhibit module, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
@@ -88,6 +91,30 @@ Replay transport supports pause/resume, rewind and single-point stepping. It pau
 
 ## Privacy boundaries
 
+### Orbital Lab
+
+Open `/orbitals`, **Orbital Lab** in the Apple menu, or its Desk Accessories card.
+Start with H, C, Fe or Ce; choose an occupied subshell and real angular component,
+then drag the ASCII cloud or use arrow keys/buttons to rotate it. The periodic
+table supports keyboard selection and a **View orbital** return action on long
+phone layouts. **Save ASCII…** exports the view with its model notes and sources.
+
+This is an analytic, non-relativistic, one-electron **hydrogen-like model at
+Z = 1**, not a molecular solver or a calculation of the selected many-electron
+atom. Neutral configurations through element 104 follow NIST reference
+compilations; 105–118 are explicitly illustrative Aufbau fillings. Phase ink
+denotes wavefunction sign, not charge. Clouds contain the inner 99.5% of radial
+probability and are independently fitted to the viewport. The app explains
+projection, thin-slab and radial-density limits instead of implying physical
+boundaries or comparable atomic sizes.
+
+The interface has all four locales, with separate Mandarin terminology for
+Mainland China and Taiwan. Element names retain their English reference labels.
+The bounded sampler and renderer make no runtime network calls and rotation
+starts paused. No account, chemistry package, GPU or extra subscription is needed.
+
+### Other exhibits
+
 Browser exhibits use deterministic, generated or clearly labelled synthetic inputs where private data or runnable source cannot be published. Source evidence, independently implemented reconstruction and illustrative behaviour are identified separately; demos make no live third-party calls or unsupported performance claims.
 
 The Desk Accessories are deliberately device-local. Note pages, focus progress and calculator tape use versioned browser storage with no account, API or server database. They therefore work the same in local development and the read-only production container, but do not sync between browsers or devices.
@@ -143,6 +170,8 @@ Before publishing, run:
 npm run check:artifacts
 npm run check:data
 npm run check:desk
+npm run check:controls
+npm run check:orbitals
 npm run check:catalogue
 npm run check:styles
 npm run check:locales
