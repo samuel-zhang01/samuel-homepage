@@ -8,6 +8,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import { translateText, type Locale } from "@/lib/i18n";
+import { advanceFocusState, enterCalculatorDecimal, enterCalculatorDigit, localDateKey, type FocusState } from "@/lib/deskBehavior";
 import ProductivityExtras, { normaliseProductivityExtraBackup } from "./ProductivityExtras";
 import styles from "./ProductivityApps.module.css";
 
@@ -104,7 +105,8 @@ function normaliseDeskBackupEntry(key: string, raw: string): string | null {
         const candidate = entry as Partial<TapeEntry>;
         if (
           typeof candidate.id !== "number"
-          || !Number.isFinite(candidate.id)
+          || !Number.isSafeInteger(candidate.id)
+          || candidate.id < 0
           || seenIds.has(candidate.id)
           || typeof candidate.expression !== "string"
           || candidate.expression.length > 80
@@ -338,6 +340,7 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         if (normalised === null) throw new Error("invalid-entry");
         candidates.set(key, normalised);
       }
+      if (!window.confirm(t("Restore this backup? It will replace your current Desk Accessories data."))) return;
       const originals = new Map(DESK_STORAGE_KEYS.map((key) => [key, window.localStorage.getItem(key)]));
       try {
         for (const key of DESK_STORAGE_KEYS) {
@@ -522,6 +525,7 @@ function NotePad({ locale }: { locale: Locale }) {
         latestNoteRef.current = next;
         setActivePage(next.activePage);
         setPages(next.pages);
+        setClearArmed(false);
         storageAvailableRef.current = true;
         setSaveState("saved");
       } catch {
@@ -529,13 +533,18 @@ function NotePad({ locale }: { locale: Locale }) {
         setSaveState("unavailable");
       }
     };
+    const restoreFromStorage = (event: StorageEvent) => {
+      if (event.storageArea === window.localStorage && (event.key === NOTE_STORAGE_KEY || event.key === null)) restore();
+    };
     window.addEventListener(DESK_FLUSH_EVENT, flush);
     window.addEventListener(DESK_RESTORE_EVENT, restore);
+    window.addEventListener("storage", restoreFromStorage);
     window.addEventListener("pagehide", flush);
     return () => {
       flush();
       window.removeEventListener(DESK_FLUSH_EVENT, flush);
       window.removeEventListener(DESK_RESTORE_EVENT, restore);
+      window.removeEventListener("storage", restoreFromStorage);
       window.removeEventListener("pagehide", flush);
     };
   }, [storageReady]);
@@ -655,22 +664,6 @@ function NotePad({ locale }: { locale: Locale }) {
   );
 }
 
-type FocusState = {
-  durationSeconds: number;
-  remainingSeconds: number;
-  endsAt: number | null;
-  running: boolean;
-  completedDate: string;
-  completedCount: number;
-};
-
-function localDateKey(date = new Date()): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
 function freshFocusState(): FocusState {
   return {
     durationSeconds: 25 * 60,
@@ -687,25 +680,13 @@ function focusStateFromStorage(raw: string | null): { state: FocusState; complet
   const normalised = normaliseDeskBackupEntry(FOCUS_STORAGE_KEY, raw);
   if (!normalised) return null;
   const parsed = JSON.parse(normalised) as FocusState & { version: 1 };
-  const today = localDateKey();
-  const sameDay = parsed.completedDate === today;
-  const running = parsed.running && parsed.endsAt !== null && parsed.endsAt > Date.now();
-  const expired = parsed.running && parsed.endsAt !== null && parsed.endsAt <= Date.now();
+  const now = Date.now();
+  const today = localDateKey(new Date(now));
+  const expired = parsed.running && parsed.endsAt !== null && parsed.endsAt <= now;
   const expiredToday = expired && localDateKey(new Date(parsed.endsAt!)) === today;
   return {
     completedWhileClosed: expiredToday,
-    state: {
-      durationSeconds: parsed.durationSeconds,
-      remainingSeconds: expired
-        ? 0
-        : running
-          ? Math.max(0, Math.min(parsed.durationSeconds, Math.ceil((parsed.endsAt! - Date.now()) / 1_000)))
-          : Math.max(0, Math.min(parsed.durationSeconds, parsed.remainingSeconds)),
-      endsAt: running ? parsed.endsAt : null,
-      running,
-      completedDate: today,
-      completedCount: sameDay ? parsed.completedCount + (expiredToday ? 1 : 0) : expiredToday ? 1 : 0,
-    },
+    state: advanceFocusState(parsed, now),
   };
 }
 
@@ -713,7 +694,7 @@ function FocusClock({ locale }: { locale: Locale }) {
   const t = (value: string) => translateText(locale, value);
   const [timer, setTimer] = useState<FocusState>(freshFocusState);
   const [storageReady, setStorageReady] = useState(false);
-  const [customMinutes, setCustomMinutes] = useState(20);
+  const [customMinutes, setCustomMinutes] = useState("20");
   const [now, setNow] = useState<Date | null>(null);
   const [announcement, setAnnouncement] = useState("");
   const latestFocusRef = useRef(timer);
@@ -751,26 +732,22 @@ function FocusClock({ locale }: { locale: Locale }) {
   useEffect(() => {
     if (!timer.running || timer.endsAt === null) return;
     const tick = () => {
-      setTimer((current) => {
-        if (!current.running || current.endsAt === null) return current;
-        const remainingSeconds = Math.max(0, Math.ceil((current.endsAt - Date.now()) / 1_000));
-        if (remainingSeconds === current.remainingSeconds) return current;
-        if (remainingSeconds > 0) return { ...current, remainingSeconds };
-        const today = localDateKey();
+      const current = latestFocusRef.current;
+      const next = advanceFocusState(current);
+      if (next === current) return;
+      if (current.running && !next.running && current.endsAt !== null && localDateKey(new Date(current.endsAt)) === next.completedDate) {
         setAnnouncement("Focus session complete.");
-        return {
-          ...current,
-          remainingSeconds: 0,
-          endsAt: null,
-          running: false,
-          completedDate: today,
-          completedCount: current.completedDate === today ? current.completedCount + 1 : 1,
-        };
-      });
+      }
+      latestFocusRef.current = next;
+      setTimer(next);
     };
     tick();
     const interval = window.setInterval(tick, 250);
-    return () => window.clearInterval(interval);
+    document.addEventListener("visibilitychange", tick);
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", tick);
+    };
   }, [timer.endsAt, timer.running]);
 
   useEffect(() => {
@@ -803,13 +780,18 @@ function FocusClock({ locale }: { locale: Locale }) {
         // A validated backup should not reach this branch.
       }
     };
+    const restoreFromStorage = (event: StorageEvent) => {
+      if (event.storageArea === window.localStorage && (event.key === FOCUS_STORAGE_KEY || event.key === null)) restore();
+    };
     window.addEventListener(DESK_FLUSH_EVENT, flush);
     window.addEventListener(DESK_RESTORE_EVENT, restore);
+    window.addEventListener("storage", restoreFromStorage);
     window.addEventListener("pagehide", flush);
     return () => {
       flush();
       window.removeEventListener(DESK_FLUSH_EVENT, flush);
       window.removeEventListener(DESK_RESTORE_EVENT, restore);
+      window.removeEventListener("storage", restoreFromStorage);
       window.removeEventListener("pagehide", flush);
     };
   }, [storageReady]);
@@ -827,12 +809,23 @@ function FocusClock({ locale }: { locale: Locale }) {
   };
 
   const startOrPause = () => {
+    const now = Date.now();
+    const latest = latestFocusRef.current;
+    // A click can arrive before the next clock tick after the tab wakes.
+    // Settle an elapsed session first so Pause cannot lose its completion.
+    if (latest.running && latest.endsAt !== null && latest.endsAt <= now) {
+      const settled = advanceFocusState(latest, now);
+      latestFocusRef.current = settled;
+      setTimer(settled);
+      setAnnouncement(localDateKey(new Date(latest.endsAt)) === settled.completedDate ? "Focus session complete." : "");
+      return;
+    }
     setAnnouncement("");
     setTimer((current) => {
       if (current.running && current.endsAt !== null) {
         return {
           ...current,
-          remainingSeconds: Math.max(0, Math.ceil((current.endsAt - Date.now()) / 1_000)),
+          remainingSeconds: Math.max(0, Math.min(current.durationSeconds, Math.ceil((current.endsAt - now) / 1_000))),
           endsAt: null,
           running: false,
         };
@@ -870,6 +863,8 @@ function FocusClock({ locale }: { locale: Locale }) {
   const dateLabel = now
     ? new Intl.DateTimeFormat(locale, { weekday: "long", month: "long", day: "numeric" }).format(now)
     : "";
+  const customMinuteValue = Number(customMinutes);
+  const customMinutesValid = Number.isInteger(customMinuteValue) && customMinuteValue >= 1 && customMinuteValue <= 120;
 
   return (
     <div className={styles.focusClock}>
@@ -926,9 +921,9 @@ function FocusClock({ locale }: { locale: Locale }) {
             min={1}
             max={120}
             value={customMinutes}
-            onChange={(event) => setCustomMinutes(Math.max(1, Math.min(120, Number(event.target.value) || 1)))}
+            onChange={(event) => setCustomMinutes(event.target.value)}
           />
-          <button type="button" onClick={() => chooseDuration(customMinutes)}>{t("Set")}</button>
+          <button type="button" onClick={() => chooseDuration(customMinuteValue)} disabled={!customMinutesValid}>{t("Set")}</button>
         </div>
 
         <div className={styles.timerActions}>
@@ -1037,13 +1032,18 @@ function DeskCalculator({ locale }: { locale: Locale }) {
         // A validated backup should not reach this branch.
       }
     };
+    const restoreFromStorage = (event: StorageEvent) => {
+      if (event.storageArea === window.localStorage && (event.key === CALCULATOR_STORAGE_KEY || event.key === null)) restore();
+    };
     window.addEventListener(DESK_FLUSH_EVENT, flush);
     window.addEventListener(DESK_RESTORE_EVENT, restore);
+    window.addEventListener("storage", restoreFromStorage);
     window.addEventListener("pagehide", flush);
     return () => {
       flush();
       window.removeEventListener(DESK_FLUSH_EVENT, flush);
       window.removeEventListener(DESK_RESTORE_EVENT, restore);
+      window.removeEventListener("storage", restoreFromStorage);
       window.removeEventListener("pagehide", flush);
     };
   }, [storageReady]);
@@ -1052,23 +1052,14 @@ function DeskCalculator({ locale }: { locale: Locale }) {
 
   const inputDigit = (digit: string) => {
     setCopyStatus("");
-    if (display === "Error" || waitingForOperand) {
-      setDisplay(digit);
-      setWaitingForOperand(false);
-      return;
-    }
-    if (display.replace(/[-.]/g, "").length >= 12) return;
-    setDisplay(display === "0" ? digit : `${display}${digit}`);
+    setDisplay(enterCalculatorDigit(display, waitingForOperand, digit));
+    setWaitingForOperand(false);
   };
 
   const inputDecimal = () => {
     setCopyStatus("");
-    if (display === "Error" || waitingForOperand) {
-      setDisplay("0.");
-      setWaitingForOperand(false);
-      return;
-    }
-    if (!display.includes(".")) setDisplay(`${display}.`);
+    setDisplay(enterCalculatorDecimal(display, waitingForOperand));
+    setWaitingForOperand(false);
   };
 
   const commitOperation = (nextOperator: Operator) => {
@@ -1093,7 +1084,12 @@ function DeskCalculator({ locale }: { locale: Locale }) {
     const formatted = formatNumber(result);
     const expression = `${formatNumber(accumulator)} ${operator} ${formatNumber(right)} =`;
     setDisplay(formatted);
-    setTape((current) => [...current, { id: Date.now(), expression, result: formatted }].slice(-8));
+    setTape((current) => {
+      const usedIds = new Set(current.map((entry) => entry.id));
+      let id = Date.now();
+      while (usedIds.has(id)) id += 1;
+      return [...current, { id, expression, result: formatted }].slice(-8);
+    });
     setAccumulator(null);
     setOperator(null);
     setWaitingForOperand(true);
@@ -1108,17 +1104,20 @@ function DeskCalculator({ locale }: { locale: Locale }) {
   };
 
   const toggleSign = () => {
+    setCopyStatus("");
     if (display === "Error" || display === "0") return;
     setDisplay(formatNumber(-numericDisplay));
   };
 
   const percent = () => {
+    setCopyStatus("");
     if (display === "Error") return;
     setDisplay(formatNumber(numericDisplay / 100));
     setWaitingForOperand(false);
   };
 
   const recallMemory = () => {
+    setCopyStatus("");
     setDisplay(formatNumber(memory));
     setWaitingForOperand(false);
   };

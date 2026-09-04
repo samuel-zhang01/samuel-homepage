@@ -7,10 +7,12 @@ import {
   useState,
   type Dispatch,
   type FormEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
   type SetStateAction,
 } from "react";
 import { translateText, type Locale } from "@/lib/i18n";
+import { parseConverterInput } from "@/lib/deskBehavior";
 import styles from "./ProductivityApps.module.css";
 
 export type ProductivityExtraId = "sketch" | "tasks" | "calendar" | "converter" | "palette";
@@ -80,7 +82,7 @@ function usePersistentState<T>(
     }
 
     const handleStorage = (event: StorageEvent) => {
-      if (event.key === key) load(event.newValue);
+      if (event.storageArea === window.localStorage && (event.key === key || event.key === null)) load(event.newValue);
     };
     const handleRestore = () => {
       try {
@@ -328,7 +330,7 @@ function SketchPad({ locale }: { locale: Locale }) {
       setClearArmed(false);
     };
     const resetHistoryFromStorage = (event: StorageEvent) => {
-      if (event.key === SKETCH_STORAGE_KEY) resetHistory();
+      if (event.storageArea === window.localStorage && (event.key === SKETCH_STORAGE_KEY || event.key === null)) resetHistory();
     };
     window.addEventListener(RESTORE_EVENT, resetHistory);
     window.addEventListener("storage", resetHistoryFromStorage);
@@ -405,7 +407,9 @@ function SketchPad({ locale }: { locale: Locale }) {
     if (!active || active.pointerId !== event.pointerId) return;
     if (drawFrame.current !== null) window.cancelAnimationFrame(drawFrame.current);
     drawFrame.current = null;
-    const finalPoint = pendingPoint.current;
+    // Pointer-up may be the only event at the release position on a fast drag.
+    // Cancellation/lost-capture coordinates are not guaranteed to be valid.
+    const finalPoint = event.type === "pointerup" ? pointFromEvent(event) : pendingPoint.current;
     pendingPoint.current = null;
     if (finalPoint) appendPoint(active.strokeId, finalPoint);
     activeStroke.current = null;
@@ -746,6 +750,26 @@ function PocketCalendarReady({ locale }: { locale: Locale }) {
   const [viewMonth, setViewMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
   const [calendar, setCalendar, saveState] = usePersistentState<CalendarData>(CALENDAR_STORAGE_KEY, { notes: {} }, validateCalendar);
   const [limitMessage, setLimitMessage] = useState("");
+  const [clearArmed, setClearArmed] = useState(false);
+  const monthPanelRef = useRef<HTMLElement | null>(null);
+  const focusDayRef = useRef(false);
+
+  useEffect(() => {
+    setClearArmed(false);
+    setLimitMessage("");
+  }, [selectedKey, calendar.notes]);
+
+  useEffect(() => {
+    if (!clearArmed) return;
+    const timer = window.setTimeout(() => setClearArmed(false), 3_000);
+    return () => window.clearTimeout(timer);
+  }, [clearArmed]);
+
+  useEffect(() => {
+    if (!focusDayRef.current) return;
+    monthPanelRef.current?.querySelector<HTMLButtonElement>(`button[data-date="${selectedKey}"]`)?.focus();
+    focusDayRef.current = false;
+  }, [selectedKey, viewMonth]);
 
   useEffect(() => {
     const checkDay = () => {
@@ -773,6 +797,38 @@ function PocketCalendarReady({ locale }: { locale: Locale }) {
   const selectedDate = parseCalendarDate(selectedKey);
   const monthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(viewMonth);
   const selectedLabel = new Intl.DateTimeFormat(locale, { weekday: "long", month: "long", day: "numeric", year: "numeric" }).format(selectedDate);
+  const tabDayKey = cells.some((date) => calendarDateKey(date) === selectedKey)
+    ? selectedKey
+    : calendarDateKey(cells.find((date) => date.getMonth() === viewMonth.getMonth())!);
+
+  const selectDate = (date: Date, focus = false) => {
+    focusDayRef.current = focus;
+    setSelectedKey(calendarDateKey(date));
+    if (date.getMonth() !== viewMonth.getMonth() || date.getFullYear() !== viewMonth.getFullYear()) {
+      setViewMonth(new Date(date.getFullYear(), date.getMonth(), 1));
+    }
+  };
+
+  const navigateDate = (event: ReactKeyboardEvent<HTMLButtonElement>, date: Date) => {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    const next = new Date(date);
+    const weekDay = locale === "en-US" ? date.getDay() : (date.getDay() + 6) % 7;
+    if (event.key === "ArrowLeft") next.setDate(date.getDate() - 1);
+    else if (event.key === "ArrowRight") next.setDate(date.getDate() + 1);
+    else if (event.key === "ArrowUp") next.setDate(date.getDate() - 7);
+    else if (event.key === "ArrowDown") next.setDate(date.getDate() + 7);
+    else if (event.key === "Home") next.setDate(date.getDate() - weekDay);
+    else if (event.key === "End") next.setDate(date.getDate() + 6 - weekDay);
+    else if (event.key === "PageUp" || event.key === "PageDown") {
+      const amount = (event.key === "PageUp" ? -1 : 1) * (event.shiftKey ? 12 : 1);
+      next.setDate(1);
+      next.setMonth(date.getMonth() + amount);
+      const lastDay = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
+      next.setDate(Math.min(date.getDate(), lastDay));
+    } else return;
+    event.preventDefault();
+    selectDate(next, true);
+  };
 
   const shiftMonth = (amount: number) => {
     setViewMonth((current) => new Date(current.getFullYear(), current.getMonth() + amount, 1));
@@ -805,10 +861,10 @@ function PocketCalendarReady({ locale }: { locale: Locale }) {
         <SaveBadge locale={locale} state={saveState} />
       </header>
       <div className={styles.calendarLayout}>
-        <section className={styles.monthPanel} aria-label={monthLabel}>
+        <section ref={monthPanelRef} className={styles.monthPanel} aria-label={monthLabel}>
           <header className={styles.monthToolbar}>
             <button type="button" onClick={() => shiftMonth(-1)} aria-label={t("Previous month")}>‹</button>
-            <h3>{monthLabel}</h3>
+            <h3 aria-live="polite">{monthLabel}</h3>
             <button type="button" onClick={() => shiftMonth(1)} aria-label={t("Next month")}>›</button>
             <button type="button" onClick={goToday}>{t("Today")}</button>
           </header>
@@ -824,8 +880,11 @@ function PocketCalendarReady({ locale }: { locale: Locale }) {
                 <button
                   key={key}
                   type="button"
+                  data-date={key}
+                  tabIndex={key === tabDayKey ? 0 : -1}
                   className={`${outside ? styles.outsideMonth : ""}${key === selectedKey ? ` ${styles.selectedDay}` : ""}`}
-                  onClick={() => { setSelectedKey(key); if (outside) setViewMonth(new Date(date.getFullYear(), date.getMonth(), 1)); }}
+                  onClick={() => selectDate(date)}
+                  onKeyDown={(event) => navigateDate(event, date)}
                   aria-label={`${fullLabel}${calendar.notes[key] ? `. ${t("Has a saved note.")}` : ""}`}
                   aria-pressed={key === selectedKey}
                   aria-current={key === todayKey ? "date" : undefined}
@@ -849,7 +908,14 @@ function PocketCalendarReady({ locale }: { locale: Locale }) {
           />
           <footer>
             <span>{(calendar.notes[selectedKey] ?? "").length} / 2000</span>
-            <button type="button" onClick={() => updateNote("")} disabled={!calendar.notes[selectedKey]}>{t("Clear note")}</button>
+            <button
+              type="button"
+              className={clearArmed ? styles.dangerButton : undefined}
+              onClick={() => { if (clearArmed) updateNote(""); else setClearArmed(true); }}
+              disabled={!calendar.notes[selectedKey]}
+            >
+              {clearArmed ? t("Clear now") : t("Clear note")}
+            </button>
           </footer>
           <span className={styles.inlineStatus} role="status">{limitMessage ? t(limitMessage) : ""}</span>
         </aside>
@@ -942,7 +1008,9 @@ function UnitConverter({ locale }: { locale: Locale }) {
   const group = CONVERTER_GROUPS[converter.category];
   const fromUnit = group.units.find((unit) => unit.id === converter.from) ?? group.units[0];
   const toUnit = group.units.find((unit) => unit.id === converter.to) ?? group.units[1];
-  const numericInput = Number(converter.input.replace(",", "."));
+  // Preserve pasted/scientific notation. Stripping unknown characters could
+  // silently turn a value such as "1e3" into the very different number 13.
+  const numericInput = parseConverterInput(converter.input);
   const convertedCandidate = converter.input.trim() && Number.isFinite(numericInput)
     ? toUnit.fromBase(fromUnit.toBase(numericInput))
     : null;
@@ -950,6 +1018,8 @@ function UnitConverter({ locale }: { locale: Locale }) {
   const output = converted === null
     ? "—"
     : new Intl.NumberFormat(locale, { maximumSignificantDigits: 10 }).format(converted);
+
+  useEffect(() => setCopyStatus(""), [converter]);
 
   const chooseCategory = (category: ConverterCategory) => {
     const units = CONVERTER_GROUPS[category].units;
@@ -989,7 +1059,8 @@ function UnitConverter({ locale }: { locale: Locale }) {
           <input
             value={converter.input}
             inputMode="decimal"
-            onChange={(event) => setConverter((current) => ({ ...current, input: event.target.value.replace(/[^\d.,+-]/g, "").slice(0, 40) }))}
+            maxLength={40}
+            onChange={(event) => setConverter((current) => ({ ...current, input: event.target.value.slice(0, 40) }))}
             aria-label={t("Value to convert")}
           />
             <select value={converter.from} onChange={(event) => setConverter((current) => ({ ...current, from: event.target.value }))} aria-label={t("Source unit")}>
