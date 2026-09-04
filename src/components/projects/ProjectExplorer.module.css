@@ -50,7 +50,7 @@
 
 .explorer button,
 .explorer input,
-.explorer select,
+.explorer [data-classic-select],
 .explorer a {
   font: inherit;
 }
@@ -278,7 +278,7 @@
   box-shadow: inset 0 1px #fff, inset 0 -1px #777;
 }
 
-.toolbar select,
+.toolbar [data-classic-select],
 .toggleButton,
 .legendButton {
   height: 34px;
@@ -293,12 +293,12 @@
   font-weight: 700;
 }
 
-.toolbar select {
+.toolbar [data-classic-select] {
   min-width: 126px;
   cursor: pointer;
 }
 
-.toolbar select:focus-visible {
+.toolbar [data-classic-select]:focus-visible {
   outline: 3px double var(--project-navy);
   outline-offset: 2px;
 }
@@ -1605,7 +1605,7 @@
    an eye test on modern high-density displays. */
 .eyebrow,
 .archiveStats span,
-.toolbar select,
+.toolbar [data-classic-select],
 .toggleButton,
 .legendButton,
 .layoutGroup > span,
@@ -1715,7 +1715,7 @@
     display: none;
   }
 
-  .toolbar select,
+  .toolbar [data-classic-select],
   .toggleButton,
   .legendButton,
   .searchField input {
@@ -1854,7 +1854,7 @@
     min-width: 0;
   }
 
-  .toolbar select {
+  .toolbar [data-classic-select] {
     width: 100%;
     min-width: 0;
     font-family: Geneva, "Helvetica Neue", Arial, sans-serif;

@@ -20,14 +20,14 @@
 }
 
 .studio button,
-.studio select,
+.studio [data-classic-select],
 .studio input {
   font: inherit;
 }
 
 .studio button:focus-visible,
 .studio input:focus-visible,
-.studio select:focus-visible,
+.studio [data-classic-select]:focus-visible,
 .studio [tabindex="0"]:focus-visible {
   outline: 2px solid #1765a4;
   outline-offset: 2px;

@@ -24,13 +24,13 @@
 
 .portfolioMap button,
 .portfolioMap input,
-.portfolioMap select {
+.portfolioMap [data-classic-select] {
   font: inherit;
 }
 
 .portfolioMap button:focus-visible,
 .portfolioMap input:focus-visible,
-.portfolioMap select:focus-visible,
+.portfolioMap [data-classic-select]:focus-visible,
 .portfolioMap [tabindex="0"]:focus-visible {
   position: relative;
   z-index: 3;
@@ -301,7 +301,7 @@
   text-transform: uppercase;
 }
 
-.filterDeck select {
+.filterDeck [data-classic-select] {
   width: 100%;
   min-width: 0;
   height: 26px;
@@ -1004,7 +1004,7 @@
   letter-spacing: 0.08em;
 }
 
-.compareSelectors select {
+.compareSelectors [data-classic-select] {
   width: 100%;
   min-width: 0;
   height: 29px;

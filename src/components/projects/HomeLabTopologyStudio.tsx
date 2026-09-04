@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { type CSSProperties, useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./HomeLabTopologyStudio.module.css";
@@ -367,14 +369,14 @@ function TopologyView() {
           <p>Follow only directed relationships retained in the audited snapshot.</p>
         </div>
         <label>From
-          <select value={start} onChange={(event) => { setStart(event.target.value as NodeId); setTraceActive(false); }}>
+          <ClassicSelect value={start} onChange={(event) => { setStart(event.target.value as NodeId); setTraceActive(false); }}>
             {NODES.map((node) => <option key={node.id} value={node.id}>{node.name}</option>)}
-          </select>
+          </ClassicSelect>
         </label>
         <label>To
-          <select value={target} onChange={(event) => { setTarget(event.target.value as NodeId); setTraceActive(false); }}>
+          <ClassicSelect value={target} onChange={(event) => { setTarget(event.target.value as NodeId); setTraceActive(false); }}>
             {NODES.map((node) => <option key={node.id} value={node.id}>{node.name}</option>)}
-          </select>
+          </ClassicSelect>
         </label>
         <button type="button" onClick={() => setTraceActive(true)}>Trace path</button>
         <button type="button" className={styles.quietButton} onClick={() => setTraceActive(false)}>Clear</button>
@@ -448,9 +450,9 @@ function FailureLab() {
         <aside className={styles.failureControls}>
           <div className={styles.panelHeading}><span>!</span><strong>FAULT CONTROL</strong><em>READ ONLY</em></div>
           <label>Compose service
-            <select value={fault} onChange={(event) => { setFault(event.target.value as ServiceNodeId); setStep(0); }}>
+            <ClassicSelect value={fault} onChange={(event) => { setFault(event.target.value as ServiceNodeId); setStep(0); }}>
               {SERVICE_IDS.map((id) => <option value={id} key={id}>{nodeById(id).name}</option>)}
-            </select>
+            </ClassicSelect>
           </label>
           <div className={styles.faultTarget} style={{ "--node-tone": selectedNode.tone } as CSSProperties}>
             <span>{selectedNode.alias}</span><strong>{selectedNode.name}</strong><small>restart: always · healthcheck: absent</small>

@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useMemo, useState } from "react";
 
 import { DemoWindow } from "./DemoChrome";
@@ -508,10 +510,10 @@ function ScopeControls({ range, setRange, accountId, setAccountId }: {
       </div>
       <label>
         <span>Account scope</span>
-        <select value={accountId} onChange={(event) => setAccountId(event.target.value)}>
+        <ClassicSelect value={accountId} onChange={(event) => setAccountId(event.target.value)}>
           <option value="all">All five accounts</option>
           {ACCOUNTS.map((account) => <option value={account.id} key={account.id}>{account.label}</option>)}
-        </select>
+        </ClassicSelect>
       </label>
       <p><strong>Anchor</strong> {ANCHOR_DATE} · date windows are fixed and reproducible</p>
     </div>
@@ -678,8 +680,8 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
         </div>
         <div className={styles.ledgerFilters}>
           <label><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Merchant, category, account…" /></label>
-          <label><span>Category</span><select value={category} onChange={(event) => setCategory(event.target.value as "all" | Category)}><option value="all">All categories</option>{CATEGORY_ORDER.map((item) => <option value={item} key={item}>{item}</option>)}</select></label>
-          <label><span>Budget treatment</span><select value={mode} onChange={(event) => setMode(event.target.value as typeof mode)}><option value="all">All rows</option><option value="household">Household cash flow</option><option value="excluded">Transfers + investment churn</option></select></label>
+          <label><span>Category</span><ClassicSelect value={category} onChange={(event) => setCategory(event.target.value as "all" | Category)}><option value="all">All categories</option>{CATEGORY_ORDER.map((item) => <option value={item} key={item}>{item}</option>)}</ClassicSelect></label>
+          <label><span>Budget treatment</span><ClassicSelect value={mode} onChange={(event) => setMode(event.target.value as typeof mode)}><option value="all">All rows</option><option value="household">Household cash flow</option><option value="excluded">Transfers + investment churn</option></ClassicSelect></label>
         </div>
         <div className={styles.ledgerTableWrap}>
           <table className={styles.ledgerTable}>

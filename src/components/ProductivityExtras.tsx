@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "./ClassicSelect";
+
 import {
   useEffect,
   useMemo,
@@ -631,10 +633,10 @@ function QuickList({ locale }: { locale: Locale }) {
             onChange={(event) => setDraft(event.target.value)}
             placeholder={t("What needs doing?")}
           />
-          <select value={priority} onChange={(event) => setPriority(event.target.value as TaskPriority)} aria-label={t("Task priority")}>
+          <ClassicSelect value={priority} onChange={(event) => setPriority(event.target.value as TaskPriority)} aria-label={t("Task priority")}>
             <option value="normal">{t("Normal")}</option>
             <option value="important">{t("Important")}</option>
-          </select>
+          </ClassicSelect>
           <button type="submit" className={styles.defaultButton} disabled={!draft.trim()}>{t("Add task")}</button>
         </div>
       </form>
@@ -1063,18 +1065,18 @@ function UnitConverter({ locale }: { locale: Locale }) {
             onChange={(event) => setConverter((current) => ({ ...current, input: event.target.value.slice(0, 40) }))}
             aria-label={t("Value to convert")}
           />
-            <select value={converter.from} onChange={(event) => setConverter((current) => ({ ...current, from: event.target.value }))} aria-label={t("Source unit")}>
+            <ClassicSelect value={converter.from} onChange={(event) => setConverter((current) => ({ ...current, from: event.target.value }))} aria-label={t("Source unit")}>
             {group.units.map((unit) => <option key={unit.id} value={unit.id}>{t(unit.label)} ({unit.symbol})</option>)}
-          </select>
+          </ClassicSelect>
         </label>
         <button type="button" className={styles.swapButton} onClick={swap} aria-label={t("Swap units")} title={t("Swap units")}>⇄</button>
         <div className={styles.converterOutput} aria-live="polite">
           <span>{t("To")}</span>
           <strong>{output}</strong>
           <small>{toUnit.symbol}</small>
-          <select value={converter.to} onChange={(event) => setConverter((current) => ({ ...current, to: event.target.value }))} aria-label={t("Result unit")}>
+          <ClassicSelect value={converter.to} onChange={(event) => setConverter((current) => ({ ...current, to: event.target.value }))} aria-label={t("Result unit")}>
             {group.units.map((unit) => <option key={unit.id} value={unit.id}>{t(unit.label)} ({unit.symbol})</option>)}
-          </select>
+          </ClassicSelect>
         </div>
       </section>
       <section className={styles.conversionReadout}>

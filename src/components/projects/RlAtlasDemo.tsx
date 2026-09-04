@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useMemo, useState } from "react";
 
 import { DemoWindow } from "./DemoChrome";
@@ -625,27 +627,27 @@ export function RlAtlasDemo() {
         </label>
         <label>
           <span>Track</span>
-          <select value={trackFilter} onChange={(event) => setTrackFilter(event.target.value as TrackFilter)}>
+          <ClassicSelect value={trackFilter} onChange={(event) => setTrackFilter(event.target.value as TrackFilter)}>
             <option value="all">All 11 tracks</option>
             {TRACKS.map((track) => (
               <option key={track.id} value={track.id}>{track.code} · {track.label}</option>
             ))}
-          </select>
+          </ClassicSelect>
         </label>
         <label>
           <span>Evidence</span>
-          <select
+          <ClassicSelect
             value={evidenceFilter}
             onChange={(event) => setEvidenceFilter(event.target.value as EvidenceFilter)}
           >
             <option value="all">Any QA state</option>
             <option value="attention">Needs attention</option>
             <option value="clean">No recorded flags</option>
-          </select>
+          </ClassicSelect>
         </label>
         <label>
           <span>Disclosure</span>
-          <select
+          <ClassicSelect
             value={disclosureFilter}
             onChange={(event) => setDisclosureFilter(event.target.value as DisclosureFilter)}
           >
@@ -653,7 +655,7 @@ export function RlAtlasDemo() {
             <option value="public">Public curriculum</option>
             <option value="synthetic">Synthetic only</option>
             <option value="restricted">Restricted audit</option>
-          </select>
+          </ClassicSelect>
         </label>
         <button className={styles.resetButton} type="button" onClick={resetFilters}>
           Reset

@@ -876,7 +876,7 @@
 .cuspCard { background: #10202d; }
 
 .bindingCard label { display: grid; gap: 6px; }
-.bindingCard select {
+.bindingCard [data-classic-select] {
   width: 100%;
   min-height: 31px;
   padding: 5px 7px;

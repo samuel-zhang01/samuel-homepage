@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useMemo, useState, type CSSProperties } from "react";
 
 import styles from "./ModelLineageMap.module.css";
@@ -417,7 +419,7 @@ export function ModelLineageMap({
           <section className={styles.historyPanel}>
             <div className={styles.panelHeading}>
               <div><span>ORDERED EVENT LOG</span><strong>Sanitised Git chronology</strong></div>
-              <label><span>Evidence</span><select value={kind} onChange={(event) => setKind(event.target.value as EvidenceKind | "all")}><option value="all">All evidence types</option>{Object.entries(KIND_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+              <label><span>Evidence</span><ClassicSelect value={kind} onChange={(event) => setKind(event.target.value as EvidenceKind | "all")}><option value="all">All evidence types</option>{Object.entries(KIND_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</ClassicSelect></label>
             </div>
             <p className={styles.chartNote}>Dates and short hashes are source-audited. Raw commit messages are intentionally replaced with descriptive labels; intervals do not imply equal effort.</p>
             <ol className={styles.timeline}>

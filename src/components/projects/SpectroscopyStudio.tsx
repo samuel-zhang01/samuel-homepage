@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { type KeyboardEvent, useEffect, useId, useMemo, useRef, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./SpectroscopyStudio.module.css";
@@ -392,9 +394,9 @@ export function SpectroscopyStudio() {
 
           <label className={styles.selectField}>
             <span>Plot colour</span>
-            <select value={plotColour} disabled={loaded} onChange={(event) => setPlotColour(event.target.value as PlotColour)}>
+            <ClassicSelect value={plotColour} disabled={loaded} onChange={(event) => setPlotColour(event.target.value as PlotColour)}>
               {colourOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-            </select>
+            </ClassicSelect>
           </label>
           <p className={styles.lockNote}>{loaded ? "Locked after load, matching source." : "Choose before loading."} “Magenta” safely corrects the source’s “megenta” typo.</p>
 
@@ -587,13 +589,13 @@ export function SpectroscopyStudio() {
               <div className={styles.exportFields}>
                 <label>
                   <span>Format</span>
-                  <select value={format} onChange={(event) => { setFormat(event.target.value as ExportFormat); setExportPrepared(false); }}>
+                  <ClassicSelect value={format} onChange={(event) => { setFormat(event.target.value as ExportFormat); setExportPrepared(false); }}>
                     <option value="png">PNG</option>
                     <option value="jpg">JPG</option>
                     <option value="tif">TIF</option>
                     <option value="pdf">PDF</option>
                     <option value="eps">EPS</option>
-                  </select>
+                  </ClassicSelect>
                 </label>
                 <label>
                   <span>Resolution / DPI</span>

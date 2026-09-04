@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "./ClassicSelect";
+
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import type { Locale } from "@/lib/i18n";
@@ -352,7 +354,7 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
       <aside className={styles.challengeCard}>
         <div className={styles.cardLabel}><span>FRIEND CHALLENGE</span><strong>{challengeState.toUpperCase()}</strong></div>
         <label htmlFor="challenge-focus">Choose a question</label>
-        <select id="challenge-focus" value={challengeKey} onChange={(event) => { setChallengeKey(event.target.value as keyof typeof challengeOptions); setChallengeState("draft"); }}>{Object.entries(challengeOptions).map(([key, challenge]) => <option key={key} value={key}>{challenge[0]}</option>)}</select>
+        <ClassicSelect id="challenge-focus" value={challengeKey} onChange={(event) => { setChallengeKey(event.target.value as keyof typeof challengeOptions); setChallengeState("draft"); }}>{Object.entries(challengeOptions).map(([key, challenge]) => <option key={key} value={key}>{challenge[0]}</option>)}</ClassicSelect>
         <dl><div><dt>Question</dt><dd>{activeChallenge[1]}</dd></div><div><dt>Bounded run</dt><dd>{activeChallenge[2]}</dd></div><div><dt>Success</dt><dd>{activeChallenge[3]}</dd></div><div><dt>Safety stop</dt><dd>Stop for chest discomfort, dizziness, faintness, unusual breathlessness or concerning pain. Stopping safely counts.</dd></div></dl>
         <div className={styles.challengeActions}>
           {challengeState === "draft" && <button type="button" onClick={() => setChallengeState("sent")}>Send to a friend</button>}

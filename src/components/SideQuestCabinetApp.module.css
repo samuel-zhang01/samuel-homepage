@@ -18,14 +18,14 @@
 }
 
 .app * { box-sizing: border-box; }
-.app button, .app input, .app select { font: inherit; }
+.app button, .app input, .app [data-classic-select] { font: inherit; }
 .app button, .app a { -webkit-tap-highlight-color: transparent; }
-.app button:focus-visible, .app a:focus-visible, .app input:focus-visible, .app select:focus-visible, .app summary:focus-visible {
+.app button:focus-visible, .app a:focus-visible, .app input:focus-visible, .app [data-classic-select]:focus-visible, .app summary:focus-visible {
   outline: 2px dotted var(--sky);
   outline-offset: 2px;
 }
 
-.app select,
+.app [data-classic-select],
 .app input:is([type="text"], [type="number"], [type="search"], [type="email"], [type="url"], [type="tel"], :not([type])) {
   border: 2px solid #111;
   border-radius: 0;
@@ -446,7 +446,7 @@
 .loopReadout span { color: var(--coral); font: 700 10px/1 var(--system-mono); }
 .loopReadout p { margin: 9px 0 0; color: #333; font-size: 12px; line-height: 1.5; }
 .challengeCard > label { display: block; margin-bottom: 7px; color: #333; font-size: 9px; font-weight: 700; text-transform: uppercase; }
-.challengeCard select { width: 100%; min-height: 38px; padding: 7px; border: 2px solid #111; border-radius: 0; color: #111; background: #fff; box-shadow: inset 1px 1px #777, inset -1px -1px #fff; }
+.challengeCard [data-classic-select] { width: 100%; min-height: 38px; padding: 7px; border: 2px solid #111; border-radius: 0; color: #111; background: #fff; box-shadow: inset 1px 1px #777, inset -1px -1px #fff; }
 .challengeCard dl { display: grid; gap: 0; margin: 17px 0 0; }
 .challengeCard dl div { padding: 11px 0; border-bottom: 1px solid var(--line); }
 .challengeCard dt { color: var(--coral); font: 700 9px/1 var(--system-mono); text-transform: uppercase; }
@@ -625,7 +625,7 @@
   .heroActions button, .relayActions button, .runForm > button, .challengeActions button,
   .replayTransport button, .replaySocial > button, .liveOverlay button, .buildLinks a, .tabs button,
   .creditTabs button, .buildTabs button, .runnerRail button, .loopSteps button,
-  .app select, .app summary {
+  .app [data-classic-select], .app summary {
     min-height: 44px;
   }
   .cheerControls button { width: 44px; height: 44px; }

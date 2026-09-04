@@ -370,8 +370,8 @@
   text-transform: uppercase;
 }
 
-.selectGrid select,
-.counterfactualIntro select {
+.selectGrid [data-classic-select],
+.counterfactualIntro [data-classic-select] {
   width: 100%;
   min-height: 27px;
   padding: 4px 5px;

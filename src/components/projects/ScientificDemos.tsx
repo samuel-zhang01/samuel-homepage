@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useId, useState } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
@@ -487,11 +489,11 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
       <div className={styles.visionControls}>
         <label>
           <span>MODEL</span>
-          <select value={model} onChange={(event) => setModel(event.target.value as VisionModelId)}>
+          <ClassicSelect value={model} onChange={(event) => setModel(event.target.value as VisionModelId)}>
             {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => (
               <option value={id} key={id}>{item.name}</option>
             ))}
-          </select>
+          </ClassicSelect>
         </label>
         <fieldset>
           <legend>BENCHMARK</legend>
@@ -502,9 +504,9 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
         </fieldset>
         <label>
           <span>SAFE SAMPLE</span>
-          <select value={frameIndex} onChange={(event) => setFrameIndex(Number(event.target.value))}>
+          <ClassicSelect value={frameIndex} onChange={(event) => setFrameIndex(Number(event.target.value))}>
             {MICRO_FRAMES.map((frame, index) => <option value={index} key={frame.id}>{frame.label}</option>)}
-          </select>
+          </ClassicSelect>
         </label>
       </div>
 

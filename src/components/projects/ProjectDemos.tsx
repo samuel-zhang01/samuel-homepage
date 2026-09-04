@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useMemo, useRef, useState, type ReactNode } from "react";
 
 import type { ProjectDemoId } from "@/data/projects";
@@ -294,15 +296,15 @@ export function FinanceIntelligenceDemo() {
         </div>
         <label>
           <span>Category</span>
-          <select value={category} onChange={(event) => setCategory(event.target.value as typeof category)}>
-            <option>All</option>
-            <option>Income</option>
-            <option>Housing</option>
-            <option>Food</option>
-            <option>Transport</option>
-            <option>Tools</option>
-            <option>Other</option>
-          </select>
+          <ClassicSelect value={category} onChange={(event) => setCategory(event.target.value as typeof category)}>
+            <option value="All">All</option>
+            <option value="Income">Income</option>
+            <option value="Housing">Housing</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Tools">Tools</option>
+            <option value="Other">Other</option>
+          </ClassicSelect>
         </label>
         <label className={styles.searchField}>
           <span>Find merchant</span>
@@ -551,10 +553,10 @@ export function RlBanditDemo() {
         <div className={styles.rlControls}>
           <label>
             <span>Scenario</span>
-            <select value={environment} onChange={(event) => changeEnvironment(event.target.value as BanditEnvironment)}>
+            <ClassicSelect value={environment} onChange={(event) => changeEnvironment(event.target.value as BanditEnvironment)}>
               <option value="campaigns">Creative concepts</option>
               <option value="treatments">Learning routes</option>
-            </select>
+            </ClassicSelect>
           </label>
           <label className={styles.rangeControl}>
             <span>Exploration ε <strong>{epsilon}%</strong></span>
@@ -844,22 +846,22 @@ export function CoverdYasaDemo() {
       <div className={styles.schedulerControls}>
         <label>
           <span>Candidate</span>
-          <select value={candidateId} onChange={(event) => changeCandidate(event.target.value)}>
+          <ClassicSelect value={candidateId} onChange={(event) => changeCandidate(event.target.value)}>
             {SYNTHETIC_CANDIDATES.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.role}</option>)}
-          </select>
+          </ClassicSelect>
         </label>
         <label>
           <span>Interview panel</span>
-          <select value={interviewerId} onChange={(event) => changeInterviewer(event.target.value)}>
+          <ClassicSelect value={interviewerId} onChange={(event) => changeInterviewer(event.target.value)}>
             {INTERVIEWERS.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.team}</option>)}
-          </select>
+          </ClassicSelect>
         </label>
         <label>
           <span>Duration</span>
-          <select value={duration} onChange={(event) => changeDuration(Number(event.target.value))}>
+          <ClassicSelect value={duration} onChange={(event) => changeDuration(Number(event.target.value))}>
             <option value={30}>30 minutes</option>
             <option value={60}>60 minutes</option>
-          </select>
+          </ClassicSelect>
         </label>
       </div>
 

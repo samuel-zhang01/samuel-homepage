@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { type KeyboardEvent as ReactKeyboardEvent, useId, useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./BanditStudio.module.css";
@@ -687,17 +689,17 @@ export function BanditStudio() {
                 <div className={styles.panelCap}><span>EXPERIMENT CONTROLS</span><b>{scenario.shortLabel}</b></div>
                 <label className={styles.selectField}>
                   <span>Environment</span>
-                  <select value={scenarioId} onChange={(event) => changeScenario(event.target.value as ScenarioId)}>
+                  <ClassicSelect value={scenarioId} onChange={(event) => changeScenario(event.target.value as ScenarioId)}>
                     <option value="wide">Bernoulli · wide gaps</option>
                     <option value="close">Bernoulli · close contest</option>
                     <option value="gaussian">Gaussian · noisy values</option>
-                  </select>
+                  </ClassicSelect>
                 </label>
                 <label className={styles.selectField}>
                   <span>Replay seed</span>
-                  <select value={seed} onChange={(event) => changeSeed(Number(event.target.value))}>
+                  <ClassicSelect value={seed} onChange={(event) => changeSeed(Number(event.target.value))}>
                     {seeds.map((entry) => <option key={entry} value={entry}>Seed {entry}</option>)}
-                  </select>
+                  </ClassicSelect>
                 </label>
                 <RangeControl
                   id="bandit-epsilon"

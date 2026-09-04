@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { memo, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type RefObject } from "react";
@@ -1159,33 +1161,33 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
         </label>
         <label>
           <span className={styles.srOnly}>{copy.filters.disciplineAria}</span>
-          <select value={area} onChange={(event) => setArea(event.target.value as AreaFilter)}>
+          <ClassicSelect value={area} onChange={(event) => setArea(event.target.value as AreaFilter)}>
             <option value="all">{copy.filters.allDisciplines}</option>
             {projectAreas.map((item) => (
               <option key={item} value={item}>
                 {copy.areas[item]} ({projects.filter((project) => project.area === item).length})
               </option>
             ))}
-          </select>
+          </ClassicSelect>
         </label>
         <label>
           <span className={styles.srOnly}>{copy.filters.accessAria}</span>
-          <select value={access} onChange={(event) => setAccess(event.target.value as AccessFilter)}>
+          <ClassicSelect value={access} onChange={(event) => setAccess(event.target.value as AccessFilter)}>
             <option value="all">{copy.filters.allAccess}</option>
             {filterAccessOrder.map((item) => (
               <option key={item} value={item}>
                 {copy.access[item].label} ({projects.filter((project) => project.access === item).length})
               </option>
             ))}
-          </select>
+          </ClassicSelect>
         </label>
         <label>
           <span className={styles.srOnly}>{copy.filters.sortAria}</span>
-          <select value={sortMode} onChange={(event) => setSortMode(event.target.value as SortMode)}>
+          <ClassicSelect value={sortMode} onChange={(event) => setSortMode(event.target.value as SortMode)}>
             <option value="curated">{copy.filters.sortCurated}</option>
             <option value="recent">{copy.filters.sortRecent}</option>
             <option value="title">{copy.filters.sortTitle}</option>
-          </select>
+          </ClassicSelect>
         </label>
         <button
           type="button"

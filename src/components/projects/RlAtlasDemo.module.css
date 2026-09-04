@@ -274,7 +274,7 @@
   text-transform: uppercase;
 }
 
-.filterBar select,
+.filterBar [data-classic-select],
 .inputWrap {
   min-height: 29px;
   border: 2px solid;
@@ -283,7 +283,7 @@
   background: #fff;
 }
 
-.filterBar select {
+.filterBar [data-classic-select] {
   width: 100%;
   padding: 3px 6px;
   font-size: 9px;

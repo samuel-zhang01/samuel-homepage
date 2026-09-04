@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./EnvironmentPlannerStudio.module.css";
@@ -543,19 +545,19 @@ function ProfileControls({ profile, setProfile }: { profile: Profile; setProfile
 
       <label className={styles.field}>
         <span>Accelerator</span>
-        <select
+        <ClassicSelect
           value={profile.accelerator}
           onChange={(event) => setProfile({ ...profile, accelerator: event.target.value as Accelerator })}
         >
           {acceleratorOptions.map((option) => (
             <option key={option.value} value={option.value}>{option.label}</option>
           ))}
-        </select>
+        </ClassicSelect>
       </label>
 
       <label className={styles.field}>
         <span>Driver-reported CUDA</span>
-        <select
+        <ClassicSelect
           value={profile.cuda}
           disabled={profile.accelerator !== "nvidia"}
           onChange={(event) => setProfile({ ...profile, cuda: event.target.value as CudaVersion })}
@@ -566,19 +568,19 @@ function ProfileControls({ profile, setProfile }: { profile: Profile; setProfile
           <option value="12.4">12.4</option>
           <option value="13.0">13.0</option>
           <option value="14.0">14.0 counterfactual</option>
-        </select>
+        </ClassicSelect>
       </label>
 
       <label className={styles.field}>
         <span>Existing “DL” environment</span>
-        <select
+        <ClassicSelect
           value={profile.environmentPolicy}
           onChange={(event) => setProfile({ ...profile, environmentPolicy: event.target.value as EnvironmentPolicy })}
         >
           <option value="new">Not found — create</option>
           <option value="keep">Found — keep</option>
           <option value="recreate">Found — recreate</option>
-        </select>
+        </ClassicSelect>
       </label>
 
       {profile.accelerator === "nvidia" && profile.cuda === "13.0" ? (
@@ -801,9 +803,9 @@ function FailureLab({ plan }: { plan: ResolvedPlan }) {
         {failure === "core-package" ? (
           <label className={styles.field}>
             <span>Fail at core call</span>
-            <select value={failedInstall} onChange={(event) => setFailedInstall(event.target.value)}>
+            <ClassicSelect value={failedInstall} onChange={(event) => setFailedInstall(event.target.value)}>
               {CORE_PACKAGES.map((item, index) => <option key={item.install} value={item.install}>{String(index + 1).padStart(2, "0")} · {item.name}</option>)}
-            </select>
+            </ClassicSelect>
           </label>
         ) : null}
       </section>

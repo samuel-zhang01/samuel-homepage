@@ -33,13 +33,13 @@
 
 .demoWindow button,
 .demoWindow input,
-.demoWindow select,
+.demoWindow [data-classic-select],
 .demoWindow textarea {
   color: inherit;
   font: inherit;
 }
 
-.demoWindow select,
+.demoWindow [data-classic-select],
 .demoWindow input:is([type="text"], [type="number"], [type="search"], [type="email"], [type="url"], [type="tel"], :not([type])),
 .demoWindow textarea {
   border: 2px solid var(--demo-ink);
@@ -91,7 +91,7 @@
 
 .demoWindow button:focus-visible,
 .demoWindow input:focus-visible,
-.demoWindow select:focus-visible,
+.demoWindow [data-classic-select]:focus-visible,
 .demoWindow textarea:focus-visible {
   outline: 3px solid #f2c14f;
   outline-offset: 2px;
@@ -363,7 +363,7 @@
   .demoContract summary,
   .macButton,
   .demoWindow button,
-  .demoWindow select,
+  .demoWindow [data-classic-select],
   .demoWindow input:is([type="text"], [type="number"], [type="search"], [type="email"], [type="url"], [type="tel"], :not([type])) {
     min-height: 44px;
   }

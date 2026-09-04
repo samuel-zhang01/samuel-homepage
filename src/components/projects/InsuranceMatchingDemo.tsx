@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useId, useMemo, useState, type CSSProperties } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
@@ -721,14 +723,14 @@ export function InsuranceMatchingDemo() {
             </label>
             <label className={styles.selectRow}>
               <span><strong>Minimum assessed signals</strong><small>Fail closed when evidence is too thin.</small></span>
-              <select
+              <ClassicSelect
                 value={minimumSignals}
                 onChange={(event) => setMinimumSignals(Number(event.target.value) as MinimumSignals)}
               >
                 <option value={1}>1 of 3</option>
                 <option value={2}>2 of 3</option>
                 <option value={3}>3 of 3</option>
-              </select>
+              </ClassicSelect>
             </label>
           </fieldset>
 
@@ -883,12 +885,12 @@ export function InsuranceMatchingDemo() {
             </p>
             <label>
               <span>Review reason</span>
-              <select value={reviewReason} onChange={(event) => setReviewReason(event.target.value)}>
-                <option>Broker context requires discussion</option>
-                <option>Explore alternative panel construction</option>
-                <option>Relationship context not modelled</option>
-                <option>Specialist wording review requested</option>
-              </select>
+              <ClassicSelect value={reviewReason} onChange={(event) => setReviewReason(event.target.value)}>
+                <option value="Broker context requires discussion">Broker context requires discussion</option>
+                <option value="Explore alternative panel construction">Explore alternative panel construction</option>
+                <option value="Relationship context not modelled">Relationship context not modelled</option>
+                <option value="Specialist wording review requested">Specialist wording review requested</option>
+              </ClassicSelect>
             </label>
             <MacButton
               primary
@@ -925,11 +927,11 @@ export function InsuranceMatchingDemo() {
           </div>
           <label className={styles.compareSelect}>
             <span>Compare against</span>
-            <select value={comparison.id} onChange={(event) => setComparisonId(event.target.value)}>
+            <ClassicSelect value={comparison.id} onChange={(event) => setComparisonId(event.target.value)}>
               {SCENARIOS.filter((item) => item.id !== scenario.id).map((item) => (
                 <option key={item.id} value={item.id}>{item.name}</option>
               ))}
-            </select>
+            </ClassicSelect>
           </label>
         </div>
 

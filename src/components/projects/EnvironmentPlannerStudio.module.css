@@ -17,13 +17,13 @@
 }
 
 .studio button,
-.studio select,
+.studio [data-classic-select],
 .studio input {
   font: inherit;
 }
 
 .studio button:focus-visible,
-.studio select:focus-visible,
+.studio [data-classic-select]:focus-visible,
 .studio input:focus-visible,
 .studio a:focus-visible {
   outline: 2px solid #195fa2;
@@ -362,7 +362,7 @@
   margin-bottom: 11px;
 }
 
-.field select {
+.field [data-classic-select] {
   width: 100%;
   min-height: 31px;
   padding: 5px 7px;
@@ -374,7 +374,7 @@
   font-size: 8px;
 }
 
-.field select:disabled {
+.field [data-classic-select]:disabled {
   color: #747771;
   background: #cfcfca;
 }

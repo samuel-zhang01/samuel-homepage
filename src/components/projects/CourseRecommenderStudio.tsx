@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useMemo, useState } from "react";
 
 import { DemoWindow } from "./DemoChrome";
@@ -331,9 +333,9 @@ function PreferenceControls({
       </fieldset>
 
       <div className={styles.selectGrid}>
-        <label><span>Preferred difficulty</span><select value={preferences.difficulty} onChange={(event) => setPreferences({ ...preferences, difficulty: event.target.value as Difficulty })}><option>Any</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
-        <label><span>Time commitment</span><select value={preferences.time} onChange={(event) => setPreferences({ ...preferences, time: event.target.value as TimeCommitment })}><option value="Any">Any</option><option value="part-time">Part-time</option><option value="full-time">Full-time</option><option value="flexible">Flexible</option></select></label>
-        <label><span>Budget range</span><select value={preferences.budget} onChange={(event) => setPreferences({ ...preferences, budget: event.target.value as Budget })}><option value="Any">Any</option><option value="free">Free</option><option value="under-100">Under $100</option><option value="100-500">$100–$500</option><option value="over-500">Over $500</option></select></label>
+        <label><span>Preferred difficulty</span><ClassicSelect value={preferences.difficulty} onChange={(event) => setPreferences({ ...preferences, difficulty: event.target.value as Difficulty })}><option value="Any">Any</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></ClassicSelect></label>
+        <label><span>Time commitment</span><ClassicSelect value={preferences.time} onChange={(event) => setPreferences({ ...preferences, time: event.target.value as TimeCommitment })}><option value="Any">Any</option><option value="part-time">Part-time</option><option value="full-time">Full-time</option><option value="flexible">Flexible</option></ClassicSelect></label>
+        <label><span>Budget range</span><ClassicSelect value={preferences.budget} onChange={(event) => setPreferences({ ...preferences, budget: event.target.value as Budget })}><option value="Any">Any</option><option value="free">Free</option><option value="under-100">Under $100</option><option value="100-500">$100–$500</option><option value="over-500">Over $500</option></ClassicSelect></label>
       </div>
 
       {mode === "source" ? (
@@ -576,7 +578,7 @@ function CounterfactualView({ preferences, weights, selectedId, setSelectedId }:
       <section className={`${styles.panel} ${styles.counterfactualHeader}`}>
         <div className={styles.panelHeading}><div><span>ONE-FACTOR PERTURBATIONS</span><h3>Counterfactual laboratory</h3></div></div>
         <div className={styles.counterfactualIntro}>
-          <label><span>Track course</span><select value={selectedCourse.id} onChange={(event) => setSelectedId(Number(event.target.value))}>{COURSES.map((course) => <option value={course.id} key={course.id}>{course.title}</option>)}</select></label>
+          <label><span>Track course</span><ClassicSelect value={selectedCourse.id} onChange={(event) => setSelectedId(Number(event.target.value))}>{COURSES.map((course) => <option value={course.id} key={course.id}>{course.title}</option>)}</ClassicSelect></label>
           <div><strong>WHY ADAPTED MODEL ONLY?</strong><p>The source baseline’s random number has no stable causal explanation. These scenarios use the declared deterministic rubric and change exactly one preference at a time.</p></div>
         </div>
       </section>

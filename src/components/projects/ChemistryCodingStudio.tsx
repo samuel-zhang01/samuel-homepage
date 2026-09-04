@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { useId, useMemo, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./ChemistryCodingStudio.module.css";
@@ -1135,9 +1137,9 @@ function QuantumLab() {
           <section className={styles.bindingCard}>
             <label>
               <span>Na⁺ BINDING CALCULATION</span>
-              <select value={selectedBinding} onChange={(event) => setSelectedBinding(event.currentTarget.value as typeof selectedBinding)}>
+              <ClassicSelect value={selectedBinding} onChange={(event) => setSelectedBinding(event.currentTarget.value as typeof selectedBinding)}>
                 {cationPiLedger.map((entry) => <option key={entry.id} value={entry.id}>{entry.label}</option>)}
-              </select>
+              </ClassicSelect>
             </label>
             <strong>{bindingEnergy.toFixed(2)} kcal mol⁻¹</strong>
             <code>{binding.complex.toFixed(2)} − ({binding.sodium.toFixed(2)}) − ({binding.aromatic.toFixed(2)})</code>

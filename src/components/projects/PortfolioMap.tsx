@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import {
   type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
@@ -210,9 +212,9 @@ function TimelineView({
           <strong id="portfolio-timeline-heading">Declared project spans</strong>
           <p>Ranges include every named year. “Ongoing” remains a separate source label; no start date is inferred.</p>
         </div>
-        <label><span>Year</span><select value={yearFilter} onChange={(event) => setYearFilter(event.target.value)}><option value="all">All declared spans</option>{YEAR_AXIS.map((year) => <option key={year} value={year}>{year}</option>)}<option value="ongoing">Ongoing label</option></select></label>
-        <label><span>Status</span><select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as "all" | ProjectStatus)}><option value="all">All statuses</option>{STATUS_VALUES.map((status) => <option key={status} value={status}>{status}</option>)}</select></label>
-        <label><span>Access</span><select value={accessFilter} onChange={(event) => setAccessFilter(event.target.value as "all" | ProjectAccess)}><option value="all">All access levels</option>{ACCESS_VALUES.map((access) => <option key={access} value={access}>{accessMeta[access].label}</option>)}</select></label>
+        <label><span>Year</span><ClassicSelect value={yearFilter} onChange={(event) => setYearFilter(event.target.value)}><option value="all">All declared spans</option>{YEAR_AXIS.map((year) => <option key={year} value={year}>{year}</option>)}<option value="ongoing">Ongoing label</option></ClassicSelect></label>
+        <label><span>Status</span><ClassicSelect value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as "all" | ProjectStatus)}><option value="all">All statuses</option>{STATUS_VALUES.map((status) => <option key={status} value={status}>{status}</option>)}</ClassicSelect></label>
+        <label><span>Access</span><ClassicSelect value={accessFilter} onChange={(event) => setAccessFilter(event.target.value as "all" | ProjectAccess)}><option value="all">All access levels</option>{ACCESS_VALUES.map((access) => <option key={access} value={access}>{accessMeta[access].label}</option>)}</ClassicSelect></label>
         <output aria-live="polite"><strong>{filtered.length}</strong><span>of {projects.length} records</span></output>
       </section>
 
@@ -476,9 +478,9 @@ function ComparisonView({
   return (
     <div className={styles.compareView}>
       <section className={styles.compareSelectors}>
-        <div><span>PROJECT A</span><select aria-label="Comparison project A" value={left.slug} onChange={(event) => chooseLeft(event.target.value)}>{projects.map((project) => <option key={project.slug} value={project.slug}>{project.title}</option>)}</select></div>
+        <div><span>PROJECT A</span><ClassicSelect aria-label="Comparison project A" value={left.slug} onChange={(event) => chooseLeft(event.target.value)}>{projects.map((project) => <option key={project.slug} value={project.slug}>{project.title}</option>)}</ClassicSelect></div>
         <div className={styles.overlapDial}><span>FIELD OVERLAP</span><strong>{overlap.signals.length}</strong><small>unweighted declared signals</small></div>
-        <div><span>PROJECT B</span><select aria-label="Comparison project B" value={right.slug} onChange={(event) => chooseRight(event.target.value)}>{projects.map((project) => <option key={project.slug} value={project.slug}>{project.title}</option>)}</select></div>
+        <div><span>PROJECT B</span><ClassicSelect aria-label="Comparison project B" value={right.slug} onChange={(event) => chooseRight(event.target.value)}>{projects.map((project) => <option key={project.slug} value={project.slug}>{project.title}</option>)}</ClassicSelect></div>
       </section>
 
       <div className={styles.compareCards}>

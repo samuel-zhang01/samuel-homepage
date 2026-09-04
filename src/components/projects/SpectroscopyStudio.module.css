@@ -137,10 +137,10 @@
 }
 
 .textField input,
-.selectField select,
+.selectField [data-classic-select],
 .rangeInputs input,
 .exportFields input,
-.exportFields select {
+.exportFields [data-classic-select] {
   min-width: 0;
   min-height: 27px;
   padding: 4px 6px;
@@ -157,10 +157,10 @@
 }
 
 .textField input:focus,
-.selectField select:focus,
+.selectField [data-classic-select]:focus,
 .rangeInputs input:focus,
 .exportFields input:focus,
-.exportFields select:focus {
+.exportFields [data-classic-select]:focus {
   background: #fffde9;
 }
 
@@ -188,7 +188,7 @@
   accent-color: var(--spec-blue);
 }
 
-.selectField select:disabled {
+.selectField [data-classic-select]:disabled {
   color: #6c6d69;
   background: #d3d3cf;
 }

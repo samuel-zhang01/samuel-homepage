@@ -183,8 +183,8 @@
   text-transform: uppercase;
 }
 
-.scopeBar select,
-.ledgerFilters select,
+.scopeBar [data-classic-select],
+.ledgerFilters [data-classic-select],
 .ledgerFilters input {
   width: 100%;
   min-height: 29px;
@@ -194,12 +194,6 @@
   color: var(--ocean-foam);
   background: var(--ocean-surface);
   font-size: 9px;
-}
-
-.scopeBar select option,
-.ledgerFilters select option {
-  color: #101820;
-  background: #fff;
 }
 
 .scopeBar p {
@@ -1605,8 +1599,8 @@
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
 }
 
-.scopeBar select,
-.ledgerFilters select,
+.scopeBar [data-classic-select],
+.ledgerFilters [data-classic-select],
 .ledgerFilters input {
   border-color: #555;
   color: #111;

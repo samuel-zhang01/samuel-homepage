@@ -7,14 +7,14 @@
 
 .studio button,
 .studio input,
-.studio select,
+.studio [data-classic-select],
 .studio textarea {
   font: inherit;
 }
 
 .studio button:focus-visible,
 .studio input:focus-visible,
-.studio select:focus-visible,
+.studio [data-classic-select]:focus-visible,
 .studio textarea:focus-visible,
 .studio summary:focus-visible {
   outline: 3px solid #f4bd35;
@@ -131,7 +131,7 @@
   text-transform: uppercase;
 }
 
-.lensControl select,
+.lensControl [data-classic-select],
 .metaGrid input {
   min-height: 31px;
   padding: 6px 8px;

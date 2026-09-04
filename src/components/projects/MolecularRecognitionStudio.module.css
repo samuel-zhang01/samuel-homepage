@@ -18,13 +18,13 @@
 
 .studio button,
 .studio input,
-.studio select {
+.studio [data-classic-select] {
   font: inherit;
 }
 
 .studio button:focus-visible,
 .studio input:focus-visible,
-.studio select:focus-visible,
+.studio [data-classic-select]:focus-visible,
 .studio a:focus-visible,
 .conformerSvg:focus-visible {
   outline: 3px solid #f1b93d;
@@ -361,8 +361,8 @@
 
 .selectField { display: block; margin-bottom: 15px; }
 .selectField > span { display: block; margin-bottom: 5px; }
-.selectField select,
-.viewerToolbar select {
+.selectField [data-classic-select],
+.viewerToolbar [data-classic-select] {
   width: 100%;
   min-height: 34px;
   padding: 5px 28px 5px 8px;

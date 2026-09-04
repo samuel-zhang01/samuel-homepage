@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import { type KeyboardEvent as ReactKeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
@@ -587,9 +589,9 @@ export function SchedulingStudio() {
         <section aria-labelledby="constraint-heading">
           <div className={styles.sectionTitle}><span>02</span><strong id="constraint-heading">Booking constraints</strong></div>
           <div className={styles.constraintGrid}>
-            <label><span>Duration</span><select value={duration} onChange={(event) => { setDuration(Number(event.target.value)); setSelection(null); }}><option value={30}>30 minutes</option><option value={45}>45 minutes</option><option value={60}>60 minutes</option></select></label>
-            <label><span>Buffer each side</span><select value={buffer} onChange={(event) => { setBuffer(Number(event.target.value)); setSelection(null); }}><option value={0}>None</option><option value={15}>15 minutes</option><option value={30}>30 minutes</option></select></label>
-            <label><span>Display timezone</span><select value={timezone} onChange={(event) => setTimezone(event.target.value as Timezone)}><option value="Europe/London">London</option><option value="America/New_York">New York</option><option value="Asia/Tokyo">Tokyo</option></select></label>
+            <label><span>Duration</span><ClassicSelect value={duration} onChange={(event) => { setDuration(Number(event.target.value)); setSelection(null); }}><option value={30}>30 minutes</option><option value={45}>45 minutes</option><option value={60}>60 minutes</option></ClassicSelect></label>
+            <label><span>Buffer each side</span><ClassicSelect value={buffer} onChange={(event) => { setBuffer(Number(event.target.value)); setSelection(null); }}><option value={0}>None</option><option value={15}>15 minutes</option><option value={30}>30 minutes</option></ClassicSelect></label>
+            <label><span>Display timezone</span><ClassicSelect value={timezone} onChange={(event) => setTimezone(event.target.value as Timezone)}><option value="Europe/London">London</option><option value="America/New_York">New York</option><option value="Asia/Tokyo">Tokyo</option></ClassicSelect></label>
           </div>
         </section>
       </div>

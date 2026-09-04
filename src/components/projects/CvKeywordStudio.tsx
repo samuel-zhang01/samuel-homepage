@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import {
   useMemo,
   useState,
@@ -667,10 +669,10 @@ export function CvKeywordStudio() {
           </div>
           <label className={styles.lensControl}>
             <span>Extraction lens</span>
-            <select value={lens} onChange={(event) => setLens(event.target.value as PriorityLens)}>
+            <ClassicSelect value={lens} onChange={(event) => setLens(event.target.value as PriorityLens)}>
               <option value="all">Balanced · all detected</option>
               <option value="core">Core · essential / weight 5</option>
-            </select>
+            </ClassicSelect>
           </label>
         </div>
 

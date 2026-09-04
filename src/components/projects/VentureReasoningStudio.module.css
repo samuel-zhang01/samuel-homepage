@@ -16,13 +16,13 @@
 
 .studio button,
 .studio input,
-.studio select {
+.studio [data-classic-select] {
   font: inherit;
 }
 
 .studio button:focus-visible,
 .studio input:focus-visible,
-.studio select:focus-visible {
+.studio [data-classic-select]:focus-visible {
   outline: 3px solid #155f9b;
   outline-offset: 2px;
 }

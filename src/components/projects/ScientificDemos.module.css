@@ -3,7 +3,7 @@
 }
 
 .scientificWindow button,
-.scientificWindow select,
+.scientificWindow [data-classic-select],
 .scientificWindow input {
   font: inherit;
 }
@@ -567,7 +567,7 @@
   letter-spacing: 0.07em;
 }
 
-.visionControls select {
+.visionControls [data-classic-select] {
   width: 100%;
   min-height: 29px;
   border: 2px solid;

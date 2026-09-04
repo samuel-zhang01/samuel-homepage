@@ -262,10 +262,10 @@
   text-transform: uppercase;
 }
 
-.toolbar select,
+.toolbar [data-classic-select],
 .toolbar input,
-.schedulerControls select,
-.rlControls select {
+.schedulerControls [data-classic-select],
+.rlControls [data-classic-select] {
   width: 100%;
   min-height: 29px;
   border: 2px solid;

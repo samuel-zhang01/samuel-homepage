@@ -1,5 +1,7 @@
 "use client";
 
+import ClassicSelect from "../ClassicSelect";
+
 import {
   type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
@@ -832,7 +834,7 @@ export function MolecularRecognitionStudio() {
 
                 <label className={styles.selectField}>
                   <span>Calculated catalog</span>
-                  <select
+                  <ClassicSelect
                     value={candidateIndex}
                     onChange={(event) => {
                       const next = Number(event.target.value);
@@ -841,7 +843,7 @@ export function MolecularRecognitionStudio() {
                     }}
                   >
                     {record.candidates.map((entry, index) => <option key={entry.id} value={index}>{entry.id} · synthetic</option>)}
-                  </select>
+                  </ClassicSelect>
                 </label>
 
                 <RangeControl
@@ -1065,7 +1067,7 @@ export function MolecularRecognitionStudio() {
                   <div className={styles.moleculeButtons} role="group" aria-label="Atlas molecule">
                     {(Object.keys(molecules) as MoleculeId[]).map((id) => <button key={id} type="button" aria-pressed={moleculeId === id} onClick={() => chooseMolecule(id)}>{molecules[id].name}</button>)}
                   </div>
-                  <label><span>Conformer</span><select value={candidateIndex} onChange={(event) => setCandidateIndex(Number(event.target.value))}>{record.candidates.map((entry, index) => <option key={entry.id} value={index}>{entry.id}</option>)}</select></label>
+                  <label><span>Conformer</span><ClassicSelect value={candidateIndex} onChange={(event) => setCandidateIndex(Number(event.target.value))}>{record.candidates.map((entry, index) => <option key={entry.id} value={index}>{entry.id}</option>)}</ClassicSelect></label>
                 </div>
                 <div className={styles.projectionWrap}>
                   <ConformerProjection

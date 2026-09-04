@@ -126,7 +126,7 @@
 .constraintGrid { display: grid; gap: 6px; }
 .constraintGrid label { display: grid; grid-template-columns: 82px minmax(0, 1fr); align-items: center; gap: 6px; }
 .constraintGrid label > span { color: #555; font-size: 8px; font-weight: 700; }
-.constraintGrid select { width: 100%; min-width: 0; height: 26px; border: 1px solid #171717; border-radius: 0; background: #fff; font-size: 9px; }
+.constraintGrid [data-classic-select] { width: 100%; min-width: 0; height: 26px; border: 1px solid #171717; border-radius: 0; background: #fff; font-size: 9px; }
 
 .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 12px 0; border: 1px solid #171717; background: #11177a; color: #fff; }
 .metrics div { padding: 8px; border-right: 1px solid #686dc3; text-align: center; }
