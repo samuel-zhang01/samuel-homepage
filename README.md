@@ -11,6 +11,7 @@ tab—without an account, tracking API or server-side personal-data store.
 
 Latest: [5 September interaction and reliability follow-up](docs/INTERACTION_AUDIT_2026-09-05.md).
 Detail pass: [ruled paper, classic menus and Orbital Lab](docs/ORBITAL_AND_DETAIL_AUDIT.md).
+Rendering follow-up: [high-DPI ASCII, density/surface 3D and icon alignment](docs/ORBITAL_RENDER_QUALITY_AUDIT.md).
 
 ![Samuel System 7 desktop showing the About Samuel Zhang window and classic desktop icons](public/readme-system7-desktop.png)
 
@@ -97,9 +98,14 @@ Open its dedicated **Orbital Lab** desktop icon, `/orbitals`, the Apple menu
 entry, or its Desk Accessories card. The desktop shortcut has its own orbital
 artwork, translated label and description, and opens the standalone app window.
 Start with H, C, Fe or Ce; choose an occupied subshell and real angular component,
-then drag the ASCII cloud or use arrow keys/buttons to rotate it. The periodic
-table supports keyboard selection and a **View orbital** return action on long
-phone layouts. **Save ASCII…** exports the view with its model notes and sources.
+then drag the view or use arrow keys/buttons to rotate it. Choose **ASCII**
+(Fine or Ultra detail), **Density 3D** (transparent probability points with
+adjustable opacity), or **Smooth 3D** (lit constant-density surfaces). Canvas
+backing stores follow display pixel density, including mobile and browser zoom.
+The collapsible periodic table sits above the viewer, supports keyboard selection,
+and includes group/period labels and a block-colour key. The inspector adds shell
+electron totals and aligned Hund-filling arrows. **Save ASCII…** exports text with
+model notes and sources; the 3D modes offer **Save image…** for a PNG.
 
 This is an analytic, non-relativistic, one-electron **hydrogen-like model at
 Z = 1**, not a molecular solver or a calculation of the selected many-electron
@@ -108,12 +114,16 @@ compilations; 105–118 are explicitly illustrative Aufbau fillings. Phase ink
 denotes wavefunction sign, not charge. Clouds contain the inner 99.5% of radial
 probability and are independently fitted to the viewport. The app explains
 projection, thin-slab and radial-density limits instead of implying physical
-boundaries or comparable atomic sizes.
+boundaries or comparable atomic sizes. The smooth surface is a sampled 1%-of-peak
+|ψ|² isovalue, not a fixed probability enclosure. Its adaptive spatial bound
+resolves high-n cores; small features below the 80-cell grid can still be omitted.
 
 The interface has all four locales, with separate Mandarin terminology for
 Mainland China and Taiwan. Element names retain their English reference labels.
-The bounded sampler and renderer make no runtime network calls and rotation
-starts paused. No account, chemistry package, GPU or extra subscription is needed.
+The bounded sampler and renderer make no runtime third-party calls and rotation
+starts paused. Surface meshing runs in a same-origin worker with a three-entry
+cache. 3D uses WebGL and falls back to ASCII if unavailable; no account, chemistry
+package or extra subscription is needed.
 
 ### Other exhibits
 
