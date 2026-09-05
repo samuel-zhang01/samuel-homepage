@@ -11,7 +11,7 @@ const root = mkdtempSync(join(tmpdir(), "homepage-deploy-check-"));
 const git = (cwd, ...args) => execFileSync("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 let checks = 0;
 try {
-  for (const scenario of ["success", "local", "dirty", "untracked", "ahead", "branch", "install", "build", "health", "first", "headers", "port", "lookup", "inspect", "empty-image", "public", "public-redirect"]) {
+  for (const scenario of ["success", "local", "dirty", "untracked", "ahead", "branch", "install", "build", "health", "first", "headers", "not-found", "port", "lookup", "inspect", "empty-image", "public", "public-redirect"]) {
     const dir = join(root, scenario);
     const checkout = join(dir, "checkout");
     const remote = join(dir, "origin.git");
@@ -78,6 +78,7 @@ if (args.startsWith('compose ps -q')) console.log(fs.existsSync(marker) ? 'candi
 if (args.startsWith('inspect')) console.log(args.includes('.Image') ? 'sha256:previous' : (['health', 'first'].includes(scenario) ? 'unhealthy' : 'healthy'));
 if (args.startsWith('exec')) {
  if (args.includes('untrusted.invalid')) { console.log('HTTP/1.1 421 Misdirected Request'); process.exit(1); }
+ if (args.includes('__finder_missing_item__')) { console.log('HTTP/1.1 ' + (scenario === 'not-found' ? '200 OK' : '404 Not Found')); process.exit(scenario === 'not-found' ? 0 : 1); }
  if (args.includes('--server-response')) console.log('HTTP/1.1 200 OK\\n' + (scenario === 'headers' ? '' : 'Content-Security-Policy: default-src \\'self\\'\\nCross-Origin-Opener-Policy: same-origin\\nCross-Origin-Resource-Policy: same-origin\\nStrict-Transport-Security: max-age=31536000\\nX-Content-Type-Options: nosniff\\nX-Frame-Options: DENY'));
 }
 `;
@@ -96,6 +97,7 @@ if (args.startsWith('exec')) {
       assert.match(log, /npm ci --include=dev --no-fund --no-audit/);
       assert.match(log, /npm run check:orbitals/);
       for (const locale of ["en-gb", "en-us", "zh-cn", "zh-tw"]) assert.ok(log.includes(`/${locale}/orbitals`));
+      assert.ok(log.includes("/__finder_missing_item__"));
       assert.ok(!log.includes("docker tag"));
       assert.equal(readFileSync(join(checkout, ".env"), "utf8"), "VERIFY_PUBLIC_ORIGIN=0\n");
     }
@@ -104,7 +106,7 @@ if (args.startsWith('exec')) {
       assert.match(output, /UPDATED_SCRIPT/);
     }
     if (["dirty", "untracked", "ahead", "branch", "install", "build", "port", "lookup", "inspect", "empty-image"].includes(scenario)) assert.ok(!log.includes("compose up"), scenario);
-    if (["health", "headers", "public-redirect"].includes(scenario)) {
+    if (["health", "headers", "not-found", "public-redirect"].includes(scenario)) {
       assert.match(log, /docker tag sha256:previous samuel-homepage:production/);
       assert.match(log, /compose up -d --no-build --force-recreate/);
     }

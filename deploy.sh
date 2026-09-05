@@ -185,6 +185,13 @@ for _ in {1..45}; do
         fi
       done
 
+      missing_route_response=$(docker exec "$container_id" wget --server-response --tries=1 --spider \
+        --header="Host: ${public_host}" http://127.0.0.1:3000/__finder_missing_item__ 2>&1 || true)
+      if ! grep -Eq "HTTP/[0-9.]+ 404" <<<"$missing_route_response"; then
+        echo "The production server did not preserve HTTP 404 for an unknown route." >&2
+        exit 1
+      fi
+
       response_headers=$(docker exec "$container_id" wget --server-response --tries=1 --spider \
         --header="Host: ${public_host}" http://127.0.0.1:3000 2>&1)
       for required_header in \

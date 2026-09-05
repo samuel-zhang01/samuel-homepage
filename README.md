@@ -88,6 +88,7 @@ of permanent storage. Export a backup before clearing site data or changing devi
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
 - Responsive System 7 windows designed for 320 px mobile screens through large desktops, with pointer- and keyboard-resizable floating windows on desktop.
+- A localised Finder-style crash dialog for unknown routes that preserves the real HTTP 404 status and offers safe ways home.
 
 ## System 7 design contract
 
