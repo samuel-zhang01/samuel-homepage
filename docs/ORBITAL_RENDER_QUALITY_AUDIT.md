@@ -76,3 +76,38 @@ from the initial audit still apply: this is an educational Z=1 one-electron
 model, not a many-electron or molecular quantum-chemistry solver. These changes
 are locally verified; the previously rejected SSH authentication still prevents
 claiming deployment to the live server.
+
+## Motion, density and Note Pad follow-up
+
+Also 5 September 2026; supersedes the original 12.5 Hz rotation cap.
+
+- Rotation now uses timestamp-based `requestAnimationFrame` callbacks, drawing
+  directly into the canvas and updating the compass without rendering the whole
+  React application every frame. The angle advances at the same speed at
+  simulated 60/120/144 Hz; hidden/inactive and reduced-motion stops are retained.
+  [Browser scheduling reference](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame).
+- Density points are solid discs with a narrow antialiased rim, rather than
+  Gaussian sprites. The minimum diameter follows the effective pixel density,
+  and default opacity is 45%. Sampling and scientific interpretation are unchanged.
+- Point vertices upload once per cloud. Rotation reuses depth/order arrays and
+  updates only 16-bit sorted indices instead of rebuilding all vertex data and
+  allocating thousands of JavaScript objects each frame.
+- Note Pad page arrows moved out of the paper into a previous / page count / next
+  footer group. Both have 44 px targets; compact windows put save status above
+  navigation. Existing translated labels, page retention and ruled text remain.
+- Production browser tests repeated the full four-locale × four-width orbital
+  matrix and added the same 16-case Note Pad navigation matrix. No overflow,
+  page-text loss or script errors were observed. Computer-use and screenshot
+  inspection confirmed the footer and the clearer density points.
+- Six production motion cases (desktop/phone × ASCII/density/surface) recorded
+  approximately 60 FPS and a 16.7 ms median interval. The tests also cover pause,
+  reset, manual rotation and changing modes/opacity while rotating. Steady
+  rotation made zero full vertex-buffer uploads. Physical 120/144 Hz hardware
+  was not available; the frame-rate-independent maths is covered by unit tests.
+- Orbital checks now total **479**. Repeated mode changes, exports, reduced
+  motion, actual context loss and forced no-WebGL fallback passed again.
+- Deployment handoff changed at the user's request: push to GitHub and let the
+  user deploy on their server. `deploy.sh` now performs a protected fast-forward
+  update, locked dependency installation, checks, build and verified replacement.
+  Seventeen scenarios exercise real temporary Git repositories with simulated
+  Docker/npm, including rollback; this is not a live-server deployment claim.

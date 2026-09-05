@@ -1,5 +1,7 @@
 # Samuel System 7
 
+### A personal website with a desktop's curiosity.
+
 Samuel Zhang's personal portfolio, presented as a carefully researched
 System 7-inspired desktop. Biography, experience, projects, COVERD, games, CVs
 and supporting documents open as movable desktop windows inside one browser
@@ -7,13 +9,69 @@ tab—without an account, tracking API or server-side personal-data store.
 
 **[Open the live desktop](https://me.samuelzhang.co.uk)** ·
 **[Browse the project archive](https://me.samuelzhang.co.uk/projects)** ·
-**[Read the release audit](docs/RELEASE_AUDIT.md)**
+**[Explore Orbital Lab](https://me.samuelzhang.co.uk/orbitals)**
+
+**40 project files · 9 useful desk apps · 4 languages · no account required**
+
+[Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
 Latest: [5 September interaction and reliability follow-up](docs/INTERACTION_AUDIT_2026-09-05.md).
 Detail pass: [ruled paper, classic menus and Orbital Lab](docs/ORBITAL_AND_DETAIL_AUDIT.md).
 Rendering follow-up: [high-DPI ASCII, density/surface 3D and icon alignment](docs/ORBITAL_RENDER_QUALITY_AUDIT.md).
+Archive follow-up: [desktop app records, detailed Find and verification](docs/ARCHIVE_SEARCH_AUDIT_2026-09-05.md).
 
-![Samuel System 7 desktop showing the About Samuel Zhang window and classic desktop icons](public/readme-system7-desktop.png)
+![Samuel System 7 desktop with its About window and classic desktop icons](docs/assets/desktop.png)
+
+## A quick look
+
+A familiar title bar. A useful little notebook. An orbital you can turn in your
+hands. The old desktop language is the starting point; the interactions are
+built for today's browsers, keyboards and touch screens.
+
+![Project Archive with 40 evidence files, guided workspaces and interactive exhibits](docs/assets/project-archive.png)
+
+<table>
+  <tr>
+    <th>Probability, made visible</th>
+    <th>The same desk, in your pocket</th>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/orbital-density.png" alt="Sharp phase-coloured probability points in Orbital Lab" width="560" /></td>
+    <td><img src="docs/assets/mobile-note-pad.png" alt="Traditional Chinese Note Pad on a phone, with aligned ruled text and clear page controls" width="240" /></td>
+  </tr>
+</table>
+
+<details>
+<summary>Watch Orbital Lab turn — animated preview</summary>
+
+![A rotating two-lobed orbital probability cloud](docs/assets/orbital-rotation.gif)
+
+The GIF is a compact recording, not a performance benchmark. The application
+uses display-timed animation, starts paused, and respects reduced-motion settings.
+
+</details>
+
+Screenshots show the current source build. The deployed site may remain on an
+earlier revision until the server owner runs the deployment script.
+
+## The desk apps
+
+Every app has its own archive record; the records launch the same desktop windows.
+
+| App | What it is good for | Keep the result |
+| --- | --- | --- |
+| Note Pad | Eight ruled pages, date insertion and clear page navigation | Local autosave, text export and desk backup |
+| Sketch Pad | Quick mouse/touch drawings with undo | Local drawing, PNG and desk backup |
+| Quick List | Small tasks, priorities and completion | Local autosave and desk backup |
+| Focus Clock | Timed focus sessions and a daily tally | Local progress and desk backup |
+| Pocket Calendar | Private notes attached to dates | Local autosave and desk backup |
+| Desk Calculator | Everyday arithmetic with a paper tape | Copy result, local tape and desk backup |
+| Unit Converter | Length, mass, temperature and decimal data units | Copy result |
+| Colour Studio | Palette swatches and contrast checks | Local swatches and desk backup |
+| Orbital Lab | ASCII, probability points and smooth orbital surfaces | Text/PNG exports with model context |
+
+Local means this browser profile—not a cloud account, shared database or promise
+of permanent storage. Export a backup before clearing site data or changing devices.
 
 ## What is included
 
@@ -21,11 +79,11 @@ Rendering follow-up: [high-DPI ASCII, density/surface 3D and icon alignment](doc
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
 - Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.
-- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches all 22 apps and 31 project files, including translated summaries; arrow keys choose a result and Return opens it.
-- A browser-native Orbital Lab: all 118 elements, real s/p/d/f orbital probability clouds rendered in ASCII, rotation, subshell inspection, radial curves, node counts and text export.
+- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches all 22 apps and 40 project files. Optional Detailed search includes public project/demo text with matching excerpts; arrow keys choose a result, Return opens it and Escape closes Find.
+- A browser-native Orbital Lab: all 118 elements, real s/p/d/f orbital clouds in high-DPI ASCII, density points or smooth 3D, refresh-synchronised rotation, subshell inspection, radial curves, node counts and exports.
 - Shared System 7 pop-up menus throughout accessories, project filters and interactive labs, with keyboard/typeahead navigation and bounded touch-friendly lists.
 - Three persistent desktop patterns and a menu-bar clock that opens Pocket Calendar with one click.
-- A 31-record project archive organised into six guided shelves and 14 substantial experiences, with 27 interactive chapters lazy-loaded by exhibit module, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
+- A 40-record project archive organised into six guided shelves and 16 experiences: 27 lazy-loaded interactive chapters plus nine entries launching the existing Orbital Lab and desk apps, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
@@ -57,15 +115,19 @@ Small interactive evidence fixtures use reviewed local CSV files under
 third-party fetching and raw public downloads are disabled. `npm run check:data` pins their schema, size, row grain, domains,
 uniqueness and SHA-256 before every production build.
 
-The Projects folder opens in **Guided Workspaces**: four short “start here” routes and six themed shelves progressively reveal 14 visitor-facing experiences. Eight multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture and Supporting Audits—while six flagship experiences remain standalone. Every one of the 31 source records appears exactly once in this guided structure; the 27 interactive chapters keep their canonical `?project=` links and load on demand through their exhibit modules.
+The Projects folder opens in **Guided Workspaces**: four short “start here” routes and six themed shelves progressively reveal 16 visitor-facing experiences. Nine multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture, Supporting Audits and Desk Accessories—while seven experiences remain standalone. Every one of the 40 records appears exactly once in this guided structure. The 27 exhibit modules load on demand; the nine native-app records launch existing windows rather than duplicate the tools. Every file retains its canonical `?project=` link.
 
-**All 31 Files** is the secondary expert view, with discipline, access and featured-work filters plus curated, newest-first and title sorting. Search matches multiple terms across names, tools and translated summaries, including fullwidth text and accented spellings. Press `/` while the archive is active to open that view and focus search; Enter or the down arrow moves into its results. Valid project deep links open the exact file directly, and switching back to Guided Workspaces reveals its parent shelf and suite.
+**All 40 Files** is the secondary expert view, with discipline, access and featured-work filters plus curated, newest-first and title sorting. Its quick filter matches multiple terms across names, tools and translated summaries, including fullwidth text and accented spellings. Press `/` while the archive is active to open that view and focus search; Enter or the down arrow moves into its results. For full public project text, open **File → Find…** and enable **Detailed search**. Valid project deep links open the exact file directly, and switching back to Guided Workspaces reveals its parent shelf and suite.
 
-Every executable chapter opens with a typed case brief: audience, human problem, objective, Samuel's precise contribution, input-to-output pipeline, evidence boundary and a concrete 30-second walkthrough. Suite navigation switches directly between lazy-loaded chapters while preserving each chapter's `?project=` deep link. The catalogue gate requires all 27 demos to have this story record, validates suite membership and enforces the 14-experience structure.
+Every research/demo chapter opens with a typed case brief: audience, human problem, objective, Samuel's precise contribution, input-to-output pipeline, evidence boundary and a concrete 30-second walkthrough. Suite navigation switches between chapters while preserving each chapter's `?project=` deep link. The catalogue gate requires all 27 demos to have this story record, validates suite membership and enforces the 16-experience structure. Native tools instead provide concise local-use descriptions, capabilities and storage/model boundaries.
+
+Detailed Find indexes public metadata, case briefs, build logs and static demo/app copy—including inactive tabs and alternative control states—in English and the selected language. A same-origin index is fetched only when the toggle is enabled; basic search keeps working if the download fails. It never indexes private notes/drawings, imported files, linked PDFs/external websites or arbitrary live simulation outputs. Existing untranslated research wording remains searchable in English.
+
+`npm run prepare:search` rebuilds four deterministic text indexes before development and production builds; `npm run check:search` detects stale/missing output and tests coverage and isolation. After changing public text during an already-running development session, rerun preparation and reload Find. Generated JSON is ignored in Git and regenerated in the Docker build; it is not added to the initial JavaScript bundle.
 
 Each record also retains its `Start small → Move forward → Polish` history. Five reviewed external-or-artifact actions expose supporting PDFs, workbooks or a primary public record. Live websites and immutable source snapshots remain separately labelled, and public visibility is never presented as a licence.
 
-The **Portfolio Map** top-level tab provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Guided chrome, archive search, filters, sorting, layouts, actions, status announcements, project summaries and suite descriptions follow the selected locale. Project titles, Portfolio Map analytical copy, longer source-traced evidence narratives and interactive lab copy remain in British English so technical claims are not silently rewritten by a partial translation layer; the interface states that boundary explicitly.
+The **Portfolio Map** top-level tab provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Guided chrome, archive search, filters, sorting, layouts, actions, status announcements, project summaries, suite descriptions and native desk-app records follow the selected locale. Original research titles, Portfolio Map analytical copy, longer source-traced evidence narratives and research-demo copy retain their source language; the interface states that boundary explicitly rather than claiming complete translation of every research narrative.
 
 Dedicated project routes open the archive maximised and can shift between catalogue, balanced and detail-focused layouts. On desktop, the System 7 project window supports pointer and keyboard resizing; its title-bar zoom control toggles the maximised and floating presentations. Small screens use the same content in a constrained responsive layout.
 
@@ -78,7 +140,7 @@ Disclosure is explicit:
 - `Private / redacted` means the live system, operational data, credentials and source remain withheld; any deliberately public artifact is reviewed and pinned separately.
 - `Open source` is reserved for material with a clear public licence; public visibility alone is not treated as an open-source grant.
 
-The current repository audit found no Samuel-authored project with an explicit repository-level licence, so the Open source count intentionally remains zero. Nested licences belonging to copied dependencies or teaching infrastructure do not licence their parent repositories.
+The Open source count intentionally remains zero: no archive record is presented as carrying an unrestricted open-source grant. This desktop's own code now has a custom non-commercial source-available licence, which is a different category. Nested licences belonging to dependencies or teaching infrastructure do not licence their parent repositories.
 
 Private entries use labels, lock icons and patterns as well as colour. Insurance lead matching and other organisational work use synthetic or high-level public reconstructions. GROWMAT links its original external showcase by owner request; live company data, credentials and source remain private.
 
@@ -152,6 +214,52 @@ Open tabs in the same browser receive saved-state updates. This is last-observed
 - Static generation for locale and application routes
 - Standalone, non-root Docker runtime
 
+## Publication and licensing
+
+The original code is **source-available with attribution, non-commercial use and
+free share-alike conditions**. The complete terms are in [LICENSE](LICENSE).
+This is a custom licence—not an OSI-approved open-source licence or a Creative
+Commons software licence. A restriction on commercial use does not meet the
+[Open Source Definition](https://opensource.org/osd).
+
+| You may | You must | You may not |
+| --- | --- | --- |
+| Study, modify and share the original code for non-commercial purposes | Credit Samuel Zhang and link to this repository | Sell copies/templates, charge for access, or monetise the work |
+| Build a free personal portfolio, including one used to seek employment | Put visible attribution in About, Credits or a footer | Use it for paid client work or a commercial product/service |
+| Publish a modified version | Keep it free, under the same licence, with its editable source available | Remove attribution or impose restrictions preventing further permitted sharing |
+
+Example credit:
+
+> Inspired by [Samuel Zhang](https://github.com/samuel-zhang01/samuel-homepage).
+
+These permissions cover only rights Samuel can grant. Personal/CV content,
+photographs, corporate and educational documents, brands and separately attributed
+third-party material are **not** a reusable portfolio-content pack. Replace them
+with your own authorised content. Dependencies and attributed material retain
+their own terms; see [Third-party notices](THIRD_PARTY_NOTICES.md). This is not an
+Apple product and is not affiliated with or endorsed by Apple.
+
+**Publication status, 5 September 2026:** GitHub reports this repository is already
+public. The current website's artifact gates are not a privacy clearance for all
+Git history, nor do they establish redistribution rights for every portfolio
+asset. Historical-content and media-permission review remains open; no visibility
+change or history rewrite was performed. Do not describe the repository as fully
+cleared for unrestricted redistribution. The custom licence expresses the owner's
+requested terms; obtain qualified legal review before relying on its enforceability.
+
+### Make a personal version
+
+1. Read the licence and preserve the credit, licence and third-party notices.
+2. Download the source using GitHub's **Code → Download ZIP**, or clone it.
+3. Replace biography, contacts, CVs, photos, employer/client information and
+   project records with material you own or have permission to publish.
+4. Update the canonical hostname and host allowlist before deploying elsewhere;
+   this checkout intentionally verifies Samuel's production domain.
+5. Update the reviewed-artifact hashes and locale fixtures for your own approved
+   files. Do not disable the privacy gates to make a build pass.
+6. Run the complete release checks, publish the editable source of your changes
+   with the same licence, and retain a visible linked attribution.
+
 ## Local development on port 5174
 
 Node.js 20.16 or newer is required.
@@ -179,19 +287,14 @@ Run **Tasks: Run Task** from the Command Palette, then choose **Homepage: dev pr
 Before publishing, run:
 
 ```bash
-npm run check:artifacts
-npm run check:data
-npm run check:desk
-npm run check:controls
-npm run check:orbitals
-npm run check:catalogue
-npm run check:styles
-npm run check:locales
-npm run lint
-npx tsc --noEmit
-npm run build
-npm audit --audit-level=moderate
+npm run check:release
 ```
+
+This includes deployment-script simulations, search checks, dependency auditing
+and signature verification, lint, TypeScript checking and an isolated production
+build. The build also runs the artifact, data, desk, control, orbital, catalogue,
+style, locale and output-budget gates. No production server is changed by this
+command. You can run each `check:*` script separately while working.
 
 `npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the desk-behaviour gate covers timer rollover and numeric-entry regressions against the actual shared helpers; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome, project summaries or suite descriptions from silently shipping.
 
@@ -199,18 +302,35 @@ When a development server is already using `.next`, run `npm run build:isolated`
 
 ## Docker deployment
 
-Compose binds the production container to `0.0.0.0:5174` by default. This makes the app reachable from the trusted LAN and lets the HTTPS proxy reach it. Override the host port with `HOMEPAGE_PORT=<port>` or bind only the LAN interface with `HOMEPAGE_BIND_ADDRESS=192.168.1.200`.
+Compose binds the production container to `0.0.0.0:5174` by default. This makes the app reachable from the trusted LAN and lets the HTTPS proxy reach it. Override the host port with `HOMEPAGE_PORT=<port>` or bind only the server's LAN interface with `HOMEPAGE_BIND_ADDRESS=<server-lan-ip>`.
 
 ```bash
 ./deploy.sh
 ```
 
-The deployment script supports both `docker compose` and the legacy
-`docker-compose` binary. It checks project artifacts, builds the image, starts
-the service, validates the core routes and security headers, and restores the
-previous image automatically if post-start verification fails.
+The one-command script works from any working directory. It requires Git,
+Node.js 20.16+, npm, and a running Docker daemon with either `docker compose`
+or legacy `docker-compose`. It refuses dirty checkouts (including untracked
+files), requires `main`, fetches `origin/main`, and only fast-forwards; local
+commits are never reset or discarded. The ignored server `.env` is preserved.
+It then re-executes the updated script, installs locked dependencies with
+`npm ci --include=dev`, runs the audits and behavioural checks, builds the image,
+and verifies routes (including Orbital Lab in all four languages) and security
+headers. Failed post-start verification restores the previous image; a failed
+first deployment removes only its failed service container. A failed build
+leaves the running container untouched. Image rollback does not revert the Git
+checkout or dependencies.
 
-Equivalent manual commands:
+To obtain this updated script on an older server checkout, first run
+`git pull --ff-only`, then `./deploy.sh`. Future deployments need only
+`./deploy.sh`. For a deliberately selected, clean revision without a fetch,
+use `./deploy.sh --local`. Nothing pushes server changes back to GitHub.
+
+`npm run check:deploy` exercises the startup, safe-update, failure and rollback
+paths with real temporary Git repositories and simulated Docker/npm commands;
+it does not start containers or contact the production server.
+
+Basic manual container commands (without the script's verification/rollback):
 
 ```bash
 docker compose up -d --build
@@ -223,13 +343,13 @@ The pinned container base and native Next.js dependencies include `linux/arm64` 
 
 ### Canonical HTTPS route
 
-`https://me.samuelzhang.co.uk` is the production identity. Copy [`deploy.env.example`](deploy.env.example) to a private, ignored `.env` file on `192.168.1.200`, then run `./deploy.sh`. The script verifies that the container accepts the canonical host header; add `VERIFY_PUBLIC_ORIGIN=1` once DNS and the proxy are configured to also verify the external HTTPS response.
+`https://me.samuelzhang.co.uk` is the production identity. Copy [`deploy.env.example`](deploy.env.example) to a private, ignored `.env` file on the deployment server, then run `./deploy.sh`. The script verifies that the container accepts the canonical host header; add `VERIFY_PUBLIC_ORIGIN=1` once DNS and the proxy are configured to also verify the external HTTPS response.
 
 Configure the existing TLS reverse proxy / Nginx Proxy Manager host as follows:
 
 - Domain: `me.samuelzhang.co.uk`
 - Scheme: `http`
-- Forward host: `192.168.1.200`
+- Forward host: the deployment server's LAN address
 - Forward port: `5174`
 - Preserve the original `Host` header; enable force-HTTPS and a valid certificate.
 - Do not use Cloudflare Flexible TLS. Use Full (strict) TLS or an equivalent end-to-end certificate configuration.
@@ -252,6 +372,11 @@ src/
 │   └── projects/page.tsx
 ├── components/
 │   ├── PdfPreview.tsx
+│   ├── DesktopFinder.tsx
+│   ├── OrbitalLab.tsx
+│   ├── OrbitalSurfaceCanvas.tsx
+│   ├── ProductivityApps.tsx
+│   ├── ProductivityExtras.tsx
 │   ├── SideQuestCabinetApp.tsx
 │   ├── SystemSevenDesktop.tsx
 │   └── projects/
@@ -294,7 +419,22 @@ src/
 │       ├── ScientificDemos.tsx
 │       └── RlAtlasDemo.tsx
 ├── data/projects.ts
-└── lib/i18n.ts
+└── lib/
+    ├── i18n.ts
+    ├── projectSearch.ts
+    ├── orbitals.ts
+    ├── orbitalAnimation.ts
+    └── orbitalWebgl.ts
+
+scripts/
+├── prepare-project-search.mjs
+├── prepare-pdfjs-assets.mjs
+├── check-project-search.mjs
+└── check-deploy.mjs
+
+docs/                 # Technical audits and README media
+LICENSE               # Original-code reuse conditions
+THIRD_PARTY_NOTICES.md # Dependency and content boundaries
 
 public/projects/
 ├── neural-cfd-surrogates/
@@ -302,4 +442,6 @@ public/projects/
 └── study-rl/
 ```
 
-The confidential Marsh research, raw bank statements and other private source material used while developing portfolio work are excluded from the deployed archive.
+Private research, raw bank statements and non-public authoring material are not
+part of the deployed archive. This deployment boundary does not erase historical
+Git objects; the publication review above is a separate responsibility.
