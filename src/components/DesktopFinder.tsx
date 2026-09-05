@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { projects } from "@/data/projects";
 import { translateText, type Locale } from "@/lib/i18n";
+import { foldSearch, parseProjectSearchIndex, searchExcerpt, type ProjectSearchIndex } from "@/lib/projectSearch";
 import type { AppId } from "./SystemSevenDesktop";
 import styles from "./DesktopFinder.module.css";
 
@@ -22,9 +23,10 @@ type FinderResult = {
   appId?: AppId;
   projectSlug?: string;
   icon?: ReactNode;
+  excerpt?: string;
 };
 
-const foldSearch = (value: string) => value.normalize("NFKD").replace(/\p{M}/gu, "").toLocaleLowerCase();
+const indexCache = new Map<Locale, ProjectSearchIndex>();
 
 export default function DesktopFinder({
   applications,
@@ -45,7 +47,34 @@ export default function DesktopFinder({
   const onCloseRef = useRef(onClose);
   const [query, setQuery] = useState("");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [detailed, setDetailed] = useState(false);
+  const [loadedIndex, setLoadedIndex] = useState<{ locale: Locale; index: ProjectSearchIndex } | null>(null);
+  const [indexError, setIndexError] = useState(false);
+  const [retry, setRetry] = useState(0);
+  const detailIndex = loadedIndex?.locale === locale ? loadedIndex.index : null;
+  const loading = detailed && !detailIndex && !indexError;
   onCloseRef.current = onClose;
+
+  useEffect(() => {
+    if (!detailed) return;
+    setIndexError(false);
+    const cached = indexCache.get(locale);
+    if (cached) { setLoadedIndex({ locale, index: cached }); return; }
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15_000);
+    let active = true;
+    fetch(`/search/project-text-${locale.toLowerCase()}.json`, { signal: controller.signal, credentials: "same-origin" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Search index unavailable");
+        const index = parseProjectSearchIndex(await response.json(), projects.map((project) => project.slug));
+        if (!active) return;
+        indexCache.set(locale, index);
+        setLoadedIndex({ locale, index });
+      })
+      .catch(() => { if (active) setIndexError(true); })
+      .finally(() => window.clearTimeout(timeout));
+    return () => { active = false; controller.abort(); window.clearTimeout(timeout); };
+  }, [detailed, locale, retry]);
 
   // Native modal behavior supplies focus containment and makes the desktop
   // inert, including pointer and screen-reader navigation behind the dialog.
@@ -70,18 +99,27 @@ export default function DesktopFinder({
     ...projects.map((project) => ({
       key: `project-${project.slug}`, kind: "project" as const,
       projectSlug: project.slug,
-      title: project.shortTitle ?? project.title,
+      title: translateText(locale, project.shortTitle ?? project.title),
       description: translateText(locale, project.summary),
       search: foldSearch([
-        project.title, project.shortTitle, project.summary,
+        project.title, project.shortTitle, translateText(locale, project.title), project.summary,
         translateText(locale, project.summary), project.area, ...project.tools,
       ].join(" ")),
     })),
   ], [applications, locale]);
   const results = useMemo(() => {
     const words = foldSearch(query).trim().split(/\s+/u).filter(Boolean);
-    return allResults.filter((result) => words.every((word) => result.search.includes(word)));
-  }, [allResults, query]);
+    const matches: FinderResult[] = [];
+    const deeperMatches: FinderResult[] = [];
+    for (const result of allResults) {
+      if (words.every((word) => result.search.includes(word))) { matches.push(result); continue; }
+      const document = detailed && result.projectSlug ? detailIndex?.get(result.projectSlug) : undefined;
+      if (document && words.every((word) => result.search.includes(word) || document.search.includes(word))) {
+        deeperMatches.push({ ...result, excerpt: searchExcerpt(document.text, words) });
+      }
+    }
+    return [...matches, ...deeperMatches];
+  }, [allResults, query, detailed, detailIndex]);
   const selectedIndex = Math.max(0, results.findIndex((result) => result.key === selectedKey));
   const selected = results[selectedIndex];
 
@@ -98,7 +136,12 @@ export default function DesktopFinder({
 
   function handleSearchKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.nativeEvent.isComposing) return;
-    if (event.key === "Enter") {
+    if (event.key === "Escape") {
+      // Search inputs otherwise consume the first Escape to clear their text.
+      event.preventDefault();
+      event.stopPropagation();
+      onCloseRef.current();
+    } else if (event.key === "Enter") {
       event.preventDefault();
       openResult(selected);
     } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
@@ -152,6 +195,16 @@ export default function DesktopFinder({
           />
           <button type="button" disabled={!query} onClick={() => { setQuery(""); setSelectedKey(null); searchRef.current?.focus(); }}>{t("Clear")}</button>
         </div>
+        <label className={styles.detailToggle}>
+          <input type="checkbox" checked={detailed} onChange={(event) => { setDetailed(event.target.checked); setSelectedKey(null); }} aria-describedby="finder-detail-description" />
+          {t("Detailed search")}
+        </label>
+        <p className={styles.detailHelp} id="finder-detail-description">{t("Include project write-ups, build logs and demo text. Private notes and imported files are never indexed.")}</p>
+        {loading && <p className={styles.indexStatus} role="status">{t("Loading the project text index…")}</p>}
+        {detailed && indexError && <div className={styles.indexStatus} role="status">
+          <span>{t("Detailed search is unavailable. Name and keyword search still works.")}</span>
+          <button type="button" onClick={() => { setIndexError(false); setRetry((value) => value + 1); }}>{t("Try again")}</button>
+        </div>}
         <div className={styles.listHeader}>
           <span>{t("On Samuel HD")}</span>
           <span role="status">{t("Matches")}: {new Intl.NumberFormat(locale).format(results.length)}</span>
@@ -172,14 +225,14 @@ export default function DesktopFinder({
                 {result.icon ?? <svg viewBox="0 0 20 20" width="20" height="20" shapeRendering="crispEdges"><path d="M2 3h7l2 3h7v11H2z" fill="#f0cb56" stroke="#111" /><path d="M3 8h14" stroke="#fff" /></svg>}
               </span>
               <span className={styles.itemCopy}>
-                <strong lang={result.kind === "project" ? "en-GB" : locale}>{result.title}</strong>
-                <small>{result.description}</small>
+                <strong>{result.title}</strong>
+                <small className={result.excerpt ? styles.excerpt : undefined}>{result.excerpt ?? result.description}</small>
               </span>
               <span className={styles.itemKind}>{result.kind === "project" ? t("Project file") : t("Application")}</span>
             </button>
           ))}
         </div>
-        {!results.length && <p className={styles.empty}>{t("No matching files. Try a shorter name or another keyword.")}</p>}
+        {!results.length && !loading && <p className={styles.empty}>{t("No matching files. Try a shorter name or another keyword.")}</p>}
         <footer className={styles.footer}>
           <p>{t("↑ ↓ to choose · Return to open · Esc to cancel")}</p>
           <div>

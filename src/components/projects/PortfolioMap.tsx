@@ -14,6 +14,7 @@ import {
 
 import {
   accessMeta,
+  isInteractiveProject,
   projectAreas,
   projects,
   type Project,
@@ -104,7 +105,7 @@ function relationship(left: Project, right: Project): Relationship {
     ...(left.area === right.area ? [`Area · ${left.area}`] : []),
     ...(left.access === right.access ? [`Access · ${accessMeta[left.access].label}`] : []),
     ...(left.status === right.status ? [`Status · ${left.status}`] : []),
-    ...(left.demo && right.demo ? ["Demo · both declare an interactive exhibit"] : []),
+    ...(isInteractiveProject(left) && isInteractiveProject(right) ? ["Demo · both declare an interactive exhibit"] : []),
     ...sharedArtifactKinds.map((kind) => `Artifact kind · ${kind}`),
   ];
   return { sharedTools, sharedArtifactKinds, signals };
@@ -125,7 +126,7 @@ const DEFAULT_PAIR = (() => {
   return pair;
 })();
 
-const TOTAL_DEMOS = projects.filter((project) => project.demo).length;
+const TOTAL_DEMOS = projects.filter(isInteractiveProject).length;
 const TOTAL_PROTECTED = projects.filter((project) => project.access === "proprietary").length;
 const TOTAL_ARTIFACTS = projects.reduce((sum, project) => sum + (project.artifacts?.length ?? 0), 0);
 const TOTAL_TOOL_ASSIGNMENTS = projects.reduce((sum, project) => sum + project.tools.length, 0);
@@ -247,7 +248,7 @@ function TimelineView({
                 onClick={() => onOpen(project)}
               >
                 <span className={styles.timelineIdentity} style={{ "--area-colour": AREA_COLOURS[project.area] } as CSSProperties}>
-                  <small>{project.area} · {project.year}</small><strong>{project.shortTitle ?? project.title}</strong><i>{accessMeta[project.access].short} · {project.status}{project.demo ? " · DEMO" : ""}</i>
+                  <small>{project.area} · {project.year}</small><strong>{project.shortTitle ?? project.title}</strong><i>{accessMeta[project.access].short} · {project.status}{isInteractiveProject(project) ? " · DEMO" : ""}</i>
                 </span>
                 <span className={styles.timelineGraph} style={{ "--year-count": YEAR_AXIS.length + 1 } as CSSProperties} aria-hidden="true">
                   <i style={{ "--start-column": startColumn, "--column-span": columnSpan, "--area-colour": AREA_COLOURS[project.area] } as CSSProperties}><b>{project.year}</b></i>
@@ -274,7 +275,7 @@ function MatrixView({
   const focusedProjects = projects.filter((project) => (
     project.area === focus.area
     && (!focus.access || project.access === focus.access)
-    && (!focus.demo || Boolean(project.demo))
+    && (!focus.demo || isInteractiveProject(project))
   ));
   const focusLabel = focus.demo
     ? `${focus.area} · interactive demos`
@@ -315,7 +316,7 @@ function MatrixView({
                         const count = areaProjects.filter((project) => project.access === access).length;
                         return <td key={access}>{cellButton(count, { area, access }, `${area}, ${accessMeta[access].label}`)}</td>;
                       })}
-                      <td className={styles.demoColumn}>{cellButton(areaProjects.filter((project) => project.demo).length, { area, demo: true }, `${area}, interactive`)}</td>
+                      <td className={styles.demoColumn}>{cellButton(areaProjects.filter(isInteractiveProject).length, { area, demo: true }, `${area}, interactive`)}</td>
                       <td>{cellButton(areaProjects.length, { area }, `${area}, total`)}</td>
                     </tr>
                   );
@@ -333,7 +334,7 @@ function MatrixView({
               <button type="button" key={project.slug} onFocus={() => onPreview(project)} onMouseEnter={() => onPreview(project)} onClick={() => onOpen(project)}>
                 <span style={{ "--area-colour": AREA_COLOURS[project.area] } as CSSProperties}>{project.shortTitle ?? project.title}</span>
                 <small>{project.year} · {project.status} · {accessMeta[project.access].short}</small>
-                <b>{project.demo ? "DEMO" : "FILE"}</b>
+                <b>{isInteractiveProject(project) ? "DEMO" : "FILE"}</b>
               </button>
             ))}
           </div>
@@ -431,7 +432,7 @@ function ProjectCompareCard({
         <div><dt>Year</dt><dd>{project.year}</dd></div>
         <div><dt>Status</dt><dd>{project.status}</dd></div>
         <div><dt>Access</dt><dd>{accessMeta[project.access].label}</dd></div>
-        <div><dt>Demo</dt><dd>{project.demo ? `Yes · ${project.demo}` : "No"}</dd></div>
+        <div><dt>Demo</dt><dd>{isInteractiveProject(project) ? `Yes · ${project.demo ?? project.systemApp}` : "No"}</dd></div>
         <div><dt>Artifacts</dt><dd>{project.artifacts?.length ?? 0}</dd></div>
       </dl>
       <button type="button" onClick={onOpen}>Open {label}</button>
@@ -525,7 +526,7 @@ function LedgerView() {
     { metric: "Catalogue records", value: projects.length, formula: "projects.length", boundary: "One row per declared project object." },
     { metric: "Exclusive access sum", value: accessTotal, formula: "Σ count(access)", boundary: `Must reconcile to ${projects.length}.` },
     { metric: "Exclusive area sum", value: areaTotal, formula: "Σ count(area)", boundary: `Must reconcile to ${projects.length}.` },
-    { metric: "Interactive demos", value: TOTAL_DEMOS, formula: "count(project.demo)", boundary: "Overlapping flag; never added to access totals." },
+    { metric: "Interactive demos", value: TOTAL_DEMOS, formula: "count(isInteractiveProject)", boundary: "Overlapping flag; never added to access totals." },
     { metric: "Artifact entries", value: TOTAL_ARTIFACTS, formula: "Σ artifacts[].length", boundary: "Excludes website and source URL fields." },
     { metric: "Exact tool labels", value: TOOL_ROWS.length, formula: "unique(tools[] string)", boundary: "No synonym, version or framework-family merging." },
     { metric: "Tool declarations", value: TOTAL_TOOL_ASSIGNMENTS, formula: "Σ tools[].length", boundary: "Not skill depth, proficiency or runtime usage." },
@@ -578,7 +579,7 @@ function ProjectInspector({
         <span>{project.area}</span><h2>{project.shortTitle ?? project.title}</h2><p>{project.eyebrow}</p>
       </div>
       <div className={styles.inspectorFlags}>
-        <span data-kind="status">{project.status}</span><span data-kind="access">{accessMeta[project.access].label}</span>{project.demo && <span data-kind="demo">Interactive</span>}{project.artifacts?.length ? <span data-kind="artifact">{project.artifacts.length} artifact{project.artifacts.length === 1 ? "" : "s"}</span> : null}
+        <span data-kind="status">{project.status}</span><span data-kind="access">{accessMeta[project.access].label}</span>{isInteractiveProject(project) && <span data-kind="demo">Interactive</span>}{project.artifacts?.length ? <span data-kind="artifact">{project.artifacts.length} artifact{project.artifacts.length === 1 ? "" : "s"}</span> : null}
       </div>
       <p className={styles.inspectorSummary} lang={locale}>{translateText(locale, project.summary)}</p>
       <section className={styles.inspectorTools}><span>DECLARED TOOLS · {project.tools.length}</span><div>{project.tools.map((tool) => <i key={tool}>{tool}</i>)}</div></section>

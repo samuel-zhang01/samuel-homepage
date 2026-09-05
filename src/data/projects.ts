@@ -73,10 +73,15 @@ export type Project = {
   websiteUrl?: string;
   artifacts?: ProjectArtifact[];
   preview?: { src: string; alt: string; caption: string };
-  systemApp?: "coverd" | "documents" | "lab" | "experience";
+  systemApp?: "coverd" | "documents" | "lab" | "experience" | "orbitals" | "notepad" | "sketch" | "tasks" | "focus" | "calendar" | "calculator" | "converter" | "palette";
   privacyNote?: string;
   visual: "agents" | "grid" | "flow" | "vision" | "chart" | "terminal" | "network" | "book";
 };
+
+/** Native desktop tools launch their existing window; they are not duplicate demos. */
+export function isInteractiveProject(project: Pick<Project, "demo" | "systemApp" | "access">) {
+  return Boolean(project.demo || (project.access === "public-demo" && project.systemApp));
+}
 
 const phases = (
   start: string,
@@ -89,6 +94,81 @@ const phases = (
 ];
 
 export const projects: Project[] = [
+  {
+    slug: "orbital-lab", title: "Orbital Lab", year: "2026", area: "Education", access: "public-demo", status: "Active",
+    eyebrow: "A SMALL QUANTUM LABORATORY",
+    summary: "Explore atomic orbitals in ASCII, a probability point cloud or a smooth 3D surface.",
+    detail: "Browse all 118 elements, inspect subshell occupancy and rotate real angular orbital components. The visual model is hydrogen-like, not a many-electron calculation: phase colours mark wavefunction sign, while the point cloud samples probability density. Radial plots, a central slice and export controls make the assumptions inspectable.",
+    tools: ["TypeScript", "WebGL", "Web Workers", "Hydrogen-like orbitals"],
+    highlights: ["118 elements with electron configurations", "ASCII, density and surface views", "Radial probability and model caveats"],
+    phases: phases("Start with a real angular orbital component.", "Compare phase, density and radial probability.", "Check the model boundary and export the view."),
+    systemApp: "orbitals", visual: "vision",
+    privacyNote: "Calculations run in this browser. This is an educational atomic model, not a quantum-chemistry solver.",
+  },
+  {
+    slug: "desk-note-pad", title: "Note Pad", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "EIGHT QUICK PAGES", summary: "Jot something down, turn the page and find it here next time.",
+    detail: "Eight ruled pages keep short notes in this browser. Insert the date, move between pages and save a text copy; the Desk Accessories backup also includes the notebook.",
+    tools: ["TypeScript", "Local storage", "Text export"], highlights: ["Eight ruled pages", "Date insertion and text export"],
+    phases: phases("Capture a useful thought.", "Keep it across browser visits.", "Save a copy before clearing browser data."),
+    systemApp: "notepad", visual: "book", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
+  {
+    slug: "desk-sketch-pad", title: "Sketch Pad", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "INK WITHOUT THE MESS", summary: "Draw with mouse, trackpad or touch; undo freely and export a PNG.",
+    detail: "A small drawing surface with ink colours, stroke sizes and undo. Pointer input works with mouse or touch, the drawing stays local, and PNG export turns a quick sketch into a file.",
+    tools: ["TypeScript", "Canvas 2D", "Pointer Events"], highlights: ["Mouse and touch drawing", "Undo and PNG export"],
+    phases: phases("Capture a useful thought.", "Keep it across browser visits.", "Save a copy before clearing browser data."),
+    systemApp: "sketch", visual: "vision", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
+  {
+    slug: "desk-quick-list", title: "Quick List", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "A TINY COMMAND CENTRE", summary: "Capture tasks, mark priorities and keep the list across visits.",
+    detail: "A compact task list with priorities, completion controls and filters. Keep the next few jobs visible without turning a checklist into a project-management system.",
+    tools: ["TypeScript", "Local storage", "Accessible forms"], highlights: ["Priorities and completion filters", "Local task persistence"],
+    phases: phases("Capture a useful thought.", "Keep it across browser visits.", "Save a copy before clearing browser data."),
+    systemApp: "tasks", visual: "grid", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
+  {
+    slug: "desk-focus-clock", title: "Focus Clock", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "A FRIENDLIER ALARM CLOCK", summary: "Run a focus sprint, take a short break and keep a tiny daily tally.",
+    detail: "A deadline-based focus timer with pause, reset and a daily completion tally. Elapsed time is derived from the clock rather than counting browser ticks; background tabs may still delay the audible alert.",
+    tools: ["TypeScript", "Web Audio", "Deadline-based timing"], highlights: ["Focus and break presets", "Pause, resume and daily tally"],
+    phases: phases("Choose a small task and a duration.", "Keep elapsed time tied to the clock.", "Review the tally and take a break."),
+    systemApp: "focus", visual: "chart", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
+  {
+    slug: "desk-pocket-calendar", title: "Pocket Calendar", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "DATES WITH A MEMORY", summary: "Plan by day with a private note saved to this browser.",
+    detail: "Browse months, return to today and attach a short note to a calendar date. Notes use local calendar dates and remain on this device; this is a day notebook, not an external calendar integration.",
+    tools: ["TypeScript", "Local dates", "Local storage"], highlights: ["Month navigation and today shortcut", "Notes attached to local dates"],
+    phases: phases("Capture a useful thought.", "Keep it across browser visits.", "Save a copy before clearing browser data."),
+    systemApp: "calendar", visual: "grid", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
+  {
+    slug: "desk-calculator", title: "Desk Calculator", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "WITH PAPER TAPE", summary: "Make a quick calculation and keep the latest workings in view.",
+    detail: "A four-function desk calculator with keyboard entry, memory controls and a paper tape of recent calculations. Copy the result and review earlier workings without leaving the desktop.",
+    tools: ["TypeScript", "Keyboard input", "Local storage"], highlights: ["Keyboard and memory controls", "Paper tape and result copying"],
+    phases: phases("Enter a small calculation.", "Keep the workings visible.", "Copy the answer and check the tape."),
+    systemApp: "calculator", visual: "chart", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
+  {
+    slug: "desk-unit-converter", title: "Unit Converter", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "MEASURE TWICE", summary: "Convert everyday length, mass, temperature and data units.",
+    detail: "Choose a quantity, select source and destination units, swap the direction and copy the answer. Data sizes use decimal factors: one kilobyte is 1,000 bytes.",
+    tools: ["TypeScript", "Unit conversion", "Accessible controls"], highlights: ["Length, mass, temperature and data", "Explicit decimal data units"],
+    phases: phases("Choose a quantity and its units.", "Show the conversion as you type.", "Swap direction and check the result."),
+    systemApp: "converter", visual: "flow", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
+  {
+    slug: "desk-colour-studio", title: "Colour Studio", year: "2026", area: "Products", access: "public-demo", status: "Shipped",
+    eyebrow: "COLOUR WITH CONTRAST", summary: "Build accessible palettes, check contrast and save favourite swatches.",
+    detail: "Compare foreground and background colours, inspect the contrast ratio and keep favourite swatches. The result describes that colour pair; it is not an accessibility audit of an entire interface.",
+    tools: ["TypeScript", "Relative luminance", "Local storage"], highlights: ["Foreground and background comparison", "Contrast ratio and saved swatches"],
+    phases: phases("Choose a foreground and background.", "Inspect their contrast ratio.", "Save a useful pair for later."),
+    systemApp: "palette", visual: "grid", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
+  },
   {
     slug: "coverd-ai",
     title: "coverd.ai",

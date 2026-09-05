@@ -83,3 +83,12 @@ next-env.d.ts
 
 # Generated from the pinned pdfjs-dist dependency for native browser loading.
 /public/_vendor/pdfjs/
+
+# Build-time public-copy indexes; regenerated for development and deployment.
+/public/search/project-text-en-gb.json
+/public/search/project-text-en-us.json
+/public/search/project-text-zh-cn.json
+/public/search/project-text-zh-tw.json
+
+# Local privacy/security audit reports must never be published.
+/.codex/reports/

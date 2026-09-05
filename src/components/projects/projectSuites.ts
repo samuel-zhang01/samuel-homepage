@@ -32,6 +32,12 @@ export type ProjectShelfSpec = {
 // lazy-loaded and retains its canonical ?project= deep link.
 export const projectSuites: readonly ProjectSuite[] = [
   {
+    id: "desk-accessories",
+    title: "Desk Accessories",
+    description: "Eight small, useful desktop tools: notes, drawings, tasks, time, dates, calculations, units and colour.",
+    slugs: ["desk-note-pad", "desk-sketch-pad", "desk-quick-list", "desk-focus-clock", "desk-pocket-calendar", "desk-calculator", "desk-unit-converter", "desk-colour-studio"],
+  },
+  {
     id: "decision-rl",
     title: "Decision & RL Methods",
     description: "From learning exercises to policy evidence, causal adjustment and deferral limits.",
@@ -92,6 +98,7 @@ export const projectShelfSpecs: readonly ProjectShelfSpec[] = [
       { kind: "project", slug: "cv-keyword-automator" },
       { kind: "project", slug: "ocean-depths-finance" },
       { kind: "project", slug: "coverd-yasa" },
+      { kind: "suite", id: "desk-accessories", recommendedSlug: "desk-note-pad" },
     ],
     supportingSlugs: ["coverd-ai", "growmat"],
   },
@@ -118,6 +125,7 @@ export const projectShelfSpecs: readonly ProjectShelfSpec[] = [
       { kind: "suite", id: "molecular-recognition", recommendedSlug: "molecular-recognition" },
       { kind: "suite", id: "thermodynamics", recommendedSlug: "pc-saft-thermodynamics" },
       { kind: "project", slug: "coding-series" },
+      { kind: "project", slug: "orbital-lab" },
     ],
   },
   {

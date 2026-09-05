@@ -210,7 +210,7 @@ const enGB: ProjectArchiveCopy = {
     interactive: "experiences",
     suites: "suites",
     redacted: "redacted",
-    languageNotice: "Interface: English (UK) · Project titles, Portfolio Map analysis, evidence narratives and interactive labs remain in British English.",
+    languageNotice: "Interface and desktop app records: English (UK). Original research narratives, Portfolio Map analysis and research demos retain their source language.",
   },
   views: {
     aria: "Project Archive views",
@@ -259,7 +259,7 @@ const enGB: ProjectArchiveCopy = {
     viewProject: "View project file",
     selected: "Selected file",
     reconciliationLead: "Coverage check:",
-    reconciliation: "14 guided experiences organise all 27 interactive chapters; four non-demo files remain available; all 31 canonical project links stay intact.",
+    reconciliation: "16 guided experiences organise 36 interactive chapters, including nine desktop apps; four reference files remain available. Every project keeps its own direct link.",
     shelves: {
       "products-operations": {
         title: "Build products people can use",
@@ -471,13 +471,13 @@ const enUS: ProjectArchiveCopy = {
   ...enGB,
   header: {
     ...enGB.header,
-    languageNotice: "Interface: English (US) · Project titles, Portfolio Map analysis, evidence narratives and interactive labs remain in British English.",
+    languageNotice: "Interface and desktop app records: English (US). Original research narratives, Portfolio Map analysis and research demos retain their source language.",
   },
   guided: {
     ...enGB.guided,
     latestDate: "AUG 29, 2026",
     heroDescription: "Read the latest field note, try a stand-out interactive project, or browse the complete archive by the problem being solved.",
-    reconciliation: "14 guided experiences organize all 27 interactive chapters; four non-demo files remain available; all 31 canonical project links stay intact.",
+    reconciliation: "16 guided experiences organize 36 interactive chapters, including nine desktop apps; four reference files remain available. Every project keeps its own direct link.",
     shelves: {
       ...enGB.guided.shelves,
       "molecular-computational": {
@@ -521,7 +521,7 @@ const zhCN: ProjectArchiveCopy = {
     interactive: "个专题体验",
     suites: "个专题",
     redacted: "项已隐去",
-    languageNotice: "界面：简体中文 · 项目标题、Portfolio Map 分析说明、证据叙述与互动实验室保留英式英语原文。",
+    languageNotice: "界面及桌面应用档案：简体中文。原始研究叙述、Portfolio Map 分析说明与研究演示保留源语言。",
   },
   views: {
     aria: "项目档案视图",
@@ -570,7 +570,7 @@ const zhCN: ProjectArchiveCopy = {
     viewProject: "查看项目档案",
     selected: "已选档案",
     reconciliationLead: "覆盖范围：",
-    reconciliation: "14 个引导式体验组织全部 27 个互动章节；四份非演示档案仍可查看；31 个项目直达链接全部保持不变。",
+    reconciliation: "16 个引导式体验涵盖 36 个互动章节，包括九款桌面应用；另有四份参考档案。每个项目都有独立的直达链接。",
     shelves: {
       "products-operations": {
         title: "构建人们愿意使用的产品",
@@ -788,7 +788,7 @@ const zhTW: ProjectArchiveCopy = {
     interactive: "個專題體驗",
     suites: "個專題",
     redacted: "項已隱去",
-    languageNotice: "介面：繁體中文 · 專案標題、Portfolio Map 分析說明、證據敘述與互動實驗室保留英式英語原文。",
+    languageNotice: "介面及桌面應用程式檔案：繁體中文。原始研究敘述、Portfolio Map 分析說明與研究展示保留來源語言。",
   },
   views: {
     aria: "專案檔案檢視",
@@ -837,7 +837,7 @@ const zhTW: ProjectArchiveCopy = {
     viewProject: "查看專案檔案",
     selected: "已選檔案",
     reconciliationLead: "涵蓋範圍：",
-    reconciliation: "14 個引導式體驗組織全部 27 個互動章節；四份非展示檔案仍可查看；31 個專案直達連結全部保持不變。",
+    reconciliation: "16 個引導式體驗涵蓋 36 個互動章節，包括九款桌面應用程式；另有四份參考檔案。每個專案都有獨立的直達連結。",
     shelves: {
       "products-operations": {
         title: "建構人們願意使用的產品",

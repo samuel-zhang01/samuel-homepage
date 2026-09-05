@@ -52,6 +52,13 @@
 .searchLabel { display: block; margin-bottom: 5px; font-weight: 700; }
 .searchRow { display: flex; gap: 10px; }
 .searchRow > button { flex: 0 0 auto; white-space: nowrap; }
+.detailToggle { display: flex; align-items: center; gap: 8px; min-height: 44px; width: fit-content; cursor: pointer; }
+.detailToggle input { appearance: none; width: 16px; height: 16px; flex: 0 0 16px; margin: 0; border: 1px solid #111; border-radius: 0; background: #fff; }
+.detailToggle input:checked { background: linear-gradient(45deg, transparent 42%, #111 43% 57%, transparent 58%), linear-gradient(-45deg, transparent 42%, #111 43% 57%, transparent 58%), #fff; }
+.detailToggle input:focus-visible { outline: 2px dotted #11177a; outline-offset: 3px; }
+.detailHelp { margin: 0; color: #454545; font-size: 11px; }
+.indexStatus { display: flex; align-items: center; gap: 10px; margin: 8px 0 0; font-size: 11px; }
+.indexStatus button { flex-shrink: 0; }
 
 .searchRow input {
   width: 100%;
@@ -104,6 +111,7 @@
 .itemCopy { min-width: 0; flex: 1; }
 .itemCopy strong { display: block; font-weight: 600; }
 .itemCopy small { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; opacity: .85; }
+.itemCopy .excerpt { white-space: normal; overflow-wrap: anywhere; }
 .itemKind { flex: 0 0 76px; text-align: right; font-size: 10px; }
 .empty { margin: 0; padding: 20px 12px; border: 1px solid #111; border-top: 0; background: #fff; }
 .footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; }

@@ -1136,6 +1136,12 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           <a className="mac-button" href={localeCvAssets[locale].src} download>Download CV</a>
           <button className="mac-button is-default" onClick={() => openApp("contact")}>Contact Samuel</button>
         </div>
+        <fieldset className="about-panel">
+          <legend>About this desktop</legend>
+          <p>Browse the source, download the code and read the setup guide on GitHub. Check the licence and content notices before reuse.</p>
+          <p>Personal, non-commercial use with credit. No sales; shared versions must stay free.</p>
+          <a className="mac-button" href="https://github.com/samuel-zhang01/samuel-homepage" target="_blank" rel="noopener noreferrer">Source &amp; downloads ↗</a>
+        </fieldset>
       </div>
     </div></TranslationBoundary>
   );

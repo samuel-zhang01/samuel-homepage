@@ -588,6 +588,23 @@ function addProjectTranslationSource(value, node, sourceFile, sourcePath) {
 }
 
 function collectProjectSummaries(node) {
+  if (ts.isObjectLiteralExpression(node)) {
+    const field = (name) => node.properties.find((property) => ts.isPropertyAssignment(property) && property.name.getText(projectsFile) === name);
+    const access = field("access");
+    if (field("systemApp") && access && ts.isStringLiteralLike(access.initializer) && access.initializer.text === "public-demo") {
+      const technicalNames = new Set(["TypeScript", "WebGL", "Web Workers", "Canvas 2D", "Pointer Events", "Web Audio"]);
+      const collectNativeCopy = (child) => {
+        if (ts.isStringLiteralLike(child) && !technicalNames.has(child.text)) {
+          addProjectTranslationSource(child.text, child, projectsFile, projectsPath);
+        }
+        ts.forEachChild(child, collectNativeCopy);
+      };
+      for (const name of ["title", "summary", "detail", "eyebrow", "privacyNote", "highlights", "phases", "tools"]) {
+        const property = field(name);
+        if (property) collectNativeCopy(property.initializer);
+      }
+    }
+  }
   if (
     ts.isPropertyAssignment(node)
     && ts.isIdentifier(node.name)
@@ -738,5 +755,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project summaries/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
+  `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project metadata/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
 );

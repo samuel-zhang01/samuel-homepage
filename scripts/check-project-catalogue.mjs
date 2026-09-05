@@ -18,7 +18,7 @@ async function importTypeScriptModule(path) {
   return import(moduleUrl);
 }
 
-const { projects } = await importTypeScriptModule(cataloguePath);
+const { projects, isInteractiveProject } = await importTypeScriptModule(cataloguePath);
 const {
   projectShelfSpecs,
   projectStartPaths,
@@ -31,6 +31,13 @@ const slugs = new Set();
 const demoOwners = new Map();
 const artifactOwners = new Map();
 const expectedPhaseLabels = ["Start small", "Move forward", "Polish"];
+const nativeAppIds = ["orbitals", "notepad", "sketch", "tasks", "focus", "calendar", "calculator", "converter", "palette"];
+for (const appId of nativeAppIds) {
+  const entries = projects.filter((project) => project.systemApp === appId);
+  if (entries.length !== 1 || !isInteractiveProject(entries[0]) || entries[0].demo) {
+    errors.push(`<native apps>: ${appId} needs exactly one executable archive entry, using its existing app instead of a duplicate demo`);
+  }
+}
 const publicRoot = resolve(projectRoot, "public");
 
 function fail(project, message) {
@@ -106,7 +113,7 @@ for (const project of projects) {
   if (project.access === "proprietary" && !project.privacyNote?.trim()) {
     fail(project, "private/redacted entries require an explicit privacy boundary");
   }
-  if (project.access === "public-demo" && !project.demo) {
+  if (project.access === "public-demo" && !isInteractiveProject(project)) {
     fail(project, "public-demo entries must route to an interactive exhibit");
   }
   if (project.access === "open-source") {
@@ -183,10 +190,10 @@ for (const demo of Object.keys(projectStories)) {
 }
 
 const experienceIds = new Set(
-  [...demoOwners.entries()].map(([, slug]) => suiteMembership.has(slug) ? `suite:${suiteMembership.get(slug)}` : `project:${slug}`),
+  projects.filter(isInteractiveProject).map(({ slug }) => suiteMembership.has(slug) ? `suite:${suiteMembership.get(slug)}` : `project:${slug}`),
 );
-if (experienceIds.size !== 14) {
-  errors.push(`<catalogue>: expected 14 curated experiences, found ${experienceIds.size}`);
+if (experienceIds.size !== 16) {
+  errors.push(`<catalogue>: expected 16 curated experiences, found ${experienceIds.size}`);
 }
 
 const guidedShelfIds = new Set();
@@ -218,7 +225,7 @@ for (const shelf of projectShelfSpecs) {
       guidedVisibleSlugs.push(...suite.slugs);
       if (!suite.slugs.includes(experience.recommendedSlug)) {
         errors.push(`${shelf.id}: recommended chapter ${experience.recommendedSlug} is not in ${suite.id}`);
-      } else if (!projects.find((project) => project.slug === experience.recommendedSlug)?.demo) {
+      } else if (!projects.some((project) => project.slug === experience.recommendedSlug && isInteractiveProject(project))) {
         errors.push(`${shelf.id}: recommended chapter ${experience.recommendedSlug} is not interactive`);
       }
       continue;
@@ -228,7 +235,7 @@ for (const shelf of projectShelfSpecs) {
       errors.push(`${shelf.id}: unknown guided project ${experience.slug || "<missing>"}`);
       continue;
     }
-    if (!projects.find((project) => project.slug === experience.slug)?.demo) {
+    if (!projects.some((project) => project.slug === experience.slug && isInteractiveProject(project))) {
       errors.push(`${shelf.id}: standalone experience ${experience.slug} is not interactive`);
     }
     guidedStandaloneSlugs.push(experience.slug);
@@ -241,20 +248,20 @@ for (const shelf of projectShelfSpecs) {
       errors.push(`${shelf.id}: unknown supporting file ${slug}`);
       continue;
     }
-    if (project.demo) errors.push(`${shelf.id}: interactive project ${slug} cannot be demoted to supporting evidence`);
+    if (isInteractiveProject(project)) errors.push(`${shelf.id}: interactive project ${slug} cannot be demoted to supporting evidence`);
     guidedVisibleSlugs.push(slug);
   }
 }
 
 const expectedStandaloneSlugs = projects
-  .filter((project) => project.demo && !suiteMembership.has(project.slug))
+  .filter((project) => isInteractiveProject(project) && !suiteMembership.has(project.slug))
   .map((project) => project.slug);
 const sameMembers = (left, right) => (
   left.length === right.length && left.every((item) => right.includes(item))
 );
 
 if (guidedShelfIds.size !== 6) errors.push(`<guided>: expected 6 shelves, found ${guidedShelfIds.size}`);
-if (guidedExperienceCount !== 14) errors.push(`<guided>: expected 14 experiences, found ${guidedExperienceCount}`);
+if (guidedExperienceCount !== 16) errors.push(`<guided>: expected 16 experiences, found ${guidedExperienceCount}`);
 if (!sameMembers(guidedSuiteIds, projectSuites.map((suite) => suite.id))) {
   errors.push("<guided>: every editorial suite must appear exactly once");
 }
@@ -266,7 +273,7 @@ if (
   || new Set(guidedVisibleSlugs).size !== projects.length
   || !projects.every((project) => guidedVisibleSlugs.includes(project.slug))
 ) {
-  errors.push("<guided>: all 31 canonical projects must appear exactly once");
+  errors.push("<guided>: every canonical project must appear exactly once");
 }
 
 const startIds = new Set(projectStartPaths.map((path) => path.id));
@@ -287,5 +294,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Project catalogue gate: ${projects.length} unique files, ${demoOwners.size} interactive exhibits, ${experienceIds.size} curated experiences across ${guidedShelfIds.size} guided shelves, ${artifactOwners.size} reviewed artifacts.`,
+  `Project catalogue gate: ${projects.length} unique files, ${projects.filter(isInteractiveProject).length} interactive exhibits, ${experienceIds.size} curated experiences across ${guidedShelfIds.size} guided shelves, ${artifactOwners.size} reviewed artifacts.`,
 );

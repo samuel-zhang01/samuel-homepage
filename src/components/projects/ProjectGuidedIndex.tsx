@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { projects, type Project } from "@/data/projects";
+import { isInteractiveProject, projects, type Project } from "@/data/projects";
 import { translateText, type Locale } from "@/lib/i18n";
 import { getProjectArchiveCopy } from "./projectArchiveI18n";
 import {
@@ -40,7 +40,7 @@ function requireProject(slug: string) {
 function resolveExperience(reference: ProjectGuidedExperienceReference): GuidedExperience {
   if (reference.kind === "project") {
     const project = requireProject(reference.slug);
-    if (!project.demo) {
+    if (!isInteractiveProject(project)) {
       throw new Error(`Standalone guided experience must be interactive: ${project.slug}`);
     }
     return {
@@ -57,7 +57,7 @@ function resolveExperience(reference: ProjectGuidedExperienceReference): GuidedE
   if (!suite) throw new Error(`Guided Project Archive references unknown suite: ${reference.id}`);
   const chapters = suite.slugs.map(requireProject);
   const recommended = requireProject(reference.recommendedSlug);
-  if (!suite.slugs.includes(recommended.slug) || !recommended.demo) {
+  if (!suite.slugs.includes(recommended.slug) || !isInteractiveProject(recommended)) {
     throw new Error(`Guided suite ${suite.id} needs an interactive recommended chapter.`);
   }
   return {
@@ -92,7 +92,7 @@ function validateGuidedArchive() {
     .filter((experience) => experience.kind === "project")
     .map((experience) => experience.recommended.slug);
   const expectedStandaloneSlugs = projects
-    .filter((project) => project.demo && !suiteProjectSlugs.has(project.slug))
+    .filter((project) => isInteractiveProject(project) && !suiteProjectSlugs.has(project.slug))
     .map((project) => project.slug);
   const visibleSlugList = GUIDED_SHELVES.flatMap((shelf) => [
     ...shelf.experiences.flatMap((experience) => (
@@ -105,7 +105,7 @@ function validateGuidedArchive() {
   );
 
   if (
-    GUIDED_EXPERIENCE_COUNT !== 14
+    GUIDED_EXPERIENCE_COUNT !== 16
     || !sameMembers(suiteIds, projectSuites.map((suite) => suite.id))
     || !sameMembers(standaloneSlugs, expectedStandaloneSlugs)
     || visibleSlugList.length !== projects.length
@@ -347,7 +347,7 @@ export function ProjectGuidedIndex({
                               </span>
                               <span className={styles.experienceCopy}>
                                 <span className={styles.experienceMarker} lang={locale}>{copy.markers.demo}</span>
-                                <strong lang={experience.kind === "project" ? "en-GB" : locale}>{translateText(locale, experience.title)}</strong>
+                                <strong lang={locale}>{translateText(locale, experience.title)}</strong>
                                 <span lang={locale}>{translateText(locale, experience.description)}</span>
                               </span>
                               <span className={styles.standaloneActions} lang={locale}>
@@ -417,7 +417,7 @@ export function ProjectGuidedIndex({
                           >
                             <aside className={styles.recommended} lang={locale}>
                               <span>{copy.guided.recommended}</span>
-                              <strong lang="en-GB">{experience.recommended.title}</strong>
+                              <strong lang={locale}>{translateText(locale, experience.recommended.title)}</strong>
                               <button
                                 type="button"
                                 onClick={() => onOpenProjectDemo(experience.recommended.slug)}
@@ -438,18 +438,18 @@ export function ProjectGuidedIndex({
                                       {String(chapterIndex + 1).padStart(2, "0")}
                                     </span>
                                     <span className={styles.chapterCopy}>
-                                      <strong lang="en-GB">{project.title}</strong>
+                                      <strong lang={locale}>{translateText(locale, project.title)}</strong>
                                       <span lang={locale}>
                                         {copy.areas[project.area]} · {copy.statuses[project.status]}
                                       </span>
                                     </span>
-                                    {!project.demo && (
+                                    {!isInteractiveProject(project) && (
                                       <span className={styles.fileMarker} lang={locale}>
                                         {projectReferenceLabel(project, locale)}
                                       </span>
                                     )}
                                   </button>
-                                  {project.demo && (
+                                  {isInteractiveProject(project) && (
                                     <button
                                       type="button"
                                       className={styles.demoButton}
@@ -487,7 +487,7 @@ export function ProjectGuidedIndex({
                             >
                               <span className={styles.resourceGlyph} aria-hidden="true">▤</span>
                               <span className={styles.resourceCopy}>
-                                <strong lang="en-GB">{project.title}</strong>
+                                <strong lang={locale}>{translateText(locale, project.title)}</strong>
                                 <span lang={locale}>{translateText(locale, project.summary)}</span>
                               </span>
                               <span className={styles.resourceMeta} lang={locale}>

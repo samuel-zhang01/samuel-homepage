@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { memo, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type RefObject } from "react";
 import {
   projectAreas,
+  isInteractiveProject,
   projects,
   type Project,
   type ProjectAccess,
@@ -113,6 +114,7 @@ function usesStackedProjectLayout(detail: HTMLElement | null) {
 }
 
 function ProjectVisual({ project, compact = false }: { project: Project; compact?: boolean }) {
+  const locale = useProjectLocale();
   const visualClass = `${styles.visual} ${styles[`visual_${project.visual}`]}`;
 
   return (
@@ -123,7 +125,7 @@ function ProjectVisual({ project, compact = false }: { project: Project; compact
       <span className={styles.visualNodeA} />
       <span className={styles.visualNodeB} />
       <span className={styles.visualNodeC} />
-      <strong>{project.shortTitle ?? project.title}</strong>
+      <strong lang={locale}>{translateText(locale, project.shortTitle ?? project.title)}</strong>
       <small>{project.year}</small>
     </div>
   );
@@ -174,14 +176,14 @@ function ProjectRow({
           <span lang={locale}>{copy.areas[project.area]}</span>
           <time>{project.year}</time>
         </span>
-        <strong lang="en-GB">{project.title}</strong>
+        <strong lang={locale}>{translateText(locale, project.title)}</strong>
         <span className={styles.rowSummary} lang={locale}>{translateText(locale, project.summary)}</span>
         <span className={styles.rowFooter} lang={locale}>
           <span className={`${styles.miniAccess} ${styles[`access_${project.access}`]}`}>
             {copy.access[project.access].short}
           </span>
           <span>{copy.statuses[project.status]}</span>
-          {project.demo && (
+          {isInteractiveProject(project) && (
             <span className={styles.resourceMarker}>
               ▶ {suite ? `${copy.markers.suite} ${suiteChapter}/${suite.slugs.length}` : copy.markers.demo}
             </span>
@@ -302,7 +304,7 @@ function HeroAction({
   const copy = getProjectArchiveCopy(locale);
   const suite = getProjectSuite(project);
 
-  if (project.demo) {
+  if (isInteractiveProject(project)) {
     const chapter = suite ? suite.slugs.indexOf(project.slug) + 1 : 0;
     return (
       <button type="button" className={styles.heroAction} onClick={onOpenDemo}>
@@ -316,8 +318,8 @@ function HeroAction({
           <strong>
             <ProjectTitleTemplate
               template={suite ? copy.actions.openSuite : copy.actions.openLab}
-              title={suite ? translateText(locale, suite.title) : project.shortTitle ?? project.title}
-              titleLang={suite ? locale : "en-GB"}
+              title={translateText(locale, project.systemApp ? project.shortTitle ?? project.title : suite?.title ?? project.shortTitle ?? project.title)}
+              titleLang={locale}
             />
           </strong>
         </span>
@@ -467,13 +469,13 @@ function ProjectDetail({
             <span>{copy.statuses[project.status]}</span>
             <time>{project.year}</time>
           </div>
-          <span className={styles.eyebrow} lang="en-GB">{project.eyebrow}</span>
-          <h3 lang="en-GB">{project.title}</h3>
+          <span className={styles.eyebrow} lang={locale}>{translateText(locale, project.eyebrow)}</span>
+          <h3 lang={locale}>{translateText(locale, project.title)}</h3>
           <p lang={locale}>{translateText(locale, project.summary)}</p>
           <HeroAction
             project={project}
             locale={locale}
-            onOpenDemo={() => setView("demo")}
+            onOpenDemo={() => project.systemApp && !project.demo ? onOpenApp(project.systemApp) : setView("demo")}
           />
         </div>
       </div>
@@ -491,12 +493,12 @@ function ProjectDetail({
       {project.privacyNote && project.access !== "proprietary" && (
         <div className={styles.safeNotice} role="note">
           <strong>{copy.detail.privacyNote}</strong>
-          <span lang="en-GB">{project.privacyNote}</span>
+          <span lang={locale}>{translateText(locale, project.privacyNote)}</span>
         </div>
       )}
 
       <div className={styles.detailBody}>
-        <p className={styles.longCopy} lang="en-GB">{project.detail}</p>
+        <p className={styles.longCopy} lang={locale}>{translateText(locale, project.detail)}</p>
 
         {project.preview && (
           <figure className={styles.artifactPreview}>
@@ -518,7 +520,7 @@ function ProjectDetail({
         )}
 
         <div className={styles.toolStrip} aria-label={copy.detail.technologiesAria}>
-          {project.tools.map((tool) => <span key={tool} lang="en-GB">{tool}</span>)}
+          {project.tools.map((tool) => <span key={tool} lang={locale}>{translateText(locale, tool)}</span>)}
         </div>
 
         <section className={styles.progressSection}>
@@ -530,7 +532,7 @@ function ProjectDetail({
             {project.phases.map((phase, index) => (
               <li key={phase.label}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
-                <div><strong>{copy.phases[phase.label]}</strong><p lang="en-GB">{phase.text}</p></div>
+                <div><strong>{copy.phases[phase.label]}</strong><p lang={locale}>{translateText(locale, phase.text)}</p></div>
               </li>
             ))}
           </ol>
@@ -542,7 +544,7 @@ function ProjectDetail({
             <strong>{copy.detail.safeToShow}</strong>
           </div>
           <ul className={styles.highlights}>
-            {project.highlights.map((highlight) => <li key={highlight} lang="en-GB">{highlight}</li>)}
+            {project.highlights.map((highlight) => <li key={highlight} lang={locale}>{translateText(locale, highlight)}</li>)}
           </ul>
         </section>
       </div>
@@ -576,7 +578,7 @@ function ProjectDetail({
           <ProjectTitleTemplate template={copy.actions.openLab} title={project.shortTitle ?? project.title} />
         ) : undefined}
         onOpenSystemApp={project.systemApp ? () => onOpenApp(project.systemApp!) : undefined}
-        systemAppLabel={project.systemApp === "coverd" ? copy.actions.openCoverdBrief : copy.actions.openSystemFile}
+        systemAppLabel={project.systemApp === "coverd" ? copy.actions.openCoverdBrief : isInteractiveProject(project) ? translateText(locale, project.title) : copy.actions.openSystemFile}
       />
     </section>
   );
@@ -790,7 +792,7 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     : filteredProjects[0]?.slug;
   const filteredProjectOrder = filteredProjects.map((project) => project.slug).join("|");
   const counts = useMemo(() => ({
-    interactive: new Set(projects.filter((project) => project.demo).map((project) => (
+    interactive: new Set(projects.filter(isInteractiveProject).map((project) => (
       getProjectSuite(project)?.id ?? `project:${project.slug}`
     ))).size,
     suites: new Set(projects.map((project) => getProjectSuite(project)?.id).filter(Boolean)).size,
@@ -880,6 +882,11 @@ function ProjectExplorer({ initialSlug, locale = "en-GB", onOpenApp }: ProjectEx
     setArchiveView("files");
     setArchiveTabStop("files");
     const nextProject = projects.find((project) => project.slug === slug);
+    if (nextProject?.systemApp && isInteractiveProject(nextProject)) {
+      selectProject(slug);
+      onOpenApp(nextProject.systemApp);
+      return;
+    }
     if (!nextProject?.demo) {
       selectProject(slug);
       return;
