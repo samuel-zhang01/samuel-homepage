@@ -209,4 +209,48 @@ check("invalid quantum numbers and unbounded workloads are rejected", () => {
   assert.throws(() => realSphericalHarmonic(1, 0, 1.01, 0), RangeError);
   assert.throws(() => getRadialDistribution(1, 0, 1_000_000), RangeError);
 });
-console.log(`Orbital gate: ${checks} element, quantum-function, probability and workload regressions passed.`);
+const modelUrl = `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`;
+const surfaceSource = ts.transpileModule(await readFile(new URL("../src/lib/orbitalSurface.ts", import.meta.url), "utf8"), {
+  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+}).outputText.replace('"./orbitals"', JSON.stringify(modelUrl));
+const { buildOrbitalSurface, SURFACE_GRID, SURFACE_DENSITY_FRACTION } = await import(`data:text/javascript;base64,${Buffer.from(surfaceSource).toString("base64")}`);
+check("surface work and level are explicitly bounded", () => {
+  assert.equal(SURFACE_GRID, 80);
+  assert.equal(SURFACE_DENSITY_FRACTION, .01);
+  assert.throws(() => buildOrbitalSurface(8, 0, 0), RangeError);
+  assert.throws(() => buildOrbitalSurface(2, 1, 2), RangeError);
+});
+for (const [n, l, m] of [[1, 0, 0], [2, 1, 0], [3, 2, 0], [4, 3, 0], [2, 0, 0], [3, 1, -1], [7, 0, 0], [7, 3, 3]]) {
+  const surface = buildOrbitalSurface(n, l, m);
+  const vertices = surface.vertices;
+  check(`${n}/${l}/${m} has finite, nonempty, bounded triangle geometry`, () => {
+    assert.ok(vertices.length > 21 && vertices.length < 500_000 * 21);
+    assert.equal(vertices.length % 21, 0);
+    assert.ok(vertices.every(Number.isFinite));
+    assert.ok(surface.level > 0 && Number.isFinite(surface.level));
+    for (let i = 0; i < vertices.length; i += 7) {
+      for (let axis = 0; axis < 3; axis++) assert.ok(Math.abs(vertices[i + axis]) <= 1.00001);
+      near(Math.hypot(vertices[i + 3], vertices[i + 4], vertices[i + 5]), 1, .0001);
+      assert.ok(vertices[i + 6] === 1 || vertices[i + 6] === -1);
+    }
+  });
+  check(`${n}/${l}/${m} surface vertices use the analytic wavefunction phase`, () => {
+    // Sample a bounded subset, independently re-evaluating the model in a0.
+    const stride = Math.max(1, Math.floor(vertices.length / 7 / 200)) * 7;
+    for (let i = 0; i < vertices.length; i += stride) {
+      const [x, y, z] = vertices.slice(i, i + 3).map((value) => value * surface.radius);
+      const r = Math.hypot(x, y, z);
+      const psi = radialWavefunction(n, l, r) * realSphericalHarmonic(l, m, r ? z / r : 1, Math.atan2(y, x));
+      assert.equal(Math.sign(psi), vertices[i + 6]);
+    }
+  });
+  if (n === 1) check("1s surface radius and normals match its known spherical level", () => {
+    const expectedRadius = -Math.log(SURFACE_DENSITY_FRACTION) / 2;
+    for (let i = 0; i < vertices.length; i += 7) {
+      const r = Math.hypot(vertices[i], vertices[i + 1], vertices[i + 2]);
+      near(r * surface.radius, expectedRadius, .02);
+      assert.ok((vertices[i] * vertices[i + 3] + vertices[i + 1] * vertices[i + 4] + vertices[i + 2] * vertices[i + 5]) / r > .99);
+    }
+  });
+}
+console.log(`Orbital gate: ${checks} element, quantum-function, surface, probability and workload regressions passed.`);

@@ -1,7 +1,15 @@
 import type { Locale } from "@/lib/i18n";
 
 const english = {
-  title: "Orbital Lab", strap: "ATOMIC STUDIES · NO. 01", intro: "A little quantum mechanics, drawn one character at a time.",
+  title: "Orbital Lab", strap: "ATOMIC STUDIES · NO. 01", intro: "A little quantum mechanics, in fine print or sculpted light.",
+  renderMode: "Rendering", asciiMode: "ASCII", surfaceMode: "Smooth 3D", detail: "Detail", fine: "Fine", ultra: "Ultra",
+  surfaceCanvas: "Shaded three-dimensional orbital surface", loading: "Calculating orbital surface…", unavailable: "3D rendering is unavailable here. ASCII remains ready to use.",
+  saveImage: "Save image…", imageSaved: "Orbital image exported.",
+  surfaceNote: "A lit constant-density surface at 1% of the sampled peak |ψ|², not an electron boundary or a probability enclosure. Small features below the grid resolution may be omitted. A slice clips the surface to a thin slab; it does not fill the cut faces.",
+  pointsMode: "Density 3D", pointsCanvas: "Transparent three-dimensional orbital probability samples", opacity: "Dot opacity",
+  singleElectron: "1 electron",
+  pointsNote: "12,000 equal-weight samples of |ψ|². Dots are probability samples, not individual electrons. Transparent overlaps reveal density; opacity changes visibility, not the wavefunction.",
+  group: "Group", period: "Period", block: "Block", shells: "Electrons per shell", electrons: "electrons", unpairedCount: "unpaired in this subshell", chooseTable: "Choose from the table", blockKey: "Colour key: orbital blocks", selectedElement: "Selected element", referenceDetails: "Element reference",
   element: "Element", previous: "Previous element", next: "Next element", configuration: "Neutral-atom configuration",
   reference: "Reference compilation", illustrative: "Illustrative Aufbau filling", subshell: "Inspect a subshell", component: "Real orbital component",
   density: "PROBABILITY CLOUD", phase: "Phase ink", slice: "Central slice", rotate: "Auto-rotate", pause: "Pause rotation", reset: "Reset view",
@@ -23,7 +31,15 @@ const english = {
 
 type Copy = { [K in keyof typeof english]: string };
 const simplified: Copy = {
-  title: "原子轨道实验室", strap: "原子研究 · 01", intro: "用一个个字符，描绘一点量子力学。",
+  title: "原子轨道实验室", strap: "原子研究 · 01", intro: "用细密字符或立体光影，描绘一点量子力学。",
+  renderMode: "渲染方式", asciiMode: "ASCII 字符", surfaceMode: "平滑 3D", detail: "细节", fine: "精细", ultra: "超精细",
+  surfaceCanvas: "明暗着色的三维原子轨道等值面", loading: "正在计算轨道等值面…", unavailable: "此设备无法使用 3D 渲染，已切回 ASCII 字符视图。",
+  saveImage: "保存图片…", imageSaved: "已导出轨道图片。",
+  surfaceNote: "带光照的等密度面，阈值为网格采样峰值 |ψ|² 的 1%，并非电子边界，也不表示包围某一固定概率。小于网格分辨率的细节可能被省略。切片仅保留薄层中的表面，不填充切口。",
+  pointsMode: "密度 3D", pointsCanvas: "透明三维原子轨道概率采样点", opacity: "点不透明度",
+  singleElectron: "1 个电子",
+  pointsNote: "12,000 个按 |ψ|² 分布的等权重采样点，并非单个电子。透明点叠加呈现概率密度；不透明度只改变显示效果，不改变波函数。",
+  group: "族", period: "周期", block: "分区", shells: "各电子层的电子数", electrons: "个电子", unpairedCount: "个未成对电子（此亚层）", chooseTable: "从周期表选择", blockKey: "颜色说明：轨道分区", selectedElement: "已选元素", referenceDetails: "元素参考资料",
   element: "元素", previous: "上一个元素", next: "下一个元素", configuration: "中性原子的电子排布",
   reference: "参考资料汇编", illustrative: "示意性构造原理填充", subshell: "查看一个亚层", component: "实原子轨道分量",
   density: "概率云", phase: "相位双色", slice: "中央切片", rotate: "自动旋转", pause: "暂停旋转", reset: "重置视角",
@@ -44,7 +60,15 @@ const simplified: Copy = {
 };
 
 const traditional: Copy = {
-  title: "原子軌域實驗室", strap: "原子研究 · 01", intro: "用一個個字元，描繪一點量子力學。",
+  title: "原子軌域實驗室", strap: "原子研究 · 01", intro: "用細密字元或立體光影，描繪一點量子力學。",
+  renderMode: "繪製方式", asciiMode: "ASCII 字元", surfaceMode: "平滑 3D", detail: "細節", fine: "精細", ultra: "超精細",
+  surfaceCanvas: "明暗著色的三維原子軌域等值面", loading: "正在計算軌域等值面…", unavailable: "此裝置無法使用 3D 繪製，已切回 ASCII 字元檢視。",
+  saveImage: "儲存圖片…", imageSaved: "已匯出軌域圖片。",
+  surfaceNote: "帶光照的等密度面，閾值為網格取樣峰值 |ψ|² 的 1%，並非電子邊界，也不代表包圍某個固定機率。小於網格解析度的細節可能被省略。切片僅保留薄層中的表面，不填滿切口。",
+  pointsMode: "密度 3D", pointsCanvas: "透明三維原子軌域機率取樣點", opacity: "點不透明度",
+  singleElectron: "1 個電子",
+  pointsNote: "12,000 個依 |ψ|² 分布的等權重取樣點，並非單個電子。透明點疊加呈現機率密度；不透明度只改變顯示效果，不改變波函數。",
+  group: "族", period: "週期", block: "分區", shells: "各電子層的電子數", electrons: "個電子", unpairedCount: "個未成對電子（此副殼層）", chooseTable: "從週期表選擇", blockKey: "顏色說明：軌域分區", selectedElement: "已選元素", referenceDetails: "元素參考資料",
   element: "元素", previous: "上一個元素", next: "下一個元素", configuration: "中性原子的電子組態",
   reference: "參考資料彙編", illustrative: "示意性遞建原理填充", subshell: "查看一個副殼層", component: "實原子軌域分量",
   density: "機率雲", phase: "相位雙色", slice: "中央切片", rotate: "自動旋轉", pause: "暫停旋轉", reset: "重設視角",
