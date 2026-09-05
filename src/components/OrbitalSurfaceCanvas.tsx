@@ -3,10 +3,13 @@
 import { useEffect, useRef, useState, type CanvasHTMLAttributes, type RefObject } from "react";
 import { createOrbitalRenderer } from "@/lib/orbitalWebgl";
 import type { OrbitalSamples } from "@/lib/orbitals";
+import type { OrbitalAngles } from "@/lib/orbitalAnimation";
 import styles from "./OrbitalLab.module.css";
 
 type Props = CanvasHTMLAttributes<HTMLCanvasElement> & {
   canvasRef: RefObject<HTMLCanvasElement | null>;
+  cameraRef: RefObject<OrbitalAngles>;
+  frameRef: RefObject<((view: OrbitalAngles) => void) | null>;
   n: number; l: number; m: number;
   yaw: number; pitch: number; phaseInk: boolean; slice: boolean;
   representation: "points" | "surface"; cloud: OrbitalSamples; opacity: number;
@@ -14,7 +17,7 @@ type Props = CanvasHTMLAttributes<HTMLCanvasElement> & {
   onUnavailable: () => void;
 };
 
-export default function OrbitalSurfaceCanvas({ canvasRef, n, l, m, yaw, pitch, phaseInk, slice, representation, cloud, opacity, loadingLabel, onUnavailable, ...canvasProps }: Props) {
+export default function OrbitalSurfaceCanvas({ canvasRef, cameraRef, frameRef, n, l, m, yaw, pitch, phaseInk, slice, representation, cloud, opacity, loadingLabel, onUnavailable, ...canvasProps }: Props) {
   const rendererRef = useRef<ReturnType<typeof createOrbitalRenderer> | null>(null);
   const workerRef = useRef<Worker | null>(null);
   const requestRef = useRef(0);
@@ -38,7 +41,7 @@ export default function OrbitalSurfaceCanvas({ canvasRef, n, l, m, yaw, pitch, p
         if (event.data.error || !event.data.vertices?.length) { onUnavailable(); return; }
         renderer!.upload(event.data.vertices);
         const view = viewRef.current;
-        renderer!.draw(view.yaw, view.pitch, view.phaseInk, view.slice, view.representation, view.opacity);
+        renderer!.draw(cameraRef.current.yaw, cameraRef.current.pitch, view.phaseInk, view.slice, view.representation, view.opacity);
         canvas.dataset.ready = "true";
         setPending(false);
       };
@@ -49,7 +52,7 @@ export default function OrbitalSurfaceCanvas({ canvasRef, n, l, m, yaw, pitch, p
       worker?.terminate(); renderer?.dispose();
       rendererRef.current = null; workerRef.current = null;
     };
-  }, [canvasRef, onUnavailable]);
+  }, [canvasRef, cameraRef, onUnavailable]);
 
   useEffect(() => {
     rendererRef.current?.uploadPoints(cloud);
@@ -58,16 +61,25 @@ export default function OrbitalSurfaceCanvas({ canvasRef, n, l, m, yaw, pitch, p
     if (canvasRef.current) canvasRef.current.dataset.ready = surface ? "false" : "true";
     rendererRef.current?.upload(new Float32Array());
     const view = viewRef.current;
-    rendererRef.current?.draw(view.yaw, view.pitch, view.phaseInk, view.slice, representation, view.opacity);
+    rendererRef.current?.draw(cameraRef.current.yaw, cameraRef.current.pitch, view.phaseInk, view.slice, representation, view.opacity);
     const id = ++requestRef.current;
     if (surface) workerRef.current?.postMessage({ id, n, l, m });
     // View changes redraw the existing geometry; only quantum numbers remesh it.
-  }, [n, l, m, cloud, representation, canvasRef, onUnavailable]);
+  }, [n, l, m, cloud, representation, canvasRef, cameraRef, onUnavailable]);
 
   useEffect(() => {
     viewRef.current = { yaw, pitch, phaseInk, slice, representation, opacity };
-    rendererRef.current?.draw(yaw, pitch, phaseInk, slice, representation, opacity);
-  }, [yaw, pitch, phaseInk, slice, representation, opacity, canvasProps.width, canvasProps.height]);
+    rendererRef.current?.draw(cameraRef.current.yaw, cameraRef.current.pitch, phaseInk, slice, representation, opacity);
+  }, [yaw, pitch, phaseInk, slice, representation, opacity, cameraRef, canvasProps.width, canvasProps.height]);
+
+  useEffect(() => {
+    const draw = (camera: OrbitalAngles) => {
+      const view = viewRef.current;
+      rendererRef.current?.draw(camera.yaw, camera.pitch, view.phaseInk, view.slice, view.representation, view.opacity);
+    };
+    frameRef.current = draw;
+    return () => { if (frameRef.current === draw) frameRef.current = null; };
+  }, [frameRef]);
 
   return <><canvas {...canvasProps} ref={canvasRef} aria-busy={pending} data-renderer={representation} />{pending && <span className={styles.renderStatus} role="status">{loadingLabel}</span>}</>;
 }

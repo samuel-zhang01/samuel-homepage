@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type SetStateAction } from "react";
 import type { Locale } from "@/lib/i18n";
 import { elements, getOrbitalSamples, getRadialDistribution, orbitalLabel, orbitalNodes, ORBITAL_SOURCES, type ElementRecord } from "@/lib/orbitals";
 import ClassicSelect from "./ClassicSelect";
 import OrbitalSurfaceCanvas from "./OrbitalSurfaceCanvas";
 import { orbitalCopies } from "./orbitalI18n";
 import styles from "./OrbitalLab.module.css";
+import { advanceOrbitalRotation, runOrbitalAnimation, type OrbitalAngles } from "@/lib/orbitalAnimation";
 
 const letters = ["s", "p", "d", "f"];
 const initialAngles = { yaw: -1.5, pitch: -.25 };
@@ -31,11 +32,20 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
   const [phaseInk, setPhaseInk] = useState(true);
   const [slice, setSlice] = useState(false);
   const [spinning, setSpinning] = useState(false);
-  const [angles, setAngles] = useState(initialAngles);
+  const [angles, setAngleState] = useState(initialAngles);
+  const cameraRef = useRef<OrbitalAngles>(initialAngles);
+  const frameRef = useRef<((view: OrbitalAngles) => void) | null>(null);
+  const compassRef = useRef<SVGSVGElement>(null);
+  const setAngles = useCallback((update: SetStateAction<OrbitalAngles>) => {
+    const next = typeof update === "function" ? update(cameraRef.current) : update;
+    cameraRef.current = next;
+    frameRef.current?.(next);
+    setAngleState({ ...next });
+  }, []);
   const [status, setStatus] = useState("");
   const [compactCanvas, setCompactCanvas] = useState(false);
   const [renderMode, setRenderMode] = useState<"ascii" | "points" | "surface">("ascii");
-  const [opacity, setOpacity] = useState(.3);
+  const [opacity, setOpacity] = useState(.45);
   const [tableOpen, setTableOpen] = useState(false);
   const [ultra, setUltra] = useState(false);
   const [canvasPixels, setCanvasPixels] = useState(960);
@@ -59,6 +69,18 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
   const surfaceHeight = Math.round(canvasPixels * (compactCanvas ? 1 : .75));
   const asciiHeight = Math.round(canvasPixels * height / width);
   const unavailable = useCallback(() => { setRenderMode("ascii"); setSpinning(false); setStatus(c.unavailable); }, [c.unavailable]);
+  const paintCompass = useCallback((view: OrbitalAngles) => {
+    const axes = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+    Array.from(compassRef.current?.children ?? []).forEach((group, index) => {
+      const axis = axes[index];
+      const [x, y] = turnPoint(axis[0], axis[1], axis[2], view.yaw, view.pitch);
+      const [line, dot, text] = Array.from(group.children);
+      line.setAttribute("x2", String(42 + x * 24)); line.setAttribute("y2", String(42 - y * 24));
+      dot.setAttribute("cx", String(42 + x * 24)); dot.setAttribute("cy", String(42 - y * 24));
+      const short = Math.hypot(x, y) < .45;
+      text.setAttribute("x", String(short ? 51 : 42 + x * 34)); text.setAttribute("y", String(short ? 55 : 46 - y * 34));
+    });
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -102,64 +124,79 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
 
   useEffect(() => {
     if (!spinning || !active || document.hidden) return;
-    const timer = window.setInterval(() => setAngles((current) => ({ ...current, yaw: (current.yaw + .035) % (2 * Math.PI) })), 80);
-    return () => window.clearInterval(timer);
-  }, [active, spinning]);
+    return runOrbitalAnimation((elapsed) => {
+      cameraRef.current = advanceOrbitalRotation(cameraRef.current, elapsed);
+      frameRef.current?.(cameraRef.current);
+      paintCompass(cameraRef.current);
+    });
+  }, [active, spinning, paintCompass]);
+
+  useEffect(() => { paintCompass(cameraRef.current); }, [angles, renderMode, paintCompass]);
 
   useEffect(() => {
     if (renderMode !== "ascii") return;
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
-    // Draw text at backing-store resolution, never stretch an old low-res bitmap.
-    context.setTransform(canvasPixels / width, 0, 0, asciiHeight / height, 0, 0);
     const density = new Float32Array(cellColumns * cellRows);
     const sign = new Float32Array(cellColumns * cellRows);
-    const scale = Math.min(width, height) * .46 / cloud.radius;
-    for (const point of cloud.points) {
-      if (slice && Math.abs(point.z) > cloud.radius * .065) continue;
-      const [x, y] = turnPoint(point.x, point.y, point.z, angles.yaw, angles.pitch);
-      const column = cellColumns / 2 + x * scale / 6 - .5;
-      const row = cellRows / 2 - y * scale / cellHeight - .5;
-      // Bilinear splatting preserves sample weight while reducing grid flicker.
-      for (let dy = 0; dy <= 1; dy++) for (let dx = 0; dx <= 1; dx++) {
-        const cx = Math.floor(column) + dx, cy = Math.floor(row) + dy;
-        if (cx < 0 || cx >= cellColumns || cy < 0 || cy >= cellRows) continue;
-        const weight = (1 - Math.abs(column - cx)) * (1 - Math.abs(row - cy));
-        const index = cy * cellColumns + cx;
-        density[index] += weight;
-        sign[index] += point.phase * weight;
+    const draw = (view: OrbitalAngles) => {
+      // Draw text at backing-store resolution, never stretch an old low-res bitmap.
+      context.setTransform(canvasPixels / width, 0, 0, asciiHeight / height, 0, 0);
+      density.fill(0); sign.fill(0);
+      const cyaw = Math.cos(view.yaw), syaw = Math.sin(view.yaw);
+      const cpitch = Math.cos(view.pitch), spitch = Math.sin(view.pitch);
+      const scale = Math.min(width, height) * .46 / cloud.radius;
+      for (const point of cloud.points) {
+        if (slice && Math.abs(point.z) > cloud.radius * .065) continue;
+        const x = point.x * cyaw + point.z * syaw;
+        const y = point.y * cpitch - (-point.x * syaw + point.z * cyaw) * spitch;
+        const column = cellColumns / 2 + x * scale / 6 - .5;
+        const row = cellRows / 2 - y * scale / cellHeight - .5;
+        // Bilinear splatting preserves sample weight while reducing grid flicker.
+        for (let dy = 0; dy <= 1; dy++) for (let dx = 0; dx <= 1; dx++) {
+          const cx = Math.floor(column) + dx, cy = Math.floor(row) + dy;
+          if (cx < 0 || cx >= cellColumns || cy < 0 || cy >= cellRows) continue;
+          const weight = (1 - Math.abs(column - cx)) * (1 - Math.abs(row - cy));
+          const index = cy * cellColumns + cx;
+          density[index] += weight;
+          sign[index] += point.phase * weight;
+        }
       }
-    }
-    context.fillStyle = "#fffff3";
-    context.fillRect(0, 0, width, height);
-    context.strokeStyle = "#d3d3c5";
-    context.setLineDash([2, 5]);
-    context.beginPath();
-    context.moveTo(width / 2, 14); context.lineTo(width / 2, height - 14);
-    context.moveTo(14, height / 2); context.lineTo(width - 14, height / 2);
-    context.stroke();
-    context.setLineDash([]);
-    context.font = "10px Monaco, Courier New, monospace";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    const maximum = Math.max(1, ...density);
-    const ramp = ".:-=+*#%@";
-    const rows: string[] = [];
-    for (let row = 0; row < cellRows; row++) {
-      let line = "";
-      for (let column = 0; column < cellColumns; column++) {
-        const index = row * cellColumns + column;
-        if (density[index] === 0) { line += " "; continue; }
-        const value = Math.min(ramp.length - 1, Math.floor(Math.sqrt(density[index] / maximum) * (ramp.length - 1)));
-        const glyph = ramp[value];
-        context.fillStyle = phaseInk ? sign[index] >= 0 ? "#11177a" : "#99412c" : "#111";
-        context.fillText(glyph, column * 6 + 3, row * cellHeight + cellHeight / 2);
-        line += phaseInk ? sign[index] >= 0 ? ".:+#"[Math.min(3, Math.floor(value / 2))] : ",;-="[Math.min(3, Math.floor(value / 2))] : glyph;
+      context.fillStyle = "#fffff3";
+      context.fillRect(0, 0, width, height);
+      context.strokeStyle = "#d3d3c5";
+      context.setLineDash([2, 5]);
+      context.beginPath();
+      context.moveTo(width / 2, 14); context.lineTo(width / 2, height - 14);
+      context.moveTo(14, height / 2); context.lineTo(width - 14, height / 2);
+      context.stroke();
+      context.setLineDash([]);
+      context.font = "10px Monaco, Courier New, monospace";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      let maximum = 1;
+      for (const value of density) maximum = Math.max(maximum, value);
+      const ramp = ".:-=+*#%@";
+      const rows: string[] = [];
+      for (let row = 0; row < cellRows; row++) {
+        let line = "";
+        for (let column = 0; column < cellColumns; column++) {
+          const index = row * cellColumns + column;
+          if (density[index] === 0) { line += " "; continue; }
+          const value = Math.min(ramp.length - 1, Math.floor(Math.sqrt(density[index] / maximum) * (ramp.length - 1)));
+          const glyph = ramp[value];
+          context.fillStyle = phaseInk ? sign[index] >= 0 ? "#11177a" : "#99412c" : "#111";
+          context.fillText(glyph, column * 6 + 3, row * cellHeight + cellHeight / 2);
+          line += phaseInk ? sign[index] >= 0 ? ".:+#"[Math.min(3, Math.floor(value / 2))] : ",;-="[Math.min(3, Math.floor(value / 2))] : glyph;
+        }
+        rows.push(line.trimEnd());
       }
-      rows.push(line.trimEnd());
-    }
-    asciiRef.current = rows.join("\n");
+      asciiRef.current = rows.join("\n");
+    };
+    frameRef.current = draw;
+    draw(cameraRef.current);
+    return () => { if (frameRef.current === draw) frameRef.current = null; };
   }, [cloud, angles, phaseInk, slice, renderMode, cellColumns, cellRows, cellHeight, width, height, canvasPixels, asciiHeight]);
 
   function adjust(yaw: number, pitch: number) {
@@ -181,7 +218,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
     if (!event.isPrimary || event.button !== 0) return;
     event.currentTarget.setPointerCapture(event.pointerId);
     event.currentTarget.focus({ preventScroll: true });
-    dragRef.current = { id: event.pointerId, x: event.clientX, y: event.clientY, ...angles };
+    dragRef.current = { id: event.pointerId, x: event.clientX, y: event.clientY, ...cameraRef.current };
     setSpinning(false);
   }
   function moveDrag(event: PointerEvent<HTMLCanvasElement>) {
@@ -259,10 +296,10 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
           {renderMode === "ascii" && <label><span>{c.detail}</span><ClassicSelect value={ultra ? "ultra" : "fine"} onChange={(event) => setUltra(event.target.value === "ultra")}><option value="fine">{c.fine}</option><option value="ultra">{c.ultra}</option></ClassicSelect></label>}
         </div>
         <div className={styles.canvasFrame}>
-          {renderMode === "ascii" ? <canvas {...canvasProps} key="ascii" ref={canvasRef} width={canvasPixels} height={asciiHeight} data-renderer="ascii" data-columns={cellColumns} data-rows={cellRows} /> : <OrbitalSurfaceCanvas {...canvasProps} key="3d" canvasRef={canvasRef} width={canvasPixels} height={surfaceHeight} n={subshell.n} l={subshell.l} m={component} yaw={angles.yaw} pitch={angles.pitch} phaseInk={phaseInk} slice={slice} representation={renderMode} cloud={cloud} opacity={opacity} loadingLabel={c.loading} onUnavailable={unavailable} />}
-          <svg className={styles.compass} viewBox="0 0 84 84" aria-hidden="true">{[["x", [1, 0, 0]], ["y", [0, 1, 0]], ["z", [0, 0, 1]]].map(([name, axis]) => {
+          {renderMode === "ascii" ? <canvas {...canvasProps} key="ascii" ref={canvasRef} width={canvasPixels} height={asciiHeight} data-renderer="ascii" data-columns={cellColumns} data-rows={cellRows} /> : <OrbitalSurfaceCanvas {...canvasProps} key="3d" canvasRef={canvasRef} cameraRef={cameraRef} frameRef={frameRef} width={canvasPixels} height={surfaceHeight} n={subshell.n} l={subshell.l} m={component} yaw={angles.yaw} pitch={angles.pitch} phaseInk={phaseInk} slice={slice} representation={renderMode} cloud={cloud} opacity={opacity} loadingLabel={c.loading} onUnavailable={unavailable} />}
+          <svg ref={compassRef} className={styles.compass} viewBox="0 0 84 84" aria-hidden="true">{[["x", [1, 0, 0]], ["y", [0, 1, 0]], ["z", [0, 0, 1]]].map(([name, axis]) => {
             const [x, y] = turnPoint(...(axis as [number, number, number]), angles.yaw, angles.pitch);
-            const short = Math.hypot(x, y) < .25;
+            const short = Math.hypot(x, y) < .45;
             return <g key={String(name)}><line x1="42" y1="42" x2={42 + x * 24} y2={42 - y * 24} /><circle cx={42 + x * 24} cy={42 - y * 24} r="1.5" /><text x={short ? 51 : 42 + x * 34} y={short ? 55 : 46 - y * 34}>{name}</text></g>;
           })}</svg>
         </div>

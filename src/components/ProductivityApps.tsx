@@ -650,28 +650,30 @@ function NotePad({ locale }: { locale: Locale }) {
           aria-label={formatNoteEditorLabel(locale, activePage + 1)}
           placeholder={t("Type a note, paste a thought, or make a tiny to-do list…")}
         />
-        <button
-          type="button"
-          className={`${styles.pageTurn} ${styles.pageTurnPrevious}`}
-          onClick={() => turnPage(-1)}
-          aria-label={t("Previous page")}
-          title={t("Previous page")}
-        >
-          ‹
-        </button>
-        <button
-          type="button"
-          className={`${styles.pageTurn} ${styles.pageTurnNext}`}
-          onClick={() => turnPage(1)}
-          aria-label={t("Next page")}
-          title={t("Next page")}
-        >
-          ›
-        </button>
       </div>
       <footer className={styles.noteStatus}>
         <span role="status" aria-live="polite">{saveLabel}</span>
-        <strong>{formatNotePage(locale, activePage + 1, NOTE_PAGE_COUNT)}</strong>
+        <div className={styles.notePagination}>
+          <button
+            type="button"
+            className={styles.pageTurn}
+            onClick={() => turnPage(-1)}
+            aria-label={t("Previous page")}
+            title={t("Previous page")}
+          >
+            ‹
+          </button>
+          <strong aria-live="polite">{formatNotePage(locale, activePage + 1, NOTE_PAGE_COUNT)}</strong>
+          <button
+            type="button"
+            className={styles.pageTurn}
+            onClick={() => turnPage(1)}
+            aria-label={t("Next page")}
+            title={t("Next page")}
+          >
+            ›
+          </button>
+        </div>
         <span>{wordCount} {wordCount === 1 ? t("word") : t("words")}</span>
       </footer>
     </div>

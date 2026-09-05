@@ -314,7 +314,7 @@
   width: 100%;
   height: 100%;
   resize: none;
-  padding: var(--paper-inset) 2.7rem 2.8rem calc(var(--note-gutter) + .55rem);
+  padding: var(--paper-inset) 1rem var(--paper-pitch) calc(var(--note-gutter) + .55rem);
   border: 0;
   outline: 0;
   color: #171717;
@@ -339,15 +339,14 @@
 }
 
 .pageTurn {
-  position: absolute;
-  z-index: 3;
-  bottom: 0;
-  width: 2.7rem;
-  height: 2.7rem;
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
-  border: 0;
+  border: 2px solid #111;
   color: #111;
-  background: linear-gradient(135deg, #fffef2 0 48%, #111 49% 52%, #d7cb83 53% 100%);
+  background: #efefea;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #888;
   font-size: 1.5rem;
   font-weight: 800;
   line-height: 1;
@@ -357,17 +356,21 @@
 .pageTurn:hover,
 .pageTurn:focus-visible {
   color: #fff;
-  background: linear-gradient(135deg, #fffef2 0 48%, #111 49% 52%, #11177a 53% 100%);
+  background: #11177a;
   outline: 2px dotted #111;
-  outline-offset: -5px;
+  outline-offset: 2px;
 }
 
-.pageTurnPrevious {
-  right: 2.8rem;
+.notePagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
 }
 
-.pageTurnNext {
-  right: 0;
+.notePagination strong {
+  text-align: center;
+  min-width: 6.5em;
 }
 
 .noteStatus {
@@ -1752,7 +1755,8 @@
   }
 
   .noteStatus {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
   .noteStatus span:last-child {

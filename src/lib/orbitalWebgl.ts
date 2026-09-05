@@ -43,7 +43,8 @@ void main() {
     float radius = length(gl_PointCoord-vec2(0.5))*2.0;
     if (radius>1.0) discard;
     vec3 ink = !phaseInk ? vec3(0.15) : vPhase>=0.0 ? vec3(0.067,0.09,0.478) : vec3(0.60,0.255,0.173);
-    gl_FragColor = vec4(ink,opacity*exp(-3.5*radius*radius));
+    // A solid disc with a narrow antialiased rim, not a Gaussian blur sprite.
+    gl_FragColor = vec4(ink,opacity*(1.0-smoothstep(0.75,1.0,radius)));
     return;
   }
   vec3 normal = normalize(vNormal);
@@ -64,9 +65,10 @@ export function createOrbitalRenderer(canvas: HTMLCanvasElement) {
   const program = gl.createProgram();
   const buffer = gl.createBuffer();
   const pointBuffer = gl.createBuffer();
-  if (!program || !buffer || !pointBuffer) throw new Error("WebGL allocation failed");
+  const orderBuffer = gl.createBuffer();
+  if (!program || !buffer || !pointBuffer || !orderBuffer) throw new Error("WebGL allocation failed");
   const dispose = () => {
-    gl.deleteBuffer(buffer); gl.deleteBuffer(pointBuffer); gl.deleteProgram(program);
+    gl.deleteBuffer(buffer); gl.deleteBuffer(pointBuffer); gl.deleteBuffer(orderBuffer); gl.deleteProgram(program);
     shaders.forEach((shader) => gl.deleteShader(shader));
     // React may replay effects on the same attached canvas in development.
     // Release the context only after its canvas actually leaves the document.
@@ -94,28 +96,56 @@ export function createOrbitalRenderer(canvas: HTMLCanvasElement) {
   gl.enable(gl.DEPTH_TEST);
   const uniforms = Object.fromEntries(["angles", "aspect", "phaseInk", "slice", "points", "pointSize", "opacity"].map((name) => [name, gl.getUniformLocation(program, name)]));
   let count = 0;
-  let cloud: OrbitalSamples | null = null;
   let pointVertices = new Float32Array();
+  let order = new Uint16Array();
+  let depths = new Float32Array();
+  let orderedYaw = NaN, orderedPitch = NaN;
+  let measuredWidth = 0, pixelRatio = 1;
   return {
     upload(vertices: Float32Array) { gl.bindBuffer(gl.ARRAY_BUFFER, buffer); gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW); count = vertices.length / 7; },
-    uploadPoints(samples: OrbitalSamples) { cloud = samples; pointVertices = new Float32Array(samples.points.length * 7); },
+    uploadPoints(samples: OrbitalSamples) {
+      // Positions stay on the GPU. Rotation uploads only 24 KB of indices,
+      // without allocating/sorting 12,000 objects or rebuilding vertex data.
+      const count = samples.points.length;
+      if (count > 65_535) throw new RangeError("Point index capacity exceeded");
+      pointVertices = new Float32Array(count * 7);
+      order = new Uint16Array(count); depths = new Float32Array(count);
+      samples.points.forEach((point, i) => {
+        pointVertices.set([point.x / samples.radius, point.y / samples.radius, point.z / samples.radius, 0, 0, 1, point.phase], i * 7);
+        order[i] = i;
+      });
+      bind(pointBuffer); gl.bufferData(gl.ARRAY_BUFFER, pointVertices, gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, orderBuffer); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, order, gl.DYNAMIC_DRAW);
+      orderedYaw = NaN; orderedPitch = NaN;
+    },
     draw(yaw: number, pitch: number, ink: boolean, slice: boolean, representation: "points" | "surface", opacity: number) {
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(1, 1, 243 / 255, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.uniform2f(uniforms.angles, yaw, pitch); gl.uniform1f(uniforms.aspect, canvas.width / canvas.height);
       gl.uniform1i(uniforms.phaseInk, ink ? 1 : 0); gl.uniform1i(uniforms.slice, slice ? 1 : 0);
       gl.uniform1i(uniforms.points, representation === "points" ? 1 : 0);
-      if (representation === "points" && cloud) {
+      if (representation === "points" && order.length) {
         // Correct back-to-front alpha compositing. These are equal-weight
         // probability samples, not electrons; overlapping dots reveal density.
-        const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-        const ordered = cloud.points.map((point) => ({ point, depth: point.y * sp + (-point.x * sy + point.z * cy) * cp })).sort((a, b) => a.depth - b.depth);
-        ordered.forEach(({ point }, i) => pointVertices.set([point.x / cloud!.radius, point.y / cloud!.radius, point.z / cloud!.radius, 0, 0, 1, point.phase], i * 7));
-        bind(pointBuffer); gl.bufferData(gl.ARRAY_BUFFER, pointVertices, gl.DYNAMIC_DRAW);
-        gl.uniform1f(uniforms.pointSize, Math.max(2, canvas.height / 170));
+        bind(pointBuffer); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, orderBuffer);
+        if (yaw !== orderedYaw || pitch !== orderedPitch) {
+          const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+          for (let i = 0; i < order.length; i++) {
+            const offset = i * 7;
+            depths[i] = pointVertices[offset + 1] * sp + (-pointVertices[offset] * sy + pointVertices[offset + 2] * cy) * cp;
+          }
+          order.sort((a, b) => depths[a] - depths[b]);
+          gl.bufferSubData(gl.ELEMENT_ARRAY_BUFFER, 0, order);
+          orderedYaw = yaw; orderedPitch = pitch;
+        }
+        if (measuredWidth !== canvas.width) {
+          measuredWidth = canvas.width;
+          pixelRatio = canvas.width / Math.max(1, canvas.getBoundingClientRect().width);
+        }
+        gl.uniform1f(uniforms.pointSize, Math.max(2.2 * pixelRatio, canvas.height / 260));
         gl.uniform1f(uniforms.opacity, opacity);
         gl.disable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-        gl.drawArrays(gl.POINTS, 0, ordered.length);
+        gl.drawElements(gl.POINTS, order.length, gl.UNSIGNED_SHORT, 0);
       } else {
         bind(buffer); gl.disable(gl.BLEND); gl.enable(gl.DEPTH_TEST);
         gl.drawArrays(gl.TRIANGLES, 0, count);

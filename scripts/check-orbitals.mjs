@@ -253,4 +253,33 @@ for (const [n, l, m] of [[1, 0, 0], [2, 1, 0], [3, 2, 0], [4, 3, 0], [2, 0, 0], 
     }
   });
 }
-console.log(`Orbital gate: ${checks} element, quantum-function, surface, probability and workload regressions passed.`);
+const animationSource = ts.transpileModule(await readFile(new URL("../src/lib/orbitalAnimation.ts", import.meta.url), "utf8"), {
+  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+}).outputText;
+const { advanceOrbitalRotation, runOrbitalAnimation } = await import(`data:text/javascript;base64,${Buffer.from(animationSource).toString("base64")}`);
+for (const hz of [60, 120, 144]) check(`rotation speed is time-based at ${hz} Hz`, () => {
+  let camera = { yaw: 0, pitch: -.25 };
+  for (let frame = 0; frame < hz * 6; frame++) camera = advanceOrbitalRotation(camera, 1000 / hz);
+  near(camera.yaw, 2.625, 1e-10);
+  assert.equal(camera.pitch, -.25);
+});
+check("rotation clamps suspension gaps and rejects invalid elapsed time", () => {
+  const camera = Object.freeze({ yaw: 0, pitch: .5 });
+  near(advanceOrbitalRotation(camera, 5000).yaw, .04375);
+  for (const elapsed of [-10, NaN, Infinity]) assert.deepEqual(advanceOrbitalRotation(camera, elapsed), camera);
+  assert.equal(camera.yaw, 0);
+});
+check("animation schedules once per repaint and cancels even request ID zero", () => {
+  const queue = new Map(); let id = 0; const elapsed = [];
+  const request = (fn) => { queue.set(id, fn); return id++; };
+  const cancel = (id) => queue.delete(id);
+  const cancelFirst = runOrbitalAnimation((delta) => elapsed.push(delta), request, cancel);
+  cancelFirst(); assert.equal(queue.size, 0);
+  const stop = runOrbitalAnimation((delta) => elapsed.push(delta), request, cancel);
+  for (const time of [100, 108, 116]) { const [key, fn] = queue.entries().next().value; queue.delete(key); fn(time); assert.equal(queue.size, 1); }
+  assert.deepEqual(elapsed, [0, 8, 8]);
+  const late = queue.values().next().value;
+  stop(); assert.equal(queue.size, 0);
+  late(124); assert.deepEqual(elapsed, [0, 8, 8]);
+});
+console.log(`Orbital gate: ${checks} element, quantum-function, surface, animation, probability and workload regressions passed.`);
