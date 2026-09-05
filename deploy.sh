@@ -2,6 +2,56 @@
 
 set -euo pipefail
 
+# Work from the checkout, even when launched from another directory.
+deployment_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+cd "$deployment_dir"
+case "${1:-}" in
+  "") sync_checkout=1 ;;
+  --local) sync_checkout=0 ;;
+  --help|-h)
+    echo "Usage: ./deploy.sh [--local]"
+    echo "Default: fast-forward origin/main, install locked dependencies, check, build and deploy."
+    echo "--local: deploy the current clean checkout without fetching."
+    exit 0 ;;
+  *) echo "Unknown option: $1. Use --help." >&2; exit 1 ;;
+esac
+if (( $# > 1 )); then
+  echo "Expected at most one option. Use --help." >&2
+  exit 1
+fi
+for required_command in git node npm docker; do
+  if ! command -v "$required_command" >/dev/null 2>&1; then
+    echo "$required_command is required but was not found." >&2
+    exit 1
+  fi
+done
+node -e 'const [major, minor] = process.versions.node.split(".").map(Number); if (major < 20 || (major === 20 && minor < 16)) { console.error("Node.js 20.16 or newer is required."); process.exit(1); }'
+if [[ "$(git rev-parse --show-toplevel)" != "$deployment_dir" ]]; then
+  echo "deploy.sh must be in the root of its Git checkout." >&2
+  exit 1
+fi
+if [[ -n "$(git status --porcelain --untracked-files=normal)" ]]; then
+  echo "The checkout has local changes. Commit or move them before deploying; nothing was overwritten." >&2
+  exit 1
+fi
+docker info >/dev/null
+if (( sync_checkout == 1 )); then
+  if [[ "$(git symbolic-ref --short -q HEAD)" != "main" ]]; then
+    echo "Automatic deployment requires branch main. Use --local for a reviewed clean revision." >&2
+    exit 1
+  fi
+  echo "Fetching the latest origin/main..."
+  git fetch origin main
+  if ! git merge-base --is-ancestor HEAD origin/main; then
+    echo "Local main is ahead of or diverged from origin/main; refusing to overwrite it." >&2
+    exit 1
+  fi
+  git merge --ff-only origin/main
+  # Run the newly fetched script, not the old shell's already loaded instructions.
+  exec bash "$deployment_dir/deploy.sh" --local
+fi
+echo "Deploying revision $(git rev-parse --short HEAD)"
+
 service_name="samuel-homepage"
 deployment_image="samuel-homepage:production"
 
@@ -57,10 +107,19 @@ fi
 
 "${compose[@]}" config --quiet
 
-previous_container_id=$("${compose[@]}" ps -q "$service_name" 2>/dev/null || true)
+echo "Installing locked dependencies (including build and verification tools)..."
+npm ci --include=dev --no-fund --no-audit
+
+if ! previous_container_id=$("${compose[@]}" ps -q "$service_name"); then
+  echo "Could not inspect the existing service; refusing to replace it without a rollback target." >&2
+  exit 1
+fi
 previous_image=""
 if [[ -n "$previous_container_id" ]]; then
-  previous_image=$(docker inspect --format '{{.Image}}' "$previous_container_id" 2>/dev/null || true)
+  if ! previous_image=$(docker inspect --format '{{.Image}}' "$previous_container_id") || [[ -z "$previous_image" ]]; then
+    echo "Could not resolve the previous image; the existing service was not replaced." >&2
+    exit 1
+  fi
 fi
 replacement_started=0
 deployment_verified=0
@@ -92,6 +151,12 @@ npm run check:data
 npm run check:catalogue
 npm run check:styles
 npm run check:locales
+npm run check:desk
+npm run check:controls
+npm run check:orbitals
+npm run prepare:search
+npm run check:search
+npm run check:finder
 
 echo "Building Samuel System 7..."
 "${compose[@]}" build "$service_name"
@@ -112,7 +177,7 @@ for _ in {1..45}; do
   health=$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$container_id")
   case "$health" in
     healthy)
-      for required_route in / /desk /projects /sidequest /en-gb/desk; do
+      for required_route in / /desk /projects /sidequest /en-gb/desk /orbitals /en-gb/orbitals /en-us/orbitals /zh-cn/orbitals /zh-tw/orbitals; do
         if ! docker exec "$container_id" wget --no-verbose --tries=1 --spider \
           --header="Host: ${public_host}" "http://127.0.0.1:3000${required_route}" >/dev/null; then
           echo "The container is healthy but failed the canonical ${required_route} route probe." >&2
@@ -195,12 +260,18 @@ for _ in {1..45}; do
           echo "The public production CSP unexpectedly permits unsafe-eval." >&2
           exit 1
         fi
-        for required_route in /desk /projects /sidequest /en-gb/desk; do
-          route_status=$(curl --silent --show-error --head --location \
+        for required_route in /desk /projects /sidequest /en-gb/desk /orbitals /en-gb/orbitals /en-us/orbitals /zh-cn/orbitals /zh-tw/orbitals; do
+          route_probe=$(curl --silent --show-error --head --location \
             --proto "=https" --proto-redir "=https" --tlsv1.2 \
             --max-redirs 3 --max-time 20 --retry 3 --retry-delay 2 \
-            --output /dev/null --write-out '%{http_code}' \
+            --output /dev/null --write-out $'__HTTP_CODE__:%{http_code}\n__EFFECTIVE_URL__:%{url_effective}\n' \
             "${homepage_public_origin}${required_route}")
+          route_status=$(sed -n 's/^__HTTP_CODE__://p' <<<"$route_probe" | tail -n 1)
+          route_url=$(sed -n 's/^__EFFECTIVE_URL__://p' <<<"$route_probe" | tail -n 1)
+          case "$route_url" in
+            "$homepage_public_origin"|"$homepage_public_origin"/*) ;;
+            *) echo "The public ${required_route} route left the canonical HTTPS origin." >&2; exit 1 ;;
+          esac
           if [[ "$route_status" != 2* ]]; then
             echo "The public ${required_route} route returned HTTP ${route_status}." >&2
             exit 1

@@ -1,0 +1,108 @@
+Samuel System 7 — Attribution, NonCommercial, Free Share-Alike Licence
+Version 1.0, 5 September 2026
+Copyright (c) 2026 Samuel Zhang
+
+This is a custom source-available licence. It is not an OSI-approved open-source
+licence, a Creative Commons licence, or an unrestricted permission to reuse all
+content in this repository.
+
+1. COVERED WORK AND EXCLUSIONS
+
+"Covered Work" means the original software, original interface artwork expressed
+in code, build/test scripts, and technical documentation in this repository to
+the extent that Samuel Zhang owns the copyright and can grant these rights.
+"You" means anyone exercising the permissions below. A "Modified Work" is a
+modification of, or derivative work incorporating, the Covered Work.
+
+This licence does not cover third-party code or separately attributed material;
+dependencies retain their own licences. It does not grant reuse rights to personal
+biographies, contact/CV information, photographs, portfolio documents, employer or
+client material, course/research source materials, trademarks or third-party logos.
+In particular, PDFs and photographs in public/, authoring documents in others/,
+and personal/media content pictured in documentation screenshots are not included
+in this grant. Displaying content on this website is not permission to relicense
+it. See THIRD_PARTY_NOTICES.md. Obtain separate permission or replace excluded
+content with material you may lawfully use.
+
+2. PERMISSION
+
+Subject to every condition below, you receive a worldwide, royalty-free,
+non-exclusive copyright licence to use, run, study, copy, modify and share the
+Covered Work and Modified Works for non-commercial purposes. You may make private
+modifications without publishing them. When you distribute or publicly make a
+Covered or Modified Work available, sections 3–5 apply.
+
+3. ATTRIBUTION
+
+Retain this licence and applicable copyright and third-party notices in every
+copy or distribution. Credit Samuel Zhang (for example, "Inspired by Samuel
+Zhang" or "Based on Samuel System 7 by Samuel Zhang") and link to
+https://github.com/samuel-zhang01/samuel-homepage in the distribution's README or
+equivalent documentation. In a publicly available application or website, also
+provide that credit and link in an easily discoverable About, Credits or footer
+area. Identify your modifications and their date without implying Samuel Zhang
+authored or endorses your changes. Reasonable layout changes are permitted; the
+credit must remain legible and accessible.
+
+4. NO COMMERCIAL USE, SALE OR MONETISATION
+
+You may not sell, rent, sublicense for payment, charge for downloads or access,
+put behind a paywall, or otherwise monetise the Covered Work or Modified Works.
+You may not include them in a paid product, commercial service or paid client
+deliverable, or use them to obtain direct or indirect commercial advantage.
+Advertising, sponsorship or a required donation in exchange for the work or its
+use is not permitted. Charging only your costs does not create an exception to
+the prohibition on charging for copies or access. Making access free of charge
+does not by itself make a commercial use permissible.
+
+Personal-portfolio exception: an individual may adapt and freely host a credited
+personal portfolio to present their own work and seek employment, even if that
+may lead to paid employment. Keep the attribution and source-sharing requirements
+above and below. This exception does not permit selling templates, paid client
+work, commercial services, advertisements, sponsorship or paywalled access.
+
+5. FREE SHARING AND THE SAME TERMS
+
+Every copy or Modified Work you distribute or publicly make available must be
+available without charge and under this same licence, including its attribution,
+non-commercial and no-sale conditions. You may not add terms, technical locks or
+access restrictions that prevent recipients from exercising these permissions.
+The same-licence requirement applies to the Covered Work and modifications to it;
+excluded and third-party components retain their separate terms.
+Recipients must be free to use, modify and share the Covered Work on the same
+terms, without paying you or obtaining another licence from you.
+
+Provide recipients and users of a public deployment with an accessible, no-charge
+link or accompanying copy of the corresponding editable source of the Covered
+Work and your modifications, including the build instructions needed for that
+version. A minified bundle alone is not editable source. Keep that source
+available while you distribute or publicly provide the version. Do not publish
+credentials, private user data or excluded third-party content to satisfy this
+requirement; provide safe configuration examples and identify separately required
+dependencies instead. Independent works merely distributed alongside this work
+do not become covered by this licence.
+
+6. RIGHTS NOT GRANTED
+
+No patent, trademark, publicity, privacy or endorsement rights are granted. This
+licence cannot grant rights Samuel Zhang does not own or override another owner's
+licence. Statutory exceptions and limitations, including applicable fair use or
+fair dealing, are not restricted. A different use requires separate written
+permission from the relevant rights holder; no commercial permission is implied.
+
+7. TERMINATION
+
+Permissions terminate automatically if you breach these conditions. Stop the
+non-compliant use and distribution. Permissions are reinstated if you cure the
+breach within 30 days after first discovering it; otherwise reinstatement requires
+written permission. Compliant recipients do not lose their rights merely because
+you breached the licence. Permissions for a version remain effective while you
+comply; a later licence revision does not remove permissions already granted.
+
+8. NO WARRANTY OR LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COVERED WORK IS PROVIDED "AS IS",
+WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. THE AUTHORS AND COPYRIGHT
+HOLDERS ARE NOT LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM THE
+WORK OR ITS USE, WHETHER IN CONTRACT, TORT OR OTHERWISE.

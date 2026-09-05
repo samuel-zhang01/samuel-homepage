@@ -52,6 +52,8 @@ deploy.env.example
 # Documentation
 README.md
 *.md
+!THIRD_PARTY_NOTICES.md
+/docs/
 
 # Locale validation reads only these reviewed source CVs during the builder
 # stage. Keep every other authoring document out of the Docker context.
