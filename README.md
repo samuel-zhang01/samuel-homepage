@@ -93,7 +93,9 @@ Replay transport supports pause/resume, rewind and single-point stepping. It pau
 
 ### Orbital Lab
 
-Open `/orbitals`, **Orbital Lab** in the Apple menu, or its Desk Accessories card.
+Open its dedicated **Orbital Lab** desktop icon, `/orbitals`, the Apple menu
+entry, or its Desk Accessories card. The desktop shortcut has its own orbital
+artwork, translated label and description, and opens the standalone app window.
 Start with H, C, Fe or Ce; choose an occupied subshell and real angular component,
 then drag the ASCII cloud or use arrow keys/buttons to rotate it. The periodic
 table supports keyboard selection and a **View orbital** return action on long

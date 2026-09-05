@@ -515,6 +515,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
   { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of Samuel’s work." },
   { id: "desk", label: "Desk Accessories", icon: "accessories", description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser." },
+  { id: "orbitals", label: "Orbital Lab", icon: "orbital", description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
   { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
