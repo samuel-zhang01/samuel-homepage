@@ -1,0 +1,8 @@
+.artwork { width: 100%; aspect-ratio: 1; overflow: hidden; border: 1px solid #000; background: #5e7882; box-shadow: inset 1px 1px #fff, 2px 2px #aaa; }
+.artwork[data-area="Products"] { background: #97705f; }
+.artwork[data-area="Systems"] { background: #667568; }
+.artwork[data-area="Education"] { background: #7b708a; }
+.artwork[data-area="Applied AI"] { background: #777c91; }
+.artwork[data-area="Research"] { background: #708185; }
+.artwork img, .artwork svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.artwork svg { padding: 10%; }

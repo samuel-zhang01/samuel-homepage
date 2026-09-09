@@ -1,5 +1,9 @@
 "use client";
 
+import { MathEquation } from "./MathEquation";
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { stockMarketCopy } from "./copy/stockMarketCopy";
+
 import { useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./StockMarketStudio.module.css";
@@ -72,7 +76,7 @@ const SCENARIOS: Array<{
 }> = [
   {
     id: "source",
-    label: "Source defaults",
+    label: "Original settings",
     hint: "P₀ 100 · Q 100 · α .01",
     config: { seed: 2025, initialPrice: 100, maxQuantity: 100, maxPriceImpact: 0.01 },
   },
@@ -92,8 +96,8 @@ const SCENARIOS: Array<{
 
 const VIEW_OPTIONS: Array<{ id: ViewId; label: string; hint: string }> = [
   { id: "lab", label: "Impact lab", hint: "seeded event replay" },
-  { id: "window", label: "Window audit", hint: "legacy vs corrected" },
-  { id: "evidence", label: "Source map", hint: "claims + invariants" },
+  { id: "window", label: "Metric windows", hint: "compare calculation ranges" },
+  { id: "evidence", label: "Model & limits", hint: "mechanisms and consistency" },
 ];
 
 function clamp(value: number, minimum: number, maximum: number) {
@@ -294,7 +298,7 @@ function PriceTrace({
   const chartEnd = audit ? xForIndex(audit.lastHistoryIndex) : width - padding;
 
   return (
-    <div className={styles.chartShell}>
+    <ProjectCopy copy={stockMarketCopy}><div className={styles.chartShell}>
       <div className={styles.chartHeading}>
         <div>
           <span>PRICE TRACE · SYNTHETIC INSTRUMENT</span>
@@ -353,22 +357,22 @@ function PriceTrace({
         <text className={styles.axisText} x={padding} y={height - 8}>{formatMoney(minimum)}</text>
         <text className={styles.axisTextEnd} x={width - padding} y={height - 8}>event {history.length - 1}</text>
       </svg>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
-function MetricCard({ label, value, detail, tone = "neutral" }: { label: string; value: string; detail: string; tone?: "neutral" | "blue" | "green" | "amber" }) {
+function MetricCard({ label, value, detail, tone = "neutral" }: { label: string; value: string; detail: React.ReactNode; tone?: "neutral" | "blue" | "green" | "amber" }) {
   return (
-    <article className={styles.metricCard} data-tone={tone}>
+    <ProjectCopy copy={stockMarketCopy}><article className={styles.metricCard} data-tone={tone}>
       <span>{label}</span>
       <strong>{value}</strong>
       <small>{detail}</small>
-    </article>
+    </article></ProjectCopy>
   );
 }
 
 function AuditStatus({ ok, children }: { ok: boolean; children: React.ReactNode }) {
-  return <span className={ok ? styles.pass : styles.fail}>{ok ? "PASS" : "CHECK"} · {children}</span>;
+  return <ProjectCopy copy={stockMarketCopy}><span className={ok ? styles.pass : styles.fail}>{ok ? "PASS" : "CHECK"} · {children}</span></ProjectCopy>;
 }
 
 export function StockMarketStudio() {
@@ -420,23 +424,23 @@ export function StockMarketStudio() {
   };
 
   return (
-    <DemoWindow
-      appName="Stockmarket.jl · audited browser port"
+    <ProjectCopy copy={stockMarketCopy}><DemoWindow
+      appName="Market impact simulator"
       title="Stochastic Market Impact Lab"
-      status="SOURCE-AUDITED"
-      purpose="Show exactly what a small stochastic price script implements without presenting it as a full exchange or forecasting engine."
+      status="Seeded simulation"
+      purpose="Explore how order quantity, sentiment and a random impact coefficient change the simulated price of one stock."
       tryThis="Run a seeded day, trigger the price floor and switch between legacy and corrected metric windows."
       watchFor="The event tape and summary arithmetic change together, exposing the original daily-window bug over a fictional process."
       statusTone="safe"
       className={styles.studio}
       footer={
         <>
-          <span>PRIVATE REPOSITORY · NO EXPLICIT LICENCE · SOURCE NOT REDISTRIBUTED</span>
-          <span>FICTIONAL PROCESS · NOT MARKET DATA OR FINANCIAL ADVICE</span>
+          <span>ONE SYNTHETIC STOCK · IMMEDIATE RANDOM PRICE IMPACT</span>
+          <span>LOCAL REPLAY · CALCULATED EVENT HISTORY</span>
         </>
       }
     >
-      <section className={styles.provenanceBanner} aria-label="Source provenance notice">
+      <section className={styles.provenanceBanner} aria-label="Model and browser implementation">
         <span>JULIA CORE</span>
         <p>
           Faithful to the single-stock stochastic price-impact equations in <code>Stockmarket.jl</code>. The deterministic RNG,
@@ -464,15 +468,15 @@ export function StockMarketStudio() {
           <section className={styles.metricGrid} aria-label="Current simulation metrics">
             <MetricCard label="Synthetic price" value={formatMoney(result.price)} detail={`${formatSigned(overallReturn)} from P₀`} tone="blue" />
             <MetricCard label="Impact events" value={String(result.events.length)} detail={`${batches} outer trade loops`} />
-            <MetricCard label="Share volume" value={result.volume.toLocaleString("en-GB")} detail="Σ submitted quantities" tone="green" />
-            <MetricCard label="Buy / sell ratio" value={buySellRatio.toFixed(2)} detail="B ÷ max(S, 1)" />
-            <MetricCard label="Price dispersion" value={overallVolatility.toFixed(4)} detail="sample std(history)" tone="amber" />
+            <MetricCard label="Share volume" value={result.volume.toLocaleString("en-GB")} detail={<MathEquation display={false} tex={String.raw`\sum_{\mathrm{submitted}}q`} />} tone="green" />
+            <MetricCard label="Buy / sell ratio" value={buySellRatio.toFixed(2)} detail={<MathEquation display={false} tex={String.raw`\frac{B}{\max(S,1)}`} />} />
+            <MetricCard label="Price dispersion" value={overallVolatility.toFixed(4)} detail={<MathEquation display={false} tex={String.raw`\operatorname{std}_{\mathrm{sample}}(\mathrm{history})`} />} tone="amber" />
           </section>
 
           <section className={styles.scenarioPanel} aria-labelledby="scenario-heading">
             <div className={styles.sectionIntro}>
               <span>DETERMINISTIC REPLAY</span>
-              <h3 id="scenario-heading">Choose an auditable scenario</h3>
+              <h3 id="scenario-heading">Choose a replay scenario</h3>
               <p>Each preset reruns the same source equations from event zero. Seed control is an adaptation; the Julia script does not call <code>Random.seed!</code>.</p>
             </div>
             <div className={styles.scenarioButtons} role="group" aria-label="Simulation scenario">
@@ -551,9 +555,9 @@ export function StockMarketStudio() {
             <div className={styles.traceColumn}>
               <PriceTrace history={result.history} audit={latestAudit} mode={metricMode} />
               <section className={styles.equationStrip} aria-label="Source price impact equations">
-                <div><span>BUY</span><code>Pₜ = Pₜ₋₁ + q · u · α</code></div>
-                <div><span>SELL</span><code>Pₜ = max(Pₜ₋₁ − q · u · α, 0.01)</code></div>
-                <div><span>SIDE</span><code>buy ⇔ uₛ &lt; clamp(s + ε, .1, .9)</code></div>
+                <div><span>BUY</span><MathEquation tex={String.raw`P_t=P_{t-1}+q\,u\,\alpha`} /></div>
+                <div><span>SELL</span><MathEquation tex={String.raw`P_t=\max(P_{t-1}-q\,u\,\alpha,0.01)`} /></div>
+                <div><span>SIDE</span><MathEquation tex={String.raw`\mathrm{buy}\iff u_s<\operatorname{clamp}(s+\varepsilon,0.1,0.9)`} /></div>
               </section>
             </div>
 
@@ -625,7 +629,7 @@ export function StockMarketStudio() {
             <>
               <section className={styles.auditMetrics} aria-label={`Day ${latestAudit.day} metric comparison`}>
                 <MetricCard label={`${metricMode === "legacy" ? "Source" : "Corrected"} daily return`} value={formatSigned(selectedDailyReturn ?? 0, 3)} detail={metricMode === "legacy" ? "last 10 stored prices" : "day open → day close"} tone={metricMode === "legacy" ? "amber" : "green"} />
-                <MetricCard label={`${metricMode === "legacy" ? "Source" : "Corrected"} daily dispersion`} value={(selectedDailyVolatility ?? 0).toFixed(5)} detail="Statistics.std · n − 1" tone={metricMode === "legacy" ? "amber" : "green"} />
+                <MetricCard label={`${metricMode === "legacy" ? "Source" : "Corrected"} daily dispersion`} value={(selectedDailyVolatility ?? 0).toFixed(5)} detail={<>Statistics.std · <MathEquation display={false} tex={String.raw`n-1`} /></>} tone={metricMode === "legacy" ? "amber" : "green"} />
                 <MetricCard label="Window coverage" value={metricMode === "legacy" ? "18%" : "100%"} detail={metricMode === "legacy" ? "9 of 50 transitions" : "50 of 50 transitions"} tone={metricMode === "legacy" ? "amber" : "green"} />
                 <MetricCard label="Audited day" value={`Day ${latestAudit.day}`} detail={`${latestAudit.firstHistoryIndex} → ${latestAudit.lastHistoryIndex}`} />
               </section>
@@ -678,16 +682,16 @@ export function StockMarketStudio() {
         <div className={styles.evidenceView}>
           <section className={styles.evidenceHero}>
             <div>
-              <span>IMPLEMENTATION BOUNDARY</span>
-              <h3>A stochastic impact model—not an exchange</h3>
-              <p>Audit scope: the complete project repository tree, all reachable Git revisions, dangling-object scan, and homepage/CV copies across the local workspace. Only one 252-line Julia artifact implements this project.</p>
+              <span>MODEL PURPOSE</span>
+              <h3>How random trades move a simulated price</h3>
+              <p>The model combines a daily sentiment signal with individual buy/sell choices and quantity-scaled random impacts. Compare requested and realised changes near the price floor, then inspect how a daily metric depends on its calculation window.</p>
             </div>
-            <strong>HIGH CONFIDENCE</strong>
+            <strong>ONE STOCK</strong>
           </section>
 
-          <section className={styles.ledgerGrid} aria-label="Source and adaptation ledger">
+          <section className={styles.ledgerGrid} aria-label="Model mechanisms and scope">
             <article data-tone="source">
-              <span>CODE-BACKED · JULIA</span>
+              <span>ORIGINAL JULIA MODEL</span>
               <h3>Present in Stockmarket.jl</h3>
               <ul>
                 <li>One mutable state object for a single synthetic stock.</li>
@@ -698,19 +702,19 @@ export function StockMarketStudio() {
               </ul>
             </article>
             <article data-tone="adapted">
-              <span>BROWSER-ADAPTED · THIS DEMO</span>
-              <h3>Added for inspection</h3>
+              <span>INTERACTIVE EXPLANATION</span>
+              <h3>What you can explore here</h3>
               <ul>
                 <li>Seeded xorshift replay and deterministic presets.</li>
                 <li>SVG price trace and accessible data tables.</li>
                 <li>Event-level requested versus realised impact tape.</li>
                 <li>Correct full-day comparison window.</li>
-                <li>Live invariant and claim-drift checks.</li>
+                <li>Live consistency checks across prices, volumes and event counts.</li>
               </ul>
             </article>
             <article data-tone="unsupported">
-              <span>CV / HOMEPAGE COPY ONLY</span>
-              <h3>Not found in source</h3>
+              <span>OUTSIDE THIS MODEL</span>
+              <h3>Exchange features beyond this model</h3>
               <ul>
                 <li>Order book, bids, asks or price–time priority.</li>
                 <li>Counterparties, fills or a matching algorithm.</li>
@@ -723,14 +727,14 @@ export function StockMarketStudio() {
 
           <div className={styles.evidenceGrid}>
             <section className={styles.capabilityCard}>
-              <div className={styles.panelHeading}><div><span>CAPABILITY MATRIX</span><h3>Claim-to-code reconciliation</h3></div><strong>9 CHECKS</strong></div>
-              <div className={styles.tableScroll} role="region" aria-label="Claim to source capability matrix" tabIndex={0}>
+              <div className={styles.panelHeading}><div><span>CAPABILITY MATRIX</span><h3>Capabilities and limits</h3></div><strong>9 CHECKS</strong></div>
+              <div className={styles.tableScroll} role="region" aria-label="Model capability table" tabIndex={0}>
                 <table className={styles.capabilityTable}>
-                  <thead><tr><th>Capability</th><th>Evidence</th><th>Verdict</th></tr></thead>
+                  <thead><tr><th>Capability</th><th>How it works</th><th>Verdict</th></tr></thead>
                   <tbody>
-                    <tr><td>Stochastic price impact</td><td><code>place_buy_order!</code> / <code>place_sell_order!</code></td><td><span data-verdict="present">PRESENT</span></td></tr>
-                    <tr><td>Sentiment-biased side</td><td><code>rand() &lt; sentiment</code></td><td><span data-verdict="present">PRESENT</span></td></tr>
-                    <tr><td>Quantity + volume counters</td><td><code>volume += quantity</code></td><td><span data-verdict="present">PRESENT</span></td></tr>
+                    <tr><td>Stochastic price impact</td><td>Random impact applied to each buy or sell</td><td><span data-verdict="present">PRESENT</span></td></tr>
+                    <tr><td>Sentiment-biased side</td><td>Buy probability follows the current sentiment</td><td><span data-verdict="present">PRESENT</span></td></tr>
+                    <tr><td>Quantity + volume counters</td><td>Submitted quantities accumulate into volume</td><td><span data-verdict="present">PRESENT</span></td></tr>
                     <tr><td>Resting order book</td><td>No order collection or price level</td><td><span data-verdict="absent">ABSENT</span></td></tr>
                     <tr><td>Price–time matching</td><td>No order ID, timestamp or match loop</td><td><span data-verdict="absent">ABSENT</span></td></tr>
                     <tr><td>Market-order execution</td><td>Price mutates without counterparty</td><td><span data-verdict="absent">ABSENT</span></td></tr>
@@ -743,28 +747,28 @@ export function StockMarketStudio() {
             </section>
 
             <section className={styles.invariantCard}>
-              <div className={styles.panelHeading}><div><span>LIVE CALCULATION AUDIT</span><h3>State invariants</h3></div><strong>{result.events.length} EVENTS</strong></div>
+              <div className={styles.panelHeading}><div><span>LIVE CONSISTENCY CHECKS</span><h3>Do the calculations agree?</h3></div><strong>{result.events.length} EVENTS</strong></div>
               <div className={styles.invariantList}>
-                <article><code>B + S = |history| − 1</code><AuditStatus ok={countInvariant}>{result.buyOrders} + {result.sellOrders} = {result.history.length - 1}</AuditStatus></article>
-                <article><code>volume = Σ submitted q</code><AuditStatus ok={volumeInvariant}>{result.volume.toLocaleString("en-GB")} shares reconcile</AuditStatus></article>
-                <article><code>|history| = |volumes|</code><AuditStatus ok={historyInvariant}>{result.history.length} = {result.volumes.length}</AuditStatus></article>
-                <article><code>Pₜ ≥ $0.01</code><AuditStatus ok={floorInvariant}>minimum {formatMoney(Math.min(...result.history), 4)}</AuditStatus></article>
-                <article><code>1 ≤ q ≤ Q</code><AuditStatus ok={quantityInvariant}>Q = {config.maxQuantity}</AuditStatus></article>
-                <article><code>B / max(S, 1)</code><AuditStatus ok={Number.isFinite(buySellRatio)}>ratio {buySellRatio.toFixed(4)}</AuditStatus></article>
+                <article><MathEquation tex={String.raw`B+S=\lvert\mathrm{history}\rvert-1`} /><AuditStatus ok={countInvariant}>{result.buyOrders} + {result.sellOrders} = {result.history.length - 1}</AuditStatus></article>
+                <article><MathEquation tex={String.raw`V=\sum_{\mathrm{submitted}}q`} /><AuditStatus ok={volumeInvariant}>{result.volume.toLocaleString("en-GB")} shares reconcile</AuditStatus></article>
+                <article><MathEquation tex={String.raw`\lvert\mathrm{history}\rvert=\lvert\mathrm{volumes}\rvert`} /><AuditStatus ok={historyInvariant}>{result.history.length} = {result.volumes.length}</AuditStatus></article>
+                <article><MathEquation tex={String.raw`P_t\ge\$0.01`} /><AuditStatus ok={floorInvariant}>minimum {formatMoney(Math.min(...result.history), 4)}</AuditStatus></article>
+                <article><MathEquation tex={String.raw`1\le q\le Q`} /><AuditStatus ok={quantityInvariant}>Q = {config.maxQuantity}</AuditStatus></article>
+                <article><MathEquation tex={String.raw`\frac{B}{\max(S,1)}`} /><AuditStatus ok={Number.isFinite(buySellRatio)}>ratio {buySellRatio.toFixed(4)}</AuditStatus></article>
               </div>
               <p className={styles.floorCaveat}>At the $0.01 sell floor, the Julia function returns the requested impact even when the realised price change is smaller. This port preserves both values so the discrepancy is visible.</p>
             </section>
           </div>
 
           <section className={styles.auditTrail}>
-            <div><span>AUTHORITATIVE ARTIFACT</span><strong>Stockmarket.jl · 252 lines</strong><small>First and only file commit: 9 Apr 2025</small></div>
-            <div><span>HISTORY COVERAGE</span><strong>1 relevant commit</strong><small>No deleted or dangling exchange implementation found</small></div>
-            <div><span>REPOSITORY BOUNDARY</span><strong>Private · no licence</strong><small>No public source action should be shown</small></div>
-            <div><span>RNG BOUNDARY</span><strong>Browser deterministic</strong><small>Seeded replay does not reproduce Julia&apos;s default RNG stream</small></div>
+            <div><span>ORIGINAL MODEL</span><strong>Julia · April 2025</strong><small>Single-stock stochastic simulation</small></div>
+            <div><span>EVENT GRANULARITY</span><strong>50 events per day</strong><small>10 outer loops × 5 traders</small></div>
+            <div><span>PRICE FLOOR</span><strong>$0.01</strong><small>Requested and realised impacts can differ</small></div>
+            <div><span>REPLAY METHOD</span><strong>Browser deterministic</strong><small>Seeded replay does not reproduce Julia&apos;s default RNG stream</small></div>
           </section>
         </div>
       ) : null}
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

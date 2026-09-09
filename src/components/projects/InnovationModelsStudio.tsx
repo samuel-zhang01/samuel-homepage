@@ -1,5 +1,10 @@
 "use client";
 
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { innovationModelsStudioCopy } from "./copy/innovationModelsStudioCopy";
+
+import { MathEquation } from "./MathEquation";
+
 import { type CSSProperties, useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./InnovationModelsStudio.module.css";
@@ -28,14 +33,13 @@ type PortfolioPreset = {
   weights: Record<ModelId, number>;
 };
 
-const AUDITED_REF = "4f337cd";
 const MODEL_IDS: ModelId[] = ["opportunist", "enabler", "advocate", "producer"];
 
 const VIEWS: Array<{ id: ViewId; label: string; hint: string }> = [
   { id: "matrix", label: "Model atlas", hint: "two structural axes" },
   { id: "portfolio", label: "Portfolio", hint: "mix four pathways" },
   { id: "transition", label: "Transition lab", hint: "add time + sequence" },
-  { id: "evidence", label: "Source map", hint: "claims + boundaries" },
+  { id: "evidence", label: "Method notes", hint: "framework + assumptions" },
 ];
 
 const MODELS: Record<ModelId, InnovationModel> = {
@@ -123,12 +127,7 @@ const SOURCE_LEDGER = [
     title: "Transition question generator",
     detail: "The readiness and pressure equations operationalise the critique for discussion; their equal weights and thresholds are illustrative.",
   },
-  {
-    state: "excluded",
-    label: "EXCLUDED",
-    title: "Assessed narrative",
-    detail: "Authorship identifiers, first-person employment detail, named organisational observations and original prose are not served.",
-  },
+
 ];
 
 function resolveModel(ownership: number, authority: number): ModelId {
@@ -158,10 +157,10 @@ function MatrixView() {
   }
 
   return (
-    <div className={styles.matrixView}>
+    <ProjectCopy copy={innovationModelsStudioCopy}><div className={styles.matrixView}>
       <section className={styles.scenarioControls}>
         <div>
-          <span>SYNTHETIC ORGANISATION</span>
+          <span>Synthetic organisation</span>
           <strong>Aster Works · initiative pathway</strong>
           <p>Move the structural axes; support horizon is displayed separately because it is a critique of the original two-axis model.</p>
         </div>
@@ -178,11 +177,11 @@ function MatrixView() {
 
       <div className={styles.matrixWorkspace}>
         <section className={styles.matrixPanel}>
-          <div className={styles.panelHeading}><span>2×2</span><strong>FOUR-MODEL STRUCTURAL ATLAS</strong><em>NO MODEL RANKING</em></div>
+          <div className={styles.panelHeading}><span>2×2</span><strong>Four-model structural atlas</strong><em>No model ranking</em></div>
           <div className={styles.matrixShell}>
-            <span className={styles.yAxisTitle}>RESOURCE AUTHORITY</span>
+            <span className={styles.yAxisTitle}>Resource authority</span>
             <span className={styles.yTop}>DEDICATED</span>
-            <span className={styles.yBottom}>AD HOC</span>
+            <span className={styles.yBottom}>Ad hoc</span>
             <div className={styles.quadrantGrid}>
               {["enabler", "producer", "opportunist", "advocate"].map((id) => {
                 const model = MODELS[id as ModelId];
@@ -206,10 +205,10 @@ function MatrixView() {
             </div>
             <span className={styles.xLeft}>DIFFUSE</span>
             <span className={styles.xRight}>FOCUSED</span>
-            <span className={styles.xAxisTitle}>ORGANISATIONAL OWNERSHIP</span>
+            <span className={styles.xAxisTitle}>Organisational ownership</span>
           </div>
           <div className={styles.horizonStrip}>
-            <span>ADDED QUESTION · SUPPORT HORIZON</span>
+            <span>Added question · support horizon</span>
             <div><i style={{ width: `${(horizon / 36) * 100}%` }} /><b style={{ left: `${(horizon / 36) * 100}%` }}>{horizon}m</b></div>
             <p>The source critiques the matrix for omitting how long an organisation will protect an initiative. Horizon does not alter the source quadrant.</p>
           </div>
@@ -225,7 +224,7 @@ function MatrixView() {
             <span>MECHANISM</span><p>{selected.mechanism}</p>
           </section>
           <section>
-            <span>GOVERNANCE QUESTION</span><p>{selected.governanceQuestion}</p>
+            <span>Governance question</span><p>{selected.governanceQuestion}</p>
           </section>
           <dl>
             <div><dt>Ownership input</dt><dd>{ownership} / 100</dd></div>
@@ -238,14 +237,14 @@ function MatrixView() {
       </div>
 
       <section className={styles.comparisonTable} role="region" aria-label="Four-model structural comparison" tabIndex={0}>
-        <div className={styles.panelHeading}><span>≠</span><strong>STRUCTURAL COMPARISON</strong><em>DESCRIPTIVE, NOT PRESCRIPTIVE</em></div>
+        <div className={styles.panelHeading}><span>≠</span><strong>Structural comparison</strong><em>Descriptive, not prescriptive</em></div>
         <div className={styles.comparisonHeader}><span>Model</span><span>Ownership</span><span>Authority</span><span>Standing pathway</span></div>
         {MODEL_IDS.map((id) => {
           const model = MODELS[id];
           return <button type="button" key={id} aria-pressed={selectedId === id} onClick={() => chooseModel(id)}><strong>{model.name}</strong><span>{model.ownership}</span><span>{model.authority}</span><span>{model.authority === "Dedicated" ? "Resource route" : "Negotiated route"}</span></button>;
         })}
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -270,11 +269,11 @@ function PortfolioView() {
   }
 
   return (
-    <div className={styles.portfolioView}>
+    <ProjectCopy copy={innovationModelsStudioCopy}><div className={styles.portfolioView}>
       <div className={styles.portfolioBanner} role="note">
-        <span>VISITOR-CONTROLLED SCENARIO</span>
+        <span>Visitor-controlled scenario</span>
         <p>Weights become a normalised 100-token structural portfolio. Tokens represent attention, not money, return or probability of success.</p>
-        <strong>NO PERFORMANCE MODEL</strong>
+        <strong>No performance model</strong>
       </div>
 
       <nav className={styles.presetTabs} aria-label="Portfolio presets">
@@ -283,7 +282,7 @@ function PortfolioView() {
 
       <div className={styles.portfolioWorkspace}>
         <section className={styles.allocationPanel}>
-          <div className={styles.panelHeading}><span>100</span><strong>EXPERIMENT-TOKEN ALLOCATION</strong><em>NORMALISED FROM INPUT WEIGHTS</em></div>
+          <div className={styles.panelHeading}><span>100</span><strong>Experiment-token allocation</strong><em>Normalised from input weights</em></div>
           <div className={styles.allocationBar} aria-label="Normalised allocation across four innovation models">
             {MODEL_IDS.map((id) => <i key={id} style={{ width: `${shares[id]}%`, background: MODELS[id].colour }} title={`${MODELS[id].name}: ${shares[id].toFixed(1)} tokens`} />)}
           </div>
@@ -311,22 +310,22 @@ function PortfolioView() {
         </section>
 
         <aside className={styles.portfolioMetrics}>
-          <div className={styles.panelHeading}><span>Σ</span><strong>STRUCTURAL PROFILE</strong><em>TRACEABLE</em></div>
+          <div className={styles.panelHeading}><span>Σ</span><strong>Structural profile</strong><em>TRACEABLE</em></div>
           <div className={styles.metricGrid}>
-            <div><span>Dedicated authority</span><strong>{dedicated.toFixed(1)}%</strong><small>Enabler + Producer</small></div>
-            <div><span>Focused ownership</span><strong>{focused.toFixed(1)}%</strong><small>Advocate + Producer</small></div>
-            <div><span>Concentration HHI</span><strong>{concentration.toFixed(3)}</strong><small>Σ normalised share²</small></div>
-            <div><span>Effective models</span><strong>{effectiveModels.toFixed(2)}</strong><small>1 ÷ HHI</small></div>
+            <div><span>Dedicated authority</span><strong>{dedicated.toFixed(1)}%</strong><small><MathEquation tex={String.raw`\text{Enabler}+\text{Producer}`} /></small></div>
+            <div><span>Focused ownership</span><strong>{focused.toFixed(1)}%</strong><small><MathEquation tex={String.raw`\text{Advocate}+\text{Producer}`} /></small></div>
+            <div><span>Concentration HHI</span><strong>{concentration.toFixed(3)}</strong><small><MathEquation tex={String.raw`\sum_i\left(\frac{\mathrm{share}_i}{100}\right)^2`} /></small></div>
+            <div><span>Effective models</span><strong>{effectiveModels.toFixed(2)}</strong><small><MathEquation tex={String.raw`\frac{1}{\mathrm{HHI}}`} /></small></div>
           </div>
           <section className={styles.dominantCard}>
-            <span>LARGEST STRUCTURAL PATHWAY</span><strong>{dominantLabel}</strong><p>{total ? `${dominantShare.toFixed(1)} of 100 normalised experiment tokens.` : "All input weights are zero; no allocation is calculated."}</p>
+            <span>Largest structural pathway</span><strong>{dominantLabel}</strong><p>{total ? `${dominantShare.toFixed(1)} of 100 normalised experiment tokens.` : "All input weights are zero; no allocation is calculated."}</p>
           </section>
           <div className={styles.formulaTape} aria-label="Portfolio calculation formulas">
-            <p><span>01</span><code>shareᵢ</code><strong>weightᵢ ÷ Σ weights × 100</strong></p>
-            <p><span>02</span><code>dedicated</code><strong>Enabler + Producer</strong></p>
-            <p><span>03</span><code>focused</code><strong>Advocate + Producer</strong></p>
-            <p><span>04</span><code>HHI</code><strong>Σ (shareᵢ ÷ 100)²</strong></p>
-            <p><span>05</span><code>effective</code><strong>1 ÷ HHI</strong></p>
+            <p><span>01</span><MathEquation tex={String.raw`\mathrm{share}_i=100\,\frac{w_i}{\sum_j w_j}`} /></p>
+            <p><span>02</span><MathEquation tex={String.raw`\mathrm{dedicated}=\mathrm{Enabler}+\mathrm{Producer}`} /></p>
+            <p><span>03</span><MathEquation tex={String.raw`\mathrm{focused}=\mathrm{Advocate}+\mathrm{Producer}`} /></p>
+            <p><span>04</span><MathEquation tex={String.raw`\mathrm{HHI}=\sum_i\left(\frac{\mathrm{share}_i}{100}\right)^2`} /></p>
+            <p><span>05</span><MathEquation tex={String.raw`N_{\mathrm{effective}}=\frac{1}{\mathrm{HHI}}`} /></p>
           </div>
         </aside>
       </div>
@@ -335,7 +334,7 @@ function PortfolioView() {
         <div className={styles.allocationHeader}><span>Model</span><span>Input weight</span><span>Normalised tokens</span><span>Ownership</span><span>Authority</span></div>
         {MODEL_IDS.map((id) => <div key={id}><strong>{MODELS[id].name}</strong><span>{weights[id]}</span><span>{shares[id].toFixed(1)}</span><span>{MODELS[id].ownership}</span><span>{MODELS[id].authority}</span></div>)}
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -360,16 +359,16 @@ function TransitionView() {
   }
 
   return (
-    <div className={styles.transitionView}>
+    <ProjectCopy copy={innovationModelsStudioCopy}><div className={styles.transitionView}>
       <div className={styles.transitionBanner} role="note">
-        <span>ILLUSTRATIVE EXTENSION</span>
+        <span>Illustrative extension</span>
         <p>The source asks when exploration should become exploitation but supplies no equation. This view uses that gap to generate questions, with its assumptions shown beside each result.</p>
-        <strong>NOT A VALIDATED DECISION RULE</strong>
+        <strong>Not a validated decision rule</strong>
       </div>
 
       <div className={styles.transitionWorkspace}>
         <aside className={styles.transitionControls}>
-          <div className={styles.panelHeading}><span>t</span><strong>SYNTHETIC INITIATIVE</strong><em>PROJECT ORBIT</em></div>
+          <div className={styles.panelHeading}><span>t</span><strong>Synthetic initiative</strong><em>Project orbit</em></div>
           <label><span>Evidence maturity <b>{evidence}</b></span><input type="range" min="0" max="100" value={evidence} onChange={(event) => setEvidence(Number(event.target.value))} /></label>
           <label><span>Integration readiness <b>{integration}</b></span><input type="range" min="0" max="100" value={integration} onChange={(event) => setIntegration(Number(event.target.value))} /></label>
           <label><span>Core urgency <b>{urgency}</b></span><input type="range" min="0" max="100" value={urgency} onChange={(event) => setUrgency(Number(event.target.value))} /></label>
@@ -383,27 +382,27 @@ function TransitionView() {
         </aside>
 
         <section className={styles.transitionPlanePanel}>
-          <div className={styles.panelHeading}><span>↗</span><strong>READINESS × PRESSURE PLANE</strong><em>EQUAL-WEIGHT HEURISTIC</em></div>
+          <div className={styles.panelHeading}><span>↗</span><strong>Readiness × pressure plane</strong><em>Equal-weight heuristic</em></div>
           <div className={styles.transitionPlane}>
-            <span className={styles.planeExplore}>KEEP EXPLORING?</span>
-            <span className={styles.planeBridge}>DESIGN THE BRIDGE?</span>
-            <span className={styles.planeMismatch}>PRESSURE MISMATCH?</span>
-            <span className={styles.planeHandoff}>TEST THE HANDOFF?</span>
+            <span className={styles.planeExplore}>Keep exploring?</span>
+            <span className={styles.planeBridge}>Design the bridge?</span>
+            <span className={styles.planeMismatch}>Pressure mismatch?</span>
+            <span className={styles.planeHandoff}>Test the handoff?</span>
             <i style={{ "--plane-x": `${readiness}%`, "--plane-y": `${100 - pressure}%` } as CSSProperties}><b>{Math.round(readiness)} / {Math.round(pressure)}</b></i>
             <em className={styles.planeXAxis}>READINESS →</em>
             <em className={styles.planeYAxis}>PRESSURE →</em>
           </div>
           <div className={`${styles.transitionResult} ${styles[`result_${result.focus}`]}`} aria-live="polite">
-            <span>QUESTION STATE</span><strong>{result.title}</strong><p>{result.question}</p>
+            <span>Question state</span><strong>{result.title}</strong><p>{result.question}</p>
           </div>
         </section>
 
         <aside className={styles.transitionMath}>
-          <div className={styles.panelHeading}><span>fx</span><strong>CALCULATION TAPE</strong><em>VISIBLE ASSUMPTIONS</em></div>
+          <div className={styles.panelHeading}><span>fx</span><strong>Calculation tape</strong><em>Visible assumptions</em></div>
           <div className={styles.transitionMetrics}>
-            <div><span>Readiness</span><strong>{readiness.toFixed(1)}</strong><small>(evidence + integration) ÷ 2</small></div>
-            <div><span>Runway pressure</span><strong>{runwayPressure.toFixed(1)}</strong><small>max(0, 100 − runway / 24 × 100)</small></div>
-            <div><span>Transition pressure</span><strong>{pressure.toFixed(1)}</strong><small>(urgency + runway pressure) ÷ 2</small></div>
+            <div><span>Readiness</span><strong>{readiness.toFixed(1)}</strong><small><MathEquation tex={String.raw`\frac{\text{evidence}+\text{integration}}{2}`} /></small></div>
+            <div><span>Runway pressure</span><strong>{runwayPressure.toFixed(1)}</strong><small><MathEquation tex={String.raw`\max\!\left(0,100-\frac{\text{runway}}{24}\times100\right)`} /></small></div>
+            <div><span>Transition pressure</span><strong>{pressure.toFixed(1)}</strong><small><MathEquation tex={String.raw`\frac{\text{urgency}+\text{runway pressure}}{2}`} /></small></div>
           </div>
           <ol className={styles.sequenceRail}>
             <li className={result.focus === "explore" || result.focus === "mismatch" ? styles.sequenceActive : undefined}><span>01</span><div><strong>Explore</strong><small>Reduce uncertainty.</small></div></li>
@@ -413,62 +412,22 @@ function TransitionView() {
           <p className={styles.transitionCaveat}>The 60-point boundaries, 24-month runway reference and equal weights are browser assumptions selected for legibility. Change in state is a prompt for inquiry, not a recommendation.</p>
         </aside>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function EvidenceView() {
   return (
-    <div className={styles.evidenceView}>
-      <section className={styles.sourceStats}>
-        <div><span>AUDITED REF</span><strong>{AUDITED_REF}</strong><small>remote-tracking main · 17 Oct 2025</small></div>
-        <div><span>COMMIT HISTORY</span><strong>12</strong><small>12–17 Oct 2025</small></div>
-        <div><span>TRACKED FILES</span><strong>14</strong><small>3 source-like · 10 generated</small></div>
-        <div><span>CITED KEYS</span><strong>8</strong><small>10 bibliography entries</small></div>
-        <div className={styles.sourceRisk}><span>DECLARED LICENCE</span><strong>NONE</strong><small>private case study</small></div>
+    <ProjectCopy copy={innovationModelsStudioCopy}><div className={styles.evidenceView}>
+      <section className={styles.claimLedger}>
+        <div className={styles.panelHeading}><span>Method</span><strong>Framework and interactive assumptions</strong></div>
+        {SOURCE_LEDGER.map((item) => <article key={item.title} className={styles[`ledger_${item.state}`]}><span>{item.label}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div></article>)}
       </section>
-
-      <div className={styles.evidenceWorkspace}>
-        <section className={styles.claimLedger}>
-          <div className={styles.panelHeading}><span>✓</span><strong>CLAIM-BY-CLAIM PROVENANCE</strong><em>NO ASSESSED TEXT COPIED</em></div>
-          {SOURCE_LEDGER.map((item) => <article key={item.title} className={styles[`ledger_${item.state}`]}><span>{item.label}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div></article>)}
-        </section>
-
-        <aside className={styles.artifactPanel}>
-          <div className={styles.panelHeading}><span>FILE</span><strong>ARTIFACT INVENTORY</strong><em>PRIVATE SOURCE</em></div>
-          <div className={styles.artifactRows}>
-            <div><span>TEX</span><strong>Reflection source</strong><small>1,251 TeX-counted words · 3 sections · 7 subsections</small></div>
-            <div><span>DRAW</span><strong>Four-model diagram</strong><small>1 Draw.io source + 1 exported PDF</small></div>
-            <div><span>BIB</span><strong>Reference ledger</strong><small>10 entries · 8 keys cited in text</small></div>
-            <div><span>PDF</span><strong>Compiled assessment</strong><small>retained privately · never embedded here</small></div>
-            <div><span>AUX</span><strong>Build artifacts</strong><small>LaTeX outputs retained in Git history</small></div>
-          </div>
-          <section className={styles.notSoftware}>
-            <span>SOURCE TYPE BOUNDARY</span>
-            <strong>Written analysis + diagram</strong>
-            <p>No executable model, dataset, measured outcomes, application code or validated scoring rule exists in the audited repository.</p>
-          </section>
-        </aside>
-      </div>
-
-      <section className={styles.historyTimeline}>
-        <div className={styles.panelHeading}><span>GIT</span><strong>SHORT ITERATION HISTORY</strong><em>SELECTED, SANITISED EVENTS</em></div>
-        <ol>
-          <li><time dateTime="2025-10-12">12 OCT</time><span>029b7fa</span><strong>Initial source enters version control</strong><small>Reflection, references and diagram build begin.</small></li>
-          <li><time dateTime="2025-10-13">13 OCT</time><span>88b188e</span><strong>Assessment structure consolidates</strong><small>Bibliography reaches its final tracked revision.</small></li>
-          <li><time dateTime="2025-10-15">15 OCT</time><span>b85eb2d</span><strong>Written analysis iterates</strong><small>The local checkout currently stops at this revision.</small></li>
-          <li><time dateTime="2025-10-17">17 OCT</time><span>cb9dbb0</span><strong>Diagram revision</strong><small>The four-model source and export are updated.</small></li>
-          <li><time dateTime="2025-10-17">17 OCT</time><span>{AUDITED_REF}</span><strong>Latest remote-tracking snapshot</strong><small>Text and compiled assessment reach the audited state.</small></li>
-        </ol>
+      <section className={styles.notSoftware}>
+        <strong>Use the model to ask better questions</strong>
+        <p>The original work is a written analysis and a four-model diagram. The portfolio and transition calculations are illustrative extensions, with their weights and thresholds shown alongside the results.</p>
       </section>
-
-      <section className={styles.boundaryGrid}>
-        <div><span>PRIVATE SOURCE</span><p>The repository is private, so this exhibit exposes neither a source action nor the assessed PDF.</p></div>
-        <div><span>LICENCE BOUNDARY</span><p>No LICENSE, COPYING or NOTICE file was found. Public visibility is not inferred, and reuse is not offered.</p></div>
-        <div><span>PRIVACY BOUNDARY</span><p>Assessment identity and first-person organisational narrative are replaced by synthetic Aster Works and Project Orbit scenarios.</p></div>
-        <div><span>METHOD BOUNDARY</span><p>Model quadrants are source-faithful; numerical portfolio and transition mechanics are explicitly illustrative.</p></div>
-      </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -476,23 +435,17 @@ export function InnovationModelsStudio() {
   const [view, setView] = useState<ViewId>("matrix");
 
   return (
-    <DemoWindow
-      appName="Innovation Models — Re-authored Case Study"
+    <ProjectCopy copy={innovationModelsStudioCopy}><DemoWindow
+      appName="Innovation Models"
       title="Innovation Governance Workbench"
-      status="SYNTHETIC SCENARIOS · READ ONLY"
+      status="Fictional scenarios"
       purpose="Make ownership and resource authority concrete when deciding how exploratory ventures should sit inside an incumbent."
       tryThis="Choose a governance model, rebalance the portfolio and stress the transition-readiness inputs."
       watchFor="Concentration and readiness heuristics move with visible weights; they structure a discussion rather than prescribe an answer."
       statusTone="safe"
       className={styles.studio}
-      footer={<><span>Audited {AUDITED_REF} · private source · no licence · assessed prose excluded</span><span>4 models · 2 source axes · adapted heuristics with visible weights</span></>}
+      footer={<><span>Fictional organisations and initiatives</span><span>4 models · 2 structural axes · illustrative calculations</span></>}
     >
-      <div className={styles.provenanceBanner} role="note">
-        <span>CONCEPTS RE-AUTHORED</span>
-        <p>An interactive reconstruction of the source framework and its limitations. Company, project and numerical inputs are synthetic; no original assessment passage is reproduced.</p>
-        <strong>NO SOURCE OR PDF LINK</strong>
-      </div>
-
       <nav className={styles.viewTabs} aria-label="Innovation strategy workbench views">
         {VIEWS.map((item) => <button type="button" key={item.id} aria-current={view === item.id ? "page" : undefined} onClick={() => setView(item.id)}><strong>{item.label}</strong><span>{item.hint}</span></button>)}
       </nav>
@@ -503,7 +456,7 @@ export function InnovationModelsStudio() {
         {view === "transition" ? <TransitionView /> : null}
         {view === "evidence" ? <EvidenceView /> : null}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

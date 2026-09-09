@@ -1,0 +1,43 @@
+{
+  "dictionary": "scientificCopy.ts",
+  "exportName": "scientificCopy",
+  "sources": [
+    "src/components/projects/CfdArchitectureStudio.tsx",
+    "src/components/projects/CfdShowcase.tsx",
+    "src/components/projects/MicrorobotShowcase.tsx",
+    "src/components/projects/ModelArchitectureStudio.tsx",
+    "src/components/projects/ModelLineageMap.tsx",
+    "src/components/projects/ScientificPlayback.tsx",
+    "src/components/projects/ScientificFailureExperiments.tsx",
+    "src/components/projects/ScientificDemos.tsx"
+  ],
+  "identities": {
+    "MeshGraphNet": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "U-Net": "Established model architecture name, preserved in both Mandarin editions.",
+    "U-NET": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "rFFT": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "Linear \u2192 ReLU \u2192 Linear \u2192 LayerNorm": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "Linear({0}, 256) \u2192 ReLU \u2192 Dropout(0.3) \u2192 Linear(256, 1) \u2192 Sigmoid": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "Linear(1,024, 40)": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "Linear(1,024, 1)": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "SimpleCNN": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "ResNet18": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "ResNet34": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "MobileNetV3": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "ViT-B/16": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "CFD": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "MRI": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "\u4e24\u79cd\u5206\u522b\u8bad\u7ec3\u7684 ResNet34 \u6a21\u578b\u4f7f\u7528\u76f8\u540c\u8f93\u5165\u3002\u79fb\u52a8\u5171\u4eab\u6df7\u5408\u6ed1\u5757\uff0c\u6bd4\u8f83\u5df2\u8bb0\u5f55\u7684\u6b63 Grad-CAM \u54cd\u5e94\u51fa\u73b0\u7684\u4f4d\u7f6e\u3002": "Already-authored Mandarin from the explicit trilingual playback helper; retained for its own locale.",
+    "\u5169\u7a2e\u5206\u5225\u8a13\u7df4\u7684 ResNet34 \u6a21\u578b\u4f7f\u7528\u76f8\u540c\u8f38\u5165\u3002\u79fb\u52d5\u5171\u7528\u6df7\u5408\u6ed1\u687f\uff0c\u6bd4\u8f03\u5df2\u8a18\u9304\u7684\u6b63 Grad-CAM \u56de\u61c9\u51fa\u73fe\u7684\u4f4d\u7f6e\u3002": "Already-authored Mandarin from the explicit trilingual playback helper; retained for its own locale.",
+    "\u4e24\u5f20\u56fe\u4f7f\u7528 ResNet34 \u6700\u540e\u7684\u6b8b\u5dee\u5757\u548c\u540c\u4e00\u5f20\u663e\u5fae\u56fe\u50cf\uff0c\u53ef\u4ee5\u6bd4\u8f83\u4e24\u79cd\u4efb\u52a1\u5f3a\u8c03\u7684\u4f4d\u7f6e\u3002": "Already-authored Mandarin from the explicit trilingual playback helper; retained for its own locale.",
+    "\u5169\u5f35\u5716\u4f7f\u7528 ResNet34 \u6700\u5f8c\u7684\u6b98\u5dee\u5340\u584a\u548c\u540c\u4e00\u5f35\u986f\u5fae\u5f71\u50cf\uff0c\u53ef\u4ee5\u6bd4\u8f03\u5169\u7a2e\u4efb\u52d9\u5f37\u8abf\u7684\u4f4d\u7f6e\u3002": "Already-authored Mandarin from the explicit trilingual playback helper; retained for its own locale.",
+    "kHz": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "{0} kHz": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "FNO": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "GNN": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "FlowBench 7": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "ECE": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "NLL": "Established model, method, metric, function pipeline or scientific unit, preserved across locales.",
+    "ImageNet": "Established pretraining dataset name, retained in both Mandarin editions."
+  }
+}

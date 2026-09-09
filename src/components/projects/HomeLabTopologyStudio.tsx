@@ -1,12 +1,17 @@
 "use client";
+import { BackupFailureExperiment } from "./SourceExperiments";
 
 import ClassicSelect from "../ClassicSelect";
 
 import { type CSSProperties, useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./HomeLabTopologyStudio.module.css";
+import { MathEquation } from "./MathEquation";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { projectText } from "@/lib/projectCopy";
+import { homeLabCopy } from "./copy/homeLabCopy";
 
-type ViewId = "topology" | "failure" | "capacity" | "audit";
+type ViewId = "backup" | "topology" | "failure" | "capacity" | "audit";
 type Representation = "map" | "table";
 type NodeKind = "service" | "operation" | "resource";
 type NodeGroup = "Edge" | "Data" | "Access" | "Operations" | "Security" | "Network";
@@ -47,13 +52,12 @@ type TopologyEdge = {
   evidence: string;
 };
 
-const AUDITED_COMMIT = "e3ef6ce";
-
 const VIEWS: Array<{ id: ViewId; label: string; hint: string }> = [
+  { id: "backup", label: "Backup failure drill", hint: "Trace exit status and lock ownership" },
   { id: "topology", label: "Topology", hint: "trace declared paths" },
   { id: "failure", label: "Failure lab", hint: "review blast radius" },
   { id: "capacity", label: "Capacity", hint: "reconcile + model" },
-  { id: "audit", label: "Evidence", hint: "source boundary" },
+  { id: "audit", label: "Design & history", hint: "roles, evolution and limits" },
 ];
 
 const NODES: TopologyNode[] = [
@@ -110,7 +114,7 @@ const NODES: TopologyNode[] = [
     y: 50,
     tone: "#3b4d77",
     summary: "The single named network declared at the top level of the Compose snapshot.",
-    evidence: "Five of the six Compose services explicitly join this network. Membership is connectivity evidence, not a runtime dependency or reachability proof.",
+    evidence: "Five of the six Compose services explicitly join this network. Membership records declared connectivity. Runtime dependencies and reachability need separate evidence.",
     metrics: [["Declared networks", "1"], ["Explicit members", "5"], ["Service dependencies", "0"], ["Identifier", "synthetic"]],
   },
   {
@@ -180,7 +184,7 @@ const NODES: TopologyNode[] = [
     y: 17,
     tone: "#8c5438",
     summary: "A separately tracked shell operation for rebuilding and restoring PostgreSQL data.",
-    evidence: "The source script invokes psql and pg_restore. Presence of a script is recovery intent, not evidence of a successful or timed restore drill.",
+    evidence: "The source script invokes psql and pg_restore. The script records a recovery procedure; a completed restore drill and recovery-time measurement remain outstanding.",
     metrics: [["Restore primitives", "2"], ["Automated test", "not found"], ["Recovery time", "not measured"], ["Result", "unverified"]],
   },
 ];
@@ -281,7 +285,7 @@ function TopologyMap({
   highlightedEdges: Set<string>;
 }) {
   return (
-      <div className={styles.topologyMap} role="group" aria-label="Privacy-safe service topology">
+      <ProjectCopy copy={homeLabCopy}><div className={styles.topologyMap} role="group" aria-label="Service topology">
       <svg className={styles.edgeLayer} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
         {EDGES.map((edge) => {
           const coordinates = edgeCoordinates(edge);
@@ -316,15 +320,15 @@ function TopologyMap({
         <span><i className={styles.legendMembership} /> membership</span>
         <span><i className={styles.legendOperation} /> operation</span>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function DependencyTable({ highlightedEdges }: { highlightedEdges: Set<string> }) {
   return (
-    <div className={styles.tableViewport} role="region" aria-label="Topology relationship table" tabIndex={0}>
+    <ProjectCopy copy={homeLabCopy}><div className={styles.tableViewport} role="region" aria-label="Topology relationship table" tabIndex={0}>
       <table className={styles.relationshipTable}>
-        <caption>Audited service, resource and operation relationships</caption>
+        <caption>Service, network and operation relationships</caption>
         <thead><tr><th>From</th><th>Relationship</th><th>To</th><th>Evidence</th></tr></thead>
         <tbody>
           {EDGES.map((edge) => (
@@ -337,11 +341,13 @@ function DependencyTable({ highlightedEdges }: { highlightedEdges: Set<string> }
           ))}
         </tbody>
       </table>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function TopologyView() {
+  const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, homeLabCopy, source);
   const [representation, setRepresentation] = useState<Representation>("map");
   const [selected, setSelected] = useState<NodeId>("database");
   const [start, setStart] = useState<NodeId>("guacamole");
@@ -354,19 +360,19 @@ function TopologyView() {
   );
   const selectedNode = nodeById(selected);
   const pathText = !traceActive
-    ? "Path highlighting is clear."
+    ? t("Path highlighting is clear.")
     : path === null
-      ? `No directed relationship path is declared from ${nodeById(start).name} to ${nodeById(target).name}.`
+      ? t(`No directed relationship path is declared from ${nodeById(start).name} to ${nodeById(target).name}.`)
       : path.length === 0
-        ? `${nodeById(start).name} is the selected target.`
-        : [start, ...path.map((edge) => edge.to)].map((id) => nodeById(id).name).join(" → ");
+        ? t(`${nodeById(start).name} is the selected target.`)
+        : [start, ...path.map((edge) => edge.to)].map((id) => t(nodeById(id).name)).join(" → ");
 
   return (
-    <div className={styles.topologyView}>
+    <ProjectCopy copy={homeLabCopy}><div className={styles.topologyView}>
       <section className={styles.traceToolbar} aria-label="Dependency path tracer">
         <div>
           <span>PATH TRACER</span>
-          <p>Follow only directed relationships retained in the audited snapshot.</p>
+          <p>Follow the configured relationships between services, networks and scheduled operations.</p>
         </div>
         <label>From
           <ClassicSelect value={start} onChange={(event) => { setStart(event.target.value as NodeId); setTraceActive(false); }}>
@@ -392,7 +398,7 @@ function TopologyView() {
 
       <div className={styles.topologyWorkspace}>
         <section className={styles.mapPanel}>
-          <div className={styles.panelHeading}><span>MAP</span><strong>PRIVACY-SAFE LOGICAL TOPOLOGY</strong><em>HOST IDs SYNTHETIC</em></div>
+          <div className={styles.panelHeading}><span>MAP</span><strong>SERVICE AND OPERATION MAP</strong><em>CONFIGURED RELATIONSHIPS</em></div>
           {representation === "map"
             ? <TopologyMap selected={selected} setSelected={setSelected} highlightedEdges={highlightedEdges} />
             : <DependencyTable highlightedEdges={highlightedEdges} />}
@@ -409,13 +415,13 @@ function TopologyView() {
             {selectedNode.metrics.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>
           <section>
-            <span>EVIDENCE NOTE</span>
+            <span>CONFIGURATION DETAIL</span>
             <p>{selectedNode.evidence}</p>
           </section>
-          <small>Alias is deliberately synthetic; live operational identity is not represented.</small>
+          <small>Node labels distinguish services, operations and the shared network.</small>
         </aside>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -439,16 +445,16 @@ function FailureLab() {
   }
 
   return (
-    <div className={styles.failureView}>
+    <ProjectCopy copy={homeLabCopy}><div className={styles.failureView}>
       <div className={styles.failureBanner} role="note">
         <span>SIMULATION ONLY</span>
-        <p>This fault lab changes browser state only. It does not contact, probe, stop or restart any infrastructure.</p>
-        <strong>NO UPTIME CLAIM</strong>
+        <p>Move through a fault marker, dependency review and recovery-planning step to see which parts of the configuration need attention.</p>
+        <strong>CONFIGURATION MODEL</strong>
       </div>
 
       <div className={styles.failureLayout}>
         <aside className={styles.failureControls}>
-          <div className={styles.panelHeading}><span>!</span><strong>FAULT CONTROL</strong><em>READ ONLY</em></div>
+          <div className={styles.panelHeading}><span>!</span><strong>FAULT CONTROL</strong><em>LOCAL REPLAY</em></div>
           <label>Compose service
             <ClassicSelect value={fault} onChange={(event) => { setFault(event.target.value as ServiceNodeId); setStep(0); }}>
               {SERVICE_IDS.map((id) => <option value={id} key={id}>{nodeById(id).name}</option>)}
@@ -471,7 +477,7 @@ function FailureLab() {
         </aside>
 
         <section className={styles.blastPanel} aria-live="polite">
-          <div className={styles.panelHeading}><span>∆</span><strong>DECLARED BLAST-RADIUS REVIEW</strong><em>STEP {step} / 3</em></div>
+          <div className={styles.panelHeading}><span>∆</span><strong>DEPENDENCY IMPACT</strong><em>STEP {step} / 3</em></div>
           <div className={styles.failureSummary}>
             <div><span>Selected fault</span><strong>{step === 0 ? "—" : selectedNode.name}</strong><small>synthetic injection</small></div>
             <div><span>Service review paths</span><strong>{step >= 2 ? declaredConsumers.length : "—"}</strong><small>depends_on only</small></div>
@@ -494,11 +500,11 @@ function FailureLab() {
             <section>
               <span>WHAT THE GRAPH SUPPORTS</span>
               <p>{declaredConsumers.length
-                ? `${selectedNode.name} has ${declaredConsumers.length} direct or transitive Compose consumer${declaredConsumers.length === 1 ? "" : "s"} to review.`
+                ? `Review ${declaredConsumers.length} direct or transitive Compose dependencies of ${selectedNode.name}.`
                 : `${selectedNode.name} has no declared downstream service dependency in this Compose snapshot.`}</p>
             </section>
             <section>
-              <span>WHAT IT DOES NOT PROVE</span>
+              <span>STARTUP ORDER AND READINESS</span>
               <p><code>depends_on</code> captures startup ordering here; without health checks it does not prove readiness, runtime propagation or recovery.</p>
             </section>
             <section className={styles.recoveryCaveat}>
@@ -508,7 +514,7 @@ function FailureLab() {
           </div>
         </section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -521,8 +527,8 @@ function CapacityView() {
   const monthlyWrite = dumpSize * 30;
 
   return (
-    <div className={styles.capacityView}>
-      <section className={styles.inventoryStrip} aria-label="Audited Compose inventory">
+    <ProjectCopy copy={homeLabCopy}><div className={styles.capacityView}>
+      <section className={styles.inventoryStrip} aria-label="Compose configuration inventory">
         {INVENTORY.map((item) => (
           <div key={item.label} className={item.label === "Health checks" ? styles.inventoryRisk : undefined}>
             <span>{item.label}</span><strong>{item.value}</strong><small>{item.note}</small>
@@ -543,7 +549,7 @@ function CapacityView() {
             </div>
           ))}
           <div className={styles.reconcileTotal}>
-            <span>Mount reconciliation</span><strong>2 + 3 + 2 + 1 + 1 + 3 = 12</strong>
+            <span>Mount reconciliation</span><MathEquation tex={String.raw`2+3+2+1+1+3=12`} label="Total mount entries" />
           </div>
           <div className={styles.tagRisk}>
             <div><span>MUTABLE IMAGE TAGS</span><strong>5 / 6</strong><small>five services use latest</small></div>
@@ -554,8 +560,8 @@ function CapacityView() {
         <section className={styles.backupPlanner}>
           <div className={styles.panelHeading}><span>DB</span><strong>DAILY BACKUP CAPACITY MODEL</strong><em>SCENARIO, NOT TELEMETRY</em></div>
           <div className={styles.plannerIntro}>
-            <span>SOURCE ANCHOR</span>
-            <p>Ofelia declares a daily backup job and the tracked script uses PostgreSQL custom-format dump output. Dump size and retention are not recorded.</p>
+            <span>BACKUP DESIGN</span>
+            <p>Ofelia declares a daily backup job and the tracked script uses PostgreSQL custom-format dump output. The script retains up to 180 backup files. Dump size and achieved calendar coverage remain unmeasured.</p>
           </div>
           <div className={styles.sliderGrid}>
             <label><span>Assumed post-dump size <strong>{dumpSize} GiB</strong></span>
@@ -570,7 +576,7 @@ function CapacityView() {
           </div>
           <div className={styles.capacityEquation} aria-label="Backup capacity calculation">
             <span>required GiB</span>
-            <strong>{dumpSize}</strong><i>×</i><strong>1/day</strong><i>×</i><strong>{retention} days</strong><i>×</i><strong>{(1 + headroom / 100).toFixed(2)}</strong><i>=</i><b>{provisioned.toFixed(1)} GiB</b>
+            <MathEquation tex={String.raw`${dumpSize}\,\mathrm{GiB}\times\frac{1}{\mathrm{day}}\times ${retention}\,\mathrm{days}\times ${(1 + headroom / 100).toFixed(2)}=${provisioned.toFixed(1)}\,\mathrm{GiB}`} label="Dump size times daily frequency, retention and capacity headroom" />
           </div>
           <div className={styles.capacityResults}>
             <div><span>Retained payload</span><strong>{retained.toLocaleString("en-GB")} GiB</strong><small>before headroom</small></div>
@@ -580,7 +586,7 @@ function CapacityView() {
           <p className={styles.modelCaveat}>These are deterministic calculations over visitor-selected assumptions. They are not observed storage use, compression ratios, throughput, backup success or recovery-time measurements.</p>
         </section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -595,17 +601,17 @@ function AuditView() {
   ];
 
   return (
-    <div className={styles.auditView}>
+    <ProjectCopy copy={homeLabCopy}><div className={styles.auditView}>
       <section className={styles.sourceSummary}>
-        <div><span>AUDITED HEAD</span><strong>{AUDITED_COMMIT}</strong><small>private default branch snapshot</small></div>
-        <div><span>TRACKED PATHS</span><strong>563</strong><small>inventory count only</small></div>
-        <div><span>SOURCE VISIBILITY</span><strong>PRIVATE</strong><small>no repository action exposed</small></div>
-        <div className={styles.sourceRisk}><span>DECLARED LICENCE</span><strong>NONE</strong><small>case study, not open source</small></div>
+        <div><span>SERVICES</span><strong>6</strong><small>containerised roles</small></div>
+        <div><span>APPLICATION NETWORKS</span><strong>1</strong><small>five explicit members</small></div>
+        <div><span>DIRECT DEPENDENCIES</span><strong>2</strong><small>both depend on PostgreSQL</small></div>
+        <div className={styles.sourceRisk}><span>HEALTH CHECKS</span><strong>0</strong><small>service readiness needs testing</small></div>
       </section>
 
       <div className={styles.auditLayout}>
         <section className={styles.evidenceLedger}>
-          <div className={styles.panelHeading}><span>✓</span><strong>CLAIM-BY-CLAIM EVIDENCE LEDGER</strong><em>AS AUDITED</em></div>
+          <div className={styles.panelHeading}><span>✓</span><strong>DESIGN AND EVALUATION</strong><em>CONFIGURATION VIEW</em></div>
           {ledger.map((item) => (
             <article key={item.title} className={styles[`ledger_${item.state}`]}>
               <span>{item.label}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div>
@@ -614,23 +620,23 @@ function AuditView() {
         </section>
 
         <aside className={styles.historyPanel}>
-          <div className={styles.panelHeading}><span>GIT</span><strong>CONFIGURATION LINEAGE</strong><em>SELECTED EVENTS</em></div>
+          <div className={styles.panelHeading}><span>↳</span><strong>HOW THE STACK EVOLVED</strong><em>SELECTED EVENTS</em></div>
           <ol>
-            <li><time dateTime="2024-10-09">09 OCT 2024</time><span>9ff7fe5</span><strong>Initial tracked stack snapshot</strong><p>Compose and supporting runtime configuration enter history.</p></li>
-            <li><time dateTime="2025-05-03">03 MAY 2025</time><span>93dfd64</span><strong>Compose update</strong><p>The core orchestration file changes during the stack’s expansion.</p></li>
-            <li><time dateTime="2025-06-03">03 JUN 2025</time><span>851b6d4</span><strong>Network and homepage configuration</strong><p>Remote-access and service-directory configuration are added to the tracked stack.</p></li>
-            <li><time dateTime="2025-09-20">20 SEP 2025</time><span>90f77a4</span><strong>Configuration upload</strong><p>A later Compose snapshot is retained in main history.</p></li>
-            <li><time dateTime="2026-02-12">12 FEB 2026</time><span>{AUDITED_COMMIT}</span><strong>Clean-main merge</strong><p>The full Docker configuration becomes HEAD.</p></li>
+            <li><time dateTime="2024-10-09">09 OCT 2024</time><span>Foundation</span><strong>Initial service stack</strong><p>Compose and supporting runtime configuration enter history.</p></li>
+            <li><time dateTime="2025-05-03">03 MAY 2025</time><span>Expansion</span><strong>Compose update</strong><p>The core orchestration file changes during the stack’s expansion.</p></li>
+            <li><time dateTime="2025-06-03">03 JUN 2025</time><span>Access</span><strong>Network and homepage configuration</strong><p>Remote-access and service-directory configuration are added to the tracked stack.</p></li>
+            <li><time dateTime="2025-09-20">20 SEP 2025</time><span>Maintenance</span><strong>Service configuration update</strong><p>A later Compose snapshot is retained in main history.</p></li>
+            <li><time dateTime="2026-02-12">12 FEB 2026</time><span>Consolidation</span><strong>Configuration consolidation</strong><p>The complete Docker configuration is brought together on the main branch.</p></li>
           </ol>
         </aside>
       </div>
 
       <section className={styles.boundaryGrid}>
-        <div><span>REPOSITORY ≠ WHOLE LAB</span><p>The six-service Compose snapshot is not presented as a complete inventory of the broader home-lab narrative elsewhere on the site.</p></div>
-        <div><span>PRIVATE SOURCE GATE</span><p>Live configuration and runtime state are excluded, source visibility remains restricted and no repository link is offered.</p></div>
-        <div><span>LICENCE BOUNDARY</span><p>No LICENSE, COPYING or NOTICE file was found. This independently implemented exhibit is a case study, not a reusable source distribution.</p></div>
+        <div><span>CASE STUDY SCOPE</span><p>This view follows one six-service Compose stack. The broader home lab also includes systems described elsewhere in the portfolio.</p></div>
+        <div><span>INTERACTIVE MODEL</span><p>The topology follows declared configuration. Fault markers and capacity assumptions are controlled here in the browser; they do not represent live service state.</p></div>
+        <div><span>NEXT EVALUATION</span><p>Health checks and a timed restore drill would test service readiness and recovery. Configuration alone cannot establish uptime or a recovery-time objective.</p></div>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -638,26 +644,26 @@ export function HomeLabTopologyStudio() {
   const [view, setView] = useState<ViewId>("topology");
 
   return (
-    <DemoWindow
-      appName="Home Lab Topology — Private Case Study"
-      title="Infrastructure Evidence Workbench"
-      status="SYNTHETIC HOSTS · READ ONLY"
-      purpose="Audit what a six-service Compose snapshot declares—and separate configuration intent from proven availability or recovery."
+    <ProjectCopy copy={homeLabCopy}><DemoWindow
+      appName="Home lab topology"
+      title="Infrastructure explorer"
+      status="Simulated hosts · local"
+      purpose="Explore how six containerised services connect, how a fault changes their dependency paths and how backup assumptions affect capacity."
       tryThis="Trace a dependency path, fail PostgreSQL and size a backup-retention scenario."
       watchFor="Blast paths and capacity change, while absent health checks and unverified restore evidence remain explicit."
       statusTone="safe"
       className={styles.studio}
       footer={
         <>
-          <span>Audited {AUDITED_COMMIT} · private source · no licence · no source link</span>
+          <span>Topology · failure paths · backup capacity · configuration history</span>
           <span>6 Compose services · 2 direct dependencies · 0 health checks</span>
         </>
       }
     >
       <div className={styles.provenanceBanner} role="note">
-        <span>STRUCTURE, NOT SECRETS</span>
-        <p>Reconstructed from one private Compose snapshot. Every visible host alias is synthetic; all operational identity and runtime state stay outside the browser.</p>
-        <strong>NO NETWORK CALLS</strong>
+        <span>SIX-SERVICE ARCHITECTURE</span>
+        <p>Explore a Compose-based service stack through a topology map, dependency table and failure drill. Host aliases are illustrative; the model uses declared configuration rather than live telemetry.</p>
+        <strong>LOCAL SIMULATION</strong>
       </div>
 
       <nav className={styles.viewTabs} aria-label="Infrastructure workbench views">
@@ -669,12 +675,13 @@ export function HomeLabTopologyStudio() {
       </nav>
 
       <div className={styles.canvas}>
+        {view === "backup" ? <BackupFailureExperiment /> : null}
         {view === "topology" ? <TopologyView /> : null}
         {view === "failure" ? <FailureLab /> : null}
         {view === "capacity" ? <CapacityView /> : null}
         {view === "audit" ? <AuditView /> : null}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

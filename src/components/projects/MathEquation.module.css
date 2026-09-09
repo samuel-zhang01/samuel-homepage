@@ -1,0 +1,40 @@
+.equation {
+  min-width: 0;
+  max-width: 100%;
+  color: inherit;
+  font-size: 1.05em;
+  font-weight: 400;
+  line-height: 1.6;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.display {
+  display: block;
+  margin: 0.45em 0;
+  padding: 0.45em 0.2em;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.inline {
+  display: inline;
+  vertical-align: baseline;
+}
+
+.equation :global(.katex-display) {
+  margin: 0;
+}
+
+.equation :global(.katex) {
+  font-size: 1.12em;
+  text-indent: 0;
+}
+
+.fallback {
+  font-size: 0.9em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

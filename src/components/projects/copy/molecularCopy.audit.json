@@ -1,0 +1,15 @@
+{
+  "dictionary": "molecularCopy.ts",
+  "exportName": "molecularCopy",
+  "sources": [
+    "src/components/projects/MolecularRecognitionStudio.tsx"
+  ],
+  "identities": {
+    "2–8 GHz": "Conventional spectroscopic unit or method acronym, retained across locales.",
+    "GHz": "Conventional spectroscopic unit or method acronym, retained across locales.",
+    "CP–FTMW": "Conventional spectroscopic unit or method acronym, retained across locales.",
+    "kHz": "Conventional spectroscopic unit or method acronym, retained across locales.",
+    "kJ mol⁻¹": "Conventional spectroscopic unit or method acronym, retained across locales.",
+    "{0} kHz": "Conventional spectroscopic unit or method acronym, retained across locales."
+  }
+}

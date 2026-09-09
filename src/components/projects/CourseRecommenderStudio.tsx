@@ -1,11 +1,16 @@
 "use client";
 
+import { MathEquation } from "./MathEquation";
+
 import ClassicSelect from "../ClassicSelect";
 
 import { useMemo, useState } from "react";
 
 import { DemoWindow } from "./DemoChrome";
 import styles from "./CourseRecommenderStudio.module.css";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { projectText } from "@/lib/projectCopy";
+import { courseCopy } from "./copy/courseCopy";
 
 type ViewId = "recommend" | "explain" | "counterfactual" | "source";
 type ModelMode = "source" | "adapted";
@@ -54,8 +59,6 @@ type ScoredCourse = {
   activeWeight: number;
 };
 
-const SOURCE_COMMIT = "f80fa51";
-
 const COURSES: Course[] = [
   { id: 1, title: "Advanced Python Programming", category: "Programming", difficulty: "Advanced", weeks: 8, rating: 4.8, mockEnrollments: 15420, price: 199.99 },
   { id: 2, title: "Machine Learning Fundamentals", category: "AI/ML", difficulty: "Intermediate", weeks: 10, rating: 4.9, mockEnrollments: 23100, price: 299.99 },
@@ -94,7 +97,7 @@ const VIEWS: { id: ViewId; label: string; hint: string }[] = [
   { id: "recommend", label: "Recommend", hint: "Inputs + ranking" },
   { id: "explain", label: "Explain", hint: "Score decomposition" },
   { id: "counterfactual", label: "What if?", hint: "Rank sensitivity" },
-  { id: "source", label: "Source map", hint: "Prototype audit" },
+  { id: "source", label: "Model design", hint: "data, ranking and limits" },
 ];
 
 const DIFFICULTY_INDEX: Record<Exclude<Difficulty, "Any">, number> = {
@@ -184,7 +187,7 @@ function adaptedComponents(course: Course, preferences: Preferences, weights: We
       active: categoryActive,
       weight: weights.category,
       value: categoryMatch ? 1 : 0,
-      evidence: categoryActive ? `${course.category} ${categoryMatch ? "is" : "is not"} selected` : "No category preference; component omitted",
+      evidence: categoryActive ? (categoryMatch ? `${course.category} is selected` : `${course.category} is not selected`) : "No category preference; component omitted",
     },
     {
       id: "difficulty",
@@ -280,14 +283,14 @@ function toggleCategory(categories: string[], category: string) {
 
 function ModelSwitch({ mode, setMode }: { mode: ModelMode; setMode: (mode: ModelMode) => void }) {
   return (
-    <div className={styles.modelSwitch} aria-label="Recommendation model">
+    <ProjectCopy copy={courseCopy}><div className={styles.modelSwitch} aria-label="Recommendation model">
       <button type="button" className={mode === "source" ? styles.activeSource : ""} onClick={() => setMode("source")} aria-pressed={mode === "source"}>
         <span>SOURCE BASELINE</span><strong>Hard filters + random rank</strong><small>Seeded here only for replay</small>
       </button>
       <button type="button" className={mode === "adapted" ? styles.activeAdapted : ""} onClick={() => setMode("adapted")} aria-pressed={mode === "adapted"}>
-        <span>SAFETY-IMPROVED PORT</span><strong>Deterministic weighted rubric</strong><small>Illustrative browser math</small>
+        <span>EXPLAINABLE RUBRIC</span><strong>Deterministic weighted rubric</strong><small>Illustrative browser math</small>
       </button>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -309,9 +312,9 @@ function PreferenceControls({
   setWeights: (weights: Weights) => void;
 }) {
   return (
-    <section className={`${styles.panel} ${styles.controlsPanel}`} aria-labelledby="course-inputs-title">
+    <ProjectCopy copy={courseCopy}><section className={`${styles.panel} ${styles.controlsPanel}`} aria-labelledby="course-inputs-title">
       <div className={styles.panelHeading}>
-        <div><span>NON-IDENTIFYING INPUTS ONLY</span><h3 id="course-inputs-title">Learning preferences</h3></div>
+        <div><span>YOUR PREFERENCES</span><h3 id="course-inputs-title">Learning preferences</h3></div>
         <button type="button" onClick={() => { setPreferences(DEFAULT_PREFERENCES); setWeights(DEFAULT_WEIGHTS); setSeed(4); }}>Reset sample</button>
       </div>
 
@@ -356,8 +359,8 @@ function PreferenceControls({
         </div>
       )}
 
-      <div className={styles.privacyFootnote}><strong>Removed from the public port:</strong> name, email and current role. They do not affect the source frontend’s recommendation logic.</div>
-    </section>
+      <div className={styles.privacyFootnote}><strong>What the score uses:</strong> category, difficulty, course length, budget and sample ratings. The source baseline applies only category and difficulty as filters.</div>
+    </section></ProjectCopy>
   );
 }
 
@@ -368,14 +371,20 @@ function ResultCard({ result, rank, mode, selected, onSelect }: {
   selected: boolean;
   onSelect: () => void;
 }) {
+  const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, courseCopy, source);
+  const reasonText = (reason: string) => {
+    const field = WEIGHT_META.find((item) => reason.startsWith(`${item.label}: `));
+    return field ? `${t(field.label)}: ${t(reason.slice(field.label.length + 2))}` : t(reason);
+  };
   return (
-    <article className={`${styles.resultCard} ${selected ? styles.selectedCard : ""}`}>
+    <ProjectCopy copy={courseCopy}><article className={`${styles.resultCard} ${selected ? styles.selectedCard : ""}`}>
       <div className={styles.rankStamp}><span>#{rank}</span><small>{mode === "source" ? "REPLAY" : "RANK"}</small></div>
       <div className={styles.courseCopy}>
         <span>{result.course.category} · {result.course.difficulty}</span>
         <h4>{result.course.title}</h4>
         <div className={styles.courseMeta}><span>{result.course.weeks} weeks</span><span>{result.course.rating.toFixed(1)} mock rating</span><span>{currency(result.course.price)}</span></div>
-        <ul>{result.reasons.length ? result.reasons.map((reason) => <li key={reason}>{reason}</li>) : <li>No source reason rule fired.</li>}</ul>
+        <ul>{result.reasons.length ? result.reasons.map((reason) => <li key={reason}>{reasonText(reason)}</li>) : <li>No source reason rule fired.</li>}</ul>
       </div>
       <div className={styles.scoreBlock}>
         <div
@@ -389,7 +398,7 @@ function ResultCard({ result, rank, mode, selected, onSelect }: {
         ><strong>{result.score.toFixed(1)}</strong><small>{mode === "source" ? "RANDOM" : "POINTS"}</small></div>
         <button type="button" onClick={onSelect} aria-pressed={selected}>{selected ? "Selected" : "Inspect"}</button>
       </div>
-    </article>
+    </article></ProjectCopy>
   );
 }
 
@@ -422,7 +431,7 @@ function RecommendView({
   const topMargin = ranking.length > 1 ? ranking[0].score - ranking[1].score : 0;
 
   return (
-    <div className={styles.recommendLayout}>
+    <ProjectCopy copy={courseCopy}><div className={styles.recommendLayout}>
       <PreferenceControls preferences={preferences} setPreferences={setPreferences} mode={mode} seed={seed} setSeed={setSeed} weights={weights} setWeights={setWeights} />
       <section className={`${styles.panel} ${styles.resultsPanel}`} aria-labelledby="course-results-title" aria-live="polite">
         <div className={styles.panelHeading}>
@@ -447,7 +456,7 @@ function RecommendView({
           )}
         </div>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -475,7 +484,7 @@ function ExplainView({
   const adaptedRank = adaptedRanking.findIndex((result) => result.course.id === course.id) + 1;
 
   return (
-    <div className={styles.explainLayout}>
+    <ProjectCopy copy={courseCopy}><div className={styles.explainLayout}>
       <section className={`${styles.panel} ${styles.courseSelector}`} aria-labelledby="course-selector-title">
         <div className={styles.panelHeading}><div><span>SELECT A CATALOG ROW</span><h3 id="course-selector-title">Course inspector</h3></div></div>
         <div>
@@ -491,7 +500,7 @@ function ExplainView({
         <div className={styles.panelHeading}><div><span>ADAPTED MODEL · FULL TRACE</span><h3 id="score-formula-title">{course.title}</h3></div><span className={styles.formulaScore}>{adapted.score.toFixed(1)}</span></div>
         <div className={styles.equation}>
           <span>FINAL SCORE</span>
-          <code>Σ(active weight × evidence value) ÷ Σ(active weight) × 100</code>
+          <MathEquation tex={String.raw`\mathrm{score}=100\,\frac{\sum_{j\in\mathrm{active}}w_j v_j}{\sum_{j\in\mathrm{active}}w_j}`} label="Weighted evidence score: sum of active weight times evidence value, divided by active weights, times 100" />
           <p>{adapted.components.reduce((sum, component) => sum + component.points, 0).toFixed(2)} points · {adapted.activeWeight} active weight units · deterministic tie-break: rating, then ID</p>
         </div>
         <div className={styles.componentList}>
@@ -499,7 +508,7 @@ function ExplainView({
             <article className={!component.active ? styles.inactiveComponent : ""} key={component.id}>
               <div><span>{component.label}</span><strong>{component.active ? `${component.points.toFixed(1)} pts` : "OMITTED"}</strong></div>
               <div className={styles.componentTrack}><i style={{ width: `${component.active ? component.value * 100 : 0}%` }} /></div>
-              <p><code>w={component.weight}</code><code>v={component.value.toFixed(2)}</code>{component.evidence}</p>
+              <p><MathEquation display={false} tex={`w=${component.weight}`} /><MathEquation display={false} tex={`v=${component.value.toFixed(2)}`} />{component.evidence}</p>
             </article>
           ))}
         </div>
@@ -527,7 +536,7 @@ function ExplainView({
           <div><dt>Seed price</dt><dd>{currency(course.price)}</dd></div>
         </dl>
       </aside>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -537,6 +546,7 @@ function CounterfactualView({ preferences, weights, selectedId, setSelectedId }:
   selectedId: number;
   setSelectedId: (id: number) => void;
 }) {
+  const locale = useProjectLocale();
   const currentRanking = rankAllAdapted(preferences, weights);
   const selectedCourse = COURSES.find((course) => course.id === selectedId) ?? currentRanking[0].course;
   const categoryScenario = preferences.categories.length
@@ -574,7 +584,7 @@ function CounterfactualView({ preferences, weights, selectedId, setSelectedId }:
   const baseline = rows[0];
 
   return (
-    <div className={styles.counterfactualLayout}>
+    <ProjectCopy copy={courseCopy}><div className={styles.counterfactualLayout}>
       <section className={`${styles.panel} ${styles.counterfactualHeader}`}>
         <div className={styles.panelHeading}><div><span>ONE-FACTOR PERTURBATIONS</span><h3>Counterfactual laboratory</h3></div></div>
         <div className={styles.counterfactualIntro}>
@@ -612,30 +622,30 @@ function CounterfactualView({ preferences, weights, selectedId, setSelectedId }:
       <div className={styles.scenarioCards}>
         {rows.slice(1).map((row) => (
           <article className={styles.panel} key={row.label}>
-            <span>{row.label.toLocaleUpperCase()}</span><strong>#{row.rank} · {row.selected.score.toFixed(1)}</strong>
+            <span>{projectText(locale, courseCopy, row.label).toLocaleUpperCase()}</span><strong>#{row.rank} · {row.selected.score.toFixed(1)}</strong>
             <div className={styles.rankTrack}><i style={{ width: `${row.selected.score}%` }} /></div>
             <p>{row.change}. Winner: <b>{row.top.course.title}</b>.</p>
           </article>
         ))}
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function SourceMapView() {
   return (
-    <div className={styles.sourceMap}>
+    <ProjectCopy copy={courseCopy}><div className={styles.sourceMap}>
       <div className={styles.sourceStats}>
         <article><span>UI CATALOG</span><strong>6</strong><small>local mock rows</small></article>
         <article><span>SQL SEED</span><strong>6</strong><small>course rows</small></article>
         <article><span>API CATALOG</span><strong>2</strong><small>fixed mock rows</small></article>
         <article><span>PROFILE TABLES</span><strong>0</strong><small>despite intake fields</small></article>
-        <article><span>LICENCE FILE</span><strong>0</strong><small>public ≠ open source</small></article>
+        <article><span>SCORING DIMENSIONS</span><strong>5</strong><small>in the weighted rubric</small></article>
       </div>
 
       <div className={styles.sourceColumns}>
         <section className={`${styles.panel} ${styles.pipelineAudit}`} aria-labelledby="pipeline-audit-title">
-          <div className={styles.panelHeading}><div><span>COMMIT {SOURCE_COMMIT}</span><h3 id="pipeline-audit-title">Actual prototype paths</h3></div></div>
+          <div className={styles.panelHeading}><div><span>APPLICATION DESIGN</span><h3 id="pipeline-audit-title">From preferences to a shortlist</h3></div></div>
           <ol>
             <li><span>01</span><div><strong>React intake</strong><p>Captures name, email, role, goals, categories, level, schedule and budget in local component state.</p></div><em>BUILT</em></li>
             <li><span>02</span><div><strong>Frontend recommender</strong><p>Hard-filters category and exact level, assigns Math.random scores, then attaches up to two rule-based reasons.</p></div><em>BUILT</em></li>
@@ -646,7 +656,7 @@ function SourceMapView() {
         </section>
 
         <section className={`${styles.panel} ${styles.contractAudit}`} aria-labelledby="contract-audit-title">
-          <div className={styles.panelHeading}><div><span>DATA CONTRACT DRIFT</span><h3 id="contract-audit-title">Three catalogs, three behaviours</h3></div></div>
+          <div className={styles.panelHeading}><div><span>CATALOGUE CONSISTENCY</span><h3 id="contract-audit-title">Three catalogs, three behaviours</h3></div></div>
           <table>
             <thead><tr><th>Surface</th><th>Rows</th><th>Price</th><th>Ranking</th></tr></thead>
             <tbody>
@@ -655,8 +665,8 @@ function SourceMapView() {
               <tr><td>PostgreSQL seed</td><td>6</td><td>Yes</td><td>None</td></tr>
             </tbody>
           </table>
-          <div className={styles.driftFinding}><strong>Example drift</strong><p>Course 4 is “Web Development Bootcamp” in the frontend and “Full Stack Web Development” in SQL. This port uses the SQL title and records the UI alias.</p></div>
-          <div className={styles.unusedInputs}><span>CAPTURED BUT UNUSED IN SOURCE RANKING</span><div><code>Name</code><code>Email</code><code>Experience</code><code>Role</code><code>Career goals</code><code>Learning style</code><code>Schedule</code><code>Budget</code></div></div>
+          <div className={styles.driftFinding}><strong>Course naming across layers</strong><p>Course 4 is “Web Development Bootcamp” in the frontend and “Full Stack Web Development” in SQL. This port uses the SQL title and records the UI alias.</p></div>
+          <div className={styles.unusedInputs}><span>CAPTURED BUT UNUSED IN SOURCE RANKING</span><div><span>Name</span><span>Email</span><span>Experience</span><span>Role</span><span>Career goals</span><span>Learning style</span><span>Schedule</span><span>Budget</span></div></div>
         </section>
       </div>
 
@@ -666,15 +676,15 @@ function SourceMapView() {
           <ul><li>Category substring and exact difficulty gates</li><li>Top-four output</li><li>Up to two source reason rules</li><li>Random ordering exposed through a deterministic replay seed</li></ul>
         </section>
         <section className={`${styles.panel} ${styles.boundaryCard} ${styles.safeBoundary}`}>
-          <span>PUBLIC SAFETY ADAPTATION</span>
-          <ul><li>No name, email, role or persistence</li><li>Deterministic, decomposable score</li><li>Missing preferences omitted from denominator</li><li>No enrolment action or learning-outcome claim</li></ul>
+          <span>EXPLAINABLE BROWSER MODEL</span>
+          <ul><li>Preference controls and temporary local state</li><li>Deterministic, decomposable score</li><li>Missing preferences omitted from denominator</li><li>No enrolment action or learning-outcome claim</li></ul>
         </section>
         <section className={`${styles.panel} ${styles.licenceCard}`}>
-          <span>LICENCE + SECURITY BOUNDARY</span>
-          <p>The source repository is public but has no LICENSE/COPYING/NOTICE file, so it must not be presented as open source. Compose also contains development placeholder credentials and a frontend Dockerfile case mismatch; neither is copied or executed here.</p>
+          <span>EVALUATION LIMITS</span>
+          <p>The catalogue and ratings are sample data. The weighted rubric is an interactive explanation of scoring choices; its recommendations have not been evaluated against learner outcomes.</p>
         </section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -689,26 +699,26 @@ export function CourseRecommenderStudio() {
   const effectiveSelected = ranking.some((result) => result.course.id === selectedId) ? selectedId : (ranking[0]?.course.id ?? selectedId);
 
   return (
-    <DemoWindow
-      appName="Course Recommender — Audit Workbench"
-      title="Learning Path Recommender Audit"
-      status="SYNTHETIC · LOCAL ONLY"
-      purpose="Reveal when a polished ‘recommender’ is only random ordering, then show what an explicit scoring contract would add."
+    <ProjectCopy copy={courseCopy}><DemoWindow
+      appName="Course recommender"
+      title="Explore learning preferences"
+      status="Fictional course catalogue"
+      purpose="Compare category and difficulty filtering followed by random ordering with an explicit weighted score for course preferences."
       tryThis="Replay the source baseline with another seed, inspect its reasons, then compare the adapted rubric."
-      watchFor="Random order, field-contract gaps and declared scoring weights stay visibly separate so personalisation is not implied."
+      watchFor="Watch how changing weights alters the ranking and how each active preference contributes to the final score."
       statusTone="safe"
       className={styles.courseStudio}
       footer={
         <>
-          <span>Source snapshot {SOURCE_COMMIT} · 6 mock catalog rows · no student records</span>
+          <span>Six example courses · adjustable ranking · local calculations</span>
           <span>{mode === "source" ? `Baseline replay seed ${seed}` : `Adapted rubric · ${Object.values(weights).reduce((sum, value) => sum + value, 0)} declared weight units`}</span>
         </>
       }
     >
       <div className={styles.safetyBanner} role="note">
         <span aria-hidden="true">✓</span>
-        <div><strong>Personalisation without personal identifiers</strong><p>The source prototype asks for name and email, but its frontend scorer never uses them. This public workbench retains only non-identifying preferences, performs every calculation in-browser and stores nothing.</p></div>
-        <code>NO NETWORK · NO STORAGE · NO ENROLMENT</code>
+        <div><strong>Explore the reasons behind a recommendation</strong><p>Adjust the subject, difficulty, time and budget preferences. Compare the original filtering rules with a weighted rubric, then inspect the contributions behind each result.</p></div>
+        <span>FILTER · RANK · EXPLAIN</span>
       </div>
 
       <ModelSwitch mode={mode} setMode={setMode} />
@@ -727,7 +737,7 @@ export function CourseRecommenderStudio() {
         {view === "counterfactual" && <CounterfactualView preferences={preferences} weights={weights} selectedId={effectiveSelected} setSelectedId={setSelectedId} />}
         {view === "source" && <SourceMapView />}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

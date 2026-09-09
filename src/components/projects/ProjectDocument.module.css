@@ -1,0 +1,26 @@
+.document { container-type: inline-size; min-height: 100%; background: var(--s7-paper, #fff); color: var(--s7-ink, #000); }
+.toolbar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 16px; border-bottom: 1px solid #000; background: var(--s7-chrome, #ddd); }
+.toolbar > span { font-size: 12px; align-self: center; }
+.header { display: grid; grid-template-columns: 152px minmax(0, 1fr); gap: 24px; padding: 28px 32px 20px; align-items: start; }
+.header h1 { margin: 4px 0 12px; font-size: var(--s7-title, 22px); line-height: 1.2; font-weight: 700; }
+.context { margin: 0; font-size: var(--s7-small, 12px); }
+.summary { margin: 0; max-width: 68ch; font-size: var(--s7-text, 15px); line-height: 1.55; }
+.tools { margin: 14px 0 0; font-size: 12px; line-height: 1.5; }
+.materials { display: flex; flex-wrap: wrap; gap: 10px; margin: 4px 32px 28px; }
+.experiment { padding: 0 20px 24px; scroll-margin-top: 70px; outline: none; }
+.preview { margin: 20px 32px; }
+.preview img { display: block; max-width: 100%; height: auto; border: 1px solid #000; }
+.preview figcaption { margin-top: 8px; font-size: 12px; }
+.boundary { margin: 0 32px; padding: 14px 0 22px; border-top: 1px solid #aaa; font-size: 13px; line-height: 1.5; }
+.boundary summary { cursor: pointer; }
+@container (max-width: 620px) {
+  .header { grid-template-columns: 80px minmax(0, 1fr); gap: 14px; padding: 20px 16px; }
+  .header h1 { font-size: var(--s7-title, 22px); }
+  .context, .tools { font-size: 12px; }
+  .summary { font-size: var(--s7-text, 15px); }
+  .toolbar { padding: 8px; gap: 6px; }
+  .toolbar button { flex: 1 1 42%; min-height: 40px; }
+  .experiment { padding: 0 8px 16px; scroll-margin-top: 108px; }
+  .materials, .preview { margin-inline: 16px; }
+  .boundary { margin-inline: 16px; }
+}

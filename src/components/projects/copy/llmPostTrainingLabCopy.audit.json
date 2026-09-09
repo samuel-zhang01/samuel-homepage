@@ -1,0 +1,8 @@
+{
+  "dictionary": "llmPostTrainingLabCopy.ts",
+  "exportName": "llmPostTrainingLabCopy",
+  "sources": [
+    "src/components/projects/LlmPostTrainingLab.tsx"
+  ],
+  "identities": {}
+}

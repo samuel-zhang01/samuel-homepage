@@ -1,5 +1,8 @@
 "use client";
 
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { thermodynamicsCopy } from "./copy/thermodynamicsCopy";
+
 /*
 PC-SAFT residual equations and universal correlation coefficients are
 reimplemented from Clapeyron.jl, audited at commit
@@ -29,6 +32,7 @@ SOFTWARE.
 
 import { useId, useMemo, useState, type ReactNode } from "react";
 import { DemoWindow } from "./DemoChrome";
+import { MathEquation } from "./MathEquation";
 import styles from "./ThermodynamicsStudio.module.css";
 
 type ComponentParameters = {
@@ -255,30 +259,23 @@ function formatPressure(value: number) {
   return value.toFixed(3);
 }
 
-function FormulaCard({
-  step,
-  title,
-  left,
-  right,
-  note,
-}: {
+function scientificTex(value: number) {
+  const [mantissa, exponent] = value.toExponential(3).split("e");
+  return String.raw`${mantissa}\times 10^{${Number(exponent)}}`;
+}
+
+function FormulaCard({ step, title, tex, label, note }: {
   step: string;
   title: string;
-  left: ReactNode;
-  right: ReactNode;
-  note: string;
+  tex: string;
+  label: string;
+  note: ReactNode;
 }) {
-  return (
-    <div className={styles.formulaCard}>
-      <span>{step} · {title}</span>
-      <div className={styles.formula} aria-label={`${title}: ${note}`}>
-        <span className={styles.formulaLeft}>{left}</span>
-        <b aria-hidden="true">=</b>
-        <span className={styles.formulaRight}>{right}</span>
-      </div>
-      <p>{note}</p>
-    </div>
-  );
+  return (<ProjectCopy copy={thermodynamicsCopy}><div className={styles.formulaCard}>
+    <span>{step} · {title}</span>
+    <div className={styles.formula}><MathEquation tex={tex} label={label} /></div>
+    <p>{note}</p>
+  </div></ProjectCopy>);
 }
 
 function IsothermChart({
@@ -323,8 +320,7 @@ function IsothermChart({
     (_, index) => yMin + (index / 4) * (yMax - yMin),
   );
 
-  return (
-    <svg
+  return (<ProjectCopy copy={thermodynamicsCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg
       className={styles.chart}
       viewBox="0 0 700 350"
       role="img"
@@ -343,7 +339,7 @@ function IsothermChart({
           <line x1="0" x2="0" y1="0" y2="6" stroke="#a13156" strokeWidth="2" opacity="0.13" />
         </pattern>
       </defs>
-      <rect width="700" height="350" fill="#f7f7f2" />
+      <rect width="700" height="350" fill="var(--s7-paper)" />
       <rect x={plot.left} y={plot.top} width={plot.width} height={plot.height} fill="#fff" stroke="#252622" />
       <rect
         x={plot.left}
@@ -381,8 +377,7 @@ function IsothermChart({
       </g>
       <text x="362" y="338" textAnchor="middle" className={styles.axisLabel}>molar density / kmol m⁻³</text>
       <text x="15" y="168" textAnchor="middle" transform="rotate(-90 15 168)" className={styles.axisLabel}>pressure / MPa</text>
-    </svg>
-  );
+    </svg></div></ProjectCopy>);
 }
 
 function ParameterSlider({
@@ -402,12 +397,10 @@ function ParameterSlider({
   step: number;
   onChange: (value: number) => void;
 }) {
-  return (
-    <label className={styles.parameterSlider}>
+  return (<ProjectCopy copy={thermodynamicsCopy}><label className={styles.parameterSlider}>
       <span><b>{label}</b><output>{value.toFixed(step < 1 ? 2 : 0)} {unit}</output></span>
       <input type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} />
-    </label>
-  );
+    </label></ProjectCopy>);
 }
 
 export function ThermodynamicsStudio() {
@@ -451,10 +444,10 @@ export function ThermodynamicsStudio() {
   const derivative = (current.z - 1) / density;
   const regime =
     current.eta >= 0.5
-      ? { label: "OUTSIDE DEMO RANGE", tone: "alert" as const, copy: "Packing fraction reached the guarded limit." }
+      ? { label: "Outside demo range", tone: "alert" as const, copy: "Packing fraction reached the guarded limit." }
       : current.z <= 0
-        ? { label: "NEGATIVE-P BRANCH", tone: "warn" as const, copy: "Non-positive Z marks a negative-pressure homogeneous branch; equilibrium requires a phase solver." }
-        : { label: "STATE EVALUATED", tone: "safe" as const, copy: "Single homogeneous-state equation evaluation only." };
+        ? { label: "Negative-pressure branch", tone: "warn" as const, copy: "Non-positive Z marks a negative-pressure homogeneous branch; equilibrium requires a phase solver." }
+        : { label: "State evaluated", tone: "safe" as const, copy: "Single homogeneous-state equation evaluation only." };
   const sampleIndices = [0, Math.round(((density - 100) / 8900) * 89), 89];
   const samples = sampleIndices.map((index) => curve[Math.max(0, Math.min(89, index))]);
 
@@ -474,11 +467,10 @@ export function ThermodynamicsStudio() {
     setSelectedComponent("A");
   }
 
-  return (
-    <DemoWindow
-      appName="PC-SAFT WORKBENCH · SAFE EXHIBIT"
-      title="Synthetic Thermodynamics Studio"
-      status="PUBLIC EQUATIONS · SYNTHETIC PARAMETERS"
+  return (<ProjectCopy copy={thermodynamicsCopy}><DemoWindow
+      appName="PC-SAFT workbench"
+      title="How molecular interactions change pressure"
+      status="Illustrative binary mixture"
       purpose="Open a PC-SAFT state calculation so the effect of molecular parameters, mixing and density is visible term by term."
       tryThis="Change density, composition or the binary interaction parameter, then open the equation tape."
       watchFor="Compressibility, pressure and the isotherm are recalculated in the browser using invented fluids—not validated property data."
@@ -486,23 +478,16 @@ export function ThermodynamicsStudio() {
       className={styles.studio}
       footer={
         <>
-          <span>NON-ASSOCIATING BINARY · EDUCATIONAL CALCULATION</span>
-          <span>NO DRUG · CLIENT · APPLICATION · EXPERIMENT DATA</span>
+          <span>Non-associating binary mixture</span>
+          <span>Invented fluid parameters</span>
         </>
       }
     >
-      <div className={styles.boundaryBanner} role="note">
-        <span>SAFE SCIENTIFIC CORE</span>
-        <p>
-          Invented Fluid A/B parameters exercise the open PC-SAFT residual equations. Nothing is read
-          from compound-solubility folders, job applications, client material or experimental tables.
-        </p>
-        <strong>NOT A PROPERTY PREDICTION</strong>
-      </div>
+      <div className={styles.boundaryBanner} role="note"><p>Real fluids depart from the ideal-gas law because molecules occupy space and attract each other. PC-SAFT represents those effects through chain segments and dispersion energy. Adjust the two illustrative components to see how the pressure changes.</p></div>
 
       <section className={styles.workbench} aria-label="Interactive PC-SAFT parameter sensitivity workbench">
         <aside className={styles.controlRack}>
-          <div className={styles.panelTitle}><span>01</span><strong>STATE VECTOR</strong></div>
+          <div className={styles.panelTitle}><span>01</span><strong>State vector</strong></div>
           <ParameterSlider label="Temperature" unit="K" value={temperature} min={270} max={450} step={1} onChange={setTemperature} />
           <ParameterSlider label="Molar density" unit="mol m⁻³" value={density} min={100} max={9000} step={100} onChange={setDensity} />
           <ParameterSlider label="Mole fraction xA" unit="" value={xA} min={0.05} max={0.95} step={0.01} onChange={setXA} />
@@ -513,7 +498,7 @@ export function ThermodynamicsStudio() {
             <button type="button" aria-pressed={selectedComponent === "B"} onClick={() => setSelectedComponent("B")}>Fluid B</button>
           </div>
           <div className={styles.componentEditor}>
-            <span className={styles.microLabel}>SYNTHETIC {selectedComponent} PARAMETERS</span>
+            <span className={styles.microLabel}>Synthetic {selectedComponent} parameters</span>
             <ParameterSlider
               label="Segments m"
               unit=""
@@ -546,17 +531,17 @@ export function ThermodynamicsStudio() {
         </aside>
 
         <div className={styles.analysisPanel}>
-          <div className={styles.panelTitle}><span>02</span><strong>PRESSURE–DENSITY ISOTHERM</strong><em>DETERMINISTIC SVG</em></div>
+          <div className={styles.panelTitle}><span>02</span><strong>Pressure–density isotherm</strong></div>
           <IsothermChart curve={curve} selectedDensity={density} current={current} />
           <div className={styles.chartNote}>
             <span className={styles[regime.tone]}>{regime.label}</span>
             <p>{regime.copy} Hatched negative-pressure regions are equation branches, not physical equilibrium states.</p>
           </div>
           <div className={styles.metricGrid} aria-live="polite">
-            <div><span>PRESSURE</span><strong>{formatPressure(current.pressureMPa)} MPa</strong><small>p = ρRTZ</small></div>
-            <div><span>COMPRESSIBILITY</span><strong>{current.z.toFixed(4)}</strong><small>Z = 1 + ρ ∂aʳᵉˢ/∂ρ</small></div>
-            <div><span>PACKING FRACTION</span><strong>{current.eta.toFixed(4)}</strong><small>η = ζ₃</small></div>
-            <div><span>RESIDUAL HELMHOLTZ</span><strong>{formatSigned(current.aResidual, 4)}</strong><small>Aʳᵉˢ / (nRT)</small></div>
+            <div><span>Pressure</span><strong>{formatPressure(current.pressureMPa)} MPa</strong><small><MathEquation display={false} tex={String.raw`p = \rho RTZ`} label="p = ρRTZ" /></small></div>
+            <div><span>Compressibility</span><strong>{current.z.toFixed(4)}</strong><small><MathEquation display={false} tex={String.raw`Z = 1 + \rho\frac{\partial a^{\mathrm{res}}}{\partial\rho}`} label="Z = 1 + ρ ∂aʳᵉˢ/∂ρ" /></small></div>
+            <div><span>Packing fraction</span><strong>{current.eta.toFixed(4)}</strong><small><MathEquation display={false} tex={String.raw`\eta = \zeta_3`} label="η = ζ₃" /></small></div>
+            <div><span>Residual helmholtz</span><strong>{formatSigned(current.aResidual, 4)}</strong><small><MathEquation display={false} tex={String.raw`\frac{A^{\mathrm{res}}}{nRT}`} label="Aʳᵉˢ / (nRT)" /></small></div>
           </div>
         </div>
       </section>
@@ -564,33 +549,27 @@ export function ThermodynamicsStudio() {
       <section className={styles.calculationTape} aria-label="Visible PC-SAFT calculations">
         <div className={styles.tapeHeading}>
           <span>03</span>
-          <div><strong>CALCULATION TAPE</strong><small>all values update from the synthetic controls</small></div>
+          <div><strong>Calculation tape</strong><small>all values update from the synthetic controls</small></div>
         </div>
         <div className={styles.tapeSteps}>
-          <div><span>EFFECTIVE DIAMETERS</span><code>dA = {current.dA.toFixed(4)} Å</code><code>dB = {current.dB.toFixed(4)} Å</code></div>
+          <div><span>Effective diameters</span><div className={styles.tapeEquation}><MathEquation tex={String.raw`d_A = ${current.dA.toFixed(4)}\,\text{\AA}`} label={`dA = ${current.dA.toFixed(4)} Å`} /></div><div className={styles.tapeEquation}><MathEquation tex={String.raw`d_B = ${current.dB.toFixed(4)}\,\text{\AA}`} label={`dB = ${current.dB.toFixed(4)} Å`} /></div></div>
           <b aria-hidden="true">→</b>
-          <div><span>LORENTZ–BERTHELOT</span><code>σAB = {current.sigmaAB.toFixed(4)} Å</code><code>εAB/kB = {current.epsilonAB.toFixed(2)} K</code></div>
+          <div><span>Lorentz–Berthelot</span><div className={styles.tapeEquation}><MathEquation tex={String.raw`\sigma_{AB} = ${current.sigmaAB.toFixed(4)}\,\text{\AA}`} label={`σAB = ${current.sigmaAB.toFixed(4)} Å`} /></div><div className={styles.tapeEquation}><MathEquation tex={String.raw`\frac{\varepsilon_{AB}}{k_B} = ${current.epsilonAB.toFixed(2)}\,\mathrm{K}`} label={`εAB/kB = ${current.epsilonAB.toFixed(2)} K`} /></div></div>
           <b aria-hidden="true">→</b>
-          <div><span>HELMHOLTZ TERMS</span><code>aʰᶜ = {formatSigned(current.aHardChain, 4)}</code><code>aᵈⁱˢᵖ = {formatSigned(current.aDispersion, 4)}</code></div>
+          <div><span>Helmholtz terms</span><div className={styles.tapeEquation}><MathEquation tex={String.raw`a^{\mathrm{hc}} = ${current.aHardChain.toFixed(4)}`} label={`aʰᶜ = ${formatSigned(current.aHardChain, 4)}`} /></div><div className={styles.tapeEquation}><MathEquation tex={String.raw`a^{\mathrm{disp}} = ${current.aDispersion.toFixed(4)}`} label={`aᵈⁱˢᵖ = ${formatSigned(current.aDispersion, 4)}`} /></div></div>
           <b aria-hidden="true">→</b>
-          <div><span>DENSITY DERIVATIVE</span><code>∂aʳᵉˢ/∂ρ = {derivative.toExponential(3)}</code><code>Z = {current.z.toFixed(4)}</code></div>
+          <div><span>Density derivative</span><div className={styles.tapeEquation}><MathEquation tex={String.raw`\frac{\partial a^{\mathrm{res}}}{\partial\rho} = ${scientificTex(derivative)}`} label={`∂aʳᵉˢ/∂ρ = ${derivative.toExponential(3)}`} /></div><div className={styles.tapeEquation}><MathEquation tex={String.raw`Z = ${current.z.toFixed(4)}`} label={`Z = ${current.z.toFixed(4)}`} /></div></div>
         </div>
       </section>
 
       <div className={styles.detailGrid}>
         <section className={styles.sensitivityPanel}>
           <div className={styles.sectionHeading}>
-            <div><span>PARAMETER SENSITIVITY</span><h3>What does kAB change?</h3></div>
+            <div><span>Parameter sensitivity</span><h3>What does kAB change?</h3></div>
             <strong>{formatSigned(pressureDelta, 3)} MPa</strong>
           </div>
           <div className={styles.mixingEquation}>
-            <span>εAB/kB</span>
-            <b>=</b>
-            <span>√({parameters.A.epsilon.toFixed(0)} × {parameters.B.epsilon.toFixed(0)})</span>
-            <b>×</b>
-            <span>(1 − {interaction.toFixed(2)})</span>
-            <b>=</b>
-            <strong>{current.epsilonAB.toFixed(2)} K</strong>
+            <MathEquation tex={String.raw`\begin{aligned}\frac{\varepsilon_{AB}}{k_B}&=\sqrt{${parameters.A.epsilon.toFixed(0)}\times ${parameters.B.epsilon.toFixed(0)}}\\&\quad\times(1-${interaction.toFixed(2)})\\&=${current.epsilonAB.toFixed(2)}\,\mathrm{K}\end{aligned}`} label={`εAB/kB = √(${parameters.A.epsilon.toFixed(0)} × ${parameters.B.epsilon.toFixed(0)}) × (1 − ${interaction.toFixed(2)}) = ${current.epsilonAB.toFixed(2)} K`} />
           </div>
           <div className={styles.comparisonRows}>
             <div><span>kAB = 0 reference</span><i><b style={{ width: `${Math.min(100, Math.max(0, (noInteraction.epsilonAB / 320) * 100))}%` }} /></i><strong>{noInteraction.epsilonAB.toFixed(2)} K</strong></div>
@@ -605,7 +584,7 @@ export function ThermodynamicsStudio() {
 
         <section className={styles.ledgerPanel}>
           <div className={styles.sectionHeading}>
-            <div><span>ACCESSIBLE CURVE LEDGER</span><h3>Three isotherm states</h3></div>
+            <div><span>Accessible curve ledger</span><h3>Three isotherm states</h3></div>
             <strong>T = {temperature} K</strong>
           </div>
           <div
@@ -635,37 +614,37 @@ export function ThermodynamicsStudio() {
 
       <section className={styles.equationPanel}>
         <div className={styles.sectionHeading}>
-          <div><span>PUBLIC EQUATION IMPLEMENTATION</span><h3>Equations evaluated in the browser</h3></div>
-          <a href={CLAPEYRON_PC_SAFT_SOURCE} target="_blank" rel="noreferrer">Open pinned PC-SAFT source ↗</a>
+          <div><span>Public equation implementation</span><h3>Equations evaluated in the browser</h3></div>
+          <a href={CLAPEYRON_PC_SAFT_SOURCE} target="_blank" rel="noreferrer">Read the PC-SAFT equations ↗</a>
         </div>
         <div className={styles.equationGrid}>
           <FormulaCard
             step="01"
-            title="EFFECTIVE SIZE"
-            left={<><var>d</var><sub>i</sub></>}
-            right={<><var>σ</var><sub>i</sub>[1 − 0.12 exp(−3<var>ε</var><sub>i</sub>/<var>T</var>)]</>}
+            title="Effective size"
+            tex={String.raw`d_i = \sigma_i\left[1 - 0.12\exp\left(-\frac{3\varepsilon_i}{T}\right)\right]`}
+            label="dᵢ = σᵢ [1 − 0.12 exp(−3εᵢ/T)]"
             note="Temperature-dependent Chen–Kreglewski diameter."
           />
           <FormulaCard
             step="02"
-            title="PACKING MOMENTS"
-            left={<><var>ζ</var><sub>n</sub></>}
-            right={<>π<var>N</var><sub>A</sub><var>ρ</var>·10<sup>−30</sup>/6 · Σ<sub>i</sub> <var>x</var><sub>i</sub><var>m</var><sub>i</sub><var>d</var><sub>i</sub><sup>n</sup></>}
+            title="Packing moments"
+            tex={String.raw`\zeta_n = \frac{\pi N_A\rho\,10^{-30}}{6}\sum_i x_i m_i d_i^n`}
+            label="ζₙ = π Nₐ ρ × 10⁻³⁰ / 6 × Σᵢ xᵢ mᵢ dᵢⁿ"
             note="ρ is in mol m⁻³ and d is in Å, so 10⁻³⁰ converts the segment-volume factor to m³. The third moment ζ₃ is the packing fraction η."
           />
           <FormulaCard
             step="03"
-            title="RESIDUAL ENERGY"
-            left={<><var>a</var><sup>res</sup></>}
-            right={<><var>a</var><sup>hc</sup> + <var>a</var><sup>disp</sup> + 0<sup>assoc</sup></>}
+            title="Residual energy"
+            tex={String.raw`a^{\mathrm{res}} = a^{\mathrm{hc}} + a^{\mathrm{disp}} + 0^{\mathrm{assoc}}`}
+            label="aʳᵉˢ = aʰᶜ + aᵈⁱˢᵖ + 0ᵃˢˢᵒᶜ"
             note="Association is exactly zero for this synthetic non-associating system."
           />
           <FormulaCard
             step="04"
-            title="PRESSURE"
-            left={<var>Z</var>}
-            right={<>1 + <var>ρ</var> · ∂<var>a</var><sup>res</sup>/∂<var>ρ</var></>}
-            note="A centred finite difference exposes the density derivative; p = ρRTZ."
+            title="Pressure"
+            tex={String.raw`Z = 1 + \rho\frac{\partial a^{\mathrm{res}}}{\partial\rho}`}
+            label="Z = 1 + ρ ∂aʳᵉˢ/∂ρ"
+            note={<>A centred finite difference exposes the density derivative; <MathEquation display={false} tex={String.raw`p=\rho RTZ`} label="p = ρRTZ" />.</>}
           />
         </div>
         <dl className={styles.symbolLedger}>
@@ -679,29 +658,11 @@ export function ThermodynamicsStudio() {
       </section>
 
       <section className={styles.boundaryLedger}>
-        <div>
-          <span className={styles.sourceTag}>LOCAL EVIDENCE</span>
-          <strong>Generic Julia notebooks</strong>
-          <p>The safe folders call PCSAFT, saturation pressure, bubble/dew pressure, mixture critical points, Helmholtz energy and related public Clapeyron APIs. No Manifest pins the historical package version.</p>
-        </div>
-        <div>
-          <span className={styles.engineTag}>OPEN ENGINE</span>
-          <strong>Clapeyron.jl residual core</strong>
-          <p>Equations and universal coefficients are reimplemented from the pinned MIT <a href={CLAPEYRON_PC_SAFT_SOURCE} target="_blank" rel="noreferrer">PC-SAFT core ↗</a>, <a href={CLAPEYRON_SAFT_EQUATIONS} target="_blank" rel="noreferrer">shared SAFT equations ↗</a> and <a href={CLAPEYRON_EOS_FUNCTIONS} target="_blank" rel="noreferrer">reduced-energy interface ↗</a>, © 2020 Hon Wa Yew and Pierre Walker. <a href={CLAPEYRON_LICENSE} target="_blank" rel="noreferrer">Licence ↗</a></p>
-        </div>
-        <div>
-          <span className={styles.adaptationTag}>ADAPTATION</span>
-          <strong>Browser sensitivity layer</strong>
-          <p>Invented parameters, guarded ranges, numerical pressure derivative, accessible chart and table are newly authored for this portfolio.</p>
-        </div>
-        <div>
-          <span className={styles.excludedTag}>EXCLUDED</span>
-          <strong>Private and compound-specific work</strong>
-          <p>No job application, CV, client/pharma document, compound parameter, solubility notebook, experimental value, archive or personal path is read or shipped.</p>
-        </div>
+        <div><strong>From molecular size to pressure</strong><p>Samuel used Julia and Clapeyron to explore equations of state, saturation, phase boundaries and critical behaviour. This interactive model isolates the PC-SAFT pressure calculation so the effect of each molecular parameter is visible.</p></div>
+        <div><strong>Try a controlled comparison</strong><p>The two components have invented parameters. Change one input at a time and compare the pressure with the ideal-gas line. The curves illustrate model behaviour; they are not predictions for a real fluid.</p></div>
+        <div><strong>Equations and attribution</strong><p>The browser calculation follows the MIT-licensed <a href={CLAPEYRON_PC_SAFT_SOURCE} target="_blank" rel="noreferrer">PC-SAFT core</a>, <a href={CLAPEYRON_SAFT_EQUATIONS} target="_blank" rel="noreferrer">SAFT equations</a> and <a href={CLAPEYRON_EOS_FUNCTIONS} target="_blank" rel="noreferrer">energy interface</a> in Clapeyron.jl, © 2020 Hon Wa Yew and Pierre Walker. <a href={CLAPEYRON_LICENSE} target="_blank" rel="noreferrer">Licence ↗</a></p></div>
       </section>
-    </DemoWindow>
-  );
+    </DemoWindow></ProjectCopy>);
 }
 
 export default ThermodynamicsStudio;

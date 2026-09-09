@@ -1,0 +1,11 @@
+{
+  "dictionary": "banditStudioCopy.ts",
+  "exportName": "banditStudioCopy",
+  "sources": [
+    "src/components/projects/BanditStudio.tsx"
+  ],
+  "identities": {
+    "ε-GREEDY": "Established algorithm, model or statistical measure name, preserved across languages.",
+    "UCB1 ·": "Established algorithm, model or statistical measure name, preserved across languages."
+  }
+}

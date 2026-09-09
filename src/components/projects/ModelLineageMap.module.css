@@ -6,12 +6,11 @@
   --muted: #5a5a55;
   container-type: inline-size;
   min-width: 0;
-  color: var(--ink);
+  color: var(--s7-ink);
   background:
-    linear-gradient(90deg, rgb(0 0 0 / 3%) 1px, transparent 1px) 0 0 / 8px 8px,
-    var(--paper);
-  font-family: Geneva, Charcoal, "Helvetica Neue", Arial, sans-serif;
-  font-size: 10px;
+    var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
 }
 
 .lineage button,
@@ -23,9 +22,9 @@
 .lineage button:focus-visible,
 .lineage [data-classic-select]:focus-visible,
 .sourceTable > div:focus-visible {
-  outline: 3px solid #155f9b;
+  outline: 2px dotted var(--s7-ink);
   outline-offset: 2px;
-  box-shadow: 0 0 0 1px #fff;
+  box-shadow: inset 1px 1px 0 var(--s7-shadow);
 }
 
 .header {
@@ -33,9 +32,9 @@
   grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.8fr);
   gap: 14px;
   padding: 16px;
-  border: 2px solid var(--ink);
-  background: #fff;
-  box-shadow: 4px 4px 0 rgb(0 0 0 / 18%);
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
+  box-shadow: none;
 }
 
 .header > div > span,
@@ -44,23 +43,23 @@
 .boundaryHero span,
 .definitionGrid span {
   display: block;
-  color: var(--blue);
-  font: 700 8px/1.3 "Courier New", monospace;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .header h3 {
   margin: 4px 0 6px;
-  font: 700 clamp(22px, 5cqw, 38px)/0.95 Georgia, serif;
-  letter-spacing: -0.035em;
+  font: 700 clamp(22px, 3cqw, 28px)/1.2 var(--s7-font-ui);
+  letter-spacing: normal;
 }
 
 .header p {
   max-width: 760px;
   margin: 0;
-  color: #444;
-  font-size: 10px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.55;
 }
 
@@ -74,22 +73,22 @@
 .header dl div {
   min-width: 0;
   padding: 8px;
-  border: 1px solid #777;
-  background: #efefe9;
-  box-shadow: 1px 1px 0 #fff inset;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
+  box-shadow: none;
 }
 
 .header dt {
-  color: var(--muted);
-  font: 700 7px/1.2 "Courier New", monospace;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .header dd {
   margin: 3px 0 0;
   overflow-wrap: anywhere;
-  font: 700 16px/1 "Courier New", monospace;
+  font: 700 var(--s7-text)/1.4 var(--s7-font-ui);
 }
 
 .controls {
@@ -99,9 +98,9 @@
   gap: 10px;
   margin-top: 12px;
   padding: 7px;
-  border: 2px solid var(--ink);
-  background: var(--chrome);
-  box-shadow: 2px 2px 0 #fff inset, -2px -2px 0 #777 inset;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
+  box-shadow: none;
 }
 
 .viewSwitch,
@@ -114,12 +113,43 @@
 
 .viewSwitch button,
 .familySwitch button {
-  min-height: 36px;
+  min-height: max(var(--s7-control-height), 36px);
   padding: 5px 9px;
-  border: 1px solid #222;
-  background: #f7f7f2;
-  box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #888 inset;
+  border: 1px solid var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  color: var(--s7-ink);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.viewSwitch button:focus-visible, .familySwitch button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.viewSwitch button:disabled, .viewSwitch button[aria-disabled="true"], .familySwitch button:disabled, .familySwitch button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.viewSwitch button:active:not(:disabled):not([aria-disabled="true"]), .familySwitch button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.viewSwitch button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewSwitch button:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewSwitch button:active:not(:disabled):not([aria-disabled="true"]) > small, .familySwitch button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .familySwitch button:active:not(:disabled):not([aria-disabled="true"]) > strong, .familySwitch button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .viewSwitch button {
@@ -132,23 +162,23 @@
 }
 
 .viewSwitch button span {
-  color: var(--blue);
-  font: 700 8px/1 "Courier New", monospace;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
 .viewSwitch button strong {
-  font-size: 9px;
+  font-size: var(--s7-small);
 }
 
 .viewSwitch button[aria-pressed="true"],
 .familySwitch button[aria-pressed="true"] {
-  color: #fff;
-  background: var(--blue);
-  box-shadow: 1px 1px 0 #5364ae inset, -1px -1px 0 #080d37 inset;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: inset 1px 1px 0 var(--s7-ink);
 }
 
 .viewSwitch button[aria-pressed="true"] span {
-  color: #f4d571;
+  color: var(--s7-ink);
 }
 
 .familySwitch {
@@ -157,15 +187,15 @@
 
 .familySwitch > span {
   padding: 0 4px;
-  color: #555;
-  font: 700 7px/1 "Courier New", monospace;
-  letter-spacing: 0.08em;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
+  letter-spacing: normal;
 }
 
 .familySwitch button {
-  min-height: 28px;
+  min-height: max(var(--s7-control-height), 28px);
   padding: 4px 8px;
-  font: 700 8px/1 "Courier New", monospace;
+  font: 700 var(--s7-ui)/1.4 var(--s7-font-ui);
 }
 
 .historyWorkspace,
@@ -181,8 +211,8 @@
 .scalePanel,
 .sourceTable {
   min-width: 0;
-  border: 2px solid var(--ink);
-  background: #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .panelHeading {
@@ -192,40 +222,40 @@
   gap: 12px;
   min-height: 44px;
   padding: 7px 9px;
-  border-bottom: 3px double #333;
-  background: #efefe9;
+  border-bottom: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
 }
 
 .panelHeading strong {
   display: block;
   margin-top: 2px;
-  font: 700 13px/1.1 Georgia, serif;
+  font: 700 var(--s7-ui)/1.4 var(--s7-font-ui);
 }
 
 .panelHeading label {
   display: grid;
   gap: 3px;
   min-width: 160px;
-  font: 700 7px/1 "Courier New", monospace;
-  text-transform: uppercase;
+  font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
+  text-transform: none;
 }
 
 .panelHeading [data-classic-select] {
   min-width: 0;
   height: 25px;
   padding: 2px 22px 2px 5px;
-  border: 1px solid #333;
-  background: #fff;
-  font-size: 8px;
+  border: 1px solid var(--s7-ink);
+  background: var(--s7-chrome);
+  font-size: var(--s7-small);
   text-transform: none;
 }
 
 .panelHeading output {
   padding: 5px 7px;
-  border: 1px solid #555;
-  background: #fff;
-  font: 700 8px/1 "Courier New", monospace;
-  text-transform: uppercase;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
+  text-transform: none;
 }
 
 .chartNote {
@@ -233,8 +263,8 @@
   padding: 8px 10px;
   border-bottom: 1px solid #aaa;
   color: #50504b;
-  background: #fbfbf6;
-  font-size: 8px;
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
   line-height: 1.45;
 }
 
@@ -251,7 +281,7 @@
 
 .timeline li {
   min-width: 0;
-  border-bottom: 1px solid #b4b4ae;
+  border-bottom: 1px solid var(--s7-shadow);
 }
 
 .timeline li:last-child {
@@ -264,20 +294,51 @@
   width: 100%;
   min-height: 82px;
   padding: 0;
-  border: 0;
-  color: inherit;
-  background: #fff;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
   text-align: left;
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.timeline li > button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.timeline li > button:disabled, .timeline li > button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.timeline li > button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.timeline li > button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .timeline li > button:active:not(:disabled):not([aria-disabled="true"]) > strong, .timeline li > button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .timeline li > button:hover,
 .timeline li > button[aria-pressed="true"] {
-  background: color-mix(in srgb, var(--family-colour) 9%, #fff);
+  background: var(--s7-chrome);
 }
 
 .timeline li > button[aria-pressed="true"] {
-  box-shadow: 4px 0 0 var(--family-colour) inset;
+  box-shadow: inset 1px 1px 0 var(--s7-ink);
 }
 
 .eventDate {
@@ -286,11 +347,11 @@
   gap: 5px;
   min-width: 0;
   padding: 10px;
-  border-right: 1px dotted #888;
+  border-right: 1px dotted var(--s7-shadow);
 }
 
 .eventDate time {
-  font: 700 8px/1.25 "Courier New", monospace;
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
 .eventDate code {
@@ -298,16 +359,16 @@
   max-width: 100%;
   padding: 2px 4px;
   overflow-wrap: anywhere;
-  color: #fff;
-  background: #333;
-  font: 700 7px/1.2 "Courier New", monospace;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-mono);
 }
 
 .eventRail {
   position: relative;
   display: flex;
   justify-content: center;
-  background: linear-gradient(90deg, transparent 7px, #aaa 7px, #aaa 9px, transparent 9px);
+  background: var(--s7-paper);
 }
 
 .eventRail i {
@@ -315,9 +376,9 @@
   top: 50%;
   width: 11px;
   height: 11px;
-  border: 2px solid #222;
-  background: var(--family-colour);
-  box-shadow: 0 0 0 2px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
   transform: translateY(-50%) rotate(45deg);
 }
 
@@ -330,22 +391,22 @@
 }
 
 .eventCopy small {
-  color: var(--family-colour);
-  font: 700 7px/1.2 "Courier New", monospace;
-  letter-spacing: 0.08em;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
+  letter-spacing: normal;
 }
 
 .eventCopy strong {
-  font: 700 11px/1.2 Georgia, serif;
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
 .eventCopy em {
   display: -webkit-box;
   overflow: hidden;
-  color: #555;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   font-style: normal;
-  line-height: 1.35;
+  line-height: 1.4;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -358,7 +419,7 @@
 }
 
 .empty strong {
-  font-family: Georgia, serif;
+  font-family: var(--s7-font-text);
 }
 
 .inspector {
@@ -366,10 +427,10 @@
   top: 0;
   min-width: 0;
   padding: 12px;
-  border: 2px solid var(--ink);
-  border-top: 7px solid var(--family-colour);
-  background: #fff;
-  box-shadow: 4px 4px 0 rgb(0 0 0 / 14%);
+  border: 1px solid var(--s7-shadow);
+  border-top: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .emptyInspector {
@@ -377,8 +438,7 @@
 
   min-height: 150px;
   background:
-    repeating-linear-gradient(135deg, rgb(0 0 0 / 2%) 0 4px, transparent 4px 9px),
-    #fff;
+    var(--s7-paper);
 }
 
 .inspectorTop {
@@ -387,28 +447,28 @@
   justify-content: space-between;
   gap: 8px;
   padding-bottom: 8px;
-  border-bottom: 3px double #555;
+  border-bottom: 1px solid var(--s7-shadow);
 }
 
 .inspectorTop b {
   padding: 3px 5px;
-  color: #fff;
-  background: var(--family-colour);
-  font: 700 7px/1 "Courier New", monospace;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
 .inspector > small {
   display: block;
   margin-top: 10px;
-  color: var(--family-colour);
-  font: 700 7px/1.3 "Courier New", monospace;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .inspector h4 {
   margin: 5px 0 7px;
-  font: 700 17px/1.05 Georgia, serif;
+  font: 700 var(--s7-heading)/1.4 var(--s7-font-text);
 }
 
 .inspector > code {
@@ -418,15 +478,15 @@
   margin-bottom: 8px;
   padding: 3px 5px;
   overflow-wrap: anywhere;
-  color: #fff;
-  background: #333;
-  font: 700 8px/1.3 "Courier New", monospace;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-mono);
 }
 
 .inspector > p {
   margin: 8px 0;
-  color: #464641;
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.48;
 }
 
@@ -434,13 +494,13 @@
   display: grid;
   gap: 0;
   margin: 10px 0;
-  border: 1px solid #777;
+  border: 1px solid var(--s7-shadow);
 }
 
 .inspector dl div {
   display: grid;
   grid-template-columns: 78px minmax(0, 1fr);
-  border-bottom: 1px dotted #999;
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .inspector dl div:last-child {
@@ -452,16 +512,16 @@
   margin: 0;
   padding: 5px;
   overflow-wrap: anywhere;
-  font-size: 8px;
-  line-height: 1.35;
+  font-size: var(--s7-small);
+  line-height: 1.4;
 }
 
 .inspector dt {
-  color: #555;
-  background: #eee;
-  font-family: "Courier New", monospace;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .inspector > button {
@@ -469,15 +529,44 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 34px;
+  min-height: max(var(--s7-control-height), 34px);
   padding: 7px 9px;
-  border: 2px solid #171717;
-  color: #fff;
-  background: var(--blue);
-  box-shadow: 2px 2px 0 #777;
-  font-weight: 700;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  font-weight: 400;
   text-align: left;
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.inspector > button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.inspector > button:disabled, .inspector > button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.inspector > button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.inspector > button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .inspector > button:active:not(:disabled):not([aria-disabled="true"]) > strong, .inspector > button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .scaleChart {
@@ -489,14 +578,14 @@
   position: relative;
   height: 24px;
   margin: 0 116px 3px 184px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--s7-shadow);
 }
 
 .scaleAxis span {
   position: absolute;
   bottom: 3px;
-  color: #555;
-  font: 700 7px/1 "Courier New", monospace;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   transform: translateX(-50%);
 }
 
@@ -506,7 +595,7 @@
   left: 50%;
   width: 1px;
   height: 8px;
-  background: #777;
+  background: var(--s7-paper);
   content: "";
 }
 
@@ -523,20 +612,52 @@
   min-width: 0;
   min-height: 46px;
   padding: 6px;
-  border: 1px solid #777;
-  background: #f9f9f5;
+  border: 1px solid var(--s7-ink);
+  background: var(--s7-paper);
   text-align: left;
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  color: var(--s7-ink);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.modelRows button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.modelRows button:disabled, .modelRows button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.modelRows button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.modelRows button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .modelRows button:active:not(:disabled):not([aria-disabled="true"]) > strong, .modelRows button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .modelRows button:hover,
 .modelRows button[aria-pressed="true"] {
-  border-color: #111;
-  background: color-mix(in srgb, var(--family-colour) 9%, #fff);
+  border-color: var(--s7-ink);
+  background: var(--s7-chrome);
 }
 
 .modelRows button[aria-pressed="true"] {
-  box-shadow: 4px 0 0 var(--family-colour) inset;
+  box-shadow: inset 1px 1px 0 var(--s7-ink);
 }
 
 .modelIdentity {
@@ -546,15 +667,15 @@
 }
 
 .modelIdentity small {
-  color: var(--family-colour);
-  font: 700 7px/1 "Courier New", monospace;
-  text-transform: uppercase;
+  color: var(--s7-ink);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
+  text-transform: none;
 }
 
 .modelIdentity strong {
   overflow-wrap: anywhere;
-  font-size: 8px;
-  line-height: 1.25;
+  font-size: var(--s7-small);
+  line-height: 1.4;
 }
 
 .modelTrack {
@@ -578,7 +699,7 @@
 
 .modelRows button > b {
   text-align: right;
-  font: 700 9px/1 "Courier New", monospace;
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
 .familyLegend {
@@ -593,8 +714,8 @@
   align-items: center;
   gap: 4px;
   color: #555;
-  font: 700 7px/1 "Courier New", monospace;
-  text-transform: uppercase;
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
+  text-transform: none;
 }
 
 .familyLegend i {
@@ -609,14 +730,14 @@
   gap: 2px;
   margin: 10px 0;
   color: var(--family-colour);
-  font: 700 20px/1 "Courier New", monospace;
+  font: 700 var(--s7-heading)/1.4 var(--s7-font-text);
 }
 
 .parameterValue span {
   color: #555;
-  font-size: 7px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--s7-small);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .contractView {
@@ -633,26 +754,25 @@
 
 .boundaryHero > div {
   padding: 12px;
-  border: 2px solid #222;
-  background: #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .boundaryHero > div:last-child {
   background:
-    repeating-linear-gradient(135deg, rgb(111 59 31 / 8%) 0, rgb(111 59 31 / 8%) 5px, transparent 5px, transparent 10px),
-    #fffaf2;
+    var(--s7-paper);
 }
 
 .boundaryHero strong {
   display: block;
   margin: 5px 0;
-  font: 700 16px/1.1 Georgia, serif;
+  font: 700 var(--s7-text)/1.4 var(--s7-font-text);
 }
 
 .boundaryHero p {
   margin: 0;
-  color: #4e4e49;
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
@@ -678,24 +798,24 @@
 .sourceTable th,
 .sourceTable td {
   padding: 8px;
-  border: 1px solid #aaa;
+  border: 1px solid var(--s7-shadow);
   vertical-align: top;
-  font-size: 8px;
+  font-size: var(--s7-small);
   line-height: 1.4;
   text-align: left;
 }
 
 .sourceTable thead th {
-  color: #fff;
-  background: var(--blue);
-  font: 700 7px/1.2 "Courier New", monospace;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .sourceTable tbody th {
-  background: #efefe9;
-  font-family: Georgia, serif;
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
 }
 
 .definitionGrid {
@@ -707,21 +827,21 @@
 .definitionGrid section {
   min-width: 0;
   padding: 10px;
-  border: 1px solid #777;
-  background: #fff;
-  box-shadow: 2px 2px 0 rgb(0 0 0 / 12%);
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .definitionGrid strong {
   display: block;
   margin: 4px 0;
-  font: 700 12px/1.15 Georgia, serif;
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
 .definitionGrid p {
   margin: 0;
-  color: #51514c;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.42;
 }
 
@@ -731,12 +851,12 @@
   gap: 10px;
   margin-top: 12px;
   padding: 7px 9px;
-  border: 1px solid #333;
-  color: #fff;
-  background: #333;
-  font: 700 7px/1.3 "Courier New", monospace;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 @container (max-width: 820px) {
@@ -784,7 +904,7 @@
 
 @container (max-width: 560px) {
   .lineage {
-    font-size: 9px;
+    font-size: var(--s7-small);
   }
 
   .header {
@@ -848,7 +968,7 @@
   .modelRows button > b {
     grid-column: 2;
     grid-row: 1;
-    font-size: 8px;
+    font-size: var(--s7-small);
   }
 
   .scaleAxis {

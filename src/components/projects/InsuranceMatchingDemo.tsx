@@ -1,5 +1,10 @@
 "use client";
 
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { insuranceMatchingDemoCopy } from "./copy/insuranceMatchingDemoCopy";
+
+import { MathEquation } from "./MathEquation";
+
 import ClassicSelect from "../ClassicSelect";
 
 import { useId, useMemo, useState, type CSSProperties } from "react";
@@ -466,7 +471,7 @@ function WeightSlider({
   const normalised = total === 0 ? "0.0%" : formatEffectiveWeight(value / total);
 
   return (
-    <label className={styles.weightField}>
+    <ProjectCopy copy={insuranceMatchingDemoCopy}><label className={styles.weightField}>
       <span className={styles.weightHeading}>
         <span>
           <i style={{ backgroundColor: pillar.colour }} aria-hidden="true" />
@@ -484,22 +489,22 @@ function WeightSlider({
         aria-describedby={helpId}
       />
       <small id={helpId}>{pillar.description}</small>
-    </label>
+    </label></ProjectCopy>
   );
 }
 
 function ConfidenceBadge({ value }: { value: RankedCandidate["confidence"] }) {
-  return <span className={`${styles.confidence} ${styles[value.toLocaleLowerCase()]}`}>{value}</span>;
+  return <ProjectCopy copy={insuranceMatchingDemoCopy}><span className={`${styles.confidence} ${styles[value.toLocaleLowerCase()]}`}>{value}</span></ProjectCopy>;
 }
 
 function RankDelta({ current, comparison }: { current: number | null; comparison: number | null }) {
-  if (current === null || comparison === null) return <span className={styles.deltaHeld}>HELD</span>;
+  if (current === null || comparison === null) return <ProjectCopy copy={insuranceMatchingDemoCopy}><span className={styles.deltaHeld}>HELD</span></ProjectCopy>;
   const difference = current - comparison;
-  if (difference === 0) return <span className={styles.deltaFlat}>—</span>;
+  if (difference === 0) return <ProjectCopy copy={insuranceMatchingDemoCopy}><span className={styles.deltaFlat}>—</span></ProjectCopy>;
   return (
-    <span className={difference > 0 ? styles.deltaUp : styles.deltaDown}>
+    <ProjectCopy copy={insuranceMatchingDemoCopy}><span className={difference > 0 ? styles.deltaUp : styles.deltaDown}>
       {difference > 0 ? "↑" : "↓"} {Math.abs(difference)}
-    </span>
+    </span></ProjectCopy>
   );
 }
 
@@ -568,10 +573,10 @@ export function InsuranceMatchingDemo() {
   }
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={insuranceMatchingDemoCopy}><DemoWindow
       appName="Lead Match Workbench"
       title="Insurance lead-market evidence lab"
-      status={workbenchMode === "evidence" ? "CURRENT DESIGN · BROKER ORDER" : "RETIRED COMPOSITE · WHAT-IF"}
+      status={workbenchMode === "evidence" ? "Current design · broker order" : "Retired composite · what-if"}
       purpose="Help a broker compare candidate insurance markets without hiding missing evidence inside one unexplained score."
       tryThis="Select a market, raise the evidence gate and inspect why a candidate becomes ready, review-only or unavailable."
       watchFor="Independent evidence pillars and review gates change; the broker—not the ranking—retains the final decision."
@@ -584,30 +589,29 @@ export function InsuranceMatchingDemo() {
         </>
       }
     >
-      <aside className={styles.disclosure} role="note" aria-label="Confidentiality boundary">
+      <aside className={styles.disclosure} role="note" aria-label="Synthetic demonstration">
         <span className={styles.disclosureIcon} aria-hidden="true">SYN</span>
         <div>
           <strong>Real workflow shape. Entirely fictional demonstration data.</strong>
           <p>
             Market names, risks, values, thresholds, weights and explanations below are synthetic. The what-if
-            composite is not the source application&apos;s ordering policy. No client, placement, employee, financial,
-            insurer-result or internal-system data is shipped to this page.
+            composite illustrates sensitivity to weights; it is separate from the evidence view, which preserves broker order.
           </p>
         </div>
       </aside>
 
       <section className={styles.sourceRecord} aria-label="Source-recorded evaluation contracts">
         <div className={styles.sourceRecordIntro}>
-          <span>SOURCE-RECORDED EVIDENCE / TWO SEPARATE CONTRACTS</span>
+          <span>Source-recorded evidence / two separate contracts</span>
           <p>These aggregate study results are context for the workbench, not values used by its fictional markets. They measure different targets and must not be combined into one headline score.</p>
         </div>
         <article>
-          <span>RISK-TO-MARKET RANKING</span>
+          <span>Risk-to-market ranking</span>
           <strong>148,140 rows · 37,844 UMRs · 46 features</strong>
           <p>Temporal Hit@1 <b>0.758</b> versus random <b>0.596</b>; Hit@3 <b>0.945</b>. The final record also notes incumbency-dominated behaviour, so this is not a generic recommendation claim.</p>
         </article>
         <article>
-          <span>PLACEMENT-OUTCOME EVALUATION</span>
+          <span>Placement-outcome evaluation</span>
           <strong>70,598 labelled rows</strong>
           <p>Holdout Hit@1 <b>0.569</b> versus random <b>0.231</b>. This is a separate placement contract, not a validation of the synthetic browser scenarios or the retired composite.</p>
         </article>
@@ -615,7 +619,7 @@ export function InsuranceMatchingDemo() {
 
       <section className={styles.modeChooser} aria-labelledby="workbench-mode-title">
         <div>
-          <span>SOURCE-FIDELITY SWITCH</span>
+          <span>Source-fidelity switch</span>
           <strong id="workbench-mode-title">Choose what the workbench demonstrates</strong>
           <p>The current design keeps Trading, historical lead share and Wording separate. The weighted composite remains only as a sensitivity experiment; its visible weights show why premature aggregation is risky.</p>
         </div>
@@ -662,7 +666,7 @@ export function InsuranceMatchingDemo() {
         </div>
         <div className={styles.scenarioBrief}>
           <div>
-            <span>RISK BRIEF</span>
+            <span>Risk brief</span>
             <p>{scenario.brief}</p>
           </div>
           <dl>
@@ -678,7 +682,7 @@ export function InsuranceMatchingDemo() {
           <div className={styles.sectionHeading}>
             <span>02</span>
             <div>
-              <p>{workbenchMode === "evidence" ? "EVIDENCE CONTRACT" : "RETIRED MODEL LAB"}</p>
+              <p>{workbenchMode === "evidence" ? "Evidence contract" : "Retired model lab"}</p>
               <h3 id="controls-title">{workbenchMode === "evidence" ? "Inspect the abstention gates" : "Tune the what-if ranking lens"}</h3>
             </div>
           </div>
@@ -705,7 +709,7 @@ export function InsuranceMatchingDemo() {
             </>
           ) : (
             <div className={styles.currentModelNote} role="note">
-              <span>NO AGGREGATE</span>
+              <span>No aggregate</span>
               <strong>Three agents return evidence, confidence, provenance and null states.</strong>
               <p>The candidate list stays in the broker-supplied order while the shared decision objective remains unvalidated. Missing evidence is shown—not silently filled.</p>
             </div>
@@ -735,8 +739,8 @@ export function InsuranceMatchingDemo() {
           </fieldset>
 
           {workbenchMode === "retired-composite" && <div className={styles.equation} aria-label="Retired composite score formula">
-            <span>NULL-SAFE COMPOSITE</span>
-            <code>S<sub>m</sub> = Σ w<sub>j,m</sub> · N(x<sub>j,m</sub>)</code>
+            <span>Null-SAFE composite</span>
+            <MathEquation tex={String.raw`S_m=\sum_j w_{j,m}\,N(x_{j,m})`} />
             <p>Missing pillars receive no invented value. Available weights are re-normalised per market.</p>
           </div>}
         </section>
@@ -746,19 +750,19 @@ export function InsuranceMatchingDemo() {
             <div className={styles.sectionHeading}>
               <span>03</span>
               <div>
-                <p>{workbenchMode === "evidence" ? "BROKER-CONTROLLED PANEL" : "RETIRED RECOMMENDATION SET"}</p>
+                <p>{workbenchMode === "evidence" ? "Broker-controlled panel" : "Retired recommendation set"}</p>
                 <h3 id="ranking-title">{workbenchMode === "evidence" ? "Separate evidence · received order" : "What-if ranked candidate panel"}</h3>
               </div>
             </div>
             <div className={styles.rankSummary}>
-              <strong>{workbenchMode === "evidence" ? "NO AUTO-RANK" : "RANKED PANEL · WHAT-IF"}</strong>
+              <strong>{workbenchMode === "evidence" ? "No auto-rank" : "Ranked panel · what-if"}</strong>
               <span>{workbenchMode === "evidence" ? "current source behavior" : normalisation === "panel" ? "relative panel view" : "calibrated view"}</span>
             </div>
           </div>
           <p className={styles.resultStatus} aria-live="polite" aria-atomic="true">{resultStatus}</p>
 
           <div className={styles.columnLabels} aria-hidden="true">
-            <span>{workbenchMode === "evidence" ? "ORDER / MARKET" : "RANK / MARKET"}</span><span>{workbenchMode === "evidence" ? "SEPARATE EVIDENCE" : "EVIDENCE COMPOSITE"}</span><span>{workbenchMode === "evidence" ? "AGGREGATE" : "SCORE"}</span><span>REVIEW</span>
+            <span>{workbenchMode === "evidence" ? "Order / market" : "Rank / market"}</span><span>{workbenchMode === "evidence" ? "Separate evidence" : "Evidence composite"}</span><span>{workbenchMode === "evidence" ? "AGGREGATE" : "SCORE"}</span><span>REVIEW</span>
           </div>
 
           <div className={styles.rankList}>
@@ -790,7 +794,7 @@ export function InsuranceMatchingDemo() {
                       <span className={styles.marketBadges}>
                         <ConfidenceBadge value={candidate.confidence} />
                         <i>{Math.round(candidate.coverage)}% weighted pillar coverage</i>
-                        {candidate.coldStart ? <i className={styles.coldStart}>COLD START</i> : null}
+                        {candidate.coldStart ? <i className={styles.coldStart}>Cold start</i> : null}
                       </span>
                     </span>
                   </button>
@@ -845,7 +849,7 @@ export function InsuranceMatchingDemo() {
             </div>
           </div>
           <div className={styles.scoreStamp}>
-            <span>{workbenchMode === "evidence" ? "AGGREGATE RETIRED" : "WHAT-IF COMPOSITE"}</span>
+            <span>{workbenchMode === "evidence" ? "Aggregate retired" : "What-if composite"}</span>
             <strong>{workbenchMode === "evidence" ? "—" : selected.score.toFixed(1)}</strong>
           </div>
         </div>
@@ -853,7 +857,7 @@ export function InsuranceMatchingDemo() {
         <div className={styles.explainGrid}>
           <div className={styles.contributionTable}>
             <div className={styles.explainLabels} aria-hidden="true">
-              <span>SIGNAL</span><span>INPUT</span><span>{workbenchMode === "evidence" ? "STATUS" : "EFFECTIVE WEIGHT"}</span><span>{workbenchMode === "evidence" ? "AGGREGATE" : "CONTRIBUTION"}</span>
+              <span>SIGNAL</span><span>INPUT</span><span>{workbenchMode === "evidence" ? "STATUS" : "Effective weight"}</span><span>{workbenchMode === "evidence" ? "AGGREGATE" : "CONTRIBUTION"}</span>
             </div>
             {PILLARS.map((pillar) => {
               const input = selected.normalised[pillar.key];
@@ -864,21 +868,21 @@ export function InsuranceMatchingDemo() {
                     <i style={{ backgroundColor: pillar.colour }} aria-hidden="true" />
                     <strong>{pillar.label}</strong>
                   </div>
-                  <span data-label="INPUT">{input === null ? "NOT ASSESSED" : input.toFixed(1)}</span>
-                  <span data-label={workbenchMode === "evidence" ? "STATUS" : "EFFECTIVE WEIGHT"}>{workbenchMode === "evidence" ? input === null ? "ABSTAIN" : "SEPARATE" : input === null ? "0.0%" : formatEffectiveWeight(selected.effectiveWeights[pillar.key])}</span>
-                  <strong data-label={workbenchMode === "evidence" ? "AGGREGATE" : "CONTRIBUTION"}>{workbenchMode === "evidence" ? "NOT COMBINED" : input === null ? "—" : `+${contribution.toFixed(1)}`}</strong>
+                  <span data-label="INPUT">{input === null ? "Not assessed" : input.toFixed(1)}</span>
+                  <span data-label={workbenchMode === "evidence" ? "STATUS" : "Effective weight"}>{workbenchMode === "evidence" ? input === null ? "ABSTAIN" : "SEPARATE" : input === null ? "0.0%" : formatEffectiveWeight(selected.effectiveWeights[pillar.key])}</span>
+                  <strong data-label={workbenchMode === "evidence" ? "AGGREGATE" : "CONTRIBUTION"}>{workbenchMode === "evidence" ? "Not combined" : input === null ? "—" : `+${contribution.toFixed(1)}`}</strong>
                   <p>{selected.evidence[pillar.key]}</p>
                 </div>
               );
             })}
             <div className={styles.calculationLine}>
-              <span>{workbenchMode === "evidence" ? "DECISION CONTRACT" : "RETIRED CALCULATION"}</span>
-              <code>{workbenchMode === "evidence" ? "TRADING ∥ LEAD SHARE ∥ WORDING → BROKER REVIEW" : `${PILLARS.filter((pillar) => selected.normalised[pillar.key] !== null).map((pillar) => `${formatEffectiveWeight(selected.effectiveWeights[pillar.key])}×${selected.normalised[pillar.key]?.toFixed(1)}`).join(" + ")} = ${selected.score.toFixed(1)}`}</code>
+              <span>{workbenchMode === "evidence" ? "Decision contract" : "Retired calculation"}</span>
+              {workbenchMode === "evidence" ? <code>TRADING ∥ LEAD SHARE ∥ WORDING → BROKER REVIEW</code> : <MathEquation tex={`${PILLARS.filter((pillar) => selected.normalised[pillar.key] !== null).map((pillar) => String.raw`${(selected.effectiveWeights[pillar.key] * 100).toFixed(1)}\%\times ${selected.normalised[pillar.key]?.toFixed(1)}`).join(" + ")} = ${selected.score.toFixed(1)}`} />}
             </div>
           </div>
 
           <aside className={styles.reviewCard} aria-labelledby="review-title">
-            <span className={styles.cardKicker}>HUMAN OVERRIDE LOG</span>
+            <span className={styles.cardKicker}>Human override log</span>
             <h4 id="review-title">Review without rewriting the model</h4>
             <p>
               A broker pin adds context to the {workbenchMode === "evidence" ? "received panel" : "what-if shortlist"} but never hides an evidence gate.
@@ -921,7 +925,7 @@ export function InsuranceMatchingDemo() {
           <div className={styles.sectionHeading}>
             <span>05</span>
             <div>
-              <p>SENSITIVITY VIEW</p>
+              <p>Sensitivity view</p>
               <h3 id="comparison-title">Compare the same market universe</h3>
             </div>
           </div>
@@ -967,7 +971,7 @@ export function InsuranceMatchingDemo() {
         </summary>
         <div className={styles.modelCardGrid}>
           <section>
-            <span className={styles.groundedLabel}>SOURCE-TRACED CONCEPTS</span>
+            <span className={styles.groundedLabel}>Source-traced concepts</span>
             <ul>
               <li>A risk-layer candidate contract with broker-supplied market order and three separate evidence agents.</li>
               <li>Historical trading performance as a LightGBM/LambdaRank risk-to-market signal with temporal evidence discipline.</li>
@@ -978,13 +982,13 @@ export function InsuranceMatchingDemo() {
             </ul>
           </section>
           <section>
-            <span className={styles.illustrativeLabel}>ILLUSTRATIVE IN THIS PUBLIC DEMO</span>
+            <span className={styles.illustrativeLabel}>Illustrative in this public demo</span>
             <ul>
               <li>Every risk, market identity, explanation, signal value and confidence level.</li>
               <li>The retired-sandbox adjustable weights, panel min–max transform and displayed composite equation.</li>
               <li>Every rank re-ordering and Top-3 outcome; these are sensitivity probes, not the current application&apos;s policy.</li>
               <li>The authority flag, evidence thresholds, review reasons and ranking outcomes.</li>
-              <li>No model weights, training rows, source documents, internal endpoints or performance tables are included.</li>
+
             </ul>
           </section>
         </div>
@@ -993,6 +997,6 @@ export function InsuranceMatchingDemo() {
           current appetite, available capacity, a quote, or an insurer recommendation.
         </p>
       </details>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }

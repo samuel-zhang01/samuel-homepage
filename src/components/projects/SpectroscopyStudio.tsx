@@ -1,5 +1,9 @@
 "use client";
 
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { spectroscopyCopy } from "./copy/spectroscopyCopy";
+import { projectText } from "@/lib/projectCopy";
+
 import ClassicSelect from "../ClassicSelect";
 
 import { type KeyboardEvent, useEffect, useId, useMemo, useRef, useState } from "react";
@@ -117,8 +121,7 @@ function SpectrumChart({
     .map((point, index) => `${index === 0 ? "M" : "L"}${xToSvg(point.x).toFixed(2)},${yToSvg(point.y).toFixed(2)}`)
     .join(" ");
 
-  return (
-    <svg className={styles.chart} viewBox="0 0 780 372" role="img" aria-labelledby={`${clipId}-title ${clipId}-description`}>
+  return (<ProjectCopy copy={spectroscopyCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.chart} viewBox="0 0 780 372" role="img" aria-labelledby={`${clipId}-title ${clipId}-description`}>
       <title id={`${clipId}-title`}>{title || "Untitled spectrum"}</title>
       <desc id={`${clipId}-description`}>
         {loaded
@@ -130,7 +133,7 @@ function SpectrumChart({
           <rect x={plot.left} y={plot.top} width={plot.width} height={plot.height} />
         </clipPath>
       </defs>
-      <rect width="780" height="372" fill="#ececea" />
+      <rect width="780" height="372" fill="var(--s7-paper)" />
       <rect x={plot.left} y={plot.top} width={plot.width} height={plot.height} fill="#fff" stroke="#20211f" />
       <text x="404" y="24" textAnchor="middle" className={styles.chartTitle}>{title || "Title"}</text>
 
@@ -163,7 +166,7 @@ function SpectrumChart({
       {!loaded ? (
         <g>
           <rect x="264" y="145" width="280" height="68" fill="#f4f4f0" stroke="#8f908b" strokeDasharray="5 4" />
-          <text x="404" y="174" textAnchor="middle" className={styles.emptyTitle}>NO TRACE LOADED</text>
+          <text x="404" y="174" textAnchor="middle" className={styles.emptyTitle}>No trace loaded</text>
           <text x="404" y="192" textAnchor="middle" className={styles.emptyCopy}>Use “Load synthetic file” in the control panel.</text>
         </g>
       ) : null}
@@ -178,27 +181,30 @@ function SpectrumChart({
 
       <text x="404" y="360" textAnchor="middle" className={styles.axisLabel}>{xLabel || "X"}</text>
       <text x="18" y="179" textAnchor="middle" transform="rotate(-90 18 179)" className={styles.axisLabel}>{yLabel || "Y"}</text>
-    </svg>
-  );
+    </svg></div></ProjectCopy>);
 }
 
 function ControlField({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
-  return (
-    <label className={styles.textField}>
+  return (<ProjectCopy copy={spectroscopyCopy}><label className={styles.textField}>
       <span>{label}</span>
       <input type="text" value={value} onChange={(event) => onChange(event.target.value)} />
-    </label>
-  );
+    </label></ProjectCopy>);
 }
 
 export function SpectroscopyStudio() {
+  const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, spectroscopyCopy, source);
   const [loaded, setLoaded] = useState(true);
-  const [plotTitle, setPlotTitle] = useState("Synthetic rotational spectrum");
-  const [xLabel, setXLabel] = useState("Frequency (MHz)");
-  const [yLabel, setYLabel] = useState("Intensity (a.u.)");
+  const [plotTitleDraft, setPlotTitle] = useState<string | null>(null);
+  const plotTitle = plotTitleDraft ?? t("Synthetic rotational spectrum");
+  const [xLabelDraft, setXLabel] = useState<string | null>(null);
+  const xLabel = xLabelDraft ?? t("Frequency (MHz)");
+  const [yLabelDraft, setYLabel] = useState<string | null>(null);
+  const yLabel = yLabelDraft ?? t("Intensity (a.u.)");
   const [showGrid, setShowGrid] = useState(true);
   const [showLegend, setShowLegend] = useState(true);
-  const [legendText, setLegendText] = useState("Synthetic trace");
+  const [legendTextDraft, setLegendText] = useState<string | null>(null);
+  const legendText = legendTextDraft ?? t("Synthetic trace");
   const [plotColour, setPlotColour] = useState<PlotColour>("blue");
   const [centreDraft, setCentreDraft] = useState("5175");
   const [centre, setCentre] = useState(5175);
@@ -212,7 +218,7 @@ export function SpectroscopyStudio() {
   const [dpiDraft, setDpiDraft] = useState("600");
   const [exportOpen, setExportOpen] = useState(false);
   const [exportPrepared, setExportPrepared] = useState(false);
-  const [message, setMessage] = useState("Synthetic two-column trace preloaded for a privacy-safe demonstration.");
+  const [message, setMessage] = useState("Illustrative spectrum loaded. Adjust the frequency window to inspect a feature.");
   const exportTriggerRef = useRef<HTMLButtonElement>(null);
   const closeExportRef = useRef<HTMLButtonElement>(null);
 
@@ -264,7 +270,7 @@ export function SpectroscopyStudio() {
     if (loaded) {
       setLoaded(false);
       setExportPrepared(false);
-      setMessage("Trace ejected. The source locks plot colour after loading; choose a colour, then reload.");
+      setMessage("Trace removed. Choose a colour, then load it again.");
       return;
     }
     setLoaded(true);
@@ -277,7 +283,7 @@ export function SpectroscopyStudio() {
     setUpperDraft("5210");
     setYRange(autoYRange(syntheticTrace.filter((point) => point.x >= 5140 && point.x <= 5210)));
     setExportPrepared(false);
-    setMessage("Loaded 1,201 synthetic rows × 2 numeric columns and focused the generated 5,175 MHz feature. No repository data was read.");
+    setMessage("Loaded 1,201 illustrative samples. The plot is centred on the 5,175 MHz feature.");
   }
 
   function applyCentre() {
@@ -293,7 +299,7 @@ export function SpectroscopyStudio() {
     setUpperDraft(String(nextRange[1]));
     const nextVisible = syntheticTrace.filter((point) => point.x >= nextRange[0] && point.x <= nextRange[1]);
     setYRange(autoYRange(nextVisible));
-    setMessage("Source behavior reproduced: changing centre applies a ±1 MHz window and resets Y to auto.");
+    setMessage("New centre applied with a ±1 MHz window. The intensity scale now fits the visible samples.");
   }
 
   function applySymmetricRange(value: number, kind: "fine" | "coarse") {
@@ -318,8 +324,8 @@ export function SpectroscopyStudio() {
     setYRange([yRange[0], safeguarded]);
     setMessage(
       safeguarded !== proposed
-        ? "Safety adaptation stopped the upper Y bound crossing the lower bound."
-        : `Upper Y bound shifted ${delta > 0 ? "+" : ""}${delta.toFixed(3)}; lower bound is unchanged, matching the source callback.`,
+        ? "The upper intensity bound must remain above the lower bound."
+        : `Upper Y bound shifted ${delta > 0 ? "+" : ""}${delta.toFixed(3)}; the lower bound is unchanged.`,
     );
   }
 
@@ -327,7 +333,7 @@ export function SpectroscopyStudio() {
     const lower = Number(lowerDraft);
     const upper = Number(upperDraft);
     if (!Number.isFinite(lower) || !Number.isFinite(upper) || lower >= upper) {
-      setMessage("Range rejected: lower and upper must be finite, with lower < upper. This guard improves on the source error path.");
+      setMessage("Enter finite frequency bounds with the lower value below the upper value.");
       return;
     }
     setXRange([lower, upper]);
@@ -344,7 +350,7 @@ export function SpectroscopyStudio() {
     setUpperDraft("5210");
     setXRange([5140, 5210]);
     setYRange(autoYRange(syntheticTrace.filter((point) => point.x >= 5140 && point.x <= 5210)));
-    setMessage("Generated 5,175 MHz focus window restored. Reset is a browser convenience, not a source control.");
+    setMessage("Restored the 5,175 MHz feature and its original plotting range.");
   }
 
   function prepareExport() {
@@ -353,11 +359,10 @@ export function SpectroscopyStudio() {
     setMessage(`Export preview prepared as ${format.toUpperCase()} at ${dpi} DPI. No file was written.`);
   }
 
-  return (
-    <DemoWindow
-      appName="CPROT SPEC PLOTTER · WEB RECONSTRUCTION"
+  return (<ProjectCopy copy={spectroscopyCopy}><DemoWindow
+      appName="CPROT · Spectroscopy plotter"
       title="Fast Spectroscopy Plotter"
-      status={loaded ? "SYNTHETIC TRACE LOADED" : "WAITING FOR TRACE"}
+      status={loaded ? "Synthetic trace loaded" : "Waiting for trace"}
       purpose="Recreate a small lab utility for turning a two-column spectrum into a navigable, consistently exportable figure."
       tryThis="Load the synthetic trace, choose a centre frequency, pan the window and change export settings."
       watchFor="The viewport and pixel dimensions update from the same plotting arithmetic; no experimental trace is bundled."
@@ -365,23 +370,16 @@ export function SpectroscopyStudio() {
       className={styles.studio}
       footer={
         <>
-          <span>MATLAB APP DESIGNER SOURCE · JUL 2022</span>
-          <span>PUBLICLY VIEWABLE · NO EXPLICIT LICENCE</span>
+          <span>MATLAB App Designer · July 2022</span>
+          <span>Illustrative spectrum</span>
         </>
       }
     >
-      <div className={styles.provenanceBanner} role="note">
-        <span>SOURCE-FAITHFUL REBUILD</span>
-        <p>
-          The original plots two numeric columns and changes presentation only. This exhibit uses a
-          deterministic synthetic trace; it does not copy either bundled 240,000-row experiment file.
-        </p>
-        <strong>NO SPECTRAL PROCESSING CLAIMS</strong>
-      </div>
+      <div className={styles.provenanceBanner} role="note"><p>Samuel built this plotting tool to navigate spectroscopy traces and prepare consistent figures. Try it with an illustrative spectrum: adjust the view, labels and export settings. The utility changes presentation; it does not process or identify spectral peaks.</p></div>
 
       <section className={styles.application} aria-label="Interactive spectroscopy plotting workbench">
         <aside className={styles.leftPanel} aria-label="Plot presentation controls">
-          <div className={styles.panelCap}><span>01</span><strong>PLOT SETUP</strong></div>
+          <div className={styles.panelCap}><span>01</span><strong>Plot setup</strong></div>
           <ControlField label="Plot title" value={plotTitle} onChange={setPlotTitle} />
           <ControlField label="X label" value={xLabel} onChange={setXLabel} />
           <ControlField label="Y label" value={yLabel} onChange={setYLabel} />
@@ -398,7 +396,7 @@ export function SpectroscopyStudio() {
               {colourOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
             </ClassicSelect>
           </label>
-          <p className={styles.lockNote}>{loaded ? "Locked after load, matching source." : "Choose before loading."} “Magenta” safely corrects the source’s “megenta” typo.</p>
+          <p className={styles.lockNote}>{loaded ? "Remove the trace to change its colour." : "Choose before loading."}</p>
 
           <button className={styles.largeButton} type="button" onClick={loadOrEject}>
             <span aria-hidden="true">{loaded ? "↥" : "↧"}</span>
@@ -406,22 +404,21 @@ export function SpectroscopyStudio() {
           </button>
           <button ref={exportTriggerRef} className={styles.largeButton} type="button" disabled={!loaded} onClick={() => { setExportOpen(true); setExportPrepared(false); }}>
             <span aria-hidden="true">▣</span>
-            Save as…
+            Export preview…
           </button>
 
           <div className={styles.fileCard}>
-            <span>SYNTHETIC INPUT</span>
+            <span>Synthetic input</span>
             <strong>rotational_demo.dat</strong>
             <dl>
               <div><dt>Rows</dt><dd>{loaded ? "1,201" : "—"}</dd></div>
               <div><dt>Columns</dt><dd>{loaded ? "2" : "—"}</dd></div>
-              <div><dt>Network</dt><dd>none</dd></div>
             </dl>
           </div>
         </aside>
 
         <div className={styles.plotPanel}>
-          <div className={styles.panelCap}><span>02</span><strong>FIGURE CANVAS</strong><em>ACCESSIBLE SVG</em></div>
+          <div className={styles.panelCap}><span>02</span><strong>Figure canvas</strong></div>
           <div className={styles.chartFrame}>
             <SpectrumChart
               loaded={loaded}
@@ -528,16 +525,16 @@ export function SpectroscopyStudio() {
       </section>
 
       <div className={styles.readoutBar} role="status" aria-live="polite">
-        <span>STATUS</span>
+        <span>Status</span>
         <p>{message}</p>
-        <strong>{visiblePoints.length.toLocaleString("en-GB")} VISIBLE ROWS</strong>
+        <strong>{visiblePoints.length.toLocaleString("en-GB")} visible rows</strong>
       </div>
 
-      <section className={styles.inspectionGrid} aria-label="Trace calculations and source boundary">
+      <section className={styles.inspectionGrid} aria-label="Trace values and plotting methods">
         <div className={styles.traceInspector}>
           <div className={styles.sectionHeading}>
-            <div><span>ACCESSIBILITY ADAPTATION</span><h3>Visible trace ledger</h3></div>
-            <strong>{xSpan.toFixed(xSpan < 20 ? 2 : 1)} MHz WINDOW</strong>
+            <div><span>Trace values</span><h3>Samples in the current view</h3></div>
+            <strong>{xSpan.toFixed(xSpan < 20 ? 2 : 1)} MHz window</strong>
           </div>
           <div className={styles.metricRow}>
             <div><span>X range</span><strong>{formatX(xRange[0], xSpan)} → {formatX(xRange[1], xSpan)}</strong></div>
@@ -547,7 +544,7 @@ export function SpectroscopyStudio() {
           </div>
           <div className={styles.tableWrap}>
             <table>
-              <caption>Three deterministic samples summarising the currently visible trace</caption>
+              <caption>The first, strongest and last samples currently visible</caption>
               <thead><tr><th scope="col">Position</th><th scope="col">Frequency / MHz</th><th scope="col">Intensity / a.u.</th></tr></thead>
               <tbody>
                 <tr><th scope="row">First visible</th><td>{visiblePoints[0] ? visiblePoints[0].x.toFixed(2) : "—"}</td><td>{visiblePoints[0] ? visiblePoints[0].y.toExponential(4) : "—"}</td></tr>
@@ -556,23 +553,16 @@ export function SpectroscopyStudio() {
               </tbody>
             </table>
           </div>
-          <p>
-            This ledger describes the SVG without relying on sight. It computes simple viewport summaries;
-            it is not baseline correction, smoothing, normalisation or peak picking.
-          </p>
+          <p>The table makes the plotted values available without relying on the chart. Changing the viewport changes these summaries; the underlying samples remain the same.</p>
         </div>
 
         <div className={styles.sourceLedger}>
-          <div className={styles.sectionHeading}>
-            <div><span>SOURCE CONTRACT</span><h3>Implemented vs deliberately absent</h3></div>
-            <a href={SOURCE_URL} target="_blank" rel="noreferrer">Inspect repository ↗</a>
-          </div>
+          <div className={styles.sectionHeading}><h3>Why these controls?</h3><a href={SOURCE_URL} target="_blank" rel="noreferrer">View original application ↗</a></div>
           <ul>
-            <li><span className={styles.present}>PRESENT</span><p>Two-column load, title and axis labels, grid, legend, seven plot colours.</p></li>
-            <li><span className={styles.present}>PRESENT</span><p>Centre ±1, fine/coarse symmetric range, direct bounds and six exact X pan increments.</p></li>
-            <li><span className={styles.present}>PRESENT</span><p>Upper-Y nudges and PNG/JPG/TIF/PDF/EPS export at prompted DPI, default 600.</p></li>
-            <li><span className={styles.absent}>ABSENT</span><p>No evidenced baseline correction, smoothing, normalisation, integration or peak picking.</p></li>
-            <li><span className={styles.adapted}>ADAPTED</span><p>Synthetic preload, inline legend naming, validation, reset, accessible ledger and export preview are browser safety improvements.</p></li>
+            <li><p>Coarse and fine frequency ranges make it easy to move from the full spectrum to a narrow feature.</p></li>
+            <li><p>Panning preserves the window width, so neighbouring features can be compared at the same scale.</p></li>
+            <li><p>Independent intensity bounds help inspect weak signals without changing the measured values.</p></li>
+            <li><p>Consistent labels, legends and export resolution make figures easier to compare and use in a report.</p></li>
           </ul>
         </div>
       </section>
@@ -582,7 +572,7 @@ export function SpectroscopyStudio() {
           <section className={styles.exportDialog} role="dialog" aria-modal="true" aria-labelledby="spec-export-title" onKeyDown={handleDialogKeyDown}>
             <div className={styles.dialogTitlebar}>
               <button ref={closeExportRef} type="button" onClick={closeExport} aria-label="Close export preview">×</button>
-              <strong id="spec-export-title">SAVE AS · EXPORT PREVIEW</strong>
+              <strong id="spec-export-title">Export preview</strong>
               <span aria-hidden="true" />
             </div>
             <div className={styles.dialogBody}>
@@ -621,10 +611,10 @@ export function SpectroscopyStudio() {
               {exportPrepared ? (
                 <div className={styles.exportReady} role="status">
                   <span>✓</span>
-                  <p><strong>Preview manifest ready.</strong> The original calls MATLAB <code>exportgraphics</code>; this portfolio does not write or download a substitute file.</p>
+                  <p><strong>Export dimensions ready.</strong> The MATLAB application exports figures in the selected format. This browser view previews the dimensions and resolution.</p>
                 </div>
               ) : null}
-              <p className={styles.dialogNote}>The 7.5 × 3.5 inch canvas and input guards are showcase adaptations. Supported formats and the default 600 DPI come directly from the source callback.</p>
+              <p className={styles.dialogNote}>At a fixed paper size, increasing DPI gives raster images more pixels. Vector formats retain their geometry when scaled.</p>
             </div>
             <div className={styles.dialogActions}>
               <button type="button" onClick={closeExport}>Cancel</button>
@@ -633,8 +623,7 @@ export function SpectroscopyStudio() {
           </section>
         </div>
       ) : null}
-    </DemoWindow>
-  );
+    </DemoWindow></ProjectCopy>);
 }
 
 export default SpectroscopyStudio;

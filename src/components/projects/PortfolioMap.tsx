@@ -1,5 +1,6 @@
 "use client";
 
+import { getProjectOrigins } from "@/data/projectOrigins";
 import ClassicSelect from "../ClassicSelect";
 
 import {
@@ -21,7 +22,14 @@ import {
   type ProjectAccess,
   type ProjectArea,
 } from "../../data/projects";
-import { translateText, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
+import { projectText } from "@/lib/projectCopy";
+import { ProjectCopy, ProjectLocaleProvider, useProjectLocale } from "./ProjectTranslationBoundary";
+import { portfolioCopy } from "./copy/portfolioCopy";
+import { projectNarrativeCopy } from "./copy/projectNarrativeCopy";
+
+// This optional comparison view is lazy-loaded; narrative copy stays with its project UI.
+const portfolioViewCopy = { ...projectNarrativeCopy, ...portfolioCopy };
 import { ModelLineageMap } from "./ModelLineageMap";
 import styles from "./PortfolioMap.module.css";
 
@@ -38,12 +46,12 @@ type Relationship = {
 };
 
 const VIEWS: Array<{ id: ViewId; label: string; hint: string }> = [
-  { id: "timeline", label: "Chronology", hint: "year × state" },
-  { id: "matrix", label: "Archive matrix", hint: "area × access" },
-  { id: "tools", label: "Tool index", hint: "exact declarations" },
-  { id: "compare", label: "Relationships", hint: "shared fields only" },
-  { id: "models", label: "Model lineage", hint: "history × scale" },
-  { id: "ledger", label: "Derivation", hint: "definitions + checks" },
+  { id: "compare", label: "Compare projects", hint: "shared context and methods" },
+  { id: "timeline", label: "Timeline", hint: "work across the years" },
+  { id: "tools", label: "Tools", hint: "where methods appear" },
+  { id: "matrix", label: "Browse by area", hint: "topics and availability" },
+  { id: "models", label: "Model lineage", hint: "architecture and scale" },
+  { id: "ledger", label: "Reading guide", hint: "what the views show" },
 ];
 
 const AREA_COLOURS: Record<ProjectArea, string> = {
@@ -100,7 +108,9 @@ function relationship(left: Project, right: Project): Relationship {
   const sharedTools = [...new Set(left.tools.filter((tool) => rightTools.has(tool)))].sort();
   const rightArtifactKinds = new Set(artifactKinds(right));
   const sharedArtifactKinds = artifactKinds(left).filter((kind) => rightArtifactKinds.has(kind));
+  const sharedOrigins = getProjectOrigins(left.slug).filter((origin) => origin.projects.includes(right.slug));
   const signals = [
+    ...sharedOrigins.map((origin) => `Work context · ${origin.label}`),
     ...sharedTools.map((tool) => `Exact tool · ${tool}`),
     ...(left.area === right.area ? [`Area · ${left.area}`] : []),
     ...(left.access === right.access ? [`Access · ${accessMeta[left.access].label}`] : []),
@@ -206,24 +216,24 @@ function TimelineView({
   }
 
   return (
-    <div className={styles.timelineView}>
+    <ProjectCopy copy={portfolioViewCopy}><div className={styles.timelineView}>
       <section className={styles.filterDeck} aria-labelledby="portfolio-timeline-heading">
         <div>
-          <span>CHRONOLOGY FILTER</span>
-          <strong id="portfolio-timeline-heading">Declared project spans</strong>
-          <p>Ranges include every named year. “Ongoing” remains a separate source label; no start date is inferred.</p>
+          <span>EXPLORE BY YEAR</span>
+          <strong id="portfolio-timeline-heading">When the work happened</strong>
+          <p>Choose a year to find the projects active during that period. Work without a fixed date appears in its own ongoing column.</p>
         </div>
-        <label><span>Year</span><ClassicSelect value={yearFilter} onChange={(event) => setYearFilter(event.target.value)}><option value="all">All declared spans</option>{YEAR_AXIS.map((year) => <option key={year} value={year}>{year}</option>)}<option value="ongoing">Ongoing label</option></ClassicSelect></label>
+        <label><span>Year</span><ClassicSelect value={yearFilter} onChange={(event) => setYearFilter(event.target.value)}><option value="all">All years</option>{YEAR_AXIS.map((year) => <option key={year} value={year}>{year}</option>)}<option value="ongoing">Ongoing work</option></ClassicSelect></label>
         <label><span>Status</span><ClassicSelect value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as "all" | ProjectStatus)}><option value="all">All statuses</option>{STATUS_VALUES.map((status) => <option key={status} value={status}>{status}</option>)}</ClassicSelect></label>
         <label><span>Access</span><ClassicSelect value={accessFilter} onChange={(event) => setAccessFilter(event.target.value as "all" | ProjectAccess)}><option value="all">All access levels</option>{ACCESS_VALUES.map((access) => <option key={access} value={access}>{accessMeta[access].label}</option>)}</ClassicSelect></label>
         <output aria-live="polite"><strong>{filtered.length}</strong><span>of {projects.length} records</span></output>
       </section>
 
       <section className={styles.timelinePanel} aria-label="Project chronology">
-        <div className={styles.panelHeading}><span>YR</span><strong>INTERACTIVE CHRONOLOGY</strong><em>{MIN_YEAR}—{MAX_YEAR} + ONGOING</em></div>
+        <div className={styles.panelHeading}><span>YR</span><strong>PROJECT TIMELINE</strong><em>{MIN_YEAR}—{MAX_YEAR} + ONGOING</em></div>
         <p className={styles.keyboardHelp}><strong>Keyboard:</strong> Tab enters the project rows once; use ↑/↓ or Home/End, then Enter to open the focused project.</p>
         <div className={styles.timelineAxis} aria-hidden="true">
-          <span>PROJECT FILE</span>
+          <span>PROJECT</span>
           <div style={{ "--year-count": YEAR_AXIS.length + 1 } as CSSProperties}>{YEAR_AXIS.map((year) => <b key={year}>{year}</b>)}<b>ONGOING</b></div>
         </div>
         <div className={styles.timelineRows}>
@@ -257,10 +267,10 @@ function TimelineView({
               </button>
             );
           })}
-          {!filtered.length && <div className={styles.emptyState}><strong>No matching project span</strong><p>Change one filter; no records were omitted from the underlying catalogue.</p></div>}
+          {!filtered.length && <div className={styles.emptyState}><strong>No matching project span</strong><p>Change one filter; explore another part of the collection.</p></div>}
         </div>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -271,6 +281,8 @@ function MatrixView({
   onPreview: (project: Project) => void;
   onOpen: (project: Project) => void;
 }) {
+  const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, portfolioViewCopy, source);
   const [focus, setFocus] = useState<{ area: ProjectArea; access?: ProjectAccess; demo?: true }>({ area: AREA_VALUES[0] });
   const focusedProjects = projects.filter((project) => (
     project.area === focus.area
@@ -278,10 +290,10 @@ function MatrixView({
     && (!focus.demo || isInteractiveProject(project))
   ));
   const focusLabel = focus.demo
-    ? `${focus.area} · interactive demos`
+    ? `${t(focus.area)} · ${t("Interactive demos")}`
     : focus.access
-      ? `${focus.area} · ${accessMeta[focus.access].label}`
-      : `${focus.area} · all access levels`;
+      ? `${t(focus.area)} · ${t(accessMeta[focus.access].label)}`
+      : `${t(focus.area)} · ${t("All access levels")}`;
 
   function cellButton(count: number, nextFocus: typeof focus, label: string) {
     const selected = nextFocus.area === focus.area && nextFocus.access === focus.access && nextFocus.demo === focus.demo;
@@ -291,16 +303,16 @@ function MatrixView({
   }
 
   return (
-    <div className={styles.matrixView}>
+    <ProjectCopy copy={portfolioViewCopy}><div className={styles.matrixView}>
       <section className={styles.matrixIntro}>
-        <div><span>EXCLUSIVE DIMENSION</span><strong>Access level</strong><p>Each record contributes to exactly one access column.</p></div>
-        <div><span>OVERLAPPING FLAG</span><strong>Interactive demo</strong><p>The demo column is a yes/no field and is not added to row totals.</p></div>
-        <div><span>RECONCILIATION</span><strong>{ACCESS_VALUES.map((access) => projects.filter((project) => project.access === access).length).reduce((sum, count) => sum + count, 0)} = {projects.length}</strong><p>Sum of the four access columns equals all catalogue records.</p></div>
+        <div><span>AVAILABILITY</span><strong>Access level</strong><p>Each project appears in one availability category.</p></div>
+        <div><span>TRY THE WORK</span><strong>Interactive demo</strong><p>Interactive demos are marked separately so you can find projects to try.</p></div>
+        <div><span>COLLECTION TOTAL</span><strong>{ACCESS_VALUES.map((access) => projects.filter((project) => project.access === access).length).reduce((sum, count) => sum + count, 0)} = {projects.length}</strong><p>The four availability categories together cover the collection.</p></div>
       </section>
 
       <div className={styles.matrixWorkspace}>
         <section className={styles.matrixPanel}>
-          <div className={styles.panelHeading}><span>{AREA_VALUES.length}×{ACCESS_VALUES.length + 1}</span><strong>AREA × ACCESS / DEMO MATRIX</strong><em>EXACT RECORD COUNTS</em></div>
+          <div className={styles.panelHeading}><span>{AREA_VALUES.length}×{ACCESS_VALUES.length + 1}</span><strong>TOPICS × AVAILABILITY</strong><em>PROJECT COUNTS</em></div>
           <p className={styles.tableHelp}>The table scrolls horizontally when needed. Focus it and use ←/→, Shift + mouse wheel or a horizontal trackpad gesture.</p>
           <div className={styles.tableScroll} role="region" aria-label="Scrollable area by access and demo matrix" tabIndex={0}>
             <table>
@@ -314,10 +326,10 @@ function MatrixView({
                       <th scope="row"><i style={{ background: AREA_COLOURS[area] }} />{area}</th>
                       {ACCESS_VALUES.map((access) => {
                         const count = areaProjects.filter((project) => project.access === access).length;
-                        return <td key={access}>{cellButton(count, { area, access }, `${area}, ${accessMeta[access].label}`)}</td>;
+                        return <td key={access}>{cellButton(count, { area, access }, `${t(area)}, ${t(accessMeta[access].label)}`)}</td>;
                       })}
-                      <td className={styles.demoColumn}>{cellButton(areaProjects.filter(isInteractiveProject).length, { area, demo: true }, `${area}, interactive`)}</td>
-                      <td>{cellButton(areaProjects.length, { area }, `${area}, total`)}</td>
+                      <td className={styles.demoColumn}>{cellButton(areaProjects.filter(isInteractiveProject).length, { area, demo: true }, `${t(area)}, ${t("Interactive")}`)}</td>
+                      <td>{cellButton(areaProjects.length, { area }, `${t(area)}, ${t("Total")}`)}</td>
                     </tr>
                   );
                 })}
@@ -340,7 +352,7 @@ function MatrixView({
           </div>
         </section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -351,10 +363,12 @@ function ToolIndexView({
   onPreview: (project: Project) => void;
   onOpen: (project: Project) => void;
 }) {
+  const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, portfolioViewCopy, source);
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [selectedTool, setSelectedTool] = useState(TOOL_ROWS[0]?.label ?? "");
-  const matching = TOOL_ROWS.filter((row) => row.label.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
+  const matching = TOOL_ROWS.filter((row) => `${row.label} ${t(row.label)}`.toLocaleLowerCase(locale).includes(query.trim().toLocaleLowerCase(locale)));
   const visible = query.trim() || showAll ? matching : matching.slice(0, 18);
   const selected = visible.find((row) => row.label === selectedTool) ?? visible[0];
   const maximum = TOOL_ROWS[0]?.projects.length ?? 1;
@@ -364,18 +378,18 @@ function ToolIndexView({
     .filter((row) => row.count > 0);
 
   return (
-    <div className={styles.toolsView}>
+    <ProjectCopy copy={portfolioViewCopy}><div className={styles.toolsView}>
       <section className={styles.toolSummary}>
-        <div><span>EXACT LABELS</span><strong>{TOOL_ROWS.length}</strong><small>No alias merging</small></div>
-        <div><span>DECLARATIONS</span><strong>{TOTAL_TOOL_ASSIGNMENTS}</strong><small>Sum of tools[] lengths</small></div>
-        <div><span>REPEATED LABELS</span><strong>{repeated}</strong><small>Declared by 2+ projects</small></div>
-        <label><span>Find an exact declared tool</span><input type="search" value={query} placeholder="e.g. PyTorch" onChange={(event) => setQuery(event.target.value)} /></label>
+        <div><span>TOOLS AND METHODS</span><strong>{TOOL_ROWS.length}</strong><small>No alias merging</small></div>
+        <div><span>PROJECT–TOOL LINKS</span><strong>{TOTAL_TOOL_ASSIGNMENTS}</strong><small>Tools listed across all projects</small></div>
+        <div><span>USED ACROSS PROJECTS</span><strong>{repeated}</strong><small>Listed by at least two projects</small></div>
+        <label><span>Find a tool or method</span><input type="search" value={query} placeholder="e.g. PyTorch" onChange={(event) => setQuery(event.target.value)} /></label>
       </section>
 
       <div className={styles.toolWorkspace}>
         <section className={styles.toolIndex}>
-          <div className={styles.panelHeading}><span>IDX</span><strong>CAPABILITY / TECHNOLOGY INDEX</strong><em>{matching.length} MATCHING LABELS</em></div>
-          <p className={styles.toolBoundary}>Labels are displayed exactly as declared in each project’s <code>tools[]</code>. “React”, “React 19” and “React + TypeScript” remain separate.</p>
+          <div className={styles.panelHeading}><span>IDX</span><strong>TOOLS ACROSS THE COLLECTION</strong><em>{matching.length} MATCHING LABELS</em></div>
+          <p className={styles.toolBoundary}>Explore where a tool or method appears. Specific versions and combinations, such as “React 19” and “React + TypeScript”, retain separate entries.</p>
           <div className={styles.toolRows}>
             {visible.map((row) => (
               <button type="button" key={row.label} aria-pressed={selected?.label === row.label} onClick={() => setSelectedTool(row.label)}>
@@ -390,7 +404,7 @@ function ToolIndexView({
         </section>
 
         <aside className={styles.toolInspector} aria-live="polite">
-          <div className={styles.panelHeading}><span>TOOL</span><strong>{selected?.label.toUpperCase() ?? "—"}</strong><em>{selected?.projects.length ?? 0} RECORDS</em></div>
+          <div className={styles.panelHeading}><span>TOOL</span><strong>{selected ? t(selected.label) : "—"}</strong><em>{selected?.projects.length ?? 0} RECORDS</em></div>
           {selected ? (
             <>
               <dl className={styles.toolAreaMix}>
@@ -403,12 +417,12 @@ function ToolIndexView({
                   </button>
                 ))}
               </div>
-              <p className={styles.toolNote}>Count = project records whose declared tool list contains this exact string. It is not a proficiency, usage-volume or recency measure.</p>
+              <p className={styles.toolNote}>The count shows how many projects list this tool. Open a project to see what it contributed and how it was used.</p>
             </>
           ) : null}
         </aside>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -424,19 +438,19 @@ function ProjectCompareCard({
   onOpen: () => void;
 }) {
   return (
-    <article className={styles.compareCard} style={{ "--area-colour": AREA_COLOURS[project.area] } as CSSProperties}>
+    <ProjectCopy copy={portfolioViewCopy}><article className={styles.compareCard} style={{ "--area-colour": AREA_COLOURS[project.area] } as CSSProperties}>
       <span>{label} · {project.area}</span>
       <h3>{project.shortTitle ?? project.title}</h3>
-      <p lang={locale}>{translateText(locale, project.summary)}</p>
+      <p lang={locale}>{projectText(locale, portfolioViewCopy, project.summary)}</p>
       <dl>
         <div><dt>Year</dt><dd>{project.year}</dd></div>
         <div><dt>Status</dt><dd>{project.status}</dd></div>
         <div><dt>Access</dt><dd>{accessMeta[project.access].label}</dd></div>
-        <div><dt>Demo</dt><dd>{isInteractiveProject(project) ? `Yes · ${project.demo ?? project.systemApp}` : "No"}</dd></div>
+        <div><dt>Demo</dt><dd>{isInteractiveProject(project) ? "Available" : "No"}</dd></div>
         <div><dt>Artifacts</dt><dd>{project.artifacts?.length ?? 0}</dd></div>
       </dl>
       <button type="button" onClick={onOpen}>Open {label}</button>
-    </article>
+    </article></ProjectCopy>
   );
 }
 
@@ -477,10 +491,10 @@ function ComparisonView({
   }
 
   return (
-    <div className={styles.compareView}>
+    <ProjectCopy copy={portfolioViewCopy}><div className={styles.compareView}>
       <section className={styles.compareSelectors}>
         <div><span>PROJECT A</span><ClassicSelect aria-label="Comparison project A" value={left.slug} onChange={(event) => chooseLeft(event.target.value)}>{projects.map((project) => <option key={project.slug} value={project.slug}>{project.title}</option>)}</ClassicSelect></div>
-        <div className={styles.overlapDial}><span>FIELD OVERLAP</span><strong>{overlap.signals.length}</strong><small>unweighted declared signals</small></div>
+        <div className={styles.overlapDial}><span>SHARED CONNECTIONS</span><strong>{overlap.signals.length}</strong><small>contexts, tools and project features</small></div>
         <div><span>PROJECT B</span><ClassicSelect aria-label="Comparison project B" value={right.slug} onChange={(event) => chooseRight(event.target.value)}>{projects.map((project) => <option key={project.slug} value={project.slug}>{project.title}</option>)}</ClassicSelect></div>
       </section>
 
@@ -491,8 +505,8 @@ function ComparisonView({
 
       <div className={styles.relationshipWorkspace}>
         <section className={styles.signalPanel}>
-          <div className={styles.panelHeading}><span>=</span><strong>EXACT SHARED SIGNALS</strong><em>{overlap.signals.length} TOTAL</em></div>
-          {overlap.signals.length ? <ul>{overlap.signals.map((signal) => <li key={signal}><span>✓</span>{signal}</li>)}</ul> : <div className={styles.emptyState}><strong>No shared declared signals</strong><p>The selected records still remain valid catalogue neighbours; this view does not infer semantic similarity.</p></div>}
+          <div className={styles.panelHeading}><span>=</span><strong>WHAT THESE PROJECTS SHARE</strong><em>{overlap.signals.length} TOTAL</em></div>
+          {overlap.signals.length ? <ul>{overlap.signals.map((signal) => <li key={signal}><span>✓</span>{signal}</li>)}</ul> : <div className={styles.emptyState}><strong>Different project contexts</strong><p>These projects have different contexts and methods. Select another pair to explore their connections.</p></div>}
           <div className={styles.toolDelta}>
             <section><span>A ONLY · {leftOnly.length}</span><div>{leftOnly.map((tool) => <i key={tool}>{tool}</i>)}</div></section>
             <section><span>SHARED · {overlap.sharedTools.length}</span><div>{overlap.sharedTools.map((tool) => <i key={tool}>{tool}</i>)}</div></section>
@@ -501,8 +515,8 @@ function ComparisonView({
         </section>
 
         <aside className={styles.neighbourPanel}>
-          <div className={styles.panelHeading}><span>REL</span><strong>NEIGHBOURS OF A</strong><em>TOP 6</em></div>
-          <p>Sorted by the same unweighted shared-field count; ties use project title.</p>
+          <div className={styles.panelHeading}><span>REL</span><strong>RELATED TO PROJECT A</strong><em>TOP 6</em></div>
+          <p>Projects with more shared contexts, tools and features appear first. Equal counts are ordered by title.</p>
           <div>
             {neighbours.map(({ project, overlap: neighbourOverlap }) => (
               <button type="button" key={project.slug} aria-pressed={project.slug === right.slug} onFocus={() => onPreview(project)} onClick={() => { setRightSlug(project.slug); onPreview(project); }}>
@@ -512,54 +526,26 @@ function ComparisonView({
           </div>
         </aside>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function LedgerView() {
-  const accessTotal = ACCESS_VALUES.reduce((sum, access) => sum + projects.filter((project) => project.access === access).length, 0);
-  const areaTotal = AREA_VALUES.reduce((sum, area) => sum + projects.filter((project) => project.area === area).length, 0);
-  const uniqueSlugs = new Set(projects.map((project) => project.slug)).size;
-  const ongoingCount = projects.filter((project) => (SPANS.get(project.slug)?.kind ?? "ongoing") === "ongoing").length;
-
-  const ledgerRows = [
-    { metric: "Catalogue records", value: projects.length, formula: "projects.length", boundary: "One row per declared project object." },
-    { metric: "Exclusive access sum", value: accessTotal, formula: "Σ count(access)", boundary: `Must reconcile to ${projects.length}.` },
-    { metric: "Exclusive area sum", value: areaTotal, formula: "Σ count(area)", boundary: `Must reconcile to ${projects.length}.` },
-    { metric: "Interactive demos", value: TOTAL_DEMOS, formula: "count(isInteractiveProject)", boundary: "Overlapping flag; never added to access totals." },
-    { metric: "Artifact entries", value: TOTAL_ARTIFACTS, formula: "Σ artifacts[].length", boundary: "Excludes website and source URL fields." },
-    { metric: "Exact tool labels", value: TOOL_ROWS.length, formula: "unique(tools[] string)", boundary: "No synonym, version or framework-family merging." },
-    { metric: "Tool declarations", value: TOTAL_TOOL_ASSIGNMENTS, formula: "Σ tools[].length", boundary: "Not skill depth, proficiency or runtime usage." },
-    { metric: "Ongoing labels", value: ongoingCount, formula: "count(year without digits)", boundary: "Kept separate; no start year inferred." },
-  ];
-
   return (
-    <div className={styles.ledgerView}>
+    <ProjectCopy copy={portfolioViewCopy}><div className={styles.ledgerView}>
       <section className={styles.ledgerHero}>
-        <div><span>AUTHORITATIVE LOCAL SOURCE</span><h3><code>src/data/projects.ts</code></h3><p>Every title, year, area, status, access label, tool, artifact and demo flag in this overview is read directly from the shared catalogue at render time.</p></div>
-        <dl><div><dt>Rows</dt><dd>{projects.length}</dd></div><div><dt>Unique slugs</dt><dd>{uniqueSlugs}</dd></div><div><dt>External requests</dt><dd>0</dd></div></dl>
+        <div><span>FIND A WAY INTO THE WORK</span><h3>Six views, one connected collection</h3><p>Compare methods, follow work through time, or start with a tool you know. Each view opens the same project documents and interactive demonstrations.</p></div>
+        <dl><div><dt>Projects</dt><dd>{projects.length}</dd></div><div><dt>Interactive demos</dt><dd>{TOTAL_DEMOS}</dd></div><div><dt>Materials to explore</dt><dd>{TOTAL_ARTIFACTS}</dd></div></dl>
       </section>
-
-      <section className={styles.reconciliationPanel}>
-        <div className={styles.panelHeading}><span>Σ</span><strong>VISIBLE CALCULATION LEDGER</strong><em>SOURCE-DERIVED COUNTS</em></div>
-        <div className={styles.tableScroll} role="region" aria-label="Scrollable portfolio derivation ledger" tabIndex={0}>
-          <table>
-            <caption>Portfolio overview metric definitions and boundaries</caption>
-            <thead><tr><th scope="col">Metric</th><th scope="col">Value</th><th scope="col">Calculation</th><th scope="col">Interpretation boundary</th></tr></thead>
-            <tbody>{ledgerRows.map((row) => <tr key={row.metric}><th scope="row">{row.metric}</th><td>{row.value}</td><td><code>{row.formula}</code></td><td>{row.boundary}</td></tr>)}</tbody>
-          </table>
-        </div>
-      </section>
-
       <div className={styles.definitionGrid}>
-        <section><span>01 · YEAR</span><strong>Inclusive declared spans</strong><p>A label such as 2023—26 is present in 2023, 2024, 2025 and 2026 filters. “Ongoing” is its own lane.</p></section>
-        <section><span>02 · MATRIX</span><strong>Exclusive + overlapping fields</strong><p>Area and access each partition the catalogue. Demo is a separate overlapping yes/no flag.</p></section>
-        <section><span>03 · TOOLS</span><strong>Exact-string index</strong><p>Counts use literal declared strings. Similar technologies are not grouped or normalised.</p></section>
-        <section><span>04 · RELATIONSHIP</span><strong>Unweighted field overlap</strong><p>One signal per exact shared tool, area, access, status, both-demo state and shared artifact kind. It is not a quality score.</p></section>
-        <section><span>05 · PRIVACY</span><strong>Catalogue metadata only</strong><p>No project source is fetched. No personal data, credentials, local storage or analytics call is used.</p></section>
-        <section><span>06 · CLAIM LIMIT</span><strong>No performance inference</strong><p>Archive volume, tools and relationships describe the catalogue—not delivery speed, impact, proficiency or commercial success.</p></section>
+        <section><span>01 · COMPARE</span><strong>Find a shared thread</strong><p>Select two projects to compare their work context, tools and outputs. The connection count describes shared features; it does not rank project quality.</p></section>
+        <section><span>02 · TIMELINE</span><strong>Follow the years</strong><p>A project spanning 2023–26 appears in each of those four years. Ongoing work without a fixed date has its own column.</p></section>
+        <section><span>03 · TOOLS</span><strong>Start from a familiar method</strong><p>Choose a tool to see the projects that use it and the areas they connect. Versions and combinations retain separate entries.</p></section>
+        <section><span>04 · AREAS</span><strong>Find something to open</strong><p>Browse topics by availability. The separate demo column highlights work you can explore interactively.</p></section>
+        <section><span>05 · MODELS</span><strong>Understand architecture choices</strong><p>Follow model families, their components and the scale of the experiments. Open a project for the task, results and limitations.</p></section>
+        <section><span>06 · PROJECTS</span><strong>Read the work in context</strong><p>Each project connects its purpose, contribution, demonstrations and supporting material. Those details explain more than a count of tools or connections.</p></section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -573,19 +559,19 @@ function ProjectInspector({
   onOpen: (project: Project) => void;
 }) {
   return (
-    <aside className={styles.projectInspector} aria-live="polite">
-      <div className={styles.inspectorHeading}><span>SELECTED FILE</span><b>{project.year}</b></div>
+    <ProjectCopy copy={portfolioViewCopy}><aside className={styles.projectInspector} aria-live="polite">
+      <div className={styles.inspectorHeading}><span>SELECTED PROJECT</span><b>{project.year}</b></div>
       <div className={styles.inspectorTitle} style={{ "--area-colour": AREA_COLOURS[project.area] } as CSSProperties}>
         <span>{project.area}</span><h2>{project.shortTitle ?? project.title}</h2><p>{project.eyebrow}</p>
       </div>
       <div className={styles.inspectorFlags}>
-        <span data-kind="status">{project.status}</span><span data-kind="access">{accessMeta[project.access].label}</span>{isInteractiveProject(project) && <span data-kind="demo">Interactive</span>}{project.artifacts?.length ? <span data-kind="artifact">{project.artifacts.length} artifact{project.artifacts.length === 1 ? "" : "s"}</span> : null}
+        <span data-kind="status">{project.status}</span><span data-kind="access">{accessMeta[project.access].label}</span>{isInteractiveProject(project) && <span data-kind="demo">Interactive</span>}{project.artifacts?.length ? <span data-kind="artifact">{project.artifacts.length} supporting materials</span> : null}
       </div>
-      <p className={styles.inspectorSummary} lang={locale}>{translateText(locale, project.summary)}</p>
-      <section className={styles.inspectorTools}><span>DECLARED TOOLS · {project.tools.length}</span><div>{project.tools.map((tool) => <i key={tool}>{tool}</i>)}</div></section>
-      <button type="button" className={styles.openProject} onClick={() => onOpen(project)}>Open project file <span aria-hidden="true">›</span></button>
-      <small className={styles.inspectorBoundary}>Selection previews catalogue metadata only. Opening delegates to the archive’s existing project handler.</small>
-    </aside>
+      <p className={styles.inspectorSummary} lang={locale}>{projectText(locale, portfolioViewCopy, project.summary)}</p>
+      <section className={styles.inspectorTools}><span>TOOLS AND METHODS · {project.tools.length}</span><div>{project.tools.map((tool) => <i key={tool}>{tool}</i>)}</div></section>
+      <button type="button" className={styles.openProject} onClick={() => onOpen(project)}>Open project <span aria-hidden="true">›</span></button>
+      <small className={styles.inspectorBoundary}>Open the project to explore its purpose, interactive demo and supporting material.</small>
+    </aside></ProjectCopy>
   );
 }
 
@@ -598,8 +584,8 @@ export function PortfolioMap({
   initialSlug?: string;
   locale?: Locale;
 }) {
-  const [view, setView] = useState<ViewId>("timeline");
-  const [tabStop, setTabStop] = useState<ViewId>("timeline");
+  const [view, setView] = useState<ViewId>("compare");
+  const [tabStop, setTabStop] = useState<ViewId>("compare");
   const viewId = useId();
   const viewTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [selectedSlug, setSelectedSlug] = useState(() => (
@@ -629,9 +615,9 @@ export function PortfolioMap({
   }
 
   return (
-    <section className={styles.portfolioMap} aria-label="Portfolio map" lang="en-GB">
+    <ProjectLocaleProvider locale={locale}><ProjectCopy copy={portfolioViewCopy}><section className={styles.portfolioMap} aria-label="Portfolio map" lang="en-GB">
       <header className={styles.mapHeader}>
-        <div><span>SAMUEL HD / PROJECTS / MAP</span><h2>Portfolio Map</h2><p>Source-derived views across chronology, access, tools, declared relationships and model experiment lineage.</p></div>
+        <div><span>SAMUEL / PROJECT COLLECTION</span><h2>Explore the collection</h2><p>Compare projects, follow their timeline and explore the methods that connect them.</p></div>
         <dl aria-label="Portfolio catalogue summary">
           <div><dt>Files</dt><dd>{projects.length}</dd></div>
           <div><dt>Interactive</dt><dd>{TOTAL_DEMOS}</dd></div>
@@ -680,10 +666,10 @@ export function PortfolioMap({
       </div>
 
       <footer className={styles.mapFooter}>
-        <span>{projects.length} project records are read from the local catalogue; counts update with that source.</span>
-        <span>No fetch · no persistence · no performance ranking</span>
+        <span>{projects.length} projects connected through work, methods and learning.</span>
+        <span>Choose a project to explore its contribution</span>
       </footer>
-    </section>
+    </section></ProjectCopy></ProjectLocaleProvider>
   );
 }
 

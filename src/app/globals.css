@@ -1,8 +1,10 @@
+@import "./system7.css";
+
 :root {
-  --black: #111;
-  --ink: #202020;
+  --black: var(--s7-ink);
+  --ink: var(--s7-ink);
   --paper: #fff;
-  --chrome: #d8d8d8;
+  --chrome: var(--s7-chrome);
   --chrome-dark: #777;
   --chrome-light: #fff;
   --selection: #11177a;
@@ -13,7 +15,7 @@
   --chrome-font: Chicago, Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
   --system-font: Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
   --system-mono: Monaco, "Courier New", Courier, monospace;
-  --label-tracking: .08em;
+  --label-tracking: normal;
 }
 
 * {
@@ -855,10 +857,10 @@ body {
   display: block;
   margin-bottom: 5px;
   color: #555;
-  font-family: "Courier New", monospace;
-  font-size: 10px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-small);
   font-weight: 700;
-  letter-spacing: .16em;
+  letter-spacing: normal;
 }
 
 .document-header {
@@ -872,10 +874,10 @@ body {
 
 .document-header h3 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(24px, 3vw, 35px);
-  line-height: 1.02;
-  letter-spacing: -.035em;
+  font-family: var(--system-font);
+  font-size: var(--s7-title);
+  line-height: 1.25;
+  letter-spacing: normal;
 }
 
 .file-stamp,
@@ -884,39 +886,10 @@ body {
   border: 2px solid #111;
   background: #eee;
   box-shadow: 2px 2px 0 #999;
-  font-family: "Courier New", monospace;
-  font-size: 10px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-small);
   font-weight: 700;
   white-space: nowrap;
-}
-
-.mac-button {
-  display: inline-flex;
-  min-height: 28px;
-  align-items: center;
-  justify-content: center;
-  padding: 3px 13px;
-  border: 2px solid #111;
-  border-radius: 3px;
-  color: #111;
-  background: #e5e5e1;
-  box-shadow:
-    inset 2px 2px 0 #fff,
-    inset -2px -2px 0 #777;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.mac-button.is-default {
-  outline: 3px solid #111;
-  outline-offset: 2px;
-  font-weight: 700;
-}
-
-.mac-button:active {
-  background: #111;
-  color: #fff;
-  box-shadow: none;
 }
 
 .sidequest-app-loading {
@@ -995,8 +968,7 @@ body {
   padding: 19px 17px;
   border-right: 2px solid #111;
   background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,.035) 0 1px, transparent 1px 3px),
-    #d8d8d2;
+    var(--s7-chrome);
 }
 
 .portrait-frame {
@@ -1019,7 +991,7 @@ body {
 
 .portrait-caption {
   margin: 10px 0 16px;
-  font-size: 10px;
+  font-size: var(--s7-small);
   font-weight: 700;
   text-align: center;
 }
@@ -1036,15 +1008,15 @@ body {
 .quick-facts dt {
   margin-bottom: 2px;
   color: #666;
-  font-size: 10px;
+  font-size: var(--s7-small);
   font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .quick-facts dd {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
@@ -1070,22 +1042,22 @@ body {
 .about-program h1 {
   margin: 0;
   font-family: var(--system-font);
-  font-size: 25px;
+  font-size: var(--s7-title);
   font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -.02em;
+  line-height: 1.25;
+  letter-spacing: normal;
 }
 
 .hero-role {
   margin: 4px 0 0;
   color: #444;
-  font-size: 11px;
+  font-size: var(--s7-ui);
 }
 
 .hero-copy {
   max-width: 66ch;
   margin: 13px 0 0;
-  font-size: 12px;
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
@@ -1101,14 +1073,14 @@ body {
   padding: 0 6px;
   color: #111;
   background: #fff;
-  font-size: 11px;
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
 .about-panel > p {
   margin: 0;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 .latest-update-card {
@@ -1118,7 +1090,7 @@ body {
   margin-top: 14px;
   overflow: hidden;
   border: 2px solid #111;
-  background: #fbfbf4;
+  background: var(--s7-paper);
   box-shadow: inset 1px 1px #fff, inset -1px -1px #777, 3px 3px #888;
 }
 
@@ -1142,7 +1114,7 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 13px 14px 12px;
-  border-left: 6px solid #dfff37;
+  border-left: 0;
 }
 
 .latest-update-card__meta {
@@ -1150,53 +1122,36 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 5px 10px;
-  color: #465000;
-  font: 700 9px/1.25 var(--system-mono);
-  letter-spacing: .07em;
+  color: var(--s7-muted);
+  font: 400 var(--s7-small)/1.5 var(--chrome-font);
+  letter-spacing: normal;
 }
 
 .latest-update-card__meta time {
   padding: 1px 4px;
-  border: 1px solid #6f7900;
+  border: 1px solid var(--s7-shadow);
   color: #111;
-  background: #efffb2;
-  letter-spacing: .02em;
+  background: var(--s7-paper);
+  letter-spacing: normal;
 }
 
 .latest-update-card h2 {
   margin: 7px 0 4px;
-  font: 700 19px/1.02 Georgia, "Times New Roman", serif;
-  letter-spacing: -.025em;
+  font: 700 var(--s7-title)/1.25 var(--system-font);
+  letter-spacing: normal;
 }
 
 .latest-update-card p {
   margin: 0;
   color: #444;
-  font-size: 11px;
-  line-height: 1.38;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 .latest-update-card button {
   align-self: flex-start;
-  min-height: 32px;
   margin-top: 9px;
   padding: 4px 8px;
-  border: 2px solid #111;
-  border-radius: 0;
-  color: #111;
-  background: #dfff37;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #6f7900, 2px 2px #111;
-  font: 700 10px/1.2 var(--system-font);
-}
-
-.latest-update-card button:hover,
-.latest-update-card button:focus-visible {
-  background: #efffa0;
-}
-
-.latest-update-card button:active {
-  transform: translate(2px, 2px);
-  box-shadow: inset 1px 1px #6f7900;
 }
 
 .identity-switchboard {
@@ -1215,24 +1170,24 @@ body {
   align-items: center;
   padding: 7px 8px;
   border-bottom: 1px solid #777;
-  background: #d8d8d2;
+  background: var(--s7-chrome);
 }
 
 .identity-switchboard__heading > span {
   color: var(--selection);
-  font: 800 9px/1.2 var(--system-mono);
-  letter-spacing: .07em;
+  font: 400 var(--s7-ui)/1.5 var(--chrome-font);
+  letter-spacing: normal;
 }
 
 .identity-switchboard__heading b {
-  font-size: 11px;
+  font-size: var(--s7-ui);
 }
 
 .identity-switchboard__heading p {
   margin: 0;
   color: #555;
-  font-size: 11px;
-  line-height: 1.3;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 .identity-switchboard button {
@@ -1248,7 +1203,7 @@ body {
   border-bottom: 1px solid #aaa;
   color: #111;
   background: #fff;
-  font-family: inherit;
+  font-family: var(--chrome-font);
   text-align: left;
   cursor: pointer;
 }
@@ -1274,7 +1229,7 @@ body {
   min-height: 82px;
   margin: 3px;
   border: 2px solid var(--selection);
-  background: #eef0ff;
+  background: var(--s7-paper);
   box-shadow:
     inset 1px 1px 0 #fff,
     inset -1px -1px 0 #7779bd,
@@ -1324,11 +1279,11 @@ body {
   border: 1px solid var(--selection);
   color: var(--selection);
   background: #fff;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 800;
-  letter-spacing: .08em;
-  line-height: 1;
+  letter-spacing: normal;
+  line-height: 1.5;
 }
 
 .identity-switchboard button > .pixel-icon {
@@ -1338,15 +1293,15 @@ body {
 }
 
 .identity-switchboard button b {
-  font-size: 12px;
+  font-size: var(--s7-ui);
 }
 
 .identity-detail {
   display: block;
   margin: 3px 0 0;
   color: #333;
-  font-size: 11px;
-  line-height: 1.35;
+  font-size: var(--s7-ui);
+  line-height: 1.5;
 }
 
 .identity-switchboard button:hover,
@@ -1403,19 +1358,8 @@ body {
   padding: 11px 12px;
   overflow: hidden;
   border: 2px solid #111;
-  background: #fff9df;
+  background: var(--s7-paper);
   box-shadow: inset 1px 1px #fff, inset -1px -1px #888, 3px 3px #777;
-}
-
-.arcade-invite::after {
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  right: 0;
-  width: 86px;
-  height: 10px;
-  content: "";
-  background: repeating-linear-gradient(90deg, #181b37 0 8px, #f1c95e 8px 16px);
 }
 
 .arcade-invite > * {
@@ -1461,14 +1405,14 @@ body {
 
 .arcade-invite h2 {
   margin: 3px 0 2px;
-  font: 700 19px/1 Georgia, "Times New Roman", serif;
+  font: 700 var(--s7-heading)/1.25 var(--system-font);
 }
 
 .arcade-invite p {
   max-width: 62ch;
   margin: 0;
   color: #444;
-  font-size: 10px;
+  font-size: var(--s7-text);
   line-height: 1.35;
 }
 
@@ -1510,23 +1454,7 @@ body {
   min-height: 38px;
   align-self: end;
   padding: 6px 10px;
-  border: 2px solid #111;
-  color: #fff;
-  background: #313b92;
-  box-shadow: inset 1px 1px #737bd1, inset -1px -1px #090d51, 2px 2px #111;
-  font: 800 10px/1.2 var(--system-font);
   white-space: nowrap;
-}
-
-.arcade-invite > button:hover,
-.arcade-invite > button:focus-visible {
-  color: #111;
-  background: #f1c95e;
-}
-
-.arcade-invite > button:active {
-  transform: translate(2px, 2px);
-  box-shadow: inset 1px 1px #777;
 }
 
 @keyframes project-archive-attention {
@@ -1553,14 +1481,14 @@ body {
 }
 
 .about-evidence dt {
-  font-size: 11px;
+  font-size: var(--s7-small);
   font-weight: 700;
 }
 
 .about-evidence dd {
   margin: 0;
-  font-size: 11px;
-  line-height: 1.35;
+  font-size: var(--s7-ui);
+  line-height: 1.5;
 }
 
 .button-row {
@@ -1577,7 +1505,7 @@ body {
 .coverd-app {
   min-height: 100%;
   color: #111;
-  background: #efefea;
+  background: var(--s7-paper);
 }
 
 .coverd-hero {
@@ -1585,8 +1513,7 @@ body {
   grid-template-columns: 1.45fr .8fr;
   color: #111;
   background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 1px, transparent 1px 4px),
-    #deded9;
+    var(--s7-chrome);
   border-bottom: 3px double #111;
 }
 
@@ -1595,20 +1522,20 @@ body {
 }
 
 .coverd-kicker {
-  font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
-  letter-spacing: .14em;
+  letter-spacing: normal;
   opacity: .72;
 }
 
 .coverd-brand h3 {
   margin: 0;
   font-family: var(--system-font);
-  font-size: clamp(25px, 3.2vw, 34px);
+  font-size: var(--s7-title);
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.02em;
+  line-height: 1.25;
+  letter-spacing: normal;
 }
 
 .coverd-wordmark {
@@ -1632,7 +1559,7 @@ body {
   margin: 0;
   color: #333;
   font-family: var(--system-font);
-  font-size: 12px;
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
@@ -1646,35 +1573,16 @@ body {
 
 .coverd-actions > span {
   color: #555;
-  font-family: var(--system-mono);
-  font-size: 8px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
-  letter-spacing: .08em;
+  letter-spacing: normal;
 }
 
 .coverd-link {
   display: inline-flex;
-  min-height: 29px;
   align-items: center;
   padding: 4px 12px;
-  border: 2px solid #111;
-  border-radius: 2px;
-  color: #111;
-  background: #e5e5e1;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
-  font-size: 11px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.coverd-link:hover {
-  background: #fff;
-}
-
-.coverd-link:active {
-  color: #fff;
-  background: #111;
-  box-shadow: none;
 }
 
 .founder-note {
@@ -1683,7 +1591,7 @@ body {
   justify-content: center;
   padding: 20px;
   border-left: 2px solid #111;
-  background: #fff4b8;
+  background: var(--s7-paper);
 }
 
 .founder-note > span {
@@ -1691,18 +1599,18 @@ body {
   width: fit-content;
   padding-bottom: 5px;
   border-bottom: 2px solid #111;
-  color: #8a3f0b;
-  font-family: var(--system-mono);
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-family: var(--system-font);
+  font-size: var(--s7-small);
   font-weight: 700;
-  letter-spacing: .08em;
+  letter-spacing: normal;
 }
 
 .founder-note p {
   margin: 13px 0 0;
-  color: #222;
+  color: var(--s7-ink);
   font-family: var(--system-font);
-  font-size: 11px;
+  font-size: var(--s7-text);
   line-height: 1.48;
 }
 
@@ -1713,21 +1621,20 @@ body {
   padding: 22px 24px;
   border-bottom: 2px solid #111;
   background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0 1px, transparent 1px 4px),
-    #fff;
+    var(--s7-paper);
 }
 
 .coverd-thesis h4 {
   margin: 0;
   font-family: var(--system-font);
-  font-size: clamp(18px, 2.5vw, 24px);
-  line-height: 1.12;
-  letter-spacing: -.015em;
+  font-size: var(--s7-heading);
+  line-height: 1.25;
+  letter-spacing: normal;
 }
 
 .coverd-thesis > p {
   margin: 4px 0 0;
-  font-size: 12px;
+  font-size: var(--s7-text);
   line-height: 1.6;
 }
 
@@ -1752,19 +1659,19 @@ body {
 }
 
 .coverd-numbers strong {
-  font-family: var(--system-font);
-  font-size: 20px;
-  line-height: 1;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
+  line-height: 1.5;
 }
 
 .coverd-numbers span {
   margin-top: 5px;
   color: #59616c;
-  font-family: var(--system-mono);
-  font-size: 8px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
-  letter-spacing: .05em;
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .coverd-section {
@@ -1773,7 +1680,7 @@ body {
 }
 
 .coverd-section--pipeline {
-  background: #e9e8e1;
+  background: var(--s7-paper);
 }
 
 .coverd-section__heading {
@@ -1785,17 +1692,17 @@ body {
 }
 
 .coverd-section__heading > span {
-  font-family: var(--system-mono);
-  font-size: 9px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
-  letter-spacing: .12em;
+  letter-spacing: normal;
 }
 
 .coverd-section__heading h4 {
   margin: 0;
   font-family: var(--system-font);
-  font-size: 20px;
-  letter-spacing: -.01em;
+  font-size: var(--s7-heading);
+  letter-spacing: normal;
 }
 
 .coverd-product-grid {
@@ -1808,9 +1715,9 @@ body {
   position: relative;
   min-height: 155px;
   padding: 17px 15px 14px;
-  border: 2px solid #111;
+  border: 1px solid var(--s7-shadow);
   background: #fff;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #999, 2px 2px 0 #777;
+  box-shadow: none;
 }
 
 .coverd-product-grid article > span {
@@ -1818,8 +1725,8 @@ body {
   top: 8px;
   right: 9px;
   color: #e4782e;
-  font-family: var(--system-mono);
-  font-size: 10px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
@@ -1827,23 +1734,23 @@ body {
 .coverd-pipeline h5 {
   margin: 0;
   font-family: var(--system-font);
-  font-size: 16px;
+  font-size: var(--s7-heading);
 }
 
 .coverd-product-grid p,
 .coverd-pipeline p {
   margin: 8px 0 0;
   color: #505761;
-  font-size: 10px;
+  font-size: var(--s7-text);
   line-height: 1.48;
 }
 
 .coverd-pipeline {
   display: grid;
   grid-template-columns: repeat(5,minmax(0,1fr));
-  border: 2px solid #111;
+  border: 1px solid var(--s7-shadow);
   background: #fff;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #999, 2px 2px 0 #777;
+  box-shadow: none;
 }
 
 .coverd-pipeline article {
@@ -1878,14 +1785,14 @@ body {
   display: block;
   margin-bottom: 14px;
   color: #e4782e;
-  font-family: var(--system-mono);
-  font-size: 12px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
 }
 
 .coverd-ethics {
   padding: 24px;
   color: #111;
-  background: #d9dcff;
+  background: var(--s7-paper);
 }
 
 .coverd-ethics {
@@ -1901,13 +1808,13 @@ body {
 .coverd-ethics__intro h4 {
   margin: 0;
   font-family: var(--system-font);
-  font-size: 21px;
-  line-height: 1.12;
+  font-size: var(--s7-heading);
+  line-height: 1.25;
 }
 
 .coverd-ethics__intro p {
   color: #333;
-  font-size: 10px;
+  font-size: var(--s7-text);
   line-height: 1.5;
 }
 
@@ -1918,20 +1825,20 @@ body {
 }
 
 .coverd-principles article {
-  padding: 0 0 10px 12px;
-  border-left: 2px solid var(--selection);
+  padding: 12px 0;
+  border-top: 1px solid var(--s7-shadow);
 }
 
 .coverd-principles strong {
-  font-family: var(--system-font);
-  font-size: 13px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
 }
 
 .coverd-principles p {
   margin: 4px 0 0;
   color: #333;
-  font-size: 9px;
-  line-height: 1.42;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 .coverd-values {
@@ -1948,8 +1855,8 @@ body {
   border: 1px solid #555;
   color: #111;
   background: #f5f5f1;
-  font-family: var(--system-mono);
-  font-size: 8px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
 }
 
 /* Experience */
@@ -1962,8 +1869,7 @@ body {
   min-height: 100%;
   padding: 24px 27px 31px;
   background:
-    linear-gradient(rgba(255,255,255,.89),rgba(255,255,255,.89)),
-    repeating-linear-gradient(0deg,#ddd 0 1px,transparent 1px 4px);
+    var(--s7-paper);
 }
 
 .career-list {
@@ -1986,8 +1892,8 @@ html:lang(zh-TW) .career-record {
   flex-direction: column;
   padding: 17px 16px 17px 0;
   border-right: 1px solid #aaa;
-  font-family: "Courier New", monospace;
-  font-size: 10px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-small);
   font-weight: 700;
 }
 
@@ -2015,8 +1921,8 @@ html:lang(zh-TW) .career-record {
 
 .record-heading h4 {
   margin: 0 0 2px;
-  font-family: Georgia, serif;
-  font-size: 17px;
+  font-family: var(--system-font);
+  font-size: var(--s7-heading);
 }
 
 .record-heading p,
@@ -2033,8 +1939,8 @@ html:lang(zh-TW) .career-record {
   padding: 2px 4px;
   color: #fff;
   background: #111;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
@@ -2042,8 +1948,8 @@ html:lang(zh-TW) .career-record {
   max-width: 70ch;
   margin-top: 7px;
   color: #444;
-  font-size: 12px;
-  line-height: 1.42;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 /* Projects */
@@ -2170,7 +2076,7 @@ html:lang(zh-TW) .career-record {
 .skills-app {
   min-height: 100%;
   padding: 22px 24px 28px;
-  background: #d9d9d4;
+  background: var(--s7-chrome);
 }
 
 .control-panel-intro {
@@ -2184,14 +2090,14 @@ html:lang(zh-TW) .career-record {
 
 .control-panel-intro h3 {
   margin: 0;
-  font-family: Georgia, serif;
-  font-size: 26px;
+  font-family: var(--system-font);
+  font-size: var(--s7-title);
 }
 
 .control-panel-intro p {
   margin: 3px 0 0;
   color: #555;
-  font-size: 11px;
+  font-size: var(--s7-text);
 }
 
 .control-groups {
@@ -2210,8 +2116,8 @@ html:lang(zh-TW) .career-record {
 
 .control-group legend {
   padding: 0 7px;
-  font-family: var(--system-font);
-  font-size: 12px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
@@ -2219,9 +2125,9 @@ html:lang(zh-TW) .career-record {
   min-height: 43px;
   margin: 0 0 10px;
   color: #444;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 11px;
-  line-height: 1.35;
+  font-family: var(--system-font);
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 .skill-items {
@@ -2238,8 +2144,8 @@ html:lang(zh-TW) .career-record {
   min-width: 0;
   align-items: flex-start;
   gap: 6px;
-  font-size: 11px;
-  line-height: 1.3;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 .skill-items li::before {
@@ -2258,17 +2164,17 @@ html:lang(zh-TW) .career-record {
   padding-top: 9px;
   border-top: 1px solid #aaa;
   color: #333;
-  font-size: 10px;
-  line-height: 1.4;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 .skill-evidence strong {
   display: block;
   margin-bottom: 3px;
   color: var(--selection);
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  letter-spacing: .07em;
+  font-family: var(--system-font);
+  font-size: var(--s7-text);
+  letter-spacing: normal;
 }
 
 /* Education */
@@ -2285,7 +2191,7 @@ html:lang(zh-TW) .career-record {
 }
 
 .degree-card--imperial {
-  border-left: 7px solid var(--accent);
+  border-left: 0;
 }
 
 .degree-mark {
@@ -2296,23 +2202,23 @@ html:lang(zh-TW) .career-record {
   border: 2px solid #111;
   background: var(--selection);
   color: #fff;
-  font-family: Georgia, serif;
-  font-size: 16px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
 .degree-card span {
   color: #666;
-  font-family: "Courier New", monospace;
-  font-size: 10px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
   white-space: nowrap;
 }
 
 .degree-card h4 {
   margin: 3px 0 2px;
-  font-family: Georgia, serif;
-  font-size: 18px;
+  font-family: var(--system-font);
+  font-size: var(--s7-heading);
 }
 
 .degree-card p,
@@ -2326,6 +2232,8 @@ html:lang(zh-TW) .career-record {
 }
 
 .degree-card small {
+  font-size: var(--s7-small);
+  line-height: 1.45;
   display: block;
   margin-top: 6px;
   color: #555;
@@ -2345,14 +2253,14 @@ html:lang(zh-TW) .career-record {
 
 .education-columns h4 {
   margin: 0 0 8px;
-  font-family: Georgia, serif;
-  font-size: 16px;
+  font-family: var(--system-font);
+  font-size: var(--s7-heading);
 }
 
 .education-columns ul {
   margin: 0;
   padding-left: 17px;
-  font-size: 11px;
+  font-size: var(--s7-ui);
   line-height: 1.55;
 }
 
@@ -2366,7 +2274,7 @@ html:lang(zh-TW) .career-record {
   gap: 12px;
   padding: 4px 0;
   border-bottom: 1px dotted #888;
-  font-size: 10px;
+  font-size: var(--s7-ui);
 }
 
 .language-list dd {
@@ -2506,7 +2414,7 @@ html:lang(zh-TW) .career-record {
 .documents-library {
   padding: 12px 9px;
   border-right: 2px solid #111;
-  background: #deded9;
+  background: var(--s7-chrome);
 }
 
 .documents-library__title {
@@ -2528,14 +2436,14 @@ html:lang(zh-TW) .career-record {
 
 .documents-library__title span {
   color: #666;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  letter-spacing: .14em;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .documents-library__title strong {
   margin-top: 3px;
-  font-size: 11px;
+  font-size: var(--s7-ui);
 }
 
 .documents-library > button {
@@ -2567,15 +2475,15 @@ html:lang(zh-TW) .career-record {
 }
 
 .documents-library > button strong {
-  font-size: 10px;
-  line-height: 1.25;
+  font-size: var(--s7-ui);
+  line-height: 1.5;
 }
 
 .documents-library > button small {
   margin-top: 3px;
   color: #666;
-  font-size: 8px;
-  line-height: 1.3;
+  font-size: var(--s7-small);
+  line-height: 1.5;
 }
 
 .documents-library > button.is-active small {
@@ -2597,8 +2505,8 @@ html:lang(zh-TW) .career-record {
   align-items: center;
   gap: 10px;
   border-bottom: 2px solid #111;
-  background: #deded9;
-  font-size: 9px;
+  background: var(--s7-chrome);
+  font-size: var(--s7-small);
 }
 
 .documents-toolbar > span:first-child {
@@ -2785,9 +2693,9 @@ html:lang(zh-TW) .career-record {
   padding: 6px 10px;
   border-top: 1px solid #999;
   color: #444;
-  background: #eee;
-  font-size: 9px;
-  line-height: 1.35;
+  background: var(--s7-paper);
+  font-size: var(--s7-ui);
+  line-height: 1.5;
 }
 
 .documents-fallback a {
@@ -2920,9 +2828,7 @@ html:lang(zh-TW) .career-record {
   }
 }
 
-/* The archive owns its two desktop scroll regions. Letting the generic window
-   scroller participate creates a third, invisible scroll range from the tall
-   detail pane even though the explorer itself is correctly clipped. */
+/* The project library owns one scroll area shared by its graph and file views. */
 @media (min-width: 721px) and (min-height: 521px) {
   .mac-window[data-app-id="projects"] .mac-window__content {
     overflow: clip;
@@ -4211,9 +4117,9 @@ html:lang(zh-TW) .career-record {
 .memory-fact {
   margin: 10px auto 0;
   padding: 7px 9px;
-  border-left: 4px solid #315f37;
+  border: 1px solid #aaa;
   background: rgba(255,255,255,.55);
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.35;
 }
 
@@ -4365,7 +4271,7 @@ html:lang(zh-TW) .career-record {
 .lab-summary > p {
   max-width: 65ch;
   margin: 0;
-  font-size: 11px;
+  font-size: var(--s7-text);
   line-height: 1.48;
 }
 
@@ -4397,17 +4303,17 @@ html:lang(zh-TW) .career-record {
 
 .lab-summary dt {
   color: #777;
-  font-family: var(--system-mono);
-  font-size: 9px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-small);
   font-weight: 700;
-  letter-spacing: .05em;
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .lab-summary dd {
   margin: 3px 0 0;
-  font-family: Georgia, serif;
-  font-size: 14px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
@@ -4419,20 +4325,7 @@ html:lang(zh-TW) .career-record {
 }
 
 .lab-filters button {
-  min-height: 28px;
   padding: 3px 9px;
-  border: 1px solid #777;
-  background: #e6e6e1;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #999;
-  font-family: var(--system-mono);
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.lab-filters button.is-active {
-  color: #fff;
-  background: var(--selection);
-  box-shadow: none;
 }
 
 .service-grid {
@@ -4447,9 +4340,9 @@ html:lang(zh-TW) .career-record {
   grid-template-columns: 48px 1fr;
   gap: 10px;
   padding: 10px;
-  border: 2px solid #111;
+  border: 1px solid var(--s7-shadow);
   background: #fff;
-  box-shadow: 2px 2px 0 #aaa;
+  box-shadow: none;
 }
 
 .service-pixel-icon {
@@ -4485,8 +4378,8 @@ html:lang(zh-TW) .career-record {
 
 .service-card h4 {
   margin: 0;
-  font-family: Georgia, serif;
-  font-size: 15px;
+  font-family: var(--system-font);
+  font-size: var(--s7-heading);
 }
 
 .service-card__copy > div > span {
@@ -4494,8 +4387,8 @@ html:lang(zh-TW) .career-record {
   align-items: center;
   gap: 3px;
   color: #5d646b;
-  font-family: var(--system-mono);
-  font-size: 9px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
@@ -4511,15 +4404,15 @@ html:lang(zh-TW) .career-record {
   display: block;
   margin-top: 2px;
   color: var(--selection);
-  font-family: var(--system-mono);
-  font-size: 10px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
 }
 
 .service-card p {
   margin: 7px 0 0;
   color: #555;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: var(--s7-text);
+  line-height: 1.5;
 }
 
 /* Scrapbook */
@@ -4536,7 +4429,7 @@ html:lang(zh-TW) .career-record {
   min-height: 155px;
   padding: 31px 14px 13px;
   border: 1px solid #777;
-  background: #fff3aa;
+  background: var(--s7-paper);
   box-shadow: 3px 4px 0 rgba(0,0,0,.25);
   transform: rotate(-1deg);
 }
@@ -4548,12 +4441,12 @@ html:lang(zh-TW) .career-record {
 }
 
 .scrap-note--2 {
-  background: #d8ecff;
+  background: var(--s7-paper);
   transform: rotate(1.2deg);
 }
 
 .scrap-note--3 {
-  background: #f7d9e2;
+  background: var(--s7-paper);
   transform: rotate(-.5deg);
 }
 
@@ -4567,27 +4460,27 @@ html:lang(zh-TW) .career-record {
   place-items: center;
   border: 1px solid #111;
   border-radius: 50%;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-small);
 }
 
 .scrap-note h4 {
   margin: 0 0 8px;
-  font-family: Georgia, serif;
-  font-size: 18px;
+  font-family: var(--system-font);
+  font-size: var(--s7-heading);
 }
 
 .scrap-note p {
   margin: 0;
-  font-size: 11px;
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
 .scrapbook-intro {
   margin: 10px 0 -8px;
   color: #555;
-  font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-family: var(--chrome-font);
+  font-size: var(--s7-ui);
 }
 
 .scrap-note__summary {
@@ -4607,35 +4500,12 @@ html:lang(zh-TW) .career-record {
 .scrap-note__toggle {
   display: flex;
   width: 100%;
-  min-height: 31px;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   margin-top: 12px;
   padding: 4px 7px;
-  border: 2px solid #111;
-  color: #111;
-  background: rgba(255,255,255,.64);
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
-  font-family: var(--system-font);
-  font-size: 10px;
-  font-weight: 700;
   text-align: left;
-}
-
-.scrap-note__toggle:hover {
-  background: #fff;
-}
-
-.scrap-note__toggle:active {
-  padding: 5px 6px 3px 8px;
-  box-shadow: inset 1px 1px #777;
-}
-
-.scrap-note__toggle:focus-visible {
-  outline: 1px dotted #111;
-  outline-offset: -5px;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
 }
 
 /* Responsive */
@@ -4932,11 +4802,11 @@ html:lang(zh-TW) .career-record {
   }
 
   .quick-facts dt {
-    font-size: 9px;
+    font-size: var(--s7-small);
   }
 
   .quick-facts dd {
-    font-size: 11px;
+    font-size: var(--s7-ui);
   }
 
   .about-main {
@@ -4944,15 +4814,15 @@ html:lang(zh-TW) .career-record {
   }
 
   .about-program h1 {
-    font-size: 23px;
+    font-size: var(--s7-title);
   }
 
   .hero-role {
-    font-size: 11px;
+    font-size: var(--s7-ui);
   }
 
   .hero-copy {
-    font-size: 12px;
+    font-size: var(--s7-text);
   }
 
   .latest-update-card {
@@ -4966,7 +4836,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .latest-update-card__copy {
-    border-left-width: 5px;
+    border-left-width: 0;
   }
 
   .identity-switchboard__heading {
@@ -5053,7 +4923,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .coverd-brand h3 {
-    font-size: 28px;
+    font-size: var(--s7-title);
   }
 
   .coverd-wordmark {
@@ -5129,7 +4999,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .document-header h3 {
-    font-size: 25px;
+    font-size: var(--s7-title);
   }
 
   .career-record {
@@ -5187,11 +5057,11 @@ html:lang(zh-TW) .career-record {
   .degree-mark {
     width: 45px;
     height: 45px;
-    font-size: 13px;
+    font-size: var(--s7-ui);
   }
 
   .degree-card h4 {
-    font-size: 15px;
+    font-size: var(--s7-heading);
   }
 
   .education-columns {
@@ -5404,6 +5274,22 @@ html:lang(zh-TW) .career-record {
 
   .arcade-game__header h3 {
     font-size: 22px;
+  }
+
+  .arcade-now-playing > p,
+  .arcade-game__header p,
+  .arcade-game__scoreboard dt,
+  .arcade-game__status,
+  .arcade-game__keys,
+  .game-help,
+  .mine-toolbar strong,
+  .mine-toolbar button,
+  .puzzle-actions button,
+  .arcade-game__actions button {
+    font-family: var(--system-font);
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: normal;
   }
 
   .arcade-game__scoreboard {
@@ -5692,10 +5578,6 @@ html:lang(zh-TW) .career-record {
   .scrap-grid {
     grid-template-columns: 1fr;
   }
-
-  .scrap-note__toggle {
-    min-height: 44px;
-  }
 }
 
 @media (max-width: 390px) {
@@ -5736,7 +5618,6 @@ html:lang(zh-TW) .career-record {
   }
 
   .lab-filters button {
-    min-height: 44px;
     padding-inline: 12px;
   }
 
@@ -5760,10 +5641,10 @@ html:lang(zh-TW) .career-record {
     gap: 3px 8px;
   }
 
-  .portrait-caption { font-size: 9px; }
+  .portrait-caption { font-size: var(--s7-small); }
   .quick-facts div { padding: 2px 0; }
-  .quick-facts dt { font-size: 8px; }
-  .quick-facts dd { font-size: 10px; }
+  .quick-facts dt { font-size: var(--s7-small); }
+  .quick-facts dd { font-size: var(--s7-ui); }
 }
 
 .system-menubar :where(button, a):focus-visible,
@@ -5833,3 +5714,16 @@ html:lang(zh-TW) .career-record {
     height: auto !important;
   }
 }
+
+/* Career records and their project evidence share one navigable trail. */
+.career-record[id], .degree-card[id] { scroll-margin-top: 24px; }
+.career-projects { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.career-projects a { display: grid; gap: 4px; min-height: 44px; max-width: 100%; border: 1px solid #777; background: var(--s7-paper); box-shadow: inset 1px 1px white, inset -1px -1px #bbb; padding: 8px 10px; color: #11177a; text-decoration: none; }
+.career-projects a:hover { background: white; }
+.career-projects a:focus-visible { outline: 2px dotted #11177a; outline-offset: 3px; }
+.career-projects span { font-size: var(--s7-ui); color: #454545; }
+.career-projects strong { font-size: var(--s7-ui); line-height: 1.5; }
+
+.career-projects-more { flex: 1 0 100%; border-top: 1px dotted #777; }
+.career-projects-more > summary { min-height: 44px; padding: 12px 4px; cursor: pointer; color: #11177a; font-size: var(--s7-ui); }
+.career-projects-more > summary:focus-visible { outline: 2px dotted #11177a; outline-offset: -2px; }

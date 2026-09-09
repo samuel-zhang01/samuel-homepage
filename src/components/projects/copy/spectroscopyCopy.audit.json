@@ -1,0 +1,19 @@
+{
+  "dictionary": "spectroscopyCopy.ts",
+  "exportName": "spectroscopyCopy",
+  "sources": [
+    "src/components/projects/SpectroscopyStudio.tsx"
+  ],
+  "identities": {
+    "rotational_demo.dat": "Conventional file format, output unit, or explicitly fictional display filename.",
+    "{0}{1} MHz": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "MHz": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "PNG": "Conventional file format, output unit, or explicitly fictional display filename.",
+    "JPG": "Conventional file format, output unit, or explicitly fictional display filename.",
+    "TIF": "Conventional file format, output unit, or explicitly fictional display filename.",
+    "PDF": "Conventional file format, output unit, or explicitly fictional display filename.",
+    "EPS": "Conventional file format, output unit, or explicitly fictional display filename.",
+    "{0} × {1} px": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "DPI": "Conventional file format, output unit, or explicitly fictional display filename."
+  }
+}

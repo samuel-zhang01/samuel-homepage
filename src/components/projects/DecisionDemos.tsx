@@ -1,5 +1,10 @@
 "use client";
 
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { decisionDemosCopy } from "./copy/decisionDemosCopy";
+
+import { MathEquation } from "./MathEquation";
+
 import { useId, useMemo, useState, type CSSProperties } from "react";
 
 import { DECISION_OPE_LOGS } from "@/data/decisionOpeLogs";
@@ -26,7 +31,7 @@ function SourceNote({
   tone?: "blue" | "amber" | "green";
 }) {
   return (
-    <aside className={`${styles.sourceNote} ${tone === "blue" ? "" : styles[tone]}`} role="note">
+    <ProjectCopy copy={decisionDemosCopy}><aside className={`${styles.sourceNote} ${tone === "blue" ? "" : styles[tone]}`} role="note">
       <span className={styles.sourceIcon} aria-hidden="true">
         {tone === "amber" ? "!" : tone === "green" ? "✓" : "i"}
       </span>
@@ -34,7 +39,7 @@ function SourceNote({
         <strong>{title}</strong>
         <p>{children}</p>
       </div>
-    </aside>
+    </aside></ProjectCopy>
   );
 }
 
@@ -50,14 +55,14 @@ function RangeField({
 }) {
   const helpId = useId();
   return (
-    <label className={styles.rangeField}>
+    <ProjectCopy copy={decisionDemosCopy}><label className={styles.rangeField}>
       <span className={styles.rangeHeading}>
         <strong>{label}</strong>
         <output>{valueLabel}</output>
       </span>
       <input {...props} type="range" aria-describedby={help ? helpId : undefined} />
       {help ? <small id={helpId}>{help}</small> : null}
-    </label>
+    </label></ProjectCopy>
   );
 }
 
@@ -132,10 +137,10 @@ export function AirQualityBudgetDemo() {
   }, [interpretability]);
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={decisionDemosCopy}><DemoWindow
       appName="Monitor Planner"
       title="Air-quality sensor budget"
-      status="COURSEWORK · HYPOTHETICAL"
+      status="Coursework · hypothetical"
       purpose="Turn source data quality and model evidence into an explicit trade-off between sensor cost, predictive value and interpretability."
       tryThis="Change the sensor budget and interpretability preference, then compare the feasible choices."
       watchFor="The browser-only recommendation moves along a constrained frontier; it is not a live procurement or deployment decision."
@@ -165,7 +170,7 @@ export function AirQualityBudgetDemo() {
           <section className={styles.controlPanel} aria-labelledby="air-data-title">
             <div className={styles.panelTitle}>
               <span aria-hidden="true">01</span>
-              <div><p>DATA CONTRACT</p><h3 id="air-data-title">What one row represents</h3></div>
+              <div><p>Data contract</p><h3 id="air-data-title">What one row represents</h3></div>
             </div>
             <dl className={styles.airDataFacts}>
               <div><dt>Rows</dt><dd>7,674 ambient snapshots</dd></div>
@@ -183,8 +188,8 @@ export function AirQualityBudgetDemo() {
           </section>
           <section className={styles.chartPanel} aria-labelledby="air-missing-title">
             <div className={styles.chartHeading}>
-              <div><span>SOURCE-RECORDED PROFILE</span><h3 id="air-missing-title">Missingness before imputation</h3></div>
-              <span className={styles.lowerLegend}>10 OF 11 PREDICTORS SHOWN</span>
+              <div><span>Source-recorded profile</span><h3 id="air-missing-title">Missingness before imputation</h3></div>
+              <span className={styles.lowerLegend}>10 of 11 predictors shown</span>
             </div>
             <div className={styles.missingBars}>
               {AIR_MISSINGNESS.map((feature) => (
@@ -205,7 +210,7 @@ export function AirQualityBudgetDemo() {
           <section className={styles.controlPanel} aria-labelledby="air-model-priority-title">
             <div className={styles.panelTitle}>
               <span aria-hidden="true">02</span>
-              <div><p>BROWSER DECISION RULE</p><h3 id="air-model-priority-title">Choose the trade-off</h3></div>
+              <div><p>Browser decision rule</p><h3 id="air-model-priority-title">Choose the trade-off</h3></div>
             </div>
             <RangeField
               label="Interpretability priority"
@@ -217,14 +222,14 @@ export function AirQualityBudgetDemo() {
               help="The ranking blends source-recorded test R² with an explicitly authored transparency score. It is not source model selection."
             />
             <div className={styles.modelWinner} aria-live="polite">
-              <span>CURRENT BROWSER RANK</span>
+              <span>Current browser rank</span>
               <strong>{rankedModels[0].name}</strong>
               <p>Score {rankedModels[0].score.toFixed(3)} · test R² {rankedModels[0].testR2.toFixed(4)} · {rankedModels[0].features} features</p>
             </div>
           </section>
           <section className={styles.chartPanel} aria-labelledby="air-model-table-title">
             <div className={styles.chartHeading}>
-              <div><span>SOURCE-RECORDED RESULTS</span><h3 id="air-model-table-title">Five model families</h3></div>
+              <div><span>Source-recorded results</span><h3 id="air-model-table-title">Five model families</h3></div>
               <span className={styles.lowerLegend}>RANDOM 80/20 TEST</span>
             </div>
             <div className={styles.modelTableWrap} role="region" tabIndex={0} aria-label="Scrollable air-quality model comparison">
@@ -249,7 +254,7 @@ export function AirQualityBudgetDemo() {
           <div className={styles.panelTitle}>
             <span aria-hidden="true">01</span>
             <div>
-              <p>DESIGN CONTROL</p>
+              <p>Design control</p>
               <h3 id="air-controls-title">Set a hardware ceiling</h3>
             </div>
           </div>
@@ -271,7 +276,7 @@ export function AirQualityBudgetDemo() {
           </div>
 
           <div className={styles.selectionCard} aria-live="polite">
-            <span className={styles.selectionFlag}>BEST REPORTED FIT</span>
+            <span className={styles.selectionFlag}>Best reported fit</span>
             <h4>{selected.name}</h4>
             <div className={styles.bigMetric}>
               <strong>{selected.rmse.toFixed(4)}</strong>
@@ -305,10 +310,10 @@ export function AirQualityBudgetDemo() {
         <section className={styles.chartPanel} aria-labelledby="air-frontier-title">
           <div className={styles.chartHeading}>
             <div>
-              <span>REPORTED SNAPSHOTS</span>
+              <span>Reported snapshots</span>
               <h3 id="air-frontier-title">Cost–accuracy frontier</h3>
             </div>
-            <span className={styles.lowerLegend}>LOWER RMSE IS BETTER</span>
+            <span className={styles.lowerLegend}>Lower RMSE is better</span>
           </div>
 
           <div
@@ -370,7 +375,7 @@ export function AirQualityBudgetDemo() {
         </section>
       </div>
       </>}
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 
@@ -397,14 +402,14 @@ function MatrixCell({
   tone: "good" | "bad";
 }) {
   return (
-    <div
+    <ProjectCopy copy={decisionDemosCopy}><div
       className={`${styles.matrixCell} ${tone === "good" ? "" : styles[tone]}`}
       style={{ "--heat": `${8 + (value / 1_000) * 32}%` } as CSSProperties}
     >
       <span>{label}</span>
       <strong>{value.toLocaleString("en-GB")}</strong>
       <small>{(value / 10).toFixed(1)}% of class</small>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -431,10 +436,10 @@ export function CyberThresholdDemo() {
   const curvePoints = curve.map((point) => `${pointX(point.threshold)},${pointY(point.cost)}`).join(" ");
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={decisionDemosCopy}><DemoWindow
       appName="Threshold Workbench"
       title="Cyber-risk cost simulator"
-      status="SYNTHETIC SCENARIO"
+      status="Synthetic scenario"
       purpose="Show how false-positive and false-negative costs change a classifier threshold—and why leaked historical evidence cannot validate it."
       tryThis="Change the cost assumptions and threshold, then inspect the audit and rerun requirements."
       watchFor="The hypothetical cost balance changes, while the performance claim remains withheld until a leakage-safe evaluation exists."
@@ -460,7 +465,7 @@ export function CyberThresholdDemo() {
           <div className={styles.panelTitle}>
             <span aria-hidden="true">01</span>
             <div>
-              <p>WHAT-IF CONTROLS</p>
+              <p>What-if controls</p>
               <h3 id="cyber-controls-title">Choose the operating point</h3>
             </div>
           </div>
@@ -509,19 +514,19 @@ export function CyberThresholdDemo() {
         <section className={styles.matrixPanel} aria-labelledby="matrix-title" aria-live="polite">
           <div className={styles.chartHeading}>
             <div>
-              <span>SYNTHETIC 2,000-FLOW COHORT</span>
+              <span>Synthetic 2,000-flow cohort</span>
               <h3 id="matrix-title">Confusion matrix</h3>
             </div>
             <span className={styles.hypothesisBadge}>HYPOTHETICAL</span>
           </div>
           <div className={styles.matrixAxisTop} aria-hidden="true">
-            <span>PREDICT BENIGN</span>
-            <span>PREDICT ATTACK</span>
+            <span>Predict benign</span>
+            <span>Predict attack</span>
           </div>
           <div className={styles.matrixWithAxis}>
             <div className={styles.matrixAxisSide} aria-hidden="true">
-              <span>ACTUAL BENIGN</span>
-              <span>ACTUAL ATTACK</span>
+              <span>Actual benign</span>
+              <span>Actual attack</span>
             </div>
             <div className={styles.matrixGrid}>
               <MatrixCell label="True negative" value={matrix.tn} tone="good" />
@@ -535,7 +540,7 @@ export function CyberThresholdDemo() {
 
       <section className={styles.costPanel} aria-labelledby="cost-curve-title">
         <div className={styles.costSummary}>
-          <span>TOTAL SCENARIO COST</span>
+          <span>Total scenario cost</span>
           <strong>{pounds.format(totalCost)}</strong>
           <small>{matrix.fn} misses × {pounds.format(falseNegativeCost)} + {matrix.fp} false alarms × {pounds.format(falsePositiveCost)}</small>
         </div>
@@ -547,7 +552,7 @@ export function CyberThresholdDemo() {
         >
           <div className={styles.chartHeading}>
             <div>
-              <span>RELATIVE SHAPE · CURRENT COST ASSUMPTIONS</span>
+              <span>Relative shape · current cost assumptions</span>
               <h3 id="cost-curve-title">Cost by threshold</h3>
             </div>
           </div>
@@ -575,7 +580,7 @@ export function CyberThresholdDemo() {
           </div>
         </div>
       </section>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 
@@ -612,10 +617,10 @@ export function RegularisationLabDemo() {
     }).join(" ");
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={decisionDemosCopy}><DemoWindow
       appName="Shrinkage Lab"
       title="Ridge & LASSO coefficient paths"
-      status="CONCEPT EXPLORER"
+      status="Concept explorer"
       purpose="Make regularisation visible: Ridge continuously shrinks coefficients, while LASSO can remove them from the active model."
       tryThis="Raise lambda and switch between Ridge and LASSO."
       watchFor="Coefficient magnitudes and the active set change through real in-browser toy calculations, not a replay of the source notebook fit."
@@ -639,7 +644,7 @@ export function RegularisationLabDemo() {
           <div className={styles.panelTitle}>
             <span aria-hidden="true">λ</span>
             <div>
-              <p>MODEL CONTROL</p>
+              <p>Model control</p>
               <h3 id="regularisation-controls-title">Apply a penalty</h3>
             </div>
           </div>
@@ -669,12 +674,10 @@ export function RegularisationLabDemo() {
             help="Move λ right to penalise larger coefficients more strongly."
           />
           <div className={styles.formulaCard}>
-            <span>ORTHONORMAL CLOSED FORM</span>
-            <code>
-              {method === "ridge"
-                ? "β̂ridge = β̂OLS / (1 + λ)"
-                : "β̂lasso = sign(β̂OLS) · max(|β̂OLS| − λ, 0)"}
-            </code>
+            <span>Orthonormal closed form</span>
+            <MathEquation tex={method === "ridge"
+              ? String.raw`\widehat{\beta}_{\mathrm{ridge}}=\frac{\widehat{\beta}_{\mathrm{OLS}}}{1+\lambda}`
+              : String.raw`\widehat{\beta}_{\mathrm{lasso}}=\operatorname{sign}(\widehat{\beta}_{\mathrm{OLS}})\max\!\left(\lvert\widehat{\beta}_{\mathrm{OLS}}\rvert-\lambda,0\right)`} />
             <p>
               {method === "ridge"
                 ? "L2 continuously shrinks every signal, but does not set one exactly to zero."
@@ -686,7 +689,7 @@ export function RegularisationLabDemo() {
         <section className={styles.pathPanel} aria-labelledby="path-title">
           <div className={styles.chartHeading}>
             <div>
-              <span>LIVE CLIENT-SIDE CALCULATION</span>
+              <span>Live client-side calculation</span>
               <h3 id="path-title">Coefficient path</h3>
             </div>
             <span className={styles.lambdaBadge}>λ {lambda.toFixed(2)}</span>
@@ -756,7 +759,7 @@ export function RegularisationLabDemo() {
           </p>
         </section>
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 
@@ -881,11 +884,11 @@ function OpeEstimatorWorkbench() {
   const essShare = audit.ess / audit.rows.length;
 
   return (
-    <div className={styles.opeWorkbench}>
+    <ProjectCopy copy={decisionDemosCopy}><div className={styles.opeWorkbench}>
       <section className={styles.opeControls} aria-labelledby="ope-workbench-controls">
         <div className={styles.chartHeading}>
           <div>
-            <span>COUNTERFACTUAL POLICY</span>
+            <span>Counterfactual policy</span>
             <h3 id="ope-workbench-controls">Logged-policy replay</h3>
           </div>
           <span className={styles.hypothesisBadge}>{DECISION_OPE_LOGS.length} LOCAL CSV ROWS</span>
@@ -951,7 +954,7 @@ function OpeEstimatorWorkbench() {
       <section className={styles.opeResults} aria-labelledby="ope-workbench-results">
         <div className={styles.chartHeading}>
           <div>
-            <span>ESTIMATOR RECEIPT</span>
+            <span>Estimator receipt</span>
             <h3 id="ope-workbench-results">Same log, five estimators</h3>
           </div>
           <span className={essShare < 0.35 ? styles.essDanger : styles.essGood}>
@@ -971,11 +974,11 @@ function OpeEstimatorWorkbench() {
 
         <div className={styles.opeDiagnostics}>
           <div>
-            <span>MAX RAW WEIGHT</span>
+            <span>Max raw weight</span>
             <strong>{audit.maxWeight.toFixed(2)}</strong>
           </div>
           <div>
-            <span>ESS SHARE</span>
+            <span>ESS share</span>
             <strong>{(essShare * 100).toFixed(0)}%</strong>
           </div>
           <div>
@@ -983,7 +986,7 @@ function OpeEstimatorWorkbench() {
             <strong>{audit.unsupportedCount}</strong>
           </div>
           <div>
-            <span>CLIPPED ROWS</span>
+            <span>Clipped rows</span>
             <strong>{clipEnabled ? audit.clippedCount : 0}</strong>
           </div>
         </div>
@@ -1013,7 +1016,7 @@ function OpeEstimatorWorkbench() {
           <strong>Source mechanic:</strong> the audited Week 11 code consumes (context, action, reward, recorded behaviour propensity), fits one ridge reward model per arm, and evaluates IPS, SNIPS, Direct, DR and SWITCH-DR. This deterministic browser log is loaded from a schema-checked local CSV; it demonstrates estimator mechanics, not a deployed policy result.
         </p>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -1069,10 +1072,10 @@ export function CausalOpeDemo() {
   }
 
   return (
-    <DemoWindow
-      appName="Decision Evidence Lab"
+    <ProjectCopy copy={decisionDemosCopy}><DemoWindow
+      appName="Decision Lab"
       title="Causal adjustment & off-policy evaluation"
-      status="SOURCE-ALIGNED REBUILD"
+      status="Interactive examples"
       purpose="Separate two often-confused questions: estimating an intervention effect and evaluating a new policy from logged decisions."
       tryThis="Open a causal path, then switch to OPE and reduce overlap for the challenger policy."
       watchFor="Invalid adjustment paths, effective sample size and estimator disagreement reveal when a decision claim loses support."
@@ -1098,7 +1101,7 @@ export function CausalOpeDemo() {
         <section className={styles.dagPanel} aria-labelledby="dag-title">
           <div className={styles.chartHeading}>
             <div>
-              <span>CLICKABLE GRAPH</span>
+              <span>Clickable graph</span>
               <h3 id="dag-title">Backdoors & colliders</h3>
             </div>
             <MacButton
@@ -1168,7 +1171,7 @@ export function CausalOpeDemo() {
             </div>
           </div>
           <div className={styles.nodeInspector}>
-            <span>SELECTED NODE</span>
+            <span>Selected node</span>
             <strong>{DAG_COPY[focusedNode].title}</strong>
             <p>{DAG_COPY[focusedNode].text}</p>
           </div>
@@ -1177,10 +1180,10 @@ export function CausalOpeDemo() {
         <section className={styles.opePanel} aria-labelledby="ope-title">
           <div className={styles.chartHeading}>
             <div>
-              <span>IPW DIAGNOSTIC</span>
+              <span>IPW diagnostic</span>
               <h3 id="ope-title">Overlap stress test</h3>
             </div>
-            <span className={styles.hypothesisBadge}>TOY DATA</span>
+            <span className={styles.hypothesisBadge}>Toy data</span>
           </div>
           <RangeField
             label="Propensity overlap quality"
@@ -1202,12 +1205,12 @@ export function CausalOpeDemo() {
 
           <div className={styles.opeMetrics} aria-live="polite">
             <div>
-              <span>HÁJEK ATE TOY</span>
+              <span>Hájek ATE toy</span>
               <strong>{ope.ate >= 0 ? "+" : ""}{ope.ate.toFixed(2)}</strong>
               <small>outcome units</small>
             </div>
             <div>
-              <span>WEIGHT VARIANCE</span>
+              <span>Weight variance</span>
               <strong>{ope.variance.toFixed(2)}</strong>
               <small>lower is steadier</small>
             </div>
@@ -1244,6 +1247,6 @@ export function CausalOpeDemo() {
           </p>
         </section>
       </div>}
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }

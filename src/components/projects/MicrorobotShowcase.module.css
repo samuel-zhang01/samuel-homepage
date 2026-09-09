@@ -9,9 +9,9 @@
   align-items: stretch;
   margin-bottom: 10px;
   padding: 3px;
-  border: 2px solid #111;
-  background: #aaa;
-  box-shadow: inset 1px 1px #666, 2px 2px #c3c3be;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .viewSwitch > div {
@@ -21,54 +21,82 @@
   justify-content: center;
   gap: 2px;
   padding: 5px 8px;
-  color: #fff;
-  background: #11177a;
-  box-shadow: inset 1px 1px #5b61b0;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .viewSwitch > div span {
-  color: #cbd0ff;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: .1em;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .viewSwitch > div strong {
   overflow: hidden;
-  font-size: 10px;
+  font-size: var(--s7-small);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .viewSwitch button {
   display: flex;
-  min-height: 38px;
+  min-height: max(var(--s7-control-height), 38px);
   align-items: center;
   justify-content: center;
   gap: 6px;
   padding: 6px 9px;
-  border: 0;
-  color: #171717;
-  background: #efefeb;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
   cursor: pointer;
-  font-size: 9px;
-  font-weight: 800;
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.viewSwitch button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.viewSwitch button:disabled, .viewSwitch button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.viewSwitch button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.viewSwitch button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewSwitch button:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewSwitch button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .viewSwitch button:hover {
-  background: #fff;
+  background: var(--s7-paper);
 }
 
 .viewSwitch button[aria-pressed="true"] {
-  color: #fff;
-  background: #262626;
-  box-shadow: inset 1px 1px #070707, inset -1px -1px #666;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: inset 1px 1px 0 var(--s7-ink);
 }
 
 .viewSwitch button span {
-  font-size: 14px;
+  font-size: var(--s7-text);
 }
 
 .viewPanel {
@@ -88,3 +116,11 @@
     white-space: normal;
   }
 }
+
+.viewSwitch { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.viewSwitch > div { grid-column: 1 / -1; }
+.viewSwitch > div strong { font-size: var(--s7-ui); white-space: normal; line-height: 1.45; }
+.viewSwitch button { min-height: 48px; white-space: normal; }
+.viewSwitch button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: -5px; }
+@container (max-width: 680px) { .viewSwitch { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .viewSwitch { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

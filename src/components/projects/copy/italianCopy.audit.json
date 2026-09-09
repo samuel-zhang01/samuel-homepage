@@ -1,0 +1,20 @@
+{
+  "dictionary": "italianCopy.ts",
+  "exportName": "italianCopy",
+  "sources": [
+    "src/components/projects/ItalianLearningStudio.tsx"
+  ],
+  "identities": {
+    "Il treno parte alle otto e mezza.": "Italian exercise material deliberately preserved in the target language; the instructions and glosses are localized.",
+    "Vorrei": "Italian exercise material deliberately preserved in the target language; the instructions and glosses are localized.",
+    "Alle sette": "Italian exercise material deliberately preserved in the target language; the instructions and glosses are localized.",
+    "La domenica": "Italian exercise material deliberately preserved in the target language; the instructions and glosses are localized.",
+    "Dopo colazione": "Italian exercise material deliberately preserved in the target language; the instructions and glosses are localized.",
+    "noi andiamo": "Italian exercise material deliberately preserved in the target language; the instructions and glosses are localized.",
+    "Presentati in almeno due frasi. Spiega dove vivi, cosa studi e perché impari l’italiano.": "Italian exercise material deliberately preserved in the target language; the instructions and glosses are localized.",
+    "Cloudflare D1": "Established product name or HTTP method, preserved across locales.",
+    "PUT": "Established product name or HTTP method, preserved across locales.",
+    "Parliamo! 7": "Established product name or HTTP method, preserved across locales.",
+    "PARLIAMO!": "Established product name or HTTP method, preserved across locales."
+  }
+}

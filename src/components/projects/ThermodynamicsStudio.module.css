@@ -9,7 +9,7 @@
   --thermo-gold-soft: #f5edc7;
   --thermo-red: #912d4b;
   --thermo-red-soft: #f4dfe6;
-  background: #ecebe5;
+  background: var(--s7-paper);
 }
 
 .boundaryBanner {
@@ -19,36 +19,35 @@
   gap: 13px;
   margin-bottom: 13px;
   padding: 9px 11px;
-  border: 1px solid #65655f;
+  border: 1px solid var(--s7-shadow);
   background:
-    repeating-linear-gradient(-45deg, rgba(25, 41, 104, 0.035) 0 4px, transparent 4px 8px),
-    #fbfaf5;
-  box-shadow: inset 1px 1px #fff;
+    var(--s7-paper);
+  box-shadow: none;
 }
 
 .boundaryBanner > span,
 .boundaryBanner > strong {
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 
 .boundaryBanner > span {
   padding: 4px 6px;
-  border: 1px solid var(--thermo-navy);
-  color: #fff;
-  background: var(--thermo-navy);
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .boundaryBanner > strong {
-  color: var(--thermo-red);
+  color: var(--s7-ink);
 }
 
 .boundaryBanner p {
   margin: 0;
-  color: #4f504d;
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
@@ -56,12 +55,10 @@
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
   overflow: hidden;
-  border: 1px solid #555651;
-  background: #d1d0ca;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
   box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px #8d8e88,
-    3px 3px 0 rgba(23, 24, 23, 0.14);
+    none;
 }
 
 .controlRack,
@@ -74,15 +71,14 @@
   flex-direction: column;
   gap: 9px;
   padding: 10px;
-  border-right: 2px solid #92938d;
-  background: #e4e3dd;
+  border-right: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .analysisPanel {
   padding: 10px 12px 13px;
   background:
-    repeating-linear-gradient(0deg, transparent 0 13px, rgba(0, 0, 0, 0.018) 13px 14px),
-    #eeede7;
+    var(--s7-paper);
 }
 
 .panelTitle {
@@ -91,32 +87,31 @@
   align-items: center;
   gap: 7px;
   padding: 4px 6px;
-  border: 1px solid #777872;
-  color: #fff;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
   background:
-    repeating-linear-gradient(90deg, transparent 0 4px, rgba(255, 255, 255, 0.05) 4px 5px),
-    var(--thermo-navy);
-  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.28);
+    var(--s7-paper);
+  box-shadow: none;
 }
 
 .panelTitle > span {
-  color: #b3c0e7;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
 }
 
 .panelTitle > strong {
-  font-size: 8px;
-  letter-spacing: 0.11em;
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .panelTitle > em {
   margin-left: auto;
-  color: #cad3ef;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   font-style: normal;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .parameterSlider {
@@ -133,17 +128,17 @@
 }
 
 .parameterSlider b {
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .parameterSlider output {
   min-width: 78px;
   padding: 3px 5px;
   border: 1px solid #777872;
-  background: #fafaf6;
+  background: var(--s7-paper);
   box-shadow: inset 1px 1px #c2c3bd;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
   text-align: right;
   white-space: nowrap;
 }
@@ -160,53 +155,82 @@
   gap: 2px;
   margin-top: 2px;
   padding: 2px;
-  border: 1px solid #555651;
-  background: #b9bab4;
-  box-shadow: inset 1px 1px #858680, 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
+  box-shadow: none;
 }
 
 .componentTabs button,
 .resetButton {
-  min-height: 29px;
+  min-height: var(--s7-control-height);
   padding: 5px 7px;
-  border: 0;
-  background: #eeeeea;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #999a94;
+  border: 1px solid var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
   cursor: pointer;
-  font-size: 8px;
-  font-weight: 900;
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  border-radius: var(--s7-control-radius);
+  color: var(--s7-ink);
+  font-family: var(--s7-font-ui);
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.componentTabs button:focus-visible, .resetButton:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.componentTabs button:disabled, .componentTabs button[aria-disabled="true"], .resetButton:disabled, .resetButton[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.componentTabs button:active:not(:disabled):not([aria-disabled="true"]), .resetButton:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.componentTabs button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .componentTabs button:active:not(:disabled):not([aria-disabled="true"]) > strong, .componentTabs button:active:not(:disabled):not([aria-disabled="true"]) > small, .resetButton:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .resetButton:active:not(:disabled):not([aria-disabled="true"]) > strong, .resetButton:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .componentTabs button:hover,
 .resetButton:hover {
-  background: #fff;
+  background: var(--s7-paper);
 }
 
 .componentTabs button[aria-pressed="true"] {
-  color: #fff;
-  background: var(--thermo-navy);
-  box-shadow: inset 1px 1px #080d25, inset -1px -1px rgba(255, 255, 255, 0.24);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: inset 1px 1px 0 var(--s7-ink);
 }
 
 .componentEditor {
   display: grid;
   gap: 9px;
   padding: 9px;
-  border: 1px solid #92938d;
-  background: #f3f2ec;
-  box-shadow: inset 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .microLabel {
-  color: #5e605b;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.11em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .resetButton {
   margin-top: auto;
-  border: 1px solid #4c4d48;
+  border: 1px solid var(--s7-ink);
 }
 
 .chart {
@@ -217,7 +241,7 @@
   min-height: 0;
   margin-top: 9px;
   border: 1px solid #82837d;
-  background: #f7f7f2;
+  background: var(--s7-paper);
   box-shadow: inset 1px 1px #fff;
 }
 
@@ -232,12 +256,12 @@
 .axisLabel {
   fill: #484a46;
   font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .legendText {
   font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .axisLabel {
@@ -254,37 +278,30 @@
   margin-top: 7px;
   padding: 7px 8px;
   border: 1px solid #a0a19b;
-  background: #fafaf6;
+  background: var(--s7-paper);
 }
 
 .chartNote > span {
   padding: 4px 6px;
   border: 1px solid currentColor;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 
-.chartNote .safe {
-  color: var(--thermo-teal);
-  background: var(--thermo-teal-soft);
-}
-
-.chartNote .warn {
-  color: var(--thermo-gold);
-  background: var(--thermo-gold-soft);
-}
-
+.chartNote .safe,
+.chartNote .warn,
 .chartNote .alert {
-  color: var(--thermo-red);
-  background: var(--thermo-red-soft);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  border-color: var(--s7-shadow);
 }
 
 .chartNote p {
   margin: 0;
   color: #5c5e59;
-  font-size: 8px;
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
@@ -302,33 +319,33 @@
   flex-direction: column;
   justify-content: center;
   padding: 8px;
-  border: 1px solid #a0a19b;
-  background: #fafaf6;
-  box-shadow: inset 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
-.metricGrid span {
-  color: #676964;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+.metricGrid > div > span {
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .metricGrid strong {
   overflow: hidden;
   margin: 4px 0 2px;
-  color: var(--thermo-navy);
-  font-family: "Courier New", monospace;
-  font-size: clamp(13px, 2vw, 19px);
-  line-height: 1;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-mono);
+  font-size: var(--s7-title);
+  line-height: 1.4;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .metricGrid small {
   overflow: hidden;
-  color: #777873;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -338,9 +355,9 @@
   grid-template-columns: 150px minmax(0, 1fr);
   margin-top: 11px;
   overflow: hidden;
-  border: 1px solid #51524e;
-  background: #dddcd6;
-  box-shadow: inset 1px 1px #fff, 2px 2px #c0c0ba;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .tapeHeading {
@@ -348,15 +365,14 @@
   align-items: center;
   gap: 8px;
   padding: 9px;
-  color: #fff;
+  color: var(--s7-ink);
   background:
-    repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.05) 5px 6px),
-    var(--thermo-navy);
+    var(--s7-paper);
 }
 
 .tapeHeading > span {
-  font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
 }
 
 .tapeHeading > div {
@@ -365,13 +381,13 @@
 }
 
 .tapeHeading strong {
-  font-size: 8px;
-  letter-spacing: 0.08em;
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .tapeHeading small {
-  color: #bac6eb;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .tapeSteps {
@@ -389,23 +405,23 @@
 }
 
 .tapeSteps > div > span {
-  color: #686a65;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .tapeSteps code {
   overflow: hidden;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--s7-font-mono);
+  font-size: var(--s7-small);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .tapeSteps > b {
-  color: #8b8c87;
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .tapeSteps > b:last-of-type {
@@ -424,9 +440,9 @@
 .equationPanel {
   min-width: 0;
   padding: 12px;
-  border: 1px solid #858680;
-  background: #efeee8;
-  box-shadow: inset 1px 1px #fff, 2px 2px #d0cfc9;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .sectionHeading {
@@ -435,46 +451,46 @@
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 8px;
-  border-bottom: 1px dotted #979892;
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .sectionHeading span {
-  color: #61635e;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.11em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .sectionHeading h3 {
   margin: 2px 0 0;
-  font-size: 14px;
-  letter-spacing: -0.025em;
+  font-size: var(--s7-heading);
+  letter-spacing: normal;
 }
 
 .sectionHeading > strong {
   padding: 5px 7px;
-  border: 1px solid var(--thermo-teal);
-  color: #fff;
-  background: var(--thermo-teal);
-  font-family: "Courier New", monospace;
-  font-size: 9px;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-small);
   white-space: nowrap;
 }
 
 .sectionHeading > a {
   padding: 5px 7px;
-  border: 1px solid var(--thermo-navy);
-  color: var(--thermo-navy);
-  background: #fff;
-  font-size: 8px;
-  font-weight: 900;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-selection);
+  background: var(--s7-chrome);
+  font-size: var(--s7-small);
+  font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .sectionHeading > a:hover {
-  color: #fff;
-  background: var(--thermo-navy);
+  color: var(--s7-selection);
+  background: var(--s7-chrome);
 }
 
 .mixingEquation {
@@ -486,17 +502,17 @@
   gap: 7px;
   margin: 10px 0;
   padding: 8px;
-  border: 1px inset #aaa;
-  background: #fff;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
 }
 
 .mixingEquation > strong {
   padding: 4px 6px;
-  color: #fff;
-  background: var(--thermo-teal);
-  font-size: 10px;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
 }
 
 .comparisonRows {
@@ -509,68 +525,68 @@
   grid-template-columns: 92px minmax(0, 1fr) 63px;
   align-items: center;
   gap: 8px;
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .comparisonRows i {
   display: block;
   height: 12px;
   overflow: hidden;
-  border: 1px solid #8e8f89;
-  background: #d7d6d0;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .comparisonRows i b {
   display: block;
   height: 100%;
-  background: var(--thermo-teal);
+  background: var(--s7-paper);
 }
 
 .comparisonRows > div:nth-child(2) i b {
-  background: var(--thermo-navy);
+  background: var(--s7-paper);
 }
 
 .comparisonRows strong {
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
   text-align: right;
 }
 
 .sensitivityPanel > p,
 .ledgerPanel > p {
   margin: 9px 0 0;
-  color: #5c5e59;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
 .tableWrap {
   margin-top: 10px;
   overflow-x: auto;
-  border: 1px solid #92938d;
+  border: 1px solid var(--s7-shadow);
 }
 
 .tableWrap table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
-  font-size: 8px;
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
 }
 
 .tableWrap caption {
   padding: 6px 7px;
-  border-bottom: 1px solid #92938d;
-  color: #5f615c;
-  background: #e2e1db;
-  font-size: 8px;
+  border-bottom: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
   text-align: left;
 }
 
 .tableWrap th,
 .tableWrap td {
   padding: 6px 7px;
-  border-right: 1px solid #d1d0ca;
-  border-bottom: 1px solid #d1d0ca;
+  border-right: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid var(--s7-shadow);
   text-align: right;
 }
 
@@ -579,17 +595,17 @@
 }
 
 .tableWrap thead th {
-  color: #fff;
-  background: var(--thermo-navy);
-  font-size: 8px;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font-size: var(--s7-small);
 }
 
 .tableWrap tbody th {
-  background: #eeeeea;
+  background: var(--s7-paper);
 }
 
 .tableWrap td {
-  font-family: "Courier New", monospace;
+  font-family: var(--s7-font-text);
 }
 
 .equationPanel {
@@ -598,16 +614,16 @@
 
 .equationGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
   margin-top: 10px;
 }
 
 .equationGrid > div {
   min-width: 0;
   padding: 9px;
-  border: 1px solid #aaaba5;
-  background: #fafaf6;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .formulaCard {
@@ -615,10 +631,10 @@
 }
 
 .equationGrid > div > span {
-  color: var(--thermo-teal);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .formula {
@@ -629,19 +645,19 @@
   min-height: 56px;
   margin: 7px 0 6px;
   padding: 7px;
-  border: 1px solid #d1d0ca;
-  color: var(--thermo-navy);
-  background: #fff;
-  font-family: "Times New Roman", Times, serif;
-  font-size: clamp(13px, 1.5vw, 17px);
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-title);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .formula b {
-  color: #8b8c87;
-  font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
-  font-size: 11px;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
 }
 
 .formulaLeft {
@@ -656,7 +672,7 @@
 }
 
 .formula var {
-  font-family: inherit;
+  font-family: var(--s7-font-text);
   font-style: italic;
 }
 
@@ -667,8 +683,8 @@
 
 .equationGrid p {
   margin: 0;
-  color: #676964;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
@@ -686,22 +702,22 @@
   gap: 5px;
   min-width: 0;
   padding: 5px 6px;
-  border: 1px dotted #aaa;
-  background: #fff;
+  border: 1px dotted var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .symbolLedger dt {
-  color: var(--thermo-navy);
-  font-family: "Times New Roman", Times, serif;
-  font-size: 13px;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-ui);
   font-weight: 700;
 }
 
 .symbolLedger dd {
   min-width: 0;
   margin: 0;
-  color: #61635e;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   overflow-wrap: anywhere;
 }
 
@@ -715,56 +731,56 @@
 .boundaryLedger > div {
   min-width: 0;
   padding: 10px;
-  border: 1px solid #999a94;
-  background: #f6f5ef;
-  box-shadow: inset 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .boundaryLedger > div > span {
   display: inline-block;
   padding: 3px 5px;
-  border: 1px solid currentColor;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  border: 1px solid var(--s7-shadow);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .sourceTag {
-  color: var(--thermo-navy);
-  background: #e3e7f4;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .engineTag {
-  color: var(--thermo-teal);
-  background: var(--thermo-teal-soft);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .adaptationTag {
-  color: var(--thermo-gold);
-  background: var(--thermo-gold-soft);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .excludedTag {
-  color: var(--thermo-red);
-  background: var(--thermo-red-soft);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .boundaryLedger strong {
   display: block;
   margin: 7px 0 4px;
-  font-size: 9px;
+  font-size: var(--s7-small);
 }
 
 .boundaryLedger p {
   margin: 0;
-  color: #656762;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
 .boundaryLedger a {
   color: inherit;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 @container (max-width: 980px) {
@@ -811,7 +827,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-right: 0;
-    border-bottom: 2px solid #92938d;
+    border-bottom: 1px solid var(--s7-shadow);
   }
 
   .controlRack > .panelTitle,
@@ -906,7 +922,7 @@
   .formulaRight {
     grid-column: 1 / -1;
     padding-top: 5px;
-    border-top: 1px dotted #c7c7c1;
+    border-top: 1px dotted var(--s7-shadow);
   }
 
   .comparisonRows > div {
@@ -914,3 +930,24 @@
     gap: 4px;
   }
 }
+
+/* Equation layout belongs to KaTeX; retain the surrounding System 7 tape. */
+.formula { display: block; font-weight: 400; }
+.mixingEquation { display: block; }
+.tapeEquation { min-width: 0; font-size: var(--s7-small); }
+.tapeEquation > [data-math-equation] { margin: 0; padding-block: 3px; }
+
+.equationGrid > div { padding: 16px; }
+.formula { min-height: 96px; padding: 12px; font-size: var(--s7-heading); display: flex; align-items: center; justify-content: center; }
+.formula > [data-math-equation] { width: 100%; margin: 0; }
+.mixingEquation { padding: 12px; font-size: var(--s7-text); }
+@container (max-width: 760px) { .equationGrid { grid-template-columns: minmax(0, 1fr); } }
+@container (max-width: 440px) {
+  .equationGrid > div { padding: 10px; }
+  .formula { padding: 8px; font-size: var(--s7-text); }
+}
+
+/* Keep plot labels readable on narrow windows; only the figure scrolls. */
+.plotScroll { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.plotScroll:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
+.plotScroll > svg { min-width: 700px; }

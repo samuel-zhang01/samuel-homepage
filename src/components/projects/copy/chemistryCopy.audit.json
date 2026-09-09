@@ -1,0 +1,31 @@
+{
+  "dictionary": "chemistryCopy.ts",
+  "exportName": "chemistryCopy",
+  "sources": [
+    "src/components/projects/ChemistryCodingStudio.tsx"
+  ],
+  "identities": {
+    "MC": "Established scientific method acronym, explained in adjacent translated text.",
+    "VV": "Established scientific method acronym, explained in adjacent translated text.",
+    "HF": "Established scientific method acronym, explained in adjacent translated text.",
+    "ArrowLeft": "Keyboard event identifiers in navigation code, not displayed prose.",
+    "ArrowRight": "Keyboard event identifiers in navigation code, not displayed prose.",
+    "Home": "Keyboard event identifiers in navigation code, not displayed prose.",
+    "End": "Keyboard event identifiers in navigation code, not displayed prose.",
+    "Pacc = min[1, exp(−ΔU/T*)]": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "Rᵍ = √[(1/N) Σᵢ|rᵢ − rcm|²]": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "Rg ≈ √((N − 1)/6)": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "r < rc": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "STO": "Established scientific method acronym, explained in adjacent translated text.",
+    "GTO": "Established scientific method acronym, explained in adjacent translated text.",
+    "kcal mol⁻¹": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "φSTO = √(ζ³/π) exp(−ζ|r|)": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "φGTO = (2α/π)^(3/4) exp(−αr²)": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "ΔEbind = Ecomplex − ENa⁺ − Earomatic": "Conventional mathematical expression or scientific unit; symbols remain unchanged.",
+    "STO-3G": "Standard quantum-chemistry basis-set name; changing it would identify a different calculation.",
+    "3-21G": "Standard quantum-chemistry basis-set name; changing it would identify a different calculation.",
+    "6-31G*": "Standard quantum-chemistry basis-set name; changing it would identify a different calculation.",
+    "6-311G**": "Standard quantum-chemistry basis-set name; changing it would identify a different calculation.",
+    "6-311+G**": "Standard quantum-chemistry basis-set name; changing it would identify a different calculation."
+  }
+}

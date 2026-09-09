@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { projects } from "@/data/projects";
+import { projectOrigins } from "@/data/projectOrigins";
 import dynamic from "next/dynamic";
 import {
   Children,
@@ -20,16 +22,21 @@ import {
   localeOptions,
   localeSlug,
   normaliseLocale,
-  translateText,
   type Locale,
 } from "@/lib/i18n";
-import projectExplorerStyles from "@/components/projects/ProjectExplorer.module.css";
-import projectActionsStyles from "@/components/projects/ProjectActions.module.css";
-import projectDemoRouterStyles from "@/components/projects/ProjectDemoRouter.module.css";
-import projectCaseBriefStyles from "@/components/projects/ProjectCaseBrief.module.css";
+import { projectText } from "@/lib/projectCopy";
+import { desktopCopy } from "./desktopCopy";
+import { projectMenuCopy } from "./projectMenuCopy";
 import type { FinderApplication } from "./DesktopFinder";
 
+const desktopText = { ...projectMenuCopy, ...desktopCopy };
+
+function translateText(locale: Locale, source: string) {
+  return projectText(locale, desktopText, source);
+}
+
 const SystemLocaleContext = createContext<Locale>("en-GB");
+const ProjectOpenContext = createContext<((slug: string) => void) | null>(null);
 
 function useSystemLocale() {
   return useContext(SystemLocaleContext);
@@ -68,13 +75,15 @@ const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplo
   loading: function ProjectExplorerLoading() {
     const locale = useSystemLocale();
     return (
-      <div className={`projects-app ${projectExplorerStyles.archiveModuleLoading} ${projectActionsStyles.archiveCssAnchor} ${projectDemoRouterStyles.archiveCssAnchor} ${projectCaseBriefStyles.archiveCssAnchor}`} role="status">
-        <span className="eyebrow">{translateText(locale, "OPENING PROJECT ARCHIVE…")}</span>
-        <span className={projectExplorerStyles.archiveLoadingTrack} aria-hidden="true"><i /></span>
+      <div className="projects-app classic-module-loading" role="status">
+        <strong>{translateText(locale, "OPENING PROJECT ARCHIVE…")}</strong>
+        <span aria-hidden="true"><i /></span>
       </div>
     );
   },
 });
+
+const ProjectDocument = dynamic(() => import("@/components/projects/ProjectDocument"), { loading: ClassicModuleLoading });
 
 const SideQuestCabinetApp = dynamic(() => import("@/components/SideQuestCabinetApp"), {
   loading: function SideQuestLoading() {
@@ -93,6 +102,7 @@ export type AppId =
   | "coverd"
   | "experience"
   | "projects"
+  | "project"
   | "sidequest"
   | "skills"
   | "education"
@@ -287,15 +297,16 @@ const INITIAL_WINDOWS: WindowState[] = [
   },
   {
     id: "projects",
-    title: "Project Archive",
+    title: "Projects",
     x: 72,
     y: 48,
-    width: 900,
-    height: 670,
+    width: 1160,
+    height: 840,
     z: 4,
     open: false,
     maximized: false,
   },
+  { id: "project", title: "Project", x: 102, y: 58, width: 1060, height: 720, z: 18, open: false, maximized: false },
   {
     id: "sidequest",
     title: "RUN/HACK — Field Journal",
@@ -512,7 +523,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
   { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
-  { id: "documents", label: "Documents", icon: "pdf", description: "Current Applied AI CV and reviewed learning material in one continuous reader." },
+  { id: "documents", label: "Documents", icon: "pdf", description: "Read the Applied AI CV and learning material in one continuous reader." },
   { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of Samuel’s work." },
   { id: "desk", label: "Desk Accessories", icon: "accessories", description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser." },
   { id: "orbitals", label: "Orbital Lab", icon: "orbital", description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory." },
@@ -541,6 +552,7 @@ const APP_ROUTES: Record<AppId, string> = {
   coverd: "coverd",
   experience: "experience",
   projects: "projects",
+  project: "projects",
   sidequest: "sidequest",
   skills: "skills",
   education: "education",
@@ -565,6 +577,7 @@ const APP_ROUTES: Record<AppId, string> = {
 const experience = [
   {
     period: "May 2026 — Present",
+    originId: "marsh",
     role: "Senior Coordinator — Digital Transformation Strategy Internship",
     company: "Marsh · Strategy & Corporate Development Group",
     location: "London",
@@ -573,14 +586,17 @@ const experience = [
   },
   {
     period: "Mar 2026 — Present",
+    originId: "coverd",
     role: "Founder & Product Lead · Part-time",
     company: "COVERD",
     location: "London",
     copy: "Developed early company-aware voice-interview experiments, then evolved that research into COVERD’s current product: an ATS-connected recruitment-intelligence layer that reviews applications across specialist dimensions, enriches evidence with automated voice interviews and returns reasoned shortlists while recruiters keep the decision.",
+    detail: "Led early discovery with four design partners and pivoted from candidate-side CV tooling. By April 2026, tested three voice-interview architectures across 20 candidate interviews; voice enrichment remains optional when application evidence is incomplete.",
     tag: "FOUNDER",
   },
   {
     period: "Oct 2024 — Apr 2026",
+    originId: "pfizer",
     role: "Web Application Developer & Product Owner · Part-time",
     company: "Pfizer Analytical R&D",
     location: "London",
@@ -589,14 +605,17 @@ const experience = [
   },
   {
     period: "Sep 2023 — Aug 2024",
+    originId: "pfizer-placement",
     role: "Data Analyst Undergraduate",
     company: "Pfizer Analytical R&D",
     location: "Sandwich",
     copy: "Built and delivered GROWMAT within a regulated R&D environment, improving an internal planning process and supporting wider product adoption. Its external showcase is public; live company data, source code, credentials and non-public operating context remain private. Also explored scientific modelling workflows for pharmaceutical research.",
+    detail: "Worked across product discovery, full-stack delivery, reliability and change management. Pharmaceutical modelling datasets, parameters and results remain confidential.",
     tag: "DATA",
   },
   {
     period: "Jan 2023 — Apr 2025",
+    originId: "kcl-teaching",
     role: "Coding Series Tutor & Curriculum Designer",
     company: "King’s College London",
     location: "London",
@@ -605,14 +624,16 @@ const experience = [
   },
   {
     period: "Jun — Jul 2023",
-    role: "Summer Research Fellow",
+    originId: "kcl-research-2023",
+    role: "Summer Research Project",
     company: "King’s College London",
     location: "London",
-    copy: "Configured and documented a GPU-capable WSL 2/CUDA/Docker environment and completed a containerised GROMACS topology-preparation checkpoint, with reproducibility gaps explicitly audited.",
+    copy: "Completed a summer research project at King’s College London. The linked computational-chemistry material includes a later workstation setup for GPU-capable containers and GROMACS topology preparation.",
     tag: "RESEARCH",
   },
   {
     period: "Jun — Jul 2022",
+    originId: "kcl-research-2022",
     role: "Undergraduate Research Fellow",
     company: "King’s College London",
     location: "London",
@@ -621,10 +642,12 @@ const experience = [
   },
   {
     period: "Jul 2019 — Jul 2021",
+    originId: "scdf",
     role: "Commander’s Personal Assistant / Sergeant",
     company: "Singapore Civil Defence Force",
     location: "Singapore",
     copy: "Built decision-support and workflow automation during COVID-19 emergency operations using public epidemiological data. Personnel records, operational processes, infrastructure and scale remain protected.",
+    detail: "Supported senior leaders in time-critical operations, balancing incomplete information, rapid prioritisation and accountability across large-scale personnel operations.",
     tag: "SERVICE",
   },
 ];
@@ -674,7 +697,7 @@ const skillGroups = [
   {
     title: "Infrastructure & Delivery",
     summary: "Operating the systems behind the product, with an emphasis on repeatability, recovery and sensible security.",
-    evidence: "Home lab — maintains a private Proxmox/Docker fleet; the public audit exposes one six-service Compose slice, a scheduled PostgreSQL backup job and explicit recovery gaps.",
+    evidence: "Home lab — connects Proxmox and Docker services for local AI, storage and automation, with scheduled PostgreSQL backups and recovery tooling.",
     items: [
       "Docker, Linux & Proxmox",
       "CI/CD & self-hosted GitHub Actions",
@@ -940,7 +963,7 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
 }
 
 const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
-  .filter((item) => item.id !== "secret")
+  .filter((item) => item.id !== "secret" && item.id !== "project")
   .map((item) => {
     const desktopItem = DESKTOP_ICONS.find((icon) => icon.id === item.id);
     return {
@@ -1043,11 +1066,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           </div>
         </div>
         <p className="hero-copy">
-          I&apos;m an applied AI engineer and founder. I build products for ambiguous, domain-heavy
-          problems. My current work covers responsible AI research and COVERD, an ATS-connected
-          recruitment product that can add evidence through automated voice interviews. I previously
-          delivered GROWMAT, an internal enterprise product documented in an external showcase;
-          live company data, source code, credentials and non-public operating context remain private.
+          I build software around problems I have met in research and at work: planning laboratory capacity, helping recruiters understand applicants, and using machine learning where the cost of an error matters. My background spans chemistry, emergency operations and product development. Today I work on applied AI and lead COVERD.
         </p>
         <fieldset className="about-panel">
           <legend>Working style</legend>
@@ -1069,7 +1088,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             </div>
             <h2 id="latest-update-title">What happens when only the runner can build?</h2>
             <p>A rain-soaked 44 km team relay, more than 100 builders, a voice-built social running app and a second-place finish.</p>
-            <button type="button" onClick={() => openApp("sidequest")}>Read the RUN/HACK story →</button>
+            <button className="s7-button" type="button" onClick={() => openApp("sidequest")}>Read the RUN/HACK story →</button>
           </div>
         </article>
         <nav className="identity-switchboard" aria-label="Samuel’s cabinet of curiosities">
@@ -1122,14 +1141,14 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               ))}
             </ul>
           </div>
-          <button type="button" onClick={() => openApp("games")}>Open Desk Arcade →</button>
+          <button className="s7-button" type="button" onClick={() => openApp("games")}>Open Desk Arcade →</button>
         </section>
         <fieldset className="about-panel about-evidence">
-          <legend>Selected evidence</legend>
+          <legend>Selected work</legend>
           <dl>
-            <div><dt>COVERD</dt><dd>Public product covers ATS-connected review, six specialist dimensions, voice enrichment and reasoned shortlists.</dd></div>
-            <div><dt>GROWMAT</dt><dd>External showcase covers architecture and outcomes; live data and source remain private.</dd></div>
-            <div><dt>People</dt><dd>20+ teaching sessions for 80+ students and a careers panel for more than 100.</dd></div>
+            <div><dt><a href={`/${localeSlug(locale)}/projects?project=coverd-ai`}>COVERD</a></dt><dd>Public product covers ATS-connected review, six specialist dimensions, voice enrichment and reasoned shortlists.</dd></div>
+            <div><dt><a href={`/${localeSlug(locale)}/projects?project=growmat`}>GROWMAT</a></dt><dd>External showcase covers architecture and outcomes; live data and source remain private.</dd></div>
+            <div><dt><a href={`/${localeSlug(locale)}/experience#kcl-teaching`}>People</a></dt><dd>20+ teaching sessions for 80+ students and a careers panel for more than 100.</dd></div>
           </dl>
         </fieldset>
         <div className="button-row">
@@ -1207,7 +1226,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
           </div>
           <p>Every applicant reviewed. A defensible shortlist with reasons.</p>
           <div className="coverd-actions">
-            <a className="coverd-link" href="https://coverd.ai/" target="_blank" rel="noopener noreferrer">Visit coverd.ai ↗</a>
+            <a className="coverd-link s7-button" href="https://coverd.ai/" target="_blank" rel="noopener noreferrer">Visit coverd.ai ↗</a>
             <span>FOUNDED 2026 · LONDON</span>
           </div>
         </div>
@@ -1296,6 +1315,36 @@ function CoverdApp({ locale }: { locale: Locale }) {
   );
 }
 
+function CareerProjectLinks({ originId, locale }: { originId: string; locale: Locale }) {
+  const openProject = useContext(ProjectOpenContext);
+  const origin = projectOrigins.find((item) => item.id === originId);
+  if (!origin) return null;
+  const t = (text: string) => translateText(locale, text);
+  const projectLinks = origin.projects.map((slug) => {
+      const project = projects.find((item) => item.slug === slug);
+      const pdf = !project?.demo ? project?.artifacts?.find((artifact) => artifact.kind === "PDF") : undefined;
+      return project ? <a key={slug} onClick={event => { if (!pdf && openProject && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); openProject(slug); } }} href={pdf?.href ?? `/${localeSlug(locale)}/projects?project=${slug}`} target={pdf ? "_blank" : undefined} rel={pdf ? "noopener noreferrer" : undefined}>
+        <span>{t(pdf ? "Open showcase PDF" : "Open project")}</span><strong>{t(project.shortTitle ?? project.title)} →</strong>
+      </a> : null;
+    });
+  return <nav className="career-projects" aria-label={t("Explore the work")} lang={locale}>
+    <a href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`experience:${originId}`)}`}><span>{t("Related ideas and projects")}</span><strong>{t("Explore connections")} →</strong></a>
+    {projectLinks.slice(0, 4)}
+    {projectLinks.length > 4 ? <details className="career-projects-more">
+      <summary>{t("More related projects")} ({projectLinks.length - 4})</summary>
+      <div className="career-projects">{projectLinks.slice(4)}</div>
+    </details> : null}
+  </nav>;
+}
+
+function CvNavigation({ locale }: { locale: Locale }) {
+  return <nav className="button-row" aria-label={translateText(locale, "Explore the CV")}>
+    <a className="mac-button" href={`/${localeSlug(locale)}/experience`}>{translateText(locale, "Experience & career")}</a>
+    <a className="mac-button" href={`/${localeSlug(locale)}/education`}>{translateText(locale, "Education & awards")}</a>
+    <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map`}>{translateText(locale, "Explore connections")}</a>
+  </nav>;
+}
+
 function ExperienceApp({ locale }: { locale: Locale }) {
   return (
     <TranslationBoundary locale={locale}><div className="experience-app">
@@ -1304,11 +1353,11 @@ function ExperienceApp({ locale }: { locale: Locale }) {
           <span className="eyebrow">PROFESSIONAL HISTORY</span>
           <h3>Building useful intelligence.</h3>
         </div>
-        <span className="file-stamp">2019—2026</span>
+        <a className="mac-button" href={`/${localeSlug(locale)}/documents`}>View CV</a>
       </header>
       <div className="career-list">
         {experience.map((item) => (
-          <article className="career-record" key={`${item.company}-${item.period}`}>
+          <article className="career-record" id={item.originId} key={`${item.company}-${item.period}`}>
             <div className="career-period">
               <span>{item.period}</span>
               <em>{item.location}</em>
@@ -1319,32 +1368,28 @@ function ExperienceApp({ locale }: { locale: Locale }) {
                 <span>{item.tag}</span>
               </div>
               <p>{item.copy}</p>
+              {item.detail ? <p>{item.detail}</p> : null}
+              {item.originId ? <CareerProjectLinks originId={item.originId} locale={locale} /> : null}
             </div>
           </article>
         ))}
       </div>
+      <section className="about-panel" id="personal-projects">
+        <h4>Selected independent technical projects</h4>
+        <p>The CV highlights a private Proxmox/Docker home lab and a Julia stochastic market-impact simulator. The linked archive also includes personal finance, language learning and reinforcement-learning tools.</p>
+        <CareerProjectLinks originId="personal-projects" locale={locale} />
+      </section>
     </div></TranslationBoundary>
   );
 }
 
-function ProjectsApp({
-  openApp,
-  locale,
-  initialSlug,
-}: {
-  openApp: (id: AppId) => void;
-  locale: Locale;
-  initialSlug?: string;
-}) {
-  return <ProjectExplorer initialSlug={initialSlug} locale={locale} onOpenApp={openApp} />;
-}
 
 function SkillsApp({ locale }: { locale: Locale }) {
   return (
     <TranslationBoundary locale={locale}><div className="skills-app">
       <div className="control-panel-intro">
         <PixelIcon kind="controls" />
-        <div><h3>Capabilities, with receipts.</h3><p>A broader engineering toolkit, connected to the products and systems where Samuel has used it.</p></div>
+        <div><h3>Skills in practice.</h3><p>A broader engineering toolkit, connected to the products and systems where Samuel has used it.</p></div>
       </div>
       <div className="control-groups">
         {skillGroups.map((group) => (
@@ -1369,16 +1414,18 @@ function EducationApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="education-app">
       <header className="document-header">
         <div><span className="eyebrow">EDUCATION</span><h3>Science, computation &amp; enterprise.</h3></div>
-        <PixelIcon kind="university" />
+        <a className="mac-button" href={`/${localeSlug(locale)}/documents`}>View CV</a>
       </header>
-      <section className="degree-card degree-card--imperial">
+      <section className="degree-card degree-card--imperial" id="imperial">
         <div className="degree-mark">ICL</div>
         <div><span>Sep 2025—Sep 2026</span><h4>MSc AI Applications &amp; Innovation</h4><p>Imperial College London · Predicted Distinction</p><small>Deep Learning · AI Safety · Innovation Management · ML in Medical Imaging · ML in Climate Change</small></div>
       </section>
-      <section className="degree-card">
+      <CareerProjectLinks originId="imperial" locale={locale} />
+      <section className="degree-card" id="kcl">
         <div className="degree-mark">KCL</div>
-        <div><span>Sep 2021—May 2025</span><h4>BSc Chemistry with Biomedicine</h4><p>King&apos;s College London · First-Class Honours</p><small>Professional placement · Computational Chemistry · Molecular Biology · Chemical Biology · Organic Chemistry</small></div>
+        <div><span>Sep 2021—May 2025</span><h4>BSc Chemistry with Biomedicine</h4><p>King&apos;s College London · First-Class Honours</p><small>Professional placement · Computational Chemistry · Molecular Biology · Chemical Biology · Organic Chemistry · Associate of King&apos;s College London</small></div>
       </section>
+      <CareerProjectLinks originId="kcl" locale={locale} />
       <div className="education-columns">
         <section>
           <h4>Honours &amp; awards</h4>
@@ -1519,7 +1566,7 @@ const supportingDocuments = [
   {
     id: "study-rl",
     title: "Reinforcement Learning Study Syllabus",
-    meta: "Reviewed learning atlas · PDF",
+    meta: "Learning atlas · PDF",
     src: "/projects/study-rl/syllabus.pdf",
   },
 ];
@@ -1551,6 +1598,7 @@ function DocumentsApp({ locale }: { locale: Locale }) {
         ))}
       </aside>
       <section className="documents-preview">
+        {activeDocument.id === "ai-cv" ? <CvNavigation locale={locale} /> : <nav className="button-row" aria-label={translateText(locale, "Explore the work")}><a className="mac-button" href={`/${localeSlug(locale)}/projects?project=study-rl&view=demo`}>{translateText(locale, "Explore learning experiments")} →</a></nav>}
         <div className="documents-toolbar">
           <span>{activeDocument.title}</span>
           <span className="documents-toolbar__hint">Scroll continuously to read every page; zoom when needed.</span>
@@ -1654,20 +1702,20 @@ const SAM_WORDS = [
   { answer: "PFIZER", clue: "Where Samuel worked on a private enterprise product.", fact: "At Pfizer, Samuel delivered GROWMAT; its external showcase is public while live data and source remain private." },
   { answer: "PYTHON", clue: "A language threading through Samuel’s research, teaching and AI work.", fact: "Samuel has taught programming and data analysis to more than 80 students." },
   { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "Samuel’s work spans research, insurance, education and responsible AI across London." },
-  { answer: "DOCKER", clue: "The container tool linking shipped products, the home lab and reproducible environments.", fact: "Samuel uses Docker across product systems, deployment workflows and a source-audited six-service home-lab slice." },
+  { answer: "DOCKER", clue: "The container tool linking shipped products, the home lab and reproducible environments.", fact: "Samuel uses Docker for product services, deployments and a home lab that connects data, automation and everyday tools." },
   { answer: "BANDIT", clue: "A sequential-decision problem balancing exploration with exploitation.", fact: "The Sequential Decisions Lab compares epsilon-greedy, UCB1 and Thompson Sampling over paired synthetic seeds." },
   { answer: "CAUSAL", clue: "The adjustment lens kept separate from off-policy evaluation.", fact: "The Causal Adjustment and OPE Lab distinguishes intervention questions from evaluation of a new logged policy." },
   { answer: "POLICY", clue: "What the OPE workbench evaluates without deploying it.", fact: "The local OPE fixture exposes propensity support, effective sample size and estimator disagreement before any policy claim." },
   { answer: "SENSOR", clue: "What the air-quality decision lab tries to choose economically.", fact: "The Air-Quality ML Decision Lab joins source data QA and model results to an explicit sensor-budget trade-off." },
-  { answer: "NEURAL", clue: "A family of scientific models whose internal structure Samuel opens for inspection.", fact: "The archive traces neural architectures for microscopy, MRI reconstruction and CFD surrogates with provenance and evaluation limits." },
+  { answer: "NEURAL", clue: "A family of scientific models whose internal structure Samuel opens for inspection.", fact: "Samuel explores neural networks for locating microrobots, reconstructing MRI images and approximating fluid flow." },
   { answer: "BROKER", clue: "The human who retains authority in the insurance decision-support workflow.", fact: "The insurance matching work keeps evidence pillars separate and leaves their final synthesis to broker judgement." },
-  { answer: "MARKET", clue: "A candidate destination for an insurance risk—and the subject of a tiny Julia simulator.", fact: "Samuel’s archive includes both lead-market decision support and a source-audited stochastic market-impact simulation." },
+  { answer: "MARKET", clue: "A candidate destination for an insurance risk—and the subject of a tiny Julia simulator.", fact: "Samuel’s projects include insurance-market decision support and a small stochastic model of stock-price impact." },
   { answer: "SOLUTE", clue: "The dissolved component in the solid–liquid equilibrium workbench.", fact: "The solubility exhibit solves an invented solute workflow in log-composition space and reconciles mole and mass reporting bases." },
-  { answer: "ENERGY", clue: "A quantity tracked in the chemistry lab’s molecular-dynamics receipt.", fact: "The computational-chemistry exhibit reports deterministic velocity-Verlet energy drift so integrator error stays visible." },
+  { answer: "ENERGY", clue: "A quantity tracked while simulating molecular motion.", fact: "The computational-chemistry exhibit reports deterministic velocity-Verlet energy drift so integrator error stays visible." },
   { answer: "CAMERA", clue: "A tool from Samuel’s former professional life that is now kept for friends and nature.", fact: "Samuel previously photographed weddings professionally and now keeps photography playful and personal." },
   { answer: "HIKING", clue: "An unhurried interest involving boots, conversation and somewhere new.", fact: "Samuel values long walks for curiosity, shared conversation and the story on the way home." },
   { answer: "LAMBDA", clue: "A symbol connecting regularisation paths and an insurance ranking model.", fact: "The archive discusses lambda shrinkage in the air-quality companion and LambdaRank in insurance decision support." },
-  { answer: "TENSOR", clue: "The object followed through several rotatable model-architecture diagrams.", fact: "Scientific ML chapters expose tensor paths, skip connections, data consistency and checkpoint provenance." },
+  { answer: "TENSOR", clue: "The object followed through several rotatable model-architecture diagrams.", fact: "The scientific models show how tensors pass through layers, skip connections and steps that preserve measured data." },
   { answer: "RECALL", clue: "The spaced-practice loop inside the Italian learning portal.", fact: "Parliamo structures a 56-day plan around adaptive practice, four-way spaced recall and progress records." },
   { answer: "CARBON", clue: "The element named in the air-quality telemetry’s CO₂ signal.", fact: "Samuel’s home telemetry includes Bluetooth air-quality measurements flowing into SQL-backed dashboards." },
 ] as const;
@@ -1705,7 +1753,7 @@ const MEMORY_PAIRS = [
   { id: "scdf", left: "SCDF", right: "OPERATIONS", fact: "Emergency planning systems supported protected operations in Singapore." },
   { id: "teaching", left: "80+ STUDENTS", right: "CODING", fact: "Samuel designed an accessible programming and data curriculum." },
   { id: "science", left: "SCIENCE", right: "MODELLING", fact: "Scientific computing supported research inside a regulated environment." },
-  { id: "infra", left: "DOCKER", right: "HOME LAB", fact: "A private infrastructure inventory spans AI, storage and automation; the public exhibit audits one six-service Compose slice." },
+  { id: "infra", left: "DOCKER", right: "HOME LAB", fact: "Samuel’s home lab connects local AI, storage and automation. Its interactive map follows six connected Docker services." },
   { id: "air", left: "CO₂", right: "GRAFANA", fact: "Bluetooth air-quality telemetry flows into SQL dashboards." },
 ] as const;
 
@@ -2213,10 +2261,11 @@ function ServiceIcon({ code, tone }: { code: string; tone: string }) {
 }
 
 function LabApp({ locale }: { locale: Locale }) {
+  const openProject = useContext(ProjectOpenContext);
   const [filter, setFilter] = useState("All");
   const services = [
     { group: "Compute", code: "PX", tone: "violet", name: "Proxmox", host: "Virtualisation cluster", description: "Runs isolated VMs and Linux containers for the heavier parts of the lab." },
-    { group: "Compute", code: "AI", tone: "blue", name: "Local AI GPU", host: "Private GPU workspace", description: "A self-reported private-fleet entry for local model training and inference through an Open WebUI workspace." },
+    { group: "Compute", code: "AI", tone: "blue", name: "Local AI GPU", host: "Private GPU workspace", description: "Local model training and inference, with Open WebUI for everyday interaction." },
     { group: "Compute", code: "DEV", tone: "navy", name: "Code Servers", host: "Browser IDEs", description: "GPU-connected VS Code environments for remote development and experiments." },
     { group: "Compute", code: "KVM", tone: "grey", name: "GLKVM", host: "Physical console", description: "Out-of-band keyboard, video and mouse access when a server stops responding." },
     { group: "Network", code: "NPM", tone: "green", name: "Nginx Proxy Manager", host: "TLS gateway", description: "Routes public domains to private services and manages HTTPS certificates." },
@@ -2231,7 +2280,7 @@ function LabApp({ locale }: { locale: Locale }) {
     { group: "Data", code: "SQL", tone: "blue", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
     { group: "Data", code: "CO2", tone: "green", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Documents a Bluetooth-to-dashboard path for CO₂, temperature, humidity and pressure." },
     { group: "Data", code: "HA", tone: "amber", name: "Home Assistant", host: "Automation hub", description: "Connects sensors, energy data and smart-home devices into one event-driven system." },
-    { group: "Storage", code: "RAID", tone: "green", name: "Storage pool", host: "Private fleet inventory", description: "RAID storage supports private media and datasets. The public six-service audit documents backup intent and a restore script, but does not claim verified recovery." },
+    { group: "Storage", code: "RAID", tone: "green", name: "Storage pool", host: "Private fleet inventory", description: "RAID storage for media and datasets, alongside database backup and recovery tooling. A successful restore still needs to be tested." },
     { group: "Storage", code: "NAS", tone: "grey", name: "Synology Cloud", host: "Files & photos", description: "Private file sync, photo management and resilient network storage." },
     { group: "Storage", code: "NC", tone: "blue", name: "Nextcloud", host: "Private cloud", description: "Self-hosted document access and synchronisation across personal devices." },
     { group: "Media", code: "JF", tone: "violet", name: "Jellyfin", host: "Home cinema", description: "Documents a private media-library and playback-monitoring service." },
@@ -2246,25 +2295,22 @@ function LabApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="lab-app">
       <header className="document-header">
         <div><span className="eyebrow">PERSONAL INFRASTRUCTURE</span><h3>A small internet, built at home.</h3></div>
-        <span className="online-badge">◆ {services.length} INVENTORY ENTRIES</span>
+        <button className="s7-button" onClick={() => openProject?.("home-automation-stack")}>Explore service map ↗</button>
       </header>
       <div className="lab-summary">
         <p>
-          This is a self-reported private-fleet inventory, not a live status page. The
-          source-audited public exhibit covers one six-service Docker Compose snapshot:
-          it declares a daily PostgreSQL backup job and includes a restore script, while
-          availability, recovery success and the wider fleet remain unverified here.
+          My home lab brings together local AI, private storage, environmental sensors and everyday applications. Proxmox and Docker keep experiments separate, while a shared network connects the services. The project map explains six of those services and lets you explore what happens when a backup or dependency fails.
         </p>
         <dl>
-          <div><dt>Audited Compose slice</dt><dd>6 services</dd></div>
-          <div><dt>Declared health checks</dt><dd>0</dd></div>
-          <div><dt>Backup schedule</dt><dd>Daily intent</dd></div>
-          <div><dt>Inventory entries</dt><dd>{services.length}</dd></div>
+          <div><dt>Interactive map</dt><dd>6 services</dd></div>
+          <div><dt>Compute</dt><dd>Proxmox + Docker</dd></div>
+          <div><dt>Database backups</dt><dd>Daily schedule</dd></div>
+          <div><dt>Service catalogue</dt><dd>{services.length}</dd></div>
         </dl>
       </div>
       <div className="lab-filters" role="group" aria-label="Filter infrastructure">
         {groups.map((group) => (
-          <button key={group} className={filter === group ? "is-active" : ""} aria-pressed={filter === group} onClick={() => setFilter(group)}>{group}</button>
+          <button key={group} className="s7-button" aria-pressed={filter === group} onClick={() => setFilter(group)}>{group}</button>
         ))}
       </div>
       <div className="service-grid">
@@ -2272,7 +2318,7 @@ function LabApp({ locale }: { locale: Locale }) {
           <article className="service-card" key={service.name}>
             <ServiceIcon code={service.code} tone={service.tone} />
             <div className="service-card__copy">
-              <div><h4>{service.name}</h4><span><i />DOCUMENTED</span></div>
+              <div><h4>{service.name}</h4></div>
               <strong>{service.host}</strong>
               <p>{service.description}</p>
             </div>
@@ -2328,7 +2374,7 @@ function ScrapbookApp({ locale }: { locale: Locale }) {
     {
       title: "Hardware catalogue",
       summary: "A private, evolving systems inventory—and an electricity bill that has become a recurring monitoring concern.",
-      detail: "The home lab began before ‘vibe coding’ made infrastructure approachable. It has included hand-built servers, Proxmox, mixed CPU architectures and one database-erasing lesson. The public project exhibit audits a six-service Compose snapshot and backup intent; it does not claim live fleet health or verified recovery.",
+      detail: "The home lab grew from hand-built servers into a mix of Proxmox machines, containers and CPU architectures. Losing a database was a memorable lesson: a backup schedule is only part of the job; you also need to practise restoring it.",
     },
   ];
   const [openInterest, setOpenInterest] = useState<number | null>(null);
@@ -2357,7 +2403,7 @@ function ScrapbookApp({ locale }: { locale: Locale }) {
                 <p>{interest.detail}</p>
               </div>
               <button
-                className="scrap-note__toggle"
+                className="scrap-note__toggle s7-button"
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
@@ -2380,19 +2426,26 @@ function AppContent({
   openApp,
   locale,
   initialProjectSlug,
+  onOpenProject,
+  onProjectBack,
+  onProjectGraph,
   active,
 }: {
   id: AppId;
   openApp: (id: AppId) => void;
   locale: Locale;
   initialProjectSlug?: string;
+  onOpenProject: (slug: string) => void;
+  onProjectBack: () => void;
+  onProjectGraph: (slug: string) => void;
   active: boolean;
 }) {
   switch (id) {
     case "about": return <AboutApp openApp={openApp} locale={locale} />;
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
-    case "projects": return <ProjectsApp openApp={openApp} locale={locale} initialSlug={initialProjectSlug} />;
+    case "projects": return <ProjectExplorer active={active} locale={locale} onOpenApp={openApp} onOpenProject={onOpenProject} />;
+    case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} /> : null;
     case "sidequest": return <SideQuestCabinetApp locale={locale} />;
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
@@ -2425,21 +2478,25 @@ export default function SystemSevenDesktop({
   skipBoot?: boolean;
   initialLocale?: Locale;
   initialProjectSlug?: string;
+  initialProjectDemo?: boolean;
 }) {
+  const initialProject = projects.find((project) => project.slug === initialProjectSlug);
+  const initialWindowId: AppId = initialApp === "projects" && initialProject ? "project" : initialApp;
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const [windows, setWindows] = useState(() =>
     INITIAL_WINDOWS.map((windowState) => ({
       ...windowState,
-      open: windowState.id === initialApp,
+      title: windowState.id === "project" && initialProject ? initialProject.title : windowState.title,
+      open: windowState.id === initialWindowId || (initialWindowId === "project" && windowState.id === "projects"),
       // Direct project and SideQuest permalinks are working surfaces rather
       // than small desktop previews. Give their interactive evidence views the
       // available canvas immediately; apps opened later from the desktop keep
       // their classic floating-window sizes.
-      maximized: (windowState.id === "projects" || windowState.id === "sidequest" || windowState.id === "orbitals")
-        && initialApp === windowState.id,
+      maximized: ["project", "projects", "sidequest", "orbitals"].includes(windowState.id)
+        && initialWindowId === windowState.id,
     })),
   );
-  const [activeId, setActiveId] = useState<AppId>(initialApp);
+  const [activeId, setActiveId] = useState<AppId>(initialWindowId);
   const [selectedIcon, setSelectedIcon] = useState<AppId | null>(null);
   const [openMenu, setOpenMenu] = useState<SystemMenuId | null>(null);
   const [booting, setBooting] = useState(!skipBoot);
@@ -2466,7 +2523,10 @@ export default function SystemSevenDesktop({
   const menuButtonRefs = useRef<Partial<Record<SystemMenuId, HTMLButtonElement | null>>>({});
   const mobileGuideButtonRef = useRef<HTMLButtonElement | null>(null);
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
-  const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({});
+  const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({
+    projects: { search: "?view=map", hash: "" },
+    project: { search: initialProject ? `?project=${encodeURIComponent(initialProject.slug)}` : "", hash: "" },
+  });
   const finderReturnFocus = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -2697,7 +2757,7 @@ export default function SystemSevenDesktop({
       hash: currentUrl.hash,
     };
 
-    if (activeId === "projects" || activeId === "sidequest") {
+    if (activeId === "projects" || activeId === "project" || activeId === "sidequest") {
       routeStateByApp.current[activeId] = currentRouteState;
     }
 
@@ -2717,8 +2777,8 @@ export default function SystemSevenDesktop({
     const appRoute = id === "secret" ? currentPublicRoute : APP_ROUTES[id];
     const nextPath = appRoute ? `${localePrefix}/${appRoute}` : localePrefix || "/";
     const savedRouteState = id === activeId ? currentRouteState : routeStateByApp.current[id];
-    const nextSearch = id === "projects" ? savedRouteState?.search ?? "" : "";
-    const nextHash = id === "sidequest" ? savedRouteState?.hash ?? "" : "";
+    const nextSearch = id === "project" ? routeStateByApp.current.project?.search ?? "" : id === "projects" ? savedRouteState?.search ?? "" : "";
+    const nextHash = id === "sidequest" ? savedRouteState?.hash ?? "" : (id === "experience" || id === "education") && currentPublicRoute === appRoute ? currentUrl.hash : "";
     const nextAddress = `${nextPath}${nextSearch}${nextHash}`;
 
     if (`${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}` !== nextAddress) {
@@ -2729,11 +2789,25 @@ export default function SystemSevenDesktop({
 
     const nextWindowTitle = INITIAL_WINDOWS.find((item) => item.id === id)?.title;
     if (nextWindowTitle) {
-      const translatedTitle = `${translateText(nextLocale, nextWindowTitle)} · Samuel Zhang`;
+      const nextUrl = new URL(nextAddress, currentUrl.origin);
+      const requestedView = nextUrl.searchParams.get("view");
+      const requestedSlug = nextUrl.searchParams.get("project");
+      const graphView = requestedView === "map"
+        || (!requestedSlug && !["guided", "list", "files"].includes(requestedView ?? ""));
+      const requestedProject = (id === "project" || id === "projects") && !graphView
+        ? projects.find((project) => project.slug === requestedSlug)
+        : undefined;
+      const archiveTitle = translateText(nextLocale, "Project Archive");
+      const pageTitle = id === "projects" || id === "project"
+        ? requestedProject
+          ? `${translateText(nextLocale, requestedProject.title)} — ${archiveTitle}`
+          : graphView ? translateText(nextLocale, "Knowledge graph") : archiveTitle
+        : translateText(nextLocale, nextWindowTitle);
+      const translatedTitle = `${pageTitle} · Samuel Zhang`;
       if (document.title !== translatedTitle) document.title = translatedTitle;
       const deskAccessoryIds: AppId[] = ["notepad", "sketch", "tasks", "focus", "calendar", "calculator", "converter", "palette"];
       const metadataId: AppId = deskAccessoryIds.includes(id) ? "desk" : id;
-      const sourceDescription = DESKTOP_ICONS.find((item) => item.id === metadataId)?.description
+      const sourceDescription = requestedProject?.summary ?? DESKTOP_ICONS.find((item) => item.id === metadataId)?.description
         ?? (metadataId === "sidequest"
           ? "A rain-soaked running hackathon field journal: the runner-only build rule, 44 team kilometres, a 100+ person track community and second-place app SideQuest."
           : metadataId === "orbitals" ? "Explore atomic orbitals in a fast, browser-local ASCII laboratory." : "");
@@ -2759,8 +2833,11 @@ export default function SystemSevenDesktop({
         canonical.rel = "canonical";
         document.head.appendChild(canonical);
       }
-      const canonicalHref = new URL(nextPath, window.location.origin).href;
+      const canonicalUrl = new URL(nextPath, window.location.origin);
+      if (requestedProject) canonicalUrl.searchParams.set("project", requestedProject.slug);
+      const canonicalHref = canonicalUrl.href;
       if (canonical.href !== canonicalHref) canonical.href = canonicalHref;
+      setMeta("property", "og:url", canonicalHref);
     }
   }, [activeId, locale]);
 
@@ -2774,7 +2851,9 @@ export default function SystemSevenDesktop({
     // structural/text changes keeps the locale metadata stable without
     // reacting to our own guarded attribute updates.
     headObserver.observe(document.head, { childList: true, characterData: true, subtree: true });
+    window.addEventListener("samuel-project-route-change", sync);
     return () => {
+      window.removeEventListener("samuel-project-route-change", sync);
       window.cancelAnimationFrame(frame);
       headObserver.disconnect();
     };
@@ -2800,6 +2879,57 @@ export default function SystemSevenDesktop({
     });
   }, [syncAddress]);
 
+  const openProjectDocument = useCallback((slug: string) => {
+    const project = projects.find((item) => item.slug === slug);
+    if (!project) return;
+    setRequestedProjectSlug(slug);
+    routeStateByApp.current.project = { search: `?project=${encodeURIComponent(slug)}`, hash: "" };
+    setWindows(current => current.map(item => item.id === "project" ? { ...item, title: project.title } : item));
+    // A single project document shares the desktop's native move, resize and
+    // close controls. The archive remains open behind it with its graph state.
+    if (activeId === "project") {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("view"); url.searchParams.delete("node"); url.searchParams.set("project", slug);
+      window.history.pushState(window.history.state, "", `${url.pathname}${url.search}`);
+    }
+    const previousAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    openApp("project");
+    const nextAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (previousAddress !== nextAddress) {
+      window.history.replaceState(window.history.state, "", previousAddress);
+      window.history.pushState(window.history.state, "", nextAddress);
+    }
+  }, [activeId, openApp]);
+
+  const returnToProjects = (slug?: string) => {
+    routeStateByApp.current.projects = { search: slug ? `?view=map&node=${encodeURIComponent(`project:${slug}`)}` : "?view=files", hash: "" };
+    setWindows(current => current.map(item => item.id === "project" ? { ...item, open: false } : item));
+    const previousAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    openApp("projects");
+    const nextAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (previousAddress !== nextAddress) {
+      window.history.replaceState(window.history.state, "", previousAddress);
+      window.history.pushState(window.history.state, "", nextAddress);
+    }
+    requestAnimationFrame(() => window.dispatchEvent(new Event("samuel-project-graph")));
+  };
+
+  useEffect(() => {
+    const restoreProjectRoute = () => {
+      const url = new URL(window.location.href);
+      if (!/\/projects\/?$/.test(url.pathname)) return;
+      const project = projects.find(item => item.slug === url.searchParams.get("project"));
+      const id: AppId = project ? "project" : "projects";
+      routeStateByApp.current[id] = { search: url.search, hash: url.hash };
+      if (project) setRequestedProjectSlug(project.slug);
+      setActiveId(id);
+      const z = ++zCounter.current;
+      setWindows(current => current.map(item => item.id === id ? { ...item, open: true, z, title: project ? project.title : item.title } : item.id === "project" && !project ? { ...item, open: false } : item));
+    };
+    window.addEventListener("popstate", restoreProjectRoute);
+    return () => window.removeEventListener("popstate", restoreProjectRoute);
+  }, []);
+
   const openFinder = useCallback(() => {
     if (booting || mobileGuide || finderOpen) return;
     finderReturnFocus.current = openMenu
@@ -2824,15 +2954,9 @@ export default function SystemSevenDesktop({
   };
 
   const openFoundProject = (slug: string) => {
-    setRequestedProjectSlug(slug);
-    openFoundApplication("projects");
-    window.requestAnimationFrame(() => {
-      const url = new URL(window.location.href);
-      url.searchParams.delete("view");
-      url.searchParams.set("project", slug);
-      window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}`);
-      window.dispatchEvent(new CustomEvent("samuel-project-open", { detail: { slug } }));
-    });
+    setFinderOpen(false);
+    openProjectDocument(slug);
+    if (finderReturnFocus.current) returnFocusByApp.current.project = finderReturnFocus.current;
   };
 
   useEffect(() => {
@@ -3114,7 +3238,7 @@ export default function SystemSevenDesktop({
             {openMenu === "apple" && (
               <div className="menu-dropdown apple-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.apple} role="menu" aria-label="Samuel menu" onKeyDown={(event) => handleSystemMenuKeyDown(event, "apple")}>
                 <button type="button" role="menuitem" onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
-                <button type="button" role="menuitem" onClick={() => openApp("projects")}><PixelIcon kind="folder" small />Project Archive</button>
+                <button type="button" role="menuitem" onClick={() => openApp("projects")}><PixelIcon kind="folder" small />Projects</button>
                 <button type="button" role="menuitem" onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
                 <button type="button" role="menuitem" onClick={() => openApp("experience")}><PixelIcon kind="briefcase" small />Career</button>
                 <button type="button" role="menuitem" onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
@@ -3236,7 +3360,7 @@ export default function SystemSevenDesktop({
           onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} active={windowState.id === activeId} />
+          <ProjectOpenContext.Provider value={openProjectDocument}><AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} onOpenProject={openProjectDocument} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider>
         </WindowChrome>
       ))}
 

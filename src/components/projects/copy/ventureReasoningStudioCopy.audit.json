@@ -1,0 +1,12 @@
+{
+  "dictionary": "ventureReasoningStudioCopy.ts",
+  "exportName": "ventureReasoningStudioCopy",
+  "sources": [
+    "src/components/projects/VentureReasoningStudio.tsx"
+  ],
+  "identities": {
+    "KilnSignal": "Fictional venture proper name, preserved across languages.",
+    "ShelfWise": "Fictional venture proper name, preserved across languages.",
+    "HarbourDesk": "Fictional venture proper name, preserved across languages."
+  }
+}

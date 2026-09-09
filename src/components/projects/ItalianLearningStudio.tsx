@@ -4,6 +4,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
 import styles from "./ItalianLearningStudio.module.css";
+import { MathEquation } from "./MathEquation";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { projectText } from "@/lib/projectCopy";
+import type { Locale } from "@/lib/i18n";
+import { italianCopy } from "./copy/italianCopy";
 
 type StudioView = "practice" | "recall" | "rubric" | "evidence" | "system";
 type PracticeMode = "daily" | "weak";
@@ -232,12 +237,14 @@ function localRubric(value: string) {
   };
 }
 
-function labelFor(skill: Skill, bilingual: boolean) {
+function labelFor(skill: Skill, bilingual: boolean, locale: Locale) {
   const label = SKILL_LABELS[skill];
+  if (locale.startsWith("zh-")) return projectText(locale, italianCopy, label.en);
   return bilingual ? `${label.it} · ${label.en}` : label.it;
 }
 
 function AppMenu({ active, setActive, bilingual }: { active: StudioView; setActive: (view: StudioView) => void; bilingual: boolean }) {
+  const locale = useProjectLocale();
   const views: { id: StudioView; it: string; en: string; icon: string }[] = [
     { id: "practice", it: "Oggi", en: "Today", icon: "✎" },
     { id: "recall", it: "Richiamo", en: "Recall", icon: "▱" },
@@ -247,7 +254,7 @@ function AppMenu({ active, setActive, bilingual }: { active: StudioView; setActi
   ];
 
   return (
-    <nav className={styles.appMenu} aria-label="Parliamo demonstration sections">
+    <ProjectCopy copy={italianCopy}><nav className={styles.appMenu} aria-label="Parliamo demonstration sections">
       {views.map((view) => (
         <button
           type="button"
@@ -257,11 +264,11 @@ function AppMenu({ active, setActive, bilingual }: { active: StudioView; setActi
           onClick={() => setActive(view.id)}
         >
           <span aria-hidden="true">{view.icon}</span>
-          <strong>{view.it}</strong>
-          {bilingual ? <small lang="en-GB">{view.en}</small> : null}
+          <strong>{locale.startsWith("zh-") ? projectText(locale, italianCopy, view.en) : view.it}</strong>
+          {bilingual ? <small lang={locale.startsWith("zh-") ? "it" : "en-GB"} translate={locale.startsWith("zh-") ? "no" : undefined}>{locale.startsWith("zh-") ? view.it : view.en}</small> : null}
         </button>
       ))}
-    </nav>
+    </nav></ProjectCopy>
   );
 }
 
@@ -278,6 +285,7 @@ function PracticeLab({
   xp: number;
   setXp: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const locale = useProjectLocale();
   const [mode, setMode] = useState<PracticeMode>("daily");
   const [seed, setSeed] = useState(0);
   const [sessionIds, setSessionIds] = useState(() => buildSession("daily", INITIAL_MASTERY, 0));
@@ -374,7 +382,7 @@ function PracticeLab({
   if (finished) {
     const sessionAccuracy = Math.round((score / Math.max(1, session.length)) * 100);
     return (
-      <section className={styles.finishPanel} aria-live="polite">
+      <ProjectCopy copy={italianCopy}><section className={styles.finishPanel} aria-live="polite">
         <div className={styles.finishDial} style={{ "--score": `${sessionAccuracy}%` } as React.CSSProperties}>
           <strong>{score}/{session.length}</strong>
           <span>{sessionAccuracy}%</span>
@@ -385,11 +393,11 @@ function PracticeLab({
           {bilingual ? <p lang="en-GB">{sessionAccuracy >= 80 ? "Strong work—the learner map has been updated." : "Mistakes now shape the next adaptive review."}</p> : null}
           <div className={styles.nextSignal}>
             <span>{bilingual ? "NEXT ADAPTIVE SIGNAL" : "PROSSIMO SEGNALE"}</span>
-            <strong>{labelFor(weakest, bilingual)} · {accuracy(mastery[weakest].attempts, mastery[weakest].correct)}%</strong>
+            <strong>{labelFor(weakest, bilingual, locale)} · {accuracy(mastery[weakest].attempts, mastery[weakest].correct)}%</strong>
           </div>
           <MacButton primary onClick={() => begin("weak")}>Nuova sessione adattiva {bilingual ? "· New adaptive session" : ""} →</MacButton>
         </div>
-      </section>
+      </section></ProjectCopy>
     );
   }
 
@@ -399,7 +407,7 @@ function PracticeLab({
   const currentStats = mastery[item.skill];
 
   return (
-    <section className={styles.practiceLab}>
+    <ProjectCopy copy={italianCopy}><section className={styles.practiceLab}>
       <header className={styles.sectionIntro}>
         <div>
           <span className={styles.kicker}>OGGI / ADAPTIVE PRACTICE · {EXERCISES.length} REPRESENTATIVE VARIATIONS / 211 SOURCE EXERCISES</span>
@@ -414,7 +422,7 @@ function PracticeLab({
           <button type="button" aria-pressed={mode === "daily"} className={mode === "daily" ? styles.selected : ""} onClick={() => selectMode("daily")}>Mix quotidiano {bilingual ? "· Daily" : ""}</button>
           <button type="button" aria-pressed={mode === "weak"} className={mode === "weak" ? styles.selected : ""} onClick={() => selectMode("weak")}>Punti deboli {bilingual ? "· Weak areas" : ""}</button>
         </div>
-        <span>{mode === "weak" ? `${labelFor(weakest, bilingual)} first` : "7 skills balanced"}</span>
+        <span>{mode === "weak" ? `${labelFor(weakest, bilingual, locale)} first` : "7 skills balanced"}</span>
       </div>
 
       <div className={styles.sessionProgress} aria-label={`Question ${index + 1} of ${session.length}`}>
@@ -425,13 +433,13 @@ function PracticeLab({
 
       <article className={styles.exerciseCard}>
         <div className={styles.exerciseMeta}>
-          <span>{labelFor(item.skill, bilingual)}</span>
+          <span>{labelFor(item.skill, bilingual, locale)}</span>
           <span>{item.type.toUpperCase()}</span>
           <span>{currentStats.attempts} attempts · {accuracy(currentStats.attempts, currentStats.correct)}%</span>
         </div>
-        {item.passage ? <blockquote className={styles.passage}>{item.passage}</blockquote> : null}
+        {item.passage ? <blockquote className={styles.passage} lang="it" translate="no">{item.passage}</blockquote> : null}
         <span className={styles.taskLabel}>CONSEGNA {bilingual ? "· TASK" : ""}</span>
-        <h4>{item.promptIt}</h4>
+        <h4 lang="it" translate="no">{item.promptIt}</h4>
         {bilingual ? <p className={styles.translation} lang="en-GB">{item.promptEn}</p> : null}
 
         {item.type === "listen" ? (
@@ -442,7 +450,7 @@ function PracticeLab({
         {item.type === "listen" && !speechAvailable ? <p id="parliamo-speech-unavailable" className={styles.speechUnavailable} role="status">Sintesi vocale non disponibile in questo browser. <span lang="en-GB">Speech synthesis is unavailable; type from the visible learning context or skip to another exercise.</span></p> : null}
 
         {item.type === "mcq" || item.type === "reading" ? (
-          <div className={styles.options} role="group" aria-label={item.promptIt}>
+          <div className={styles.options} role="group" aria-label={item.promptEn}>
             {item.options?.map((option) => {
               const correctOption = result !== null && normalise(option) === normalise(item.answer);
               const wrongOption = result === false && answer === option;
@@ -452,6 +460,8 @@ function PracticeLab({
                   aria-pressed={answer === option}
                   disabled={result !== null}
                   className={`${answer === option ? styles.optionSelected : ""} ${correctOption ? styles.optionCorrect : ""} ${wrongOption ? styles.optionWrong : ""}`}
+                  lang="it"
+                  translate="no"
                   key={option}
                   onClick={() => setAnswer(option)}
                 >
@@ -480,13 +490,13 @@ function PracticeLab({
           <div className={styles.reorderBoard}>
             <div className={styles.builtSentence} aria-label="Constructed sentence">
               {tiles.length ? tiles.map((tile, tileIndex) => (
-                <button type="button" key={`${tile}-${tileIndex}`} disabled={result !== null} onClick={() => setTiles(tiles.filter((_, indexToKeep) => indexToKeep !== tileIndex))}>{tile}</button>
+                <button type="button" key={`${tile}-${tileIndex}`} lang="it" translate="no" disabled={result !== null} onClick={() => setTiles(tiles.filter((_, indexToKeep) => indexToKeep !== tileIndex))}>{tile}</button>
               )) : <span>{bilingual ? "Tap the tiles to build the sentence." : "Tocca le tessere per costruire la frase."}</span>}
             </div>
             <div className={styles.wordTiles}>
               {item.tiles?.map((tile, tileIndex) => {
                 const used = tiles.filter((value) => value === tile).length >= (item.tiles?.filter((value) => value === tile).length ?? 0);
-                return <button type="button" key={`${tile}-${tileIndex}`} disabled={used || result !== null} onClick={() => setTiles([...tiles, tile])}>{tile}</button>;
+                return <button type="button" key={`${tile}-${tileIndex}`} lang="it" translate="no" disabled={used || result !== null} onClick={() => setTiles([...tiles, tile])}>{tile}</button>;
               })}
             </div>
           </div>
@@ -497,21 +507,22 @@ function PracticeLab({
         ) : (
           <div className={`${styles.practiceFeedback} ${result ? styles.feedbackGood : styles.feedbackBad}`} role="status" aria-live="polite">
             <div>
-              <strong>{result ? `✓ Esatto${bilingual ? " · Correct" : ""}` : `× Non ancora${bilingual ? " · Not yet" : ""}`}</strong>
+              <strong>{locale.startsWith("zh-") ? (result ? "✓ Correct" : "× Not yet") : result ? `✓ Esatto${bilingual ? " · Correct" : ""}` : `× Non ancora${bilingual ? " · Not yet" : ""}`}</strong>
               <span>+{result ? 8 : 2} XP · {(lastMs / 1000).toFixed(1)}s</span>
             </div>
-            <p>{item.explanationIt}</p>
+            <p lang="it" translate="no">{item.explanationIt}</p>
             {bilingual ? <small lang="en-GB">{item.explanationEn}</small> : null}
             {!result ? <code>{item.answer}</code> : null}
             <MacButton primary onClick={next}>{index === session.length - 1 ? (bilingual ? "Risultato · Result" : "Risultato") : (bilingual ? "Prossimo · Next" : "Prossimo")} →</MacButton>
           </div>
         )}
       </article>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
 function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; setXp: React.Dispatch<React.SetStateAction<number>> }) {
+  const locale = useProjectLocale();
   const [cardIndex, setCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [cardState, setCardState] = useState<Record<string, CardState>>(INITIAL_CARD_STATE);
@@ -543,7 +554,7 @@ function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; s
   }
 
   return (
-    <section className={styles.recallLab}>
+    <ProjectCopy copy={italianCopy}><section className={styles.recallLab}>
       <header className={styles.sectionIntro}>
         <div>
           <span className={styles.kicker}>RICHIAMO DISTANZIATO · DUE QUEUE</span>
@@ -566,15 +577,15 @@ function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; s
           <button type="button" className={`${styles.flashcard} ${flipped ? styles.cardFlipped : ""}`} onClick={() => setFlipped((value) => !value)} aria-pressed={flipped}>
             <span>{card.topic}</span>
             {!flipped ? (
-              <><small>ITALIANO</small><strong lang="it">{card.italian}</strong><em>{bilingual ? "Click to reveal · Clicca per girare" : "Clicca per girare"}</em></>
+              <><small>ITALIANO</small><strong lang="it" translate="no">{card.italian}</strong><em>{bilingual ? "Click to reveal · Clicca per girare" : "Clicca per girare"}</em></>
             ) : (
-              <><small lang="en-GB">ENGLISH</small><strong lang="en-GB">{card.english}</strong><span className={styles.cardExample}><b lang="it">{card.example}</b>{bilingual ? <span lang="en-GB">{card.exampleEn}</span> : null}</span></>
+              <><small lang="en-GB">ENGLISH</small><strong lang="en-GB">{card.english}</strong><span className={styles.cardExample}><b lang="it" translate="no">{card.example}</b>{bilingual ? <span lang="en-GB">{card.exampleEn}</span> : null}</span></>
             )}
           </button>
           <div className={styles.ratings}>
             {ratings.map((rating) => (
-              <button type="button" key={rating.it} disabled={!flipped} onClick={() => rate(`${rating.it}${bilingual ? ` · ${rating.en}` : ""}`, rating.quality)}>
-                <strong>{rating.it}</strong>{bilingual ? <small lang="en-GB">{rating.en}</small> : null}
+              <button type="button" key={rating.it} disabled={!flipped} onClick={() => rate(locale.startsWith("zh-") ? projectText(locale, italianCopy, rating.en) : `${rating.it}${bilingual ? ` · ${rating.en}` : ""}`, rating.quality)}>
+                <strong>{locale.startsWith("zh-") ? projectText(locale, italianCopy, rating.en) : rating.it}</strong>{bilingual ? <small lang={locale.startsWith("zh-") ? "it" : "en-GB"} translate={locale.startsWith("zh-") ? "no" : undefined}>{locale.startsWith("zh-") ? rating.it : rating.en}</small> : null}
               </button>
             ))}
           </div>
@@ -587,14 +598,14 @@ function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; s
           <div>
             <span>LAST SCHEDULER TRACE · {lastCalculation.label}</span>
             <strong>{lastCalculation.oldInterval}d → {lastCalculation.interval}d <i>·</i> ease {lastCalculation.oldEase.toFixed(2)} → {lastCalculation.ease.toFixed(2)} <i>·</i> +{lastCalculation.xp} XP</strong>
-            <code>interval[q] = [0, 1, max(3, round(i×1.8)), max(7, round(i×2.5))]</code>
+            <MathEquation tex={String.raw`I(q)=\begin{cases}0&q=0\\1&q=1\\\max(3,\operatorname{round}(1.8i))&q=2\\\max(7,\operatorname{round}(2.5i))&q=3\end{cases}`} label="Next review interval in days, by recall quality q and previous interval i" />
           </div>
         ) : (
-          <div><span>SCHEDULER READY</span><strong>{bilingual ? "Reveal the answer, then rate how well you recalled it." : "Gira la carta, poi valuta il richiamo."}</strong><code>ease′ = max(1.3, ease + (quality − 1.5) × 0.1)</code></div>
+          <div><span>SCHEDULER READY</span><strong>{bilingual ? "Reveal the answer, then rate how well you recalled it." : "Gira la carta, poi valuta il richiamo."}</strong><MathEquation tex={String.raw`e'=\max\bigl(1.3,\,e+(q-1.5)\times 0.1\bigr)`} label="Ease update from recall quality q" /></div>
         )}
         <span className={styles.traceXp}>{xp} XP</span>
       </div>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -608,12 +619,12 @@ function RubricLab({ bilingual }: { bilingual: boolean }) {
     : "Hai iniziato bene; aggiungi più segnali distinti del compito.";
 
   return (
-    <section className={styles.rubricLab}>
+    <ProjectCopy copy={italianCopy}><section className={styles.rubricLab}>
       <header className={styles.sectionIntro}>
         <div>
           <span className={styles.kicker}>RUBRICA LOCALE · ZERO API CALLS</span>
           <h3>Feedback spiegabile, parola per parola.</h3>
-          <p>{bilingual ? "This browser-safe refinement of the source fallback scores distinct useful words, one contribution per task signal and sentence completion—so repetition cannot inflate the result." : "Questa versione sicura della rubrica conta parole distinte, ogni segnale una sola volta e il completamento: le ripetizioni non alzano il risultato."}</p>
+          <p>{bilingual ? "This scoring rule counts distinct useful words, one contribution per task signal and sentence completion, so repeating the same text does not increase the score." : "Questa versione sicura della rubrica conta parole distinte, ogni segnale una sola volta e il completamento: le ripetizioni non alzano il risultato."}</p>
         </div>
         <span className={styles.localBadge}>● LOCAL-ONLY</span>
       </header>
@@ -622,12 +633,12 @@ function RubricLab({ bilingual }: { bilingual: boolean }) {
         <div className={styles.writingPanel}>
           <div className={styles.promptCard}>
             <span>COMPITO {bilingual ? "· TASK" : ""}</span>
-            <strong>Presentati in almeno due frasi. Spiega dove vivi, cosa studi e perché impari l’italiano.</strong>
+            <strong lang="it" translate="no">Presentati in almeno due frasi. Spiega dove vivi, cosa studi e perché impari l’italiano.</strong>
             {bilingual ? <small>Introduce yourself in at least two sentences. Say where you live, what you study and why you learn Italian.</small> : null}
           </div>
           <label>
             <span><strong>RISPOSTA</strong><em>{words(draft).length} words · {draft.length} chars</em></span>
-            <textarea value={draft} onChange={(event) => setDraft(event.target.value)} spellCheck="true" />
+            <textarea lang="it" translate="no" value={draft} onChange={(event) => setDraft(event.target.value)} spellCheck="true" />
           </label>
           <div className={styles.sampleActions}>
             <MacButton onClick={() => setDraft("Studio italiano")}>Short sample</MacButton>
@@ -641,8 +652,8 @@ function RubricLab({ bilingual }: { bilingual: boolean }) {
             <strong>{report.score}</strong><span>/100</span>
           </div>
           <div className={styles.breakdown}>
-            <div><span>Distinct useful words</span><strong>{report.lengthScore}/45</strong><i><b style={{ width: `${(report.lengthScore / 45) * 100}%` }} /></i><small>min(45, {report.scoredWords} unique tokens × 3)</small></div>
-            <div><span>Distinct task overlap</span><strong>{report.overlapScore}/45</strong><i><b style={{ width: `${(report.overlapScore / 45) * 100}%` }} /></i><small>min(45, {report.matches} unique signals × 9)</small></div>
+            <div><span>Distinct useful words</span><strong>{report.lengthScore}/45</strong><i><b style={{ width: `${(report.lengthScore / 45) * 100}%` }} /></i><small><MathEquation tex={String.raw`\min(45,\,${report.scoredWords}\times 3)`} display={false} /></small></div>
+            <div><span>Distinct task overlap</span><strong>{report.overlapScore}/45</strong><i><b style={{ width: `${(report.overlapScore / 45) * 100}%` }} /></i><small><MathEquation tex={String.raw`\min(45,\,${report.matches}\times 9)`} display={false} /></small></div>
             <div><span>Completion</span><strong>{report.punctuationScore}/10</strong><i><b style={{ width: `${report.punctuationScore * 10}%` }} /></i><small>{report.punctuationScore === 10 ? "Terminal punctuation found" : "Add a finished sentence"}</small></div>
           </div>
           <div className={`${styles.tutorNote} ${report.score >= 70 ? styles.tutorGood : ""}`}>
@@ -656,13 +667,14 @@ function RubricLab({ bilingual }: { bilingual: boolean }) {
 
       <aside className={styles.rubricCaveat} role="note">
         <span aria-hidden="true">i</span>
-        <p><strong>Local fallback with bounded claims.</strong> This public reconstruction hardens the source heuristic by capping every repeated token and target signal at one scoring contribution. The production portal can optionally request richer feedback, while local mode works without a key or metered service. The score is not a language certificate.</p>
+        <p><strong>How to read this score.</strong> Each word and task signal contributes at most once to the local heuristic. The production portal can optionally request richer feedback, while local mode works without a key or metered service. The score is not a language certificate.</p>
       </aside>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
 function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mastery }) {
+  const locale = useProjectLocale();
   const [laneIndex, setLaneIndex] = useState(2);
   const [artifacts, setArtifacts] = useState(MAX_DEMO_EVIDENCE_ARTIFACTS);
   const [gap, setGap] = useState(4);
@@ -672,7 +684,7 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
   const meanAccuracy = Math.round(SKILLS.reduce((total, skill) => total + accuracy(mastery[skill].attempts, mastery[skill].correct), 0) / SKILLS.length);
 
   return (
-    <section className={styles.evidenceLab}>
+    <ProjectCopy copy={italianCopy}><section className={styles.evidenceLab}>
       <header className={styles.sectionIntro}>
         <div>
           <span className={styles.kicker}>PROVE, NON SOLO PERCENTUALI · FIVE SEPARATE LANES</span>
@@ -687,8 +699,8 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
           {EVIDENCE_LANES.map((item, index) => (
             <button type="button" key={item.id} aria-pressed={laneIndex === index} className={laneIndex === index ? styles.activeLane : ""} onClick={() => setLaneIndex(index)}>
               <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>{item.it}</strong>
-              {bilingual ? <small lang="en-GB">{item.en}</small> : null}
+              <strong>{locale.startsWith("zh-") ? projectText(locale, italianCopy, item.en) : item.it}</strong>
+              {bilingual ? <small lang={locale.startsWith("zh-") ? "it" : "en-GB"} translate={locale.startsWith("zh-") ? "no" : undefined}>{locale.startsWith("zh-") ? item.it : item.en}</small> : null}
               <i style={{ width: `${[58, 74, 62, 47, 81][index]}%` }} />
             </button>
           ))}
@@ -696,7 +708,7 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
 
         <article className={styles.evidenceWorkbench}>
           <div className={styles.laneHeading}>
-            <div><span lang="en-GB">A1 EXIT TARGET</span><h4>{lane.it}{bilingual ? <small lang="en-GB"> · {lane.en}</small> : null}</h4><p lang="en-GB">{lane.target}</p></div>
+            <div><span lang="en-GB">A1 EXIT TARGET</span><h4>{locale.startsWith("zh-") ? projectText(locale, italianCopy, lane.en) : lane.it}{bilingual ? <small lang={locale.startsWith("zh-") ? "it" : "en-GB"} translate={locale.startsWith("zh-") ? "no" : undefined}> · {locale.startsWith("zh-") ? lane.it : lane.en}</small> : null}</h4><p lang="en-GB">{lane.target}</p></div>
             <span className={`${styles.evidenceStatus} ${independentReady ? styles.independent : ""}`}>{status}</span>
           </div>
 
@@ -722,7 +734,7 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
             <span aria-hidden="true">{independentReady ? "✓" : "⌛"}</span>
             <div>
               <strong>{independentReady ? "Independent unlocked" : "Independent remains locked"}</strong>
-              <p>{independentReady ? "Two artifacts are separated by at least seven days." : artifacts < 2 ? "Add a second dated artifact." : `${7 - gap} more day${7 - gap === 1 ? "" : "s"} of spacing required.`}</p>
+              <p>{independentReady ? "Two artifacts are separated by at least seven days." : artifacts < 2 ? "Add a second dated artifact." : `Additional spacing required (days): ${7 - gap}.`}</p>
             </div>
           </div>
         </article>
@@ -732,10 +744,10 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
         {SKILLS.map((skill) => {
           const stats = mastery[skill];
           const percentage = accuracy(stats.attempts, stats.correct);
-          return <div key={skill}><span>{SKILL_LABELS[skill].it}</span><i><b style={{ width: `${percentage}%` }} /></i><strong>{percentage}%</strong><small>{stats.attempts} checks</small></div>;
+          return <div key={skill}><span>{locale.startsWith("zh-") ? projectText(locale, italianCopy, SKILL_LABELS[skill].en) : SKILL_LABELS[skill].it}</span><i><b style={{ width: `${percentage}%` }} /></i><strong>{percentage}%</strong><small>{stats.attempts} checks</small></div>;
         })}
       </div>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -776,11 +788,11 @@ function SystemLab({ bilingual }: { bilingual: boolean }) {
   }
 
   return (
-    <section className={styles.systemLab}>
+    <ProjectCopy copy={italianCopy}><section className={styles.systemLab}>
       <header className={styles.sectionIntro}>
         <div>
           <span className={styles.kicker}>LOCAL-FIRST APPLICATION · OPTIMISTIC REVISION CONTROL</span>
-          <h3>A real curriculum engine, not a static lesson page.</h3>
+          <h3>How practice becomes lasting progress.</h3>
           <p>{bilingual ? "The source application keeps structured content, learner state, practice events and rubric submissions in Cloudflare D1, with a browser cache for offline continuity." : "Contenuti, stato, eventi e feedback sono strutturati in D1 con cache locale."}</p>
         </div>
         <span className={styles.localBadge}>753 SEEDED ROWS</span>
@@ -820,18 +832,19 @@ function SystemLab({ bilingual }: { bilingual: boolean }) {
         </div>
 
         <ol className={styles.syncLog} aria-live="polite">
-          {log.map((entry, index) => <li key={`${entry}-${index}`}><span>{String(index + 1).padStart(2, "0")}</span><code>{entry}</code></li>)}
+          {log.map((entry, index) => <li key={`${entry}-${index}`}><span>{String(index + 1).padStart(2, "0")}</span><span>{entry}</span></li>)}
         </ol>
       </div>
 
       <aside className={styles.privacyNote} role="note">
-        <span aria-hidden="true">⌾</span><div><strong>Portfolio-safe reconstruction</strong><p>All learner answers and state shown here are synthetic. The original private archive, local backups and personal study history are not shipped with this demonstration.</p></div>
+        <span aria-hidden="true">⌾</span><div><strong>Local learning state</strong><p>These example answers and progress records let you inspect the learning workflow. Practice, review and sync changes remain in this demo session.</p></div>
       </aside>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
 export function ItalianLearningStudio() {
+  const locale = useProjectLocale();
   const [view, setView] = useState<StudioView>("practice");
   const [bilingual, setBilingual] = useState(true);
   const [mastery, setMastery] = useState<Mastery>(INITIAL_MASTERY);
@@ -846,10 +859,10 @@ export function ItalianLearningStudio() {
   }
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={italianCopy}><DemoWindow
       appName="Parliamo! 7"
-      title="Local-first Italian Learning Studio"
-      status="SYNTHETIC LEARNER · LOCAL"
+      title="Italian practice studio"
+      status="Practice profile · local"
       purpose="Connect a 56-day beginner curriculum to daily practice, spaced recall and durable progress evidence."
       tryThis="Answer a Today prompt, grade a Recall card, then open the sync-conflict exercise."
       watchFor="Mastery and the next-review schedule change locally while revision handling protects progress across devices."
@@ -858,11 +871,11 @@ export function ItalianLearningStudio() {
       footer={
         <>
           <span>56 DAYS · 28 HUBS · 7 SKILLS · 753 CONTENT ROWS</span>
-          <span>PRIVATE SOURCE DATA EXCLUDED</span>
+          <span>PRACTICE · RECALL · FEEDBACK · PROGRESS · OFFLINE SYNC</span>
         </>
       }
     >
-      <div className={styles.studio} lang="it">
+      <div className={styles.studio} lang={locale.startsWith("zh-") ? locale : "it"}>
         <div className={styles.utilityBar}>
           <div><span className={styles.flagMark} aria-hidden="true"><i /><i /><i /></span><strong>PARLIAMO!</strong><small lang="en-GB">A1 CONSOLIDATION ENGINE</small></div>
           <div>
@@ -876,7 +889,7 @@ export function ItalianLearningStudio() {
         <section className={styles.productMap} aria-labelledby="parliamo-product-map-title" lang="en-GB">
           <div>
             <span>PRODUCT MAP / START HERE</span>
-            <h3 id="parliamo-product-map-title">A dated 56-day learning product—not seven loose exercises</h3>
+            <h3 id="parliamo-product-map-title">56 days of planned practice and progress checks</h3>
             <p>Today selects work from the learner’s dated plan and weaker skills. Recall, writing and CEFR evidence then update separate progress records; the System chapter exposes the local-first persistence contract.</p>
             <button type="button" onClick={() => setView("system")}>Inspect curriculum & sync architecture →</button>
           </div>
@@ -896,7 +909,7 @@ export function ItalianLearningStudio() {
           {view === "system" ? <SystemLab bilingual={bilingual} /> : null}
         </div>
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

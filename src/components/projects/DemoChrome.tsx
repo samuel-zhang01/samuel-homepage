@@ -34,10 +34,10 @@ export function DemoWindow({
   const t = (source: string) => translateText(locale, source);
 
   return (
-    <section className={`${styles.demoWindow} ${className}`} aria-label={`${t(title)} — ${t("interactive demo")}`}>
+    <section className={`system7-project ${styles.demoWindow} ${className}`} data-locale={locale} aria-label={`${t(title)} — ${t("interactive demo")}`}>
       <header className={styles.demoHeader}>
         <div>
-          <span className={styles.eyebrow}>{t(appName)} · {t("INTERACTIVE PROJECT FILE")}</span>
+          <span className={styles.eyebrow}>{t(appName)} · {locale === "en-GB" ? "Interactive project file" : t("INTERACTIVE PROJECT FILE")}</span>
           <h2>{t(title)}</h2>
         </div>
         <span className={`${styles.statusBadge} ${styles[statusTone]}`}>
@@ -49,15 +49,15 @@ export function DemoWindow({
         <summary>{t("How to use this interactive demo")}</summary>
         <div className={styles.contractGrid}>
           <div className={styles.contractPurpose}>
-            <span>{t("WHY THIS EXISTS")}</span>
+            <span>{locale === "en-GB" ? "Purpose" : t("WHY THIS EXISTS")}</span>
             <strong>{t(purpose)}</strong>
           </div>
           <div>
-            <span><i aria-hidden="true">01</i> {t("TRY THIS")}</span>
+            <span><i aria-hidden="true">01</i> {locale === "en-GB" ? "Try this" : t("TRY THIS")}</span>
             <p>{t(tryThis)}</p>
           </div>
           <div>
-            <span><i aria-hidden="true">02</i> {t("WATCH")}</span>
+            <span><i aria-hidden="true">02</i> {locale === "en-GB" ? "Watch" : t("WATCH")}</span>
             <p>{t(watchFor)}</p>
           </div>
         </div>
@@ -71,12 +71,16 @@ export function DemoWindow({
 export function MacButton({
   children,
   primary = false,
+  variant = "normal",
+  className = "",
+  type = "button",
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean; variant?: "normal" | "default" | "icon" }) {
   return (
     <button
       {...props}
-      className={`${styles.macButton} ${primary ? styles.primaryButton : ""} ${props.className ?? ""}`}
+      type={type}
+      className={`s7-button ${primary || variant === "default" ? "is-default" : ""} ${variant === "icon" ? "s7-button--icon" : ""} ${className}`}
     >
       {children}
     </button>

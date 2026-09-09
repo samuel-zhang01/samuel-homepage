@@ -1,13 +1,21 @@
 import { lstat, readFile, readdir } from "node:fs/promises";
 import { join, relative, resolve, sep } from "node:path";
+import { gzipSync } from "node:zlib";
 
 const outputRoot = resolve(process.cwd(), process.argv[2] || process.env.NEXT_DIST_DIR?.trim() || ".next");
 const staticRoot = join(outputRoot, "static");
 const standaloneRoot = join(outputRoot, "standalone");
 const MAX_BROWSER_FILES = 120;
-const MAX_BROWSER_BYTES = 4 * 1024 * 1024;
+// Full CN/TW demo copy adds about 1 MiB across lazy project chunks. Budget that
+// requested content explicitly while separately preventing initial-load growth.
+const MAX_BROWSER_BYTES = 5 * 1024 * 1024;
+const MAX_INITIAL_JS_GZIP_BYTES = 270 * 1024;
+// LaTeX is an explicitly requested, demand-loaded feature. Keep the existing
+// aggregate application budget, and bound its single third-party parser independently.
+const MAX_MATH_RENDERER_BYTES = 300 * 1024;
 const MAX_RUNTIME_FILES = 2_500;
-const MAX_APPLICATION_RUNTIME_BYTES = 4 * 1024 * 1024;
+// Server-rendered project copy shares the same bilingual content allowance.
+const MAX_APPLICATION_RUNTIME_BYTES = 5 * 1024 * 1024;
 const formatMiB = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MiB`;
 
 const credentialMarkers = [
@@ -70,12 +78,18 @@ await requireRegularFile(join(standaloneRoot, "server.js"), "standalone server")
 const staticFiles = await collectFiles(staticRoot);
 const standaloneFiles = await collectFiles(standaloneRoot);
 let staticBytes = 0;
+let mathRendererBytes = 0;
+const mathRendererFiles = [];
 let applicationRuntimeBytes = 0;
 
 for (const path of staticFiles) {
   const publicPath = relative(outputRoot, path).split(sep).join("/");
   const metadata = await lstat(path);
   staticBytes += metadata.size;
+  if (path.endsWith(".js") && (await readFile(path, "utf8")).includes("KaTeX parse error:")) {
+    mathRendererBytes += metadata.size;
+    mathRendererFiles.push(publicPath);
+  }
   if (path.endsWith(".map")) {
     throw new Error(`Browser source map is forbidden in production output: ${publicPath}`);
   }
@@ -106,8 +120,29 @@ for (const path of standaloneFiles) {
 if (staticFiles.length > MAX_BROWSER_FILES) {
   throw new Error(`Browser output contains ${staticFiles.length} files; budget is ${MAX_BROWSER_FILES}.`);
 }
-if (staticBytes > MAX_BROWSER_BYTES) {
-  throw new Error(`Browser output is ${formatMiB(staticBytes)}; budget is ${formatMiB(MAX_BROWSER_BYTES)}.`);
+if (mathRendererFiles.length !== 1 || mathRendererBytes > MAX_MATH_RENDERER_BYTES) {
+  throw new Error(`Math renderer must remain one shared chunk below ${MAX_MATH_RENDERER_BYTES / 1024} KiB; found ${mathRendererFiles.length} chunks / ${mathRendererBytes} bytes.`);
+}
+const appManifest = JSON.parse(await readFile(join(outputRoot, "app-build-manifest.json"), "utf8"));
+for (const [page, files] of Object.entries(appManifest.pages)) {
+  if (files.some((file) => mathRendererFiles.includes(file))) {
+    throw new Error(`The math renderer must load on demand, but is in the initial ${page} entry.`);
+  }
+}
+const initialFiles = new Set([
+  ...(appManifest.pages["/layout"] ?? []),
+  ...(appManifest.pages["/[locale]/layout"] ?? []),
+  ...(appManifest.pages["/[locale]/page"] ?? []),
+]);
+let initialJsGzipBytes = 0;
+for (const file of initialFiles) if (file.endsWith(".js")) {
+  initialJsGzipBytes += gzipSync(await readFile(join(outputRoot, file))).length;
+}
+if (!initialJsGzipBytes || initialJsGzipBytes > MAX_INITIAL_JS_GZIP_BYTES) {
+  throw new Error(`Initial desktop JavaScript is ${(initialJsGzipBytes / 1024).toFixed(1)} KiB gzip; budget is ${MAX_INITIAL_JS_GZIP_BYTES / 1024} KiB.`);
+}
+if (staticBytes - mathRendererBytes > MAX_BROWSER_BYTES) {
+  throw new Error(`Application browser output is ${formatMiB(staticBytes - mathRendererBytes)}; budget is ${formatMiB(MAX_BROWSER_BYTES)} (math renderer checked separately).`);
 }
 if (standaloneFiles.length > MAX_RUNTIME_FILES) {
   throw new Error(`Standalone output contains ${standaloneFiles.length} traced files; budget is ${MAX_RUNTIME_FILES}.`);
@@ -121,5 +156,7 @@ if (applicationRuntimeBytes > MAX_APPLICATION_RUNTIME_BYTES) {
 
 console.log(
   `Production output gate: ${staticFiles.length} browser files (${formatMiB(staticBytes)}), `
+  + `including ${(mathRendererBytes / 1024).toFixed(1)} KiB demand-loaded math; `
+  + `${(initialJsGzipBytes / 1024).toFixed(1)} KiB initial JavaScript gzip; `
   + `${standaloneFiles.length} traced runtime files; application runtime ${formatMiB(applicationRuntimeBytes)}.`,
 );

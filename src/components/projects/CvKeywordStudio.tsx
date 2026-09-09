@@ -10,7 +10,11 @@ import {
 } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
+import { MathEquation } from "./MathEquation";
 import styles from "./CvKeywordStudio.module.css";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { cvKeywordCopy } from "./copy/cvKeywordCopy";
+import { projectText } from "../../lib/projectCopy";
 
 type TemplateId =
   | "tech"
@@ -439,7 +443,7 @@ function buildSuggestions(cv: string, report: AnalysisReport): RewriteSuggestion
     label: `Validate “${signal.label}”`,
     reason: "The role asks for this signal, but the supplied CV contains no supporting sentence.",
     original: "No evidence located in the CV snapshot.",
-    replacement: `If true, add: [action] ${signal.label.toLocaleLowerCase("en-GB")} for [scope], resulting in [verified outcome].`,
+    replacement: `If true, add: [action] ${signal.label} for [scope], resulting in [verified outcome].`,
     canStage: false,
   }));
 
@@ -472,7 +476,7 @@ function formatPercent(value: number) {
 
 function ScoreRing({ value, label }: { value: number; label: string }) {
   return (
-    <div
+    <ProjectCopy copy={cvKeywordCopy}><div
       className={styles.scoreRing}
       role="meter"
       aria-label={label}
@@ -483,7 +487,7 @@ function ScoreRing({ value, label }: { value: number; label: string }) {
     >
       <span>{value}</span>
       <small>/100</small>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -499,7 +503,7 @@ function TabButton({
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
 }) {
   return (
-    <button
+    <ProjectCopy copy={cvKeywordCopy}><button
       id={`cv-studio-tab-${tab.id}`}
       className={`${styles.stepTab} ${active ? styles.activeStep : ""}`}
       type="button"
@@ -513,11 +517,13 @@ function TabButton({
       <span>{tab.step}</span>
       <strong>{tab.label}</strong>
       <small>{tab.detail}</small>
-    </button>
+    </button></ProjectCopy>
   );
 }
 
 export function CvKeywordStudio() {
+  const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, cvKeywordCopy, source);
   const [cvText, setCvText] = useState(SAMPLE_CV);
   const [jobText, setJobText] = useState(SAMPLE_JOB);
   const [role, setRole] = useState("Applied Machine Learning Engineer");
@@ -535,7 +541,7 @@ export function CvKeywordStudio() {
   const [includeCoverLetter, setIncludeCoverLetter] = useState(false);
   const [selectedSignal, setSelectedSignal] = useState<string>("python");
   const [runNumber, setRunNumber] = useState(1);
-  const [announcement, setAnnouncement] = useState("Safe sample loaded. Ready to analyse.");
+  const [announcement, setAnnouncement] = useState("Fictional sample loaded. Ready to analyse.");
 
   const report = useMemo(
     () => analyse(analysed.cv, analysed.job, lens),
@@ -592,7 +598,7 @@ export function CvKeywordStudio() {
     setIncludeCoverLetter(false);
     setRunNumber((current) => current + 1);
     setActiveTab("inputs");
-    setAnnouncement("The fictional source-faithful sample has been restored.");
+    setAnnouncement("The fictional example has been restored.");
   }
 
   function clearWorkspace() {
@@ -631,30 +637,30 @@ export function CvKeywordStudio() {
   }
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={cvKeywordCopy}><DemoWindow
       appName="CV Keyword Studio"
       title="Role-tailored CV build lab"
-      status={isDirty ? "EDITING · RUN TO REFRESH" : "ANALYSIS CURRENT"}
-      purpose="Map role language to truthful CV evidence without silently injecting unsupported keywords."
-      tryThis="Edit a sentence, run the analysis and stage one factual rewrite for a missing signal."
+      status={isDirty ? "Editing · run to update" : "Analysis current"}
+      purpose="Connect job requirements to the sentences that support them, then compare factual edits and document templates."
+      tryThis="Edit a sentence, run the analysis and stage a factual rewrite; inspect missing signals separately."
       watchFor="Signal coverage and the output manifest change only after review; the demo never fabricates experience."
       statusTone={isDirty ? "working" : "safe"}
       className={styles.studio}
       footer={
         <>
           <span>Run #{runNumber} · {report.signals.length}/40 unique signals</span>
-          <span>{stagedCount} factual rewrite{stagedCount === 1 ? "" : "s"} staged · memory only</span>
+          <span>{`Factual rewrites staged: ${stagedCount} · session only`}</span>
         </>
       }
     >
       <div style={studioStyle}>
         <p className={styles.liveRegion} role="status" aria-live="polite">{announcement}</p>
 
-        <aside className={styles.privacyBanner} aria-label="Demonstration privacy boundary">
+        <aside className={styles.privacyBanner} aria-label="How this demonstration works">
           <span className={styles.shield} aria-hidden="true">✓</span>
           <div>
-            <strong>Fictional data. Local deterministic demo.</strong>
-            <p>No upload, API call, storage, hiring decision, or personal document is used. The original workflow used model-assisted extraction and LaTeX; this browser edition exposes a smaller rule set so every calculation can be inspected.</p>
+            <strong>From job language to visible evidence.</strong>
+            <p>The original workflow combined model-assisted extraction with LaTeX templates. This local edition uses 18 explicit English signal rules, so you can inspect each match, weight and evidence check. The sample documents remain in English to show exactly what the matcher reads.</p>
           </div>
           <span className={styles.memoryBadge}>SESSION MEMORY ONLY</span>
         </aside>
@@ -698,7 +704,7 @@ export function CvKeywordStudio() {
             <div className={styles.sectionHeading}>
               <div>
                 <span>INPUT SNAPSHOT</span>
-                <h3>Start with role context and sanitised evidence</h3>
+                <h3>Start with role context and supporting evidence</h3>
               </div>
               <p>Edits remain local until “Run analysis” snapshots them.</p>
             </div>
@@ -718,9 +724,10 @@ export function CvKeywordStudio() {
               <label className={styles.editorPanel}>
                 <span className={styles.editorHeading}>
                   <span><b>01</b> Sanitised CV evidence</span>
-                  <small>{cvText.length.toLocaleString("en-GB")} chars</small>
+                  <small>{cvText.length.toLocaleString(locale)} chars</small>
                 </span>
                 <textarea
+                  lang="en"
                   value={cvText}
                   onChange={(event) => setCvText(event.target.value)}
                   spellCheck="true"
@@ -731,9 +738,10 @@ export function CvKeywordStudio() {
               <label className={styles.editorPanel}>
                 <span className={styles.editorHeading}>
                   <span><b>02</b> Job description</span>
-                  <small>{jobText.length.toLocaleString("en-GB")} chars</small>
+                  <small>{jobText.length.toLocaleString(locale)} chars</small>
                 </span>
                 <textarea
+                  lang="en"
                   value={jobText}
                   onChange={(event) => setJobText(event.target.value)}
                   spellCheck="true"
@@ -831,7 +839,7 @@ export function CvKeywordStudio() {
             <article className={`${styles.panel} ${styles.signalPanel}`}>
               <div className={styles.panelTitle}>
                 <div><span>EXTRACTED SIGNALS</span><strong>Term-by-term calculation</strong></div>
-                <small>base + specificity + repetition + essential boost</small>
+                <small><MathEquation tex={String.raw`\begin{aligned}&\text{base}+\text{specificity}\\&+\text{repetition}+\text{essential boost}\end{aligned}`} /></small>
               </div>
               <div className={styles.signalTableWrap}>
                 <table className={styles.signalTable}>
@@ -846,7 +854,7 @@ export function CvKeywordStudio() {
                         </th>
                         <td>{signal.category}</td>
                         <td>{signal.required ? <span className={styles.coreTag}>CORE</span> : "Support"}</td>
-                        <td><b>{signal.weight}</b><small>{signal.baseWeight}+{signal.specificity}+{Math.min(Math.max(signal.frequency - 1, 0), 2)}+{signal.required ? 2 : 0}</small></td>
+                        <td><b>{signal.weight}</b><small><MathEquation display={false} tex={String.raw`${signal.baseWeight}+${signal.specificity}+${Math.min(Math.max(signal.frequency - 1, 0), 2)}+${signal.required ? 2 : 0}`} /></small></td>
                         <td>{signal.matched ? <span className={styles.foundTag}>✓ Found</span> : <span className={styles.missingTag}>— Missing</span>}</td>
                       </tr>
                     ))}
@@ -904,8 +912,8 @@ export function CvKeywordStudio() {
                       </div>
                     </header>
                     <div className={styles.quotePair}>
-                      <div><span>ROLE EVIDENCE</span><blockquote>{shorten(selected.jobEvidence, 240)}</blockquote></div>
-                      <div><span>CV EVIDENCE</span><blockquote className={!selected.cvEvidence ? styles.noEvidence : ""}>{selected.cvEvidence ? shorten(selected.cvEvidence, 240) : "No matching sentence. Validate experience before adding this term."}</blockquote></div>
+                      <div><span>ROLE EVIDENCE</span><blockquote lang="en" translate="no">{shorten(selected.jobEvidence, 240)}</blockquote></div>
+                      <div><span>CV EVIDENCE</span><blockquote lang={selected.cvEvidence ? "en" : undefined} translate={selected.cvEvidence ? "no" : undefined} className={!selected.cvEvidence ? styles.noEvidence : ""}>{selected.cvEvidence ? shorten(selected.cvEvidence, 240) : "No matching sentence. Validate experience before adding this term."}</blockquote></div>
                     </div>
                     <div className={styles.proofChecks}>
                       <span className={selected.cvEvidence ? styles.checkOn : ""}><b>{selected.cvEvidence ? "✓" : "–"}</b> Relevant sentence</span>
@@ -934,9 +942,9 @@ export function CvKeywordStudio() {
                       </header>
                       <p>{suggestion.reason}</p>
                       <div className={styles.rewriteDiff}>
-                        <div><span>{suggestion.kind === "rewrite" ? "BEFORE" : "OBSERVED"}</span><p>{suggestion.original}</p></div>
+                        <div><span>{suggestion.kind === "rewrite" ? "BEFORE" : "OBSERVED"}</span><p lang={suggestion.kind === "rewrite" ? "en" : undefined} translate={suggestion.kind === "rewrite" ? "no" : undefined}>{suggestion.original}</p></div>
                         <span aria-hidden="true">→</span>
-                        <div><span>{suggestion.kind === "rewrite" ? "STAGED DRAFT" : "COACHING PROMPT"}</span><p>{suggestion.replacement}</p></div>
+                        <div><span>{suggestion.kind === "rewrite" ? "STAGED DRAFT" : "COACHING PROMPT"}</span><p lang={suggestion.kind === "rewrite" ? "en" : undefined} translate={suggestion.kind === "rewrite" ? "no" : undefined}>{suggestion.replacement}</p></div>
                       </div>
                       {suggestion.canStage ? (
                         <button
@@ -1001,7 +1009,7 @@ export function CvKeywordStudio() {
                   <div><dt>Relevant signals</dt><dd>{templateMatched}/{templateSignals.length || 0} evidenced</dd></div>
                   <div><dt>Keyword payload</dt><dd>{report.signals.length} unique · JSON shape checked</dd></div>
                   <div><dt>LaTeX escaping</dt><dd>{escapeCount(report.signals.map((signal) => signal.label).join(", "))} reserved characters</dd></div>
-                  <div><dt>Staged edits</dt><dd>{stagedCount} fact-preserving rewrite{stagedCount === 1 ? "" : "s"}</dd></div>
+                  <div><dt>Staged edits</dt><dd>{`Factual rewrites: ${stagedCount}`}</dd></div>
                 </dl>
 
                 <label className={styles.coverToggle}>
@@ -1021,13 +1029,13 @@ export function CvKeywordStudio() {
               <article className={styles.documentPreview} aria-label="Fictional CV output preview">
                 <div className={styles.paperToolbar}>
                   <span>PREVIEW · PAGE 1 / 1</span>
-                  <span>{templateProfile.label.toUpperCase()} PROFILE</span>
+                  <span>{t(templateProfile.label).toLocaleUpperCase(locale)} PROFILE</span>
                 </div>
                 {buildReady ? <div className={styles.paper}>
                   <header>
                     <span>FICTIONAL CANDIDATE</span>
                     <h4>Alex Morgan</h4>
-                    <p>{analysed.role || "Target role"} · London, UK</p>
+                    <p><span translate={analysed.role ? "no" : undefined}>{analysed.role || "Target role"}</span> · London, UK</p>
                   </header>
                   <section>
                     <h5>Profile</h5>
@@ -1036,12 +1044,12 @@ export function CvKeywordStudio() {
                   <section>
                     <h5>{template === "science" ? "Selected Research & Experience" : template === "product" ? "Product Experience" : "Selected Experience"}</h5>
                     <ul>
-                      {previewBullets.slice(0, 5).map((bullet) => <li key={bullet}>{bullet}</li>)}
+                      {previewBullets.slice(0, 5).map((bullet) => <li key={bullet} lang="en" translate="no">{bullet}</li>)}
                     </ul>
                   </section>
                   <section>
                     <h5>Role alignment</h5>
-                    <p className={styles.keywordLine}>{report.matched.slice(0, 9).map((signal) => signal.label).join(" · ") || "Run analysis to populate evidenced signals"}</p>
+                    <p className={styles.keywordLine}>{report.matched.slice(0, 9).map((signal) => t(signal.label)).join(" · ") || "Run analysis to populate evidenced signals"}</p>
                   </section>
                   <footer>Demonstration preview · fictional content · not a generated file</footer>
                 </div> : <div className={styles.buildEmpty} role="status"><span aria-hidden="true">□</span><strong>No validated snapshot</strong><p>Return to Brief, add CV evidence and a role description, then run the analysis before inspecting output.</p></div>}
@@ -1050,7 +1058,7 @@ export function CvKeywordStudio() {
 
             <article className={`${styles.panel} ${styles.manifest}`}>
               <div className={styles.panelTitle}>
-                <div><span>OUTPUT MANIFEST</span><strong>YYYYMMDD {analysed.role || "Role"} from {analysed.company || "Company"}/</strong></div>
+                <div><span>OUTPUT MANIFEST</span><strong translate="no">YYYYMMDD {analysed.role || "Role"} from {analysed.company || "Company"}/</strong></div>
                 <small>{buildReady ? `${includeCoverLetter ? 4 : 2} dated outputs · 1 workspace file` : "Build waiting for a validated snapshot"}</small>
               </div>
               <div className={styles.fileGrid}>
@@ -1065,15 +1073,15 @@ export function CvKeywordStudio() {
         ) : null}
 
         <details className={styles.methodology}>
-          <summary>Methodology, provenance &amp; limitations</summary>
+          <summary>Method and interpretation</summary>
           <div>
-            <p><strong>Source-derived, safety-improved adaptation:</strong> job description → ranked keyword payload → role-specific LaTeX template → LuaLaTeX PDF → dated output folder, with an optional cover-letter route. The working repository validates strict JSON, deduplicates up to 40 terms, escapes LaTeX control characters, and offers Tech, Consult, Product, Science, Law, Fintech, AI and Ops templates. Its former hidden keyword-injection mechanism has now been removed from every active template; this port likewise turns each signal into visible, reviewable evidence.</p>
-            <p><strong>Browser adaptation:</strong> this showcase replaces external model inference with a deterministic 18-signal dictionary. Weight = base relevance + specificity + up to 2 repetition points + 2 points for essential wording. Proof quality separately checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.</p>
-            <p><strong>Integrity boundary:</strong> a missing signal is never inserted automatically. Only three rewrites grounded verbatim in the fictional sample can be staged, and every generated coaching prompt contains explicit placeholders for evidence that must be verified.</p>
+            <p><strong>Project workflow:</strong> connect a job description to ranked signals, a role-specific LaTeX template and a dated output bundle. The original workflow validates structured keyword data, removes duplicates, handles LaTeX special characters and offers eight template families. This demonstration makes each signal visible and links it to evidence you can inspect.</p>
+            <p><strong>Browser adaptation:</strong> this showcase replaces external model inference with a deterministic 18-signal dictionary. <MathEquation tex={String.raw`\begin{aligned}\text{weight}={}&\text{base relevance}+\text{specificity}\\&+\min(\max(\text{frequency}-1,0),2)\\&+\begin{cases}2,&\text{essential wording}\\0,&\text{otherwise}\end{cases}\end{aligned}`} />Repetition adds up to 2 points; essential wording adds 2 points. Proof quality separately checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.</p>
+            <p><strong>Review before editing:</strong> a missing signal is never inserted automatically. Only three rewrites grounded verbatim in the fictional sample can be staged, and every generated coaching prompt contains explicit placeholders for evidence that must be verified.</p>
           </div>
         </details>
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

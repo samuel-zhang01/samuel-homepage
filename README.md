@@ -15,7 +15,11 @@ tab—without an account, tracking API or server-side personal-data store.
 
 [Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
-Latest: [5 September interaction and reliability follow-up](docs/INTERACTION_AUDIT_2026-09-05.md).
+Latest: [System 7 redesign and review](docs/SYSTEM7_REVIEW_2026-09-09.md).
+Design references: [Apple manuals and the shared control specification](docs/SYSTEM7_DESIGN_BENCHMARK.md).
+Restoration: [9 September baseline restoration](docs/RESTORATION_AUDIT_2026-09-09.md).
+Source review: [9 September project depth and source audit](docs/PROJECT_DEPTH_AUDIT_2026-09-09.md).
+Previous: [5 September interaction and reliability follow-up](docs/INTERACTION_AUDIT_2026-09-05.md).
 Detail pass: [ruled paper, classic menus and Orbital Lab](docs/ORBITAL_AND_DETAIL_AUDIT.md).
 Rendering follow-up: [high-DPI ASCII, density/surface 3D and icon alignment](docs/ORBITAL_RENDER_QUALITY_AUDIT.md).
 Archive follow-up: [desktop app records, detailed Find and verification](docs/ARCHIVE_SEARCH_AUDIT_2026-09-05.md).
@@ -51,7 +55,7 @@ uses display-timed animation, starts paused, and respects reduced-motion setting
 
 </details>
 
-Screenshots show the current source build. The deployed site may remain on an
+Screenshots document the 5 September desktop baseline; the new graph and restored demo additions are described in the restoration audit. The deployed site may remain on an
 earlier revision until the server owner runs the deployment script.
 
 ## The desk apps
@@ -90,6 +94,11 @@ of permanent storage. Export a backup before clearing site data or changing devi
 - Responsive System 7 windows designed for 320 px mobile screens through large desktops, with pointer- and keyboard-resizable floating windows on desktop.
 - A localised Finder-style crash dialog for unknown routes that preserves the real HTTP 404 status and offers safe ways home.
 
+
+The 9 September update adds direct career and education links, employer-aware project search and project context before launch. Demo URLs retain `&view=demo`. STUDY-RL now includes actual seeded CliffWalking Q-learning/SARSA, recorded small-model answer comparison, live LoRA updates and a DPO objective calculator. The source review records 25 executed notebooks, 448 lecture pages, 279 passing tests and one Week 25 failure.
+
+New experiments include finance import identity, overlap replay, provider-ID corrections and reconciliation edge cases; scheduling across daylight-saving changes, backup failure sequences, MRI residual patterns and acquisition budgets, CFD rollout amplification, vision sequence splits, spectral matching order and coverage under population shift. Their controls label calculated teaching examples separately from recorded source results. MRI also exposes uncertainty rescaling, ranking and pixel-removal budgets against an equal-budget oracle. Saved CFD sequences support pinned-frame comparison; microscopy supports pose/depth Grad-CAM comparison on the same source image. `npm run check:learning` checks 148 source transition fixtures, control semantics, learning calculations, response evidence and career references before production builds. `npm run check:experiments` checks eight scientific/product interaction suites, seven original finance-source fixture attempts and 70 MRI scale/ranking/removal configurations with independent numerical expectations and control interactions. `npm run check:scientific-media` checks the archived media and playback/comparison controls.
+
 ## System 7 design contract
 
 This is an interpretation for the modern web, not a claim of pixel-for-pixel
@@ -100,8 +109,10 @@ clean black-and-white structure, and familiar visual metaphors.
 - Chicago-first window/menu chrome, Geneva-first content and Monaco/Courier
   machine readouts, with language-appropriate CJK fallbacks.
 - 32 × 32 desktop icon plates and 16 × 16 menu artwork.
-- Square controls, hard keylines, one-pixel bevels, dotted focus and restrained
-  project colour—no glass panels, pill buttons, blur or soft UI glow.
+- Slightly rounded push buttons, square pop-up menus, hard one-pixel relief,
+  separate default-action and keyboard-focus rings, and restrained project
+  colour. The [System 7 benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes
+  the original Apple controls from modern readability and touch adaptations.
 - Compact layouts keep the content and hierarchy but replace floating windows
   with one usable app surface, safe-area handling and coarse-pointer targets.
 
@@ -116,23 +127,25 @@ Small interactive evidence fixtures use reviewed local CSV files under
 third-party fetching and raw public downloads are disabled. `npm run check:data` pins their schema, size, row grain, domains,
 uniqueness and SHA-256 before every production build.
 
-The Projects folder opens in **Guided Workspaces**: four short “start here” routes and six themed shelves progressively reveal 16 visitor-facing experiences. Nine multi-project workspaces consolidate related chapters—Decision & RL, Scientific ML, Systems, Air Quality, Molecular Recognition, Thermodynamics, Strategy/Venture, Supporting Audits and Desk Accessories—while seven experiences remain standalone. Every one of the 40 records appears exactly once in this guided structure. The 27 exhibit modules load on demand; the nine native-app records launch existing windows rather than duplicate the tools. Every file retains its canonical `?project=` link.
+The Projects folder opens in a **System 7 knowledge graph with a 3D view** connecting topics, methods, projects, experience and education. Select a node to traverse its relationships, open a project or its demo, or follow a dated career record. The graph contains a linked work and education timeline. Its expandable catalogue-analysis section preserves the earlier chronology, matrices, comparisons and model-lineage views. Focus, whole-graph, selection and fit changes ease the camera, node positions and opacity over 720 ms while preserving the viewing angle. An interrupted transition continues from the displayed state; reduced motion applies changes immediately. Animation frames stop when the transition ends. Raised System 7 controls and inset panels match the other archive views.
 
-**All 40 Files** is the secondary expert view, with discipline, access and featured-work filters plus curated, newest-first and title sorting. Its quick filter matches multiple terms across names, tools and translated summaries, including fullwidth text and accented spellings. Press `/` while the archive is active to open that view and focus search; Enter or the down arrow moves into its results. For full public project text, open **File → Find…** and enable **Detailed search**. Valid project deep links open the exact file directly, and switching back to Guided Workspaces reveals its parent shelf and suite.
+**Selected work** offers a short list of featured projects. **All projects** is a folder tree grouped by discipline, with a text filter and keyboard navigation. Press `/` while the archive is active to open that view and focus search. Enter or Down moves into its results. Detailed text is fetched only when someone searches; names, descriptions and tools still filter if that request fails.
 
-Every research/demo chapter opens with a typed case brief: audience, human problem, objective, Samuel's precise contribution, input-to-output pipeline, evidence boundary and a concrete 30-second walkthrough. Suite navigation switches between chapters while preserving each chapter's `?project=` deep link. The catalogue gate requires all 27 demos to have this story record, validates suite membership and enforces the 16-experience structure. Native tools instead provide concise local-use descriptions, capabilities and storage/model boundaries.
+Selecting a record opens its own native project document. The problem, work, results and career/education context are visible immediately, followed by the interactive content. **Explore the project** scrolls within that same document. **Connections** returns to that project's graph neighbourhood. Browser Back/Forward, deep links and native window closing preserve the expected document or career context. There is no suite entrance or cross-project chapter strip. The 27 exhibit modules remain lazy-loaded; the nine native-app records launch their existing desktop windows.
 
-Detailed Find indexes public metadata, case briefs, build logs and static demo/app copy—including inactive tabs and alternative control states—in English and the selected language. A same-origin index is fetched only when the toggle is enabled; basic search keeps working if the download fails. It never indexes private notes/drawings, imported files, linked PDFs/external websites or arbitrary live simulation outputs. Existing untranslated research wording remains searchable in English.
+Project explanations focus on what the work does, why the method was chosen and how to explore it. Recorded measurements, illustrative calculations and their relevant limits remain distinguishable. Internal repository receipts, checkpoint reconciliation and file-by-file audit tables are developer material rather than visitor-facing project descriptions. GROWMAT opens the original linked showcase PDF.
 
-`npm run prepare:search` rebuilds four deterministic text indexes before development and production builds; `npm run check:search` detects stale/missing output and tests coverage and isolation. After changing public text during an already-running development session, rerun preparation and reload Find. Generated JSON is ignored in Git and regenerated in the Docker build; it is not added to the initial JavaScript bundle.
+The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 40 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
 
-Each record also retains its `Start small → Move forward → Polish` history. Five reviewed external-or-artifact actions expose supporting PDFs, workbooks or a primary public record. Live websites and immutable source snapshots remain separately labelled, and public visibility is never presented as a licence.
+Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [Mandarin review](docs/SYSTEM7_MANDARIN_REVIEW_2026-09-09.md) for the exact tested scope.
 
-The **Portfolio Map** top-level tab provides six evidence-led views: chronology; an area × access/demo matrix; an exact capability and technology index; a two-project relationship comparison using declared metadata only; a source-audited vision/CFD/MRI model-lineage timeline and logarithmic parameter-scale view; and a derivation ledger that explains every catalogue count. Selecting a record returns to its existing project file. Guided chrome, archive search, filters, sorting, layouts, actions, status announcements, project summaries, suite descriptions and native desk-app records follow the selected locale. Original research titles, Portfolio Map analytical copy, longer source-traced evidence narratives and research-demo copy retain their source language; the interface states that boundary explicitly rather than claiming complete translation of every research narrative.
+`npm run prepare:search` builds four deterministic text indexes from each project's metadata and own public component copy. Translation dictionaries are not indiscriminately indexed into unrelated projects. Private notes, drawings, imported statements, linked PDFs and external websites are excluded. Rebuild these indexes after changing copy in an already-running dev session. Generated JSON is ignored in Git and rebuilt for production; it is absent from initial JavaScript.
 
-Dedicated project routes open the archive maximised and can shift between catalogue, balanced and detail-focused layouts. On desktop, the System 7 project window supports pointer and keyboard resizing; its title-bar zoom control toggles the maximised and floating presentations. Small screens use the same content in a constrained responsive layout.
+Project documents and controls share `src/app/system7.css`: white paper, one neutral chrome tone, black boundaries, a consistent type scale, hard button shadows, an outer default-button ring and separate pressed/selected/focus states. The [historical benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes Apple-era references from modern touch/accessibility adaptations. Scientific series retain meaningful colour. Wide figures scroll inside their own frame instead of shrinking their labels to phone-sized illegibility.
 
-The source-faithful architecture studios expose engineering evidence without inventing model results. The microrobot-vision studio includes an optional rotatable tensor graph, an accessible two-dimensional fallback, layer-shape and parameter ledgers, task-head adaptations, checkpoint-definition drift and a sanitised Git timeline. The CFD atlas separates Fourier operators, message-passing depth and U-Net skip routes; the MRI studio traces its residual reconstruction U-Net, frozen segmentation evaluator and learned data-consistency cascade. Differently evaluated runs remain separate; no cross-run leaderboard is synthesised.
+Three commissioned project covers depict microrobot imaging, neural flow prediction and finance; the remaining records use subject-specific pixel artwork. Prompts, source images and optimized WebP exports are described in [Project artwork](docs/PROJECT_ARTWORK.md).
+
+Mathematical expressions across the project studios use the shared `MathEquation` component with KaTeX 0.18.7 and accessible MathML. Equations retain their source meaning and readable labels; code and pseudocode remain code. The renderer loads on demand, with local CSS and fonts and no CDN dependency. Wide equation panels and aligned long expressions preserve readable typesetting within the System 7 framing.
 
 Disclosure is explicit:
 
@@ -299,6 +312,10 @@ command. You can run each `check:*` script separately while working.
 
 `npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the desk-behaviour gate covers timer rollover and numeric-entry regressions against the actual shared helpers; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome, project summaries or suite descriptions from silently shipping.
 
+`npm run check:math` validates actual expressions with the strict KaTeX parser, accessible component output and local font assets. The output gate caps the shared math-renderer chunk at 300 KiB and rejects its inclusion in initial page entries. Initial-route JavaScript has a 270 KiB gzip ceiling. The aggregate lazy browser/runtime ceiling is 5 MiB excluding math, increased from 4 MiB for the explicit bilingual project dictionaries; this is separate from initial page cost. KaTeX uses 20 local WOFF2 fonts (253.7 KiB) and 30.6 KiB of CSS.
+
+Current measurements and the completed browser/check matrix are recorded in the [System 7 review](docs/SYSTEM7_REVIEW_2026-09-09.md). The earlier restoration report describes its own prior build, not the final redesign bundle.
+
 When a development server is already using `.next`, run `npm run build:isolated` instead. It writes the production checkpoint to `.next-build` so the live development cache is not replaced.
 
 ## Docker deployment
@@ -391,7 +408,9 @@ src/
 │       ├── PortfolioMap.module.css
 │       ├── ModelLineageMap.tsx
 │       ├── ModelLineageMap.module.css
-│       ├── ProjectActions.tsx
+│       ├── ProjectDocument.tsx
+│       ├── ProjectArtwork.tsx
+│       ├── KnowledgeGraph.tsx
 │       ├── projectArchiveI18n.ts
 │       ├── CvKeywordStudio.tsx
 │       ├── SchedulingStudio.tsx

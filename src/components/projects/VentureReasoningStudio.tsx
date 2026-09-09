@@ -1,8 +1,12 @@
 "use client";
 
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { ventureReasoningStudioCopy } from "./copy/ventureReasoningStudioCopy";
+
 import { type CSSProperties, useMemo, useState } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
+import { MathEquation } from "./MathEquation";
 import styles from "./VentureReasoningStudio.module.css";
 
 type ViewId = "claims" | "market" | "ask" | "ledger";
@@ -208,52 +212,35 @@ const SOURCE_LEDGER: Array<{
 }> = [
   {
     state: "source",
-    label: "SOURCE STRUCTURE",
+    label: "Source structure",
     title: "Draft → critique → revision",
     detail: "The assessed materials separate an LLM-produced venture explanation from a human critique of its suitability for an investor pitch.",
   },
   {
     state: "source",
-    label: "SOURCE STRUCTURE",
+    label: "Source structure",
     title: "Prompt, output and model disclosure",
     detail: "The submission retains the instruction, generated response and model identification as distinct artifacts with clear authorship boundaries.",
   },
   {
     state: "source",
-    label: "SOURCE THEMES",
+    label: "Source themes",
     title: "Specificity must meet proof",
     detail: "The critique tests differentiation, competition, market substantiation, founder context, traction and an ask tied to milestones.",
   },
   {
     state: "reconstructed",
-    label: "BROWSER MODEL",
+    label: "Browser model",
     title: "Evidence ladder and weighted claim score",
     detail: "The four evidence levels, factors and claim weights are new explanatory mechanics. They are visible assumptions, not a sourced investor rubric.",
   },
   {
     state: "reconstructed",
-    label: "BROWSER MODEL",
+    label: "Browser model",
     title: "Market and runway equations",
     detail: "Bottom-up revenue, pipeline, churn, reserve and milestone arithmetic are deterministic additions built for this exhibit.",
   },
-  {
-    state: "excluded",
-    label: "NOT SERVED",
-    title: "Assessed prose and actual venture material",
-    detail: "Original answers, generated passages, names, product specifics, named comparisons and compiled submission files are not reproduced.",
-  },
-  {
-    state: "absent",
-    label: "NOT EVIDENCED",
-    title: "Runtime product or validation claim",
-    detail: "The folder contains no executable product, test suite, retained customer dataset or independently validated performance result.",
-  },
-  {
-    state: "absent",
-    label: "NOT EVIDENCED",
-    title: "Licence and repository chronology",
-    detail: "The local folder has no repository metadata and no declared licence; this page therefore exposes no source or download action.",
-  },
+
 ];
 
 function currency(value: number) {
@@ -283,9 +270,9 @@ function levelById(level: EvidenceLevel) {
 
 function PanelHeading({ code, title, note }: { code: string; title: string; note: string }) {
   return (
-    <div className={styles.panelHeading}>
+    <ProjectCopy copy={ventureReasoningStudioCopy}><div className={styles.panelHeading}>
       <span>{code}</span><strong>{title}</strong><em>{note}</em>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -307,7 +294,7 @@ function Slider({
   onChange: (value: number) => void;
 }) {
   return (
-    <label className={styles.slider}>
+    <ProjectCopy copy={ventureReasoningStudioCopy}><label className={styles.slider}>
       <span>{label}<b>{display}</b></span>
       <input
         type="range"
@@ -318,7 +305,7 @@ function Slider({
         aria-valuetext={display}
         onChange={(event) => onChange(Number(event.target.value))}
       />
-    </label>
+    </label></ProjectCopy>
   );
 }
 
@@ -351,17 +338,17 @@ function ClaimDesk({
   const selected = contributions.find((claim) => claim.id === selectedClaimId) ?? contributions[0];
 
   return (
-    <div className={styles.claimView}>
+    <ProjectCopy copy={ventureReasoningStudioCopy}><div className={styles.claimView}>
       <section className={styles.scoreStrip} aria-label="Illustrative claim evidence summary" aria-live="polite">
-        <div><span>WEIGHTED PROOF</span><strong>{score.toFixed(1)}<small>/ 100</small></strong></div>
-        <div><span>EVIDENCED WEIGHT</span><strong>{evidencedWeight}<small>%</small></strong></div>
+        <div><span>Weighted proof</span><strong>{score.toFixed(1)}<small>/ 100</small></strong></div>
+        <div><span>Evidenced weight</span><strong>{evidencedWeight}<small>%</small></strong></div>
         <div><span>CORROBORATED</span><strong>{corroborated}<small>/ 6</small></strong></div>
-        <div className={styles.weakMetric}><span>MOST EXPOSED</span><strong>{weakest.code}</strong><small>{weakest.label}</small></div>
+        <div className={styles.weakMetric}><span>Most exposed</span><strong>{weakest.code}</strong><small>{weakest.label}</small></div>
       </section>
 
       <div className={styles.claimWorkspace}>
         <section className={styles.claimRegister}>
-          <PanelHeading code="01" title="CLAIM / EVIDENCE REGISTER" note="VISITOR-CONTROLLED" />
+          <PanelHeading code="01" title="Claim / evidence register" note="Visitor-controlled" />
           <div className={styles.claimHeader} aria-hidden="true"><span>Claim</span><span>Evidence state</span><span>Contribution</span></div>
           <div className={styles.claimRows}>
             {contributions.map((claim) => (
@@ -397,13 +384,13 @@ function ClaimDesk({
             ))}
           </div>
           <div className={styles.equationBar}>
-            <code>weighted proof = Σ(claim weight × evidence factor)</code>
+            <MathEquation tex={String.raw`\text{weighted proof}=\sum_i w_i f_i`} label="Weighted proof sums each claim weight times its evidence factor" />
             <MacButton onClick={onReset}>Reset fictional pack</MacButton>
           </div>
         </section>
 
         <aside className={styles.claimInspector} aria-live="polite">
-          <PanelHeading code={selected.code} title="CHALLENGE CARD" note={`LEVEL ${selected.level.id}`} />
+          <PanelHeading code={selected.code} title="Challenge card" note={`LEVEL ${selected.level.id}`} />
           <div className={styles.levelStamp} data-level={selected.level.id}>
             <span>{selected.level.short}</span>
             <strong>{selected.level.label}</strong>
@@ -412,18 +399,18 @@ function ClaimDesk({
           <dl className={styles.claimMath}>
             <div><dt>Materiality weight</dt><dd>{selected.weight}%</dd></div>
             <div><dt>Evidence factor</dt><dd>{selected.level.factor.toFixed(2)}</dd></div>
-            <div><dt>Contribution</dt><dd>{selected.weight} × {selected.level.factor.toFixed(2)} = <b>{selected.contribution.toFixed(1)}</b></dd></div>
+            <div><dt>Contribution</dt><dd><MathEquation tex={String.raw`${selected.weight}\times ${selected.level.factor.toFixed(2)}=${selected.contribution.toFixed(1)}`} display={false} /></dd></div>
           </dl>
           <section className={styles.challengeBox}>
-            <span>INVESTOR QUESTION</span><p>{selected.investorQuestion}</p>
+            <span>Investor question</span><p>{selected.investorQuestion}</p>
           </section>
           <section className={styles.nextEvidence}>
-            <span>NEXT EVIDENCE TO CHECK</span><p>{selected.nextEvidence}</p>
+            <span>Next evidence to check</span><p>{selected.nextEvidence}</p>
           </section>
           <p className={styles.modelCaveat}>The exhibit shows every assumed weight and factor. It measures evidence coverage, not investment quality.</p>
         </aside>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -450,9 +437,9 @@ function MarketLab({ inputs, onChange }: { inputs: MarketInputs; onChange: (inpu
   }
 
   return (
-    <div className={styles.marketView}>
+    <ProjectCopy copy={ventureReasoningStudioCopy}><div className={styles.marketView}>
       <section className={styles.marketControls}>
-        <PanelHeading code="02" title="BOTTOM-UP ASSUMPTION DESK" note="FICTIONAL INPUTS" />
+        <PanelHeading code="02" title="Bottom-up assumption desk" note="Fictional inputs" />
         <div className={styles.sliderGrid}>
           <Slider label="Reachable accounts" value={inputs.accounts} display={integer(inputs.accounts)} min={250} max={8000} step={50} onChange={(value) => update("accounts", value)} />
           <Slider label="Sites per account" value={inputs.sites} display={inputs.sites.toFixed(1)} min={1} max={8} step={0.1} onChange={(value) => update("sites", value)} />
@@ -465,15 +452,15 @@ function MarketLab({ inputs, onChange }: { inputs: MarketInputs; onChange: (inpu
       </section>
 
       <section className={styles.marketMetrics} aria-label="Calculated fictional market outputs" aria-live="polite">
-        <div><span>SERVICEABLE REVENUE</span><strong>{compactCurrency(serviceableRevenue)}</strong><small>accounts × sites × price × 12</small></div>
-        <div><span>TARGET ARR</span><strong>{compactCurrency(targetArr)}</strong><small>{targetLogos} target logos</small></div>
-        <div><span>ANNUAL GROSS PROFIT</span><strong>{compactCurrency(annualGrossProfit)}</strong><small>{inputs.grossMargin}% assumption</small></div>
-        <div data-alert={pipelineLoad > 1 ? "true" : "false"}><span>PIPELINE LOAD</span><strong>{(pipelineLoad * 100).toFixed(0)}%</strong><small>{qualifiedPipeline} / {integer(inputs.accounts)} accounts</small></div>
+        <div><span>Serviceable revenue</span><strong>{compactCurrency(serviceableRevenue)}</strong><small><MathEquation tex={String.raw`N_{\mathrm{accounts}}\,N_{\mathrm{sites}}\,p\times 12`} display={false} /></small></div>
+        <div><span>Target ARR</span><strong>{compactCurrency(targetArr)}</strong><small>{targetLogos} target logos</small></div>
+        <div><span>Annual gross profit</span><strong>{compactCurrency(annualGrossProfit)}</strong><small>{inputs.grossMargin}% assumption</small></div>
+        <div data-alert={pipelineLoad > 1 ? "true" : "false"}><span>Pipeline load</span><strong>{(pipelineLoad * 100).toFixed(0)}%</strong><small>{qualifiedPipeline} / {integer(inputs.accounts)} accounts</small></div>
       </section>
 
       <div className={styles.marketWorkspace}>
         <figure className={styles.pipelineChart}>
-          <PanelHeading code="FNL" title="ONE-YEAR LOGO FUNNEL" note="STATIC SNAPSHOT" />
+          <PanelHeading code="FNL" title="One-year logo funnel" note="Static snapshot" />
           <div className={styles.bars}>
             {bars.map((bar) => (
               <div key={bar.label}>
@@ -491,15 +478,15 @@ function MarketLab({ inputs, onChange }: { inputs: MarketInputs; onChange: (inpu
         </figure>
 
         <section className={styles.equationSheet}>
-          <PanelHeading code="Σ" title="RECONCILIATION SHEET" note="LIVE MATH" />
+          <PanelHeading code="Σ" title="Reconciliation sheet" note="Live math" />
           <table>
             <caption>Traceable market calculation</caption>
             <tbody>
-              <tr><th scope="row">Serviceable revenue</th><td>{integer(inputs.accounts)} × {inputs.sites.toFixed(1)} × {currency(inputs.monthlyPrice)} × 12</td><td>{currency(serviceableRevenue)}</td></tr>
-              <tr><th scope="row">Year-end target</th><td>{integer(inputs.accounts)} × {inputs.penetration}%</td><td>{integer(targetLogos)} logos</td></tr>
-              <tr><th scope="row">Annual churn</th><td>1 − (1 − {inputs.monthlyChurn.toFixed(1)}%)¹²</td><td>{(annualChurn * 100).toFixed(1)}%</td></tr>
-              <tr><th scope="row">Replacement wins</th><td>{integer(targetLogos)} × {(annualChurn * 100).toFixed(1)}%</td><td>{integer(replacementLogos)}</td></tr>
-              <tr><th scope="row">Qualified pipeline</th><td>{integer(winsRequired)} wins ÷ {inputs.closeRate}%</td><td>{integer(qualifiedPipeline)}</td></tr>
+              <tr><th scope="row">Serviceable revenue</th><td><MathEquation tex={String.raw`${inputs.accounts}\times ${inputs.sites.toFixed(1)}\times \pounds ${inputs.monthlyPrice}\times 12`} /></td><td>{currency(serviceableRevenue)}</td></tr>
+              <tr><th scope="row">Year-end target</th><td><MathEquation tex={String.raw`${inputs.accounts}\times ${inputs.penetration}\%`} /></td><td>{integer(targetLogos)} logos</td></tr>
+              <tr><th scope="row">Annual churn</th><td><MathEquation tex={String.raw`1-\left(1-${inputs.monthlyChurn.toFixed(1)}\%\right)^{12}`} /></td><td>{(annualChurn * 100).toFixed(1)}%</td></tr>
+              <tr><th scope="row">Replacement wins</th><td><MathEquation tex={String.raw`${Math.round(targetLogos)}\times ${(annualChurn * 100).toFixed(1)}\%`} /></td><td>{integer(replacementLogos)}</td></tr>
+              <tr><th scope="row">Qualified pipeline</th><td><MathEquation tex={String.raw`\frac{${Math.round(winsRequired)}}{${inputs.closeRate}\%}`} /></td><td>{integer(qualifiedPipeline)}</td></tr>
             </tbody>
           </table>
           <div className={styles.marketBoundary} role="note">
@@ -508,7 +495,7 @@ function MarketLab({ inputs, onChange }: { inputs: MarketInputs; onChange: (inpu
           </div>
         </section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -540,10 +527,10 @@ function AskPlanner({
   }
 
   return (
-    <div className={styles.askView}>
+    <ProjectCopy copy={ventureReasoningStudioCopy}><div className={styles.askView}>
       <div className={styles.askTop}>
         <section className={styles.askControls}>
-          <PanelHeading code="03" title="CAPITAL ASSUMPTIONS" note="NO VALUATION MODEL" />
+          <PanelHeading code="03" title="Capital assumptions" note="No valuation model" />
           <div className={styles.askSliders}>
             <Slider label="Headline ask" value={inputs.ask} display={compactCurrency(inputs.ask)} min={300_000} max={3_000_000} step={50_000} onChange={(value) => update("ask", value)} />
             <Slider label="Monthly operating burn" value={inputs.monthlyBurn} display={compactCurrency(inputs.monthlyBurn)} min={30_000} max={180_000} step={2_000} onChange={(value) => update("monthlyBurn", value)} />
@@ -552,7 +539,7 @@ function AskPlanner({
         </section>
 
         <section className={styles.milestonePicker}>
-          <PanelHeading code="GATE" title="NEXT FALSIFIABLE MILESTONE" note="SELECT ONE" />
+          <PanelHeading code="GATE" title="Next falsifiable milestone" note="Select one" />
           <div className={styles.milestoneButtons}>
             {MILESTONES.map((item) => (
               <button
@@ -580,11 +567,11 @@ function AskPlanner({
       </div>
 
       <section className={styles.runwayPanel} aria-live="polite">
-        <PanelHeading code="RUN" title="ASK → RESERVE → EVIDENCE GATE" note={clearsGate ? "ARITHMETIC CLEARS" : "ARITHMETIC GAP"} />
+        <PanelHeading code="RUN" title="Ask → reserve → evidence gate" note={clearsGate ? "Arithmetic clears" : "Arithmetic gap"} />
         <div className={styles.runwayMetrics}>
           <div><span>DEPLOYABLE</span><strong>{compactCurrency(deployable)}</strong><small>after {compactCurrency(reserveAmount)} reserve</small></div>
           <div><span>RUNWAY</span><strong>{runway.toFixed(1)}m</strong><small>at stated operating burn</small></div>
-          <div><span>GATE REQUIREMENT</span><strong>{compactCurrency(requiredBeforeReserve)}</strong><small>{milestone.months} months + fixed work</small></div>
+          <div><span>Gate requirement</span><strong>{compactCurrency(requiredBeforeReserve)}</strong><small>{milestone.months} months + fixed work</small></div>
           <div data-state={clearsGate ? "clear" : "gap"}><span>HEADROOM</span><strong>{headroom >= 0 ? "+" : "−"}{compactCurrency(Math.abs(headroom))}</strong><small>{(fundingCoverage * 100).toFixed(0)}% funded</small></div>
         </div>
         <figure className={styles.runwayTimeline}>
@@ -599,16 +586,16 @@ function AskPlanner({
 
       <div className={styles.askBottom}>
         <section className={styles.askLedger}>
-          <PanelHeading code="CALC" title="CAPITAL RECONCILIATION" note="TRACEABLE" />
+          <PanelHeading code="CALC" title="Capital reconciliation" note="TRACEABLE" />
           <dl>
-            <div><dt>Operating plan</dt><dd>{milestone.months} × {currency(inputs.monthlyBurn)}<b>{currency(operatingCost)}</b></dd></div>
+            <div><dt>Operating plan</dt><dd><MathEquation tex={String.raw`${milestone.months}\times \pounds ${inputs.monthlyBurn}`} display={false} /><b>{currency(operatingCost)}</b></dd></div>
             <div><dt>Gate-specific work</dt><dd>{milestone.label}<b>{currency(milestone.fixedCost)}</b></dd></div>
-            <div><dt>Required before reserve</dt><dd>operating + gate work<b>{currency(requiredBeforeReserve)}</b></dd></div>
-            <div><dt>Reconciled headline ask</dt><dd>{currency(requiredBeforeReserve)} ÷ {(100 - inputs.reserve)}%<b>{currency(requiredHeadlineAsk)}</b></dd></div>
+            <div><dt>Required before reserve</dt><dd><MathEquation tex={String.raw`C_{\mathrm{operating}}+C_{\mathrm{gate}}`} display={false} /><b>{currency(requiredBeforeReserve)}</b></dd></div>
+            <div><dt>Reconciled headline ask</dt><dd><MathEquation tex={String.raw`\frac{\pounds ${requiredBeforeReserve.toFixed(0)}}{${100 - inputs.reserve}\%}`} display={false} /><b>{currency(requiredHeadlineAsk)}</b></dd></div>
           </dl>
         </section>
         <aside className={styles.reviewQueue}>
-          <PanelHeading code="VC?" title="REVIEW QUEUE" note="QUESTIONS, NOT VERDICTS" />
+          <PanelHeading code="VC?" title="Review queue" note="Questions, not verdicts" />
           <ol>
             <li><span>01</span><p><strong>Evidence exposure</strong>The fictional claim pack scores {proofScore.toFixed(1)}/100; inspect <b>{weakestClaim}</b> before adding pitch polish.</p></li>
             <li><span>02</span><p><strong>Milestone contract</strong>{milestone.proof}</p></li>
@@ -616,32 +603,15 @@ function AskPlanner({
           </ol>
         </aside>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function SourceLedger() {
-  const sourceCount = SOURCE_LEDGER.filter((item) => item.state === "source").length;
-  const reconstructedCount = SOURCE_LEDGER.filter((item) => item.state === "reconstructed").length;
-  const guardedCount = SOURCE_LEDGER.filter((item) => item.state === "excluded" || item.state === "absent").length;
-
   return (
-    <div className={styles.ledgerView}>
-      <section className={styles.auditHero}>
-        <div>
-          <span>PRIVATE ASSESSED MATERIAL · STRUCTURE ONLY</span>
-          <h3>Reasoning is shown; submission text is not.</h3>
-          <p>The local archive supports a human-in-the-loop critique pattern. This exhibit re-authors that pattern around fictional ventures and labels every added calculation.</p>
-        </div>
-        <dl>
-          <div><dt>Themes tied to sources</dt><dd>{sourceCount}</dd></div>
-          <div><dt>Browser reconstructions</dt><dd>{reconstructedCount}</dd></div>
-          <div><dt>Excluded / absent</dt><dd>{guardedCount}</dd></div>
-        </dl>
-      </section>
-
+    <ProjectCopy copy={ventureReasoningStudioCopy}><div className={styles.ledgerView}>
       <section className={styles.ledgerPanel}>
-        <PanelHeading code="AUD" title="SOURCE → EXHIBIT LEDGER" note="NO DOWNLOAD ACTION" />
+        <PanelHeading code="Method" title="From a draft to an evidence-led decision" note="Framework and assumptions" />
         <div className={styles.ledgerRows}>
           {SOURCE_LEDGER.map((item) => (
             <article key={item.title} data-state={item.state}>
@@ -651,22 +621,10 @@ function SourceLedger() {
           ))}
         </div>
       </section>
-
-      <div className={styles.boundaryGrid}>
-        <section>
-          <PanelHeading code="IN" title="SAFE TO DEMONSTRATE" note="RE-AUTHORED" />
-          <ul><li>Human critique after an LLM draft</li><li>Claim-to-evidence separation</li><li>Fictional bottom-up market arithmetic</li><li>Fictional ask-to-milestone reconciliation</li></ul>
-        </section>
-        <section>
-          <PanelHeading code="OUT" title="DELIBERATELY EXCLUDED" note="PRIVATE / UNSUPPORTED" />
-          <ul><li>Any assessed sentence or generated passage</li><li>Actual venture, founder or competitor detail</li><li>Grades, feedback or personal identifiers</li><li>Product, traction or investment-performance claims</li></ul>
-        </section>
-        <section>
-          <PanelHeading code="LIC" title="PROVENANCE LIMIT" note="NO LICENCE" />
-          <p>The inspected folder is not itself a Git repository, exposes no remote history and declares no reuse licence. The demo has no source link, PDF link or archive download.</p>
-        </section>
-      </div>
-    </div>
+      <section className={styles.boundaryGrid}>
+        <section><h3>Interpretation</h3><p>The ventures, evidence levels and financial inputs are fictional. These calculations expose assumptions and inconsistencies; they do not measure investment quality or predict business performance.</p></section>
+      </section>
+    </div></ProjectCopy>
   );
 }
 
@@ -700,26 +658,20 @@ export function VentureReasoningStudio() {
   }
 
   return (
-    <DemoWindow
-      appName="VENTURE REASONING DESK · PRIVATE CASE STUDY"
+    <ProjectCopy copy={ventureReasoningStudioCopy}><DemoWindow
+      appName="Venture Reasoning Desk"
       title="Venture Proof Workbench"
-      status="SYNTHETIC RECONSTRUCTION"
+      status="Synthetic reconstruction"
       purpose="Connect a venture claim, its evidence, bottom-up market arithmetic and the capital needed to reach the next milestone."
       tryThis="Strengthen one traction claim, stress the qualified pipeline and change the funding ask."
       watchFor="Evidence coverage, market sizing and runway gates update together so polished prose cannot hide a broken chain."
       statusTone="safe"
       className={styles.studio}
-      footer={<><span>{scenario.name} · {view.toUpperCase()}</span><span>All ventures, inputs and outputs fictional · assessed prose excluded</span></>}
+      footer={<><span>{scenario.name} · {VIEWS.find((item) => item.id === view)?.label}</span><span>Fictional ventures · visible assumptions</span></>}
     >
-      <section className={styles.provenanceBanner} role="note">
-        <span>ASSESSED SOURCE</span>
-        <p><strong>Authorship boundary:</strong> the archive’s critique structure is re-authored here; original answers and generated passages are never served.</p>
-        <b>NO SOURCE / PDF ACTION</b>
-      </section>
-
       <section className={styles.scenarioBar} aria-labelledby="venture-scenario-heading">
         <div>
-          <span id="venture-scenario-heading">FICTIONAL VENTURE FILE</span>
+          <span id="venture-scenario-heading">Fictional venture file</span>
           <strong>{scenario.name}</strong>
           <small>{scenario.code} · {scenario.category}</small>
         </div>
@@ -778,7 +730,7 @@ export function VentureReasoningStudio() {
         )}
         {view === "ledger" && <SourceLedger />}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

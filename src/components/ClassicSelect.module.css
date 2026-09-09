@@ -1,5 +1,5 @@
-/* Deliberately square pop-up menus: paper, a dark outline and a hard shadow. */
-.trigger.trigger.trigger {
+/* Pop-up menus keep a square silhouette, distinct from action buttons. */
+.trigger[data-classic-select] {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -7,53 +7,28 @@
   gap: 12px;
   min-width: 0;
   max-width: 100%;
-  min-height: 30px;
-  padding: 4px 7px;
-  border: 2px solid #171717;
+  min-height: var(--s7-control-height, 32px);
+  padding: 5px 7px;
+  border: 1px solid var(--s7-ink, #000);
   border-radius: 0;
-  color: #171717;
-  background: #fff;
-  box-shadow: 2px 2px 0 #777;
-  font-family: var(--system-font, Geneva, Arial, sans-serif);
+  color: var(--s7-ink, #000);
+  background: var(--s7-paper, #fff);
+  box-shadow: 1px 1px 0 var(--s7-ink, #000);
+  font-family: var(--s7-font-ui, Geneva, Arial, sans-serif);
+  font-size: var(--s7-ui, 13px);
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.4;
   letter-spacing: normal;
   text-align: left;
   text-transform: none;
   cursor: pointer;
 }
 
-.trigger.trigger.trigger:focus-visible {
-  outline: 2px dotted #171717;
-  outline-offset: 3px;
-}
-
-.trigger.trigger.trigger[aria-expanded="true"] {
-  color: #fff;
-  background: #11177a;
-}
-
-.trigger.trigger.trigger:disabled {
-  color: #666;
-  background: #deded8;
-  cursor: default;
-}
-
-.value {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.arrow {
-  width: 0;
-  height: 0;
-  flex: 0 0 auto;
-  border-top: 6px solid currentColor;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-}
+.trigger[data-classic-select]:focus-visible { outline: 2px dotted var(--s7-ink, #000); outline-offset: 3px; }
+.trigger[data-classic-select][aria-expanded="true"] { color: var(--s7-paper, #fff); background: var(--s7-ink, #000); }
+.trigger[data-classic-select]:disabled { color: var(--s7-muted, #555); background: var(--s7-chrome, #ddd); border-color: var(--s7-shadow, #aaa); box-shadow: none; cursor: default; }
+.value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.arrow { width: 0; height: 0; flex: 0 0 auto; border-top: 5px solid currentColor; border-right: 4px solid transparent; border-left: 4px solid transparent; }
 
 .menu {
   display: none;
@@ -65,53 +40,39 @@
   padding: 2px;
   overflow: auto;
   overscroll-behavior: contain;
-  border: 2px solid #171717;
+  border: 1px solid var(--s7-ink, #000);
   border-radius: 0;
-  color: #171717;
-  background: #fff;
-  box-shadow: 3px 3px 0 #171717;
-  font-family: var(--system-font, Geneva, Arial, sans-serif);
-  font-size: 13px;
+  color: var(--s7-ink, #000);
+  background: var(--s7-paper, #fff);
+  box-shadow: 1px 1px 0 var(--s7-ink, #000);
+  font-family: var(--s7-font-ui, Geneva, Arial, sans-serif);
+  font-size: var(--s7-ui, 13px);
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.4;
   letter-spacing: normal;
   text-align: left;
   text-transform: none;
   scrollbar-width: auto;
-  scrollbar-color: #777 #ddd;
+  scrollbar-color: var(--s7-shadow, #aaa) var(--s7-chrome, #ddd);
 }
 
-.menu:popover-open { display: block; }
+.menu:popover-open,
 .menu[data-open="true"] { display: block; }
 .menu::backdrop { background: transparent; }
 
-.option.option {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 30px;
-  box-sizing: border-box;
-  padding: 5px 8px 5px 3px;
-  color: #171717;
-  background: #fff;
-  overflow-wrap: anywhere;
-  cursor: pointer;
-}
-
-.option.option[data-active="true"] {
-  color: #fff;
-  background: #11177a;
-}
-
-.option.option[aria-disabled="true"] { color: #777; cursor: default; }
-.check { width: 15px; flex: 0 0 15px; font-family: var(--system-font, Geneva, Arial, sans-serif); }
-.group { padding: 5px 8px 3px 24px; color: #555; font-size: 11px; border-bottom: 1px solid #bbb; }
+.option[role="option"] { display: flex; align-items: center; gap: 6px; min-height: var(--s7-control-height, 32px); box-sizing: border-box; padding: 5px 8px 5px 3px; color: var(--s7-ink, #000); background: var(--s7-paper, #fff); overflow-wrap: anywhere; cursor: pointer; }
+.option[data-active="true"] { color: var(--s7-selection-text, #fff); background: var(--s7-selection, #11177a); }
+.option[aria-disabled="true"] { color: var(--s7-muted, #555); cursor: default; }
+.check { width: 15px; flex: 0 0 15px; font-family: inherit; }
+.group { padding: 6px 8px 4px 24px; color: var(--s7-muted, #555); font-size: var(--s7-small, 12px); border-bottom: 1px solid var(--s7-shadow, #aaa); }
 
 @media (pointer: coarse) {
-  .trigger.trigger.trigger { min-height: 44px; height: auto; }
-  .option.option { min-height: 44px; }
+  .trigger[data-classic-select] { min-height: 44px; height: auto; }
+  .option[role="option"] { min-height: 44px; }
 }
 
 @media (forced-colors: active) {
-  .trigger.trigger.trigger[aria-expanded="true"], .option.option[data-active="true"] { color: HighlightText; background: Highlight; forced-color-adjust: none; }
+  .trigger[data-classic-select], .menu { border-color: ButtonText; box-shadow: none; }
+  .trigger[data-classic-select][aria-expanded="true"], .option[data-active="true"] { color: HighlightText; background: Highlight; forced-color-adjust: none; }
+  .trigger[data-classic-select]:disabled, .option[aria-disabled="true"] { color: GrayText; }
 }

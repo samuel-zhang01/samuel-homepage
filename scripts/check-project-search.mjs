@@ -60,11 +60,13 @@ check("All nine standalone desk apps have full-copy coverage", () => {
 });
 check("Deep demo copy covers inactive views and alternative control states", () => {
   const finance = document("en-GB", "ocean-depths-finance");
-  for (const phrase of ["An exact replay exercises idempotency", "No pairs pass this configuration.", "PENNY-CLOSE CONTROL"]) assert.ok(finance.includes(phrase), phrase);
+  for (const phrase of ["Import row decisions", "No pairs pass this configuration.", "PENNY-CLOSE CONTROL"]) assert.ok(finance.includes(phrase), phrase);
   assert.ok(document("en-GB", "desk-colour-studio").includes("Colour Studio holds 12 swatches. Remove one before saving another."));
 });
 check("Editorial case briefs and build logs are searchable", () => {
-  assert.ok(document("en-GB", "sequential-decisions-lab").includes("twelve-seed UCB1/Thompson/epsilon bake-off"));
+  assert.ok(records.find(({ project }) => project.slug === "ocean-depths-finance").provenance.some((path) => path.endsWith("/FinanceImportExperiment.tsx")));
+  assert.ok(document("en-GB", "growmat").includes("Pfizer"));
+  assert.ok(document("en-GB", "sequential-decisions-lab").includes("twelve paired synthetic runs"));
   for (const { project } of records) for (const phase of project.phases) assert.ok(document("en-GB", project.slug).includes(phase.text), `${project.slug} ${phase.label}`);
 });
 check("Chinese and English aliases coexist without adding unrelated dictionaries", () => {
@@ -74,13 +76,15 @@ check("Chinese and English aliases coexist without adding unrelated dictionaries
   assert.ok(document("zh-CN", "orbital-lab").includes("原子轨道实验室"));
   assert.ok(document("zh-TW", "orbital-lab").includes("原子軌域實驗室"));
   assert.ok(!document("en-GB", "desk-note-pad").includes("Kilobytes"));
+  assert.ok(!document("en-GB", "desk-note-pad").includes("Lennard–Jones"), "Translation tables must not leak unrelated project text into search");
+  assert.ok(document("zh-CN", "cprot-spectroscopy-plotter").includes("光谱"));
   assert.ok(!document("zh-CN", "desk-note-pad").includes("PENNY-CLOSE CONTROL"));
 });
 check("Shared demo modules do not index every sibling component", () => {
   assert.ok(document("en-GB", "regularisation-lab").includes("Shrinkage Lab"));
-  assert.ok(document("en-GB", "causal-ope-lab").includes("Decision Evidence Lab"));
+  assert.ok(document("en-GB", "causal-ope-lab").split("\n").includes("Decision Lab"));
   assert.ok(document("en-GB", "air-quality-sensor-optimisation").includes("Monitor Planner"));
-  assert.ok(!document("en-GB", "regularisation-lab").includes("Decision Evidence Lab"));
+  assert.ok(!document("en-GB", "regularisation-lab").split("\n").includes("Decision Lab"));
   assert.ok(!document("en-GB", "air-quality-sensor-optimisation").includes("Shrinkage Lab"));
 });
 check("Implementation source, private paths, credentials and storage keys are absent", () => {

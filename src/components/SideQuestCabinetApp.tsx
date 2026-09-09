@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEven
 import type { Locale } from "@/lib/i18n";
 import styles from "./SideQuestCabinetApp.module.css";
 import { localizeSideQuestTree } from "./sideQuestI18n";
+import { MathEquation } from "./projects/MathEquation";
 
 type PanelId = "day" | "rules" | "people" | "build";
 type BuildView = "evidence" | "question" | "live";
@@ -146,12 +147,12 @@ function RulesPanel({ locale }: { locale: Locale }) {
       <article className={styles.relaySimulator}>
         <div className={styles.cardLabel}><span>INTERACTIVE RELAY</span><strong>{runnerMoving ? "LAP LIVE" : "LAP PAUSED"}</strong></div>
         <div className={styles.runnerRail}>
-          {teammates.map((teammate, index) => <button key={teammate[1]} type="button" className={activeRunner === index ? styles.isActive : ""} aria-pressed={activeRunner === index} onClick={() => { setActiveRunner(index); setRunnerMoving(true); }}><span>{teammate[0]}</span><strong>{teammate[1].split(" ")[0]}</strong></button>)}
+          {teammates.map((teammate, index) => <button key={teammate[1]} type="button" className={`s7-button ${activeRunner === index ? styles.isActive : ""}`} aria-pressed={activeRunner === index} onClick={() => { setActiveRunner(index); setRunnerMoving(true); }}><span>{teammate[0]}</span><strong>{teammate[1].split(" ")[0]}</strong></button>)}
         </div>
         <div className={`${styles.agentConsole} ${runnerMoving ? styles.isRunning : styles.isPaused}`} aria-live="polite">
           <span className={styles.runnerDot} aria-hidden="true" /><div><small>CURRENT RUNNER / CURRENT BUILDER</small><strong>{teammates[activeRunner][1]}</strong><p>{runnerMoving ? "Runner moving · voice in · building allowed" : "Runner stopped · building paused under event rules"}</p></div>
         </div>
-        <div className={styles.relayActions}><button type="button" onClick={() => setRunnerMoving((current) => !current)}>{runnerMoving ? "Pause the lap" : "Resume the lap"}</button><button type="button" onClick={handOff}>Hand over →</button></div>
+        <div className={styles.relayActions}><button className="s7-button" type="button" onClick={() => setRunnerMoving((current) => !current)}>{runnerMoving ? "Pause the lap" : "Resume the lap"}</button><button className="s7-button" type="button" onClick={handOff}>Hand over →</button></div>
         <p className={styles.demoNote}>Illustrative control: it demonstrates the event rule and does not start a real agent or track a location.</p>
       </article>
       <aside className={styles.ruleSheet}>
@@ -170,12 +171,12 @@ function RulesPanel({ locale }: { locale: Locale }) {
         <div className={styles.cardLabel}><span>OFFICIAL WORKED EXAMPLE</span><strong>NOT SIDEQUEST&apos;S SCORE</strong></div>
         <label htmlFor="build-score"><span><strong>BUILD score</strong><b>{buildScore} / 35</b></span><input id="build-score" type="range" min="0" max="35" step="1" value={buildScore} onChange={(event) => setBuildScore(Number(event.target.value))} /></label>
         <label htmlFor="team-km"><span><strong>Verified team distance</strong><b>{teamDistance} km</b></span><input id="team-km" type="range" min="0" max="80" step="1" value={teamDistance} onChange={(event) => setTeamDistance(Number(event.target.value))} /></label>
-        <div className={styles.scoreFormula} aria-live="polite"><span><small>BUILD</small><strong>{buildScore}</strong></span><b>+</b><span><small>{teamDistance} KM ÷ 2</small><strong>{(teamDistance / 2).toFixed(1)}</strong></span><b>=</b><span className={styles.totalScore}><small>FINAL</small><strong>{finalScore.toFixed(1)}</strong></span></div>
+        <div className={styles.scoreFormula} aria-live="polite"><span><small>BUILD</small><strong>{buildScore}</strong></span><b><MathEquation tex="+" display={false} /></b><span><small><MathEquation tex={String.raw`\frac{${teamDistance}\,\mathrm{km}}{2}`} display={false} /></small><strong>{(teamDistance / 2).toFixed(1)}</strong></span><b><MathEquation tex="=" display={false} /></b><span className={styles.totalScore}><small>FINAL</small><strong>{finalScore.toFixed(1)}</strong></span></div>
         <p>The event pack illustrates the formula with BUILD 30 + 50 km ÷ 2 = 55. SideQuest&apos;s exact judge score is not documented. If the reported 44 km matched the verified score distance, it would have contributed 22 points.</p>
       </div>
       <div className={styles.criteriaPanel}>
         <div className={styles.criteriaGrid} aria-label="Published BUILD criteria">
-          {judgingCriteria.map((item) => <button key={item[0]} type="button" className={criterionId === item[0] ? styles.isActive : ""} aria-pressed={criterionId === item[0]} onClick={() => setCriterionId(item[0])}><span>{item[1]}</span><strong>{item[3]}</strong><small>points</small></button>)}
+          {judgingCriteria.map((item) => <button key={item[0]} type="button" className={`s7-button ${criterionId === item[0] ? styles.isActive : ""}`} aria-pressed={criterionId === item[0]} onClick={() => setCriterionId(item[0])}><span>{item[1]}</span><strong>{item[3]}</strong><small>points</small></button>)}
         </div>
         <article className={styles.criterionDetail} aria-live="polite"><span>{criterion[3] === 10 ? "DOUBLE WEIGHT" : "BUILD CRITERION"}</span><h3>{criterion[2]}</h3><p>{criterion[4]}</p><small>Organiser copy says “seven criteria”, while the published table names these six and weights originality twice. Sponsor challenges were scored separately.</small></article>
       </div>
@@ -322,9 +323,9 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
       <article><span>03</span><div><strong>Bring a friend live</strong><p>Ephemeral camera, coarsened route, cheers and an accept-or-decline challenge.</p></div></article>
     </div>
     <div className={styles.buildTabs} aria-label="SideQuest feature demos">
-      <button type="button" className={view === "evidence" ? styles.isActive : ""} aria-pressed={view === "evidence"} onClick={() => setView("evidence")}>Strava evidence</button>
-      <button type="button" className={view === "question" ? styles.isActive : ""} aria-pressed={view === "question"} onClick={() => setView("question")}>Subsequent run</button>
-      <button type="button" className={view === "live" ? styles.isActive : ""} aria-pressed={view === "live"} onClick={() => setView("live")}>Live relay</button>
+      <button type="button" className={`s7-button ${view === "evidence" ? styles.isActive : ""}`} aria-pressed={view === "evidence"} onClick={() => setView("evidence")}>Strava evidence</button>
+      <button type="button" className={`s7-button ${view === "question" ? styles.isActive : ""}`} aria-pressed={view === "question"} onClick={() => setView("question")}>Subsequent run</button>
+      <button type="button" className={`s7-button ${view === "live" ? styles.isActive : ""}`} aria-pressed={view === "live"} onClick={() => setView("live")}>Live relay</button>
     </div>
 
     {view === "evidence" && <div className={styles.evidenceDemo}>
@@ -341,14 +342,14 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
           <label>Moving time <span><input type="number" min="1" step="1" value={sandboxMinutes} onChange={(event) => setSandboxMinutes(event.target.value)} /> min</span></label>
           <label>Effort <span><input type="number" min="1" max="10" step="1" value={sandboxEffort} onChange={(event) => setSandboxEffort(event.target.value)} /> /10</span></label>
         </div>
-        <button type="submit">Normalise this run</button><p className={styles.runResult} role="status">{sandboxResult ?? "No browser observation added yet."}</p>
+        <button className="s7-button" type="submit">Normalise this run</button><p className={styles.runResult} role="status">{sandboxResult ?? "No browser observation added yet."}</p>
       </form>
     </div>}
 
     {view === "question" && <div className={styles.questionDemo}>
       <article className={styles.loopCard}>
         <div className={styles.cardLabel}><span>AGENT GODOY</span><strong>NON-DIAGNOSTIC</strong></div>
-        <div className={styles.loopSteps}>{loopSteps.map((step, index) => <button key={step} type="button" className={loopStep === index ? styles.isActive : ""} aria-pressed={loopStep === index} onClick={() => setLoopStep(index)}><span>0{index + 1}</span><strong>{step}</strong></button>)}</div>
+        <div className={styles.loopSteps}>{loopSteps.map((step, index) => <button key={step} type="button" className={`s7-button ${loopStep === index ? styles.isActive : ""}`} aria-pressed={loopStep === index} onClick={() => setLoopStep(index)}><span>0{index + 1}</span><strong>{step}</strong></button>)}</div>
         <div className={styles.loopReadout} aria-live="polite"><span>{loopSteps[loopStep]}</span><p>{loopDetails[loopStep]}</p></div>
       </article>
       <aside className={styles.challengeCard}>
@@ -357,9 +358,9 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
         <ClassicSelect id="challenge-focus" value={challengeKey} onChange={(event) => { setChallengeKey(event.target.value as keyof typeof challengeOptions); setChallengeState("draft"); }}>{Object.entries(challengeOptions).map(([key, challenge]) => <option key={key} value={key}>{challenge[0]}</option>)}</ClassicSelect>
         <dl><div><dt>Question</dt><dd>{activeChallenge[1]}</dd></div><div><dt>Bounded run</dt><dd>{activeChallenge[2]}</dd></div><div><dt>Success</dt><dd>{activeChallenge[3]}</dd></div><div><dt>Safety stop</dt><dd>Stop for chest discomfort, dizziness, faintness, unusual breathlessness or concerning pain. Stopping safely counts.</dd></div></dl>
         <div className={styles.challengeActions}>
-          {challengeState === "draft" && <button type="button" onClick={() => setChallengeState("sent")}>Send to a friend</button>}
-          {challengeState === "sent" && <><button type="button" onClick={() => setChallengeState("accepted")}>Accept</button><button type="button" onClick={() => setChallengeState("declined")}>Decline</button></>}
-          {(challengeState === "accepted" || challengeState === "declined") && <button type="button" onClick={() => setChallengeState("draft")}>Reset challenge</button>}
+          {challengeState === "draft" && <button className="s7-button" type="button" onClick={() => setChallengeState("sent")}>Send to a friend</button>}
+          {challengeState === "sent" && <><button className="s7-button" type="button" onClick={() => setChallengeState("accepted")}>Accept</button><button className="s7-button" type="button" onClick={() => setChallengeState("declined")}>Decline</button></>}
+          {(challengeState === "accepted" || challengeState === "declined") && <button className="s7-button" type="button" onClick={() => setChallengeState("draft")}>Reset challenge</button>}
         </div>
         <p className={styles.challengeStatus} role="status">{challengeState === "draft" && "Draft · nothing has been sent"}{challengeState === "sent" && "Sent · the runner decides"}{challengeState === "accepted" && "Accepted · ready to measure"}{challengeState === "declined" && "Declined · no penalty"}</p>
       </aside>
@@ -377,19 +378,19 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
           <svg viewBox="0 0 100 86" role="img" aria-label={`Abstract replay route with ${visibleRoute.length} points`}><rect width="100" height="86" /><path d="M-5 21 C18 4 36 29 58 14 S82 8 108 25M-8 72 C17 54 37 82 60 65 S84 50 109 68" /><polyline points={routePolyline} /><circle cx={runnerPoint[0]} cy={runnerPoint[1]} r="4" /></svg>
           <span>ROTATED, COARSENED GEOMETRY</span>
           {lastCheer && <b className={styles.reaction} key={lastCheer.id} role="status">{lastCheer.text}</b>}
-          {liveChallenge !== "draft" && <div className={styles.liveOverlay}><span>NEXT-KILOMETRE CHALLENGE</span><strong>Hold an even pace · £9 pledge to Mind</strong><small>No payment is charged.</small>{liveChallenge === "sent" && <div><button type="button" onClick={() => setLiveChallenge("accepted")}>Accept</button><button type="button" onClick={() => setLiveChallenge("declined")}>Decline</button></div>}{liveChallenge === "accepted" && <b>ACCEPTED</b>}{liveChallenge === "declined" && <b>DECLINED</b>}</div>}
+          {liveChallenge !== "draft" && <div className={styles.liveOverlay}><span>NEXT-KILOMETRE CHALLENGE</span><strong>Hold an even pace · £9 pledge to Mind</strong><small>No payment is charged.</small>{liveChallenge === "sent" && <div><button className="s7-button" type="button" onClick={() => setLiveChallenge("accepted")}>Accept</button><button className="s7-button" type="button" onClick={() => setLiveChallenge("declined")}>Decline</button></div>}{liveChallenge === "accepted" && <b>ACCEPTED</b>}{liveChallenge === "declined" && <b>DECLINED</b>}</div>}
         </div>
         <dl className={styles.replayStats}><div><dt>Distance</dt><dd>{distance.toFixed(2)} km</dd></div><div><dt>Live pace</dt><dd>{replayTick ? `${5 + Math.floor(replayTick / 9)}:${String(42 + (replayTick % 9)).padStart(2, "0")}` : "—"}</dd></div><div><dt>Time</dt><dd>{formatTime(elapsed)}</dd></div></dl>
         <div className={styles.replayControls}>
           <div className={styles.replayTransport} role="group" aria-label="Replay controls">
-            <button type="button" onClick={toggleReplay}><span aria-hidden="true">{replayState === "live" ? "Ⅱ" : "▶"}</span>{replayState === "live" ? "Pause replay" : replayState === "paused" ? "Resume replay" : replayState === "finished" ? "Run replay again" : "Start live replay"}</button>
-            <button type="button" disabled={replayTick === 0} onClick={rewindReplay}>Rewind</button>
-            <button type="button" disabled={replayState === "live" || replayState === "finished"} onClick={stepReplay}>Next point</button>
+            <button className="s7-button" type="button" onClick={toggleReplay}><span aria-hidden="true">{replayState === "live" ? "Ⅱ" : "▶"}</span>{replayState === "live" ? "Pause replay" : replayState === "paused" ? "Resume replay" : replayState === "finished" ? "Run replay again" : "Start live replay"}</button>
+            <button className="s7-button" type="button" disabled={replayTick === 0} onClick={rewindReplay}>Rewind</button>
+            <button className="s7-button" type="button" disabled={replayState === "live" || replayState === "finished"} onClick={stepReplay}>Next point</button>
           </div>
           {reducedMotion && <p className={styles.replayMotionNote}>Reduced motion: use Next point, or Resume replay to play.</p>}
           <div className={styles.replaySocial}>
-            <div className={styles.cheerControls}><span>Send a cheer</span>{cheersByLocale[locale].map((cheer) => <button key={cheer} type="button" disabled={!replayStarted} onClick={() => sendCheer(cheer)} aria-label={locale === "zh-CN" ? `发送助威：${cheer}` : locale === "zh-TW" ? `傳送加油訊息：${cheer}` : `Send ${cheer} cheer`}>{cheer}</button>)}</div>
-            <button type="button" disabled={!replayStarted || liveChallenge !== "draft"} onClick={() => setLiveChallenge("sent")}>Send challenge</button>
+            <div className={styles.cheerControls}><span>Send a cheer</span>{cheersByLocale[locale].map((cheer) => <button className="s7-button s7-button--icon" key={cheer} type="button" disabled={!replayStarted} onClick={() => sendCheer(cheer)} aria-label={locale === "zh-CN" ? `发送助威：${cheer}` : locale === "zh-TW" ? `傳送加油訊息：${cheer}` : `Send ${cheer} cheer`}>{cheer}</button>)}</div>
+            <button className="s7-button" type="button" disabled={!replayStarted || liveChallenge !== "draft"} onClick={() => setLiveChallenge("sent")}>Send challenge</button>
           </div>
         </div>
       </article>
@@ -404,7 +405,7 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
         <section><span>HONEST LIMITS</span><p>The hackathon guest flow was not production authentication, pledge commitments did not charge money, and the live relay was designed for limited event concurrency.</p></section>
       </div>
     </details>
-    <div className={styles.buildLinks}><a href="https://genesis.hiddenlayers.co.uk" target="_blank" rel="noreferrer">Original event deployment ↗</a><a href="https://github.com/samuel-zhang01/sidequest" target="_blank" rel="noreferrer">SideQuest source ↗</a></div>
+    <div className={styles.buildLinks}><a className="s7-button" href="https://genesis.hiddenlayers.co.uk" target="_blank" rel="noreferrer">Original event deployment ↗</a><a className="s7-button" href="https://github.com/samuel-zhang01/sidequest" target="_blank" rel="noreferrer">SideQuest source ↗</a></div>
   </>)}</>;
 }
 
@@ -443,7 +444,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
   };
 
   return <>{localizeSideQuestTree(locale, (
-    <div className={styles.app} data-locale={locale} lang={locale}>
+    <div className={`system7-project ${styles.app}`} data-locale={locale} lang={locale}>
       <header className={styles.masthead}>
         <div className={styles.identity}><span className={styles.mark} aria-hidden="true">RH</span><div><span>Sam&apos;s Cabinet of Curiosities · Latest field note</span><strong>RUN/HACK FIELD JOURNAL</strong></div></div>
         <div className={styles.releaseStamp}><span>29 AUG 2026</span><strong>2ND PLACE</strong></div>
@@ -455,8 +456,8 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
           <h1 id="runhack-title">Running wasn&apos;t the break. It was the only time we could build.</h1>
           <p>After a morning 5K, Samuel joined Javiera Rubio and Andrés Daniel Godoy Ortiz at an event billed as Europe&apos;s first running hackathon. Only the teammate on the track could direct the build. Through rain, phone dictation and 44 additional team kilometres, they shipped SideQuest.</p>
           <div className={styles.heroActions}>
-            <button type="button" onClick={() => selectPanel("rules", true)}>See how the hack worked</button>
-            <button type="button" className={styles.secondaryAction} onClick={() => selectPanel("build", true)}>Replay what we shipped</button>
+            <button className="s7-button" type="button" onClick={() => selectPanel("rules", true)}>See how the hack worked</button>
+            <button type="button" className={`s7-button ${styles.secondaryAction}`} onClick={() => selectPanel("build", true)}>Replay what we shipped</button>
           </div>
           <dl className={styles.heroFacts}>
             <div><dt>Morning prelude</dt><dd>5K</dd><dd className={styles.factNote}>RunThrough, Regent&apos;s Park</dd></div>
@@ -472,7 +473,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
       </section>
 
       <nav id="runhack-navigation" className={styles.tabs} aria-label="RUN/HACK field journal" role="tablist">
-        {panels.map((item) => <button key={item.id} type="button" role="tab" id={`runhack-tab-${item.id}`} aria-controls={`runhack-panel-${item.id}`} aria-selected={panel === item.id} tabIndex={panel === item.id ? 0 : -1} onClick={() => selectPanel(item.id)} onKeyDown={(event) => handleTabKey(event, item.id)}><span>{item.index}</span>{item.label}</button>)}
+        {panels.map((item) => <button className="s7-tab" key={item.id} type="button" role="tab" id={`runhack-tab-${item.id}`} aria-controls={`runhack-panel-${item.id}`} aria-selected={panel === item.id} tabIndex={panel === item.id ? 0 : -1} onClick={() => selectPanel(item.id)} onKeyDown={(event) => handleTabKey(event, item.id)}><span>{item.index}</span>{item.label}</button>)}
       </nav>
 
       <div className={styles.workspace}>

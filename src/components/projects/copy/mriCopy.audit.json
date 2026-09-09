@@ -1,0 +1,34 @@
+{
+  "dictionary": "mriCopy.ts",
+  "exportName": "mriCopy",
+  "sources": [
+    "src/components/projects/MriTrustStudio.tsx"
+  ],
+  "identities": {
+    "MC Dropout": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "ACS": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "U-Net + DC": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "PSNR ↑": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "SSIM ↑": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "NMSE ↓": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "31.9 → 23.8 dB": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "DC": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "AUSE ↓": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "FGSM": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "PGD-7": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "{0} PSNR": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "MR": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "CT": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "PSNR": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "Grad-CAM": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "0.51 SSIM + 0.49 L1": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
+    "enc1": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "enc2": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "enc3": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "enc4": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "dec1": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "dec2": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "dec3": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "dec4": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately."
+  }
+}

@@ -5,6 +5,11 @@ import ClassicSelect from "../ClassicSelect";
 import { useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./EnvironmentPlannerStudio.module.css";
+import { MathEquation } from "./MathEquation";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { environmentCopy } from "./copy/environmentCopy";
+import { projectText } from "../../lib/projectCopy";
+import type { Locale } from "../../lib/i18n";
 
 type ViewId = "resolver" | "failure" | "manifest" | "audit";
 type PlannerMode = "source" | "adapted";
@@ -71,14 +76,11 @@ type CorePackage = {
   probe: "aligned" | "mismatch";
 };
 
-const SOURCE_COMMIT = "19dacbe";
-const INSTALLER_COMMIT = "698be5d";
-
 const VIEWS: Array<{ id: ViewId; label: string; hint: string }> = [
   { id: "resolver", label: "Resolve", hint: "platform route" },
   { id: "failure", label: "Failure lab", hint: "inject faults" },
   { id: "manifest", label: "Manifest", hint: "targets + probes" },
-  { id: "audit", label: "Source map", hint: "evidence boundary" },
+  { id: "audit", label: "Design & limits", hint: "decisions + scope" },
 ];
 
 const CORE_PACKAGES: CorePackage[] = [
@@ -325,7 +327,8 @@ function resolveTensorFlow(profile: Profile, blocked: boolean, mode: PlannerMode
   };
 }
 
-function resolvePlan(profile: Profile, mode: PlannerMode): ResolvedPlan {
+function resolvePlan(profile: Profile, mode: PlannerMode, locale: Locale): ResolvedPlan {
+  const t = (source: string) => projectText(locale, environmentCopy, source);
   const platform = platformResolution(profile, mode);
   const blocked = platform.tone === "blocked";
   const torch = resolveTorch(profile, blocked, mode);
@@ -398,7 +401,7 @@ function resolvePlan(profile: Profile, mode: PlannerMode): ResolvedPlan {
     {
       number: "01",
       label: "Detect host",
-      detail: `${platform.label}; ${profile.accelerator === "nvidia" ? `NVIDIA · CUDA ${profile.cuda}` : profile.accelerator === "apple" ? "Apple integrated GPU" : "CPU only"}`,
+      detail: `${t(platform.label)}; ${profile.accelerator === "nvidia" ? `NVIDIA · CUDA ${profile.cuda === "unknown" ? t("Not parsed") : profile.cuda}` : profile.accelerator === "apple" ? t("Apple integrated GPU") : t("CPU only")}`,
       tone: platform.tone,
       provenance: "SOURCE",
     },
@@ -426,7 +429,7 @@ function resolvePlan(profile: Profile, mode: PlannerMode): ResolvedPlan {
     {
       number: "05",
       label: "Route frameworks",
-      detail: blocked ? "Not reached" : `${torch.lane} · ${tensorflow.lane}`,
+      detail: blocked ? "Not reached" : `${t(torch.lane)} · ${t(tensorflow.lane)}`,
       tone: blocked ? "blocked" : torch.tone === "warning" || tensorflow.tone === "warning" ? "warning" : downstreamTone,
       provenance: "SOURCE",
     },
@@ -465,7 +468,7 @@ function setOperatingSystem(profile: Profile, os: OsId): Profile {
 
 function ModeSwitch({ mode, setMode }: { mode: PlannerMode; setMode: (mode: PlannerMode) => void }) {
   return (
-    <div className={styles.modeSwitch} aria-label="Planner interpretation">
+    <ProjectCopy copy={environmentCopy}><div className={styles.modeSwitch} aria-label="Planner interpretation">
       <div>
         <span>INTERPRETATION</span>
         <p>Compare the implemented shell route with a non-executing, safety-improved planning layer.</p>
@@ -480,7 +483,7 @@ function ModeSwitch({ mode, setMode }: { mode: PlannerMode; setMode: (mode: Plan
           <span>browser-only adaptation</span>
         </button>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -497,7 +500,7 @@ function ProfileControls({ profile, setProfile }: { profile: Profile; setProfile
         ];
 
   return (
-    <aside className={styles.controls} aria-label="Synthetic host profile">
+    <ProjectCopy copy={environmentCopy}><aside className={styles.controls} aria-label="Synthetic host profile">
       <div className={styles.panelHeading}>
         <span>01</span>
         <strong>SYNTHETIC HOST</strong>
@@ -597,13 +600,14 @@ function ProfileControls({ profile, setProfile }: { profile: Profile; setProfile
       <button type="button" className={styles.resetButton} onClick={() => setProfile(DEFAULT_PROFILE)}>
         RESET PROFILE
       </button>
-    </aside>
+    </aside></ProjectCopy>
   );
 }
 
 function FrameworkCard({ route }: { route: FrameworkRoute }) {
+  const locale = useProjectLocale();
   return (
-    <article className={`${styles.frameworkCard} ${styles[route.tone]}`}>
+    <ProjectCopy copy={environmentCopy}><article className={`${styles.frameworkCard} ${styles[route.tone]}`}>
       <header>
         <div><span>{route.name === "PyTorch" ? "PT" : "TF"}</span><strong>{route.name}</strong></div>
         <em>{toneLabel(route.tone)}</em>
@@ -611,18 +615,18 @@ function FrameworkCard({ route }: { route: FrameworkRoute }) {
       <dl>
         <div><dt>PRIMARY</dt><dd>{route.target}</dd></div>
         <div><dt>LANE</dt><dd>{route.lane}</dd></div>
-        <div><dt>FALLBACKS</dt><dd>{route.fallbacks.length ? route.fallbacks.join(" → ") : "None declared"}</dd></div>
+        <div><dt>FALLBACKS</dt><dd>{route.fallbacks.length ? route.fallbacks.map((item) => projectText(locale, environmentCopy, item)).join(" → ") : "None declared"}</dd></div>
         <div><dt>CHECK</dt><dd>{route.verification}</dd></div>
       </dl>
       <p>{route.note}</p>
-    </article>
+    </article></ProjectCopy>
   );
 }
 
 function ResolverView({ profile, setProfile, mode, plan }: { profile: Profile; setProfile: (profile: Profile) => void; mode: PlannerMode; plan: ResolvedPlan }) {
   const fallbackCount = plan.torch.fallbacks.length + plan.tensorflow.fallbacks.length;
   return (
-    <div className={styles.resolverLayout}>
+    <ProjectCopy copy={environmentCopy}><div className={styles.resolverLayout}>
       <ProfileControls profile={profile} setProfile={setProfile} />
       <section className={styles.workspace} aria-label="Resolved installation route">
         <div className={styles.metricStrip}>
@@ -675,11 +679,11 @@ function ResolverView({ profile, setProfile, mode, plan }: { profile: Profile; s
           </div>
         </section>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
-function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: ResolvedPlan) {
+function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: ResolvedPlan, locale: Locale) {
   const index = CORE_PACKAGES.findIndex((item) => item.install === failedPackage.install);
 
   if (failure === "core-package") {
@@ -709,7 +713,7 @@ function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: 
         tone: plan.torch.fallbacks.length ? ("warning" as const) : ("blocked" as const),
         headline: plan.torch.fallbacks.length ? `Primary fails; next attempt is ${fallback}` : "This route has no alternate accelerator wheel",
         detail: plan.torch.fallbacks.length
-          ? `The framework branch catches its own failure and follows the explicit ${plan.torch.fallbacks.join(" → ")} chain.`
+          ? `The framework branch catches its own failure and follows the explicit ${plan.torch.fallbacks.map((item) => projectText(locale, environmentCopy, item)).join(" → ")} chain.`
           : "The guarded command prints a warning and the remaining installer stages continue without PyTorch.",
         trace: ["primary wheel → non-zero", plan.torch.fallbacks.length ? `fallback → ${fallback}` : "warning → framework skipped", "later stages → continue"],
       },
@@ -762,32 +766,33 @@ function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: 
 
 function OutcomeCard({ title, result }: { title: string; result: ReturnType<typeof failureNarrative>["source"] }) {
   return (
-    <article className={`${styles.outcomeCard} ${styles[result.tone]}`}>
+    <ProjectCopy copy={environmentCopy}><article className={`${styles.outcomeCard} ${styles[result.tone]}`}>
       <header><span>{title}</span><strong>{result.outcome}</strong></header>
       <h3>{result.headline}</h3>
       <p>{result.detail}</p>
       <ol>
         {result.trace.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>)}
       </ol>
-    </article>
+    </article></ProjectCopy>
   );
 }
 
 function FailureLab({ plan }: { plan: ResolvedPlan }) {
+  const locale = useProjectLocale();
   const [failure, setFailure] = useState<FailureId>("tensorflow-runtime");
   const [failedInstall, setFailedInstall] = useState("lightgbm");
   const failedPackage = CORE_PACKAGES.find((item) => item.install === failedInstall) ?? CORE_PACKAGES[15];
-  const comparison = failureNarrative(failure, failedPackage, plan);
+  const comparison = failureNarrative(failure, failedPackage, plan, locale);
 
   return (
-    <div className={styles.failureLab}>
+    <ProjectCopy copy={environmentCopy}><div className={styles.failureLab}>
       <section className={styles.faultControls}>
         <div className={styles.panelHeading}>
           <span>FX</span>
           <strong>DETERMINISTIC FAULT INJECTION</strong>
           <em>SIMULATION ONLY</em>
         </div>
-        <p>Choose one failure boundary. No command runs; the state trace is derived from the audited control flow.</p>
+        <p>Inject a failure to see which later stages remain reachable. Compare the original control flow with an explicit record of unresolved dependencies.</p>
         <div className={styles.faultButtons}>
           {([
             ["core-package", "Core package", "set -e boundary"],
@@ -832,7 +837,7 @@ function FailureLab({ plan }: { plan: ResolvedPlan }) {
           <div className={styles.checkpointRow} key={label}><strong>{label}</strong><span>{source}</span><span>{adapted}</span></div>
         ))}
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -843,10 +848,10 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
   const frameworkTargets = ["torch", "torchvision", tensorflowInstall, "keras"];
 
   return (
-    <div className={styles.manifestView}>
+    <ProjectCopy copy={environmentCopy}><div className={styles.manifestView}>
       <section className={styles.manifestSummary}>
         <div><span>CORE CALLS</span><strong>19</strong><small>sequential pip installs</small></div>
-        <div><span>FRAMEWORK TARGETS</span><strong>4</strong><small>{frameworkTargets.join(" · ")}</small></div>
+        <div><span>FRAMEWORK TARGETS</span><strong>4</strong><small translate="no">{frameworkTargets.join(" · ")}</small></div>
         <div><span>CLI TARGET</span><strong>1</strong><small>Hugging Face CLI</small></div>
         <div className={styles.warning}><span>KNOWN PROBE DRIFT</span><strong>1</strong><small>grad-cam distribution ≠ import token</small></div>
       </section>
@@ -869,7 +874,7 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
             return (
               <div className={styles.packageRow} key={item.install}>
                 <span>{String(sourceIndex).padStart(2, "0")}</span>
-                <strong>{item.install}</strong>
+                <strong translate="no">{item.install}</strong>
                 <code>{item.module}</code>
                 <span>{item.group}</span>
                 <em className={styles[item.probe === "aligned" ? "ready" : "warning"]}>{item.probe === "aligned" ? "MATCH" : "MISMATCH"}</em>
@@ -887,50 +892,50 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
             <em>READ ONLY</em>
           </div>
           <div className={styles.commandLines} aria-label="Resolved dry-run manifest">
-            <p><span>01</span><code>platform</code><strong>{plan.platformLabel}</strong></p>
-            <p><span>02</span><code>artifact</code><strong>{plan.installer}</strong></p>
-            <p><span>03</span><code>environment</code><strong>{plan.environmentAction}</strong></p>
-            <p><span>04</span><code>pytorch</code><strong>{plan.torch.target}</strong></p>
-            <p><span>05</span><code>tensorflow</code><strong>{plan.tensorflow.target}</strong></p>
-            <p><span>06</span><code>verification</code><strong>23 imports · accelerator capability probes</strong></p>
+            <p><span>01</span><span className={styles.manifestLabel}>Platform</span><strong>{plan.platformLabel}</strong></p>
+            <p><span>02</span><span className={styles.manifestLabel}>Artifact</span><strong>{plan.installer}</strong></p>
+            <p><span>03</span><span className={styles.manifestLabel}>Environment</span><strong>{plan.environmentAction}</strong></p>
+            <p><span>04</span><span className={styles.manifestLabel}>PyTorch</span><strong>{plan.torch.target}</strong></p>
+            <p><span>05</span><span className={styles.manifestLabel}>TensorFlow</span><strong>{plan.tensorflow.target}</strong></p>
+            <p><span>06</span><span className={styles.manifestLabel}>Verification</span><strong>23 imports · accelerator capability probes</strong></p>
           </div>
         </section>
         <section className={styles.reconciliationCard}>
           <span>MANIFEST RECONCILIATION</span>
           <div className={styles.reconcileEquation}>
-            <strong>19</strong><i>+</i><strong>4</strong><i>+</i><strong>1</strong><i>=</i><strong>24</strong>
+            <MathEquation tex={String.raw`19+4+1=24`} />
           </div>
           <p>Core package targets + framework distributions + external CLI.</p>
           <div><span>23 Python import probes</span><span>+ 1 CLI presence probe</span></div>
           <small>The source’s Grad-CAM verifier uses a hyphenated import token; the exhibit flags the invalid check and withholds a result.</small>
         </section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function AuditView() {
   return (
-    <div className={styles.auditView}>
+    <ProjectCopy copy={environmentCopy}><div className={styles.auditView}>
       <section className={styles.evidenceHero}>
-        <div><span>SOURCE SNAPSHOT</span><strong>{SOURCE_COMMIT}</strong><small>repository HEAD audited read-only</small></div>
-        <div><span>INSTALLER LAST CHANGE</span><strong>{INSTALLER_COMMIT}</strong><small>08 Dec 2025</small></div>
-        <div><span>SHELL FUNCTIONS</span><strong>22</strong><small>968 source lines</small></div>
-        <div><span>INSTALLER COMMITS</span><strong>13</strong><small>tracked evolution</small></div>
+        <div><span>PLANNING STAGES</span><strong>7</strong><small>host detection to runtime verification</small></div>
+        <div><span>MODEL BASIS</span><strong>2025</strong><small>December installer logic</small></div>
+        <div><span>PACKAGE TARGETS</span><strong>24</strong><small>core, frameworks and CLI</small></div>
+        <div><span>FAULT SCENARIOS</span><strong>4</strong><small>compare failure handling</small></div>
       </section>
 
       <div className={styles.auditGrid}>
         <section className={styles.auditCard}>
-          <div className={styles.panelHeading}><span>✓</span><strong>EXECUTED EVIDENCE</strong><em>VERIFIED</em></div>
+          <div className={styles.panelHeading}><span>✓</span><strong>WHAT THE PLANNER EXPLAINS</strong><em>INTERACTIVE MODEL</em></div>
           <ul>
-            <li><strong>Shell syntax</strong><span><code>bash -n</code> passes at the audited working-tree snapshot.</span></li>
-            <li><strong>Notebook boundary</strong><span>Coursework notebooks contain executed outputs, but their microrobot task duplicates an existing exhibit and is excluded here.</span></li>
-            <li><strong>Repository state</strong><span>The IX-DeepLearning source tree was inspected read-only; this exhibit uses no model files, image rows or report prose.</span></li>
+            <li><strong>Platform routing</strong><span>Follow the decision from operating system and architecture to a package artifact and accelerator route.</span></li>
+            <li><strong>Failure handling</strong><span>Compare early exit, fallback and incomplete device checks with an explicit planning ledger.</span></li>
+            <li><strong>Verification design</strong><span>Separate a successful package command, a successful import and a usable accelerator.</span></li>
           </ul>
         </section>
 
         <section className={styles.auditCard}>
-          <div className={styles.panelHeading}><span>?</span><strong>NOT DEMONSTRATED</strong><em>DO NOT CLAIM</em></div>
+          <div className={styles.panelHeading}><span>?</span><strong>HOW TO INTERPRET RESULTS</strong><em>MODEL LIMITS</em></div>
           <ul>
             <li><strong>Cross-platform success</strong><span>No CI matrix or retained installation logs prove every OS, wheel and CUDA branch.</span></li>
             <li><strong>Current compatibility</strong><span>CUDA and framework comments are a December 2025 source snapshot, not current vendor guidance.</span></li>
@@ -940,7 +945,7 @@ function AuditView() {
       </div>
 
       <section className={styles.diffPanel}>
-        <div className={styles.panelHeading}><span>Δ</span><strong>SOURCE / ADAPTATION DIFF</strong><em>VISIBLE BOUNDARY</em></div>
+        <div className={styles.panelHeading}><span>Δ</span><strong>DESIGN COMPARISON</strong><em>ORIGINAL + EXTENSION</em></div>
         <div className={styles.diffHeader}><span>Concern</span><span>Implemented source</span><span>Browser adaptation</span></div>
         {[
           ["Architecture", "macOS Intel exits; Linux always selects x86_64 artifact", "Blocks every artifact/architecture mismatch"],
@@ -956,34 +961,35 @@ function AuditView() {
 
       <div className={styles.boundaryGrid}>
         <section>
-          <span>PRIVACY + ASSESSMENT BOUNDARY</span>
-          <p>No assessed solution text, dataset rows, microscopy images, report figures, trained weights, system paths or credentials are published. Every host profile is synthetic and no browser data leaves the page.</p>
+          <span>LOCAL EXPLORATION</span>
+          <p>Every host profile is a scenario you control. Changing it updates the plan locally; the demonstration does not inspect your computer or run an installer.</p>
         </section>
         <section>
-          <span>LICENCE BOUNDARY</span>
-          <p>The audited private repository has no LICENSE, COPYING or NOTICE file. This is an independently implemented case study, not reusable source.</p>
+          <span>WHAT WOULD MAKE A REAL RELEASE</span>
+          <p>A production installer would need a tested platform matrix, pinned dependencies, artifact integrity checks and retained device-verification results.</p>
         </section>
         <section className={styles.sourceBoundary}>
-          <span>PRIVATE SOURCE AUDIT</span>
-          <strong>Installer inspected at {SOURCE_COMMIT}</strong>
-          <small>No public repository action · exact local checkout</small>
+          <span>PROJECT CONTRIBUTION</span>
+          <strong>Make hidden installation decisions visible</strong>
+          <small>Explainable routes, failure traces and a reconciled package manifest</small>
         </section>
       </div>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 export function EnvironmentPlannerStudio() {
+  const locale = useProjectLocale();
   const [view, setView] = useState<ViewId>("resolver");
   const [mode, setMode] = useState<PlannerMode>("adapted");
   const [profile, setProfile] = useState<Profile>(DEFAULT_PROFILE);
-  const plan = useMemo(() => resolvePlan(profile, mode), [mode, profile]);
+  const plan = useMemo(() => resolvePlan(profile, mode, locale), [mode, profile, locale]);
 
   return (
-    <DemoWindow
-      appName="DL Environment Resolver — Case Study"
+    <ProjectCopy copy={environmentCopy}><DemoWindow
+      appName="Environment planner"
       title="Accelerator Environment Planner"
-      status="SYNTHETIC · DRY RUN"
+      status="Installation simulation"
       purpose="Turn host, architecture and accelerator facts into an explainable deep-learning installation route before commands are run."
       tryThis="Choose a host, inject a framework failure and compare the source route with the guarded plan."
       watchFor="Compatibility branches, fallbacks and validation probes change; this is a dry-run planner and executes nothing."
@@ -991,14 +997,14 @@ export function EnvironmentPlannerStudio() {
       className={styles.studio}
       footer={
         <>
-          <span>Source {SOURCE_COMMIT} · installer {INSTALLER_COMMIT} · no commands executed</span>
+          <span>7 planning stages · 4 fault scenarios · local simulation</span>
           <span>{plan.platformLabel} · {mode === "source" ? "source route" : "guarded plan"}</span>
         </>
       }
     >
       <div className={styles.provenanceBanner} role="note">
-        <span>SOURCE-FAITHFUL AUDIT</span>
-        <p>A read-only reconstruction of a 968-line Bash installer’s OS, accelerator, fallback and verification branches. Compatibility labels describe the 2025 source snapshot—not present-day package guidance.</p>
+        <span>ACCELERATOR ROUTING LAB</span>
+        <p>Explore how platform, accelerator and fallback choices shape a deep-learning environment. The rules reflect a December 2025 installer; use the comparison to understand its design, not to choose current package versions.</p>
         <strong>NO INSTALL · NO DEVICE ACCESS</strong>
       </div>
 
@@ -1018,7 +1024,7 @@ export function EnvironmentPlannerStudio() {
         {view === "manifest" ? <ManifestView plan={plan} /> : null}
         {view === "audit" ? <AuditView /> : null}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

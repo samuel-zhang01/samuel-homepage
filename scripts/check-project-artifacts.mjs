@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { scientificMedia } from "./fixtures/scientific-media.mjs";
 import { lstat, readFile, readdir } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 
@@ -7,22 +8,22 @@ const projectRoot = join(publicRoot, "projects");
 const allowlist = new Map([
   ["Samuel-Zhang-Applied-AI-CV.pdf", {
     maximumBytes: 500_000,
-    sha256: "9417909d249b70cdc16b711a4bca9e91abacb3b172f4d33578a49977d39a14aa",
+    sha256: "216b048d4bcccaa7ffc753e131998ce12203250b71b8810c637cdaade13215b8",
     type: "pdf",
   }],
   ["Samuel-Zhang-Applied-AI-CV-en-US.pdf", {
     maximumBytes: 500_000,
-    sha256: "7bece3526e15c979879f49dbfe5732e9e37909ceef55be420a6f5e7285898d13",
+    sha256: "faa600bc92f8d3b035d36e8d1e00d1f6c7eb450b7a0f2077f3fb9bac9d80d973",
     type: "pdf",
   }],
   ["Samuel-Zhang-Applied-AI-CV-zh-CN.pdf", {
     maximumBytes: 500_000,
-    sha256: "a0637630fd85f71278ec75b25bc4caaeaad16a170f3ea0f208635d55869d9795",
+    sha256: "a4d6ac8c0877b8fdc65ddcf17ed777327d4a92aa6f2fc496dda8a2535158b35d",
     type: "pdf",
   }],
   ["Samuel-Zhang-Applied-AI-CV-zh-TW.pdf", {
     maximumBytes: 500_000,
-    sha256: "1d7101d02dd457f5d7ca872d34362b8e078c7388baf2e80fcf2e457520721baf",
+    sha256: "92a17e0355a076b269b756e410893ce7c27ac4a07a2d2cb6c1d41395f9d21114",
     type: "pdf",
   }],
   ["GROWMAT Showcase External Highest Quality.pdf", {
@@ -46,10 +47,26 @@ const allowlist = new Map([
     type: "pdf",
   }],
   ["projects/study-rl/syllabus.pdf", {
-    maximumBytes: 220_297,
-    sha256: "6f75ff7c78a4f8c3836314eba7438b57678513961e29c6757ea00cc53823d91d",
+    maximumBytes: 222734,
+    sha256: "547619235e20ed7befaa7e868793b46cff7796b0b483e3e065626252f83d244e",
     type: "pdf",
   }],
+  ["project-art/finance.webp", {
+    maximumBytes: 125_000,
+    sha256: "fbdfa6d9ca51e8953b5aaad8863d7a47e6831769b50478479a2454f44bce54c2",
+    type: "webp",
+  }],
+  ["project-art/microrobot.webp", {
+    maximumBytes: 125_000,
+    sha256: "c9fe7dab1a365c786698bd9a69c2ec68a0bc21ab44ec3419f86f1442006358fc",
+    type: "webp",
+  }],
+  ["project-art/neural-cfd.webp", {
+    maximumBytes: 125_000,
+    sha256: "0f8ae49517161017795a031aac792f7521ad9860aecef1da7b64a9fdca093802",
+    type: "webp",
+  }],
+  ...scientificMedia,
 ]);
 
 const forbiddenPublicArtifacts = [
@@ -147,7 +164,8 @@ for (const [publicPath, expected] of allowlist) {
   const isPdf = bytes.subarray(0, 5).toString("ascii") === "%PDF-";
   const pngHeader = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
   const isPng = pngHeader.every((value, index) => bytes[index] === value);
-  if ((expected.type === "pdf" && !isPdf) || (expected.type === "png" && !isPng)) {
+  const isWebp = bytes.toString("ascii", 0, 4) === "RIFF" && bytes.toString("ascii", 8, 12) === "WEBP";
+  if ((expected.type === "pdf" && !isPdf) || (expected.type === "png" && !isPng) || (expected.type === "webp" && !isWebp)) {
     throw new Error(`${publicPath} does not match its reviewed ${expected.type.toUpperCase()} type`);
   }
 

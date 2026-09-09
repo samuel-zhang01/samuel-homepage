@@ -1,4 +1,7 @@
 "use client";
+import { projectText } from "@/lib/projectCopy";
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { scientificCopy } from "./copy/scientificCopy";
 
 import { type CSSProperties, useMemo, useState } from "react";
 import type { Locale } from "@/lib/i18n";
@@ -8,7 +11,6 @@ import styles from "./ModelArchitectureStudio.module.css";
 
 type Task = "classification" | "depth";
 type ModelId = "simple" | "resnet18" | "resnet34" | "mobilenet" | "vit";
-type EvidenceState = "present" | "output-only" | "drift";
 
 type Stage = {
   id: string;
@@ -19,7 +21,7 @@ type Stage = {
   width: number;
   height: number;
   residual?: boolean;
-  evidence: string;
+  role: string;
 };
 
 type ModelRecord = {
@@ -29,11 +31,8 @@ type ModelRecord = {
   family: string;
   origin: "authored" | "pretrained";
   originLabel: string;
-  checkpoint: EvidenceState;
-  checkpointLabel: string;
   colour: string;
   parameters: Record<Task, number>;
-  checkpointParameters?: Partial<Record<Task, number>>;
   classification: {
     csvTestAccuracy: number;
     csvValidationAccuracy: number;
@@ -47,21 +46,16 @@ type ModelRecord = {
   training: Record<Task, { learningRate: string; optimiser: string; epochs: number }>;
   stages: (task: Task) => Stage[];
   architectureNote: string;
-  checkpointNote: string;
 };
 
 type TimelineEvent = {
   date: string;
   commit: string;
   title: string;
-  evidence: string;
+  detail: string;
   kind: "design" | "data" | "run" | "selection" | "release";
 };
 
-const AUDITED_COMMIT = "19dacbe70dedb5700a30a51084f5c7e8fb91205a";
-const NOTEBOOK_PATH = "Course Work/DL_coursework.ipynb";
-const COMPARISON_PATH = "Course Work/Image/model_comparison.csv";
-const REPORT_PATH = "Course Work/Report/DeepLearning_Report.tex";
 
 function headStage(task: Task, input: number, classificationParameters: number, depthParameters: number): Stage {
   return task === "classification"
@@ -73,7 +67,7 @@ function headStage(task: Task, input: number, classificationParameters: number, 
         parameters: classificationParameters,
         width: 30,
         height: 58,
-        evidence: "Current notebook model definition; 40 pitch-roll classes.",
+        role: "Choose among 40 combinations of pitch and roll to estimate the robot’s orientation.",
       }
     : {
         id: "head",
@@ -83,7 +77,7 @@ function headStage(task: Task, input: number, classificationParameters: number, 
         parameters: depthParameters,
         width: 26,
         height: 52,
-        evidence: "Current notebook regressor definition; Sigmoid constrains normalized depth to [0,1].",
+        role: "Estimate one normalised depth value; Sigmoid constrains the output to [0,1].",
       };
 }
 
@@ -97,7 +91,7 @@ function simpleStages(task: Task): Stage[] {
       parameters: 0,
       width: 60,
       height: 150,
-      evidence: "Notebook and report both specify 224×224 grayscale inputs.",
+      role: "Give every model the same-sized grayscale view of the microrobot.",
     },
     {
       id: "block1",
@@ -107,7 +101,7 @@ function simpleStages(task: Task): Stage[] {
       parameters: 320,
       width: 55,
       height: 130,
-      evidence: "Exact Conv2d and pool2 definition in the current notebook.",
+      role: "Detect local image patterns and reduce the spatial resolution by four.",
     },
     {
       id: "block2",
@@ -118,7 +112,7 @@ function simpleStages(task: Task): Stage[] {
       width: 51,
       height: 111,
       residual: true,
-      evidence: "18,496 main-path + 2,112 projection parameters, derived from the declared layers.",
+      role: "Build richer features while a learned skip aligns the change from 32 to 64 channels.",
     },
     {
       id: "block3",
@@ -129,7 +123,7 @@ function simpleStages(task: Task): Stage[] {
       width: 48,
       height: 94,
       residual: true,
-      evidence: "73,856 main-path + 8,320 projection parameters, derived from the declared layers.",
+      role: "Combine a wider field of view with a learned skip from 64 to 128 channels.",
     },
     {
       id: "block4",
@@ -140,7 +134,7 @@ function simpleStages(task: Task): Stage[] {
       width: 44,
       height: 76,
       residual: true,
-      evidence: "Exact current notebook layer dimensions; identity branch has no learned parameters.",
+      role: "Use a wider convolution to gather context while an identity skip preserves earlier features.",
     },
     {
       id: "block5",
@@ -151,7 +145,7 @@ function simpleStages(task: Task): Stage[] {
       width: 44,
       height: 76,
       residual: true,
-      evidence: "Exact current notebook layer dimensions; no further spatial pooling.",
+      role: "Refine the image features at the same resolution before the dense layers.",
     },
     {
       id: "dense",
@@ -161,7 +155,7 @@ function simpleStages(task: Task): Stage[] {
       parameters: 3_211_776,
       width: 34,
       height: 64,
-      evidence: "6,272 = 7×7×128; parameter total includes the 512-unit bias.",
+      role: "Combine the 7×7 spatial feature map into one representation for the task head.",
     },
     task === "classification"
       ? {
@@ -172,7 +166,7 @@ function simpleStages(task: Task): Stage[] {
           parameters: 20_520,
           width: 27,
           height: 52,
-          evidence: "Current notebook classifier definition and report loss contract.",
+          role: "Produce 40 orientation scores, trained with cross-entropy.",
         }
       : {
           id: "head",
@@ -182,7 +176,7 @@ function simpleStages(task: Task): Stage[] {
           parameters: 513,
           width: 22,
           height: 45,
-          evidence: "Current SimpleCNNRegressor definition uses a direct linear output, without Sigmoid.",
+          role: "Predict depth directly with a linear output, trained with mean squared error.",
         },
   ];
 }
@@ -192,9 +186,6 @@ function resnetStages(task: Task, depth: 18 | 34): Stage[] {
     ? [221_952, 1_116_416, 6_822_400, 13_114_368]
     : [147_968, 525_568, 2_099_712, 8_393_728];
   const repeats = depth === 34 ? [3, 4, 6, 3] : [2, 2, 2, 2];
-  const source = depth === 34
-    ? "Exact aggregation of checkpoint parameter keys by layer prefix."
-    : "Derived from the torchvision ResNet18 block pattern named by the executed notebook.";
   return [
     {
       id: "input",
@@ -204,7 +195,7 @@ function resnetStages(task: Task, depth: 18 | 34): Stage[] {
       parameters: 0,
       width: 60,
       height: 150,
-      evidence: "Notebook replaces the RGB stem for one-channel input.",
+      role: "Use microscope intensity directly as a single image channel.",
     },
     {
       id: "stem",
@@ -214,7 +205,7 @@ function resnetStages(task: Task, depth: 18 | 34): Stage[] {
       parameters: 3_264,
       width: 54,
       height: 128,
-      evidence: depth === 34 ? "Exact conv1 + bn1 checkpoint aggregation." : "Exact declared grayscale stem dimensions.",
+      role: "Convert grayscale patterns into 64 feature channels and reduce image resolution",
     },
     ...[64, 128, 256, 512].map((channels, index): Stage => ({
       id: `layer${index + 1}`,
@@ -225,7 +216,7 @@ function resnetStages(task: Task, depth: 18 | 34): Stage[] {
       width: 51 - index * 4,
       height: 112 - index * 17,
       residual: true,
-      evidence: source,
+      role: `Combine ${repeats[index]} residual blocks at this scale; skip paths help retain features through the deeper network.`,
     })),
     {
       id: "pool",
@@ -235,7 +226,7 @@ function resnetStages(task: Task, depth: 18 | 34): Stage[] {
       parameters: 0,
       width: 30,
       height: 45,
-      evidence: "ResNet family backbone contract; the notebook reads 512 fc input features.",
+      role: "Average each feature channel over the image before making a single prediction.",
     },
     headStage(task, 512, 20_520, 131_585),
   ];
@@ -251,7 +242,7 @@ function mobileStages(task: Task): Stage[] {
       parameters: 0,
       width: 60,
       height: 150,
-      evidence: "Notebook replaces the RGB input convolution with one channel.",
+      role: "Feed the same grayscale image into the compact model.",
     },
     {
       id: "early",
@@ -262,7 +253,7 @@ function mobileStages(task: Task): Stage[] {
       width: 52,
       height: 118,
       residual: true,
-      evidence: "Exact checkpoint aggregation for features.0 through features.3.",
+      role: "Extract early patterns using inexpensive inverted residual blocks.",
     },
     {
       id: "middle",
@@ -273,7 +264,7 @@ function mobileStages(task: Task): Stage[] {
       width: 47,
       height: 93,
       residual: true,
-      evidence: "Exact checkpoint aggregation for features.4 through features.8.",
+      role: "Use depthwise filters for spatial detail and channel attention to emphasise useful features.",
     },
     {
       id: "late",
@@ -284,7 +275,7 @@ function mobileStages(task: Task): Stage[] {
       width: 42,
       height: 72,
       residual: true,
-      evidence: "Exact checkpoint aggregation for features.9 through features.12.",
+      role: "Build higher-level features and expand their channel representation before pooling.",
     },
     {
       id: "embedding",
@@ -294,7 +285,7 @@ function mobileStages(task: Task): Stage[] {
       parameters: 590_848,
       width: 34,
       height: 57,
-      evidence: "Exact classifier.0 tensors in both saved MobileNet checkpoints.",
+      role: "Pool the image into a compact representation shared by either task head.",
     },
     task === "classification"
       ? {
@@ -305,7 +296,7 @@ function mobileStages(task: Task): Stage[] {
           parameters: 41_000,
           width: 27,
           height: 50,
-          evidence: "Exact classifier.3 tensors in model3_mobilenet.pth.",
+          role: "Map the compact image representation to 40 orientation classes.",
         }
       : {
           id: "head",
@@ -315,7 +306,7 @@ function mobileStages(task: Task): Stage[] {
           parameters: 1_025,
           width: 22,
           height: 44,
-          evidence: "Exact classifier.3 tensors in depth_model3_mobilenet.pth; no added Sigmoid in source.",
+          role: "Map the image representation directly to one depth value.",
         },
   ];
 }
@@ -330,7 +321,7 @@ function vitStages(task: Task): Stage[] {
       parameters: 0,
       width: 60,
       height: 150,
-      evidence: "Current notebook ViT adapter accepts one-channel images.",
+      role: "Use one grayscale channel, matching the other models’ inputs.",
     },
     {
       id: "patch",
@@ -340,7 +331,7 @@ function vitStages(task: Task): Stage[] {
       parameters: 196_608,
       width: 53,
       height: 124,
-      evidence: "Exact declared conv_proj dimensions; bias=False in the notebook.",
+      role: "Divide the image into 16×16 patches and embed each patch in 768 features.",
     },
     {
       id: "tokens",
@@ -350,7 +341,7 @@ function vitStages(task: Task): Stage[] {
       parameters: 152_064,
       width: 48,
       height: 106,
-      evidence: "ViT-B/16 contract: 196 image patches plus one class token; parameter count includes class and position embeddings.",
+      role: "Keep track of patch position and add a token that will summarise the whole image.",
     },
     {
       id: "encoder",
@@ -361,7 +352,7 @@ function vitStages(task: Task): Stage[] {
       width: 42,
       height: 85,
       residual: true,
-      evidence: "Residual of the exact executed-notebook total after patch, token and task-head parameters; represents the inherited ViT-B/16 encoder and final norm.",
+      role: "Let each patch attend to other patches, building relationships across the image.",
     },
     {
       id: "class-token",
@@ -371,7 +362,7 @@ function vitStages(task: Task): Stage[] {
       parameters: 0,
       width: 32,
       height: 56,
-      evidence: "ViT classifier interface used by the replaced heads.head layer.",
+      role: "Read the whole-image summary for pose classification or depth estimation.",
     },
     headStage(task, 768, 30_760, 197_121),
   ];
@@ -384,12 +375,9 @@ const models: ModelRecord[] = [
     shortName: "SimpleCNN",
     family: "Five-block convolutional network",
     origin: "authored",
-    originLabel: "AUTHORED + TRAINED FROM SCRATCH",
-    checkpoint: "drift",
-    checkpointLabel: "LOCAL CHECKPOINT / DEFINITION DRIFT",
+    originLabel: "Custom model · trained from scratch",
     colour: "#b24b45",
     parameters: { classification: 4_154_856, depth: 4_134_849 },
-    checkpointParameters: { classification: 4_144_424, depth: 4_124_417 },
     classification: { csvValidationAccuracy: 0.99, csvTestAccuracy: 0.9775, reportAccuracy: 0.9825 },
     depth: { reportRmse: 0.0478, reportMae: 0.0354, reportR2: 0.973 },
     training: {
@@ -397,8 +385,7 @@ const models: ModelRecord[] = [
       depth: { learningRate: "1e−3", optimiser: "Adam", epochs: 100 },
     },
     stages: simpleStages,
-    architectureNote: "The authored model reduces 224→56→28→14→7, adds learned 1×1 projections where channels change, then flattens 6,272 features into a 512-unit representation.",
-    checkpointNote: "The two locally present, ignored SimpleCNN state_dict files contain no skip2.* or skip3.* keys. Their exact parameter totals are 10,432 below the current definitions. No .pth file is tracked at the pinned HEAD, and this exhibit does not describe those local artifacts as the current residual architecture.",
+    architectureNote: "Samuel’s custom CNN reduces 224→56→28→14→7, adds learned 1×1 skips where channels change, then combines the image into 512 features. The final layer changes for orientation or depth.",
   },
   {
     id: "resnet18",
@@ -406,9 +393,7 @@ const models: ModelRecord[] = [
     shortName: "ResNet18",
     family: "18-layer residual network",
     origin: "pretrained",
-    originLabel: "IMAGENET BACKBONE + AUTHORED ADAPTATION",
-    checkpoint: "output-only",
-    checkpointLabel: "EXECUTED OUTPUT · FILE ABSENT",
+    originLabel: "ImageNet pretraining · task adaptation",
     colour: "#19818a",
     parameters: { classification: 11_190_760, depth: 11_301_825 },
     classification: { csvValidationAccuracy: 0.9925, csvTestAccuracy: 0.9875, reportAccuracy: 0.975 },
@@ -418,8 +403,7 @@ const models: ModelRecord[] = [
       depth: { learningRate: "5e−5", optimiser: "Adam", epochs: 100 },
     },
     stages: (task) => resnetStages(task, 18),
-    architectureNote: "The notebook loads torchvision ImageNet weights, replaces conv1 with a fresh 1→64 grayscale stem and replaces the task head. The executed output prints 11,190,760 classification parameters.",
-    checkpointNote: "Training histories and evaluation outputs exist in the executed notebook, but model4_resnet18.pth and depth_model4_resnet18.pth are not present in the audited checkout.",
+    architectureNote: "This adaptation starts from an ImageNet-pretrained ResNet18, replaces the colour-image input with a fresh grayscale stem, and learns a new orientation or depth head.",
   },
   {
     id: "resnet34",
@@ -427,12 +411,9 @@ const models: ModelRecord[] = [
     shortName: "ResNet34",
     family: "34-layer residual network",
     origin: "pretrained",
-    originLabel: "IMAGENET BACKBONE + AUTHORED ADAPTATION",
-    checkpoint: "present",
-    checkpointLabel: "LOCAL CHECKPOINT · UNTRACKED AT HEAD",
+    originLabel: "ImageNet pretraining · task adaptation",
     colour: "#28498f",
     parameters: { classification: 21_298_920, depth: 21_409_985 },
-    checkpointParameters: { classification: 21_298_920, depth: 21_409_985 },
     classification: { csvValidationAccuracy: 0.995, csvTestAccuracy: 0.985, reportAccuracy: 0.985 },
     depth: { reportRmse: 0.0256, reportMae: 0.0181, reportR2: 0.994 },
     training: {
@@ -440,8 +421,7 @@ const models: ModelRecord[] = [
       depth: { learningRate: "5e−5", optimiser: "Adam", epochs: 100 },
     },
     stages: (task) => resnetStages(task, 34),
-    architectureNote: "The selected precision model uses torchvision ImageNet weights, a fresh one-channel 7×7 stem, residual stages [3,4,6,3], and separate 40-logit or 256-dropout-1 heads.",
-    checkpointNote: "Initial and final classification/regression state_dict files are locally present in the audited working copy but ignored and untracked at the pinned HEAD. Their parameter counts reconcile after excluding BatchNorm running buffers.",
+    architectureNote: "A deeper ImageNet-pretrained model combines residual stages [3,4,6,3] with a fresh grayscale stem and separate pose/depth heads. It was selected for precise estimation in the project.",
   },
   {
     id: "mobilenet",
@@ -449,12 +429,9 @@ const models: ModelRecord[] = [
     shortName: "MobileNetV3",
     family: "Inverted residual + squeeze/excitation",
     origin: "pretrained",
-    originLabel: "IMAGENET BACKBONE + AUTHORED ADAPTATION",
-    checkpoint: "present",
-    checkpointLabel: "LOCAL CHECKPOINT · UNTRACKED AT HEAD",
+    originLabel: "ImageNet pretraining · task adaptation",
     colour: "#8a5d12",
     parameters: { classification: 1_558_568, depth: 1_518_593 },
-    checkpointParameters: { classification: 1_558_568, depth: 1_518_593 },
     classification: { csvValidationAccuracy: 0.995, csvTestAccuracy: 0.9775, reportAccuracy: 0.975 },
     depth: { reportRmse: 0.0325, reportMae: 0.0241, reportR2: 0.989 },
     training: {
@@ -462,8 +439,7 @@ const models: ModelRecord[] = [
       depth: { learningRate: "1e−3", optimiser: "Adam", epochs: 100 },
     },
     stages: mobileStages,
-    architectureNote: "The compact candidate retains MobileNetV3-Small inverted residual and squeeze/excitation blocks, replaces the stem with a fresh 1→16 convolution and swaps only the final task layer.",
-    checkpointNote: "Both classification and depth state_dict files are locally present in the audited working copy but ignored and untracked at the pinned HEAD. Prefix-level tensor aggregation yields the exact totals shown here; no checkpoint bytes are shipped.",
+    architectureNote: "The compact candidate uses inexpensive depthwise filters and channel attention. A fresh grayscale input layer and task-specific output adapt it to microscope images.",
   },
   {
     id: "vit",
@@ -471,9 +447,7 @@ const models: ModelRecord[] = [
     shortName: "ViT-B/16",
     family: "16×16 patch transformer",
     origin: "pretrained",
-    originLabel: "IMAGENET BACKBONE + AUTHORED ADAPTATION",
-    checkpoint: "output-only",
-    checkpointLabel: "EXECUTED OUTPUT · FILE ABSENT",
+    originLabel: "ImageNet pretraining · task adaptation",
     colour: "#6a3a82",
     parameters: { classification: 85_435_432, depth: 85_601_793 },
     classification: { csvValidationAccuracy: 0.985, csvTestAccuracy: 0.985, reportAccuracy: 0.9825 },
@@ -483,8 +457,7 @@ const models: ModelRecord[] = [
       depth: { learningRate: "1e−5", optimiser: "Adam", epochs: 100 },
     },
     stages: vitStages,
-    architectureNote: "The adapter averages pretrained RGB patch-projection weights into one channel, retains 16×16 patches and the ViT-B/16 encoder, then replaces the classifier or depth head.",
-    checkpointNote: "The executed notebook prints 85,435,432 classification parameters and contains training history, but model5_vit.pth and depth_model5_vit.pth are absent from the audited checkout.",
+    architectureNote: "The transformer compares information across 16×16 image patches. Averaging the pretrained colour-input weights adapts it to grayscale, and a new head estimates orientation or depth.",
   },
 ];
 
@@ -492,50 +465,50 @@ const timeline: TimelineEvent[] = [
   {
     date: "04 DEC 2025",
     commit: "1af6d06",
-    title: "Report scaffold enters version history",
-    evidence: "Added the report source, IEEE template and reference material. No trained-model claim is attached to this milestone.",
+    title: "Frame the pose and depth prediction tasks",
+    detail: "Define the microscopy problem, review related work and plan the comparison of orientation classifiers and depth estimators.",
     kind: "design",
   },
   {
     date: "07 DEC 2025",
     commit: "63adb26",
-    title: "EXIF orientation correction lands",
-    evidence: "Notebook, comparison image, rotation summary and SimpleCNN checkpoint changed together; a follow-up commit refined the fix.",
+    title: "Correct image orientation before training",
+    detail: "Correct image orientation metadata so the microscope image and its pose label stay aligned. Follow-up work refines the preprocessing.",
     kind: "data",
   },
   {
     date: "08 DEC 2025",
     commit: "872620a",
-    title: "Evaluation surface expands",
-    evidence: "Added classification histories, depth histories, model comparison plots and both classification/regression Grad-CAM outputs.",
+    title: "Inspect prediction errors and image attention",
+    detail: "Compare training progress and errors for both tasks, then use Grad-CAM to inspect the image regions associated with orientation and depth predictions.",
     kind: "run",
   },
   {
     date: "10 DEC 2025",
     commit: "53496b4",
-    title: "Five run directories and analysis artifacts are consolidated",
-    evidence: "Run 1–5 notebooks, confusion matrices, residual plots, t-SNE outputs and the model comparison CSV moved in one evidence-bearing revision.",
+    title: "Compare five model families",
+    detail: "Bring together confusion matrices, depth residuals and learned-feature views for SimpleCNN, ResNet18, ResNet34, MobileNetV3 and ViT.",
     kind: "run",
   },
   {
     date: "13 DEC 2025",
     commit: "d59a4a5",
-    title: "Best-model selection and deployment pack",
-    evidence: "Commit labelled “save the best model” refreshed the notebook, comparison CSV, report, final plots and deployment artifacts.",
+    title: "Select models and prepare a prediction workflow",
+    detail: "Use the recorded comparisons to select models, then prepare the image-loading and prediction workflow for handoff.",
     kind: "selection",
   },
   {
     date: "20 DEC 2025",
     commit: "0133d9b",
-    title: "Final experiment/report revision",
-    evidence: "Final ResNet outputs, Roll–Pitch grid, report images, deployment README and model-architecture documentation were updated together.",
+    title: "Explain the final models and results",
+    detail: "Present the final ResNet analysis, roll–pitch orientation grid, architecture explanations and instructions for using the trained models.",
     kind: "release",
   },
   {
     date: "20 DEC 2025",
     commit: "19dacbe",
-    title: "Deployment loader receives the last audited change",
-    evidence: "The repository head used by this exhibit changes deployment/test_loader.ipynb; architecture and metrics remain pinned to this checkout.",
+    title: "Refine the image-loading workflow",
+    detail: "Refine loading and preprocessing so new microscopy images can follow the same prediction workflow.",
     kind: "release",
   },
 ];
@@ -545,11 +518,6 @@ function formatParameters(value: number) {
   return value.toLocaleString("en-GB");
 }
 
-function statusClass(state: EvidenceState) {
-  if (state === "present") return styles.present;
-  if (state === "drift") return styles.drift;
-  return styles.outputOnly;
-}
 
 export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale }) {
   const [modelId, setModelId] = useState<ModelId>("simple");
@@ -567,7 +535,7 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
   const filteredTimeline = timelineFilter === "all"
     ? timeline
     : timeline.filter((event) => event.kind === timelineFilter);
-  const visibleMetricLabel = task === "classification" ? "CSV test accuracy" : "Report RMSE";
+  const visibleMetricLabel = task === "classification" ? "Recorded test accuracy" : "Recorded depth RMSE";
   const visibleMetric = task === "classification"
     ? `${(selectedModel.classification.csvTestAccuracy * 100).toFixed(2)}%`
     : selectedModel.depth.reportRmse.toFixed(4);
@@ -591,32 +559,27 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
   } as CSSProperties;
 
   return (
-    <ProjectTranslationBoundary locale={locale}>
+    <ProjectCopy copy={scientificCopy} locale={locale}><ProjectTranslationBoundary locale={locale}>
     <DemoWindow
-      appName="MODEL LINEAGE LAB 1.0"
-      title="Microrobot Architecture & Experiment Atlas"
-      status="SOURCE-AUDITED"
-      purpose="Trace how microscopy pixels move through each pose or depth model and connect the definition to its checkpoint evidence."
-      tryThis="Select a model, rotate or expand its tensor diagram, then compare architecture and checkpoint records."
-      watchFor="Tensor shapes, skip paths and parameter discrepancies become explicit; this is a source audit, not live microscopy inference."
+      appName="Microrobot vision"
+      title="Finding orientation and depth from microscope images"
+      status="5 Models · 2 tasks"
+      purpose="Guiding a microrobot requires knowing where it is and how it is tilted. This project uses microscope images to classify orientation and estimate depth."
+      tryThis="Switch between pose and depth, select a model, then click a stage to follow the image features into its prediction head."
+      watchFor="The same image-processing backbone can serve two tasks. Compare the output head, model size and recorded performance as you switch."
       statusTone="safe"
       className={styles.studio}
       footer={(
         <>
-          <span>CHECKOUT {AUDITED_COMMIT.slice(0, 8)}</span>
-          <span>5 ARCHITECTURES · 2 TASKS · 7 LINEAGE EVENTS</span>
-          <span>ABSTRACT TENSORS ONLY · NO DATASET OR WEIGHTS</span>
+          <span>5 Architectures · pose classification + depth estimation</span>
+          <span>Interactive architecture diagrams</span>
         </>
       )}
     >
-      <section className={styles.provenance} aria-label="Evidence boundary">
-        <span>READ-ONLY SOURCE AUDIT</span>
-        <p>
-          Every layer, shape, parameter total, run status and revision below is tied to the executed notebook,
-          locally present ignored state dictionaries, machine-readable comparison CSV, report source or Git history.
-          Conflicting artifacts stay visibly separate.
-        </p>
-        <strong>PRIVATE REPOSITORY · NO EXPLICIT LICENCE</strong>
+      <section className={styles.provenance} aria-label="Project contribution">
+        <span>Research context</span>
+        <p>Samuel built a custom CNN, adapted four pretrained image models to grayscale microscopy, and trained separate orientation and depth predictors. Image-orientation corrections, error plots and Grad-CAM comparisons helped examine what the models learned.</p>
+        <strong>224 × 224 grayscale input · 40 orientations or one depth value</strong>
       </section>
 
       <section className={styles.modelStrip} aria-label="Model selection">
@@ -628,7 +591,7 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
             style={{ "--model-colour": model.colour } as CSSProperties}
             onClick={() => chooseModel(model.id)}
           >
-            <span>{model.origin === "authored" ? "AUTHORED" : "PRETRAINED"}</span>
+            <span>{model.origin === "authored" ? "Custom CNN" : "Pretrained"}</span>
             <strong>{model.shortName}</strong>
             <small>{formatParameters(model.parameters[task])} params</small>
           </button>
@@ -637,10 +600,10 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
 
       <section className={styles.workbench}>
         <aside className={styles.inspector}>
-          <div className={styles.panelCap}><span>01</span><strong>MODEL INSPECTOR</strong></div>
+          <div className={styles.panelCap}><span>01</span><strong>Model inspector</strong></div>
           <div className={styles.taskSwitch} role="group" aria-label="Task head">
-            <button type="button" aria-pressed={task === "classification"} onClick={() => chooseTask("classification")}>POSE · 40 CLASS</button>
-            <button type="button" aria-pressed={task === "depth"} onClick={() => chooseTask("depth")}>DEPTH · REGRESSION</button>
+            <button type="button" aria-pressed={task === "classification"} onClick={() => chooseTask("classification")}>Pose · 40 class</button>
+            <button type="button" aria-pressed={task === "depth"} onClick={() => chooseTask("depth")}>Depth · regression</button>
           </div>
 
           <div className={styles.modelIdentity}>
@@ -648,14 +611,12 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
             <h3>{selectedModel.name}</h3>
             <div>
               <b className={selectedModel.origin === "authored" ? styles.authored : styles.pretrained}>{selectedModel.originLabel}</b>
-              <b className={statusClass(selectedModel.checkpoint)}>{selectedModel.checkpointLabel}</b>
             </div>
             <p>{selectedModel.architectureNote}</p>
           </div>
 
           <dl className={styles.modelFacts}>
-            <div><dt>Current-definition parameters</dt><dd>{selectedModel.parameters[task].toLocaleString("en-GB")}</dd></div>
-            <div><dt>Local checkpoint parameters</dt><dd>{selectedModel.checkpointParameters?.[task]?.toLocaleString("en-GB") ?? "not available"}</dd></div>
+            <div><dt>Trainable parameters</dt><dd>{selectedModel.parameters[task].toLocaleString("en-GB")}</dd></div>
             <div><dt>{visibleMetricLabel}</dt><dd>{visibleMetric}</dd></div>
             <div><dt>Training recipe</dt><dd>{selectedModel.training[task].epochs} epochs · {selectedModel.training[task].optimiser} · {selectedModel.training[task].learningRate}</dd></div>
           </dl>
@@ -680,25 +641,26 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
           </div>
 
           <div className={styles.selectedStage}>
-            <span>SELECTED TENSOR · {selectedStage.id.toUpperCase()}</span>
+            <span>Selected tensor</span>
             <strong>{selectedStage.label}</strong>
-            <code>{selectedStage.shape}</code>
+            <code>{projectText(locale, scientificCopy, selectedStage.shape)}</code>
             <p>{selectedStage.operation}</p>
             <dl>
               <div><dt>Parameters</dt><dd>{selectedStage.parameters.toLocaleString("en-GB")}</dd></div>
-              <div><dt>Evidence</dt><dd>{selectedStage.evidence}</dd></div>
+              <div><dt>Role</dt><dd>{selectedStage.role}</dd></div>
             </dl>
           </div>
         </aside>
 
         <div className={styles.architecturePanel}>
-          <div className={styles.panelCap}><span>02</span><strong>ROTATABLE TENSOR GRAPH</strong><em>SELECT ANY STAGE</em></div>
+          <div className={styles.panelCap}><span>02</span><strong>Rotatable tensor graph</strong><em>Select any stage</em></div>
           <div className={styles.sceneToolbar}>
-            <span>INPUT</span><i /><span>{task === "classification" ? "40 POSE LOGITS" : "NORMALIZED DEPTH"}</span>
-            <strong>{stages.filter((stage) => stage.residual).length} RESIDUAL / SKIP STAGES</strong>
+            <span>INPUT</span><i /><span>{task === "classification" ? "40 Pose logits" : "Normalized depth"}</span>
+            <strong>{stages.filter((stage) => stage.residual).length} Residual / skip stages</strong>
           </div>
 
-          <div className={styles.sceneViewport}>
+          <p className={styles.sceneHint}>Scroll sideways to follow all stages. Select a tensor to inspect it.</p>
+          <div className={styles.sceneViewport} role="region" aria-label="Tensor graph; scroll horizontally to follow all stages" tabIndex={0}>
             <div
               className={`${styles.network3d} ${spinning ? styles.spinning : ""}`}
               style={sceneStyle}
@@ -727,7 +689,7 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
                   </button>
                   <div className={styles.tensorLabel}>
                     <strong>{stage.label}</strong>
-                    <code>{stage.shape}</code>
+                    <code>{projectText(locale, scientificCopy, stage.shape)}</code>
                   </div>
                 </div>
               ))}
@@ -741,40 +703,35 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
 
           <div className={styles.layerLedger}>
             <div className={styles.sectionHeading}>
-              <div><span>ACCESSIBLE 2D FALLBACK</span><h3>Exact layer and tensor ledger</h3></div>
-              <strong>{stages.length} AGGREGATED STAGES</strong>
+              <div><span>Architecture table</span><h3>Follow each stage of the model</h3></div>
+              <strong>{stages.length} Aggregated stages</strong>
             </div>
-            <div className={styles.tableWrap} role="region" aria-label={`${selectedModel.name} layer ledger; scroll horizontally for all columns`} tabIndex={0}>
+            <div className={styles.tableWrap} role="region" aria-label={`${selectedModel.name} architecture table; scroll horizontally for all columns`} tabIndex={0}>
               <table>
                 <caption>{selectedModel.name} {task} architecture</caption>
-                <thead><tr><th scope="col">Stage</th><th scope="col">Operation</th><th scope="col">Output shape</th><th scope="col">Parameters</th><th scope="col">Trace</th></tr></thead>
+                <thead><tr><th scope="col">Stage</th><th scope="col">Operation</th><th scope="col">Output shape</th><th scope="col">Parameters</th><th scope="col">Role</th></tr></thead>
                 <tbody>
                   {stages.map((stage) => (
                     <tr key={stage.id} className={selectedStage.id === stage.id ? styles.selectedRow : ""}>
                       <th scope="row"><button type="button" aria-pressed={selectedStage.id === stage.id} onClick={() => setSelectedStageId(stage.id)}>{stage.label}</button></th>
                       <td>{stage.operation}</td>
-                      <td><code>{stage.shape}</code></td>
+                      <td><code>{projectText(locale, scientificCopy, stage.shape)}</code></td>
                       <td>{stage.parameters.toLocaleString("en-GB")}</td>
-                      <td>{stage.residual ? "residual" : "direct"}</td>
+                      <td>{stage.role}</td>
                     </tr>
                   ))}
                 </tbody>
-                <tfoot><tr><th scope="row" colSpan={3}>Current-definition total</th><td>{stages.reduce((sum, stage) => sum + stage.parameters, 0).toLocaleString("en-GB")}</td><td>{stages.reduce((sum, stage) => sum + stage.parameters, 0) === selectedModel.parameters[task] ? "reconciled" : "grouped estimate"}</td></tr></tfoot>
+                <tfoot><tr><th scope="row" colSpan={3}>Architecture total</th><td>{stages.reduce((sum, stage) => sum + stage.parameters, 0).toLocaleString("en-GB")}</td><td>{stages.reduce((sum, stage) => sum + stage.parameters, 0) === selectedModel.parameters[task] ? "all stages" : "grouped estimate"}</td></tr></tfoot>
               </table>
             </div>
           </div>
         </div>
       </section>
 
-      <section className={styles.checkpointNotice} data-state={selectedModel.checkpoint}>
-        <span>{selectedModel.checkpoint === "present" ? "✓" : selectedModel.checkpoint === "drift" ? "!" : "i"}</span>
-        <div><strong>{selectedModel.checkpointLabel}</strong><p>{selectedModel.checkpointNote}</p></div>
-      </section>
-
       <section className={styles.comparisonSection}>
         <div className={styles.sectionHeading}>
-          <div><span>EXPERIMENT COMPARISON</span><h3>{task === "classification" ? "Machine-readable model comparison" : "Report-sourced depth comparison"}</h3></div>
-          <strong>{task === "classification" ? COMPARISON_PATH : REPORT_PATH}</strong>
+          <div><span>Experiment comparison</span><h3>{task === "classification" ? "How accurately did the models estimate orientation?" : "How closely did they estimate depth?"}</h3></div>
+          <strong>{task === "classification" ? "Pose accuracy · higher is better" : "Normalised depth RMSE · lower is better"}</strong>
         </div>
         <div className={styles.comparisonGrid}>
           <div className={styles.metricChart}>
@@ -795,7 +752,7 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
           </div>
 
           <div className={styles.parameterChart}>
-            <span>PARAMETER FOOTPRINT · LOG SCALE</span>
+            <span>Parameter footprint · log scale</span>
             {models.map((model) => {
               const parameters = model.parameters[task];
               const width = (Math.log10(parameters) / Math.log10(90_000_000)) * 100;
@@ -810,24 +767,18 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
           </div>
 
           <div className={styles.artifactConflict}>
-            <span>ARTIFACT RECONCILIATION</span>
-            <h4>CSV and report are not silently merged</h4>
-            <p>The classification CSV and report agree exactly only for ResNet34. Other rows differ by 0.25–1.25 percentage points, consistent with distinct saved evaluation snapshots. Both values remain labelled below.</p>
-            <p className={styles.exclusion}><strong>Excluded final-retrain claim:</strong> the report gives ResNet34 regression RMSE as 0.204 in its abstract, 0.0141 in prose, and 0.0204 in its final table/conclusion. None is substituted into the five-model depth bars, which remain pinned to the separately labelled 0.0256 comparison-table result.</p>
-            <table>
-              <thead><tr><th scope="col">Model</th><th scope="col">CSV test</th><th scope="col">Report test</th><th scope="col">Δ</th></tr></thead>
-              <tbody>{models.map((model) => {
-                const delta = model.classification.csvTestAccuracy - model.classification.reportAccuracy;
-                return <tr key={model.id}><th scope="row">{model.shortName}</th><td>{(model.classification.csvTestAccuracy * 100).toFixed(2)}%</td><td>{(model.classification.reportAccuracy * 100).toFixed(2)}%</td><td>{delta === 0 ? "0.00 pp" : `${delta > 0 ? "+" : ""}${(delta * 100).toFixed(2)} pp`}</td></tr>;
-              })}</tbody>
-            </table>
+            <span>Reading the comparison</span>
+            <h4>Accuracy, depth error and model size answer different questions</h4>
+            <p>Pose accuracy measures the fraction of images assigned to the correct orientation. Depth RMSE measures the size of the depth errors in normalised units. The parameter chart shows how much model capacity each design uses.</p>
+            <p>The bars use the recorded five-model comparison, before final retraining. Pose scores varied slightly between recorded evaluations; the depth results shown here use one comparison table consistently.</p>
+            <p className={styles.exclusion}>SimpleCNN scores describe an earlier version without the two learned projection skips shown in the developed architecture. The original image-level split may place related video frames in training and testing; the sequence experiment explores why that matters.</p>
           </div>
         </div>
       </section>
 
       <section className={styles.timelineSection}>
         <div className={styles.sectionHeading}>
-          <div><span>GIT + EXPERIMENT LINEAGE</span><h3>From data correction to deployment handoff</h3></div>
+          <div><span>Project development</span><h3>From data correction to deployment handoff</h3></div>
           <strong>04–20 DEC 2025</strong>
         </div>
         <div className={styles.timelineFilters} role="group" aria-label="Filter experiment timeline">
@@ -838,9 +789,9 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
         <ol className={styles.timeline}>
           {filteredTimeline.map((event) => (
             <li key={event.commit} data-kind={event.kind}>
-              <div><time>{event.date}</time><code>{event.commit}</code></div>
+              <div><time>{event.date}</time></div>
               <span aria-hidden="true" />
-              <article><b>{event.kind}</b><h4>{event.title}</h4><p>{event.evidence}</p></article>
+              <article><b>{event.kind}</b><h4>{event.title}</h4><p>{event.detail}</p></article>
             </li>
           ))}
         </ol>
@@ -848,26 +799,18 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
 
       <section className={styles.evidenceLedger}>
         <div className={styles.sectionHeading}>
-          <div><span>CLAIM PROVENANCE</span><h3>What “designed”, “pretrained”, “trained” and “compared” mean here</h3></div>
-          <code>{AUDITED_COMMIT.slice(0, 12)}</code>
+          <div><span>Design choices</span><h3>What was built, adapted and tested</h3></div>
         </div>
         <ul>
-          <li><span className={styles.authored}>DESIGNED</span><p>SimpleCNN layer graph is authored locally. Adaptation heads and grayscale input replacements are also authored; ResNet, MobileNet and ViT backbones are not.</p></li>
-          <li><span className={styles.pretrained}>PRETRAINED</span><p>The current notebook explicitly requests torchvision ImageNet defaults for ResNet18/34, MobileNetV3-Small and ViT-B/16. SimpleCNN requests no pretrained weights.</p></li>
-          <li><span className={styles.present}>LOCAL FILE ONLY</span><p>SimpleCNN, ResNet34 and MobileNet state_dict files exist only as ignored local working-copy artifacts. No .pth file is tracked at the pinned HEAD.</p></li>
-          <li><span className={styles.outputOnly}>TRAINED OUTPUT</span><p>ResNet18 and ViT have executed training/evaluation output, but their named checkpoint files are not locally present; no .pth file is tracked at the pinned HEAD.</p></li>
-          <li><span className={styles.drift}>DRIFT FOUND</span><p>The current SimpleCNN code declares learned skip projections; saved SimpleCNN state_dict keys do not. The exhibit shows both totals and does not imply compatibility.</p></li>
-          <li><span className={styles.compared}>COMPARED</span><p>Classification bars read the CSV snapshot. Depth bars read the report table. Final retraining claims are not substituted into the earlier five-model comparison.</p></li>
-          <li><span className={styles.drift}>SPLIT CAVEAT</span><p>The notebook uses a stratified image-row 60/20/20 split with random state 42, not a recording-group split. Adjacent or correlated video frames may cross partitions, so these scores do not establish group-held-out generalisation.</p></li>
+          <li><span className={styles.authored}>Custom CNN</span><p>The five-block CNN and its residual skips were built for this project. It learns image features from scratch.</p></li>
+          <li><span className={styles.pretrained}>Transfer learning</span><p>ResNet, MobileNet and ViT start from ImageNet-pretrained backbones. Grayscale inputs and new prediction heads adapt those existing architectures to microscopy.</p></li>
+          <li><span className={styles.compared}>Two tasks</span><p>Pose classification selects one of 40 pitch–roll combinations. Depth regression estimates one continuous value from the same kind of image.</p></li>
+          <li><span className={styles.outputOnly}>Evaluation</span><p>Recorded pose and depth results show the trade-off between model size and prediction quality. The browser diagrams explain the models; they do not run a new prediction.</p></li>
+          <li><span className={styles.drift}>New recordings</span><p>The original 60/20/20 image split can mix correlated frames across sets. Testing on complete unseen recordings would better assess performance in a new experiment.</p></li>
         </ul>
-        <div className={styles.sourcePaths}>
-          <span><b>Notebook</b><code>{NOTEBOOK_PATH}</code></span>
-          <span><b>Comparison</b><code>{COMPARISON_PATH}</code></span>
-          <span><b>Report</b><code>{REPORT_PATH}</code></span>
-        </div>
       </section>
     </DemoWindow>
-    </ProjectTranslationBoundary>
+    </ProjectTranslationBoundary></ProjectCopy>
   );
 }
 

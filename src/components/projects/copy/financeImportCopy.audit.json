@@ -1,0 +1,11 @@
+{
+  "dictionary": "financeImportCopy.ts",
+  "exportName": "financeImportCopy",
+  "sources": [
+    "src/components/projects/FinanceImportExperiment.tsx"
+  ],
+  "dataSources": [
+    "src/lib/financeImport.ts"
+  ],
+  "identities": {}
+}

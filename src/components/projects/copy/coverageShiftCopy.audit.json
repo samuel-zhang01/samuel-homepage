@@ -1,0 +1,8 @@
+{
+  "dictionary": "coverageShiftCopy.ts",
+  "exportName": "coverageShiftCopy",
+  "sources": [
+    "src/components/projects/CoverageShiftExperiment.tsx"
+  ],
+  "identities": {}
+}

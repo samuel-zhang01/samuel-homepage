@@ -1,0 +1,8 @@
+{
+  "dictionary": "cliffLearningLabCopy.ts",
+  "exportName": "cliffLearningLabCopy",
+  "sources": [
+    "src/components/projects/CliffLearningLab.tsx"
+  ],
+  "identities": {}
+}

@@ -1,0 +1,8 @@
+{
+  "dictionary": "courseCopy.ts",
+  "exportName": "courseCopy",
+  "sources": [
+    "src/components/projects/CourseRecommenderStudio.tsx"
+  ],
+  "identities": {}
+}

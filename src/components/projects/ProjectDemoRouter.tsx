@@ -17,6 +17,7 @@ function DemoLoading() {
   );
 }
 
+
 const BanditStudio = dynamic(
   () => import("./BanditStudio").then((module) => module.BanditStudio),
   { loading: DemoLoading },
@@ -125,6 +126,7 @@ const VentureReasoningStudio = dynamic(
   () => import("./VentureReasoningStudio").then((module) => module.VentureReasoningStudio),
   { loading: DemoLoading },
 );
+
 
 export function ProjectDemoRouter({ demoId, locale = "en-GB" }: { demoId: ProjectDemoId; locale?: Locale }) {
   let demo: React.ReactNode;

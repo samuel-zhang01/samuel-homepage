@@ -1,4 +1,8 @@
 "use client";
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { scientificCopy } from "./copy/scientificCopy";
+
+import { CoverageShiftExperiment } from "./CoverageShiftExperiment";
 
 import ClassicSelect from "../ClassicSelect";
 
@@ -25,7 +29,7 @@ function TabStrip<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div className={styles.tabStrip} role="group" aria-label={label}>
+    <ProjectCopy copy={scientificCopy}><div className={styles.tabStrip} role="group" aria-label={label}>
       {options.map((option) => (
         <button
           type="button"
@@ -37,7 +41,7 @@ function TabStrip<T extends string>({
           {option.label}
         </button>
       ))}
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -55,13 +59,13 @@ function EvidenceNote({
   const toneClass = tone === "amber" ? styles.note_amber : tone === "green" ? styles.note_green : "";
 
   return (
-    <aside className={`${styles.evidenceNote} ${toneClass}`} role="note">
+    <ProjectCopy copy={scientificCopy}><aside className={`${styles.evidenceNote} ${toneClass}`} role="note">
       <span className={styles.noteIcon} aria-hidden="true">{icon}</span>
       <div>
         <strong>{title}</strong>
         <p>{children}</p>
       </div>
-    </aside>
+    </aside></ProjectCopy>
   );
 }
 
@@ -86,8 +90,8 @@ const CFD_MODELS: Record<CfdModelId, {
     architecture: "Spectral operator",
     representation: "Structured grid",
     parameters: "3,990,575",
-    evaluation: "Executed notebook test run",
-    note: "Baseline width-36, three-block FNO; the current loose checkpoint is a different later architecture.",
+    evaluation: "Recorded baseline evaluation",
+    note: "The width-36 baseline combines three spectral blocks with a local pointwise path.",
   },
   gnn: {
     name: "MeshGraphNet",
@@ -96,18 +100,18 @@ const CFD_MODELS: Record<CfdModelId, {
     architecture: "Message passing",
     representation: "Native mesh",
     parameters: "8,323",
-    evaluation: "Executed 500-file test run",
-    note: "Ten processor blocks completed within the supplied ML4Sci starter scaffold.",
+    evaluation: "Recorded 500-file evaluation",
+    note: "Ten residual processors exchange information along the original mesh edges.",
   },
   unet: {
     name: "U-Net baseline",
-    short: "U-NET",
+    short: "U-Net",
     relativeL2: "1.2823",
     architecture: "Encoder–decoder",
     representation: "Rasterised grid",
     parameters: "50,542,531",
     evaluation: "Shifted 20-file validation run",
-    note: "A deliberately different distribution-shift check; it is not ranked against the test runs.",
+    note: "This shifted set tests unfamiliar flow conditions, so its score cannot directly rank the model against the other runs.",
   },
 };
 
@@ -141,7 +145,7 @@ function FlowField({
   const viewLabel = field === "truth" ? "ground-truth" : field;
 
   return (
-    <svg
+    <ProjectCopy copy={scientificCopy}><svg
       className={`${styles.flowField} ${field === "error" ? styles.flow_error : ""} ${model === "unet" && field !== "truth" ? styles.flowModel_unet : ""}`}
       viewBox="0 0 560 270"
       role="img"
@@ -214,7 +218,7 @@ function FlowField({
         <text x="77" y="240">x</text>
         <text x="25" y="197">y</text>
       </g>
-    </svg>
+    </svg></ProjectCopy>
   );
 }
 
@@ -226,34 +230,34 @@ export function CfdSurrogateDemo() {
   const activeModel = CFD_MODELS[model];
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={scientificCopy}><DemoWindow
       appName="FlowBench 7"
       title="CFD Surrogate Model Workbench"
-      status="ILLUSTRATIVE RESULT VIEW"
-      purpose="Compare saved CFD surrogate results without pretending that runs with different evaluation splits form one leaderboard."
+      status="Illustrative result view"
+      purpose="Explore the recorded prediction errors and the flow representations used by three neural models."
       tryThis="Switch model, field view, frame and grid-or-mesh overlay."
-      watchFor="The recorded metric receipt and illustrative field view change together; no model inference or CFD solve runs here."
+      watchFor="The selected model changes the recorded metric and illustrative field view. The next tab contains actual saved flow frames."
       statusTone="safe"
       className={styles.scientificWindow}
       footer={
         <>
           <span>Recorded relative L2 · evaluation splits differ</span>
-          <span>Display-only port · no browser inference</span>
+          <span>Interactive display · no browser inference</span>
         </>
       }
     >
-      <EvidenceNote icon="≋" title="Fixed benchmark values — not a live solver">
-        Controls switch a newly generated browser illustration anchored to saved evaluation numbers. No CFD solve, model download, or claim of real-time inference is made.
+      <EvidenceNote icon="≋" title="Recorded benchmark values">
+        The field drawing illustrates the view controls. The numerical results below are recorded evaluations; use flow playback to inspect the actual saved fields.
       </EvidenceNote>
 
-      <EvidenceNote tone="amber" icon="!" title="These values are not one leaderboard">
-        FNO and MeshGraphNet use their executed test runs; U-Net uses a separate 20-file shifted validation run. The values document three experiments, but their ordering is not a valid cross-model rank.
+      <EvidenceNote tone="amber" icon="!" title="Separate runs and evaluation splits">
+        FNO and MeshGraphNet report sets that were also checked during training. U-Net uses a separate 20-file set with different flow statistics. Read each score in those conditions rather than as a common ranking.
       </EvidenceNote>
 
       <div className={styles.cfdLayout}>
         <nav className={styles.modelRail} aria-label="Surrogate model">
           <div className={styles.railHeading}>
-            <span>MODEL FAMILY</span>
+            <span>Model family</span>
             <strong>03 candidates</strong>
           </div>
           {(Object.entries(CFD_MODELS) as [CfdModelId, (typeof CFD_MODELS)[CfdModelId]][]).map(([id, item], index) => (
@@ -285,19 +289,19 @@ export function CfdSurrogateDemo() {
 
           <figure className={styles.fieldFigure}>
             <div className={styles.figureChrome}>
-              <span>{activeModel.short} / {field.toUpperCase()}</span>
+              <span>{activeModel.short} / {CFD_FIELD_TABS.find((item) => item.id === field)?.label}</span>
               <span>{CFD_FRAMES[frame]} · t+1</span>
             </div>
             <FlowField field={field} model={model} topology={topology} frame={frame} />
             <figcaption>
-              <span>ILLUSTRATIVE FIELD VIEW</span>
-              <p>Generated SVG recreates the comparison interface; benchmark numbers come from saved project evaluation.</p>
+              <span>Illustrative field view</span>
+              <p>The illustration explores the comparison controls; numbers come from the recorded project evaluation.</p>
             </figcaption>
           </figure>
 
           <div className={styles.snapshotBar}>
             <div>
-              <span>SAVED SEQUENCE</span>
+              <span>Illustration step</span>
               <strong>{CFD_FRAMES[frame]} of 03</strong>
             </div>
             <MacButton onClick={() => setFrame((current) => (current + 1) % CFD_FRAMES.length)}>
@@ -309,7 +313,7 @@ export function CfdSurrogateDemo() {
 
       <section className={styles.evidencePanel} aria-label={`${activeModel.name} evaluation summary`}>
         <div className={`${styles.heroMetric} ${model === "unet" ? styles.heroMetricWarning : ""}`}>
-          <span>RECORDED RELATIVE L2</span>
+          <span>Recorded relative L2</span>
           <strong>{activeModel.relativeL2}</strong>
           <small>{activeModel.evaluation}</small>
         </div>
@@ -328,7 +332,7 @@ export function CfdSurrogateDemo() {
           ))}
         </div>
       </section>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 
@@ -370,11 +374,11 @@ function MicrorobotScene({ view, frameIndex }: { view: VisionView; frameIndex: n
   const grain = `${id}-grain`;
 
   return (
-    <svg
+    <ProjectCopy copy={scientificCopy}><svg
       className={styles.robotScene}
       viewBox="0 0 520 310"
       role="img"
-      aria-label={`Sanitised illustrative microrobot ${view === "attention" ? "Grad-CAM-style attention" : view} view for ${frame.label}`}
+      aria-label={`Illustrative microrobot ${view === "attention" ? "Grad-CAM-style attention" : view} view for ${frame.label}`}
     >
       <defs>
         <radialGradient id={glass} cx="48%" cy="47%" r="68%">
@@ -447,11 +451,11 @@ function MicrorobotScene({ view, frameIndex }: { view: VisionView; frameIndex: n
 
       <g className={styles.microscopeHud}>
         <path d="M20 47V20h27M473 20h27v27M20 263v27h27M473 290h27v-27" />
-        <text x="25" y="280">SANITISED / ILLUSTRATIVE</text>
+        <text x="25" y="280">Illustrative view</text>
         <text x="391" y="280">50 μm</text>
         <path d="M390 265h87" />
       </g>
-    </svg>
+    </svg></ProjectCopy>
   );
 }
 
@@ -462,33 +466,33 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
   const [frameIndex, setFrameIndex] = useState(0);
   const activeModel = VISION_MODELS[model];
   const primaryMetric = benchmark === "pose" ? activeModel.poseAccuracy : activeModel.depthRmse;
-  const primaryLabel = benchmark === "pose" ? "POSE ACCURACY" : "DEPTH RMSE";
+  const primaryLabel = benchmark === "pose" ? "Pose accuracy" : "Depth RMSE";
 
   return (
-    <ProjectTranslationBoundary locale={locale}>
+    <ProjectCopy copy={scientificCopy} locale={locale}><ProjectTranslationBoundary locale={locale}>
     <DemoWindow
-      appName="MicroVision Archive"
+      appName="MicroVision Lab"
       title="Microrobot Pose & Depth Bench"
-      status="SANITISED BENCHMARK"
-      purpose="Show how pose classification and depth estimation were evaluated while keeping source microscopy frames private."
-      tryThis="Switch task and model, then move through the sanitised benchmark frames."
+      status="Model comparison"
+      purpose="Compare how five image models estimate a microrobot’s orientation and depth."
+      tryThis="Switch task and model, then move through the illustrative views to inspect the type of prediction."
       watchFor="The metric, error treatment and output overlay change by task; the images are illustrative and no model runs in the browser."
       statusTone="safe"
       className={styles.scientificWindow}
       footer={
         <>
-          <span>2,002 source frames · 40 observed pose classes</span>
-          <span>Illustrative browser view · no source images shipped</span>
+          <span>2,002 microscopy frames · 40 orientation classes</span>
+          <span>Illustrative comparison · recorded images in the microscopy tab</span>
         </>
       }
     >
       <EvidenceNote tone="amber" icon="!" title="Important split limitation">
-        The reported 100% final-run result came from a random split where adjacent frames could cross partitions, and the test loader was reused to monitor and select the best epoch. It is not an untouched held-out estimate or evidence of generalisation to new robots, recordings, or microscope setups.
+        Related frames may appear in both training and testing, and the final run used test performance to select its training epoch. New recordings and microscope setups are still needed to check generalisation.
       </EvidenceNote>
 
       <div className={styles.visionControls}>
         <label>
-          <span>MODEL</span>
+          <span>Model</span>
           <ClassicSelect value={model} onChange={(event) => setModel(event.target.value as VisionModelId)}>
             {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => (
               <option value={id} key={id}>{item.name}</option>
@@ -496,14 +500,14 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
           </ClassicSelect>
         </label>
         <fieldset>
-          <legend>BENCHMARK</legend>
+          <legend>Benchmark</legend>
           <div className={styles.binaryToggle}>
             <button type="button" aria-pressed={benchmark === "pose"} className={benchmark === "pose" ? styles.toggleActive : ""} onClick={() => setBenchmark("pose")}>Pose classification</button>
             <button type="button" aria-pressed={benchmark === "depth"} className={benchmark === "depth" ? styles.toggleActive : ""} onClick={() => setBenchmark("depth")}>Depth regression</button>
           </div>
         </fieldset>
         <label>
-          <span>SAFE SAMPLE</span>
+          <span>Illustrative sample</span>
           <ClassicSelect value={frameIndex} onChange={(event) => setFrameIndex(Number(event.target.value))}>
             {MICRO_FRAMES.map((frame, index) => <option value={index} key={frame.id}>{frame.label}</option>)}
           </ClassicSelect>
@@ -514,25 +518,25 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
         <section className={styles.visionViewer}>
           <div className={styles.viewerHeader}>
             <TabStrip label="Microrobot analysis view" options={VISION_VIEW_TABS} value={view} onChange={setView} />
-            <span>ROBOT 8 / {MICRO_FRAMES[frameIndex].label.toUpperCase()}</span>
+            <span>Robot 8 / {MICRO_FRAMES[frameIndex].label}</span>
           </div>
           <MicrorobotScene view={view} frameIndex={frameIndex} />
           <div className={styles.viewerReadout} aria-live="polite">
             {view === "pose" && (
-              <><span>POSE LABEL</span><strong>Pitch {MICRO_FRAMES[frameIndex].pitch} · Roll {MICRO_FRAMES[frameIndex].roll}</strong><small>Illustrative class overlay</small></>
+              <><span>Pose label</span><strong>Pitch {MICRO_FRAMES[frameIndex].pitch} · Roll {MICRO_FRAMES[frameIndex].roll}</strong><small>Illustrative class overlay</small></>
             )}
             {view === "depth" && (
-              <><span>NORMALISED DEPTH</span><strong>{MICRO_FRAMES[frameIndex].depth}</strong><small>Illustrative depth overlay</small></>
+              <><span>Normalised depth</span><strong>{MICRO_FRAMES[frameIndex].depth}</strong><small>Illustrative depth overlay</small></>
             )}
             {view === "attention" && (
-              <><span>INTERPRETABILITY VIEW</span><strong>Body contours + edge fringes</strong><small>Grad-CAM-style illustration—not a computed activation map</small></>
+              <><span>Interpretability view</span><strong>Body contours + edge fringes</strong><small>Grad-CAM-style illustration—not a computed activation map</small></>
             )}
           </div>
         </section>
 
         <aside className={styles.benchmarkPanel} aria-live="polite">
           <div className={styles.benchmarkHeading}>
-            <span>SAVED MODEL CARD</span>
+            <span>Model results</span>
             <strong>{activeModel.name}</strong>
           </div>
           <div className={styles.benchmarkPrimary}>
@@ -546,19 +550,13 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
             <div><dt>Parameters</dt><dd>{activeModel.parameters}</dd></div>
             <div><dt>Initialisation</dt><dd>{activeModel.pretraining}</dd></div>
           </dl>
-          {model === "resnet34" && (
-            <div className={styles.hundredCallout}>
-              <span>SEPARATE FINAL RUN</span>
-              <strong>100%*</strong>
-              <p>*Adjacent-frame random split plus test-monitored epoch selection; not an untouched estimate or external-sequence generalisation claim.</p>
-            </div>
-          )}
+          {model === "resnet34" && <p className={styles.hundredCallout}>The five-model comparison is shown here. A later final run reused test results for model selection, so it does not establish performance on new recordings.</p>}
         </aside>
       </div>
 
       <section className={styles.modelMatrix} aria-label="Five-model benchmark comparison">
         <div className={styles.matrixHeader}>
-          <span>ARCHITECTURE</span><span>POSE</span><span>DEPTH RMSE</span><span>PARAMS</span>
+          <span>Architecture</span><span>Pose</span><span>Depth RMSE</span><span>Params</span>
         </div>
         {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => (
           <button type="button" aria-pressed={model === id} className={model === id ? styles.matrixActive : ""} key={id} onClick={() => setModel(id)}>
@@ -567,7 +565,7 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
         ))}
       </section>
     </DemoWindow>
-    </ProjectTranslationBoundary>
+    </ProjectTranslationBoundary></ProjectCopy>
   );
 }
 
@@ -609,37 +607,37 @@ const CONFORMAL_RUNS = [
 
 function ReliabilityChart({ view }: { view: CalibrationView }) {
   const points = RELIABILITY_POINTS[view];
-  const x = (value: number) => 38 + value * 238;
+  const x = (value: number) => 68 + value * 238;
   const y = (value: number) => 168 - value * 142;
   const polyline = points.map((point) => `${x(point.confidence)},${y(point.observed)}`).join(" ");
 
   return (
-    <svg
+    <ProjectCopy copy={scientificCopy}><svg
       className={styles.reliabilityChart}
-      viewBox="0 0 310 205"
+      viewBox="0 0 342 215"
       role="img"
       aria-label={`Fifteen-bin reliability diagram ${view} temperature scaling`}
     >
-      <rect x="38" y="26" width="238" height="142" className={styles.chartPaper} />
+      <rect x="68" y="26" width="238" height="142" className={styles.chartPaper} />
       {[0, 0.25, 0.5, 0.75, 1].map((tick) => (
         <g key={tick} className={styles.chartGrid}>
-          <path d={`M${x(tick)} 26V168M38 ${y(tick)}H276`} />
+          <path d={`M${x(tick)} 26V168M68 ${y(tick)}H306`} />
           <text x={x(tick)} y="183" textAnchor="middle">{tick.toFixed(tick === 0 || tick === 1 ? 0 : 2)}</text>
-          <text x="31" y={y(tick) + 3} textAnchor="end">{tick.toFixed(tick === 0 || tick === 1 ? 0 : 2)}</text>
+          <text x="61" y={y(tick) + 3} textAnchor="end">{tick.toFixed(tick === 0 || tick === 1 ? 0 : 2)}</text>
         </g>
       ))}
-      <path d="M38 168 276 26" className={styles.perfectLine} />
+      <path d="M68 168 306 26" className={styles.perfectLine} />
       <polyline points={polyline} className={styles.observedLine} />
       {points.map((point, index) => (
         <circle cx={x(point.confidence)} cy={y(point.observed)} r="3.4" key={index} className={styles.observedPoint} />
       ))}
-      <text x="157" y="201" textAnchor="middle" className={styles.axisLabel}>MEAN CONFIDENCE</text>
-      <text transform="translate(10 102) rotate(-90)" textAnchor="middle" className={styles.axisLabel}>OBSERVED RATE</text>
+      <text x="187" y="201" textAnchor="middle" className={styles.axisLabel}>Mean confidence</text>
+      <text transform="translate(14 102) rotate(-90)" textAnchor="middle" className={styles.axisLabel}>Observed rate</text>
       <g className={styles.chartLegend}>
-        <path d="M174 16h22" className={styles.perfectLine} /><text x="201" y="19">ideal</text>
-        <path d="M228 16h22" className={styles.observedLine} /><text x="255" y="19">bins</text>
+        <path d="M164 16h20" className={styles.perfectLine} /><text x="190" y="19">ideal</text>
+        <path d="M248 16h20" className={styles.observedLine} /><text x="274" y="19">bins</text>
       </g>
-    </svg>
+    </svg></ProjectCopy>
   );
 }
 
@@ -652,13 +650,13 @@ export function ReliabilityLabDemo() {
   const widthPercent = 28 + ((conformal.width - 37.85) / (57.39 - 37.85)) * 58;
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={scientificCopy}><DemoWindow
       appName="Reliability Laboratory"
       title="Calibration & Conformal Explorer"
-      status="EXECUTED RESULTS"
+      status="Executed results"
       purpose="Show why a confident scientific model can still be unreliable, and how calibration and conformal sets expose that gap."
-      tryThis="Change the calibration view, confidence level and covariate-shift setting."
-      watchFor="Calibration error, prediction-set size and the coverage warning respond; nominal conformal coverage depends on exchangeability."
+      tryThis="Compare saved calibration results, then move the population in the synthetic coverage experiment."
+      watchFor="The recorded calibration trade-off stays visible. The separate shift experiment recomputes interval membership for forty outcomes."
       statusTone="safe"
       className={styles.scientificWindow}
       footer={
@@ -669,13 +667,13 @@ export function ReliabilityLabDemo() {
       }
     >
       <EvidenceNote tone="green" icon="✓" title="Results preserved with their trade-offs">
-        This port reads fixed outputs from the executed safety coursework. It does not refit the classifier or recompute conformal intervals in the browser. The split-conformal coverage result relies on exchangeability; the source explicitly notes that covariate shift can break that guarantee.
+        The calibration panels read fixed results from the executed safety coursework. The separate synthetic shift experiment below recomputes interval membership in the browser. Split-conformal coverage relies on exchangeable calibration and test observations; population changes can reduce that coverage.
       </EvidenceNote>
 
       <div className={styles.reliabilityLayout}>
         <section className={styles.calibrationPanel}>
           <div className={styles.panelTitlebar}>
-            <div><span>PROBABILITY QUALITY</span><strong>Reliability diagram</strong></div>
+            <div><span>Probability quality</span><strong>Reliability diagram</strong></div>
             <TabStrip
               label="Temperature scaling state"
               options={[{ id: "before", label: "Before" }, { id: "after", label: "After" }] as const}
@@ -691,7 +689,7 @@ export function ReliabilityLabDemo() {
                 <small>{calibrationView === "after" ? "improved ↓" : "baseline"}</small>
               </article>
               <article>
-                <span>BRIER</span><strong>{calibration.brier}</strong>
+                <span>Brier</span><strong>{calibration.brier}</strong>
                 <small>{calibrationView === "after" ? "improved slightly ↓" : "baseline"}</small>
               </article>
               <article className={calibrationView === "after" ? styles.metricCaution : ""}>
@@ -708,8 +706,8 @@ export function ReliabilityLabDemo() {
 
         <section className={styles.conformalPanel}>
           <div className={styles.panelTitlebar}>
-            <div><span>UNCERTAINTY SETS</span><strong>Coverage vs. width</strong></div>
-            <span className={styles.splitBadge}>SPLIT CONFORMAL</span>
+            <div><span>Uncertainty sets</span><strong>Coverage vs. width</strong></div>
+            <span className={styles.splitBadge}>Split conformal</span>
           </div>
 
           <div className={styles.coverageControl}>
@@ -732,12 +730,12 @@ export function ReliabilityLabDemo() {
 
           <div className={styles.coverageReadout} aria-live="polite">
             <article>
-              <span>EMPIRICAL COVERAGE</span>
+              <span>Empirical coverage</span>
               <strong>{conformal.empirical.toFixed(2)}%</strong>
               <small>{(conformal.empirical - conformal.target) >= 0 ? "+" : ""}{(conformal.empirical - conformal.target).toFixed(2)} pp vs target</small>
             </article>
             <article>
-              <span>AVERAGE WIDTH</span>
+              <span>Average width</span>
               <strong>{conformal.width.toFixed(2)}</strong>
               <small>full interval width</small>
             </article>
@@ -769,6 +767,7 @@ export function ReliabilityLabDemo() {
           <p className={styles.alphaReadout}>α = {conformal.alpha.toFixed(2)} · test-set empirical estimate</p>
         </section>
       </div>
-    </DemoWindow>
+    <CoverageShiftExperiment />
+    </DemoWindow></ProjectCopy>
   );
 }

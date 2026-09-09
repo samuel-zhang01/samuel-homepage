@@ -84,6 +84,10 @@ next-env.d.ts
 # Generated from the pinned pdfjs-dist dependency for native browser loading.
 /public/_vendor/pdfjs/
 
+# Generated from the pinned KaTeX dependency; WOFF2-only local font assets.
+/public/_vendor/katex/
+/src/components/projects/katex.generated.css
+
 # Build-time public-copy indexes; regenerated for development and deployment.
 /public/search/project-text-en-gb.json
 /public/search/project-text-en-us.json

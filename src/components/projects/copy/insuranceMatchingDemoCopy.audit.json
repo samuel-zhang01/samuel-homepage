@@ -1,0 +1,8 @@
+{
+  "dictionary": "insuranceMatchingDemoCopy.ts",
+  "exportName": "insuranceMatchingDemoCopy",
+  "sources": [
+    "src/components/projects/InsuranceMatchingDemo.tsx"
+  ],
+  "identities": {}
+}

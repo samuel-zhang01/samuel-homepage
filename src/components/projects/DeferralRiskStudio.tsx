@@ -1,5 +1,10 @@
 "use client";
 
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { deferralRiskStudioCopy } from "./copy/deferralRiskStudioCopy";
+
+import { MathEquation } from "./MathEquation";
+
 import { useMemo, useState, type CSSProperties } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
@@ -376,10 +381,10 @@ export function DeferralRiskStudio() {
   };
 
   return (
-    <DemoWindow
+    <ProjectCopy copy={deferralRiskStudioCopy}><DemoWindow
       appName="SAFE-L2D LAB"
       title="Fraud-risk deferral workbench"
-      status={isReportedSettings ? "PAPER POINT LOADED" : "SYNTHETIC POLICY ACTIVE"}
+      status={isReportedSettings ? "Paper point loaded" : "Synthetic policy active"}
       purpose="Explore when an automated fraud classifier should hand a case to a human instead of forcing a prediction."
       tryThis="Move the score and uncertainty deferral thresholds, then compare system accuracy, retained risk and review volume."
       watchFor="Coverage and tail risk move in opposite directions; every output comes from deterministic fictional claims."
@@ -392,17 +397,10 @@ export function DeferralRiskStudio() {
         </div>
       )}
     >
-      <section className={styles.researchBanner} aria-label="Research and licensing disclosure">
+      <section className={styles.researchBanner} aria-label="Simulation assumptions">
         <div className={styles.researchIcon} aria-hidden="true">§</div>
-        <div>
-          <strong>Fictional research simulator — never adjudicate a real claim with this page.</strong>
-          <p>
-            Records are synthetic and contain no claimant data; the 200-row outcomes are deliberately shaped to expose
-            the reported aggregate arithmetic, not to independently validate it. The repository is publicly available,
-            but the inspected source snapshot has <em>no explicit licence</em>; public visibility does not grant reuse rights.
-          </p>
-        </div>
-        <a href={SOURCE_URL} target="_blank" rel="noreferrer">Inspect source ↗</a>
+        <div><strong>A synthetic test of selective prediction</strong><p>The 200-row test bench illustrates the reported aggregate arithmetic. Its fictional records and investigator model do not independently validate real claim decisions.</p></div>
+        <a href={SOURCE_URL} target="_blank" rel="noreferrer">Read the research ↗</a>
       </section>
 
       <nav className={styles.viewTabs} aria-label="Safe deferral studio views">
@@ -424,7 +422,7 @@ export function DeferralRiskStudio() {
         <section className={styles.policyPanel} aria-labelledby="policy-controls-title">
           <div className={styles.panelHeading}>
             <div>
-              <span>POLICY CONSOLE</span>
+              <span>Policy console</span>
               <h3 id="policy-controls-title">Choose what the classifier may decide</h3>
             </div>
             <MacButton type="button" onClick={reset}>Restore paper point</MacButton>
@@ -487,7 +485,7 @@ export function DeferralRiskStudio() {
                 value={lambda}
                 onChange={(event) => setLambda(Number(event.target.value))}
               />
-              <small>Current-policy score = system accuracy − λ · CVaR; this control does not optimise a threshold.</small>
+              <small><MathEquation tex={String.raw`\begin{aligned}&\text{current-policy score}\\&=\text{system accuracy}-\lambda\,\mathrm{CVaR}\end{aligned}`} />This control does not optimise a threshold.</small>
             </label>
             <fieldset className={styles.deltaSwitch}>
               <legend>Worst-tail share δ</legend>
@@ -509,11 +507,7 @@ export function DeferralRiskStudio() {
           </div>
 
           <div className={styles.ruleReadout} aria-live="polite">
-            <code>
-              defer = {mode !== "confidence" ? `H(π) > ${entropyThreshold.toFixed(2)}` : "entropy off"}
-              {mode === "combined" ? " OR " : " · "}
-              {mode !== "entropy" ? `confidence < ${confidenceThreshold.toFixed(2)}` : "confidence off"}
-            </code>
+            <MathEquation tex={String.raw`\mathrm{defer}\iff ${mode === "confidence" ? String.raw`\mathrm{confidence}<${confidenceThreshold.toFixed(2)}` : mode === "entropy" ? String.raw`H(\pi)>${entropyThreshold.toFixed(2)}` : String.raw`H(\pi)>${entropyThreshold.toFixed(2)}\lor\mathrm{confidence}<${confidenceThreshold.toFixed(2)}`}`} />
             <span>
               {evaluation.entropyOnly} entropy hits · {evaluation.confidenceOnly} confidence hits · {evaluation.bothSignals} overlap
             </span>
@@ -544,7 +538,7 @@ export function DeferralRiskStudio() {
           <article className={`${styles.metricCard} ${styles.objectiveCard}`}>
             <span>Current-policy risk score</span>
             <strong>{evaluation.objective.toFixed(3)}</strong>
-            <small>{percent(evaluation.systemAccuracy)} − {lambda.toFixed(1)} × {evaluation.cvar.toFixed(3)}</small>
+            <small><MathEquation tex={String.raw`${(evaluation.systemAccuracy * 100).toFixed(1)}\%-${lambda.toFixed(1)}\times${evaluation.cvar.toFixed(3)}`} /></small>
           </article>
         </section>
 
@@ -574,7 +568,7 @@ export function DeferralRiskStudio() {
         ) : null}
         {view === "method" ? <ResearchNotes /> : null}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 
@@ -605,7 +599,7 @@ function DecisionDesk({
   const selectedDeferred = shouldDefer(selectedClaim, settings);
 
   return (
-    <div className={styles.viewStack}>
+    <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.viewStack}>
       <section className={styles.pipeline} aria-label="Safe L2D decision pipeline">
         <article>
           <span>01</span><strong>KDE evidence</strong><small>Four paper features → likelihood ratios</small>
@@ -627,7 +621,7 @@ function DecisionDesk({
       <div className={styles.decisionGrid}>
         <section className={styles.plotPanel} aria-labelledby="uncertainty-map-title">
           <div className={styles.sectionHeading}>
-            <div><span>TEST SET · N=200</span><h3 id="uncertainty-map-title">Uncertainty decision map</h3></div>
+            <div><span>Test set · n=200</span><h3 id="uncertainty-map-title">Uncertainty decision map</h3></div>
             <div className={styles.legend} aria-hidden="true"><i /> retained <i /> deferred</div>
           </div>
           <UncertaintyMap settings={settings} selectedClaim={selectedClaim} />
@@ -636,9 +630,9 @@ function DecisionDesk({
 
         <section className={styles.claimInspector} aria-labelledby="claim-inspector-title">
           <div className={styles.sectionHeading}>
-            <div><span>SELECTED SYNTHETIC CLAIM</span><h3 id="claim-inspector-title">{selectedClaim.id}</h3></div>
+            <div><span>Selected synthetic claim</span><h3 id="claim-inspector-title">{selectedClaim.id}</h3></div>
             <span className={selectedDeferred ? styles.deferBadge : styles.retainBadge}>
-              {selectedDeferred ? "DEFER TO REVIEW" : "MODEL DECIDES"}
+              {selectedDeferred ? "Defer to review" : "Model decides"}
             </span>
           </div>
           <dl className={styles.claimFacts}>
@@ -680,7 +674,7 @@ function DecisionDesk({
 
       <section className={styles.queuePanel} aria-labelledby="review-queue-title">
         <div className={styles.sectionHeading}>
-          <div><span>OR-GATE PRIORITY</span><h3 id="review-queue-title">Synthetic claim queue</h3></div>
+          <div><span>Or-gate priority</span><h3 id="review-queue-title">Synthetic claim queue</h3></div>
           <span>{evaluation.deferredCount} routed to review</span>
         </div>
         <div className={styles.tableScroll} tabIndex={0} aria-label="Scrollable synthetic claim queue">
@@ -707,7 +701,7 @@ function DecisionDesk({
           </table>
         </div>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -723,7 +717,7 @@ function UncertaintyMap({ settings, selectedClaim }: { settings: PolicySettings;
   const deferredCount = TEST_CLAIMS.filter((claim) => shouldDefer(claim, settings)).length;
 
   return (
-    <svg
+    <ProjectCopy copy={deferralRiskStudioCopy}><svg
       className={styles.uncertaintyMap}
       viewBox={`0 0 ${width} ${height}`}
       role="img"
@@ -761,7 +755,7 @@ function UncertaintyMap({ settings, selectedClaim }: { settings: PolicySettings;
       ))}
       <text x={left + plotWidth / 2} y={height - 7} textAnchor="middle" className={styles.axisLabel}>Bayesian posterior entropy H(π), bits</text>
       <text transform={`translate(13 ${top + plotHeight / 2}) rotate(-90)`} textAnchor="middle" className={styles.axisLabel}>Calibrated classifier confidence</text>
-    </svg>
+    </svg></ProjectCopy>
   );
 }
 
@@ -777,11 +771,11 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
   const path = curve.map((point, index) => `${index ? "L" : "M"} ${x(point.coverage).toFixed(1)} ${y(point.accuracy).toFixed(1)}`).join(" ");
 
   return (
-    <div className={styles.viewStack}>
+    <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.viewStack}>
       <div className={styles.tradeoffGrid}>
         <section className={styles.plotPanel} aria-labelledby="coverage-chart-title">
           <div className={styles.sectionHeading}>
-            <div><span>THRESHOLD SWEEP · FICTIONAL TEST BENCH</span><h3 id="coverage-chart-title">Coverage versus system accuracy</h3></div>
+            <div><span>Threshold sweep · fictional test bench</span><h3 id="coverage-chart-title">Coverage versus system accuracy</h3></div>
             <span>{policyLabel(settings.mode)}</span>
           </div>
           <svg
@@ -819,7 +813,7 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
         </section>
 
         <aside className={styles.benchmarkPanel} aria-label="Reported benchmark results">
-          <div className={styles.sectionHeading}><div><span>FIXED REPORTED RESULTS</span><h3>Results reported by the small study</h3></div></div>
+          <div className={styles.sectionHeading}><div><span>Fixed reported results</span><h3>Results reported by the small study</h3></div></div>
           <article className={styles.benchmarkHero}>
             <span>Safe-L2D-Fraud</span>
             <strong>89.5%</strong>
@@ -838,7 +832,7 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
       </div>
 
       <section className={styles.policyComparison} aria-labelledby="policy-comparison-title">
-        <div className={styles.sectionHeading}><div><span>SAME 200 FICTIONAL OUTCOMES</span><h3 id="policy-comparison-title">Policy comparison at paper thresholds</h3></div></div>
+        <div className={styles.sectionHeading}><div><span>Same 200 fictional outcomes</span><h3 id="policy-comparison-title">Policy comparison at paper thresholds</h3></div></div>
         <div className={styles.comparisonCards}>
           {([
             { mode: "combined", label: "Combined OR", detail: "H(π) > .90 OR confidence < .65" },
@@ -862,7 +856,7 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
           })}
         </div>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -877,7 +871,7 @@ function TailLedger({
 }) {
   const tailErrors = evaluation.tail.filter((claim) => !claim.modelCorrect).length;
   return (
-    <div className={styles.viewStack}>
+    <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.viewStack}>
       <div className={styles.tailGrid}>
         <section className={styles.tailPanel} aria-labelledby="tail-risk-title">
           <div className={styles.sectionHeading}>
@@ -885,11 +879,11 @@ function TailLedger({
             <span>{tailErrors} errors / {evaluation.tailCount} rows</span>
           </div>
           <div className={styles.tailFormula}>
-            <div><span>Sort retained losses</span><code>ℓ(1) ≥ ℓ(2) ≥ … ≥ ℓ(Nᵣ)</code></div>
+            <div><span>Sort retained losses</span><MathEquation tex={String.raw`\ell_{(1)}\ge\ell_{(2)}\ge\cdots\ge\ell_{(N_r)}`} /></div>
             <b aria-hidden="true">→</b>
-            <div><span>Take k = ceil(δ · Nᵣ)</span><code>ceil({settings.delta.toFixed(2)} × {evaluation.retainedCount}) = {evaluation.tailCount}</code></div>
+            <div><span>Take <MathEquation display={false} tex={String.raw`k=\lceil\delta N_r\rceil`} /></span><MathEquation tex={String.raw`\left\lceil ${settings.delta.toFixed(2)}\times ${evaluation.retainedCount}\right\rceil=${evaluation.tailCount}`} /></div>
             <b aria-hidden="true">→</b>
-            <div><span>Average the tail</span><code>{tailErrors} / {evaluation.tailCount || 1} = {evaluation.cvar.toFixed(3)}</code></div>
+            <div><span>Average the tail</span><MathEquation tex={String.raw`\frac{${tailErrors}}{${evaluation.tailCount || 1}}=${evaluation.cvar.toFixed(3)}`} /></div>
           </div>
           <div className={styles.lossRail} role="img" aria-label={`${evaluation.tailCount} claims are in the tail, containing ${tailErrors} classifier errors.`}>
             {Array.from({ length: Math.min(evaluation.retainedCount, 64) }, (_, index) => {
@@ -902,10 +896,10 @@ function TailLedger({
         </section>
 
         <aside className={styles.objectivePanel} aria-labelledby="deferral-objective-title">
-          <div className={styles.sectionHeading}><div><span>RISK-SENSITIVE SCORE</span><h3 id="deferral-objective-title">Current threshold score</h3></div></div>
+          <div className={styles.sectionHeading}><div><span>Risk-sensitive score</span><h3 id="deferral-objective-title">Current threshold score</h3></div></div>
           <div className={styles.objectiveEquation}>
             <strong>{evaluation.objective.toFixed(3)}</strong>
-            <code>{evaluation.systemAccuracy.toFixed(3)} − {settings.lambda.toFixed(1)} × {evaluation.cvar.toFixed(3)}</code>
+            <MathEquation tex={String.raw`${evaluation.systemAccuracy.toFixed(3)}-${settings.lambda.toFixed(1)}\times ${evaluation.cvar.toFixed(3)}`} />
           </div>
           <dl>
             <div><dt>Accuracy reward</dt><dd>{evaluation.systemAccuracy.toFixed(3)}</dd></div>
@@ -921,7 +915,7 @@ function TailLedger({
 
       <section className={styles.queuePanel} aria-labelledby="tail-ledger-title">
         <div className={styles.sectionHeading}>
-          <div><span>AUDITABLE SORT ORDER</span><h3 id="tail-ledger-title">Claims contributing to empirical CVaR</h3></div>
+          <div><span>Auditable sort order</span><h3 id="tail-ledger-title">Claims contributing to empirical CVaR</h3></div>
           <span>Click a claim to inspect its Bayes trace</span>
         </div>
         <div className={styles.tableScroll} tabIndex={0} aria-label="Scrollable CVaR tail ledger">
@@ -948,18 +942,18 @@ function TailLedger({
       <section className={styles.significancePanel}>
         <div><span>SAFE-L2D</span><strong>0.923</strong><small>reported CVaR₀.₁</small></div>
         <i aria-hidden="true">Δ 0.015</i>
-        <div><span>CONFIDENCE BASELINE</span><strong>0.938</strong><small>reported CVaR₀.₁</small></div>
-        <p><strong>Directional, not significant.</strong> At 64% coverage, ceil(0.10 × 128) = 13 claims determine the entire Safe-L2D tail estimate.</p>
+        <div><span>Confidence baseline</span><strong>0.938</strong><small>reported CVaR₀.₁</small></div>
+        <p><strong>Directional, not significant.</strong> At 64% coverage, <MathEquation display={false} tex={String.raw`\lceil0.10\times128\rceil=13`} /> claims determine the entire Safe-L2D tail estimate.</p>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function ResearchNotes() {
   return (
-    <div className={styles.viewStack}>
+    <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.viewStack}>
       <section className={styles.provenancePanel}>
-        <div className={styles.sectionHeading}><div><span>SOURCE FIDELITY</span><h3>What this exhibit reproduces—and what it does not</h3></div></div>
+        <div className={styles.sectionHeading}><div><span>Source fidelity</span><h3>What this exhibit reproduces—and what it does not</h3></div></div>
         <div className={styles.provenanceGrid}>
           <article><span>Benchmark shape</span><strong>{CORPUS_SIZE.toLocaleString("en-GB")} claims / {TEST_SIZE} test</strong><p>{SYNTHETIC_FRAUD_COUNT} of {CORPUS_SIZE} fictional labels are fraud: exactly 24.7%. The paper warns that this prevalence is inflated relative to production.</p></article>
           <article><span>Investigator model</span><strong>85% base accuracy</strong><p>The source uses a seeded synthetic expert with a slight bonus on high-entropy claims. It does not measure a real investigation team.</p></article>
@@ -970,7 +964,7 @@ function ResearchNotes() {
 
       <section className={styles.methodColumns}>
         <article>
-          <span className={styles.kicker}>SOURCE PIPELINE</span>
+          <span className={styles.kicker}>Source pipeline</span>
           <h3>Two-stage selective prediction</h3>
           <ol>
             <li><b>Train.</b> Fit XGBoost, then calibrate class probabilities with 3-fold isotonic regression.</li>
@@ -979,13 +973,13 @@ function ResearchNotes() {
             <li><b>Score.</b> Inspect a selected τ and subtract λ times empirical CVaR on non-deferred 0–1 losses; this browser control does not choose an optimum.</li>
           </ol>
           <div className={styles.formulaCard}>
-            <code>H(π) = −π log₂π − (1−π) log₂(1−π)</code>
-            <code>r(x) = 𝟙[H(π)&gt;τ] ∨ 𝟙[max σ(g(x))&lt;κ]</code>
-            <code>J(τ) = Acc_system − λ · CVaRδ(retained loss)</code>
+            <MathEquation tex={String.raw`H(\pi)=-\pi\log_2\pi-(1-\pi)\log_2(1-\pi)`} />
+            <MathEquation tex={String.raw`r(x)=\mathbb{1}[H(\pi)>\tau]\lor\mathbb{1}[\max\sigma(g(x))<\kappa]`} />
+            <MathEquation tex={String.raw`J(\tau)=\mathrm{Acc}_{\mathrm{system}}-\lambda\,\mathrm{CVaR}_{\delta}(\text{retained loss})`} />
           </div>
         </article>
         <article>
-          <span className={styles.kicker}>INTERPRETATION GUARDRAILS</span>
+          <span className={styles.kicker}>Interpretation guardrails</span>
           <h3>Why this is not deployment evidence</h3>
           <ul>
             <li>The 200-claim test set has only about 49 fraud cases; confidence intervals are wide and overlap.</li>
@@ -1001,21 +995,17 @@ function ResearchNotes() {
       <section className={styles.opePanel}>
         <div className={styles.opeBadge} aria-hidden="true">OPE</div>
         <div>
-          <span className={styles.kicker}>OFF-POLICY EVALUATION</span>
+          <span className={styles.kicker}>Off-policy evaluation</span>
           <h3>Methodological illustration, not counterfactual proof</h3>
           <p>The repository computes Direct Method, SNIPS with importance weights clipped at 10, and Doubly Robust estimates, but it has no historical investigator decisions. Its behaviour policy is simulated with logistic regression, while the reward model and behaviour policy are learned from the same data. That circularity violates the known-behaviour-policy premise, so the ranking must not be read as real-world policy value.</p>
         </div>
       </section>
 
       <section className={styles.licencePanel}>
-        <div>
-          <span className={styles.kicker}>PUBLIC SOURCE · RIGHTS RESERVED BY DEFAULT</span>
-          <h3>No explicit licence found in the inspected repository snapshot</h3>
-          <p>You may inspect the paper, Python modules, notebook and generated figures on GitHub. Public access alone is not an open-source licence. This exhibit therefore paraphrases the method and independently renders fictional data; it does not redistribute the paper PDF, dataset, figures or trained artefacts.</p>
-        </div>
+        <div><h3>Research reference</h3><p>Inspect the paper and methods for the original study design, reported results and discussion.</p></div>
         <a href={SOURCE_URL} target="_blank" rel="noreferrer">Open IX-Safety-Latex ↗</a>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 

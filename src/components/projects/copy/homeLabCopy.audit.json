@@ -1,0 +1,21 @@
+{
+  "dictionary": "homeLabCopy.ts",
+  "exportName": "homeLabCopy",
+  "sources": [
+    "src/components/projects/HomeLabTopologyStudio.tsx"
+  ],
+  "identities": {
+    "Nginx Proxy Manager": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "Portainer CE": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "Portainer": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "Fail2ban": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "Guacamole": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "PostgreSQL": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "Ofelia": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "depends_on": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "pg_dump": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "psql + pg_restore": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "GiB": "Established software name, configuration key, command or standard storage unit, preserved across locales.",
+    "{0} GiB": "Established software name, configuration key, command or standard storage unit, preserved across locales."
+  }
+}

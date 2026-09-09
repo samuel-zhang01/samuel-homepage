@@ -66,6 +66,13 @@ function flatten(value, prefix = "", result = {}) {
   return result;
 }
 
+const desktopCopyPath = resolve(projectRoot, "src/components/desktopCopy.ts");
+const { desktopCopy } = await compileModule(await readFile(desktopCopyPath, "utf8"), desktopCopyPath);
+const desktopCopyErrors = [];
+for (const [source, values] of Object.entries(desktopCopy)) {
+  if (!Array.isArray(values) || values.length !== 2 || values.some(value => typeof value !== "string" || !value.trim())) desktopCopyErrors.push(`Incomplete desktop translation: ${source}`);
+  else if (source !== "Proxmox + Docker" && values.some(value => value === source)) desktopCopyErrors.push(`Untranslated desktop prose: ${source}`);
+}
 const archiveModule = await compileModule(archiveI18nSource, archiveI18nPath);
 const coreModule = await compileModule(i18nSource, i18nPath);
 const orbitalI18nPath = resolve(projectRoot, "src/components/orbitalI18n.ts");
@@ -722,7 +729,7 @@ for (const [key, value] of Object.entries(archiveCopies["zh-TW"])) {
 }
 
 const missingCoreKeys = [...visibleStrings]
-  .filter(([value]) => !zhKeys.has(value))
+  .filter(([value, location]) => !zhKeys.has(value) && !(location.path === systemPath && value in desktopCopy))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 for (const [key, value] of Object.entries(orbitalModule.orbitalCopies["zh-TW"])) {
   const residual = findTraditionalResidue(value);
@@ -731,11 +738,14 @@ for (const [key, value] of Object.entries(orbitalModule.orbitalCopies["zh-TW"]))
 const missingSideQuestKeys = [...sideQuestSourceStrings]
   .filter(([value]) => !sideQuestZhKeys.has(value))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
+const projectNarrativePath = resolve(projectRoot, "src/components/projects/copy/projectNarrativeCopy.ts");
+const { projectNarrativeCopy } = await compileModule(await readFile(projectNarrativePath, "utf8"), projectNarrativePath);
 const missingProjectKeys = [...projectTranslationSources]
-  .filter(([value]) => !zhKeys.has(value))
+  .filter(([value]) => !zhKeys.has(value) && !projectNarrativeCopy[value]?.every(translation => typeof translation === "string" && translation.trim()))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 
 const errors = [
+  ...desktopCopyErrors,
   ...orbitalErrors,
   ...archiveErrors,
   ...regionalisationErrors,

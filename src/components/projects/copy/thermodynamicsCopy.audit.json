@@ -1,0 +1,20 @@
+{
+  "dictionary": "thermodynamicsCopy.ts",
+  "exportName": "thermodynamicsCopy",
+  "sources": [
+    "src/components/projects/ThermodynamicsStudio.tsx"
+  ],
+  "identities": {
+    "MPa": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "p = ρRTZ": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "Aʳᵉˢ / (nRT)": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "dA = {0} Å": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "dB = {0} Å": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "σAB = {0} Å": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "εAB/kB = {0} K": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "εAB/kB = √({0} × {1}) × (1 − {2}) = {3} K": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "ρ / mol m⁻³": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "p / MPa": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "dᵢ = σᵢ [1 − 0.12 exp(−3εᵢ/T)]": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages."
+  }
+}

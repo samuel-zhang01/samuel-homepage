@@ -1,0 +1,14 @@
+{
+  "dictionary": "portfolioCopy.ts",
+  "exportName": "portfolioCopy",
+  "sources": [
+    "src/components/projects/PortfolioMap.tsx"
+  ],
+  "identities": {
+    "ArrowLeft": "Keyboard identifier retained as the exact key used for navigation.",
+    "ArrowRight": "Keyboard identifier retained as the exact key used for navigation.",
+    "Home": "Keyboard identifier retained as the exact key used for navigation.",
+    "End": "Keyboard identifier retained as the exact key used for navigation.",
+    "markdown": "The Markdown document format keeps its official name in both locales."
+  }
+}

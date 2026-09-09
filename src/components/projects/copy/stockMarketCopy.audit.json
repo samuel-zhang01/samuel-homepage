@@ -1,0 +1,8 @@
+{
+  "dictionary": "stockMarketCopy.ts",
+  "exportName": "stockMarketCopy",
+  "sources": [
+    "src/components/projects/StockMarketStudio.tsx"
+  ],
+  "identities": {}
+}

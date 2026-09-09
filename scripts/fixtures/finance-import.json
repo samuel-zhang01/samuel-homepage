@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "fixtureKind": "invented-inputs-with-isolated-original-Python-outputs",
+  "auditedAt": "2026-09-09",
+  "sourceRevision": {
+    "kind": "non-git-source-directory",
+    "files": [
+      {
+        "path": "backend/app/ingest.py",
+        "sha256": "8d010ce1a81d0d9033f121cf0b5e5cbf6924f8f0f2013edee5e743031fcbb39a"
+      },
+      {
+        "path": "backend/app/parsers/base.py",
+        "sha256": "fd527a99f1a3cf9430dae3b0fbf6ef82e3becb2e76c3107ca6916e63cd130c1c"
+      },
+      {
+        "path": "backend/app/db.py",
+        "sha256": "392b993294d7d9c1b10839ca405524c4d663417b4dd99be120fd1d892325d1bb"
+      }
+    ]
+  },
+  "keyContract": {
+    "hash": "SHA-1 of UTF-8 input, first 20 lowercase hex characters",
+    "providerInput": "accountId|id|providerId",
+    "contentInput": "accountId|dateISO-or-Python-None|amount-formatted-.2f|exact-description|occurrence",
+    "occurrence": "zero-based index within each parsed statement, grouping by date, Python round(amount, 2) and exact description"
+  },
+  "execution": "Only selected original functions and original SQLite schema executed; each sequence starts in a new :memory: database. No original data/database/parser/network access.",
+  "scenarios": [
+    {
+      "id": "occurrence-overlap",
+      "title": "Repeated charges and overlapping statements",
+      "initialLedger": [],
+      "steps": [
+        {
+          "sourceFile": "synthetic/first.pdf",
+          "statement": {
+            "bank": "Fictional bank",
+            "accountType": "debit",
+            "accountId": "fictional-A",
+            "periodStart": "2026-01-01",
+            "periodEnd": "2026-12-31",
+            "openingBalance": 100.0,
+            "closingBalance": 75.0,
+            "transactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              }
+            ]
+          },
+          "expected": {
+            "parsedRows": 2,
+            "newRows": 2,
+            "duplicateRows": 0,
+            "reconciled": true,
+            "ledgerRows": 2,
+            "ledgerMovement": -25.0,
+            "storedTransactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "dedupeKey": "55b8e034e0b9e48cf9fe"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "dedupeKey": "93f65c85bb3520cf55c8"
+              }
+            ],
+            "storedStatementFlags": [
+              1
+            ]
+          }
+        },
+        {
+          "sourceFile": "synthetic/replay.pdf",
+          "statement": {
+            "bank": "Fictional bank",
+            "accountType": "debit",
+            "accountId": "fictional-A",
+            "periodStart": "2026-01-01",
+            "periodEnd": "2026-12-31",
+            "openingBalance": 100.0,
+            "closingBalance": 75.0,
+            "transactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              }
+            ]
+          },
+          "expected": {
+            "parsedRows": 2,
+            "newRows": 0,
+            "duplicateRows": 2,
+            "reconciled": true,
+            "ledgerRows": 2,
+            "ledgerMovement": -25.0,
+            "storedTransactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "dedupeKey": "55b8e034e0b9e48cf9fe"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "dedupeKey": "93f65c85bb3520cf55c8"
+              }
+            ],
+            "storedStatementFlags": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "sourceFile": "synthetic/expanded.pdf",
+          "statement": {
+            "bank": "Fictional bank",
+            "accountType": "debit",
+            "accountId": "fictional-A",
+            "periodStart": "2026-01-01",
+            "periodEnd": "2026-12-31",
+            "openingBalance": 100.0,
+            "closingBalance": 62.5,
+            "transactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              }
+            ]
+          },
+          "expected": {
+            "parsedRows": 3,
+            "newRows": 1,
+            "duplicateRows": 2,
+            "reconciled": true,
+            "ledgerRows": 3,
+            "ledgerMovement": -37.5,
+            "storedTransactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "dedupeKey": "55b8e034e0b9e48cf9fe"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "dedupeKey": "93f65c85bb3520cf55c8"
+              },
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -12.5,
+                "dedupeKey": "a1d4529618cbadc92441"
+              }
+            ],
+            "storedStatementFlags": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "provider-collision",
+      "title": "Existing provider ID with changed amount",
+      "initialLedger": [],
+      "steps": [
+        {
+          "sourceFile": "synthetic/provider-first.csv",
+          "statement": {
+            "bank": "Fictional bank",
+            "accountType": "debit",
+            "accountId": "fictional-A",
+            "periodStart": "2026-01-01",
+            "periodEnd": "2026-12-31",
+            "openingBalance": 100.0,
+            "closingBalance": 60.0,
+            "transactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -40,
+                "providerId": "FIXTURE-ID-1",
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              }
+            ]
+          },
+          "expected": {
+            "parsedRows": 1,
+            "newRows": 1,
+            "duplicateRows": 0,
+            "reconciled": true,
+            "ledgerRows": 1,
+            "ledgerMovement": -40.0,
+            "storedTransactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -40.0,
+                "dedupeKey": "ed8c16d58e7f961fba0e"
+              }
+            ],
+            "storedStatementFlags": [
+              1
+            ]
+          }
+        },
+        {
+          "sourceFile": "synthetic/provider-amended.csv",
+          "statement": {
+            "bank": "Fictional bank",
+            "accountType": "debit",
+            "accountId": "fictional-A",
+            "periodStart": "2026-01-01",
+            "periodEnd": "2026-12-31",
+            "openingBalance": 100.0,
+            "closingBalance": 55.0,
+            "transactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -45,
+                "providerId": "FIXTURE-ID-1",
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              }
+            ]
+          },
+          "expected": {
+            "parsedRows": 1,
+            "newRows": 0,
+            "duplicateRows": 1,
+            "reconciled": true,
+            "ledgerRows": 1,
+            "ledgerMovement": -40.0,
+            "storedTransactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -40.0,
+                "dedupeKey": "ed8c16d58e7f961fba0e"
+              }
+            ],
+            "storedStatementFlags": [
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "reconciliation-failure",
+      "title": "Mismatched closing balance with one transaction",
+      "initialLedger": [],
+      "steps": [
+        {
+          "sourceFile": "synthetic/mismatch.pdf",
+          "statement": {
+            "bank": "Fictional bank",
+            "accountType": "debit",
+            "accountId": "fictional-A",
+            "periodStart": "2026-01-01",
+            "periodEnd": "2026-12-31",
+            "openingBalance": 100.0,
+            "closingBalance": 90,
+            "transactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -20,
+                "providerId": null,
+                "merchant": "Fixture merchant",
+                "category": "Shopping"
+              }
+            ]
+          },
+          "expected": {
+            "parsedRows": 1,
+            "newRows": 1,
+            "duplicateRows": 0,
+            "reconciled": false,
+            "ledgerRows": 1,
+            "ledgerMovement": -20.0,
+            "storedTransactions": [
+              {
+                "date": "2026-06-01",
+                "description": "Fixture merchant",
+                "amount": -20.0,
+                "dedupeKey": "f3de0f6f50a2a5093886"
+              }
+            ],
+            "storedStatementFlags": [
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "empty-mismatch",
+      "title": "Mismatched closing balance with an empty transaction list",
+      "initialLedger": [],
+      "steps": [
+        {
+          "sourceFile": "synthetic/empty.pdf",
+          "statement": {
+            "bank": "Fictional bank",
+            "accountType": "debit",
+            "accountId": "fictional-A",
+            "periodStart": "2026-01-01",
+            "periodEnd": "2026-12-31",
+            "openingBalance": 100,
+            "closingBalance": 90,
+            "transactions": []
+          },
+          "expected": {
+            "parsedRows": 0,
+            "newRows": 0,
+            "duplicateRows": 0,
+            "reconciled": true,
+            "ledgerRows": 0,
+            "ledgerMovement": 0,
+            "storedTransactions": [],
+            "storedStatementFlags": [
+              1
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

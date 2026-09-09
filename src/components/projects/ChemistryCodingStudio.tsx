@@ -1,9 +1,12 @@
 "use client";
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { chemistryCopy } from "./copy/chemistryCopy";
 
 import ClassicSelect from "../ClassicSelect";
 
 import { useId, useMemo, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { DemoWindow } from "./DemoChrome";
+import { MathEquation } from "./MathEquation";
 import styles from "./ChemistryCodingStudio.module.css";
 
 type LabId = "metropolis" | "polymer" | "dynamics" | "quantum" | "audit";
@@ -23,8 +26,8 @@ const labTabs: Array<{ id: LabId; number: string; label: string; short: string }
   { id: "metropolis", number: "01", label: "Metropolis sampler", short: "MC" },
   { id: "polymer", number: "02", label: "Polymer walks", short: "3D" },
   { id: "dynamics", number: "03", label: "Potential + Verlet", short: "VV" },
-  { id: "quantum", number: "04", label: "Quantum ledger", short: "HF" },
-  { id: "audit", number: "05", label: "Evidence trail", short: "LOG" },
+  { id: "quantum", number: "04", label: "Quantum energies", short: "HF" },
+  { id: "audit", number: "05", label: "Methods & development", short: "LOG" },
 ];
 
 const initialParticles: Point2[] = [
@@ -83,30 +86,35 @@ const mdStages = [
     number: "1/2",
     title: "Half velocity",
     formula: "v(t + Δt/2) = λv(t) + ½a(t)Δt",
+    tex: String.raw`v\!\left(t+\frac{\Delta t}{2}\right)=\lambda v(t)+\frac12a(t)\Delta t`,
     note: "Apply the thermostat scale, then advance velocity by half a time step.",
   },
   {
     number: "02",
     title: "Position + PBC",
     formula: "r(t + Δt) = r(t) + v(t + Δt/2)Δt",
+    tex: String.raw`r(t+\Delta t)=r(t)+v\!\left(t+\frac{\Delta t}{2}\right)\Delta t`,
     note: "Move particles and wrap coordinates that cross the periodic box.",
   },
   {
     number: "03",
     title: "Pair forces",
     formula: "a(t + Δt) ← −∇U\u2097\u2c7c",
+    tex: String.raw`a(t+\Delta t)\leftarrow-\nabla U_{\mathrm{LJ}}`,
     note: "Use minimum-image pair separations, the cutoff and the shifted potential.",
   },
   {
     number: "1/2",
     title: "Close velocity",
     formula: "v(t + Δt) = v(t + Δt/2) + ½a(t + Δt)Δt",
+    tex: String.raw`v(t+\Delta t)=v\!\left(t+\frac{\Delta t}{2}\right)+\frac12a(t+\Delta t)\Delta t`,
     note: "Complete velocity Verlet with the newly evaluated acceleration.",
   },
   {
     number: "05",
     title: "Observables",
     formula: "T = 2⟨K⟩/d  ·  P = ρT + W/V",
+    tex: String.raw`T=\frac{2\langle K\rangle}{d},\qquad P=\rho T+\frac{W}{V}`,
     note: "Record reduced temperature, energy and the virial pressure estimate.",
   },
 ] as const;
@@ -191,7 +199,7 @@ function RangeControl({
 }) {
   const id = useId();
   return (
-    <label className={styles.rangeControl} htmlFor={id}>
+    <ProjectCopy copy={chemistryCopy}><label className={styles.rangeControl} htmlFor={id}>
       <span>
         {label}
         <output htmlFor={id}>{output}</output>
@@ -205,17 +213,17 @@ function RangeControl({
         value={value}
         onChange={(event) => onChange(Number(event.currentTarget.value))}
       />
-    </label>
+    </label></ProjectCopy>
   );
 }
 
-function MetricCard({ label, value, detail }: { label: string; value: string; detail: string }) {
+function MetricCard({ label, value, detail }: { label: string; value: ReactNode; detail: ReactNode }) {
   return (
-    <div className={styles.metricCard}>
+    <ProjectCopy copy={chemistryCopy}><div className={styles.metricCard}>
       <span>{label}</span>
       <strong>{value}</strong>
       <small>{detail}</small>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -234,7 +242,7 @@ function MethodDrawer({
   const items: Array<{ id: MethodView; label: string }> = [
     { id: "equation", label: "Equation" },
     { id: "algorithm", label: "Code sketch" },
-    { id: "record", label: "Notebook record" },
+    { id: "record", label: "Interpretation" },
   ];
   function moveMethodTab(event: KeyboardEvent<HTMLButtonElement>) {
     if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
@@ -250,7 +258,7 @@ function MethodDrawer({
     document.getElementById(`${panelId}-${next}`)?.focus();
   }
   return (
-    <section className={styles.methodDrawer} aria-label="Method details">
+    <ProjectCopy copy={chemistryCopy}><section className={styles.methodDrawer} aria-label="Method details">
       <div className={styles.methodTabs} role="tablist" aria-label="Method representation">
         {items.map((item) => (
           <button
@@ -271,7 +279,7 @@ function MethodDrawer({
       <div id={panelId} className={styles.methodPanel} role="tabpanel" aria-labelledby={activeTabId}>
         {view === "equation" ? equation : view === "algorithm" ? algorithm : record}
       </div>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -287,7 +295,7 @@ function LabHeading({
   evidence: string;
 }) {
   return (
-    <header className={styles.labHeading}>
+    <ProjectCopy copy={chemistryCopy}><header className={styles.labHeading}>
       <div>
         <span>{kicker}</span>
         <h3>{title}</h3>
@@ -297,7 +305,7 @@ function LabHeading({
         <span aria-hidden="true" />
         {evidence}
       </div>
-    </header>
+    </header></ProjectCopy>
   );
 }
 
@@ -365,18 +373,18 @@ function MetropolisLab() {
   const chartPath = linePath(history, 460, 130, 14);
 
   return (
-    <div className={styles.lab}>
+    <ProjectCopy copy={chemistryCopy}><div className={styles.lab}>
       <LabHeading
-        kicker="STANDALONE REACT EXTENSION · 25 MAR 2025"
+        kicker="React extension · 25 Mar 2025"
         title="Metropolis molecular sampler"
         description="Move one particle with a symmetric reflected-boundary proposal, evaluate the Lennard–Jones energy change, then let temperature decide whether an uphill proposal survives. Every run is deterministic for its seed."
-        evidence="LIVE REIMPLEMENTATION"
+        evidence="Interactive calculation"
       />
 
       <div className={styles.experimentGrid}>
         <section className={styles.canvasCard} aria-label="Particle configuration">
           <div className={styles.cardToolbar}>
-            <span>CONFIGURATION / 2D REDUCED SPACE</span>
+            <span>Particle configuration · 2D</span>
             <strong>{particles.length} particles</strong>
           </div>
           <svg
@@ -385,17 +393,7 @@ function MetropolisLab() {
             role="img"
             aria-label={`Nine-particle Lennard-Jones configuration after ${step} Monte Carlo moves`}
           >
-            <defs>
-              <radialGradient id="chem-particle-halo">
-                <stop offset="0" stopColor="#60a5fa" stopOpacity="0.28" />
-                <stop offset="1" stopColor="#60a5fa" stopOpacity="0" />
-              </radialGradient>
-              <linearGradient id="chem-chamber" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#101b28" />
-                <stop offset="1" stopColor="#071018" />
-              </linearGradient>
-            </defs>
-            <rect x="18" y="18" width="444" height="274" rx="4" fill="url(#chem-chamber)" />
+            <rect x="18" y="18" width="444" height="274" fill="var(--s7-paper)" stroke="var(--s7-ink)" />
             <g className={styles.chamberGrid} aria-hidden="true">
               {[1, 2, 3, 4, 5].map((index) => (
                 <line key={`v-${index}`} x1={18 + index * 74} x2={18 + index * 74} y1="18" y2="292" />
@@ -410,7 +408,6 @@ function MetropolisLab() {
               const isMoved = lastMove?.particle === index;
               return (
                 <g key={index} className={isMoved ? styles.activeParticle : undefined}>
-                  <circle cx={x} cy={y} r="34" fill="url(#chem-particle-halo)" />
                   <circle cx={x} cy={y} r="9" className={styles.particle} />
                   <text x={x} y={y + 3.4} textAnchor="middle">
                     {index + 1}
@@ -455,40 +452,40 @@ function MetropolisLab() {
             }}
           />
           <div className={`${styles.moveReceipt} ${lastMove?.accepted ? styles.moveAccepted : styles.moveRejected}`} aria-live="polite">
-            <span>LAST PROPOSAL</span>
-            <strong>{lastMove ? (lastMove.accepted ? "ACCEPTED" : "REJECTED") : "READY"}</strong>
+            <span>Last proposal</span>
+            <strong>{lastMove ? (lastMove.accepted ? "Accepted" : "Rejected") : "Ready"}</strong>
             <dl>
               <div><dt>ΔU*</dt><dd>{lastMove ? formatSigned(lastMove.deltaEnergy) : "—"}</dd></div>
               <div><dt>P(accept)</dt><dd>{lastMove ? `${(lastMove.probability * 100).toFixed(1)}%` : "—"}</dd></div>
             </dl>
           </div>
           <div className={styles.historyCard}>
-            <div><span>ACCEPTED-STATE ENERGY</span><strong>last {history.length}</strong></div>
-            <svg viewBox="0 0 460 130" role="img" aria-label="Accepted configuration energy history">
+            <div><span>Accepted-state energy</span><strong>last {history.length}</strong></div>
+            <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 460 130" role="img" aria-label="Accepted configuration energy history">
               <line x1="14" x2="446" y1="116" y2="116" />
               <path d={chartPath} />
-            </svg>
+            </svg></div>
           </div>
         </aside>
       </div>
 
       <div className={styles.metricsRow}>
-        <MetricCard label="CURRENT ENERGY" value={energy.toFixed(3)} detail="Reduced Lennard–Jones units" />
-        <MetricCard label="ACCEPTANCE" value={`${(acceptanceRate * 100).toFixed(1)}%`} detail={`${accepted} of ${step} proposals`} />
-        <MetricCard label="THERMAL GATE" value={`e^(−ΔU/${temperature.toFixed(1)})`} detail="Applied only when ΔU > 0" />
+        <MetricCard label="Current energy" value={energy.toFixed(3)} detail="Reduced Lennard–Jones units" />
+        <MetricCard label="Acceptance" value={`${(acceptanceRate * 100).toFixed(1)}%`} detail={`${accepted} of ${step} proposals`} />
+        <MetricCard label="Thermal factor" value={<MathEquation display={false} tex={String.raw`e^{-\Delta U/${temperature.toFixed(1)}}`} />} detail="Applied only when ΔU > 0" />
       </div>
 
       <MethodDrawer
         equation={
           <div className={styles.formulaGrid}>
             <div className={styles.formulaCard}>
-              <span>PAIR POTENTIAL</span>
-              <p><var>U</var>(<var>r</var>) = 4<var>ε</var>[(<var>σ</var>/<var>r</var>)<sup>12</sup> − (<var>σ</var>/<var>r</var>)<sup>6</sup>]</p>
+              <span>Pair potential</span>
+              <p><MathEquation tex={String.raw`U(r)=4\varepsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right]`} label="U(r) = 4ε[(σ/r)¹² − (σ/r)⁶]" /></p>
               <small>Summed once over each particle pair.</small>
             </div>
             <div className={styles.formulaCard}>
-              <span>METROPOLIS RULE</span>
-              <p><var>P</var><sub>acc</sub> = min[1, exp(−Δ<var>U</var> / <var>T</var>*)]</p>
+              <span>Metropolis rule</span>
+              <p><MathEquation tex={String.raw`P_{\mathrm{acc}}=\min\!\left[1,\exp\!\left(-\frac{\Delta U}{T^*}\right)\right]`} label="Pacc = min[1, exp(−ΔU/T*)]" /></p>
               <small>Downhill moves are certain; uphill moves pass a thermal draw.</small>
             </div>
           </div>
@@ -498,13 +495,13 @@ function MetropolisLab() {
         }
         record={
           <div className={styles.recordNote}>
-            <strong>Contents of the private archive</strong>
-            <p>A 492-line React/D3 experiment committed on 25 March 2025 models five particles, a 12–6 potential, single-particle displacements and the Metropolis gate. The archived component does not compile as committed and records proposal energy after rejected moves; this safe demo preserves the method while fixing both defects.</p>
-            <span>Private repository · no explicit licence · source is intentionally not linked.</span>
+            <strong>Sampling a thermal distribution</strong>
+            <p>A single-particle proposal changes the Lennard-Jones interaction energy. Downhill moves are accepted; some uphill moves are also accepted at finite temperature. After a rejected proposal, the accepted configuration and its energy stay unchanged.</p>
+            <span>The course exercises were extended with a React sampling experiment; this browser version lets you inspect each accepted or rejected move.</span>
           </div>
         }
       />
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -646,12 +643,12 @@ function PolymerLab() {
       : "Six-neighbour self-avoiding lattice";
 
   return (
-    <div className={styles.lab}>
+    <ProjectCopy copy={chemistryCopy}><div className={styles.lab}>
       <LabHeading
-        kicker="PYTHON NOTEBOOK → JULIA EXTENSION · FEB–MAR 2025"
+        kicker="Python study → Julia extension · Feb–Mar 2025"
         title="Rotatable polymer conformation lab"
         description="Trace a continuous ideal chain, correct its angular sampler, or switch to the later self-avoiding lattice implementation. Rotation changes only the camera—never the calculated conformation."
-        evidence="SEEDED 3D CALCULATION"
+        evidence="Repeatable 3D calculation"
       />
 
       <div className={styles.modeSwitch} role="group" aria-label="Polymer model">
@@ -667,15 +664,15 @@ function PolymerLab() {
       <div className={styles.polymerGrid}>
         <section className={styles.polymerViewport}>
           <div className={styles.cardToolbar}>
-            <span>CONFORMATION / ORTHOGRAPHIC PROJECTION</span>
+            <span>Conformation · orthographic projection</span>
             <strong>{modeDescription}</strong>
           </div>
           <svg viewBox="0 0 520 440" role="img" aria-label={`${length}-monomer ${modeDescription} projected in three dimensions`}>
             <defs>
               <linearGradient id="chem-polymer-gradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#22d3ee" />
-                <stop offset="0.52" stopColor="#818cf8" />
-                <stop offset="1" stopColor="#fb7185" />
+                <stop offset="0" stopColor="#0c706d" />
+                <stop offset="0.52" stopColor="#273c85" />
+                <stop offset="1" stopColor="#963d52" />
               </linearGradient>
             </defs>
             <g className={styles.axisTripod} aria-hidden="true">
@@ -695,7 +692,7 @@ function PolymerLab() {
                     y1={previous.y}
                     x2={point.x}
                     y2={point.y}
-                    style={{ opacity: 0.38 + progress * 0.62 }}
+                    style={{ opacity: 0.7 + progress * 0.3 }}
                   />
                 );
               })}
@@ -706,7 +703,7 @@ function PolymerLab() {
                 <circle cx={projected.at(-1)?.x} cy={projected.at(-1)?.y} r="7" className={styles.polymerEnd} />
               </>
             ) : null}
-            <text x="24" y="34" className={styles.svgReadout}>START → END / {length} sites · {bonds} bonds</text>
+            <text x="24" y="34" className={styles.svgReadout}>Start → end / {length} sites · {bonds} bonds</text>
           </svg>
           <div className={styles.legendRow}>
             <span><i className={styles.startDot} /> start</span>
@@ -724,31 +721,31 @@ function PolymerLab() {
             Generate next seeded chain
           </button>
           <div className={styles.samplerDiagnostic}>
-            <span>ANGULAR DIAGNOSTIC</span>
+            <span>Angular sampling</span>
             <strong>⟨Δz²⟩ = {result.zMoment.toFixed(3)}</strong>
-            <p>{mode === "notebook" ? "Uniform φ targets 0.500, so poles are oversampled." : mode === "isotropic" ? "Uniform cos φ targets the isotropic value 0.333." : `${result.restarts} whole-walk restart${result.restarts === 1 ? "" : "s"}; no site revisits.`}</p>
+            <p>{mode === "notebook" ? "Uniform φ targets 0.500, so poles are oversampled." : mode === "isotropic" ? "Uniform cos φ targets the isotropic value 0.333." : `${result.restarts} whole-walk restarts; no site revisits.`}</p>
           </div>
         </aside>
       </div>
 
       <div className={styles.metricsRow}>
-        <MetricCard label="END-TO-END R" value={result.endToEnd.toFixed(3)} detail={`Ideal reference √(N − 1) = ${theoryEnd.toFixed(3)}`} />
-        <MetricCard label="RADIUS OF GYRATION" value={result.radiusGyration.toFixed(3)} detail={`Ideal reference √((N − 1)/6) = ${theoryGyration.toFixed(3)}`} />
-        <MetricCard label="MODEL" value={mode === "self-avoiding" ? "SAW / lattice" : "Random flight"} detail={modeDescription} />
+        <MetricCard label="End-to-end R" value={result.endToEnd.toFixed(3)} detail={<>Ideal reference <MathEquation display={false} tex={String.raw`\sqrt{N-1}=${theoryEnd.toFixed(3)}`} label={`√(N − 1) = ${theoryEnd.toFixed(3)}`} /></>} />
+        <MetricCard label="RADIUS OF Gyration" value={result.radiusGyration.toFixed(3)} detail={<>Ideal reference <MathEquation display={false} tex={String.raw`\sqrt{\frac{N-1}{6}}=${theoryGyration.toFixed(3)}`} label={`√((N − 1)/6) = ${theoryGyration.toFixed(3)}`} /></>} />
+        <MetricCard label="Model" value={mode === "self-avoiding" ? "SAW / lattice" : "Random flight"} detail={modeDescription} />
       </div>
 
       <MethodDrawer
         equation={
           <div className={styles.formulaGrid}>
             <div className={styles.formulaCard}>
-              <span>CHAIN SIZE</span>
-              <p><var>R</var><sub>e</sub> = |<b>r</b><sub>N</sub> − <b>r</b><sub>0</sub>|</p>
+              <span>Chain size</span>
+              <p><MathEquation tex={String.raw`R_e=\left|\mathbf r_N-\mathbf r_0\right|`} label="Rₑ = |rₙ − r₀|" /></p>
               <small>The end-to-end vector is unchanged by centring or camera rotation.</small>
             </div>
             <div className={styles.formulaCard}>
-              <span>GYRATION</span>
-              <p><var>R</var><sub>g</sub> = √[(1/<var>N</var>) Σ |<b>r</b><sub>i</sub> − <b>r</b><sub>cm</sub>|²]</p>
-              <small>For this N-site display there are N − 1 bonds, so the ideal reference uses R<sub>g</sub> ≈ √((N − 1)/6).</small>
+              <span>Gyration</span>
+              <p><MathEquation tex={String.raw`R_g=\sqrt{\frac1N\sum_i\left|\mathbf r_i-\mathbf r_{\mathrm{cm}}\right|^2}`} label="Rᵍ = √[(1/N) Σᵢ|rᵢ − rcm|²]" /></p>
+              <small>For this N-site display there are N − 1 bonds, so the ideal reference uses <MathEquation display={false} tex={String.raw`R_g\approx\sqrt{\frac{N-1}{6}}`} label="Rg ≈ √((N − 1)/6)" />.</small>
             </div>
           </div>
         }
@@ -759,13 +756,13 @@ function PolymerLab() {
         }
         record={
           <div className={styles.recordNote}>
-            <strong>Two source stages, one visible correction</strong>
-            <p>The February polymer notebook implements 2D/3D random flights, R<sub>e</sub>, R<sub>g</sub> and the √N scaling comparison. A separate 22 March Julia file adds a six-neighbour self-avoiding walk with restart-on-trap and Makie 3D output. The browser control also exposes the notebook’s non-isotropic φ sampler.</p>
-            <span>Teaching notebook attributes SciPython and TU Delft material; this page does not reproduce its questions or supplied solutions.</span>
+            <strong>Polymer sampling and self-avoidance</strong>
+            <p>The February polymer exercises implement 2D/3D random flights, R<sub>e</sub>, R<sub>g</sub> and the √N scaling comparison. A later Julia extension adds a six-neighbour self-avoiding walk with restart-on-trap and Makie 3D output. The browser also exposes the original non-isotropic φ sampler.</p>
+            <span>The course methods draw on SciPython and TU Delft teaching material.</span>
           </div>
         }
       />
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -907,21 +904,21 @@ function DynamicsLab() {
   }, [cutoff, cutoffPotential, distance, epsilon, equilibrium, shifted, sigma]);
 
   return (
-    <div className={styles.lab}>
+    <ProjectCopy copy={chemistryCopy}><div className={styles.lab}>
       <LabHeading
         kicker="COMPUTATIONAL LAB 4 · 18–23 FEB 2025"
         title="Lennard–Jones potential and Verlet explainer"
-        description="Interrogate the shifted 12–6 potential, inspect the force at one separation and walk through the velocity-Verlet pipeline recorded in the notebook. This is an explanatory kernel, not a molecular-dynamics trajectory simulation."
-        evidence="FORMULA + PIPELINE"
+        description="Inspect the shifted 12–6 potential, examine the force at one separation and step through the velocity-Verlet update. A small numerical trajectory below lets you compare time steps."
+        evidence="Equations and method"
       />
 
       <div className={styles.dynamicsGrid}>
         <section className={styles.potentialCard}>
           <div className={styles.cardToolbar}>
-            <span>PAIR POTENTIAL / REDUCED COORDINATES</span>
+            <span>Pair potential · reduced coordinates</span>
             <strong>r<sub>min</sub> = {equilibrium.toFixed(3)}</strong>
           </div>
-          <svg viewBox="0 0 600 270" role="img" aria-label="Lennard-Jones potential and cutoff-shifted potential as a function of separation">
+          <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 270" role="img" aria-label="Lennard-Jones potential and cutoff-shifted potential as a function of separation">
             <g className={styles.chartGrid} aria-hidden="true">
               <line x1="42" x2="582" y1={chart.zeroY} y2={chart.zeroY} />
               <line x1="42" x2="42" y1="18" y2="232" />
@@ -935,7 +932,7 @@ function DynamicsLab() {
             <text x={chart.equilibriumX + 5} y="214" className={styles.svgReadout}>minimum</text>
             <text x="300" y="260" textAnchor="middle" className={styles.axisLabel}>separation r / σ</text>
             <text x="13" y="130" textAnchor="middle" transform="rotate(-90 13 130)" className={styles.axisLabel}>energy U / ε</text>
-          </svg>
+          </svg></div>
           <div className={styles.legendRow}>
             <span><i className={styles.rawLegend} /> raw U(r)</span>
             <span><i className={styles.shiftedLegend} /> energy-shifted at cutoff</span>
@@ -957,15 +954,15 @@ function DynamicsLab() {
       </div>
 
       <div className={styles.metricsRow}>
-        <MetricCard label="RAW POTENTIAL" value={formatSigned(potential, 4)} detail="12–6 pair energy" />
-        <MetricCard label="SHIFTED POTENTIAL" value={formatSigned(shifted, 4)} detail={`U(r) − U(${cutoff.toFixed(1)}σ)`} />
-        <MetricCard label="FORCE DIRECTION" value={force >= 0 ? "OUTWARD" : "INWARD"} detail={distance >= cutoff * sigma ? "Suppressed beyond cutoff" : `Fᵣ = ${formatSigned(force, 3)}`} />
+        <MetricCard label="Raw potential" value={formatSigned(potential, 4)} detail="12–6 pair energy" />
+        <MetricCard label="Shifted potential" value={formatSigned(shifted, 4)} detail={`U(r) − U(${cutoff.toFixed(1)}σ)`} />
+        <MetricCard label="Force direction" value={force >= 0 ? "Outward" : "Inward"} detail={distance >= cutoff * sigma ? "Suppressed beyond cutoff" : `Fᵣ = ${formatSigned(force, 3)}`} />
       </div>
 
       <section className={styles.trajectoryLab} aria-labelledby="mini-md-title">
         <div className={styles.trajectoryHeader}>
-          <div><span>EXECUTABLE BROWSER CALCULATION</span><h4 id="mini-md-title">Four-particle periodic velocity-Verlet trajectory</h4><p>This deterministic reduced-unit system executes minimum-image forces, wrapped positions and the full two-force velocity-Verlet update. It is a teaching fixture derived from the notebook mechanics—not a reproduced source trajectory.</p></div>
-          <div><span>RELATIVE ENERGY DRIFT</span><strong>{formatSigned(miniMd.relativeDrift, 4)}%</strong><small>{trajectorySteps} steps · Δt {timeStep.toFixed(3)}</small></div>
+          <div><span>Interactive trajectory</span><h4 id="mini-md-title">Four-particle periodic velocity-Verlet trajectory</h4><p>This deterministic reduced-unit system calculates minimum-image forces, wrapped positions and the full velocity-Verlet update. It is a small teaching model for exploring numerical integration.</p></div>
+          <div><span>Relative energy drift</span><strong>{formatSigned(miniMd.relativeDrift, 4)}%</strong><small>{trajectorySteps} steps · Δt {timeStep.toFixed(3)}</small></div>
         </div>
         <div className={styles.trajectoryGrid}>
           <svg viewBox="0 0 360 300" role="img" aria-label={`Final periodic simulation frame with four particles after ${trajectorySteps} steps`}>
@@ -977,27 +974,27 @@ function DynamicsLab() {
             <text x="166" y="290" textAnchor="middle" className={styles.axisLabel}>periodic box · L = {miniMd.box.toFixed(2)} σ-units</text>
           </svg>
           <div className={styles.energyTrace}>
-            <div><span>TOTAL ENERGY RECEIPT</span><strong>E₀ {miniMd.initialEnergy.toFixed(6)} → Eₜ {miniMd.finalEnergy.toFixed(6)}</strong></div>
-            <svg viewBox="0 0 600 180" role="img" aria-label={`Total energy trace over ${trajectorySteps} velocity-Verlet steps`}>
+            <div><span>Total energy change</span><strong>E₀ {miniMd.initialEnergy.toFixed(6)} → Eₜ {miniMd.finalEnergy.toFixed(6)}</strong></div>
+            <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 180" role="img" aria-label={`Total energy trace over ${trajectorySteps} velocity-Verlet steps`}>
               <line x1="30" x2="580" y1="152" y2="152" />
               <path d={linePath(miniMd.energies, 600, 180, 30)} />
-            </svg>
+            </svg></div>
             <div className={styles.trajectoryControls}>
               <RangeControl label="Time step Δt" value={timeStep} minimum={0.002} maximum={0.02} step={0.001} output={timeStep.toFixed(3)} onChange={setTimeStep} />
               <RangeControl label="Trajectory steps" value={trajectorySteps} minimum={25} maximum={400} step={25} output={String(trajectorySteps)} onChange={setTrajectorySteps} />
             </div>
             <div className={`${styles.driftAssessment} ${Math.abs(miniMd.relativeDrift) > 5 ? styles.driftBad : Math.abs(miniMd.relativeDrift) > 1 ? styles.driftWarn : styles.driftGood}`} role="status">
               <strong>{Math.abs(miniMd.relativeDrift) > 5 ? "UNSTABLE TEACHING RUN" : Math.abs(miniMd.relativeDrift) > 1 ? "VISIBLE INTEGRATION DRIFT" : "DRIFT BELOW 1%"}</strong>
-              <span>{Math.abs(miniMd.relativeDrift) > 5 ? "Reduce Δt or shorten the run. A large energy change is a numerical failure signal, not a physical result." : "The receipt is diagnostic only; it does not establish convergence or reproduce a source trajectory."}</span>
+              <span>{Math.abs(miniMd.relativeDrift) > 5 ? "Reduce Δt or shorten the run. A large energy change is a numerical failure signal, not a physical result." : "A small energy change is useful diagnostic information; compare time steps before drawing conclusions about numerical convergence."}</span>
             </div>
           </div>
         </div>
-        <footer><span>4 PARTICLES</span><span>2D REDUCED UNITS</span><span>PERIODIC WRAP</span><span>MINIMUM IMAGE</span><span>ENERGY-SHIFTED CUTOFF</span><span>NVE · NO THERMOSTAT</span></footer>
+        <footer><span>4 particles</span><span>2D reduced units</span><span>Periodic boundaries</span><span>Minimum image</span><span>Energy-shifted cutoff</span><span>NVE · no thermostat</span></footer>
       </section>
 
       <section className={styles.integratorCard} aria-label="Velocity Verlet stepper">
         <div className={styles.integratorHeader}>
-          <div><span>VELOCITY-VERLET TAPE</span><strong>Stage {stage + 1} of {mdStages.length}</strong></div>
+          <div><span>Velocity-Verlet steps</span><strong>Stage {stage + 1} of {mdStages.length}</strong></div>
           <button type="button" onClick={() => setStage((current) => (current + 1) % mdStages.length)}>Advance stage →</button>
         </div>
         <div className={styles.integratorTrack} role="list">
@@ -1015,7 +1012,7 @@ function DynamicsLab() {
           ))}
         </div>
         <div className={styles.stageReadout} aria-live="polite">
-          <code>{mdStages[stage].formula}</code>
+          <MathEquation tex={mdStages[stage].tex} label={mdStages[stage].formula} />
           <p>{mdStages[stage].note}</p>
         </div>
       </section>
@@ -1024,13 +1021,13 @@ function DynamicsLab() {
         equation={
           <div className={styles.formulaGrid}>
             <div className={styles.formulaCard}>
-              <span>SHIFTED CUTOFF</span>
-              <p><var>U</var><sub>s</sub>(<var>r</var>) = <var>U</var>(<var>r</var>) − <var>U</var>(<var>r</var><sub>c</sub>)</p>
-              <small>For r &lt; r<sub>c</sub>; this makes energy continuous, but not force-continuous, at the cutoff. The browser generalises the notebook’s ε = σ = 1 expression.</small>
+              <span>Shifted cutoff</span>
+              <p><MathEquation tex={String.raw`U_s(r)=U(r)-U(r_c)`} label="Uₛ(r) = U(r) − U(rᶜ)" /></p>
+              <small>For <MathEquation display={false} tex={String.raw`r<r_c`} label="r &lt; rc" />; this makes energy continuous, but not force-continuous, at the cutoff. The browser generalises the notebook’s <MathEquation display={false} tex={String.raw`\varepsilon=\sigma=1`} label="ε = σ = 1" /> expression.</small>
             </div>
             <div className={styles.formulaCard}>
-              <span>RADIAL FORCE</span>
-              <p><var>F</var><sub>r</sub> = (24<var>ε</var>/<var>r</var>)[2(<var>σ</var>/<var>r</var>)<sup>12</sup> − (<var>σ</var>/<var>r</var>)<sup>6</sup>]</p>
+              <span>Radial force</span>
+              <p><MathEquation tex={String.raw`F_r=\frac{24\varepsilon}{r}\left[2\left(\frac\sigma r\right)^{12}-\left(\frac\sigma r\right)^6\right]`} label="Fᵣ = (24ε/r)[2(σ/r)¹² − (σ/r)⁶]" /></p>
               <small>Positive is repulsive; negative is attractive.</small>
             </div>
           </div>
@@ -1040,13 +1037,13 @@ function DynamicsLab() {
         }
         record={
           <div className={styles.recordNote}>
-            <strong>Executed notebook scope</strong>
-            <p>The archived lab contains 2D and 3D initialisation, periodic boundaries, minimum-image forces, a 2.5σ cutoff, shifted energy, temperature, virial pressure, velocity Verlet and Berendsen-coupling comparisons. Its final notebook is unusually large because outputs and revisions were retained; this demo isolates the scientific kernel.</p>
+            <strong>Molecular-dynamics methods</strong>
+            <p>The course work covers 2D and 3D initialisation, periodic boundaries, minimum-image forces, a 2.5σ cutoff, shifted energy, temperature, virial pressure, velocity Verlet and Berendsen-coupling comparisons. This view isolates the potential and integration steps.</p>
             <span>Adapted teaching material credits Dr Micaela Matta and the NZ Nano molecular-dynamics tutorial.</span>
           </div>
         }
       />
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -1090,21 +1087,21 @@ function QuantumLab() {
   const energySpan = energyMaximum - energyMinimum;
 
   return (
-    <div className={styles.lab}>
+    <ProjectCopy copy={chemistryCopy}><div className={styles.lab}>
       <LabHeading
         kicker="COMPUTATIONAL LAB 5 · 3–4 MAR 2025"
-        title="Orbital shapes and Hartree–Fock ledger"
-        description="Compare a cusp-bearing Slater orbital with a Gaussian primitive, then inspect the exact toluene basis-set and Na⁺–aromatic arithmetic recorded in the notebooks."
-        evidence="RECORDED OUTPUT + LIVE MATH"
+        title="Orbital shapes and Hartree–Fock energies"
+        description="Compare a cusp-bearing Slater orbital with a Gaussian primitive, then explore the toluene basis-set energies and Na⁺–aromatic energy differences calculated during the course."
+        evidence="Recorded energies and live calculations"
       />
 
       <div className={styles.quantumGrid}>
         <section className={styles.orbitalCard}>
           <div className={styles.cardToolbar}>
-            <span>NORMALISED 1D 1s CROSS-SECTION</span>
+            <span>Normalised 1D 1s cross-section</span>
             <strong>φ(r)</strong>
           </div>
-          <svg viewBox="0 0 600 270" role="img" aria-label="Slater-type and Gaussian-type 1s orbital functions">
+          <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 270" role="img" aria-label="Slater-type and Gaussian-type 1s orbital functions">
             <g className={styles.chartGrid} aria-hidden="true">
               <line x1="38" x2="582" y1={orbitalChart.baselineY} y2={orbitalChart.baselineY} />
               <line x1={orbitalChart.zeroX} x2={orbitalChart.zeroX} y1="18" y2="238" />
@@ -1113,7 +1110,7 @@ function QuantumLab() {
             <path d={orbitalChart.gto} className={styles.gtoCurve} />
             <text x="300" y="262" textAnchor="middle" className={styles.axisLabel}>signed 1D displacement r through the nucleus</text>
             <text x="52" y="35" className={styles.svgReadout}>cusp at r = 0</text>
-          </svg>
+          </svg></div>
           <div className={styles.legendRow}>
             <span><i className={styles.stoLegend} /> STO · exponential tail</span>
             <span><i className={styles.gtoLegend} /> GTO · smooth origin</span>
@@ -1126,7 +1123,7 @@ function QuantumLab() {
 
         <aside className={styles.quantumRail}>
           <section className={styles.cuspCard}>
-            <span>NUCLEAR CUSP CHECK</span>
+            <span>Behaviour at the nucleus</span>
             <dl>
               <div><dt>φ<sub>STO</sub>(0)</dt><dd>{stoOrbital(zeta, 0).toFixed(4)}</dd></div>
               <div><dt>φ<sub>GTO</sub>(0)</dt><dd>{gtoOrbital(alpha, 0).toFixed(4)}</dd></div>
@@ -1136,13 +1133,13 @@ function QuantumLab() {
           </section>
           <section className={styles.bindingCard}>
             <label>
-              <span>Na⁺ BINDING CALCULATION</span>
+              <span>Na⁺ binding energy</span>
               <ClassicSelect value={selectedBinding} onChange={(event) => setSelectedBinding(event.currentTarget.value as typeof selectedBinding)}>
                 {cationPiLedger.map((entry) => <option key={entry.id} value={entry.id}>{entry.label}</option>)}
               </ClassicSelect>
             </label>
             <strong>{bindingEnergy.toFixed(2)} kcal mol⁻¹</strong>
-            <code>{binding.complex.toFixed(2)} − ({binding.sodium.toFixed(2)}) − ({binding.aromatic.toFixed(2)})</code>
+            <div className={styles.bindingEquation}><MathEquation tex={String.raw`\begin{aligned}&${binding.complex.toFixed(2)}\\&-(${binding.sodium.toFixed(2)})\\&-(${binding.aromatic.toFixed(2)})\end{aligned}`} label={`${binding.complex.toFixed(2)} − (${binding.sodium.toFixed(2)}) − (${binding.aromatic.toFixed(2)})`} /></div>
             <p>Recorded electronic-energy subtraction; no counterpoise or correlation correction is claimed.</p>
           </section>
         </aside>
@@ -1150,7 +1147,7 @@ function QuantumLab() {
 
       <section className={styles.basisCard}>
         <div className={styles.basisHeader}>
-          <div><span>TOLUENE HF CONVERGENCE LEDGER</span><strong>{selectedEnergy.basis}</strong></div>
+          <div><span>Toluene HF basis-set convergence</span><strong>{selectedEnergy.basis}</strong></div>
           <p>{selectedEnergy.functions} basis functions · ΔE from STO-3G {formatSigned(selectedEnergy.energy - referenceEnergy, 6)} E<sub>h</sub></p>
         </div>
         <div className={styles.energyPlot} role="group" aria-label="Toluene Hartree-Fock energies by basis-set size">
@@ -1194,18 +1191,18 @@ function QuantumLab() {
           <div className={styles.formulaGrid}>
             <div className={styles.formulaCard}>
               <span>SLATER 1s</span>
-              <p><var>φ</var><sub>STO</sub> = √(<var>ζ</var>³/π) exp(−<var>ζ</var>|<var>r</var>|)</p>
+              <p><MathEquation tex={String.raw`\phi_{\mathrm{STO}}=\sqrt{\frac{\zeta^3}{\pi}}\exp(-\zeta|r|)`} label="φSTO = √(ζ³/π) exp(−ζ|r|)" /></p>
               <small>Correct nuclear cusp and exponential long-range decay.</small>
             </div>
             <div className={styles.formulaCard}>
               <span>GAUSSIAN 1s</span>
-              <p><var>φ</var><sub>GTO</sub> = (2<var>α</var>/π)<sup>3/4</sup> exp(−<var>αr</var>²)</p>
+              <p><MathEquation tex={String.raw`\phi_{\mathrm{GTO}}=\left(\frac{2\alpha}{\pi}\right)^{3/4}\exp(-\alpha r^2)`} label="φGTO = (2α/π)^(3/4) exp(−αr²)" /></p>
               <small>Smooth at the nucleus; Gaussian products make integrals tractable.</small>
             </div>
             <div className={styles.formulaCard}>
-              <span>BINDING LEDGER</span>
-              <p>Δ<var>E</var><sub>bind</sub> = <var>E</var><sub>complex</sub> − <var>E</var><sub>Na⁺</sub> − <var>E</var><sub>aromatic</sub></p>
-              <small>The selected record is recomputed above, not copied as a static label.</small>
+              <span>Binding-energy calculation</span>
+              <p><MathEquation tex={String.raw`\Delta E_{\mathrm{bind}}=E_{\mathrm{complex}}-E_{\mathrm{Na}^+}-E_{\mathrm{aromatic}}`} label="ΔEbind = Ecomplex − ENa⁺ − Earomatic" /></p>
+              <small>The selected system’s energy difference is recalculated above.</small>
             </div>
           </div>
         }
@@ -1214,101 +1211,56 @@ function QuantumLab() {
         }
         record={
           <div className={styles.recordNote}>
-            <strong>Recorded, not independently reproduced</strong>
-            <p>The five toluene SCF energies and four Na⁺–aromatic electronic-energy triplets are notebook outputs. The browser recomputes only their arithmetic and analytic orbital curves; it does not rerun Hartree–Fock or claim benchmark accuracy.</p>
+            <strong>Recorded quantum-chemistry results</strong>
+            <p>The five toluene SCF energies and four Na⁺–aromatic energy triplets come from completed course calculations. The browser recalculates energy differences and analytic orbital curves; it does not rerun Hartree–Fock.</p>
             <span>Basis-set material credits Psi4Education and Molecular Modeling Basics; the cation–π lab credits Psi4Education and Mecozzi et al., PNAS 93 (1996).</span>
           </div>
         }
       />
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function AuditLab() {
   const timeline = [
-    { date: "24 JAN", title: "Notebook foundations", detail: "Jupyter and Python teaching notebooks enter the archive." },
-    { date: "11–13 FEB", title: "Sampling + polymers", detail: "Monte Carlo, central-limit and random-flight polymer work is iterated." },
-    { date: "18–23 FEB", title: "Molecular dynamics", detail: "Lennard–Jones, PBC, velocity Verlet and thermostat comparisons are added." },
-    { date: "03–04 MAR", title: "Quantum chemistry", detail: "Basis-set convergence and Na⁺–aromatic calculations are recorded." },
-    { date: "22–25 MAR", title: "Independent extensions", detail: "Julia self-avoiding walk and React Metropolis files follow the notebooks." },
-    { date: "30 APR–12 MAY", title: "Revision pass", detail: "All five scientific notebooks receive later refinement commits." },
+    { date: "24 JAN", title: "Computational foundations", detail: "Work with Python and Jupyter to connect chemical models with numerical calculations." },
+    { date: "11–13 FEB", title: "Sampling and polymers", detail: "Explore Monte Carlo sampling, the central-limit theorem and random-flight polymer models." },
+    { date: "18–23 FEB", title: "Molecular dynamics", detail: "Study Lennard-Jones interactions, periodic boundaries, velocity Verlet and thermostat choices." },
+    { date: "03–04 MAR", title: "Quantum chemistry", detail: "Compare basis-set convergence and sodium–aromatic interaction energies." },
+    { date: "22–25 MAR", title: "Independent extensions", detail: "Build Julia self-avoiding walks and a React Metropolis sampling experiment." },
+    { date: "30 APR–12 MAY", title: "Refinement", detail: "Refine the five computational topics and their explanations." },
   ];
-
-  return (
-    <div className={styles.lab}>
-      <LabHeading
-        kicker="REPOSITORY AUDIT · SOURCE BOUNDARY"
-        title="What the archive proves—and what it does not"
-        description="A compact evidence ledger separates live browser calculations, recorded notebook outputs, adapted teaching material and unsupported portfolio-level claims."
-        evidence="PRIVATE / NO LICENCE"
-      />
-
-      <div className={styles.auditHero}>
-        <div><span>TRACKED COMP-CHEM FILES</span><strong>46</strong><p>12 notebooks plus code, figures and local data.</p></div>
-        <div><span>AUDITED METHOD LABS</span><strong>5</strong><p>Monte Carlo, polymers, MD, basis sets and cation–π.</p></div>
-        <div><span>VISIBLE HISTORY WINDOW</span><strong>109 days</strong><p>24 January → 12 May 2025.</p></div>
+  return <ProjectCopy copy={chemistryCopy}><div className={styles.lab}>
+    <LabHeading kicker="Methods and development" title="Five physical ideas, four interactive labs" description="Each experiment uses a different numerical method. Compare what it calculates, how to interpret it and which assumptions matter." evidence="Computational chemistry" />
+    <section className={styles.claimLedger}>
+      <div className={styles.sectionTitle}><span>01</span><div><strong>Choose a question to explore</strong><small>Connect the calculation to its physical meaning</small></div></div>
+      <div className={styles.tableScroll} tabIndex={0} role="region" aria-label="Computational chemistry method guide"><table>
+        <thead><tr><th>Method</th><th>Question</th><th>What to inspect</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Metropolis sampling</th><td>Which configurations are plausible at this temperature?</td><td>Energy changes, acceptance probability and the accepted configuration.</td></tr>
+          <tr><th scope="row">Polymer walks</th><td>How do direction and self-avoidance rules change a chain’s shape?</td><td>End-to-end distance, radius of gyration and variation between seeds.</td></tr>
+          <tr><th scope="row">Velocity Verlet</th><td>How do force and time step determine a numerical trajectory?</td><td>Position updates, periodic wrapping and total-energy drift.</td></tr>
+          <tr><th scope="row">Basis sets</th><td>How does the orbital representation change an electronic-energy calculation?</td><td>Function count and the recorded change in SCF energy.</td></tr>
+          <tr><th scope="row">Cation–π interactions</th><td>How does complex formation change electronic energy?</td><td>The complex energy minus the separate sodium-ion and aromatic energies.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+    <section className={styles.auditGrid}>
+      <div className={styles.timelineCard}><div className={styles.sectionTitle}><span>02</span><div><strong>Development through 2025</strong><small>From course exercises to independent experiments</small></div></div>
+        <ol className={styles.timeline}>{timeline.map(item => <li key={item.date}><time>{item.date}</time><div><strong>{item.title}</strong><p>{item.detail}</p></div></li>)}</ol>
       </div>
-
-      <section className={styles.auditGrid}>
-        <div className={styles.timelineCard}>
-          <div className={styles.sectionTitle}><span>01</span><div><strong>SANITISED BUILD LINEAGE</strong><small>Commit emails, hashes and private paths omitted</small></div></div>
-          <ol className={styles.timeline}>
-            {timeline.map((item) => (
-              <li key={item.date}>
-                <time>{item.date}</time>
-                <div><strong>{item.title}</strong><p>{item.detail}</p></div>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className={styles.boundaryColumn}>
-          <section className={styles.boundaryCard}>
-            <div className={styles.sectionTitle}><span>02</span><div><strong>EVIDENCE CLASSES</strong><small>How to read this demo</small></div></div>
-            <ul className={styles.evidenceList}>
-              <li><i className={styles.liveDot} /><div><strong>Live calculation</strong><p>Deterministic TypeScript reimplementation executed in this browser.</p></div></li>
-              <li><i className={styles.recordDot} /><div><strong>Recorded result</strong><p>Numeric output present in a notebook, not independently rerun here.</p></div></li>
-              <li><i className={styles.adaptedDot} /><div><strong>Adapted teaching source</strong><p>Attributed course material; neither authorship nor republication is claimed.</p></div></li>
-              <li><i className={styles.privateDot} /><div><strong>Private source</strong><p>Repository access and redistribution remain closed because no licence is present.</p></div></li>
-            </ul>
-          </section>
-
-          <section className={styles.boundaryCard}>
-            <div className={styles.sectionTitle}><span>03</span><div><strong>PUBLICATION GATE</strong><small>Applied to this showcase</small></div></div>
-            <dl className={styles.gateList}>
-              <div><dt>Notebook files</dt><dd>Not shipped</dd></div>
-              <div><dt>Assessed prompts / answers</dt><dd>Excluded</dd></div>
-              <div><dt>Personal emails + job IDs</dt><dd>Excluded</dd></div>
-              <div><dt>Private repository URL</dt><dd>Not linked</dd></div>
-              <div><dt>Standard formula reimplementation</dt><dd>Included</dd></div>
-              <div><dt>Attribution boundary</dt><dd>Visible</dd></div>
-            </dl>
-          </section>
-        </div>
-      </section>
-
-      <section className={styles.claimLedger}>
-        <div className={styles.sectionTitle}><span>04</span><div><strong>CLAIM CONFIDENCE</strong><small>Repository evidence only</small></div></div>
-        <div className={styles.tableScroll} tabIndex={0} role="region" aria-label="Claim confidence table">
-          <table>
-            <thead><tr><th>Claim</th><th>Evidence</th><th>Safe portfolio wording</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Scientific Python practice</th><td><span className={styles.strongEvidence}>Strong</span></td><td>Completed and iterated computational-chemistry notebooks.</td></tr>
-              <tr><th scope="row">Interactive scientific extensions</th><td><span className={styles.strongEvidence}>Strong</span></td><td>Built later React and Julia experiments around sampling and 3D walks.</td></tr>
-              <tr><th scope="row">Original curriculum authorship</th><td><span className={styles.weakEvidence}>Not supported</span></td><td>Do not infer from this repository; notebooks identify another author and adaptations.</td></tr>
-              <tr><th scope="row">20+ sessions / 80+ students / endorsement</th><td><span className={styles.weakEvidence}>Not in repo</span></td><td>Keep only if corroborated by separate approved evidence.</td></tr>
-              <tr><th scope="row">Open source availability</th><td><span className={styles.weakEvidence}>No</span></td><td>Private case study; no explicit licence and no source-download action.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <div className={styles.attributionPanel}>
-        <span>ATTRIBUTION NOTE</span>
-        <p>The audited notebooks explicitly credit Micaela Matta and adaptations from sources including Towards AI, the SciPython Book, TU Delft computational-physics lectures, the NZ Nano molecular-dynamics tutorial, Psi4Education and Mecozzi et al. This portfolio demo is a new interface around the methods and Samuel’s recorded work; it is not a replacement copy of those materials.</p>
+      <div className={styles.boundaryColumn}>
+        <section className={styles.boundaryCard}><div className={styles.sectionTitle}><span>03</span><div><strong>Reading the results</strong><small>Calculated here or recorded earlier</small></div></div>
+          <ul className={styles.evidenceList}>
+            <li><i className={styles.liveDot} /><div><strong>Interactive calculations</strong><p>Sampling, polymer generation and the small dynamics trajectory run locally with controlled inputs.</p></div></li>
+            <li><i className={styles.recordDot} /><div><strong>Recorded quantum energies</strong><p>The browser recomputes differences from recorded values; it does not run a new electronic-structure calculation.</p></div></li>
+            <li><i className={styles.adaptedDot} /><div><strong>Model assumptions</strong><p>Compare seeds, time steps and model rules. A convincing picture alone does not establish convergence or physical accuracy.</p></div></li>
+          </ul>
+        </section>
       </div>
-    </div>
-  );
+    </section>
+    <div className={styles.attributionPanel}><span>Teaching foundations</span><p>The exercises credit Micaela Matta, Towards AI, the SciPython Book, TU Delft computational-physics lectures, NZ Nano, Psi4Education and Mecozzi et al. Samuel completed and extended the computational work; the browser provides an interactive way to explore those methods.</p></div>
+  </div></ProjectCopy>;
 }
 
 export function ChemistryCodingStudio() {
@@ -1330,33 +1282,33 @@ export function ChemistryCodingStudio() {
   }
 
   return (
-    <DemoWindow
-      appName="CHEMLAB.OS / NOTEBOOK ATLAS"
+    <ProjectCopy copy={chemistryCopy}><DemoWindow
+      appName="Chemistry Lab"
       title="Chemistry coding workbench"
-      status="4 LIVE LABS · SOURCE AUDITED"
-      purpose="Turn four computational-chemistry notebook topics into inspectable numerical kernels with their assumptions and update rules exposed."
+      status="Four interactive labs"
+      purpose="Explore how sampling, molecular shape, numerical motion and quantum-energy calculations turn physical ideas into computational experiments."
       tryThis="Run the sampler, change polymer generation, step molecular dynamics or recompute a quantum-energy comparison."
-      watchFor="Seeded configurations, acceptance, energy drift and derived differences update locally; each lab labels what is recomputed versus archived."
+      watchFor="Temperature changes which moves are accepted, polymer rules change shape, and time steps change energy drift. Quantum tables retain recorded calculations."
       statusTone="safe"
       className={styles.window}
       footer={
         <>
-          <span>PRIVATE SOURCE · NO EXPLICIT LICENCE · ATTRIBUTED METHODS</span>
-          <span>JAN–MAY 2025 ARCHIVE</span>
+          <span>Computational chemistry · attributed teaching methods</span>
+          <span>January–May 2025</span>
         </>
       }
     >
       <div className={styles.studio}>
         <section className={styles.studioHero}>
           <div>
-            <span>COMPUTATIONAL CHEMISTRY / EVIDENCE WORKBENCH</span>
-            <h2>From notebook cells to scientific instruments you can test.</h2>
-            <p>Four deterministic browser labs expose the mathematics, algorithm and recorded evidence separately—so the interesting work is visible without distributing private coursework.</p>
+            <span>Computational chemistry</span>
+            <h2>Explore the rules, then see what they produce.</h2>
+            <p>Samuel completed and extended computational-chemistry exercises, then built Julia and React experiments. These four labs connect the equations with configurations, trajectories and energy comparisons.</p>
           </div>
-          <div className={styles.heroSeal} aria-label="Source audit complete">
-            <span>AUDIT</span>
-            <strong>05 / 05</strong>
-            <small>methods traced</small>
+          <div className={styles.heroSeal} aria-label="Four interactive chemistry labs">
+            <span>Explore</span>
+            <strong>04</strong>
+            <small>interactive labs</small>
           </div>
         </section>
 
@@ -1388,7 +1340,7 @@ export function ChemistryCodingStudio() {
           {activeLab === "audit" ? <AuditLab /> : null}
         </div>
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

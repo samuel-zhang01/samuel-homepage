@@ -1,4 +1,7 @@
 "use client";
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { molecularCopy } from "./copy/molecularCopy";
+import { MatchingOrderExperiment } from "./ScientificFailureExperiments";
 
 import ClassicSelect from "../ClassicSelect";
 
@@ -12,9 +15,10 @@ import {
   useState,
 } from "react";
 import { DemoWindow } from "./DemoChrome";
+import { MathEquation } from "./MathEquation";
 import styles from "./MolecularRecognitionStudio.module.css";
 
-type StudioTab = "assignment" | "atlas" | "method";
+type StudioTab = "order" | "assignment" | "atlas" | "method";
 type AssignmentView = "spectrum" | "matches" | "equations";
 type MoleculeId = "exaltenone" | "muscone";
 type BandId = "full" | "low" | "mid" | "high" | "focus";
@@ -63,9 +67,10 @@ const CPROT_URL =
   "https://github.com/samuel-zhang01/CPROT-Spec-Fast-Plotter/tree/9c6496d7b3c9f67dad163bf6f289de5e22ed3fd0";
 
 const studioTabs: Array<{ id: StudioTab; number: string; label: string; short: string }> = [
+  { id: "order", number: "00", label: "Matching order experiment", short: "Order" },
   { id: "assignment", number: "01", label: "Assignment desk", short: "FIT" },
   { id: "atlas", number: "02", label: "Conformer atlas", short: "3D" },
-  { id: "method", number: "03", label: "Evidence & method", short: "LOG" },
+  { id: "method", number: "03", label: "Research method", short: "LOG" },
 ];
 
 const exaltenoneBase = [
@@ -191,35 +196,35 @@ const pipeline = [
   {
     number: "01",
     title: "Search conformers",
-    tag: "PUBLIC ABSTRACT",
+    tag: "Research method",
     detail:
-      "Several conformational searches mapped the flexible macrocycles. The public record does not disclose the search settings or original candidate geometries.",
+      "Conformational searches explore the many shapes a flexible macrocycle can adopt, providing candidate structures for comparison.",
   },
   {
     number: "02",
     title: "Predict parameters",
-    tag: "PUBLIC ABSTRACT",
+    tag: "Research method",
     detail:
-      "Various theoretical methods predicted relative energies and spectroscopic parameters. Method-by-method values are not reproduced here.",
+      "Theoretical calculations predict relative energies and spectroscopic parameters. Different molecular shapes produce different rotational fingerprints.",
   },
   {
     number: "03",
     title: "Acquire 2–8 GHz",
-    tag: "PUBLIC ABSTRACT + REPO",
+    tag: "Measurement",
     detail:
-      "CP-FTMW measurements covered 2–8 GHz. The 2022 MATLAB repository contains two-column Exaltenone traces across the same band; raw rows are deliberately not embedded.",
+      "Broadband CP-FTMW measurements cover 2–8 GHz, producing frequency–intensity traces that can be compared with the predicted transitions.",
   },
   {
     number: "04",
     title: "Compare obs. / calc.",
-    tag: "PUBLIC ABSTRACT",
+    tag: "Research method",
     detail:
-      "Experimental and theoretical spectroscopic parameters were compared to identify plausible conformations. This browser uses an explicitly documented nearest-line teaching algorithm.",
+      "Compare several measured and predicted lines to identify plausible conformations. This browser uses a simplified nearest-unused-line rule to make the matching decisions visible.",
   },
   {
     number: "05",
     title: "Assign structures",
-    tag: "2025 PUBLIC RECORD",
+    tag: "Research result",
     detail:
       "The conference abstract reports more than 20 Exaltenone and more than 30 Muscone conformations observed and identified at that point in the study.",
   },
@@ -350,7 +355,7 @@ function SpectrumPlot({
   const isFine = span < 10;
 
   return (
-    <svg className={styles.spectrum} viewBox="0 0 880 330" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={molecularCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.spectrum} viewBox="0 0 880 330" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>{record.name} synthetic observed and predicted spectrum comparison</title>
       <desc id={`${chartId}-desc`}>
         Synthetic CP-FTMW teaching trace from {minimum.toFixed(isFine ? 3 : 0)} to {maximum.toFixed(isFine ? 3 : 0)} megahertz.
@@ -386,7 +391,7 @@ function SpectrumPlot({
 
       <g clipPath={`url(#${chartId}-clip)`}>
         <path d={`${path} L${plot.x + plot.width},${plot.y + plot.height} L${plot.x},${plot.y + plot.height} Z`} fill={`url(#${chartId}-fade)`} />
-        <path d={path} fill="none" stroke="#70e2e9" strokeWidth="1.7" vectorEffect="non-scaling-stroke" />
+        <path d={path} fill="none" stroke="#0c706d" strokeWidth="1.7" vectorEffect="non-scaling-stroke" />
         {visiblePredicted.map((line) => {
           const matched = matches.some((match) => match.predictedIndex === line.index);
           return (
@@ -396,7 +401,7 @@ function SpectrumPlot({
               x2={xOf(line.frequency)}
               y1={plot.y + plot.height - (matched ? 56 : 34)}
               y2={plot.y + plot.height}
-              stroke={matched ? "#f0bd50" : "#d97a79"}
+              stroke={matched ? "#915e00" : "#d97a79"}
               strokeWidth={matched ? 2 : 1.2}
               vectorEffect="non-scaling-stroke"
             />
@@ -415,17 +420,17 @@ function SpectrumPlot({
         ) : null}
       </g>
 
-      <text x={plot.x} y="20" className={styles.chartLabel}>SYNTHETIC OBSERVATION</text>
-      <g transform="translate(633 13)">
-        <line x1="0" x2="22" y1="0" y2="0" stroke="#70e2e9" strokeWidth="2" />
+      <text x={plot.x} y="20" className={styles.chartLabel}>Synthetic observation</text>
+      <g transform="translate(510 13)">
+        <line x1="0" x2="22" y1="0" y2="0" stroke="#0c706d" strokeWidth="2" />
         <text x="28" y="4" className={styles.chartLegend}>observed trace</text>
-        <line x1="112" x2="112" y1="-8" y2="7" stroke="#f0bd50" strokeWidth="2" />
-        <text x="121" y="4" className={styles.chartLegend}>matched prediction</text>
+        <line x1="154" x2="154" y1="-8" y2="7" stroke="#915e00" strokeWidth="2" />
+        <text x="166" y="4" className={styles.chartLegend}>matched prediction</text>
       </g>
       <text x={453} y="315" textAnchor="middle" className={styles.chartAxis}>Frequency / MHz</text>
       <text x="17" y="146" textAnchor="middle" transform="rotate(-90 17 146)" className={styles.chartAxis}>Intensity / a.u.</text>
-      <text x={plot.x + 8} y={plot.y + plot.height - 8} className={styles.stickLabel}>CALCULATED STICKS · {candidate.id}</text>
-    </svg>
+      <text x={plot.x + 8} y={plot.y + plot.height - 8} className={styles.stickLabel}>Predicted lines · {candidate.id}</text>
+    </svg></div></ProjectCopy>
   );
 }
 
@@ -508,7 +513,7 @@ function ConformerProjection({
     .sort((left, right) => left.z - right.z);
 
   return (
-    <svg
+    <ProjectCopy copy={molecularCopy}><svg
       className={styles.conformerSvg}
       viewBox="0 0 540 352"
       role="img"
@@ -585,9 +590,9 @@ function ConformerProjection({
         <line x1="0" x2="25" y1="0" y2="22" className={styles.axisC} />
         <text x="43" y="4">a</text><text x="-4" y="-43">b</text><text x="29" y="29">c</text>
       </g>
-      <text x="270" y="24" textAnchor="middle" className={styles.projectionTitle}>SYNTHETIC GEOMETRY · DRAG TO ROTATE</text>
+      <text x="270" y="24" textAnchor="middle" className={styles.projectionTitle}>Illustrative geometry · drag to rotate</text>
       <text x="270" y="338" textAnchor="middle" className={styles.projectionFooter}>{candidate.id} · yaw {Math.round(yaw)}° · pitch {Math.round(pitch)}°</text>
-    </svg>
+    </svg></ProjectCopy>
   );
 }
 
@@ -611,7 +616,7 @@ function RangeControl({
   onChange: (value: number) => void;
 }) {
   return (
-    <label className={styles.rangeControl} htmlFor={id}>
+    <ProjectCopy copy={molecularCopy}><label className={styles.rangeControl} htmlFor={id}>
       <span><b>{label}</b><output htmlFor={id}>{output}</output></span>
       <input
         id={id}
@@ -622,7 +627,7 @@ function RangeControl({
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
       />
-    </label>
+    </label></ProjectCopy>
   );
 }
 
@@ -642,7 +647,7 @@ export function MolecularRecognitionStudio() {
   const [focusedFrequency, setFocusedFrequency] = useState<number | null>(null);
   const [runNumber, setRunNumber] = useState(1);
   const [message, setMessage] = useState(
-    "Synthetic line catalog loaded. E-01 is the hidden reference candidate; run the documented matcher or test a decoy.",
+    "Synthetic line catalogue loaded. Run the comparison, then try a different candidate.",
   );
   const [yaw, setYaw] = useState(-24);
   const [pitch, setPitch] = useState(24);
@@ -749,10 +754,10 @@ export function MolecularRecognitionStudio() {
   }
 
   return (
-    <DemoWindow
-      appName="MOLECULAR RECOGNITION · LAB"
+    <ProjectCopy copy={molecularCopy}><DemoWindow
+      appName="Molecular recognition lab"
       title="Macrocycle Assignment Workbench"
-      status="PUBLIC RECORD + SYNTHETIC DATA"
+      status="Synthetic assignment experiment"
       purpose="Demonstrate how rotational spectroscopists distinguish plausible molecular conformers by matching several predicted and observed transitions."
       tryThis="Offset the synthetic spectrum, compare a candidate with the decoy, then focus a matched transition."
       watchFor="Residuals and assignment confidence change across multiple lines; a single nearby peak is not treated as proof."
@@ -760,18 +765,18 @@ export function MolecularRecognitionStudio() {
       className={styles.studio}
       footer={
         <>
-          <span>CP-FTMW · 2–8 GHz · CONFERENCE RECORD 2025</span>
-          <span>NO ASSESSED FILES · NO RAW EXPERIMENTAL ROWS</span>
+          <span>CP-FTMW · 2–8 GHz · ISMS 2025</span>
+          <span>Synthetic spectra and structures for exploration</span>
         </>
       }
     >
       <section className={styles.hero} aria-labelledby="recognition-studio-title">
         <div className={styles.heroCopy}>
-          <span>MOLECULAR SHAPE → ROTATIONAL SIGNATURE</span>
+          <span>Molecular shape → rotational signature</span>
           <h2 id="recognition-studio-title">Compare theoretical predictions with the observed spectrum.</h2>
           <p>
-            Reconstructed from a public MATLAB artifact and the 2025 ISMS conference record that names Samuel as a co-author.
-            Every number you can manipulate below is synthetic; the research facts are kept separate and cited.
+            Samuel contributed to the King’s College London research on flexible macrocyclic musks, presented at ISMS 2025.
+            Explore its assignment logic with synthetic spectra and molecular shapes.
           </p>
         </div>
         <div className={styles.heroInstrument} aria-hidden="true">
@@ -781,9 +786,9 @@ export function MolecularRecognitionStudio() {
       </section>
 
       <div className={styles.truthStrip} role="note">
-        <strong>DISPLAY CONTRACT</strong>
-        <p><b>Public facts:</b> molecules, method, range, comparison workflow and reported counts. <b>Simulation:</b> spectra, constants, energies, geometries and matches.</p>
-        <span>RAW DATA STAYS OUT</span>
+        <strong>About this example</strong>
+        <p>The molecules, measurement range and research outcomes come from the study. Adjustable spectra, constants, energies and structures are synthetic teaching examples.</p>
+        <span>Explore the matching process</span>
       </div>
 
       <div className={styles.studioTabs} role="tablist" aria-label="Molecular recognition workbench sections">
@@ -805,6 +810,7 @@ export function MolecularRecognitionStudio() {
       </div>
 
       <div className={styles.workbench}>
+        {activeTab === "order" ? <section id="recognition-panel-order" role="tabpanel" aria-labelledby="recognition-tab-order"><MatchingOrderExperiment /></section> : null}
         {activeTab === "assignment" ? (
           <section
             id="recognition-panel-assignment"
@@ -813,13 +819,13 @@ export function MolecularRecognitionStudio() {
             className={styles.assignmentPanel}
           >
             <div className={styles.sectionHeading}>
-              <div><span>OBSERVED ↔ CALCULATED</span><h3>Greedy line-assignment sandbox</h3><p>Change the tolerance, add a calibration offset, test decoys and inspect every accepted residual. The matcher uses a documented ordered nearest-neighbour heuristic. It is neither a global bipartite fit nor the group&apos;s expert assignment workflow.</p></div>
-              <div className={styles.recordBadge}><small>RESEARCH BAND</small><strong>2–8 GHz</strong><span>publicly documented</span></div>
+              <div><span>Observed ↔ calculated</span><h3>Greedy line-matching experiment</h3><p>Change the tolerance and calibration offset, test decoys and inspect the accepted residuals. This example finds the nearest unused line in sequence to explain the matching logic; research assignments combine several physical judgements.</p></div>
+              <div className={styles.recordBadge}><small>Research band</small><strong>2–8 GHz</strong><span>publicly documented</span></div>
             </div>
 
             <div className={styles.assignmentGrid}>
               <aside className={styles.controlPanel} aria-label="Assignment controls">
-                <div className={styles.panelTitle}><span>CONTROL DESK</span><b>RUN {String(runNumber).padStart(2, "0")}</b></div>
+                <div className={styles.panelTitle}><span>Controls</span><b>Run {String(runNumber).padStart(2, "0")}</b></div>
 
                 <fieldset className={styles.segmentField}>
                   <legend>Molecule</legend>
@@ -883,7 +889,7 @@ export function MolecularRecognitionStudio() {
                 </div>
 
                 <div className={styles.moleculeCard}>
-                  <span>SOURCE FACTS</span>
+                  <span>Research context</span>
                   <strong>{record.name}</strong>
                   <dl>
                     <div><dt>Formula</dt><dd>{record.formula}</dd></div>
@@ -916,10 +922,10 @@ export function MolecularRecognitionStudio() {
                 </div>
 
                 <div className={styles.metricRail} aria-label="Current comparison metrics">
-                  <div><span>LINE HITS</span><strong>{matches.length}<small>/{candidate.lines.length}</small></strong></div>
-                  <div><span>RMS RESIDUAL</span><strong>{rms === null ? "—" : rms.toFixed(1)}<small> kHz</small></strong></div>
-                  <div><span>ACTIVE WINDOW</span><strong>{chartRange[0].toFixed(chartRange[1] - chartRange[0] < 10 ? 3 : 0)}<small> → {chartRange[1].toFixed(chartRange[1] - chartRange[0] < 10 ? 3 : 0)}</small></strong></div>
-                  <div><span>CANDIDATE</span><strong>{candidate.id}</strong></div>
+                  <div><span>Matched lines</span><strong>{matches.length}<small>/{candidate.lines.length}</small></strong></div>
+                  <div><span>RMS residual</span><strong>{rms === null ? "—" : rms.toFixed(1)}<small> kHz</small></strong></div>
+                  <div><span>Frequency window</span><strong>{chartRange[0].toFixed(chartRange[1] - chartRange[0] < 10 ? 3 : 0)}<small> → {chartRange[1].toFixed(chartRange[1] - chartRange[0] < 10 ? 3 : 0)}</small></strong></div>
+                  <div><span>Candidate</span><strong>{candidate.id}</strong></div>
                 </div>
 
                 {assignmentView === "spectrum" ? (
@@ -935,7 +941,7 @@ export function MolecularRecognitionStudio() {
                       focusedFrequency={focusedFrequency}
                     />
                     <div className={styles.chartReadout}>
-                      <span>SYNTHETIC FFT VIEW</span>
+                      <span>Synthetic spectrum view</span>
                       <p>Teal is a deterministic teaching trace; gold sticks pass the current one-to-one tolerance test.</p>
                       <strong>{observed.length} OBS. LINES</strong>
                     </div>
@@ -945,7 +951,7 @@ export function MolecularRecognitionStudio() {
                 {assignmentView === "matches" ? (
                   <div className={styles.matchView}>
                     <div className={styles.tableHeader}>
-                      <div><span>AUDITABLE OUTPUT</span><h4>Accepted line pairs</h4></div>
+                      <div><span>Matching results</span><h4>Accepted line pairs</h4></div>
                       <p>Click any row to inspect the sub-MHz neighbourhood around that synthetic peak.</p>
                     </div>
                     <div className={styles.tableWrap}>
@@ -973,24 +979,25 @@ export function MolecularRecognitionStudio() {
                 {assignmentView === "equations" ? (
                   <div className={styles.equationView}>
                     <div className={styles.equationCard}>
-                      <span>01 · CALIBRATION</span>
-                      <div className={styles.formula}>ν̂<sub>j</sub> = ν<sup>calc</sup><sub>j</sub> + δ</div>
-                      <p>The user-controlled offset δ is applied to every calculated line before matching.</p>
+                      <span>01 · Calibration</span>
+                      <div className={styles.formula}><MathEquation tex={String.raw`\hat\nu_j=\nu_j^{\mathrm{calc}}+\delta`} label="ν̂ⱼ = νⱼᶜᵃˡᶜ + δ" /></div>
+                      <p>The control’s offset is converted from kHz to MHz; this converted δ is applied to every calculated line before matching.</p>
                     </div>
                     <div className={styles.equationCard}>
-                      <span>02 · GREEDY ONE-TO-ONE MATCH</span>
-                      <div className={styles.formula}>j* = arg min<sub>j ∈ unused</sub> |ν<sup>obs</sup><sub>i</sub> − ν̂<sub>j</sub>|</div>
-                      <p>Predicted lines are visited in catalogue order; the nearest still-unused observation is accepted only when its absolute residual is no larger than tolerance τ. Changing order can change the result.</p>
+                      <span>02 · Greedy one-to-one match</span>
+                      <div className={styles.formula}><MathEquation tex={String.raw`i^*(j)=\operatorname*{arg\,min}_{i\in\mathcal U_j}\left|\nu_i^{\mathrm{obs}}-\hat\nu_j\right|`} label="i*(j) = arg min over unused observations i of |νᵢᵒᵇˢ − ν̂ⱼ|" /></div>
+                      <p>For each predicted line j in catalogue order, Uⱼ contains the still-unused observed indices. The nearest observation i*(j) is accepted and removed only when <MathEquation display={false} tex={String.raw`|r_j|\le\tau`} label="|rⱼ| ≤ τ" />, with both residual and tolerance in kHz. Empty sets or out-of-tolerance candidates leave j unmatched; changing catalogue order can change the result.</p>
                     </div>
                     <div className={styles.equationCard}>
-                      <span>03 · FIT RECEIPT</span>
-                      <div className={styles.formula}>RMS = √[(1/N) Σ(ν<sup>obs</sup><sub>i</sub> − ν̂<sub>j*</sub>)²]</div>
+                      <span>03 · Fit summary</span>
+                      <div className={styles.formula}><MathEquation tex={String.raw`\begin{aligned}r_j&=1000\left(\nu_{i^*(j)}^{\mathrm{obs}}-\hat\nu_j\right)\\\mathrm{RMS}&=\sqrt{\frac{1}{|\mathcal M|}\sum_{j\in\mathcal M}r_j^2}\end{aligned}`} label="rⱼ = 1000(νᵢ*(ⱼ)ᵒᵇˢ − ν̂ⱼ); RMS = √[(1/|M|) Σ over accepted j of rⱼ²]" /></div>
+                      <p>Frequencies are in MHz; rⱼ is observed minus predicted in kHz. M contains only accepted predictions, so RMS is undefined when M is empty.</p>
                       <p>Current output: {matches.length} pairs; {rms === null ? "RMS undefined" : `${rms.toFixed(2)} kHz RMS`}.</p>
                     </div>
                     <div className={`${styles.equationCard} ${styles.physicalCard}`}>
-                      <span>PHYSICAL BACKGROUND · NOT A FIT CLAIM</span>
-                      <div className={styles.formula}>A = h / (8π²I<sub>a</sub>)</div>
-                      <p>Rotational constants are inversely related to principal moments of inertia. The public abstract says spectroscopic parameters were predicted; it does not publish the values used here.</p>
+                      <span>Physical background</span>
+                      <div className={styles.formula}><MathEquation tex={String.raw`A=\frac{h}{8\pi^2I_a}`} label="A = h/(8π²Iₐ)" /></div>
+                      <p>Rotational constants are inversely related to principal moments of inertia. Changing the mass distribution changes the spectral fingerprint; illustrative values show that relationship here.</p>
                     </div>
                     <pre className={styles.runReceipt} aria-label="Current matcher output">{`matcher_pass_${String(runNumber).padStart(2, "0")} {
   input: "synthetic/${moleculeId}/${candidate.id}"
@@ -1008,12 +1015,12 @@ export function MolecularRecognitionStudio() {
             </div>
 
             <div className={styles.liveStatus} role="status" aria-live="polite">
-              <span>ANALYSIS LOG</span><p>{message}</p><strong>DETERMINISTIC</strong>
+              <span>Comparison</span><p>{message}</p>
             </div>
 
             <section className={styles.candidateBoard} aria-labelledby="candidate-board-title">
               <div className={styles.candidateHeading}>
-                <div><span>SYNTHETIC SHORTLIST</span><h4 id="candidate-board-title">Candidate comparison board</h4></div>
+                <div><span>Illustrative candidates</span><h4 id="candidate-board-title">Candidate comparison board</h4></div>
                 <RangeControl
                   id="recognition-temperature"
                   label="Illustrative Boltzmann T"
@@ -1057,8 +1064,8 @@ export function MolecularRecognitionStudio() {
             className={styles.atlasPanel}
           >
             <div className={styles.sectionHeading}>
-              <div><span>SHAPE ↔ INERTIA ↔ SPECTRUM</span><h3>Rotatable conformer atlas</h3><p>Explore why a flexible 15-membered ring can produce many distinguishable rotational signatures.</p></div>
-              <div className={styles.syntheticStamp}>SCHEMATIC<br /><strong>NOT DFT</strong></div>
+              <div><span>Shape ↔ inertia ↔ spectrum</span><h3>Rotatable conformer atlas</h3><p>Explore why a flexible 15-membered ring can produce many distinguishable rotational signatures.</p></div>
+              <div className={styles.syntheticStamp}>Illustrative geometry<br /><strong>Generated model</strong></div>
             </div>
 
             <div className={styles.atlasGrid}>
@@ -1088,9 +1095,9 @@ export function MolecularRecognitionStudio() {
               </div>
 
               <aside className={styles.geometryLedger} aria-label="Synthetic geometry calculations">
-                <div className={styles.geometryHeader}><span>LIVE GEOMETRY LEDGER</span><strong>{record.formula}</strong></div>
+                <div className={styles.geometryHeader}><span>Geometry</span><strong>{record.formula}</strong></div>
                 <div className={styles.constantBlock}>
-                  <span>SYNTHETIC ROTATIONAL CONSTANTS / MHz</span>
+                  <span>Illustrative rotational constants / MHz</span>
                   <div>{(["A", "B", "C"] as const).map((axis, index) => <p key={axis}><b>{axis}</b><strong>{candidate.constants[index].toFixed(2)}</strong></p>)}</div>
                   <small>Larger principal moment ↔ smaller rotational constant.</small>
                 </div>
@@ -1103,14 +1110,14 @@ export function MolecularRecognitionStudio() {
                   <div><dt>Illustrative weight</dt><dd>{(selectedPopulation * 100).toFixed(1)}%</dd></div>
                 </dl>
                 <div className={styles.geometryNote}>
-                  <strong>Why the boundary matters</strong>
-                  <p>This ring is generated from sinusoidal puckering controls. It demonstrates dimensional reasoning without posing as an unpublished optimized structure.</p>
+                  <strong>What does this geometry explain?</strong>
+                  <p>Sinusoidal puckering controls generate the ring, showing how shape changes the moments of inertia. It is an illustrative geometry rather than a research-optimised structure.</p>
                 </div>
               </aside>
             </div>
 
             <section className={styles.energyLandscape} aria-labelledby="energy-landscape-title">
-              <div className={styles.landscapeHeading}><div><span>RELATIVE-ENERGY SANDBOX</span><h4 id="energy-landscape-title">Four shapes, four rotational fingerprints</h4></div><p>Select a column to rotate that geometry and send its calculated sticks back to the assignment desk.</p></div>
+              <div className={styles.landscapeHeading}><div><span>Relative energy</span><h4 id="energy-landscape-title">Four shapes, four rotational fingerprints</h4></div><p>Select a column to rotate that geometry and send its calculated sticks back to the assignment desk.</p></div>
               <div className={styles.energyChart}>
                 {record.candidates.map((entry, index) => {
                   const height = 42 + (1 - entry.energy / 2.6) * 116;
@@ -1143,11 +1150,10 @@ export function MolecularRecognitionStudio() {
             className={styles.methodPanel}
           >
             <div className={styles.sectionHeading}>
-              <div><span>PROVENANCE BEFORE POLISH</span><h3>What the sources support</h3><p>The public record is strong enough for a process reconstruction, but not for releasing the original analysis or asserting undocumented contribution details.</p></div>
-              <div className={styles.auditSeal}><span>2 SOURCES</span><strong>0 RAW ROWS</strong><small>SHIPPED</small></div>
+              <div><span>From molecular shape to assignment</span><h3>How the research connects theory and measurement</h3><p>Conformer searches narrow the candidate shapes; predicted rotational fingerprints are then compared with broadband measurements. Several consistent lines provide a stronger assignment than one nearby peak.</p></div>
             </div>
 
-            <div className={styles.pipeline} aria-label="Molecular recognition pipeline traced to source">
+            <div className={styles.pipeline} aria-label="Molecular recognition research pipeline">
               {pipeline.map((stage, index) => (
                 <button key={stage.number} type="button" aria-pressed={pipelineStage === index} onClick={() => setPipelineStage(index)}>
                   <span>{stage.number}</span><strong>{stage.title}</strong><small>{stage.tag}</small>
@@ -1162,59 +1168,47 @@ export function MolecularRecognitionStudio() {
 
             <div className={styles.evidenceGrid}>
               <section className={styles.publicRecord} aria-labelledby="public-record-title">
-                <div className={styles.cardCap}><span>PRIMARY PUBLIC RECORD</span><strong>ISMS · 2025</strong></div>
+                <div className={styles.cardCap}><span>Conference presentation</span><strong>ISMS · 2025</strong></div>
                 <h4 id="public-record-title">Macrocyclic musk conformational landscape</h4>
-                <p>The official program lists Samuel among the KCL co-authors and records:</p>
+                <p>Samuel is a co-author of the King’s College London presentation, which describes:</p>
                 <ul>
                   <li>Muscone ({molecules.muscone.formula}) and Exaltenone ({molecules.exaltenone.formula}) as 15-membered macrocyclic ketones.</li>
                   <li>CP-FTMW spectroscopy across 2–8 GHz, supported by conformational searches and theoretical predictions.</li>
                   <li>Identification by comparing experimental and theoretical spectroscopic parameters.</li>
                   <li>More than 30 Muscone and more than 20 Exaltenone conformations observed and identified at the time of the abstract.</li>
                 </ul>
-                <a href={ABSTRACT_URL} target="_blank" rel="noreferrer">Open official session record <span aria-hidden="true">↗</span></a>
+                <a href={ABSTRACT_URL} target="_blank" rel="noreferrer">Read the conference abstract <span aria-hidden="true">↗</span></a>
               </section>
 
               <section className={styles.sourceArtifact} aria-labelledby="source-artifact-title">
-                <div className={styles.cardCap}><span>PUBLIC SOURCE ARTIFACT</span><strong>MATLAB · 2022</strong></div>
+                <div className={styles.cardCap}><span>Supporting research tool</span><strong>MATLAB · 2022</strong></div>
                 <h4 id="source-artifact-title">CPROT Fast Spectroscopy Plotter</h4>
-                <p>The pinned public repository independently establishes a MATLAB App Designer tool and Exaltenone two-column traces spanning 2,000–7,999.975 MHz.</p>
-                <div className={styles.artifactStats}>
-                  <div><span>APP</span><strong>.mlapp</strong></div>
-                  <div><span>SAMPLE SHAPE</span><strong>240k × 2</strong></div>
-                  <div><span>LICENCE</span><strong>NONE</strong></div>
-                </div>
-                <p className={styles.licenceWarning}><strong>No explicit repository licence:</strong> public access does not grant reuse rights. This exhibit links the commit and rebuilds concepts; it does not redistribute source or experiment rows.</p>
-                <a href={CPROT_URL} target="_blank" rel="noreferrer">Inspect pinned repository <span aria-hidden="true">↗</span></a>
+                <p>Samuel’s MATLAB App Designer tool makes frequency–intensity traces easier to inspect, with precise panning, labelling and high-resolution export. It supports the practical work of exploring a crowded rotational spectrum.</p>
+                <a href={CPROT_URL} target="_blank" rel="noreferrer">View the plotting tool <span aria-hidden="true">↗</span></a>
               </section>
             </div>
 
             <section className={styles.claimLedger} aria-labelledby="claim-ledger-title">
-              <div className={styles.claimHeader}><div><span>CLAIM CONTROL</span><h4 id="claim-ledger-title">Evidence ledger</h4></div><p>Labels describe what can safely appear as fact on the project card.</p></div>
-              <div className={styles.claimTableWrap} tabIndex={0} aria-label="Scrollable evidence ledger table">
-                <table>
-                  <caption>Source status of claims associated with the molecular-recognition project</caption>
-                  <thead><tr><th scope="col">Claim</th><th scope="col">Status</th><th scope="col">Portfolio treatment</th></tr></thead>
-                  <tbody>
-                    <tr><th scope="row">Named co-author on the 2025 conference record</th><td><span className={styles.publicTag}>PUBLIC</span></td><td>Shown and linked.</td></tr>
-                    <tr><th scope="row">2–8 GHz CP-FTMW + theory/experiment comparison</th><td><span className={styles.publicTag}>PUBLIC</span></td><td>Reconstructed with synthetic inputs.</td></tr>
-                    <tr><th scope="row">20+ Exaltenone and 30+ Muscone conformations</th><td><span className={styles.publicTag}>PUBLIC</span></td><td>Attributed to the 2025 abstract.</td></tr>
-                    <tr><th scope="row">MATLAB Exaltenone plotting artifact</th><td><span className={styles.sourceTag}>SOURCE</span></td><td>Pinned repository linked; no code/data copied.</td></tr>
-                    <tr><th scope="row">40% faster analysis and research-group adoption</th><td><span className={styles.selfTag}>SELF-REPORTED</span></td><td>Not used as a verified demo metric.</td></tr>
-                    <tr><th scope="row">Individual ownership of every assignment or method</th><td><span className={styles.absentTag}>NOT RESOLVED</span></td><td>Not claimed.</td></tr>
-                  </tbody>
-                </table>
-              </div>
+              <div className={styles.claimHeader}><div><span>Reading an assignment</span><h4 id="claim-ledger-title">Use several checks together</h4></div><p>A small residual is helpful only when enough lines are explained and the proposed structure is physically plausible.</p></div>
+              <div className={styles.claimTableWrap} tabIndex={0} aria-label="Scrollable spectral assignment guide"><table>
+                <caption>What each comparison contributes</caption>
+                <thead><tr><th scope="col">Check</th><th scope="col">What it asks</th><th scope="col">Useful caution</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Line coverage</th><td>How many predicted transitions have an observed match?</td><td>A narrow tolerance can produce a small residual by leaving difficult lines unmatched.</td></tr>
+                  <tr><th scope="row">Residual</th><td>How far apart are the matched frequencies?</td><td>Inspect its sign and size across several lines, alongside coverage.</td></tr>
+                  <tr><th scope="row">Rotational constants</th><td>Does the candidate’s mass distribution fit the spectral fingerprint?</td><td>Similar energies do not imply identical rotational spectra.</td></tr>
+                  <tr><th scope="row">Relative energy</th><td>How plausible is the conformation under the model’s assumptions?</td><td>The illustrated Boltzmann fractions are a teaching calculation, not measured populations.</td></tr>
+                </tbody>
+              </table></div>
             </section>
-
             <div className={styles.boundaryGrid}>
-              <section><span>SAFE TO SHOW</span><strong>Process & public outcome</strong><ul><li>Public abstract facts</li><li>Original browser calculations</li><li>Synthetic spectra and geometries</li><li>Source links and limitations</li></ul></section>
-              <section><span>DELIBERATELY EXCLUDED</span><strong>Protected research material</strong><ul><li>Assessed reports and personal identifiers</li><li>Raw experimental rows</li><li>Unpublished optimized geometries</li><li>Third-party code or private notebooks</li></ul></section>
-              <section><span>RECONSTRUCTION STATUS</span><strong>Educational, not analytical</strong><p>This workbench demonstrates the comparison logic and scientific intuition. It cannot reproduce or validate the research assignments without the original catalogs, settings and expert fitting workflow.</p></section>
+              <section><span>Research outcome</span><strong>Flexible macrocycles can have many observable forms</strong><p>The 2025 conference abstract reports more than 20 Exaltenone and more than 30 Muscone conformations identified by the group.</p></section>
+              <section><span>Interactive example</span><strong>Change one assumption at a time</strong><p>Try the frequency offset, matching tolerance and candidate selection. Synthetic spectra and geometries make the method available to explore.</p></section>
             </div>
           </section>
         ) : null}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

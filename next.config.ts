@@ -40,6 +40,9 @@ const nextConfig: NextConfig = {
     localPatterns: [
       { pathname: "/coverd-logo-black-on-transparent.png" },
       { pathname: "/headshot.jpg" },
+      { pathname: "/project-art/microrobot.webp" },
+      { pathname: "/project-art/neural-cfd.webp" },
+      { pathname: "/project-art/finance.webp" },
       { pathname: "/projects/neural-cfd-surrogates/cylinder-wake.png" },
       { pathname: "/hackathons/runhack/building-in-motion.jpg" },
       { pathname: "/hackathons/runhack/community-track-group.jpg" },

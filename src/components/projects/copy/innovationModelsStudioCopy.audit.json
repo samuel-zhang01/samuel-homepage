@@ -1,0 +1,13 @@
+{
+  "dictionary": "innovationModelsStudioCopy.ts",
+  "exportName": "innovationModelsStudioCopy",
+  "sources": [
+    "src/components/projects/InnovationModelsStudio.tsx"
+  ],
+  "identities": {
+    "OPP": "Fixed diagram code identifying one of the four governance models.",
+    "ENB": "Fixed diagram code identifying one of the four governance models.",
+    "ADV": "Fixed diagram code identifying one of the four governance models.",
+    "PRO": "Fixed diagram code identifying one of the four governance models."
+  }
+}

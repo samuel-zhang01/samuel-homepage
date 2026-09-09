@@ -2,10 +2,16 @@
 
 import ClassicSelect from "../ClassicSelect";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 import { DemoWindow } from "./DemoChrome";
+import { FinanceImportExperiment } from "./FinanceImportExperiment";
+import { MathEquation } from "./MathEquation";
 import styles from "./FinanceStudio.module.css";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { projectText } from "@/lib/projectCopy";
+import type { Locale } from "@/lib/i18n";
+import { financeCopy } from "./copy/financeCopy";
 
 type ViewId = "overview" | "ledger" | "recurring" | "transfers" | "import";
 type AccountKind = "current" | "joint" | "credit" | "investment";
@@ -210,10 +216,10 @@ const DECLARED_CLOSINGS: Record<Account["id"], number> = {
 
 const VIEWS: { id: ViewId; label: string; hint: string }[] = [
   { id: "overview", label: "Overview", hint: "Reconciled cash flow" },
-  { id: "ledger", label: "Ledger", hint: "Classification trace" },
+  { id: "ledger", label: "Ledger", hint: "Why each category" },
   { id: "recurring", label: "Patterns", hint: "Cadence detector" },
   { id: "transfers", label: "Transfers", hint: "Cross-account matching" },
-  { id: "import", label: "Import audit", hint: "Parser + dedupe pipeline" },
+  { id: "import", label: "Import checks", hint: "Parser + dedupe pipeline" },
 ];
 
 const CATEGORY_ORDER: Category[] = [
@@ -247,8 +253,8 @@ function percentage(value: number) {
   return new Intl.NumberFormat("en-GB", { style: "percent", maximumFractionDigits: 1 }).format(value);
 }
 
-function shortDate(value: string) {
-  return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short" }).format(new Date(`${value}T00:00:00Z`));
+function shortDate(value: string, locale: Locale) {
+  return new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short" }).format(new Date(`${value}T00:00:00Z`));
 }
 
 function accountFor(id: string) {
@@ -503,7 +509,7 @@ function ScopeControls({ range, setRange, accountId, setAccountId }: {
   setAccountId: (id: string) => void;
 }) {
   return (
-    <div className={styles.scopeBar} aria-label="Cash-flow scope">
+    <ProjectCopy copy={financeCopy}><div className={styles.scopeBar} aria-label="Cash-flow scope">
       <div className={styles.rangeSwitch} aria-label="Analysis period">
         <button type="button" className={range === 30 ? styles.active : ""} onClick={() => setRange(30)} aria-pressed={range === 30}>30 days</button>
         <button type="button" className={range === 90 ? styles.active : ""} onClick={() => setRange(90)} aria-pressed={range === 90}>90 days</button>
@@ -516,22 +522,22 @@ function ScopeControls({ range, setRange, accountId, setAccountId }: {
         </ClassicSelect>
       </label>
       <p><strong>Anchor</strong> {ANCHOR_DATE} · date windows are fixed and reproducible</p>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function MetricCard({ label, value, note, tone = "default" }: {
   label: string;
   value: string;
-  note: string;
+  note: ReactNode;
   tone?: "default" | "positive" | "negative" | "teal";
 }) {
   return (
-    <article className={`${styles.metricCard} ${styles[tone]}`}>
+    <ProjectCopy copy={financeCopy}><article className={`${styles.metricCard} ${styles[tone]}`}>
       <span>{label}</span>
       <strong>{value}</strong>
       <small>{note}</small>
-    </article>
+    </article></ProjectCopy>
   );
 }
 
@@ -565,7 +571,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
   const transactionCount = rangeLedger.length;
 
   return (
-    <>
+    <ProjectCopy copy={financeCopy}><>
       <div className={styles.metricStrip}>
         <MetricCard label="SCOPE POSITION" value={money(scopedPosition)} note="At anchor; cash + holdings, debt negative" tone="teal" />
         <MetricCard label="HOUSEHOLD INFLOWS" value={money(income)} note={`${range}-day eligible ledger`} tone="positive" />
@@ -606,7 +612,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
           <ul className={styles.signalStack}>
             <li><span className={styles.signalGood}>✓</span><div><strong>{scopedTransfers.length} transfer groups neutralised</strong><p>{money(moved)} moved once between accounts; both legs stay outside income and spending.</p></div></li>
             <li><span className={anomalies.length ? styles.signalWarn : styles.signalGood}>{anomalies.length || "✓"}</span><div><strong>{anomalies.length ? "Review queue has evidence" : "No anomalies at this threshold"}</strong><p>{anomalies[0]?.reason ?? "Category z-score and two-day duplicate checks are clear."}</p></div></li>
-            <li><span className={styles.signalGood}>✓</span><div><strong>Four bank adapters reconcile</strong><p>Opening + normalised movements = closing. The investment CSV is audited as a cash ledger.</p></div></li>
+            <li><span className={styles.signalGood}>✓</span><div><strong>Four bank adapters reconcile</strong><p>Opening + normalised movements = closing. The investment CSV is treated as a cash ledger.</p></div></li>
           </ul>
         </section>
       </div>
@@ -622,7 +628,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
                 <article key={account.id}>
                   <span className={styles.accountMark} style={{ background: account.accent }} />
                   <div><strong>{account.label}</strong><small>{account.adapter} · {account.kind === "credit" ? "debt normalised negative" : account.kind}</small></div>
-                  <code>{money(account.openingBalance)} {movement >= 0 ? "+" : "−"} {money(Math.abs(movement))}</code>
+                  <MathEquation className={styles.accountEquation} tex={String.raw`\pounds ${account.openingBalance.toFixed(2)}${movement >= 0 ? "+" : "-"}\pounds ${Math.abs(movement).toFixed(2)}`} />
                   <strong className={closing < 0 ? styles.debt : ""}>{money(closing)}</strong>
                 </article>
               );
@@ -643,7 +649,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
           </div>
         </section>
       </div>
-    </>
+    </></ProjectCopy>
   );
 }
 
@@ -652,6 +658,7 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
   defaultTransfers: TransferMatch[];
   anomalies: Anomaly[];
 }) {
+  const locale = useProjectLocale();
   const [category, setCategory] = useState<"all" | Category>("all");
   const [mode, setMode] = useState<"all" | "household" | "excluded">("all");
   const [query, setQuery] = useState("");
@@ -665,17 +672,17 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
   const filtered = rangeLedger.filter((transaction) => (
     (category === "all" || transaction.category === category)
     && (mode === "all" || (mode === "household" ? householdEligible(transaction) : !householdEligible(transaction)))
-    && (!cleanQuery || `${transaction.description} ${transaction.category} ${accountFor(transaction.accountId).label}`.toLocaleLowerCase().includes(cleanQuery))
+    && (!cleanQuery || `${transaction.description} ${transaction.category} ${accountFor(transaction.accountId).label} ${projectText(locale, financeCopy, transaction.description)} ${projectText(locale, financeCopy, transaction.category)} ${projectText(locale, financeCopy, accountFor(transaction.accountId).label)}`.toLocaleLowerCase().includes(cleanQuery))
   ));
   const selected = rangeLedger.find((transaction) => transaction.id === selectedId) ?? filtered[0] ?? rangeLedger[0];
   const filteredIncome = roundMoney(filtered.filter((transaction) => householdEligible(transaction) && transaction.amount > 0).reduce((sum, transaction) => sum + transaction.amount, 0));
   const filteredSpend = roundMoney(Math.abs(filtered.filter((transaction) => householdEligible(transaction) && transaction.amount < 0).reduce((sum, transaction) => sum + transaction.amount, 0)));
 
   return (
-    <div className={styles.ledgerLayout}>
+    <ProjectCopy copy={financeCopy}><div className={styles.ledgerLayout}>
       <section className={`${styles.oceanPanel} ${styles.ledgerPanel}`} aria-labelledby="finance-ledger-title">
         <div className={styles.panelTitle}>
-          <div><span>NORMALISED TRANSACTION GRAIN</span><h3 id="finance-ledger-title">Synthetic ledger</h3></div>
+          <div><span>TRANSACTION DETAILS</span><h3 id="finance-ledger-title">Synthetic ledger</h3></div>
           <span className={styles.rowCount}>{filtered.length}/{rangeLedger.length} rows</span>
         </div>
         <div className={styles.ledgerFilters}>
@@ -691,7 +698,7 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
                 const isSelected = selected?.id === transaction.id;
                 return (
                   <tr key={transaction.id} className={isSelected ? styles.selectedRow : ""}>
-                    <td>{shortDate(transaction.date)}</td>
+                    <td>{shortDate(transaction.date, locale)}</td>
                     <td>{accountFor(transaction.accountId).shortLabel}</td>
                     <td><button type="button" onClick={() => setSelectedId(transaction.id)} aria-pressed={isSelected}><strong>{transaction.merchant}</strong><small>{transaction.description}</small></button></td>
                     <td><span className={styles.categoryPill}>{transaction.category}</span></td>
@@ -712,22 +719,22 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
       </section>
 
       <aside className={`${styles.oceanPanel} ${styles.inspector}`} aria-live="polite">
-        <div className={styles.panelTitle}><div><span>WHY THIS ROW?</span><h3>Transaction trace</h3></div></div>
+        <div className={styles.panelTitle}><div><span>WHY THIS ROW?</span><h3>Why this record?</h3></div></div>
         {selected ? (
           <div className={styles.inspectorBody}>
-            <div className={styles.inspectAmount}><span>{shortDate(selected.date)} · {accountFor(selected.accountId).label}</span><strong className={selected.amount >= 0 ? styles.amountIn : styles.amountOut}>{money(selected.amount, true)}</strong></div>
+            <div className={styles.inspectAmount}><span>{shortDate(selected.date, locale)} · {accountFor(selected.accountId).label}</span><strong className={selected.amount >= 0 ? styles.amountIn : styles.amountOut}>{money(selected.amount, true)}</strong></div>
             <dl>
               <div><dt>Normalised merchant</dt><dd>{selected.merchant}</dd></div>
               <div><dt>Category</dt><dd>{selected.category} <span>{selected.confidence}% · {selected.categorySource}</span></dd></div>
               <div><dt>Budget treatment</dt><dd>{sourceStatus(selected)}</dd></div>
               <div><dt>Transfer group</dt><dd>{transferIds.get(selected.id) ?? "Not matched"}</dd></div>
-              <div><dt>Anomaly evidence</dt><dd>{anomalyReasons.get(selected.id)?.join("; ") ?? "No flag at selected threshold"}</dd></div>
+              <div><dt>Anomaly evidence</dt><dd>{anomalyReasons.get(selected.id)?.map((reason) => projectText(locale, financeCopy, reason)).join("; ") ?? "No flag at selected threshold"}</dd></div>
             </dl>
-            <div className={styles.signatureBox}><span>DEDUPE INPUT SHAPE</span><code>{dedupeShape(selected)}</code><p>Provider transaction ID wins when supplied; otherwise the source engine hashes this content plus the within-statement occurrence index.</p></div>
+            <div className={styles.signatureBox}><span>TRANSACTION IDENTITY</span><code>{dedupeShape(selected)}</code><p>A provider transaction ID identifies a row when available. Otherwise its date, amount, description and occurrence within the statement form the duplicate check.</p></div>
           </div>
         ) : <p className={styles.emptyState}>Select a transaction.</p>}
       </aside>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -737,7 +744,7 @@ function RecurringView() {
   const monthlyTotal = roundMoney(patterns.reduce((sum, pattern) => sum + pattern.monthlyCost, 0));
 
   return (
-    <>
+    <ProjectCopy copy={financeCopy}><>
       <div className={styles.modelWorkbench}>
         <section className={`${styles.oceanPanel} ${styles.controlPanel}`} aria-labelledby="recurring-controls-title">
           <div className={styles.panelTitle}><div><span>LIVE PARAMETERS</span><h3 id="recurring-controls-title">Cadence detector</h3></div><button type="button" onClick={() => setConfig({ minOccurrences: 3, regularity: 0.5, priceThreshold: 0.3, monthlyTolerance: 5 })}>Reset</button></div>
@@ -752,7 +759,7 @@ function RecurringView() {
 
         <div className={styles.patternMetrics}>
           <MetricCard label="PATTERNS" value={patterns.length.toString()} note="90-day synthetic corpus" tone="teal" />
-          <MetricCard label="MONTHLY EQUIVALENT" value={money(monthlyTotal)} note="Σ typical × 30.4 / cadence" tone="negative" />
+          <MetricCard label="MONTHLY EQUIVALENT" value={money(monthlyTotal)} note={<MathEquation tex={String.raw`\sum_i\frac{30.4\,a_i}{d_i}`} display={false} label="Sum of typical amounts times 30.4 days divided by cadence in days" />} tone="negative" />
           <MetricCard label="PRICE CHANGES" value={patterns.filter((pattern) => pattern.status === "price_change").length.toString()} note={`Recent median differs > ${percentage(config.priceThreshold)}`} />
         </div>
       </div>
@@ -780,7 +787,7 @@ function RecurringView() {
           </table>
         </div>
       </section>
-    </>
+    </></ProjectCopy>
   );
 }
 
@@ -792,12 +799,12 @@ function TransfersView() {
   const maxAmount = Math.max(1, ...matches.map((match) => match.amount));
 
   return (
-    <div className={styles.transferLayout}>
+    <ProjectCopy copy={financeCopy}><div className={styles.transferLayout}>
       <section className={`${styles.oceanPanel} ${styles.transferControls}`} aria-labelledby="transfer-model-title">
         <div className={styles.panelTitle}><div><span>CONFIGURABLE PRECISION</span><h3 id="transfer-model-title">Cross-account matcher</h3></div></div>
         <label><span>Date window <strong>±{windowDays} day{windowDays === 1 ? "" : "s"}</strong></span><input type="range" min={0} max={5} step={1} value={windowDays} onChange={(event) => setWindowDays(Number(event.target.value))} /></label>
         <label className={styles.checkControl}><input type="checkbox" checked={requireEvidence} onChange={(event) => setRequireEvidence(event.target.checked)} /><span><strong>Require descriptor evidence</strong><small>Generic “account move”, “funding” or “settlement” tokens. Amount equality remains mandatory.</small></span></label>
-        <div className={styles.matchFormula}><span>SCORE</span><code>(10 − |day gap|) + 5 if descriptor evidence</code><p>Greedy one-to-one matching prevents an incoming row from being reused. Same-account pairs are rejected.</p></div>
+        <div className={styles.matchFormula}><span>SCORE</span><MathEquation tex={String.raw`10-|\Delta d|+5\,\mathbf{1}_{\mathrm{descriptor}}`} label="Transfer matching score" /><p>Greedy one-to-one matching prevents an incoming row from being reused. Same-account pairs are rejected.</p></div>
         <div className={styles.transferMetrics}>
           <div><span>MATCHES</span><strong>{matches.length}</strong></div>
           <div><span>MOVED ONCE</span><strong>{money(totalMoved)}</strong></div>
@@ -822,13 +829,11 @@ function TransfersView() {
         </div>
         <div className={styles.transferFootnote}>Each card represents two ledger rows but counts the moved amount once. The accounting exclusion removes both legs, preventing artificial income and spending.</div>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function ImportView() {
-  const [mode, setMode] = useState<"fresh" | "replay">("fresh");
-  const [lastRun, setLastRun] = useState<"fresh" | "replay" | null>(null);
   const statements = ACCOUNTS.map((account) => {
     const rows = LEDGER.filter((transaction) => transaction.accountId === account.id);
     const movements = roundMoney(rows.reduce((sum, transaction) => sum + transaction.amount, 0));
@@ -842,41 +847,15 @@ function ImportView() {
       difference: roundMoney(declaredClosing - calculatedClosing),
     };
   });
-  const totalRows = statements.reduce((sum, statement) => sum + statement.rows, 0);
-  const committedRows = lastRun === "fresh" ? totalRows : 0;
-  const duplicateRows = lastRun === "replay" ? totalRows : 0;
   const bankStatements = statements.filter((statement) => statement.account.kind !== "investment");
   const reconciledBanks = bankStatements.filter((statement) => Math.abs(statement.difference) <= 0.02);
 
   return (
-    <div className={styles.importLayout}>
-      <section className={`${styles.oceanPanel} ${styles.pipelinePanel}`} aria-labelledby="pipeline-title">
-        <div className={styles.panelTitle}><div><span>LOCAL-FIRST INGESTION</span><h3 id="pipeline-title">Synthetic import run</h3></div></div>
-        <div className={styles.importMode}>
-          <button type="button" className={mode === "fresh" ? styles.active : ""} onClick={() => setMode("fresh")} aria-pressed={mode === "fresh"}>Fresh batch</button>
-          <button type="button" className={mode === "replay" ? styles.active : ""} onClick={() => setMode("replay")} aria-pressed={mode === "replay"}>Exact overlap replay</button>
-        </div>
-        <button type="button" className={styles.runButton} onClick={() => setLastRun(mode)}>{lastRun ? "Run selected scenario" : "Run synthetic import"}</button>
-        <ol className={styles.pipelineSteps}>
-          {[
-            ["01", "Detect", "PDF/CSV header + first-page structure"],
-            ["02", "Parse", "Provider-specific column geometry"],
-            ["03", "Reconcile", "Opening + movements = closing"],
-            ["04", "De-duplicate", "Provider ID or stable occurrence key"],
-            ["05", "Recompute", "Recurring · transfers · anomalies"],
-          ].map(([number, title, note]) => (
-            <li className={lastRun ? styles.completeStep : ""} key={number}><span>{lastRun ? "✓" : number}</span><div><strong>{title}</strong><small>{note}</small></div></li>
-          ))}
-        </ol>
-        <div className={styles.importReceipt} aria-live="polite">
-          <span>{lastRun ? "RUN COMPLETE" : "READY"}</span>
-          <strong>{lastRun ? `${committedRows} committed · ${duplicateRows} duplicates skipped` : `${totalRows} safe rows staged`}</strong>
-          <p>{lastRun === "replay" ? "An exact replay exercises idempotency: every content key already exists, so totals remain unchanged." : lastRun === "fresh" ? "The fresh path commits every staged synthetic row, then recomputes intelligence." : "Choose a scenario, then run the same detect → parse → reconcile → de-duplicate → recompute pipeline."}</p>
-        </div>
-      </section>
+    <ProjectCopy copy={financeCopy}><div className={styles.importLayout}>
+      <FinanceImportExperiment />
 
       <section className={`${styles.oceanPanel} ${styles.auditPanel}`} aria-labelledby="reconciliation-title">
-        <div className={styles.panelTitle}><div><span>PENNY-CLOSE CONTROL</span><h3 id="reconciliation-title">Statement reconciliation</h3></div><span className={`${styles.rowCount} ${reconciledBanks.length === bankStatements.length ? styles.pass : styles.fail}`}>{reconciledBanks.length}/{bankStatements.length} pass</span></div>
+        <div className={styles.panelTitle}><div><span>PENNY-CLOSE CONTROL</span><h3 id="reconciliation-title">Separate 51-row ledger: balance checks</h3></div><span className={`${styles.rowCount} ${reconciledBanks.length === bankStatements.length ? styles.pass : styles.fail}`}>{reconciledBanks.length}/{bankStatements.length} pass</span></div>
         <div className={styles.auditTableWrap}>
           <table className={styles.auditTable}>
             <thead><tr><th>Adapter</th><th>Rows</th><th>Opening</th><th>Σ movement</th><th>Closing</th><th>Difference</th><th>Control</th></tr></thead>
@@ -901,12 +880,12 @@ function ImportView() {
           <p><strong>Investment CSV</strong> has no carried statement balance. Its closing cash is opening zero or staged cash + signed actions; market holdings are valued separately.</p>
         </div>
       </section>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 export function FinanceStudio() {
-  const [view, setView] = useState<ViewId>("overview");
+  const [view, setView] = useState<ViewId>("import");
   const [range, setRange] = useState<30 | 90>(90);
   const [accountId, setAccountId] = useState("all");
   const [anomalyThreshold, setAnomalyThreshold] = useState(3);
@@ -921,13 +900,13 @@ export function FinanceStudio() {
     .reduce((sum, transaction) => sum + ((transaction.shares ?? 0) * (HOLDING_PRICES.find((holding) => holding.ticker === transaction.ticker)?.price ?? 0)), 0);
 
   return (
-    <DemoWindow
-      appName="Finance App — Ocean Depths"
-      title="Bank Statement Intelligence Control Room"
-      status="SYNTHETIC · LOCAL-FIRST"
-      purpose="Show how inconsistent statement files become one auditable household ledger before any financial pattern is trusted."
-      tryThis="Replay the staged import, then change a recurring-charge or transfer-matching rule."
-      watchFor="Deduplication, reconciliation and derived views update together over fictional accounts; no bank connection is used."
+    <ProjectCopy copy={financeCopy}><DemoWindow
+      appName="Ocean Depths Finance"
+      title="Explore the household ledger"
+      status="Fictional ledger · local"
+      purpose="Trace statement identity, reconciliation status and the calculations behind a household ledger."
+      tryThis="Import two repeated charges, replay the export, then inspect a corrected amount under the same provider ID."
+      watchFor="Import receipts expose stored and skipped rows; separate controls explore recurring and transfer rules over the fictional ledger."
       statusTone="safe"
       className={styles.financeStudio}
       footer={
@@ -939,23 +918,23 @@ export function FinanceStudio() {
     >
       <div className={styles.privacyBanner} role="note">
         <span aria-hidden="true">◈</span>
-        <div><strong>Portfolio-safe simulation, production-shaped logic</strong><p>Every account, merchant, date, amount and holding is invented. The interactions mirror the local parser, reconciliation, de-duplication and intelligence architecture without loading statement files or a database.</p></div>
+        <div><strong>Example accounts and transactions</strong><p>Import, reconcile and categorise a fictional household ledger.</p></div>
         <code>PDF / CSV → SQLite → FastAPI → React</code>
       </div>
 
       <section className={styles.sourceScale} aria-labelledby="finance-source-scale-title">
         <div>
-          <span>SOURCE SNAPSHOT / SAFE AGGREGATES</span>
-          <h3 id="finance-source-scale-title">What the private application had to reconcile</h3>
-          <p>These counts come from the audited handover. The interactive ledger below is a smaller fictional fixture so no financial row or identifier is published.</p>
+          <span>STATEMENT IMPORT RULES</span>
+          <h3 id="finance-source-scale-title">The rules behind the ledger</h3>
+          <p>Import statements into an empty ledger, or explore spending patterns across 51 example transactions.</p>
         </div>
         <dl>
-          <div><dt>Transactions</dt><dd>3,875</dd></div>
-          <div><dt>Accounts</dt><dd>6</dd></div>
-          <div><dt>Statements reconciled</dt><dd>67 / 67</dd></div>
-          <div><dt>Recurring patterns</dt><dd>36</dd></div>
-          <div><dt>Transfer groups</dt><dd>100</dd></div>
-          <div><dt>Anomaly records</dt><dd>122</dd></div>
+          <div><dt>Provider adapters</dt><dd>5</dd></div>
+          <div><dt>Balance tolerance</dt><dd>£0.02</dd></div>
+          <div><dt>Identity paths</dt><dd>2</dd></div>
+          <div><dt>Repeated rows</dt><dd>Occurrence key</dd></div>
+          <div><dt>Transfer window</dt><dd>3 days</dd></div>
+          <div><dt>Recurring minimum</dt><dd>3 dates</dd></div>
         </dl>
       </section>
 
@@ -975,7 +954,7 @@ export function FinanceStudio() {
           <div className={styles.thresholdStrip}>
             <span>Category anomaly threshold</span>
             {[2, 3, 4].map((threshold) => <button type="button" key={threshold} className={anomalyThreshold === threshold ? styles.active : ""} onClick={() => setAnomalyThreshold(threshold)} aria-pressed={anomalyThreshold === threshold}>{threshold}σ</button>)}
-            <small>{anomalies.length} row{anomalies.length === 1 ? "" : "s"} flagged, including duplicate evidence</small>
+            <small>{`Flagged records: ${anomalies.length}, including duplicate evidence`}</small>
           </div>
         )}
         {view === "overview" && <OverviewView range={range} accountId={accountId} rangeLedger={rangeLedger} allTransfers={defaultTransfers} anomalies={anomalies} />}
@@ -984,7 +963,7 @@ export function FinanceStudio() {
         {view === "transfers" && <TransfersView />}
         {view === "import" && <ImportView />}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

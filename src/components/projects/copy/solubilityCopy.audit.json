@@ -1,0 +1,13 @@
+{
+  "dictionary": "solubilityCopy.ts",
+  "exportName": "solubilityCopy",
+  "sources": [
+    "src/components/projects/DrugSolubilityStudio.tsx"
+  ],
+  "identities": {
+    "ΔHfus/R · (1/Tm − 1/T)": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "ln γQ = A · (1 − xQ)²": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "xQ/(1−xQ) · MQ/ML · 1000": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages.",
+    "mQ/L = xQ/(1 − xQ) × MQ/ML × 1000": "Scientific notation or mathematical expression; symbols retain their conventional meaning in both languages."
+  }
+}

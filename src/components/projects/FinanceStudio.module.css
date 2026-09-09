@@ -24,12 +24,11 @@
   gap: 12px;
   margin-bottom: 12px;
   padding: 11px 13px;
-  border: 1px solid #17605f;
-  color: var(--ocean-foam);
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
   background:
-    linear-gradient(105deg, rgba(46, 196, 182, 0.2), transparent 58%),
-    var(--ocean-deep);
-  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.12);
+    var(--s7-paper);
+  box-shadow: none;
 }
 
 .privacyBanner > span {
@@ -37,31 +36,31 @@
   width: 32px;
   height: 32px;
   place-items: center;
-  border: 1px solid var(--ocean-teal);
-  color: var(--ocean-teal);
-  background: rgba(46, 196, 182, 0.08);
-  font-size: 17px;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-heading);
 }
 
 .privacyBanner strong {
   display: block;
-  color: var(--ocean-foam);
-  font-size: 11px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .privacyBanner p {
   margin: 2px 0 0;
-  color: var(--ocean-mist);
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
 .privacyBanner code {
   padding: 7px 9px;
-  border: 1px solid var(--ocean-line);
-  color: var(--ocean-cyan);
-  background: rgba(6, 19, 28, 0.7);
-  font-size: 8px;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
   white-space: nowrap;
 }
 
@@ -72,43 +71,51 @@
   align-items: center;
   margin-bottom: 12px;
   padding: 10px 12px;
-  border: 1px solid #17605f;
-  color: var(--ocean-foam);
-  background: linear-gradient(100deg, var(--ocean-deep), var(--ocean-surface));
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
-.sourceScale span { color: var(--ocean-teal); font-size: 8px; font-weight: 900; letter-spacing: .08em; }
-.sourceScale h3 { margin: 3px 0 0; font-size: 13px; line-height: 1.15; }
-.sourceScale p { margin: 4px 0 0; color: var(--ocean-mist); font-size: 8px; line-height: 1.4; }
+.sourceScale span { color: var(--s7-ink); font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
+.sourceScale h3 { margin: 3px 0 0; font-size: var(--s7-heading); line-height: 1.4; }
+.sourceScale p { margin: 4px 0 0; color: var(--s7-ink); font-size: var(--s7-text); line-height: 1.4; }
 .sourceScale dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 0; }
-.sourceScale dl > div { min-width: 0; padding: 6px; border: 1px solid var(--ocean-line); background: rgba(6, 19, 28, .7); }
-.sourceScale dt { color: var(--ocean-mist); font-size: 7px; line-height: 1.2; }
-.sourceScale dd { margin: 3px 0 0; color: var(--ocean-cyan); font: 900 14px/1 "Courier New", monospace; font-variant-numeric: tabular-nums; }
+.sourceScale dl > div { min-width: 0; padding: 6px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); }
+.sourceScale dt { color: var(--s7-ink); font-size: var(--s7-small); line-height: 1.4; }
+.sourceScale dd { margin: 3px 0 0; color: var(--s7-ink); font: 700 var(--s7-text)/1.4 var(--s7-font-text); font-variant-numeric: tabular-nums; }
 
 .viewTabs {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 4px;
   padding: 4px 4px 0;
-  border: 1px solid var(--ocean-abyss);
+  border: 1px solid var(--s7-shadow);
   border-bottom: 0;
-  background: #d8d8d3;
+  background: var(--s7-chrome);
 }
 
 .viewTabs button {
   min-width: 0;
   padding: 8px 7px 7px;
-  border: 1px solid #5e6567;
+  border: 1px solid var(--s7-ink);
   border-bottom: 0;
-  color: #2d3f45;
-  background: #bfc7c8;
-  box-shadow: inset 1px 1px 0 #eef4f4;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
   text-align: left;
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  min-height: var(--s7-control-height);
 }
 
 .viewTabs button:hover {
-  background: #d8e1e1;
+  background: var(--s7-paper);
 }
 
 .viewTabs button strong,
@@ -120,38 +127,40 @@
 }
 
 .viewTabs button strong {
-  font-size: 9px;
-  text-transform: uppercase;
+  font-size: var(--s7-small);
+  text-transform: none;
 }
 
 .viewTabs button span {
   margin-top: 1px;
-  color: #596b70;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .viewTabs .activeView {
   position: relative;
   z-index: 1;
-  color: var(--ocean-foam);
-  background: var(--ocean-surface);
-  box-shadow: inset 0 3px 0 var(--ocean-teal);
-}
-
-.viewTabs .activeView span {
-  color: var(--ocean-mist);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid var(--s7-ink);
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  min-height: var(--s7-control-height);
 }
 
 .oceanCanvas {
   min-height: 590px;
   padding: 13px;
-  border: 1px solid var(--ocean-abyss);
-  color: var(--ocean-foam);
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
   background:
-    radial-gradient(circle at 86% -20%, rgba(53, 199, 224, 0.11), transparent 34%),
-    linear-gradient(rgba(228, 242, 247, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(228, 242, 247, 0.018) 1px, transparent 1px),
-    var(--ocean-abyss);
+    var(--s7-paper);
   background-size: auto, 22px 22px, 22px 22px, auto;
 }
 
@@ -177,10 +186,10 @@
 .parameterGrid label > span,
 .transferControls > label > span {
   color: var(--ocean-mist);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .scopeBar [data-classic-select],
@@ -193,14 +202,14 @@
   border-radius: 0;
   color: var(--ocean-foam);
   background: var(--ocean-surface);
-  font-size: 9px;
+  font-size: var(--s7-small);
 }
 
 .scopeBar p {
   align-self: center;
   margin: 0;
   color: var(--ocean-mist);
-  font-size: 8px;
+  font-size: var(--s7-text);
   text-align: right;
 }
 
@@ -217,14 +226,43 @@
 .rangeSwitch button,
 .importMode button,
 .thresholdStrip button {
-  min-height: 29px;
+  min-height: var(--s7-control-height);
   padding: 5px 9px;
-  border: 1px solid var(--ocean-line);
-  color: var(--ocean-mist);
-  background: var(--ocean-surface);
-  font-size: 8px;
-  font-weight: 800;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-ui);
+  font-weight: 400;
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  font-family: var(--s7-font-ui);
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.rangeSwitch button:focus-visible, .importMode button:focus-visible, .thresholdStrip button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.rangeSwitch button:disabled, .rangeSwitch button[aria-disabled="true"], .importMode button:disabled, .importMode button[aria-disabled="true"], .thresholdStrip button:disabled, .thresholdStrip button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]), .importMode button:active:not(:disabled):not([aria-disabled="true"]), .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > strong, .rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > small, .importMode button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .importMode button:active:not(:disabled):not([aria-disabled="true"]) > strong, .importMode button:active:not(:disabled):not([aria-disabled="true"]) > small, .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > strong, .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .rangeSwitch button + button,
@@ -238,9 +276,9 @@
 .thresholdStrip .active {
   position: relative;
   z-index: 1;
-  border-color: var(--ocean-teal);
-  color: var(--ocean-abyss);
-  background: var(--ocean-teal);
+  border-color: var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
 }
 
 .metricStrip {
@@ -253,11 +291,10 @@
 .metricCard {
   min-width: 0;
   padding: 10px;
-  border: 1px solid var(--ocean-line);
+  border: 1px solid var(--s7-shadow);
   background:
-    linear-gradient(145deg, rgba(79, 157, 222, 0.08), transparent 70%),
-    var(--ocean-deep);
-  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.06);
+    var(--s7-paper);
+  box-shadow: none;
 }
 
 .metricCard > span,
@@ -267,51 +304,50 @@
 }
 
 .metricCard.default {
-  border-color: var(--ocean-line);
+  border-color: var(--s7-shadow);
 }
 
 .metricCard > span {
   overflow: hidden;
-  color: var(--ocean-mist);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.09em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .metricCard > strong {
   margin: 5px 0 1px;
-  color: var(--ocean-foam);
-  font-size: clamp(14px, 2.2cqi, 22px);
+  color: var(--s7-ink);
+  font-size: var(--s7-title);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.045em;
+  letter-spacing: normal;
 }
 
 .metricCard > small {
   min-height: 21px;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   line-height: 1.4;
 }
 
 .metricCard.teal {
-  border-color: rgba(46, 196, 182, 0.65);
+  border-color: var(--s7-shadow);
   background:
-    linear-gradient(140deg, rgba(46, 196, 182, 0.18), transparent 70%),
-    var(--ocean-deep);
+    var(--s7-paper);
 }
 
 .metricCard.teal > strong {
-  color: var(--ocean-teal);
+  color: var(--s7-ink);
 }
 
 .metricCard.positive > strong {
-  color: var(--ocean-kelp);
+  color: var(--s7-ink);
 }
 
 .metricCard.negative > strong {
-  color: var(--ocean-coral);
+  color: var(--s7-ink);
 }
 
 .overviewGrid,
@@ -334,9 +370,9 @@
 
 .oceanPanel {
   min-width: 0;
-  border: 1px solid var(--ocean-line);
-  background: rgba(10, 32, 48, 0.94);
-  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.045);
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .panelTitle {
@@ -346,39 +382,70 @@
   justify-content: space-between;
   gap: 10px;
   padding: 7px 9px;
-  border-bottom: 1px solid var(--ocean-line);
-  background: rgba(21, 57, 76, 0.7);
+  border-bottom: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .panelTitle > div > span {
   display: block;
-  color: var(--ocean-teal);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.11em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .panelTitle h3 {
   margin: 2px 0 0;
-  color: var(--ocean-foam);
-  font-size: 12px;
-  letter-spacing: -0.02em;
+  color: var(--s7-ink);
+  font-size: var(--s7-heading);
+  letter-spacing: normal;
 }
 
 .panelTitle > button {
   padding: 4px 8px;
-  border: 1px solid var(--ocean-line);
-  color: var(--ocean-mist);
-  background: var(--ocean-deep);
-  font-size: 8px;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-ui);
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  font-family: var(--s7-font-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  min-height: var(--s7-control-height);
+}
+
+.panelTitle > button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.panelTitle > button:disabled, .panelTitle > button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > strong, .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .legend {
   display: flex;
   gap: 9px;
   color: var(--ocean-mist);
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .legend span {
@@ -420,19 +487,19 @@
   min-width: 43px;
   grid-template-rows: minmax(0, 1fr) auto auto;
   gap: 3px;
-  color: var(--ocean-mist);
+  color: var(--s7-ink);
   text-align: center;
 }
 
 .flowPeriod > strong {
-  color: var(--ocean-mist);
-  font-size: 8px;
-  letter-spacing: 0.08em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .flowPeriod > small {
-  color: var(--ocean-foam);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   font-variant-numeric: tabular-nums;
 }
 
@@ -452,11 +519,11 @@
 }
 
 .flowIncome {
-  background: linear-gradient(180deg, var(--ocean-kelp), #177a5a);
+  background: var(--s7-paper);
 }
 
 .flowSpend {
-  background: repeating-linear-gradient(135deg, var(--ocean-coral) 0 3px, #8a3347 3px 6px);
+  background: var(--s7-paper);
 }
 
 .reconcileBar {
@@ -469,7 +536,7 @@
   border-top: 1px solid var(--ocean-line);
   color: var(--ocean-mist);
   background: rgba(6, 19, 28, 0.6);
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .reconcileBar strong {
@@ -477,11 +544,11 @@
 }
 
 .pass {
-  color: var(--ocean-kelp) !important;
+  color: var(--s7-ink) !important;
 }
 
 .fail {
-  color: var(--ocean-coral) !important;
+  color: var(--s7-ink) !important;
 }
 
 .signalStack {
@@ -495,7 +562,7 @@
   grid-template-columns: 28px minmax(0, 1fr);
   gap: 8px;
   padding: 12px 0;
-  border-bottom: 1px dotted rgba(157, 192, 205, 0.3);
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .signalStack li:last-child {
@@ -507,21 +574,21 @@
   width: 27px;
   height: 23px;
   place-items: center;
-  border: 1px solid;
-  font-size: 8px;
-  font-weight: 900;
+  border: 1px solid var(--s7-shadow);
+  font-size: var(--s7-small);
+  font-weight: 700;
 }
 
 .signalGood {
-  border-color: #2f9e77 !important;
-  color: var(--ocean-kelp);
-  background: rgba(52, 211, 153, 0.1);
+  border-color: var(--s7-shadow) !important;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .signalWarn {
-  border-color: #b97f18 !important;
-  color: var(--ocean-amber);
-  background: rgba(251, 191, 36, 0.1);
+  border-color: var(--s7-shadow) !important;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .signalStack strong,
@@ -530,14 +597,14 @@
 }
 
 .signalStack strong {
-  color: var(--ocean-foam);
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .signalStack p {
   margin: 2px 0 0;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
@@ -551,7 +618,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .accountList article:last-child {
@@ -570,30 +637,36 @@
 
 .accountList article > div strong,
 .accountList article > strong {
-  color: var(--ocean-foam);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .accountList article > div small {
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .accountList code {
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   white-space: nowrap;
+}
+
+.accountEquation {
+  margin: 0;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .accountList article > strong {
   min-width: 62px;
-  color: var(--ocean-kelp);
+  color: var(--s7-ink);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
 
 .accountList .debt {
-  color: var(--ocean-coral);
+  color: var(--s7-ink);
 }
 
 .categoryBars {
@@ -607,7 +680,7 @@
   grid-template-columns: minmax(82px, 0.85fr) minmax(70px, 1.6fr) 55px;
   align-items: center;
   gap: 7px;
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .categoryBars > div > span {
@@ -631,7 +704,7 @@
 
 .categoryBars strong {
   color: var(--ocean-foam);
-  font-size: 8px;
+  font-size: var(--s7-small);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -641,21 +714,21 @@
   align-items: center;
   gap: 0;
   margin: -1px 0 10px;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .thresholdStrip > span {
   margin-right: 7px;
-  font-weight: 800;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .thresholdStrip small {
   margin-left: 9px;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .ledgerLayout {
@@ -668,11 +741,11 @@
 }
 
 .rowCount {
-  color: var(--ocean-mist);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
   white-space: nowrap;
 }
 
@@ -681,8 +754,8 @@
   grid-template-columns: minmax(160px, 1fr) minmax(125px, 0.75fr) minmax(160px, 0.9fr);
   gap: 7px;
   padding: 8px;
-  border-bottom: 1px solid var(--ocean-line);
-  background: rgba(6, 19, 28, 0.45);
+  border-bottom: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .ledgerTableWrap,
@@ -700,7 +773,7 @@
 .auditTable {
   width: 100%;
   border-collapse: collapse;
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .ledgerTable thead,
@@ -715,14 +788,14 @@
 .patternTable th,
 .auditTable th {
   padding: 6px 7px;
-  border-right: 1px solid var(--ocean-line);
-  border-bottom: 1px solid var(--ocean-line);
-  color: var(--ocean-mist);
-  background: #123347;
-  font-size: 8px;
-  letter-spacing: 0.07em;
+  border-right: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
+  letter-spacing: normal;
   text-align: left;
-  text-transform: uppercase;
+  text-transform: none;
   white-space: nowrap;
 }
 
@@ -730,23 +803,10 @@
 .patternTable td,
 .auditTable td {
   padding: 7px;
-  border-bottom: 1px solid rgba(30, 79, 98, 0.55);
-  color: var(--ocean-mist);
+  border-bottom: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-}
-
-.ledgerTable tbody tr:nth-child(even),
-.patternTable tbody tr:nth-child(even),
-.auditTable tbody tr:nth-child(even) {
-  background: rgba(21, 57, 76, 0.25);
-}
-
-.ledgerTable tbody tr:hover,
-.patternTable tbody tr:hover,
-.auditTable tbody tr:hover,
-.ledgerTable .selectedRow {
-  background: rgba(46, 196, 182, 0.09);
 }
 
 .ledgerTable td:nth-child(3) button {
@@ -768,13 +828,13 @@
 }
 
 .ledgerTable td:nth-child(3) strong {
-  color: var(--ocean-foam);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .ledgerTable td:nth-child(3) small {
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .ledgerTable th:last-child,
@@ -799,46 +859,46 @@
   align-items: center;
   min-height: 17px;
   padding: 2px 5px;
-  border: 1px solid;
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  border: 1px solid var(--s7-shadow);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 
 .categoryPill {
-  border-color: rgba(79, 157, 222, 0.5);
-  color: #b7d9f5;
-  background: rgba(79, 157, 222, 0.1);
+  border-color: var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .cashflowPill,
 .activePattern,
 .auditPass {
-  border-color: rgba(52, 211, 153, 0.45);
-  color: var(--ocean-kelp);
-  background: rgba(52, 211, 153, 0.08);
+  border-color: var(--s7-shadow);
+  color: var(--s7-selection-text);
+  background: var(--s7-selection);
 }
 
 .excludePill,
 .priceChange {
-  border-color: rgba(251, 191, 36, 0.5);
-  color: var(--ocean-amber);
-  background: rgba(251, 191, 36, 0.08);
+  border-color: var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .cadencePill {
-  border-color: rgba(46, 196, 182, 0.5);
-  color: var(--ocean-teal);
-  background: rgba(46, 196, 182, 0.08);
+  border-color: var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .amountIn {
-  color: var(--ocean-kelp) !important;
+  color: var(--s7-ink) !important;
 }
 
 .amountOut {
-  color: var(--ocean-coral) !important;
+  color: var(--s7-ink) !important;
 }
 
 .ledgerTotals {
@@ -847,14 +907,14 @@
   justify-content: space-between;
   gap: 8px;
   padding: 7px 9px;
-  border-top: 1px solid var(--ocean-line);
-  color: var(--ocean-mist);
-  background: var(--ocean-abyss);
-  font-size: 8px;
+  border-top: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
 }
 
 .ledgerTotals strong {
-  color: var(--ocean-foam);
+  color: var(--s7-ink);
 }
 
 .inspector {
@@ -868,7 +928,7 @@
 
 .inspectAmount {
   padding-bottom: 9px;
-  border-bottom: 1px solid var(--ocean-line);
+  border-bottom: 1px solid var(--s7-shadow);
 }
 
 .inspectAmount span,
@@ -877,15 +937,15 @@
 }
 
 .inspectAmount span {
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .inspectAmount strong {
   margin-top: 3px;
-  font-size: 23px;
+  font-size: var(--s7-title);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.04em;
+  letter-spacing: normal;
 }
 
 .inspector dl {
@@ -897,49 +957,49 @@
   grid-template-columns: 88px minmax(0, 1fr);
   gap: 7px;
   padding: 7px 0;
-  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .inspector dt {
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .inspector dd {
   margin: 0;
-  color: var(--ocean-foam);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   overflow-wrap: anywhere;
 }
 
 .inspector dd span {
   display: block;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .signatureBox,
 .matchFormula {
   padding: 8px;
-  border: 1px solid var(--ocean-line);
-  background: var(--ocean-abyss);
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .signatureBox > span,
-.matchFormula > span {
+.matchFormula > span:not([data-math-equation]) {
   display: block;
-  color: var(--ocean-teal);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .signatureBox code,
 .matchFormula code {
   display: block;
   margin: 5px 0;
-  color: var(--ocean-cyan);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   line-height: 1.5;
   overflow-wrap: anywhere;
   white-space: normal;
@@ -948,14 +1008,14 @@
 .signatureBox p,
 .matchFormula p {
   margin: 0;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
 .emptyState {
   padding: 24px !important;
-  color: var(--ocean-mist) !important;
+  color: var(--s7-ink) !important;
   text-align: center !important;
   white-space: normal !important;
 }
@@ -1005,8 +1065,8 @@
 .methodNote {
   margin: 0;
   padding: 0 10px 10px;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   line-height: 1.5;
 }
 
@@ -1032,12 +1092,12 @@
 
 .patternTable td:first-child strong,
 .auditTable td:first-child strong {
-  color: var(--ocean-foam);
+  color: var(--s7-ink);
 }
 
 .auditTable td:first-child small {
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .transferLayout {
@@ -1063,8 +1123,8 @@
   gap: 8px;
   margin: 3px 11px 11px;
   padding: 9px;
-  border: 1px solid var(--ocean-line);
-  background: rgba(6, 19, 28, 0.55);
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .checkControl input {
@@ -1079,14 +1139,14 @@
 }
 
 .checkControl strong {
-  color: var(--ocean-foam) !important;
-  font-size: 8px;
+  color: var(--s7-ink) !important;
+  font-size: var(--s7-small);
 }
 
 .checkControl small {
   margin-top: 2px;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   line-height: 1.4;
 }
 
@@ -1097,13 +1157,13 @@
 .transferMetrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--ocean-line);
+  border-top: 1px solid var(--s7-shadow);
 }
 
 .transferMetrics > div {
   min-width: 0;
   padding: 8px;
-  border-right: 1px solid var(--ocean-line);
+  border-right: 1px solid var(--s7-shadow);
   text-align: center;
 }
 
@@ -1117,15 +1177,15 @@
 }
 
 .transferMetrics span {
-  color: var(--ocean-mist);
-  font-size: 8px;
-  letter-spacing: 0.07em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .transferMetrics strong {
   margin-top: 3px;
-  color: var(--ocean-teal);
-  font-size: 15px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1135,7 +1195,7 @@
 
 .transferFlows article {
   padding: 11px 0;
-  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .transferFlows article:last-child {
@@ -1151,9 +1211,9 @@
 
 .transferRoute > span {
   overflow: hidden;
-  color: var(--ocean-foam);
-  font-size: 8px;
-  font-weight: 800;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1175,13 +1235,13 @@
   left: 0;
   height: 6px;
   max-width: calc(100% - 12px);
-  background: linear-gradient(90deg, var(--ocean-blue), var(--ocean-teal));
+  background: var(--s7-paper);
 }
 
 .transferRoute b {
   position: absolute;
   right: 0;
-  color: var(--ocean-teal);
+  color: var(--s7-ink);
 }
 
 .transferDetail {
@@ -1189,24 +1249,24 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 8px;
   margin-top: 5px;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .transferDetail strong {
-  color: var(--ocean-cyan);
+  color: var(--s7-ink);
 }
 
 .transferDetail code {
-  color: var(--ocean-teal);
+  color: var(--s7-ink);
 }
 
 .transferFootnote {
   padding: 8px 10px;
-  border-top: 1px solid var(--ocean-line);
-  color: var(--ocean-mist);
-  background: var(--ocean-abyss);
-  font-size: 8px;
+  border-top: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
   line-height: 1.45;
 }
 
@@ -1231,20 +1291,47 @@
   width: calc(100% - 20px);
   margin: 0 10px 10px;
   padding: 8px;
-  border: 1px solid #1c9c90;
-  color: var(--ocean-abyss);
-  background: var(--ocean-teal);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.55), 2px 2px 0 #031017;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  line-height: 1.4;
+  min-height: var(--s7-control-height);
+}
+
+.runButton:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.runButton:disabled, .runButton[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.runButton:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.runButton:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .runButton:active:not(:disabled):not([aria-disabled="true"]) > strong, .runButton:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .runButton:active {
   transform: translate(1px, 1px);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3), 1px 1px 0 #031017;
+  box-shadow: none;
 }
 
 .pipelineSteps {
@@ -1259,7 +1346,7 @@
   align-items: center;
   gap: 8px;
   padding: 7px 0;
-  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .pipelineSteps li > span {
@@ -1267,9 +1354,9 @@
   width: 24px;
   height: 21px;
   place-items: center;
-  border: 1px solid var(--ocean-line);
-  color: var(--ocean-mist);
-  font-size: 8px;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .pipelineSteps li strong,
@@ -1278,26 +1365,26 @@
 }
 
 .pipelineSteps li strong {
-  color: var(--ocean-foam);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .pipelineSteps li small {
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .pipelineSteps .completeStep > span {
-  border-color: var(--ocean-kelp);
-  color: var(--ocean-kelp);
-  background: rgba(52, 211, 153, 0.08);
+  border-color: var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .importReceipt {
   margin: 10px 10px 0;
   padding: 9px;
-  border: 1px solid var(--ocean-line);
-  background: var(--ocean-abyss);
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .importReceipt span,
@@ -1306,22 +1393,22 @@
 }
 
 .importReceipt span {
-  color: var(--ocean-teal);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .importReceipt strong {
   margin: 3px 0;
-  color: var(--ocean-foam);
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .importReceipt p {
   margin: 0;
-  color: var(--ocean-mist);
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
@@ -1337,23 +1424,23 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
-  border-top: 1px solid var(--ocean-line);
-  background: var(--ocean-line);
+  border-top: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .auditNotes p {
   margin: 0;
   padding: 8px;
-  color: var(--ocean-mist);
-  background: var(--ocean-abyss);
-  font-size: 8px;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
 .auditNotes strong {
   display: block;
   margin-bottom: 2px;
-  color: var(--ocean-foam);
+  color: var(--s7-ink);
 }
 
 @container (max-width: 900px) {
@@ -1484,6 +1571,12 @@
     display: none;
   }
 
+  .accountEquation {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
   .transferRoute {
     grid-template-columns: 62px minmax(50px, 1fr) 62px;
   }
@@ -1502,7 +1595,7 @@
 
   .transferMetrics > div {
     border-right: 0;
-    border-bottom: 1px solid var(--ocean-line);
+    border-bottom: 1px solid var(--s7-shadow);
   }
 }
 
@@ -1522,71 +1615,134 @@
   --ocean-kelp: #1e754f;
   --ocean-coral: #a52f42;
   --ocean-amber: #8a5a00;
-  color: #111;
-  font-family: var(--system-font);
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
 }
 
 .sourceScale dd,
 .financeStudio code,
 .financeStudio output {
-  font-family: var(--system-mono);
+  font-family: var(--s7-font-mono);
 }
 
 .privacyBanner,
 .sourceScale {
-  border: 2px solid #111;
+  border: 1px solid var(--s7-shadow);
   border-radius: 0;
-  color: #111;
-  background: #e8e8e3;
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .privacyBanner > span,
 .privacyBanner code,
 .sourceScale dl > div {
-  border-color: #777;
-  color: #111;
-  background: #fff;
-  box-shadow: inset 1px 1px 0 #bbb;
+  border-color: var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .privacyBanner strong,
 .privacyBanner p,
 .sourceScale p,
 .sourceScale dt {
-  color: #333;
+  color: var(--s7-ink);
 }
 
 .viewTabs {
-  border: 2px solid #111;
+  border: 1px solid var(--s7-shadow);
   border-bottom: 0;
-  background: #bfbfba;
+  background: var(--s7-chrome);
 }
 
 .viewTabs button {
-  border-color: #555;
-  border-radius: 0;
-  color: #333;
-  background: #d8d8d3;
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+  border-color: var(--s7-ink);
+  border-radius: var(--s7-control-radius);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid var(--s7-ink);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  min-height: var(--s7-control-height);
+}
+
+.viewTabs button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.viewTabs button:disabled, .viewTabs button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .viewTabs .activeView {
-  color: #111;
-  background: #fff;
-  box-shadow: inset 0 3px 0 var(--ocean-teal), inset 1px 1px 0 #777;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid var(--s7-ink);
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  min-height: var(--s7-control-height);
+}
+
+.viewTabs .activeView:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.viewTabs .activeView:disabled, .viewTabs .activeView[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .viewTabs .activeView span {
-  color: #555;
+  color: var(--s7-ink);
 }
 
 .oceanCanvas {
-  border: 2px solid #111;
+  border: 1px solid var(--s7-shadow);
   border-radius: 0;
-  color: #111;
-  background: #e8e8e3;
-  box-shadow: inset 1px 1px 0 #fff;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .scopeBar,
@@ -1612,49 +1768,112 @@
 .thresholdStrip button,
 .panelTitle > button,
 .runButton {
-  border-color: #555;
-  border-radius: 0;
-  color: #111;
-  background: #e5e5e0;
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+  border-color: var(--s7-ink);
+  border-radius: var(--s7-control-radius);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid var(--s7-ink);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  min-height: var(--s7-control-height);
+}
+
+.rangeSwitch button:focus-visible, .importMode button:focus-visible, .thresholdStrip button:focus-visible, .panelTitle > button:focus-visible, .runButton:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.rangeSwitch button:disabled, .rangeSwitch button[aria-disabled="true"], .importMode button:disabled, .importMode button[aria-disabled="true"], .thresholdStrip button:disabled, .thresholdStrip button[aria-disabled="true"], .panelTitle > button:disabled, .panelTitle > button[aria-disabled="true"], .runButton:disabled, .runButton[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]), .importMode button:active:not(:disabled):not([aria-disabled="true"]), .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]), .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]), .runButton:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > strong, .rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > small, .importMode button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .importMode button:active:not(:disabled):not([aria-disabled="true"]) > strong, .importMode button:active:not(:disabled):not([aria-disabled="true"]) > small, .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > strong, .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > small, .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > strong, .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > small, .runButton:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .runButton:active:not(:disabled):not([aria-disabled="true"]) > strong, .runButton:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .rangeSwitch .active,
 .importMode .active,
 .thresholdStrip .active,
 .runButton {
-  border-color: #111;
-  color: #fff;
-  background: var(--selection);
-  box-shadow: inset 1px 1px 0 #777, 2px 2px 0 #555;
+  border-color: var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid var(--s7-ink);
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  min-height: var(--s7-control-height);
+}
+
+.rangeSwitch .active:focus-visible, .importMode .active:focus-visible, .thresholdStrip .active:focus-visible, .runButton:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.rangeSwitch .active:disabled, .rangeSwitch .active[aria-disabled="true"], .importMode .active:disabled, .importMode .active[aria-disabled="true"], .thresholdStrip .active:disabled, .thresholdStrip .active[aria-disabled="true"], .runButton:disabled, .runButton[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]), .importMode .active:active:not(:disabled):not([aria-disabled="true"]), .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]), .runButton:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]) > strong, .rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]) > small, .importMode .active:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .importMode .active:active:not(:disabled):not([aria-disabled="true"]) > strong, .importMode .active:active:not(:disabled):not([aria-disabled="true"]) > small, .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]) > strong, .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]) > small, .runButton:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .runButton:active:not(:disabled):not([aria-disabled="true"]) > strong, .runButton:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .metricCard {
-  border-color: #777;
+  border-color: var(--s7-shadow);
   border-radius: 0;
-  color: #111;
-  background: #f4f4ef;
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .metricCard.teal {
-  border-color: var(--ocean-teal);
-  background: #e5f1ee;
+  border-color: var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .oceanPanel {
-  border: 1px solid #111;
+  border: 1px solid var(--s7-shadow);
   border-radius: 0;
-  color: #111;
-  background: #fff;
-  box-shadow: inset 1px 1px 0 #fff, 2px 2px 0 #777;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .panelTitle {
-  border-color: #111;
-  color: #111;
-  background: #d8d8d3;
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+  border-color: var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .panelTitle h3,
@@ -1692,13 +1911,13 @@
 }
 
 .signalGood {
-  color: #174c34;
-  background: #e4f1e8;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .signalWarn {
-  color: #5d4200;
-  background: #fff4cc;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .categoryBars > div > div {
@@ -1712,29 +1931,29 @@
 .ledgerTable th,
 .patternTable th,
 .auditTable th {
-  color: #111;
-  background: #d8d8d3;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
 }
 
 .ledgerTable td,
 .patternTable td,
 .auditTable td {
-  border-color: #bbb;
-  color: #333;
-  background: #fff;
+  border-color: var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .ledgerTable tbody tr:nth-child(even),
 .patternTable tbody tr:nth-child(even),
 .auditTable tbody tr:nth-child(even) {
-  background: #f0f0eb;
+  background: var(--s7-paper);
 }
 
 .ledgerTable tbody tr:hover,
 .patternTable tbody tr:hover,
 .auditTable tbody tr:hover,
 .ledgerTable .selectedRow {
-  background: #e1e1f2;
+  background: var(--s7-selection);
 }
 
 .ledgerTotals,
@@ -1742,5 +1961,8 @@
 .matchFormula,
 .transferFootnote,
 .importReceipt {
-  border: 2px solid #111;
+  border: 1px solid var(--s7-shadow);
 }
+
+/* Import identities are a sequential experiment, followed by the separate ledger audit. */
+.importLayout { grid-template-columns: minmax(0, 1fr); }

@@ -1,9 +1,13 @@
 "use client";
 
+import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { banditStudioCopy } from "./copy/banditStudioCopy";
+
 import ClassicSelect from "../ClassicSelect";
 
 import { type KeyboardEvent as ReactKeyboardEvent, useId, useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
+import { MathEquation } from "./MathEquation";
 import styles from "./BanditStudio.module.css";
 
 type ViewId = "policy" | "regret" | "method";
@@ -69,7 +73,6 @@ type Simulation = {
 };
 
 const MAX_STEPS = 500;
-const SOURCE_REF = "STUDY-RL · WEEK 01 · 4e2c94e";
 
 const views: Array<{ id: ViewId; number: string; label: string; short: string }> = [
   { id: "policy", number: "01", label: "Policy console", short: "LIVE" },
@@ -81,7 +84,7 @@ const scenarios: Record<ScenarioId, Scenario> = {
   wide: {
     id: "wide",
     label: "Bernoulli · wide gaps",
-    shortLabel: "WIDE GAP",
+    shortLabel: "Wide gap",
     kind: "bernoulli",
     sigma: 0,
     seedSalt: 0x17a4c913,
@@ -95,7 +98,7 @@ const scenarios: Record<ScenarioId, Scenario> = {
   close: {
     id: "close",
     label: "Bernoulli · close contest",
-    shortLabel: "CLOSE GAP",
+    shortLabel: "Close gap",
     kind: "bernoulli",
     sigma: 0,
     seedSalt: 0x52db71af,
@@ -114,7 +117,7 @@ const scenarios: Record<ScenarioId, Scenario> = {
     kind: "gaussian",
     sigma: 0.65,
     seedSalt: 0x78f02d41,
-    description: "A source-aligned Gaussian testbed with fixed synthetic means and reward noise σ = 0.65.",
+    description: "A synthetic Gaussian reward experiment with fixed means and reward noise σ = 0.65.",
     arms: [
       { id: "A", label: "Arm A", note: "negative mean", mean: -0.3 },
       { id: "B", label: "Arm B", note: "neutral", mean: 0 },
@@ -398,7 +401,7 @@ function RangeControl({
   onChange: (value: number) => void;
 }) {
   return (
-    <label className={styles.rangeControl} htmlFor={id}>
+    <ProjectCopy copy={banditStudioCopy}><label className={styles.rangeControl} htmlFor={id}>
       <span><b>{label}</b><output htmlFor={id}>{output}</output></span>
       <input
         id={id}
@@ -409,7 +412,7 @@ function RangeControl({
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
       />
-    </label>
+    </label></ProjectCopy>
   );
 }
 
@@ -429,7 +432,7 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
   };
 
   return (
-    <svg className={styles.decisionMap} viewBox="0 0 860 286" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={banditStudioCopy}><svg className={styles.decisionMap} viewBox="0 0 860 286" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>Recent epsilon-greedy decisions by arm</title>
       <desc id={`${chartId}-desc`}>
         {visible.length
@@ -462,7 +465,7 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
       )) : (
         <g>
           <rect x="264" y="105" width="370" height="68" fill="#102b3b" stroke="#4e7280" strokeDasharray="5 4" />
-          <text x="449" y="134" textAnchor="middle" className={styles.emptyMapTitle}>WAITING FOR ROUND 001</text>
+          <text x="449" y="134" textAnchor="middle" className={styles.emptyMapTitle}>Waiting for round 001</text>
           <text x="449" y="153" textAnchor="middle" className={styles.emptyMapCopy}>Use “Step once” to force-initialise Arm A.</text>
         </g>
       )}
@@ -473,7 +476,7 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
         <circle cx="73" cy="0" r="4" fill="#df7178" /><text x="82" y="3" className={styles.mapLegend}>explore</text>
         <circle cx="151" cy="0" r="4" fill="#64d8df" /><text x="160" y="3" className={styles.mapLegend}>exploit</text>
       </g>
-    </svg>
+    </svg></ProjectCopy>
   );
 }
 
@@ -497,7 +500,7 @@ function RegretChart({ trace }: { trace: readonly TracePoint[] }) {
   const last = trace.at(-1) ?? trace[0];
 
   return (
-    <svg className={styles.regretChart} viewBox="0 0 880 338" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={banditStudioCopy}><svg className={styles.regretChart} viewBox="0 0 880 338" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>Expected pseudo-regret and realised counterfactual regret</title>
       <desc id={`${chartId}-desc`}>
         Through round {last.step}, cumulative expected pseudo-regret is {last.expectedRegret.toFixed(2)} and realised oracle-minus-policy reward is {last.realisedRegret.toFixed(2)}.
@@ -533,7 +536,7 @@ function RegretChart({ trace }: { trace: readonly TracePoint[] }) {
       </g>
       <text x="448" y="326" textAnchor="middle" className={styles.lightAxis}>Round t</text>
       <text x="18" y="154" textAnchor="middle" transform="rotate(-90 18 154)" className={styles.lightAxis}>Cumulative regret</text>
-    </svg>
+    </svg></ProjectCopy>
   );
 }
 
@@ -620,10 +623,10 @@ export function BanditStudio() {
   ])).sort((left, right) => left - right);
 
   return (
-    <DemoWindow
-      appName="STUDY-RL · BANDIT LAB"
+    <ProjectCopy copy={banditStudioCopy}><DemoWindow
+      appName="STUDY-RL · Bandit lab"
       title="Sequential Decisions Console"
-      status={rounds ? `${rounds} SEEDED ROUNDS` : "READY AT ROUND 0"}
+      status={rounds ? `${rounds} SEEDED ROUNDS` : "Ready at round 0"}
       purpose="See how a learning policy balances trying uncertain options against repeatedly choosing the current best option."
       tryThis="Run 100 seeded rounds, then change epsilon or the reward scenario."
       watchFor="The chosen arms, learned value estimates and regret trace change together; the oracle is a comparison, not information available to the policy."
@@ -631,8 +634,8 @@ export function BanditStudio() {
       className={styles.studio}
       footer={
         <>
-          <span>ε-GREEDY · INCREMENTAL SAMPLE MEAN</span>
-          <span>TOY ENVIRONMENT · NO LIVE DECISIONS</span>
+          <span>ε-Greedy · incremental sample mean</span>
+          <span>Toy environment · no live decisions</span>
         </>
       }
     >
@@ -653,7 +656,7 @@ export function BanditStudio() {
       </section>
 
       <div className={styles.boundaryStrip} role="note">
-        <strong>SYNTHETIC TESTBED</strong>
+        <strong>Synthetic testbed</strong>
         <p>Fixed fictional means, locally generated rewards, no API and no operational decision data. The oracle exists only because this is a controlled teaching world.</p>
         <span>SEED {seed}</span>
       </div>
@@ -680,13 +683,13 @@ export function BanditStudio() {
         {view === "policy" ? (
           <section id="bandit-panel-policy" role="tabpanel" aria-labelledby="bandit-tab-policy" className={styles.policyPanel}>
             <div className={styles.sectionHeading}>
-              <div><span>ONE STATE · K ACTIONS</span><h3>Policy console</h3><p>Forced initialization makes every estimate defined; ε-greedy takes over only after each arm has one observation.</p></div>
-              <div className={styles.phaseBadge}><small>POLICY PHASE</small><strong>{rounds < scenario.arms.length ? "INITIALISE" : "ε-GREEDY"}</strong><span>{rounds < scenario.arms.length ? `${rounds}/${scenario.arms.length} arms observed` : `${simulation.modeCounts.explore} explore · ${simulation.modeCounts.exploit} exploit`}</span></div>
+              <div><span>One state · k actions</span><h3>Policy console</h3><p>Forced initialization makes every estimate defined; ε-greedy takes over only after each arm has one observation.</p></div>
+              <div className={styles.phaseBadge}><small>Policy phase</small><strong>{rounds < scenario.arms.length ? "INITIALISE" : "ε-GREEDY"}</strong><span>{rounds < scenario.arms.length ? `${rounds}/${scenario.arms.length} arms observed` : `${simulation.modeCounts.explore} explore · ${simulation.modeCounts.exploit} exploit`}</span></div>
             </div>
 
             <div className={styles.consoleGrid}>
               <aside className={styles.controlDesk} aria-label="Bandit simulation controls">
-                <div className={styles.panelCap}><span>EXPERIMENT CONTROLS</span><b>{scenario.shortLabel}</b></div>
+                <div className={styles.panelCap}><span>Experiment controls</span><b>{scenario.shortLabel}</b></div>
                 <label className={styles.selectField}>
                   <span>Environment</span>
                   <ClassicSelect value={scenarioId} onChange={(event) => changeScenario(event.target.value as ScenarioId)}>
@@ -716,9 +719,9 @@ export function BanditStudio() {
                   <span><strong>Reveal true means</strong><small>The policy never reads this switch.</small></span>
                 </label>
                 <div className={styles.scenarioCard}>
-                  <span>ENVIRONMENT NOTE</span>
+                  <span>Environment note</span>
                   <strong>{scenario.label}</strong>
-                  <p>{scenario.description}</p>
+                  <p>{scenario.id === "gaussian" ? <>A synthetic Gaussian reward experiment with fixed means and reward noise <MathEquation tex={String.raw`\sigma = 0.65`} display={false} />.</> : scenario.description}</p>
                   <dl>
                     <div><dt>Reward</dt><dd>{scenario.kind === "bernoulli" ? "binary {0,1}" : `Normal · σ ${scenario.sigma}`}</dd></div>
                     <div><dt>Arms</dt><dd>{scenario.arms.length}</dd></div>
@@ -730,14 +733,14 @@ export function BanditStudio() {
               <div className={styles.liveDesk}>
                 <div className={styles.metricRail} aria-label="Current bandit metrics">
                   <div><span>ROUND</span><strong>{String(rounds).padStart(3, "0")}</strong></div>
-                  <div><span>POLICY REWARD</span><strong>{formatReward(current.policyReward, scenario.kind)}</strong></div>
-                  <div><span>ESTIMATE LEADER</span><strong>{bestEstimatedIndex === null ? "—" : scenario.arms[bestEstimatedIndex].id}</strong></div>
-                  <div><span>OPTIMAL SHARE</span><strong>{postInitRounds ? `${(optimalShare * 100).toFixed(1)}%` : "—"}</strong></div>
+                  <div><span>Policy reward</span><strong>{formatReward(current.policyReward, scenario.kind)}</strong></div>
+                  <div><span>Estimate leader</span><strong>{bestEstimatedIndex === null ? "—" : scenario.arms[bestEstimatedIndex].id}</strong></div>
+                  <div><span>Optimal share</span><strong>{postInitRounds ? `${(optimalShare * 100).toFixed(1)}%` : "—"}</strong></div>
                 </div>
                 <div className={styles.mapFrame}>
                   <DecisionMap scenario={scenario} events={simulation.events} />
                   <div className={styles.mapReceipt}>
-                    <span>DECISION TAPE · LAST 90</span>
+                    <span>Decision tape · last 90</span>
                     <p>{lastEvent ? `Round ${lastEvent.step}: ${lastEvent.armLabel} · ${lastEvent.mode} · reward ${formatReward(lastEvent.reward, scenario.kind)}.` : "No action has been selected."}</p>
                     <strong>{simulation.modeCounts.initialise} FORCED</strong>
                   </div>
@@ -753,11 +756,11 @@ export function BanditStudio() {
             </div>
 
             <div className={styles.liveStatus} role="status" aria-live="polite">
-              <span>RUN LOG</span><p>{message}</p><strong>LOCAL · SEEDED</strong>
+              <span>Run log</span><p>{message}</p><strong>Local · seeded</strong>
             </div>
 
             <section className={styles.armBoard} aria-labelledby="arm-board-title">
-              <div className={styles.boardHeading}><div><span>EMPIRICAL ESTIMATES</span><h4 id="arm-board-title">What the policy currently believes</h4></div><p>Q̂ is updated only for the selected arm using the incremental sample mean.</p></div>
+              <div className={styles.boardHeading}><div><span>Empirical estimates</span><h4 id="arm-board-title">What the policy currently believes</h4></div><p><MathEquation tex={String.raw`\widehat Q`} display={false} /> is updated only for the selected arm using the incremental sample mean.</p></div>
               <div className={styles.armGrid}>
                 {scenario.arms.map((arm, index) => {
                   const stat = simulation.stats[index];
@@ -770,7 +773,7 @@ export function BanditStudio() {
                   return (
                     <article key={arm.id} className={`${styles.armCard} ${lastEvent?.armIndex === index ? styles.lastArm : ""}`}>
                       <div className={styles.armHeader}><span>{arm.id}</span><div><strong>{arm.label}</strong><small>{arm.note}</small></div><em>{stat.lastStep === null ? "UNPLAYED" : `LAST #${stat.lastStep}`}</em></div>
-                      <div className={styles.estimateReadout}><strong>{stat.pulls ? formatMean(stat.estimate, scenario.kind) : "—"}</strong><span>Q̂ empirical mean</span></div>
+                      <div className={styles.estimateReadout}><strong>{stat.pulls ? formatMean(stat.estimate, scenario.kind) : "—"}</strong><span><MathEquation tex={String.raw`\widehat Q`} display={false} /> empirical mean</span></div>
                       <div
                         className={styles.estimateTrack}
                         role="img"
@@ -781,11 +784,11 @@ export function BanditStudio() {
                       </div>
                       <div className={styles.armStats}>
                         <div><span>Pulls</span><strong>{stat.pulls}</strong></div>
-                        <div><span>{scenario.kind === "bernoulli" ? "Wins" : "Σ reward"}</span><strong>{scenario.kind === "bernoulli" ? stat.positive : stat.reward.toFixed(2)}</strong></div>
+                        <div><span>{scenario.kind === "bernoulli" ? "Wins" : <><MathEquation tex={String.raw`\sum`} display={false} /> reward</>}</span><strong>{scenario.kind === "bernoulli" ? stat.positive : stat.reward.toFixed(2)}</strong></div>
                         <div><span>±1 SE</span><strong>{standardError === null ? "—" : standardError.toFixed(3)}</strong></div>
-                        <div><span>Σ mean gap</span><strong>{expectedContribution.toFixed(2)}</strong></div>
+                        <div><span><MathEquation tex={String.raw`\sum`} display={false} /> mean gap</span><strong>{expectedContribution.toFixed(2)}</strong></div>
                       </div>
-                      <div className={styles.truthLine}><span>TRUE μ</span><strong>{revealTruth ? formatMean(arm.mean, scenario.kind) : "HIDDEN"}</strong></div>
+                      <div className={styles.truthLine}><span>TRUE <MathEquation tex={String.raw`\mu`} display={false} /></span><strong>{revealTruth ? formatMean(arm.mean, scenario.kind) : "HIDDEN"}</strong></div>
                     </article>
                   );
                 })}
@@ -793,11 +796,11 @@ export function BanditStudio() {
             </section>
 
             <section className={styles.dataLedger} aria-labelledby="bandit-ledger-title">
-              <div className={styles.boardHeading}><div><span>ACCESSIBLE RUN STATE</span><h4 id="bandit-ledger-title">Arm-by-arm data ledger</h4></div><p>The visual cards and this table expose the same deterministic state.</p></div>
+              <div className={styles.boardHeading}><div><span>Accessible run state</span><h4 id="bandit-ledger-title">Arm-by-arm data ledger</h4></div><p>The visual cards and this table expose the same deterministic state.</p></div>
               <div className={styles.tableWrap} tabIndex={0} aria-label="Scrollable arm statistics table">
                 <table>
                   <caption>Arm statistics after {rounds} seeded rounds</caption>
-                  <thead><tr><th scope="col">Arm</th><th scope="col">True mean</th><th scope="col">Pulls</th><th scope="col">Reward sum</th><th scope="col">Empirical Q̂</th><th scope="col">Estimate error</th><th scope="col">Pseudo-regret contribution</th></tr></thead>
+                  <thead><tr><th scope="col">Arm</th><th scope="col">True mean</th><th scope="col">Pulls</th><th scope="col">Reward sum</th><th scope="col">Empirical <MathEquation tex={String.raw`\widehat Q`} display={false} /></th><th scope="col">Estimate error</th><th scope="col">Pseudo-regret contribution</th></tr></thead>
                   <tbody>{scenario.arms.map((arm, index) => {
                     const stat = simulation.stats[index];
                     return (
@@ -812,7 +815,7 @@ export function BanditStudio() {
                       </tr>
                     );
                   })}</tbody>
-                  <tfoot><tr><th scope="row" colSpan={2}>TOTAL / RECONCILIATION</th><td>{rounds}</td><td>{formatReward(current.policyReward, scenario.kind)}</td><td colSpan={2}>—</td><td>{current.expectedRegret.toFixed(3)}</td></tr></tfoot>
+                  <tfoot><tr><th scope="row" colSpan={2}>Total / reconciliation</th><td>{rounds}</td><td>{formatReward(current.policyReward, scenario.kind)}</td><td colSpan={2}>—</td><td>{current.expectedRegret.toFixed(3)}</td></tr></tfoot>
                 </table>
               </div>
             </section>
@@ -822,13 +825,13 @@ export function BanditStudio() {
         {view === "regret" ? (
           <section id="bandit-panel-regret" role="tabpanel" aria-labelledby="bandit-tab-regret" className={styles.regretPanel}>
             <div className={styles.sectionHeading}>
-              <div><span>MEAN GAP ≠ SAMPLED OUTCOME</span><h3>Regret and oracle comparison</h3><p>One trace accounts for chosen means; the other compares rewards drawn from a fixed counterfactual table.</p></div>
-              <div className={styles.oracleBadge}><small>TOY ORACLE</small><strong>{revealTruth ? bestArm.id : "μ*"}</strong><span>{revealTruth ? `mean ${formatMean(bestMean, scenario.kind)}` : "truth hidden in policy view"}</span></div>
+              <div><span>Mean gap ≠ sampled outcome</span><h3>Regret and oracle comparison</h3><p>One trace accounts for chosen means; the other compares rewards drawn from a fixed counterfactual table.</p></div>
+              <div className={styles.oracleBadge}><small>Toy oracle</small><strong>{revealTruth ? bestArm.id : <MathEquation tex={String.raw`\mu^*`} display={false} />}</strong><span>{revealTruth ? `mean ${formatMean(bestMean, scenario.kind)}` : "truth hidden in policy view"}</span></div>
             </div>
 
             <div className={styles.regretGrid}>
               <div className={styles.chartCard}>
-                <div className={styles.chartCap}><span>CUMULATIVE TRACE</span><strong>ROUND {rounds}</strong></div>
+                <div className={styles.chartCap}><span>Cumulative trace</span><strong>ROUND {rounds}</strong></div>
                 <RegretChart trace={simulation.trace} />
                 <div className={styles.traceSummary}>
                   <div><i className={styles.expectedSwatch} /><span>Expected / pseudo-regret</span><strong>{current.expectedRegret.toFixed(2)}</strong></div>
@@ -837,20 +840,20 @@ export function BanditStudio() {
               </div>
 
               <aside className={styles.oraclePanel} aria-label="Oracle comparison receipt">
-                <div className={styles.panelCap}><span>ORACLE RECEIPT</span><b>SEED {seed}</b></div>
+                <div className={styles.panelCap}><span>Oracle receipt</span><b>SEED {seed}</b></div>
                 <section>
-                  <span>EXPECTATION ACCOUNT</span>
+                  <span>Expectation account</span>
                   <dl>
-                    <div><dt>Oracle Tμ*</dt><dd>{current.oracleExpected.toFixed(2)}</dd></div>
-                    <div><dt>Chosen Σμ<sub>Aₜ</sub></dt><dd>{current.policyExpected.toFixed(2)}</dd></div>
+                    <div><dt>Oracle <MathEquation tex={String.raw`T\mu^*`} display={false} /></dt><dd>{current.oracleExpected.toFixed(2)}</dd></div>
+                    <div><dt>Chosen <MathEquation tex={String.raw`\sum_t\mu_{A_t}`} display={false} /></dt><dd>{current.policyExpected.toFixed(2)}</dd></div>
                     <div className={styles.totalRow}><dt>Difference</dt><dd>{current.expectedRegret.toFixed(2)}</dd></div>
                   </dl>
                 </section>
                 <section>
-                  <span>REALISED ACCOUNT</span>
+                  <span>Realised account</span>
                   <dl>
-                    <div><dt>Oracle ΣR*</dt><dd>{formatReward(current.oracleReward, scenario.kind)}</dd></div>
-                    <div><dt>Policy ΣR</dt><dd>{formatReward(current.policyReward, scenario.kind)}</dd></div>
+                    <div><dt>Oracle <MathEquation tex={String.raw`\sum_t R_t^*`} display={false} /></dt><dd>{formatReward(current.oracleReward, scenario.kind)}</dd></div>
+                    <div><dt>Policy <MathEquation tex={String.raw`\sum_t R_t`} display={false} /></dt><dd>{formatReward(current.policyReward, scenario.kind)}</dd></div>
                     <div className={styles.totalRow}><dt>Difference</dt><dd>{formatSigned(current.realisedRegret, 2)}</dd></div>
                   </dl>
                 </section>
@@ -862,28 +865,28 @@ export function BanditStudio() {
             </div>
 
             <div className={styles.definitionGrid}>
-              <section><span>MONOTONE</span><strong>Action-path pseudo-regret</strong><div className={styles.inlineFormula}>R̄<sub>T</sub> = Σ<sub>t</sub>(μ* − μ<sub>Aₜ</sub>)</div><p>Uses known toy means. Each increment is non-negative, so this line cannot fall.</p></section>
-              <section><span>NOISY · MAY FALL</span><strong>Realised counterfactual regret</strong><div className={styles.inlineFormula}>R̃<sub>T</sub> = Σ<sub>t</sub>(R*<sub>t</sub> − R<sub>t</sub>)</div><p>Uses seeded outcomes. A lucky policy draw can make an increment negative.</p></section>
-              <section><span>ORACLE LIMIT</span><strong>Available only in simulation</strong><div className={styles.inlineFormula}>A* = arg max<sub>a</sub> μ<sub>a</sub></div><p>Ground-truth means and unchosen rewards are deliberately unavailable in operational bandit logs.</p></section>
+              <section><span>MONOTONE</span><strong>Action-path pseudo-regret</strong><div className={styles.inlineFormula}><MathEquation tex={String.raw`\bar R_T = \sum_t (\mu^* - \mu_{A_t})`} label="Action-path pseudo-regret" /></div><p>Uses known toy means. Each increment is non-negative, so this line cannot fall.</p></section>
+              <section><span>Noisy · may fall</span><strong>Realised counterfactual regret</strong><div className={styles.inlineFormula}><MathEquation tex={String.raw`\widetilde R_T = \sum_t (R_t^* - R_t)`} label="Realised counterfactual regret" /></div><p>Uses seeded outcomes. A lucky policy draw can make an increment negative.</p></section>
+              <section><span>Oracle limit</span><strong>Available only in simulation</strong><div className={styles.inlineFormula}><MathEquation tex={String.raw`A^* = \operatorname*{arg\,max}_a \mu_a`} label="Best-mean oracle arm" /></div><p>Ground-truth means and unchosen rewards are deliberately unavailable in operational bandit logs.</p></section>
             </div>
 
             <section className={styles.bakeoff} aria-labelledby="policy-bakeoff-title">
               <div className={styles.boardHeading}>
-                <div><span>SOURCE-MECHANIC COMPARISON</span><h4 id="policy-bakeoff-title">Three policies · twelve paired seeds</h4></div>
-                <p>The same deterministic reward table is replayed for each policy. This browser calculation compares action-path pseudo-regret; it does not copy or substitute the source experiment&apos;s recorded outputs.</p>
+                <div><span>Source-mechanic comparison</span><h4 id="policy-bakeoff-title">Three policies · twelve paired seeds</h4></div>
+                <p>Each policy replays the same deterministic reward table. Compare the pseudo-regret of its chosen actions; realised rewards also contain sampling noise.</p>
               </div>
               {bakeoff ? (
                 <div className={styles.bakeoffGrid}>
                   {bakeoff.map((entry) => {
-                    const label = entry.policy === "epsilon" ? "ε-greedy · 0.10" : entry.policy === "ucb1" ? "UCB1 · c = 2" : "Thompson · Beta";
+                    const label = entry.policy === "epsilon" ? "ε-greedy · 0.10" : entry.policy === "ucb1" ? <>UCB1 · <MathEquation tex={String.raw`c=2`} display={false} /></> : "Thompson · Beta";
                     const description = entry.policy === "epsilon"
                       ? "Fixed random exploration plus greedy empirical means."
                       : entry.policy === "ucb1"
-                        ? "Optimism bonus √(2 log t / nₐ) shrinks with evidence."
-                        : "Sample Beta(successes + 1, failures + 1), then act greedily.";
+                        ? <>Optimism bonus <MathEquation tex={String.raw`\sqrt{\frac{2\log t}{n_a}}`} display={false} /> shrinks with evidence.</>
+                        : <>Sample <MathEquation tex={String.raw`\operatorname{Beta}(\text{successes}+1,\text{failures}+1)`} display={false} />, then act greedily.</>;
                     return (
                       <article key={entry.policy}>
-                        <span>{entry.policy === "epsilon" ? "BASELINE" : "ADAPTIVE EXPLORATION"}</span>
+                        <span>{entry.policy === "epsilon" ? "BASELINE" : "Adaptive exploration"}</span>
                         <strong>{label}</strong>
                         <p>{description}</p>
                         <dl><div><dt>Mean regret</dt><dd>{entry.mean.toFixed(2)}</dd></div><div><dt>Seed range</dt><dd>{entry.minimum.toFixed(2)}—{entry.maximum.toFixed(2)}</dd></div></dl>
@@ -894,11 +897,11 @@ export function BanditStudio() {
               ) : (
                 <div className={styles.bakeoffUnavailable} role="note"><strong>Bernoulli policies only</strong><span>Beta-Bernoulli Thompson Sampling and bounded-reward UCB1 are intentionally withheld for the Gaussian scenario.</span></div>
               )}
-              <footer><span>HORIZON {Math.max(50, rounds)}</span><span>12 FIXED SEEDS</span><span>PAIRED SYNTHETIC REWARDS</span><span>SOURCE DEFINITIONS · WEEK 01</span></footer>
+              <footer><span>HORIZON {Math.max(50, rounds)}</span><span>12 Fixed seeds</span><span>Paired synthetic rewards</span><span>Source definitions · week 01</span></footer>
             </section>
 
             <section className={styles.checkpointLedger} aria-labelledby="checkpoint-title">
-              <div className={styles.boardHeading}><div><span>TRACE RECONCILIATION</span><h4 id="checkpoint-title">Selected checkpoints</h4></div><p>Expected difference equals pseudo-regret at every row by construction.</p></div>
+              <div className={styles.boardHeading}><div><span>Trace reconciliation</span><h4 id="checkpoint-title">Selected checkpoints</h4></div><p>Expected difference equals pseudo-regret at every row by construction.</p></div>
               <div className={styles.tableWrap} tabIndex={0} aria-label="Scrollable regret checkpoint table">
                 <table>
                   <caption>Expected and realised regret checkpoints</caption>
@@ -920,8 +923,7 @@ export function BanditStudio() {
         {view === "method" ? (
           <section id="bandit-panel-method" role="tabpanel" aria-labelledby="bandit-tab-method" className={styles.methodPanel}>
             <div className={styles.sectionHeading}>
-              <div><span>IMPLEMENTATION RECEIPT</span><h3>Method and source boundary</h3><p>The browser preserves the generic Week 01 mechanics while keeping the private curriculum, graded exercises and reference answers out of the bundle.</p></div>
-              <div className={styles.sourceSeal}><span>PRIVATE SOURCE</span><strong>NO LICENCE</strong><small>CONCEPT REBUILD</small></div>
+              <div><span>Method</span><h3>From a policy choice to cumulative regret</h3><p>Each round selects an arm, observes a seeded reward and updates the estimate. The oracle makes the cost of exploration visible.</p></div>
             </div>
 
             <div className={styles.algorithmFlow} aria-label="Epsilon-greedy browser algorithm">
@@ -938,55 +940,40 @@ export function BanditStudio() {
 
             <div className={styles.methodGrid}>
               <section className={styles.equationDeck} aria-labelledby="equation-deck-title">
-                <div className={styles.cardCap}><span>EXECUTABLE EQUATIONS</span><strong>GENERIC BANDIT MATH</strong></div>
+                <div className={styles.cardCap}><span>Executable equations</span><strong>Generic bandit math</strong></div>
                 <h4 id="equation-deck-title">Four lines drive the workbench</h4>
-                <div className={styles.equationRow}><span>POLICY</span><div>A<sub>t</sub> = uniform(𝒜) with probability ε; otherwise arg max<sub>a</sub> Q̂<sub>a</sub></div></div>
-                <div className={styles.equationRow}><span>UPDATE</span><div>Q̂<sub>a,n</sub> ← Q̂<sub>a,n−1</sub> + (R<sub>n</sub> − Q̂<sub>a,n−1</sub>) / n</div></div>
-                <div className={styles.equationRow}><span>PSEUDO</span><div>R̄<sub>T</sub> = Σ<sub>t=1</sub><sup>T</sup> (μ* − μ<sub>Aₜ</sub>) = Σ<sub>a</sub> N<sub>a</sub>(T)Δ<sub>a</sub></div></div>
-                <div className={styles.equationRow}><span>REALISED</span><div>R̃<sub>T</sub> = Σ<sub>t=1</sub><sup>T</sup> (R*<sub>t</sub> − R<sub>t</sub>)</div></div>
+                <div className={styles.equationRow}><span>POLICY</span><div><MathEquation tex={String.raw`A_t = \begin{cases} \operatorname{uniform}(\mathcal A), & \text{with probability }\varepsilon, \\ \operatorname*{arg\,max}_a \widehat Q_a, & \text{otherwise}. \end{cases}`} label="Epsilon-greedy policy" /></div></div>
+                <div className={styles.equationRow}><span>UPDATE</span><div><MathEquation tex={String.raw`\widehat Q_{a,n} \leftarrow \widehat Q_{a,n-1} + \frac{R_n - \widehat Q_{a,n-1}}{n}`} label="Incremental sample-mean update" /></div></div>
+                <div className={styles.equationRow}><span>PSEUDO</span><div><MathEquation tex={String.raw`\bar R_T = \sum_{t=1}^{T}(\mu^* - \mu_{A_t}) = \sum_a N_a(T)\Delta_a`} label="Cumulative pseudo-regret identity" /></div></div>
+                <div className={styles.equationRow}><span>REALISED</span><div><MathEquation tex={String.raw`\widetilde R_T = \sum_{t=1}^{T}(R_t^* - R_t)`} label="Cumulative realised counterfactual regret" /></div></div>
                 <p>The first three relations align with the Week 01 environment, agent and cumulative-regret contracts. The realised counterfactual ledger is an explicit browser addition.</p>
               </section>
 
               <section className={styles.sourceLedger} aria-labelledby="source-ledger-title">
-                <div className={styles.cardCap}><span>SOURCE AUDIT</span><strong>{SOURCE_REF}</strong></div>
-                <h4 id="source-ledger-title">What was grounded—and what was not copied</h4>
+                <div className={styles.cardCap}><span>Experiment design</span><strong>Reproducible synthetic rewards</strong></div>
+                <h4 id="source-ledger-title">What shapes the comparison</h4>
                 <ul>
                   <li><span className={styles.groundedTag}>GROUNDED</span><p>Bernoulli and Gaussian arms, mean-gap regret, ε-greedy selection and incremental estimates.</p></li>
                   <li><span className={styles.groundedTag}>GROUNDED</span><p>The three-arm means (0.20, 0.50, 0.80), ε = 0.10 and a 200-round teaching fixture.</p></li>
-                  <li><span className={styles.adaptedTag}>ADAPTED</span><p>One forced pull per arm makes every displayed estimate defined before exploitation and makes the UI contract testable.</p></li>
+                  <li><span className={styles.adaptedTag}>ADAPTED</span><p>One forced pull per arm gives every estimate an observed reward before exploitation begins.</p></li>
                   <li><span className={styles.adaptedTag}>ADAPTED</span><p>A stable browser PRNG and split policy/reward streams replace runtime-dependent randomness.</p></li>
-                  <li><span className={styles.excludedTag}>EXCLUDED</span><p>No notebook prompts, worked solutions, test bodies, PDFs, matching applications or private repository link.</p></li>
+
                 </ul>
               </section>
             </div>
 
             <section className={styles.initialisationAudit} aria-labelledby="initialisation-title">
-              <div><span>BROWSER HARDENING</span><h4 id="initialisation-title">Forced initialization is a declared policy stage</h4><p>ε-greedy does not mathematically require forced pulls: zero estimates plus random tie-breaking are also valid. This exhibit intentionally pulls A → B → … once, because its interface promises defined empirical estimates before ε-greedy begins.</p></div>
+              <div><span>Browser hardening</span><h4 id="initialisation-title">Forced initialization is a declared policy stage</h4><p>ε-greedy does not mathematically require forced pulls: zero estimates plus random tie-breaking are also valid. This exhibit intentionally pulls A → B → … once, because its interface promises defined empirical estimates before ε-greedy begins.</p></div>
               <div className={styles.initSequence}>{scenario.arms.map((arm, index) => <span key={arm.id} className={rounds > index ? styles.initDone : ""}><b>{index + 1}</b>{arm.id}</span>)}<i>then ε-policy</i></div>
             </section>
 
-            <div className={styles.boundaryGrid}>
-              <section><span>SAFE TO DEMO</span><strong>Independent browser mechanics</strong><ul><li>Generic equations and algorithms</li><li>Fixed synthetic environments</li><li>Seeded decisions and outcomes</li><li>Original visual and audit layers</li></ul></section>
-              <section><span>NOT PUBLISHED</span><strong>Private curriculum material</strong><ul><li>Graded workbook questions</li><li>Reference solutions and tests</li><li>Lecture PDFs and reading pack</li><li>Applied matching case content</li></ul></section>
-              <section><span>LIMITATION</span><strong>A toy is not a deployment</strong><p>Stationary arms, a known oracle and complete synthetic counterfactuals remove delayed feedback, non-stationarity, interference, safety constraints and logging-policy uncertainty.</p></section>
-            </div>
-
-            <pre className={styles.auditReceipt} role="region" tabIndex={0} aria-label="Scrollable deterministic simulation manifest">{`bandit_manifest {
-  source_snapshot: "${SOURCE_REF}"
-  scenario: "${scenarioId}/${scenario.kind}"
-  seed: ${seed}
-  epsilon: ${(epsilonPercent / 100).toFixed(2)}
-  forced_initialisation: ${scenario.arms.length} rounds
-  completed_rounds: ${rounds}
-  expected_regret: ${current.expectedRegret.toFixed(6)}
-  realised_regret: ${current.realisedRegret.toFixed(6)}
-  network_calls: 0
-  live_decisions: 0
-}`}</pre>
+            <aside className={styles.boundaryGrid} role="note">
+              <section><span>Limitations</span><strong>A stationary testbed</strong><p>Known arm means and complete synthetic counterfactuals simplify this comparison. Delayed feedback, changing rewards, interference and uncertain logging policies require additional methods.</p></section>
+            </aside>
           </section>
         ) : null}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

@@ -1,0 +1,12 @@
+{
+  "dictionary": "schedulingCopy.ts",
+  "exportName": "schedulingCopy",
+  "sources": [
+    "src/components/projects/SchedulingStudio.tsx"
+  ],
+  "identities": {
+    "Alex": "Fictional host proper name, preserved across locales.",
+    "Morgan": "Fictional host proper name, preserved across locales.",
+    "Riley": "Fictional host proper name, preserved across locales."
+  }
+}

@@ -1,10 +1,17 @@
 "use client";
+import { MriErrorExperiment } from "./SourceExperiments";
 
 import { useId, useMemo, useState } from "react";
+import { mriUncertaintySample } from "@/lib/mriUncertainty";
+import { translateText } from "@/lib/i18n";
+import { projectText } from "@/lib/projectCopy";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { mriCopy } from "./copy/mriCopy";
+import { MathEquation } from "./MathEquation";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./MriTrustStudio.module.css";
 
-type View = "reconstruction" | "architecture" | "uncertainty" | "robustness" | "segmentation" | "audit";
+type View = "experiments" | "reconstruction" | "architecture" | "uncertainty" | "robustness" | "segmentation" | "audit";
 type Acceleration = 4 | 8;
 type ReconMethod = "zero" | "no-dc" | "dc";
 type UqMethod = "dropout" | "ensemble";
@@ -61,7 +68,7 @@ const uncertaintyResults = {
     ause: 0.00013,
     errorR: 0.493,
     segmentationR: 0.156,
-    strength: "Calibrated intervals",
+    strength: "Relative error-map agreement",
   },
 } as const;
 
@@ -81,12 +88,13 @@ const segmentationResults = {
 } as const;
 
 const viewLabels: Array<{ id: View; number: string; label: string }> = [
+  { id: "experiments", number: "00", label: "Error experiments" },
   { id: "reconstruction", number: "01", label: "Reconstruct" },
   { id: "architecture", number: "02", label: "Architecture" },
   { id: "uncertainty", number: "03", label: "Uncertainty" },
   { id: "robustness", number: "04", label: "Stress test" },
   { id: "segmentation", number: "05", label: "Downstream" },
-  { id: "audit", number: "06", label: "Audit trail" },
+  { id: "audit", number: "06", label: "Study & limits" },
 ];
 
 const architectureStages: Array<{
@@ -232,6 +240,7 @@ function SyntheticSlice({
   severity?: number;
   label: string;
 }) {
+  const locale = useProjectLocale();
   const rawId = useId();
   const id = rawId.replace(/:/g, "");
   const ghostCount = mode === "zero" ? (acceleration >= 8 ? 7 : 4) : mode === "attack" ? 6 : 0;
@@ -239,7 +248,7 @@ function SyntheticSlice({
   const uncertaintyOpacity = mode === "uncertainty" ? 0.94 : 0;
 
   return (
-    <figure className={styles.sliceFrame} aria-label={`${label}, generated synthetic schematic`}>
+    <ProjectCopy copy={mriCopy}><figure className={styles.sliceFrame} aria-label={`${projectText(locale, mriCopy, label)}, generated synthetic schematic`}>
       <div className={styles.syntheticFlag}>SYNTHETIC · NO PATIENT DATA</div>
       <svg className={styles.sliceSvg} viewBox="0 0 240 190" role="img" aria-label={label}>
         <defs>
@@ -338,7 +347,7 @@ function SyntheticSlice({
         </text>
       </svg>
       <figcaption>{label}</figcaption>
-    </figure>
+    </figure></ProjectCopy>
   );
 }
 
@@ -348,7 +357,7 @@ function KSpaceMask({ acceleration }: { acceleration: Acceleration }) {
   const centerEnd = centerStart + Math.floor(64 * 0.08) - 1;
 
   return (
-    <div className={styles.maskPanel}>
+    <ProjectCopy copy={mriCopy}><div className={styles.maskPanel}>
       <div className={styles.maskHeader}>
         <div>
           <span className={styles.microLabel}>CARTESIAN MASK · 64-COLUMN SCHEMATIC</span>
@@ -390,17 +399,17 @@ function KSpaceMask({ acceleration }: { acceleration: Acceleration }) {
         Generated mask follows the source algorithm: fixed central 8% ACS lines, then deterministic
         column placement to reach W/R. It is a schematic, not an experimental mask.
       </p>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
 function Metric({ label, value, detail, tone = "plain" }: { label: string; value: string; detail: string; tone?: "plain" | "good" | "warn" }) {
   return (
-    <div className={`${styles.metric} ${tone === "plain" ? "" : styles[tone]}`}>
+    <ProjectCopy copy={mriCopy}><div className={`${styles.metric} ${tone === "plain" ? "" : styles[tone]}`}>
       <span>{label}</span>
       <strong>{value}</strong>
       <small>{detail}</small>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -423,7 +432,7 @@ function ReconstructionView() {
   }
 
   return (
-    <section className={styles.workspace} aria-labelledby="mri-reconstruction-heading">
+    <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-reconstruction-heading">
       <div className={styles.sectionLead}>
         <div>
           <span className={styles.kicker}>PHYSICS-INFORMED RECONSTRUCTION</span>
@@ -512,11 +521,7 @@ function ReconstructionView() {
             />
           </label>
           <div className={styles.equation}>
-            <span>(1 − {lambda.toFixed(2)}) × {predictedCoefficient.toFixed(2)}</span>
-            <b>+</b>
-            <span>{lambda.toFixed(2)} × {measuredCoefficient.toFixed(2)}</span>
-            <b>=</b>
-            <strong>{blended.toFixed(3)}</strong>
+            <MathEquation tex={String.raw`(1-${lambda.toFixed(2)})\times ${predictedCoefficient.toFixed(2)}+${lambda.toFixed(2)}\times ${measuredCoefficient.toFixed(2)}=${blended.toFixed(3)}`} label="Illustrative measured k-space blend" />
           </div>
           <p>
             At measured locations, the source blends predicted and acquired k-space with a learned,
@@ -539,7 +544,7 @@ function ReconstructionView() {
           </div>
         </div>
       </div>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -574,10 +579,10 @@ function ArchitectureView() {
   }
 
   return (
-    <section className={`${styles.workspace} ${styles.architectureWorkspace}`} aria-labelledby="mri-architecture-heading">
+    <ProjectCopy copy={mriCopy}><section className={`${styles.workspace} ${styles.architectureWorkspace}`} aria-labelledby="mri-architecture-heading">
       <div className={styles.sectionLead}>
         <div>
-          <span className={styles.kicker}>DEFINITION-DERIVED MODEL BLUEPRINT</span>
+          <span className={styles.kicker}>MODEL DESIGN</span>
           <h3 id="mri-architecture-heading">Follow every scale, skip and physics constraint.</h3>
           <p>
             Select a tensor stage, a matching-resolution skip route or one of the three final soft data-consistency
@@ -649,7 +654,7 @@ function ArchitectureView() {
           <strong>{selectedStage.label}</strong>
           <output>{selectedStage.tensor}</output>
           <dl>
-            <div><dt>Verified operation</dt><dd>{selectedStage.operation}</dd></div>
+            <div><dt>What this stage does</dt><dd>{selectedStage.operation}</dd></div>
             <div><dt>Why it is here</dt><dd>{selectedStage.explanation}</dd></div>
           </dl>
           <p>
@@ -678,7 +683,7 @@ function ArchitectureView() {
                 onClick={() => setSelectedCascade(cascade)}
               >
                 <span>DC {cascade}</span>
-                <small>σ(λ{cascade})</small>
+                <small><MathEquation tex={String.raw`\sigma(\lambda_{${cascade}})`} display={false} /></small>
               </button>
             ))}
           </fieldset>
@@ -687,9 +692,9 @@ function ArchitectureView() {
             <strong>Re-anchor acquired k-space lines</strong>
             <div className={styles.dcEquation}>
               <span>measured:</span>
-              <code>(1 − σ(λ{selectedCascade})) k<sub>pred</sub> + σ(λ{selectedCascade}) k<sub>measured</sub></code>
+              <MathEquation tex={String.raw`\bigl(1-\sigma(\lambda_{${selectedCascade}})\bigr)k_{\mathrm{pred}}+\sigma(\lambda_{${selectedCascade}})k_{\mathrm{measured}}`} label="Soft data consistency at measured locations" />
               <span>unmeasured:</span>
-              <code>k<sub>pred</sub></code>
+              <MathEquation tex={String.raw`k_{\mathrm{pred}}`} label="Prediction retained at unmeasured locations" />
             </div>
             <p>
               The code applies DC 1 → 2 → 3 to the running reconstruction after one residual U-Net pass.
@@ -747,7 +752,7 @@ function ArchitectureView() {
           </tbody>
         </table>
       </div>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -758,7 +763,7 @@ function UncertaintyView() {
   const auseReduction = Math.round((1 - uncertaintyResults.dropout.ause / uncertaintyResults.ensemble.ause) * 100);
 
   return (
-    <section className={styles.workspace} aria-labelledby="mri-uncertainty-heading">
+    <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-uncertainty-heading">
       <div className={styles.sectionLead}>
         <div>
           <span className={styles.kicker}>CALIBRATION + ERROR RANKING</span>
@@ -790,7 +795,7 @@ function UncertaintyView() {
           </div>
           <div className={styles.dossierMetrics}>
             <Metric label="PSNR ↑" value={`${selected.psnr.toFixed(2)} dB`} detail="R=4 final report" />
-            <Metric label="ECE ↓" value={selected.ece.toFixed(3)} detail="calibration error" tone={method === "ensemble" ? "good" : "plain"} />
+            <Metric label="Relative ECE ↓" value={selected.ece.toFixed(3)} detail="normalised map agreement" tone={method === "ensemble" ? "good" : "plain"} />
             <Metric label="AUSE ↓" value={formatAuse(selected.ause)} detail="sparsification" tone={method === "dropout" ? "good" : "plain"} />
             <Metric label="ERROR r ↑" value={selected.errorR.toFixed(3)} detail="uncertainty vs |error|" tone={method === "dropout" ? "good" : "plain"} />
           </div>
@@ -802,12 +807,14 @@ function UncertaintyView() {
         </div>
       </div>
 
+      <UncertaintyRankingExperiment />
+
       <div className={styles.lowerGrid}>
         <div className={styles.comparisonPanel}>
           <div className={styles.panelTitle}>
             <div>
-              <span className={styles.microLabel}>CALIBRATION · LOWER IS BETTER</span>
-              <h4>Expected calibration error</h4>
+              <span className={styles.microLabel}>RELATIVE MAP AGREEMENT · LOWER IS BETTER</span>
+              <h4>Relative uncertainty–error agreement</h4>
             </div>
             <span className={styles.readout}>{eceReduction}% lower</span>
           </div>
@@ -815,7 +822,7 @@ function UncertaintyView() {
             <div><span>MC Dropout</span><i><b style={{ width: `${(0.026 / 0.03) * 100}%` }} /></i><strong>0.026</strong></div>
             <div><span>Ensemble</span><i><b style={{ width: `${(0.017 / 0.03) * 100}%` }} /></i><strong>0.017</strong></div>
           </div>
-          <p>Calculated from rounded values in the final report table. Ensemble calibration is stronger.</p>
+          <p>Uncertainty and absolute-error maps are each divided by their own maximum before binning. The ensemble has a smaller relative-map discrepancy; this score is insensitive to absolute uncertainty scale.</p>
         </div>
         <div className={styles.comparisonPanel}>
           <div className={styles.panelTitle}>
@@ -832,7 +839,77 @@ function UncertaintyView() {
           <p>Calculated from rounded table values. MC Dropout ranks unreliable pixels more tightly.</p>
         </div>
       </div>
-    </section>
+    </section></ProjectCopy>
+  );
+}
+
+export function UncertaintyRankingExperiment() {
+  const [scale, setScale] = useState(1);
+  const [reversed, setReversed] = useState(false);
+  const [removeCount, setRemoveCount] = useState(4);
+  const locale = useProjectLocale();
+  const t = (source: string) => translateText(locale, source);
+  const controlId = useId();
+  const sample = mriUncertaintySample(scale, reversed, removeCount);
+
+  return (
+    <ProjectCopy copy={mriCopy}><section className={styles.rankingExperiment} aria-label={t("Uncertainty scale and ranking experiment")}>
+      <div className={styles.panelTitle}>
+        <div>
+          <span className={styles.microLabel}>{t("CALCULATED HERE · EIGHT SYNTHETIC PIXELS")}</span>
+          <h4>{t("What does a low uncertainty score actually tell you?")}</h4>
+        </div>
+        <a className={styles.sourceButton} href={`${REPOSITORY_URL}/notebooks/03_ensemble_and_calibration.ipynb`} target="_blank" rel="noreferrer">{t("Metric source ↗")}</a>
+      </div>
+      <p className={styles.rankingIntroduction}>
+        {t("First increase the uncertainty scale: relative ECE barely changes because the notebook divides each map by its own maximum. Then reverse the ranking: removing the most uncertain pixels now leaves the largest errors behind. The reconstruction stays fixed throughout.")}
+      </p>
+      <div className={styles.rankingWorkbench}>
+        <div className={styles.rankingControls}>
+          <div>
+            <span className={styles.controlLabel}>{t("UNCERTAINTY ORDER")}</span>
+            <div className={styles.segmented} aria-label={t("Synthetic uncertainty ranking")}>
+              <button type="button" aria-pressed={!reversed} onClick={() => setReversed(false)}>{t("Aligned with error")}</button>
+              <button type="button" aria-pressed={reversed} onClick={() => setReversed(true)}>{t("Reversed")}</button>
+            </div>
+          </div>
+          <label className={styles.sliderLabel} htmlFor={`${controlId}-scale`}>
+            <span>{t("Multiply uncertainty")} <output>{scale.toFixed(2)}×</output></span>
+            <input id={`${controlId}-scale`} type="range" min="0.25" max="8" step="0.25" value={scale} onChange={(event) => setScale(Number(event.target.value))} />
+          </label>
+          <label className={styles.sliderLabel} htmlFor={`${controlId}-remove`}>
+            <span>{t("Remove highest uncertainty")} <output>{removeCount} / 8</output></span>
+            <input id={`${controlId}-remove`} type="range" min="0" max="6" step="1" value={removeCount} onChange={(event) => setRemoveCount(Number(event.target.value))} />
+          </label>
+          <p className={styles.rankingHint}>
+            {t("Removal is only a way to evaluate error ranking. The oracle knows the true errors and removes the worst pixels first; a reconstruction system would not have that information.")}
+          </p>
+        </div>
+        <div className={styles.rankingTableFrame}>
+          <table className={styles.rankingTable}>
+            <caption>{t("Fixed residuals · uncertainty changes · shaded rows removed")}</caption>
+            <thead><tr><th scope="col">{t("Pixel")}</th><th scope="col">{t("|Error|")}</th><th scope="col">{t("Uncertainty")}</th><th scope="col">{t("Kept?")}</th></tr></thead>
+            <tbody>
+              {sample.rows.map((row) => (
+                <tr key={row.id} data-removed={row.removed || undefined}>
+                  <th scope="row">{row.id.toString().padStart(2, "0")}</th>
+                  <td>{row.error.toFixed(2)}</td><td>{row.uncertainty.toFixed(3)}</td><td>{row.removed ? t("Removed") : t("Kept")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className={styles.rankingReadouts} aria-live="polite" aria-atomic="true">
+        <Metric label={t("RELATIVE ECE ↓")} value={sample.relativeEce.toFixed(4)} detail={t("all 8 pixels · source formula")} />
+        <Metric label={t("MEAN UNCERTAINTY")} value={sample.meanUncertainty.toFixed(4)} detail={t("raw scale · all 8 pixels")} />
+        <Metric label={t("RETAINED MSE ↓")} value={sample.retainedMse.toFixed(6)} detail={`${sample.retainedCount} / 8 ${t("pixels retained")}`} />
+        <Metric label={t("ORACLE MSE ↓")} value={sample.oracleMse.toFixed(6)} detail={t("same removal budget")} />
+      </div>
+      <p className={styles.rankingConclusion}>
+        {t("Full-image MSE stays at")} <strong>{sample.fullMse.toFixed(6)}</strong>. {t("Relative map agreement, uncertainty magnitude and error ranking answer different questions. These toy calculations do not estimate model performance or establish an absolute calibration guarantee.")}
+      </p>
+    </section></ProjectCopy>
   );
 }
 
@@ -846,7 +923,7 @@ function AttackChart({ selectedAttack, selectedIndex }: { selectedAttack: Attack
   ];
 
   return (
-    <div className={styles.chartPanel}>
+    <ProjectCopy copy={mriCopy}><div className={styles.chartPanel}>
       <div className={styles.chartLegend}>
         {series.map((item) => <span key={item.label}><i style={{ background: item.color }} />{item.label}</span>)}
       </div>
@@ -888,7 +965,7 @@ function AttackChart({ selectedAttack, selectedIndex }: { selectedAttack: Attack
         <text x="8" y="20" fontSize="8" fill="#343431">PSNR dB</text>
       </svg>
       <p>Aggregate values transcribed from the final report; no per-slice samples are plotted.</p>
-    </div>
+    </div></ProjectCopy>
   );
 }
 
@@ -904,7 +981,7 @@ function RobustnessView() {
   const shift = domain === "MR" ? { psnr: 31.3, uncertainty: 0.004 } : { psnr: 30.4, uncertainty: 0.007 };
 
   return (
-    <section className={styles.workspace} aria-labelledby="mri-robustness-heading">
+    <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-robustness-heading">
       <div className={styles.sectionLead}>
         <div>
           <span className={styles.kicker}>FAILURE-MODE LAB</span>
@@ -987,7 +1064,7 @@ function RobustnessView() {
           </div>
         </div>
       )}
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -1004,7 +1081,7 @@ function SegmentationView() {
   const passesGate = preserved >= gate;
 
   return (
-    <section className={styles.workspace} aria-labelledby="mri-segmentation-heading">
+    <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-segmentation-heading">
       <div className={styles.sectionLead}>
         <div>
           <span className={styles.kicker}>DOWNSTREAM TASK CHECK</span>
@@ -1087,7 +1164,7 @@ function SegmentationView() {
           </p>
         </div>
       </div>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -1095,14 +1172,14 @@ function AuditView() {
   const [attribution, setAttribution] = useState<Attribution>("Grad-CAM");
 
   return (
-    <section className={styles.workspace} aria-labelledby="mri-audit-heading">
+    <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-audit-heading">
       <div className={styles.sectionLead}>
         <div>
-          <span className={styles.kicker}>METHOD + EVIDENCE BOUNDARY</span>
-          <h3 id="mri-audit-heading">Show the mechanism—and the limits.</h3>
+          <span className={styles.kicker}>UNDERSTANDING THE STUDY</span>
+          <h3 id="mri-audit-heading">How was reconstruction quality evaluated?</h3>
           <p>
-            This map is traced to the study source. The portfolio demo contains no MM-WHS data, weights,
-            assessed paper PDF, notebook output or reproduced repository figures.
+            The study combines image quality, uncertainty, adversarial stress and downstream segmentation.
+            Explore the model configuration and evaluation population, then read what these results can support.
           </p>
         </div>
         <a className={styles.sourceButton} href={REPOSITORY_URL} target="_blank" rel="noreferrer">Inspect public source ↗</a>
@@ -1150,7 +1227,7 @@ function AuditView() {
       <div className={styles.datasetLedger}>
         <div>
           <span className={styles.microLabel}>MM-WHS SLICE COUNTS · AS REPORTED</span>
-          <h4>Evaluation ledger</h4>
+          <h4>Images used for evaluation</h4>
         </div>
         <div className={styles.ledgerTable} role="table" aria-label="Reported data split counts">
           <div role="row" className={styles.ledgerHead}><span role="columnheader">Modality</span><span role="columnheader">Train</span><span role="columnheader">Validation</span><span role="columnheader">Test</span></div>
@@ -1182,7 +1259,7 @@ function AuditView() {
           <p>The repository is publicly viewable but contains no explicit licence file; public access is not a reuse grant.</p>
         </div>
       </div>
-    </section>
+    </section></ProjectCopy>
   );
 }
 
@@ -1190,28 +1267,27 @@ export function MriTrustStudio() {
   const [view, setView] = useState<View>("reconstruction");
 
   return (
-    <DemoWindow
-      appName="TRUST LAB 1.0"
+    <ProjectCopy copy={mriCopy}><DemoWindow
+      appName="MRI reconstruction lab"
       title="Trustworthy MRI Reconstruction"
-      status="REPORTED METRICS · SYNTHETIC VISUALS"
-      purpose="Test whether an accelerated MRI reconstruction is not only visually plausible but also data-consistent, calibrated and safe for downstream use."
+      status="Study results · synthetic visuals"
+      purpose="Test whether an accelerated MRI reconstruction is not only visually plausible but also data-consistent and useful for downstream evaluation."
       tryThis="Change acceleration and uncertainty settings, then inspect the trust gate and architecture path."
       watchFor="Quality, consistency, uncertainty and downstream checks can disagree; visuals are synthetic and metrics are reported source results."
       statusTone="safe"
       className={styles.studio}
       footer={
         <>
-          <span>PUBLIC SOURCE INSPECTION · NO EXPLICIT LICENCE</span>
-          <span>NOT BUNDLED HERE: DATA · WEIGHTS · ASSESSMENT PDF</span>
+          <span>IMAGE QUALITY · UNCERTAINTY · DOWNSTREAM USE</span>
+          <span>STUDY RESULTS + INTERACTIVE EXPLANATIONS</span>
         </>
       }
     >
       <div className={styles.disclaimer} role="note">
         <span>RESEARCH SHOWCASE</span>
         <p>
-          Interactive calculations use repository-reported final-report aggregates that this exhibit
-          has not independently reproduced. Scan-like graphics are generated anatomy schematics—not
-          patient data, model inference or diagnostic evidence.
+          Compare the study’s reported results and explore the calculations behind them.
+          Scan-like graphics are synthetic illustrations; this page does not run a trained MRI model.
         </p>
         <strong>NOT FOR CLINICAL USE</strong>
       </div>
@@ -1226,6 +1302,7 @@ export function MriTrustStudio() {
       </nav>
 
       <div className={styles.viewShell}>
+        {view === "experiments" ? <MriErrorExperiment /> : null}
         {view === "reconstruction" ? <ReconstructionView /> : null}
         {view === "architecture" ? <ArchitectureView /> : null}
         {view === "uncertainty" ? <UncertaintyView /> : null}
@@ -1233,7 +1310,7 @@ export function MriTrustStudio() {
         {view === "segmentation" ? <SegmentationView /> : null}
         {view === "audit" ? <AuditView /> : null}
       </div>
-    </DemoWindow>
+    </DemoWindow></ProjectCopy>
   );
 }
 

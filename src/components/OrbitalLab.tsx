@@ -7,6 +7,7 @@ import ClassicSelect from "./ClassicSelect";
 import OrbitalSurfaceCanvas from "./OrbitalSurfaceCanvas";
 import { orbitalCopies } from "./orbitalI18n";
 import styles from "./OrbitalLab.module.css";
+import { MathEquation } from "./projects/MathEquation";
 import { advanceOrbitalRotation, runOrbitalAnimation, type OrbitalAngles } from "@/lib/orbitalAnimation";
 
 const letters = ["s", "p", "d", "f"];
@@ -258,14 +259,14 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
   const orbitalsInSubshell = 2 * subshell.l + 1;
   const shellCounts = Array.from({ length: Math.max(...element.configuration.map((shell) => shell.n)) }, (_, index) => element.configuration.filter((shell) => shell.n === index + 1).reduce((sum, shell) => sum + shell.electrons, 0));
 
-  return <div className={styles.app}>
+  return <div className={`system7-project ${styles.app}`}>
     <header className={styles.header}>
       <div><span>{c.strap}</span><h3>{c.title}</h3><p>{c.intro}</p></div>
-      <div className={styles.presets} aria-label={c.subshell}>{[[1, "H · 1s", "1-0"], [6, "C · 2p", "2-1"], [26, "Fe · 3d", "3-2"], [58, "Ce · 4f", "4-3"]].map(([number, title, shell]) => <button key={number} type="button" onClick={() => { selectElement(Number(number)); setShellKey(String(shell)); }}>{title}</button>)}</div>
+      <div className={styles.presets} aria-label={c.subshell}>{[[1, "H · 1s", "1-0"], [6, "C · 2p", "2-1"], [26, "Fe · 3d", "3-2"], [58, "Ce · 4f", "4-3"]].map(([number, title, shell]) => <button className="s7-button" key={number} type="button" onClick={() => { selectElement(Number(number)); setShellKey(String(shell)); }}>{title}</button>)}</div>
     </header>
     <details className={styles.periodic} ref={periodicRef} open={tableOpen} onToggle={(event) => setTableOpen(event.currentTarget.open)}>
       <summary>{c.periodic}<span>{element.number} · {element.symbol}</span></summary><p>{c.tableHint}</p>
-      <div className={styles.tableSelection}><span role="status">{element.number} · {element.symbol} · {label}</span><button type="button" onClick={() => { setTableOpen(false); window.requestAnimationFrame(() => { canvasRef.current?.scrollIntoView({ block: "center" }); canvasRef.current?.focus({ preventScroll: true }); }); }}>{c.viewOrbital} ↓</button></div>
+      <div className={styles.tableSelection}><span role="status">{element.number} · {element.symbol} · {label}</span><button className="s7-button" type="button" onClick={() => { setTableOpen(false); window.requestAnimationFrame(() => { canvasRef.current?.scrollIntoView({ block: "center" }); canvasRef.current?.focus({ preventScroll: true }); }); }}>{c.viewOrbital} ↓</button></div>
       <div className={styles.tableScroll}>
         <div className={styles.table} role="group" aria-label={c.periodic}>
           {Array.from({ length: 18 }, (_, index) => <span key={`group-${index}`} style={{ gridColumn: index + 2, gridRow: 1 }} className={styles.groupNumber} title={`${c.group} ${index + 1}`}>{index + 1}</span>)}
@@ -292,7 +293,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
       <section className={styles.viewer} aria-label={c.density}>
         <header className={styles.instrumentLabel}><strong>{c.density}</strong><span>{label}</span></header>
         <div className={styles.renderControls}>
-          <div role="group" aria-label={c.renderMode}>{(["ascii", "points", "surface"] as const).map((mode) => <button type="button" key={mode} aria-pressed={renderMode === mode} onClick={() => { setRenderMode(mode); setStatus(""); }}>{mode === "ascii" ? c.asciiMode : mode === "points" ? c.pointsMode : c.surfaceMode}</button>)}</div>
+          <div role="group" aria-label={c.renderMode}>{(["ascii", "points", "surface"] as const).map((mode) => <button className="s7-button" type="button" key={mode} aria-pressed={renderMode === mode} onClick={() => { setRenderMode(mode); setStatus(""); }}>{mode === "ascii" ? c.asciiMode : mode === "points" ? c.pointsMode : c.surfaceMode}</button>)}</div>
           {renderMode === "ascii" && <label><span>{c.detail}</span><ClassicSelect value={ultra ? "ultra" : "fine"} onChange={(event) => setUltra(event.target.value === "ultra")}><option value="fine">{c.fine}</option><option value="ultra">{c.ultra}</option></ClassicSelect></label>}
         </div>
         <div className={styles.canvasFrame}>
@@ -307,10 +308,10 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
         <div className={styles.legend}><span>{c.scale}</span>{phaseInk && <span><i />{c.positive} <i />{c.negative}</span>}</div>
         <div className={styles.viewOptions}><label><input type="checkbox" checked={phaseInk} onChange={(event) => setPhaseInk(event.target.checked)} />{c.phase}</label><label><input type="checkbox" checked={slice} onChange={(event) => setSlice(event.target.checked)} />{c.slice}</label></div>
         <div className={styles.transport}>
-          <div><button type="button" aria-label={c.left} onClick={() => adjust(-.2, 0)}>←</button><button type="button" aria-label={c.right} onClick={() => adjust(.2, 0)}>→</button><button type="button" aria-label={c.up} onClick={() => adjust(0, .2)}>↑</button><button type="button" aria-label={c.down} onClick={() => adjust(0, -.2)}>↓</button></div>
-          <button type="button" aria-pressed={spinning} onClick={() => setSpinning(!spinning)}>{spinning ? c.pause : c.rotate}</button>
-          <button type="button" onClick={() => { setAngles(initialAngles); setSpinning(false); }}>{c.reset}</button>
-          <button type="button" onClick={renderMode === "ascii" ? saveAscii : saveImage}>{renderMode === "ascii" ? c.save : c.saveImage}</button>
+          <div><button className="s7-button s7-button--icon" type="button" aria-label={c.left} onClick={() => adjust(-.2, 0)}>←</button><button className="s7-button s7-button--icon" type="button" aria-label={c.right} onClick={() => adjust(.2, 0)}>→</button><button className="s7-button s7-button--icon" type="button" aria-label={c.up} onClick={() => adjust(0, .2)}>↑</button><button className="s7-button s7-button--icon" type="button" aria-label={c.down} onClick={() => adjust(0, -.2)}>↓</button></div>
+          <button className="s7-button" type="button" aria-pressed={spinning} onClick={() => setSpinning(!spinning)}>{spinning ? c.pause : c.rotate}</button>
+          <button className="s7-button" type="button" onClick={() => { setAngles(initialAngles); setSpinning(false); }}>{c.reset}</button>
+          <button className="s7-button" type="button" onClick={renderMode === "ascii" ? saveAscii : saveImage}>{renderMode === "ascii" ? c.save : c.saveImage}</button>
         </div>
         <p className={styles.hint}>{c.drag} {c.motion}</p>
         {renderMode === "surface" && <p className={styles.hint}>{c.surfaceNote}</p>}
@@ -320,11 +321,11 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
       </section>
       <aside className={styles.inspector}>
         <label className={styles.elementPicker}><span>{c.element}</span><ClassicSelect value={atomicNumber} onChange={(event) => selectElement(Number(event.target.value))}>{elements.map((entry) => <option key={entry.number} value={entry.number} lang="en-GB">{entry.number} · {entry.symbol} — {entry.name}</option>)}</ClassicSelect></label>
-        <div className={styles.elementCard}><button type="button" onClick={() => selectElement(atomicNumber - 1)} disabled={atomicNumber === 1} aria-label={c.previous}>‹</button><div><small>{atomicNumber}</small><strong>{element.symbol}</strong><span lang="en-GB">{element.name}</span></div><button type="button" onClick={() => selectElement(atomicNumber + 1)} disabled={atomicNumber === 118} aria-label={c.next}>›</button></div>
+        <div className={styles.elementCard}><button className="s7-button s7-button--icon" type="button" onClick={() => selectElement(atomicNumber - 1)} disabled={atomicNumber === 1} aria-label={c.previous}>‹</button><div><small>{atomicNumber}</small><strong>{element.symbol}</strong><span lang="en-GB">{element.name}</span></div><button className="s7-button s7-button--icon" type="button" onClick={() => selectElement(atomicNumber + 1)} disabled={atomicNumber === 118} aria-label={c.next}>›</button></div>
         <dl className={styles.elementFacts}><div><dt>{c.period}</dt><dd>{element.period}</dd></div><div><dt>{c.group}</dt><dd>{element.group ?? "—"}</dd></div><div><dt>{c.block}</dt><dd>{element.block}</dd></div><div><dt>{c.shells}</dt><dd>{shellCounts.join(" · ")}</dd></div></dl>
-        <button className={styles.tableShortcut} type="button" onClick={() => { setTableOpen(true); periodicRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }}>{c.chooseTable} ↑</button>
+        <button className={`s7-button ${styles.tableShortcut}`} type="button" onClick={() => { setTableOpen(true); periodicRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }}>{c.chooseTable} ↑</button>
         <section className={styles.config}><h4>{c.configuration}</h4><p>{element.configuration.map((shell) => <span key={`${shell.n}-${shell.l}`}>{shell.n}{letters[shell.l]}<sup>{shell.electrons}</sup>{" "}</span>)}</p><small>{element.configurationStatus === "reference" ? c.reference : c.illustrative}</small></section>
-        <div className={styles.subshells} role="group" aria-label={c.subshell}>{element.configuration.map((shell) => <button type="button" key={`${shell.n}-${shell.l}`} aria-pressed={shell.n === subshell.n && shell.l === subshell.l} onClick={() => { setShellKey(`${shell.n}-${shell.l}`); setM(0); setStatus(""); }}>{shell.n}{letters[shell.l]}</button>)}</div>
+        <div className={styles.subshells} role="group" aria-label={c.subshell}>{element.configuration.map((shell) => <button className="s7-button" type="button" key={`${shell.n}-${shell.l}`} aria-pressed={shell.n === subshell.n && shell.l === subshell.l} onClick={() => { setShellKey(`${shell.n}-${shell.l}`); setM(0); setStatus(""); }}>{shell.n}{letters[shell.l]}</button>)}</div>
         <label className={styles.elementPicker}><span>{c.component}</span><ClassicSelect value={component} onChange={(event) => { setM(Number(event.target.value)); setStatus(""); }}>{Array.from({ length: orbitalsInSubshell }, (_, index) => index - subshell.l).map((value) => <option key={value} value={value}>{orbitalLabel(subshell.n, subshell.l, value)}</option>)}</ClassicSelect></label>
         <p className={styles.hint}>{c.componentHint}</p>
         <div className={styles.boxes} role="group" aria-label={c.unpaired}>{Array.from({ length: orbitalsInSubshell }, (_, index) => {
@@ -335,7 +336,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
         <p className={styles.hint}>{Math.min(subshell.electrons, orbitalsInSubshell * 2 - subshell.electrons)} {c.unpairedCount}</p>
         <p className={styles.hint}>{c.boxNote}</p>
         <dl className={styles.nodes}><div><dt>{c.radial}</dt><dd>{nodes.radial}</dd></div><div><dt>{c.angular}</dt><dd>{nodes.angular}</dd></div><div><dt>{c.total}</dt><dd>{nodes.total}</dd></div></dl>
-        <figure className={styles.radial}><figcaption>{c.radialTitle} · {c.radialAxis}</figcaption><svg viewBox="0 0 280 104" role="img" aria-label={`${c.radialTitle}: ${shellName}; ${c.radialAxis}`}><path d="M12 10V82H268" fill="none" stroke="#777" /><path d={radialPath} fill="none" stroke="#11177a" strokeWidth="2" /><text x="12" y="99">0</text><text x="265" y="99" textAnchor="end">{radialEnd.toFixed(0)} a₀</text></svg></figure>
+        <figure className={styles.radial}><figcaption>{c.radialTitle} · <MathEquation tex={String.raw`P(r)=r^2\lvert R(r)\rvert^2`} display={false} /></figcaption><svg viewBox="0 0 280 104" role="img" aria-label={`${c.radialTitle}: ${shellName}; ${c.radialAxis}`}><path d="M12 10V82H268" fill="none" stroke="#777" /><path d={radialPath} fill="none" stroke="#11177a" strokeWidth="2" /><text x="12" y="99">0</text><text x="265" y="99" textAnchor="end">{radialEnd.toFixed(0)} a₀</text></svg></figure>
       </aside>
     </div>
     <details className={styles.notes}><summary>{c.sources}</summary><h4>{c.model}</h4><p>{c.modelBody}</p><p>{c.phaseBody}</p><p>{c.projectionBody}</p><p>{c.pointsNote}</p><p>{c.surfaceNote}</p><p>{c.scaleBody}</p><p>{c.configBody}</p><div><a href={ORBITAL_SOURCES.configurations} target="_blank" rel="noreferrer">{c.sourceNist} ↗</a><a href={ORBITAL_SOURCES.hydrogen} target="_blank" rel="noreferrer">{c.sourceMath} ↗</a><a href={ORBITAL_SOURCES.elementIndex} target="_blank" rel="noreferrer">NIST · 93–104 ↗</a></div></details>

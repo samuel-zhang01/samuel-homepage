@@ -26,6 +26,9 @@ const {
 } = await importTypeScriptModule(resolve(projectRoot, "src/components/projects/projectSuites.ts"));
 const { projectStories } = await importTypeScriptModule(resolve(projectRoot, "src/components/projects/projectStories.ts"));
 
+const { projectOrigins } = await importTypeScriptModule(resolve(projectRoot, "src/data/projectOrigins.ts"));
+const { buildKnowledgeGraph } = await importTypeScriptModule(resolve(projectRoot, "src/data/knowledgeGraph.ts"));
+
 const errors = [];
 const slugs = new Set();
 const demoOwners = new Map();
@@ -286,6 +289,30 @@ for (const path of projectStartPaths) {
     errors.push(`<guided>: Start Here route ${path.slug} must open an interactive project`);
   }
 }
+
+let graph;
+try {
+  graph = buildKnowledgeGraph(projects, projectOrigins);
+  const graphIds = new Set(graph.nodes.map((node) => node.id));
+  if (graphIds.size !== graph.nodes.length) errors.push("<graph>: duplicate node ID");
+  if (new Set(graph.edges.map((edge) => edge.id)).size !== graph.edges.length) errors.push("<graph>: duplicate edge ID");
+  const projectNodes = graph.nodes.filter((node) => node.kind === "project");
+  if (projectNodes.length !== projects.length) errors.push("<graph>: each canonical project requires one node");
+  for (const project of projects) {
+    const id = `project:${project.slug}`;
+    if (projectNodes.filter((node) => node.id === id && node.slug === project.slug).length !== 1) fail(project, "graph node is missing or duplicated");
+    if (!graph.edges.some((edge) => edge.source === id && edge.relation === "explores")) fail(project, "graph needs a topic connection");
+  }
+  for (const edge of graph.edges) {
+    if (!graphIds.has(edge.source) || !graphIds.has(edge.target) || edge.source === edge.target) errors.push(`<graph>: invalid endpoints for ${edge.id}`);
+  }
+  for (const origin of projectOrigins) for (const slug of origin.projects) {
+    if (!slugs.has(slug)) errors.push(`<origins>: ${origin.id} references unknown project ${slug}`);
+  }
+} catch (error) {
+  errors.push(`<graph>: ${error.message}`);
+}
+
 
 if (errors.length) {
   console.error("Project catalogue validation failed:\n");

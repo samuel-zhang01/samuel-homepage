@@ -1,4 +1,5 @@
 "use client";
+import { SchedulingDstExperiment } from "./SourceExperiments";
 
 import ClassicSelect from "../ClassicSelect";
 
@@ -6,6 +7,11 @@ import { type KeyboardEvent as ReactKeyboardEvent, useEffect, useMemo, useRef, u
 
 import { DemoWindow, MacButton } from "./DemoChrome";
 import styles from "./SchedulingStudio.module.css";
+import { MathEquation } from "./MathEquation";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { projectText } from "@/lib/projectCopy";
+import type { Locale } from "@/lib/i18n";
+import { schedulingCopy } from "./copy/schedulingCopy";
 
 type DayId = "mon" | "tue" | "wed" | "thu" | "fri";
 type Mode = "individual" | "round-robin" | "collective" | "first-available";
@@ -148,7 +154,7 @@ function sourceInstant(day: DayId, minutes: number) {
   return guess;
 }
 
-function zonedSlot(day: DayId, minutes: number, timezone: Timezone) {
+function zonedSlot(day: DayId, minutes: number, timezone: Timezone, locale: Locale = "en-GB") {
   const instant = sourceInstant(day, minutes);
   const target = zonedParts(instant, timezone);
   const sourceIso = DAYS.find((item) => item.id === day)?.iso ?? DAYS[0].iso;
@@ -157,7 +163,7 @@ function zonedSlot(day: DayId, minutes: number, timezone: Timezone) {
   return {
     time: `${String(target.hour).padStart(2, "0")}:${String(target.minute).padStart(2, "0")}`,
     dayShift,
-    full: new Intl.DateTimeFormat("en-GB", {
+    full: new Intl.DateTimeFormat(locale, {
       timeZone: timezone,
       weekday: "short",
       day: "numeric",
@@ -192,6 +198,7 @@ function calendarCellKey(day: DayId, start: number) {
 }
 
 export function SchedulingStudio() {
+  const locale = useProjectLocale();
   const [mode, setMode] = useState<Mode>("round-robin");
   const [selectedHostIds, setSelectedHostIds] = useState<string[]>(HOSTS.map((host) => host.id));
   const [duration, setDuration] = useState(60);
@@ -359,7 +366,7 @@ export function SchedulingStudio() {
       day: day.id,
       start,
       ...(!candidateStartsByDay[day.id].includes(start)
-        ? { state: "outside" as const, hostIds: [], reason: "No source-generated candidate at this time" }
+        ? { state: "outside" as const, hostIds: [], reason: "No candidate slot at this time" }
         : selection?.day === day.id && selection.start === start
         ? { state: "available" as const, hostIds: selection.hostIds, reason: "Reserved for this browser session" }
         : hostsForSlot(day.id, start)),
@@ -506,10 +513,10 @@ export function SchedulingStudio() {
     : "";
 
   return (
-    <DemoWindow
-      appName="YASA · AVAILABILITY ENGINE"
-      title="Multi-host Scheduling Lab"
-      status="SOURCE-TRACED SANDBOX"
+    <ProjectCopy copy={schedulingCopy}><DemoWindow
+      appName="YASA scheduling"
+      title="Explore shared availability"
+      status="Booking simulation"
       purpose="Explain how multi-host availability, time zones, buffers and collision protection become bookable slots."
       tryThis="Switch allocation policy, inspect a blocked slot, then reserve a free time and replay a collision."
       watchFor="Host assignment and slot state update while final revalidation prevents a stale choice from becoming a double-booking."
@@ -528,9 +535,9 @@ export function SchedulingStudio() {
 
       <section className={styles.bookingJourney} aria-labelledby="booking-journey-title">
         <div>
-          <span>SOURCE APPLICATION FLOW</span>
+          <span>BOOKING JOURNEY</span>
           <h3 id="booking-journey-title">From public page to managed calendar event</h3>
-          <p>The live repository carries the booking beyond slot display. This sandbox executes the middle scheduling transaction and documents the excluded integrations.</p>
+          <p>The complete application connects a public booking page to calendar events and notifications. Explore its scheduling decisions here, using fictional calendars and local reservations.</p>
         </div>
         <ol>
           <li><span>01</span><strong>Public page</strong><small>event + attendee input</small></li>
@@ -559,7 +566,7 @@ export function SchedulingStudio() {
       <div className={styles.ruleStrip}>
         <span>ALGORITHM</span>
         <p>{MODE_COPY[mode].detail}</p>
-        <code>{mode === "collective" ? "A ∩ B ∩ C" : mode === "individual" ? "A − busy" : "A ∪ B ∪ C"}</code>
+        <MathEquation className={styles.availabilityEquation} tex={mode === "collective" ? String.raw`A\cap B\cap C` : mode === "individual" ? String.raw`A\setminus B_{\mathrm{busy}}` : String.raw`A\cup B\cup C`} />
       </div>
 
       <div className={styles.controlDeck}>
@@ -622,7 +629,7 @@ export function SchedulingStudio() {
               <span className={styles.timeCorner}>{timezone === "Europe/London" ? "LON" : timezone === "America/New_York" ? "NYC" : "TYO"}</span>
               {DAYS.map((day) => <strong className={styles.day} key={day.id}>{day.short}<small>{day.date}</small></strong>)}
               {candidateStarts.map((start) => {
-                const rowTime = zonedSlot("mon", start, timezone);
+                const rowTime = zonedSlot("mon", start, timezone, locale);
                 return (
                 <div className={styles.calendarRow} key={start}>
                   <span className={styles.time}>{rowTime.time}{rowTime.dayShift && <small>{rowTime.dayShift}</small>}</span>
@@ -633,7 +640,7 @@ export function SchedulingStudio() {
                     }
                     const isSelected = selection?.day === day.id && selection.start === start;
                     const hostInitials = HOSTS.filter((host) => slot.hostIds.includes(host.id)).map((host) => host.name[0]).join("+");
-                    const displaySlot = zonedSlot(day.id, start, timezone);
+                    const displaySlot = zonedSlot(day.id, start, timezone, locale);
                     const cellKey = calendarCellKey(day.id, start);
                     return (
                       <button
@@ -651,7 +658,7 @@ export function SchedulingStudio() {
                         onKeyDown={(event) => handleSlotKeyDown(event, day.id, start)}
                         tabIndex={cellKey === activeRovingSlotKey ? 0 : -1}
                         title={slot.reason}
-                        aria-label={`${displaySlot.full}: ${slot.reason}`}
+                        aria-label={`${displaySlot.full}: ${projectText(locale, schedulingCopy, slot.reason)}`}
                         aria-pressed={isSelected}
                       >
                         <span>{slot.state === "available" ? hostInitials : slot.state === "conflict" ? "×" : "·"}</span>
@@ -708,7 +715,8 @@ export function SchedulingStudio() {
           </ol>
         </aside>
       </div>
-    </DemoWindow>
+      <details className={styles.dstChapter}><summary>Explore daylight-saving gaps and repeated times</summary><SchedulingDstExperiment /></details>
+    </DemoWindow></ProjectCopy>
   );
 }
 

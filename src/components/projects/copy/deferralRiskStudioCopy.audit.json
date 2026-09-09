@@ -1,0 +1,14 @@
+{
+  "dictionary": "deferralRiskStudioCopy.ts",
+  "exportName": "deferralRiskStudioCopy",
+  "sources": [
+    "src/components/projects/DeferralRiskStudio.tsx"
+  ],
+  "identities": {
+    "CVaR": "Established algorithm, model or statistical measure name, preserved across languages.",
+    "Safe-L2D-Fraud": "Established algorithm, model or statistical measure name, preserved across languages.",
+    "XGBoost": "Established algorithm, model or statistical measure name, preserved across languages.",
+    "SAFE-L2D": "Established algorithm, model or statistical measure name, preserved across languages.",
+    "OPE": "Established algorithm, model or statistical measure name, preserved across languages."
+  }
+}

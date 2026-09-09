@@ -1,0 +1,12 @@
+{
+  "dictionary": "sourceExperimentsCopy.ts",
+  "exportName": "sourceExperimentsCopy",
+  "sources": [
+    "src/components/projects/SourceExperiments.tsx"
+  ],
+  "identities": {
+    "MSE": "Established mean-squared-error metric acronym.",
+    "dB": "Standard decibel unit, preserved in both locales.",
+    "MAE": "Established mean-absolute-error metric acronym."
+  }
+}

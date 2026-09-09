@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 type RouteParams = Promise<{ locale: string }>;
-type ProjectSearchParams = Promise<{ project?: string | string[] }>;
+type ProjectSearchParams = Promise<{ project?: string | string[]; view?: string | string[] }>;
 
 function canonicalLocaleSlug(locale: string) {
   const resolved = normaliseLocale(locale);
@@ -64,7 +64,7 @@ export default async function LocalisedProjectsPage({
   params: RouteParams;
   searchParams: ProjectSearchParams;
 }) {
-  const [{ locale: localeParam }, { project }] = await Promise.all([params, searchParams]);
+  const [{ locale: localeParam }, { project, view }] = await Promise.all([params, searchParams]);
   const locale = normaliseLocale(localeParam);
   if (!locale) notFound();
 
@@ -73,6 +73,7 @@ export default async function LocalisedProjectsPage({
       initialApp="projects"
       initialLocale={locale}
       initialProjectSlug={typeof project === "string" ? project : undefined}
+      initialProjectDemo={view === "demo"}
       skipBoot
     />
   );

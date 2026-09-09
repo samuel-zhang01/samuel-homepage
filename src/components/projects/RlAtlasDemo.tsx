@@ -1,11 +1,17 @@
 "use client";
 
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { rlAtlasDemoCopy } from "./copy/rlAtlasDemoCopy";
+import { projectText } from "@/lib/projectCopy";
+
 import ClassicSelect from "../ClassicSelect";
 
 import { useMemo, useState } from "react";
 
 import { DemoWindow } from "./DemoChrome";
 import styles from "./RlAtlasDemo.module.css";
+import { CliffLearningLab } from "./CliffLearningLab";
+import { LlmPostTrainingLab } from "./LlmPostTrainingLab";
 
 const TRACKS = [
   { id: "foundations", code: "T1", label: "Foundations", range: "01–04" },
@@ -41,6 +47,9 @@ type Week = {
   executed: boolean;
   notesPdfIssue?: string;
   readingPdfIssue?: string;
+  testResult: string;
+  workedExamples: number;
+  selfChecks: number;
 };
 
 const WEEKS: readonly Week[] = [
@@ -54,9 +63,11 @@ const WEEKS: readonly Week[] = [
     methods: ["MDPs", "ε-greedy", "UCB", "Thompson sampling"],
     project: "Bernoulli and contextual bandit testbed",
     disclosure: "public",
-    notesPages: 16,
+    notesPages: 17,
     executed: true,
-    notesPdfIssue: "Overfull box (max 6.6pt); cutoff heuristic flagged page 15.",
+    testResult: "10 passed in 1.37s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 2,
@@ -70,7 +81,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 14,
     executed: true,
-    notesPdfIssue: "Cutoff heuristic flagged page 13.",
+    testResult: "11 passed in 1.41s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 3,
@@ -84,7 +97,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 14,
     executed: true,
-    notesPdfIssue: "Cutoff heuristic flagged page 13.",
+    testResult: "11 passed in 1.54s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 4,
@@ -97,7 +112,10 @@ const WEEKS: readonly Week[] = [
     project: "Cliff Walking and Taxi control",
     disclosure: "public",
     notesPages: 14,
-    executed: false,
+    executed: true,
+    testResult: "16 passed in 0.70s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 5,
@@ -111,6 +129,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 14,
     executed: true,
+    testResult: "13 passed, 3 warnings in 17.09s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 6,
@@ -124,6 +145,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 15,
     executed: true,
+    testResult: "17 passed, 3 warnings in 17.81s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 7,
@@ -137,7 +161,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 16,
     executed: true,
-    notesPdfIssue: "Cutoff heuristic flagged page 15.",
+    testResult: "9 passed in 6.91s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 8,
@@ -151,7 +177,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 16,
     executed: true,
-    notesPdfIssue: "Overfull box (max 26.1pt); cutoff heuristic flagged pages 6 and 15.",
+    testResult: "8 passed, 3 warnings in 15.45s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 9,
@@ -165,7 +193,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 15,
     executed: true,
-    notesPdfIssue: "Cutoff heuristic flagged page 14.",
+    testResult: "8 passed, 3 warnings in 15.52s",
+    workedExamples: 3,
+    selfChecks: 3,
     readingPdfIssue: "Extended reading has an overfull box (max 27.5pt).",
   },
   {
@@ -180,7 +210,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 14,
     executed: true,
-    notesPdfIssue: "Cutoff heuristic flagged page 13.",
+    testResult: "8 passed in 1.75s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 11,
@@ -192,9 +224,11 @@ const WEEKS: readonly Week[] = [
     methods: ["LinUCB", "LinTS", "IPS / SNIPS", "Doubly robust OPE"],
     project: "Synthetic insurance-lead bandit",
     disclosure: "synthetic",
-    notesPages: 20,
+    notesPages: 24,
     executed: true,
-    notesPdfIssue: "Overfull box (max 39.3pt).",
+    testResult: "11 passed in 0.50s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 12,
@@ -206,9 +240,11 @@ const WEEKS: readonly Week[] = [
     methods: ["Counterfactual LTR", "Slate policies", "Exposure fairness", "Two-sided matching"],
     project: "Synthetic applicant-ranking environment",
     disclosure: "synthetic",
-    notesPages: 35,
+    notesPages: 36,
     executed: true,
-    notesPdfIssue: "Two overfull boxes (max 72.5pt); cutoff heuristic flagged page 5.",
+    testResult: "12 passed in 17.28s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 13,
@@ -222,6 +258,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 25,
     executed: true,
+    testResult: "16 passed in 3.79s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 14,
@@ -235,6 +274,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 13,
     executed: true,
+    testResult: "8 passed in 0.85s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 15,
@@ -248,6 +290,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 12,
     executed: true,
+    testResult: "5 passed in 1.36s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 16,
@@ -261,7 +306,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 12,
     executed: true,
-    notesPdfIssue: "Overfull box (max 30.7pt).",
+    testResult: "5 passed, 1 warning in 1.34s",
+    workedExamples: 3,
+    selfChecks: 3,
   },
   {
     number: 17,
@@ -275,6 +322,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 12,
     executed: true,
+    testResult: "7 passed, 1 warning in 1.44s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 18,
@@ -288,7 +338,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 26,
     executed: true,
-    notesPdfIssue: "Overfull box (max 43.3pt); cutoff heuristic flagged page 5.",
+    testResult: "13 passed in 1.17s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 19,
@@ -300,8 +352,11 @@ const WEEKS: readonly Week[] = [
     methods: ["DPO", "IPO", "KTO", "ORPO / SimPO"],
     project: "Preference-optimisation bake-off",
     disclosure: "public",
-    notesPages: 26,
+    notesPages: 25,
     executed: true,
+    testResult: "16 passed in 1.10s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 20,
@@ -315,7 +370,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 20,
     executed: true,
-    notesPdfIssue: "Overfull box (max 7.4pt); cutoff heuristic flagged page 4.",
+    testResult: "13 passed in 2.61s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 21,
@@ -329,6 +386,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 16,
     executed: true,
+    testResult: "11 passed in 6.18s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 22,
@@ -342,6 +402,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 17,
     executed: true,
+    testResult: "9 passed in 3.68s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 23,
@@ -355,6 +418,9 @@ const WEEKS: readonly Week[] = [
     disclosure: "public",
     notesPages: 15,
     executed: true,
+    testResult: "10 passed in 1.33s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 24,
@@ -366,8 +432,11 @@ const WEEKS: readonly Week[] = [
     methods: ["Offline IQL", "PPO-Lagrangian", "Fairness audit", "Release gates"],
     project: "Synthetic safe-matching CLI",
     disclosure: "synthetic",
-    notesPages: 15,
+    notesPages: 16,
     executed: true,
+    testResult: "12 passed in 2.65s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
   {
     number: 25,
@@ -379,9 +448,11 @@ const WEEKS: readonly Week[] = [
     methods: ["Read-only audit", "Off-policy evaluation", "Constrained reranking", "Go / no-go gates"],
     project: "Sanitised synthetic audit harness",
     disclosure: "restricted",
-    notesPages: 29,
+    notesPages: 30,
     executed: true,
-    notesPdfIssue: "Five overfull boxes (max 10.9pt).",
+    testResult: "1 failed, 15 passed in 6.26s",
+    workedExamples: 2,
+    selfChecks: 3,
   },
 ];
 
@@ -418,7 +489,7 @@ type Artifact = {
 };
 
 function weekHasAttention(week: Week) {
-  return !week.executed || Boolean(week.notesPdfIssue || week.readingPdfIssue);
+  return !week.executed || week.testResult.includes("failed") || Boolean(week.notesPdfIssue || week.readingPdfIssue);
 }
 
 function getArtifacts(week: Week): Artifact[] {
@@ -451,9 +522,15 @@ function getArtifacts(week: Week): Artifact[] {
     },
     {
       label: "Test suite",
-      state: "recorded",
-      value: "RECORDED OK",
-      detail: "Smoke and solution tests recorded as passing",
+      state: week.testResult.includes("failed") ? "attention" : "recorded",
+      value: week.testResult.includes("failed") ? "REVIEW FAILURE" : "RECORDED OK",
+      detail: week.testResult,
+    },
+    {
+      label: "Teaching guide",
+      state: "present",
+      value: "PRESENT",
+      detail: `${week.workedExamples} worked examples · ${week.selfChecks} self-checks`,
     },
     {
       label: "Mini-project",
@@ -487,6 +564,8 @@ function formatWeek(number: number) {
 }
 
 export function RlAtlasDemo() {
+  const locale = useProjectLocale();
+  const [workspace, setWorkspace] = useState<"control" | "lab" | "atlas">("atlas");
   const [query, setQuery] = useState("");
   const [trackFilter, setTrackFilter] = useState<TrackFilter>("all");
   const [evidenceFilter, setEvidenceFilter] = useState<EvidenceFilter>("all");
@@ -524,13 +603,13 @@ export function RlAtlasDemo() {
   }
 
   return (
-    <DemoWindow
-      appName="RL Atlas 1.0"
+    <ProjectCopy copy={rlAtlasDemoCopy}><DemoWindow
+      appName="RL Atlas 2.0"
       title="STUDY-RL Learning Atlas"
-      status="QA SNAPSHOT · REVIEW"
-      purpose="Map a 24-week reinforcement-learning curriculum to the notes, code, tests and applied evidence that support each topic."
-      tryThis="Filter by track or method, then select a week to open its evidence ledger."
-      watchFor="This is a curriculum and provenance atlas—not an agent simulation. It shows what was studied, executed and quality-checked."
+      status="Source snapshot · 6 sep 2026"
+      purpose="Explore 24 core reinforcement-learning weeks and an applied audit, then try the control and language-model learning labs."
+      tryThis="Filter by track or method, then select a week to explore its methods, projects and learning materials."
+      watchFor="The atlas preserves recorded source evidence; the separate learning labs expose training steps and calculated objectives."
       statusTone="working"
       className={styles.atlasWindow}
       footer={
@@ -540,17 +619,22 @@ export function RlAtlasDemo() {
         </>
       }
     >
+      <div className={styles.workspaceTabs} role="group" aria-label="RL workspaces">
+        <button type="button" aria-pressed={workspace === "atlas"} onClick={() => setWorkspace("atlas")}>25-module curriculum &amp; evidence</button>
+        <button type="button" aria-pressed={workspace === "control"} onClick={() => setWorkspace("control")}>Train an RL agent</button>
+        <button type="button" aria-pressed={workspace === "lab"} onClick={() => setWorkspace("lab")}>Post-training lab</button>
+      </div>
+      {workspace === "control" ? <CliffLearningLab /> : workspace === "lab" ? <LlmPostTrainingLab /> : <>
       <div className={styles.atlasIntro}>
         <div className={styles.atlasMark} aria-hidden="true">
           <span>π</span>
           <i />
         </div>
         <div>
-          <span className={styles.kicker}>BROWSER-NATIVE CURRICULUM MAP</span>
+          <span className={styles.kicker}>Browser-native curriculum map</span>
           <strong>Twenty-four core weeks. One bounded applied audit.</strong>
           <p>
-            Browse the sequence, inspect repository evidence, and see exactly where the public learning
-            boundary ends. This view does not execute training code or expose source datasets.
+            Follow the sequence from value functions to constrained policy learning. Select a week to see its methods and project, or open a learning lab to train an agent step by step.
           </p>
         </div>
         <a
@@ -569,33 +653,33 @@ export function RlAtlasDemo() {
         <div className={styles.snapshotHeading}>
           <span className={styles.sectionIcon} aria-hidden="true">✓</span>
           <div>
-            <span className={styles.kicker}>REPOSITORY EVIDENCE</span>
-            <h3 id="snapshot-heading">Bundle health, not learner completion</h3>
+            <span className={styles.kicker}>Repository evidence</span>
+            <h3 id="snapshot-heading">Learning materials at a glance</h3>
           </div>
         </div>
         <div className={styles.metricStrip}>
           <article>
-            <span>MODULES INDEXED</span>
+            <span>Modules indexed</span>
             <strong>25</strong>
             <small>24 core + 1 audit</small>
           </article>
           <article className={styles.metricCaution}>
-            <span>EXECUTED NOTEBOOKS</span>
+            <span>Executed notebooks</span>
             <strong>{executedCount}/25</strong>
-            <small>Week 04 missing</small>
+            <small>teaching review recorded</small>
           </article>
           <article>
-            <span>TEST SUITES</span>
-            <strong>25/25</strong>
-            <small>recorded OK</small>
+            <span>Test suites</span>
+            <strong>279 / 1</strong>
+            <small>tests passed / failed</small>
           </article>
           <article className={styles.metricCaution}>
-            <span>PDF ATTENTION</span>
+            <span>PDF attention</span>
             <strong>{flaggedPdfCount}</strong>
-            <small>documents flagged</small>
+            <small>extended reading flagged</small>
           </article>
           <article className={styles.metricNeutral}>
-            <span>LEARNER PROGRESS</span>
+            <span>Learner progress</span>
             <strong>—</strong>
             <small>untracked template</small>
           </article>
@@ -603,11 +687,12 @@ export function RlAtlasDemo() {
         <div className={styles.snapshotCaveat} role="note">
           <span aria-hidden="true">!</span>
           <p>
-            <strong>Snapshot caveat:</strong> this atlas was audited against local source snapshot 1675f6a;
-            the checked-in QA tables themselves include no generated-at time or commit. “Recorded OK” is
-            historical evidence, not a live rerun. PDF flags are margin-scan heuristics and should be visually
-            reviewed; the prose index’s “all notebooks execute” claim conflicts with the Week 04 row. The
-            repository credits agent-authored bundles, so this map does not imply individual authorship of every module.
+            <strong>Source snapshot:</strong> the 6 September teaching review at revision 92e9b70 records
+            25 executed notebooks, 448 lecture pages, 64 worked examples and 75 self-checks.
+            It supersedes the older QA table’s missing Week 04 execution and lecture-margin flags.
+            The older extended-reading scan remains a separate record. Week 25 retains one empirical-ordering
+            test failure. These are recorded repository results, not a fresh training run or learner-completion
+            claim; the repository credits agent-authored teaching bundles.
           </p>
         </div>
       </section>
@@ -666,7 +751,7 @@ export function RlAtlasDemo() {
         <section className={styles.topologyPanel} aria-labelledby="topology-heading">
           <header className={styles.panelTitleBar}>
             <div>
-              <span className={styles.kicker}>CURRICULUM TOPOLOGY</span>
+              <span className={styles.kicker}>Curriculum topology</span>
               <h3 id="topology-heading">From decisions to deployment gates</h3>
             </div>
             <span>{filteredWeeks.length} shown</span>
@@ -705,9 +790,12 @@ export function RlAtlasDemo() {
                             type="button"
                             onClick={() => setSelectedWeekNumber(week.number)}
                             aria-pressed={isSelected}
-                            aria-label={`Week ${week.number}: ${week.title}. ${
-                              attention ? "QA evidence needs attention." : "No recorded QA flags."
-                            } ${DISCLOSURE_META[week.disclosure].label}.`}
+                            aria-label={projectText(locale, rlAtlasDemoCopy, "Week {0}: {1}. {2} {3}.", {
+                              0: week.number,
+                              1: projectText(locale, rlAtlasDemoCopy, week.title),
+                              2: projectText(locale, rlAtlasDemoCopy, attention ? "QA evidence needs attention." : "No recorded QA flags."),
+                              3: projectText(locale, rlAtlasDemoCopy, DISCLOSURE_META[week.disclosure].label),
+                            })}
                           >
                             <span>{formatWeek(week.number)}</span>
                             <small>{week.shortTitle}</small>
@@ -768,10 +856,10 @@ export function RlAtlasDemo() {
               <section className={styles.artifactPanel} aria-labelledby="artifact-heading">
                 <header>
                   <div>
-                    <span className={styles.kicker}>ARTIFACT MANIFEST</span>
+                    <span className={styles.kicker}>Artifact manifest</span>
                     <h4 id="artifact-heading">What the snapshot records</h4>
                   </div>
-                  <span className={styles.artifactCount}>6 ITEMS</span>
+                  <span className={styles.artifactCount}>7 ITEMS</span>
                 </header>
                 <ul>
                   {getArtifacts(selectedWeek).map((artifact) => (
@@ -789,14 +877,11 @@ export function RlAtlasDemo() {
                 </ul>
               </section>
 
-              {selectedWeek.number === 4 && (
-                <div className={styles.executionWarning} role="alert">
+              {selectedWeek.testResult.includes("failed") && (
+                <div className={styles.executionWarning} role="note">
                   <span aria-hidden="true">!</span>
-                  <p>
-                    <strong>Execution artifact missing.</strong> The source workbook and passing tests are
-                    present, but <code>qa_report.tsv</code> records “–” for the executed notebook. This atlas
-                    does not upgrade that status from the broader README claim.
-                  </p>
+                  <p><strong>One recorded test failure.</strong> The Week 25 empirical-ordering assertion failed
+                    in the teaching review; its executed notebook and other passing tests remain separately recorded.</p>
                 </div>
               )}
 
@@ -823,7 +908,7 @@ export function RlAtlasDemo() {
               </div>
 
               <footer className={styles.detailFooter}>
-                <span>Source: checked-in index + QA tables</span>
+                <span>Source: curriculum + teaching validation + reading scan</span>
                 <a href="/projects/study-rl/syllabus.pdf" target="_blank" rel="noreferrer">
                   Syllabus PDF <span aria-hidden="true">↗</span>
                 </a>
@@ -838,6 +923,7 @@ export function RlAtlasDemo() {
           )}
         </aside>
       </div>
-    </DemoWindow>
+      </>}
+    </DemoWindow></ProjectCopy>
   );
 }

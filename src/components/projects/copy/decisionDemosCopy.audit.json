@@ -1,0 +1,20 @@
+{
+  "dictionary": "decisionDemosCopy.ts",
+  "exportName": "decisionDemosCopy",
+  "sources": [
+    "src/components/projects/DecisionDemos.tsx"
+  ],
+  "identities": {
+    "C6H6(GT)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "PT08.S1(CO)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "OLS": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "NO2(GT)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "NOx(GT)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "PT08.S2(NMHC)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "PT08.S3(NOx)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "PT08.S4(NO2)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "PT08.S5(O3)": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "LASSO · L1": "Recorded sensor feature identifier or established statistical method abbreviation.",
+    "ESS": "Recorded sensor feature identifier or established statistical method abbreviation."
+  }
+}

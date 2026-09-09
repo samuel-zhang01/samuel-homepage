@@ -1,0 +1,37 @@
+{
+  "dictionary": "cvKeywordCopy.ts",
+  "exportName": "cvKeywordCopy",
+  "sources": [
+    "src/components/projects/CvKeywordStudio.tsx"
+  ],
+  "identities": {
+    "Python": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "SQL": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "scikit-learn": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "Docker": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CI/CD": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "ArrowLeft": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "ArrowRight": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "Home": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "End": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    ".tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "Alex Morgan": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "YYYYMMDD": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "PDF": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CV.pdf": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "TXT": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "Job Description.txt": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "Cover Letter.pdf": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "TEX": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "Cover Letter Main.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "Keywords Placement.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateTech.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateConsult.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateProduct.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateScience.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateLaw.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateFintech.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateAI.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored.",
+    "CVtemplateOps.tex": "Proper name, software format, exact artifact filename or keyboard identifier retained as authored."
+  }
+}

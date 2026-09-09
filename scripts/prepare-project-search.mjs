@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -19,6 +19,9 @@ const dictionaries = new Set([
   "src/components/projects/projectArchiveI18n.ts",
   "src/components/ClassicSelect.tsx", "src/lib/classicSelectBehavior.ts",
   "src/lib/orbitalWebgl.ts", "src/lib/orbitalAnimation.ts",
+  "src/lib/projectCopy.ts", "src/lib/projectNarrative.ts",
+  "src/components/projects/ProjectTranslationBoundary.tsx",
+  "src/components/desktopCopy.ts", "src/components/projectMenuCopy.ts",
 ]);
 const nonDisplayDependencies = new Set(["normaliseDeskBackupEntry", "normaliseProductivityExtraBackup"]);
 const appRoots = {
@@ -202,7 +205,7 @@ function values(value) {
 // are read; string literals are extracted, never application code executed.
 async function componentText(path, name, output, visited, provenance) {
   const key = `${path}#${name}`;
-  if (visited.has(key) || dictionaries.has(path) || nonDisplayDependencies.has(name)) return;
+  if (visited.has(key) || dictionaries.has(path) || path.startsWith("src/components/projects/copy/") || nonDisplayDependencies.has(name)) return;
   visited.add(key);
   const sourceData = await sourceModule(path);
   const declaration = sourceData.declarations.get(name);
@@ -249,21 +252,27 @@ async function demoRoots() {
 }
 
 export async function buildProjectSearch() {
-  const [{ projects }, { translateText }, { projectStories }, suites, archive, orbital] = await Promise.all([
+  const [{ projects }, { translateText }, { projectStories }, suites, archive, orbital, origins] = await Promise.all([
     dataModule("src/data/projects.ts"), dataModule("src/lib/i18n.ts"), dataModule("src/components/projects/projectStories.ts"),
-    dataModule("src/components/projects/projectSuites.ts"), dataModule("src/components/projects/projectArchiveI18n.ts"), dataModule("src/components/orbitalI18n.ts"),
+    dataModule("src/components/projects/projectSuites.ts"), dataModule("src/components/projects/projectArchiveI18n.ts"), dataModule("src/components/orbitalI18n.ts"), dataModule("src/data/projectOrigins.ts"),
   ]);
+  const copyFiles = (await readdir(resolve(root, "src/components/projects/copy"))).filter(name => name.endsWith("Copy.ts"));
+  const tables = await Promise.all(copyFiles.map(name => dataModule(`src/components/projects/copy/${name}`)));
+  const projectCopy = Object.assign({}, ...tables.flatMap(module => Object.values(module).filter(value => value && typeof value === "object")));
+  const localise = (locale, value) => projectCopy[value]?.[locale === "zh-CN" ? 0 : 1] && locale.startsWith("zh-")
+    ? projectCopy[value][locale === "zh-CN" ? 0 : 1] : translateText(locale, value);
   const demos = await demoRoots();
   const records = [];
   for (const project of projects) {
     const text = new Set(values(project).map(normalise));
+    text.add(normalise(origins.projectOriginSearchText(project.slug)));
     if (project.demo) {
       if (!demos.has(project.demo) || !projectStories[project.demo]) throw new Error(`Missing demo/story search coverage: ${project.slug}`);
       values(projectStories[project.demo]).forEach((value) => text.add(normalise(value)));
     }
     const suite = suites.getProjectSuite(project);
     if (suite) { text.add(suite.title); text.add(suite.description); }
-    const provenance = new Set(["src/data/projects.ts"]);
+    const provenance = new Set(["src/data/projects.ts", "src/data/projectOrigins.ts"]);
     await componentText("src/components/projects/ProjectCaseBrief.tsx", "ProjectCaseBrief", text, new Set(), provenance);
     const entry = project.demo ? demos.get(project.demo) : project.systemApp ? appRoots[project.systemApp] : null;
     if (project.systemApp && !entry) throw new Error(`Missing system app search mapping: ${project.systemApp}`);
@@ -274,7 +283,7 @@ export async function buildProjectSearch() {
     version: 1,
     documents: records.map(({ project, text }) => {
       const strings = new Set();
-      for (const value of text) { if (value) { strings.add(value); strings.add(normalise(translateText(locale, value))); } }
+      for (const value of text) { if (value) { strings.add(value); strings.add(normalise(localise(locale, value))); } }
       // Include only archive detail chrome, not unrelated guided-start/menu copy.
       for (const language of new Set(["en-GB", locale])) {
         const copy = archive.getProjectArchiveCopy(language);

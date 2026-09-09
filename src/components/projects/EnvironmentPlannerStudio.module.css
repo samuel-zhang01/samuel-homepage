@@ -13,7 +13,7 @@
   --env-red: #8d2e3e;
   --env-red-soft: #f0dce0;
   container-type: inline-size;
-  background: #e9e9e4;
+  background: var(--s7-paper);
 }
 
 .studio button,
@@ -26,7 +26,7 @@
 .studio [data-classic-select]:focus-visible,
 .studio input:focus-visible,
 .studio a:focus-visible {
-  outline: 2px solid #195fa2;
+  outline: 2px dotted var(--s7-ink);
   outline-offset: 2px;
 }
 
@@ -37,36 +37,35 @@
   gap: 12px;
   margin-bottom: 11px;
   padding: 9px 11px;
-  border: 1px solid #5d605b;
+  border: 1px solid var(--s7-shadow);
   background:
-    repeating-linear-gradient(-45deg, rgba(20, 95, 67, 0.035) 0 4px, transparent 4px 8px),
-    #fafaf6;
-  box-shadow: inset 1px 1px #fff;
+    var(--s7-paper);
+  box-shadow: none;
 }
 
 .provenanceBanner > span,
 .provenanceBanner > strong {
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.11em;
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 
 .provenanceBanner > span {
   padding: 5px 7px;
-  border: 1px solid var(--env-green);
-  color: #fff;
-  background: var(--env-green);
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .provenanceBanner > strong {
-  color: var(--env-red);
+  color: var(--s7-ink);
 }
 
 .provenanceBanner p {
   margin: 0;
-  color: #484c48;
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
@@ -77,26 +76,25 @@
   align-items: center;
   margin-bottom: 9px;
   padding: 9px 10px;
-  border: 1px solid #777a74;
-  background: #deded9;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
   box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px #aaa;
+    none;
 }
 
 .modeSwitch > div:first-child > span {
   display: block;
   margin-bottom: 3px;
-  color: var(--env-green);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.14em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .modeSwitch p {
   margin: 0;
-  color: #50534f;
-  font-size: 9px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
@@ -104,32 +102,61 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 2px;
-  border: 1px solid #565954;
-  background: #bdbeb8;
-  box-shadow: inset 1px 1px #878984;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .segmented button {
-  min-height: 39px;
+  min-height: max(var(--s7-control-height), 39px);
   padding: 5px 8px;
-  border: 0;
-  color: #484b47;
-  background: #deded9;
-  box-shadow: inset 1px 1px #f9f9f6;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
   cursor: pointer;
   text-align: left;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.segmented button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.segmented button:disabled, .segmented button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.segmented button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.segmented button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .segmented button:active:not(:disabled):not([aria-disabled="true"]) > strong, .segmented button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .segmented button + button {
-  border-left: 1px solid #858782;
+  border-left: 1px solid var(--s7-ink);
 }
 
 .segmented button[aria-pressed="true"] {
-  color: #fff;
-  background: var(--env-dark);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
   box-shadow:
-    inset 1px 1px rgba(255, 255, 255, 0.18),
-    inset -1px -1px rgba(0, 0, 0, 0.5);
+    inset 1px 1px 0 var(--s7-ink);
 }
 
 .segmented strong,
@@ -138,14 +165,14 @@
 }
 
 .segmented strong {
-  font-size: 8px;
-  letter-spacing: 0.09em;
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .segmented span {
   margin-top: 2px;
   color: inherit;
-  font-size: 8px;
+  font-size: var(--s7-small);
   opacity: 0.76;
 }
 
@@ -155,34 +182,62 @@
   gap: 1px;
   margin-bottom: 10px;
   padding: 2px;
-  border: 1px solid #5f625c;
-  background: #9a9c96;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
   box-shadow:
-    inset 1px 1px #fff,
-    1px 1px #fff;
+    none;
 }
 
 .viewTabs button {
-  min-height: 38px;
+  min-height: max(var(--s7-control-height), 38px);
   padding: 6px 9px;
-  border: 0;
-  color: #343733;
-  background: #dfdfda;
-  box-shadow: inset 1px 1px #fafaf6;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: 1px 1px 0 var(--s7-shadow);
   cursor: pointer;
   text-align: left;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.viewTabs button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.viewTabs button:disabled, .viewTabs button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .viewTabs button:hover {
-  background: #f0f0eb;
+  background: var(--s7-paper);
 }
 
 .viewTabs button[aria-current="page"] {
-  color: #fff;
-  background: var(--env-blue);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
   box-shadow:
-    inset 1px 1px rgba(255, 255, 255, 0.28),
-    inset -1px -1px rgba(0, 0, 0, 0.35);
+    inset 1px 1px 0 var(--s7-ink);
 }
 
 .viewTabs strong,
@@ -191,13 +246,13 @@
 }
 
 .viewTabs strong {
-  font-size: 9px;
-  letter-spacing: 0.06em;
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .viewTabs span {
   margin-top: 2px;
-  font-size: 8px;
+  font-size: var(--s7-small);
   opacity: 0.73;
 }
 
@@ -222,10 +277,9 @@
 .controls {
   min-width: 0;
   padding: 9px;
-  border-right: 2px solid #83857f;
+  border-right: 1px solid var(--s7-shadow);
   background:
-    repeating-linear-gradient(0deg, transparent 0 18px, rgba(0, 0, 0, 0.018) 18px 19px),
-    #e4e4df;
+    var(--s7-chrome);
 }
 
 .panelHeading {
@@ -235,12 +289,11 @@
   gap: 7px;
   margin-bottom: 9px;
   padding: 5px 7px;
-  border: 1px solid #525650;
-  color: #fff;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
   background:
-    repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.04) 5px 6px),
-    var(--env-dark);
-  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.22);
+    var(--s7-chrome);
+  box-shadow: none;
 }
 
 .panelHeading > span {
@@ -249,25 +302,25 @@
   height: 16px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #7f9b8c;
-  color: #c7e4d4;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  font-weight: 900;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-small);
+  font-weight: 700;
 }
 
 .panelHeading > strong {
-  font-size: 8px;
-  letter-spacing: 0.11em;
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .panelHeading > em {
   margin-left: auto;
-  color: #b9cebf;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   font-style: normal;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: normal;
   text-align: right;
 }
 
@@ -283,9 +336,9 @@
   display: block;
   margin-bottom: 5px;
   color: #3c403c;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .cardChoices {
@@ -297,15 +350,44 @@
 .cardChoices button,
 .twoChoices button {
   min-width: 0;
-  min-height: 38px;
+  min-height: max(var(--s7-control-height), 38px);
   padding: 5px;
-  border: 1px solid #696c66;
-  color: #353834;
-  background: #f0f0eb;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
   box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px #aaa;
+    1px 1px 0 var(--s7-shadow);
   cursor: pointer;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.cardChoices button:focus-visible, .twoChoices button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.cardChoices button:disabled, .cardChoices button[aria-disabled="true"], .twoChoices button:disabled, .twoChoices button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.cardChoices button:active:not(:disabled):not([aria-disabled="true"]), .twoChoices button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.cardChoices button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .cardChoices button:active:not(:disabled):not([aria-disabled="true"]) > strong, .cardChoices button:active:not(:disabled):not([aria-disabled="true"]) > small, .twoChoices button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .twoChoices button:active:not(:disabled):not([aria-disabled="true"]) > strong, .twoChoices button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .cardChoices button:hover,
@@ -320,11 +402,10 @@
 .twoChoices button.selectedChoice,
 .cardChoices button[aria-pressed="true"],
 .twoChoices button[aria-pressed="true"] {
-  color: #fff;
-  background: var(--env-green);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
   box-shadow:
-    inset 1px 1px rgba(255, 255, 255, 0.3),
-    inset -1px -1px rgba(0, 0, 0, 0.35);
+    inset 1px 1px 0 var(--s7-ink);
 }
 
 .cardChoices strong,
@@ -335,12 +416,12 @@
 }
 
 .cardChoices strong {
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .cardChoices span {
   margin-top: 2px;
-  font-size: 8px;
+  font-size: var(--s7-small);
   opacity: 0.72;
 }
 
@@ -351,10 +432,10 @@
 }
 
 .twoChoices button {
-  min-height: 30px;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  font-weight: 900;
+  min-height: max(var(--s7-control-height), 30px);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 700;
 }
 
 .field {
@@ -366,17 +447,17 @@
   width: 100%;
   min-height: 31px;
   padding: 5px 7px;
-  border: 1px solid #555853;
+  border: 1px solid var(--s7-ink);
   border-radius: 0;
-  color: #242724;
-  background: #fff;
-  box-shadow: inset 1px 1px #b3b5af;
-  font-size: 8px;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: inset 1px 1px 0 var(--s7-shadow);
+  font-size: var(--s7-small);
 }
 
 .field [data-classic-select]:disabled {
-  color: #747771;
-  background: #cfcfca;
+  color: var(--s7-muted);
+  background: var(--s7-paper);
 }
 
 .checkField {
@@ -386,8 +467,8 @@
   align-items: flex-start;
   margin: 0 0 11px;
   padding: 7px;
-  border: 1px solid #9a7628;
-  background: var(--env-amber-soft);
+  border: 1px solid var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .checkField input {
@@ -403,31 +484,57 @@
 }
 
 .checkField strong {
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .checkField small {
   margin-top: 2px;
-  color: #665522;
-  font-size: 8px;
-  line-height: 1.35;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  line-height: 1.4;
 }
 
 .resetButton {
   width: 100%;
-  min-height: 31px;
+  min-height: var(--s7-control-height);
   margin-top: 2px;
   padding: 6px;
-  border: 1px solid #545752;
-  color: #2d302d;
-  background: #ebebe6;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
   box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px #aaa;
+    1px 1px 0 var(--s7-shadow);
   cursor: pointer;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.09em;
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  letter-spacing: normal;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.resetButton:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.resetButton:disabled, .resetButton[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.resetButton:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.resetButton:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .resetButton:active:not(:disabled):not([aria-disabled="true"]) > strong, .resetButton:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .workspace {
@@ -449,9 +556,9 @@
 .evidenceHero > div {
   min-width: 0;
   padding: 8px 9px;
-  border: 1px solid #747771;
-  background: #efefea;
-  box-shadow: inset 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .metricStrip span,
@@ -469,48 +576,48 @@
 .metricStrip span,
 .manifestSummary span,
 .evidenceHero span {
-  color: #5b5f59;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .metricStrip strong,
 .manifestSummary strong,
 .evidenceHero strong {
   margin: 3px 0 2px;
-  color: var(--env-dark);
-  font-family: "Courier New", monospace;
-  font-size: 17px;
-  line-height: 1;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-mono);
+  font-size: var(--s7-heading);
+  line-height: 1.4;
 }
 
 .metricStrip small,
 .manifestSummary small,
 .evidenceHero small {
   overflow: hidden;
-  color: #5c605b;
-  font-size: 8px;
-  line-height: 1.35;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  line-height: 1.4;
   text-overflow: ellipsis;
 }
 
 .metricStrip > div.ready,
 .manifestSummary > div.ready {
-  border-color: var(--env-green);
-  background: var(--env-green-soft);
+  border-color: var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .metricStrip > div.warning,
 .manifestSummary > div.warning {
-  border-color: var(--env-amber);
-  background: var(--env-amber-soft);
+  border-color: var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .metricStrip > div.blocked,
 .manifestSummary > div.blocked {
-  border-color: var(--env-red);
-  background: var(--env-red-soft);
+  border-color: var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .routePanel,
@@ -560,45 +667,45 @@
   flex: 0 0 23px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #545752;
+  border: 1px solid var(--s7-shadow);
   border-radius: 50%;
-  color: #fff;
-  background: var(--env-blue);
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  font-weight: 900;
-  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.25);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  box-shadow: none;
 }
 
 .stepRail > i {
   width: calc(100% - 23px);
   height: 1px;
-  border-top: 1px dashed #6f726c;
+  border-top: 1px dashed var(--s7-shadow);
 }
 
 .pipeline li.ready .stepRail > span {
-  background: var(--env-green);
+  background: var(--s7-paper);
 }
 
 .pipeline li.warning .stepRail > span {
-  color: #2a230f;
-  background: #c79d32;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .pipeline li.blocked .stepRail > span {
-  background: var(--env-red);
+  background: var(--s7-paper);
 }
 
 .pipeline li.probe .stepRail > span {
-  background: var(--env-blue);
+  background: var(--s7-paper);
 }
 
 .pipeline li > div:last-child {
   min-width: 0;
   margin-right: 4px;
   padding: 6px;
-  border: 1px solid #9a9c96;
-  background: #f7f7f2;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .pipeline li:last-child > div:last-child {
@@ -606,11 +713,11 @@
 }
 
 .pipeline li.blocked > div:last-child {
-  background: #ead9dc;
+  background: var(--s7-paper);
 }
 
 .pipeline li.warning > div:last-child {
-  background: #f3ead1;
+  background: var(--s7-paper);
 }
 
 .pipeline header {
@@ -621,24 +728,24 @@
 }
 
 .pipeline header strong {
-  font-size: 8px;
-  line-height: 1.25;
+  font-size: var(--s7-small);
+  line-height: 1.4;
 }
 
 .pipeline header em {
   padding: 2px 3px;
-  color: #5c605a;
-  background: #deded9;
-  font-size: 8px;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font-size: var(--s7-small);
   font-style: normal;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .pipeline p {
   margin: 5px 0 0;
-  color: #555954;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
@@ -653,28 +760,28 @@
 .frameworkCard {
   min-width: 0;
   padding: 8px;
-  border: 1px solid #656862;
-  background: #f0f0eb;
-  box-shadow: inset 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .frameworkCard.ready {
-  border-left: 4px solid var(--env-green);
+  border-left: 1px solid var(--s7-shadow);
 }
 
 .frameworkCard.warning {
-  border-left: 4px solid var(--env-amber);
-  background: #f3ecd7;
+  border-left: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .frameworkCard.blocked {
-  border-left: 4px solid var(--env-red);
-  background: #eadbdd;
+  border-left: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .frameworkCard.probe {
-  border-left: 4px solid var(--env-blue);
-  background: #e1e8f0;
+  border-left: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .frameworkCard > header {
@@ -683,7 +790,7 @@
   justify-content: space-between;
   gap: 8px;
   padding-bottom: 7px;
-  border-bottom: 1px dotted #8b8e88;
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .frameworkCard > header > div {
@@ -698,23 +805,23 @@
   height: 23px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #3f423e;
-  color: #fff;
-  background: var(--env-dark);
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  font-weight: 900;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-small);
+  font-weight: 700;
 }
 
 .frameworkCard > header strong {
-  font-size: 10px;
+  font-size: var(--s7-small);
 }
 
 .frameworkCard > header em {
-  font-size: 8px;
+  font-size: var(--s7-small);
   font-style: normal;
-  font-weight: 900;
-  letter-spacing: 0.09em;
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .frameworkCard dl {
@@ -730,17 +837,17 @@
 }
 
 .frameworkCard dt {
-  color: #626660;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .frameworkCard dd {
   margin: 0;
-  color: #292c29;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
@@ -748,9 +855,9 @@
 .frameworkCard > p {
   margin: 0;
   padding-top: 6px;
-  border-top: 1px dotted #9b9e98;
-  color: #50544f;
-  font-size: 8px;
+  border-top: 1px dotted var(--s7-shadow);
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
@@ -766,13 +873,13 @@
   gap: 7px;
   min-width: 0;
   padding: 7px;
-  border: 1px solid #9c7a31;
-  background: #f3ead2;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .warningList article.blocked {
-  border-color: var(--env-red);
-  background: var(--env-red-soft);
+  border-color: var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .warningList article > span {
@@ -781,26 +888,26 @@
   height: 20px;
   align-items: center;
   justify-content: center;
-  border: 1px solid currentColor;
-  color: var(--env-amber);
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  font-weight: 900;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
+  font-weight: 700;
 }
 
 .warningList article.blocked > span {
-  color: var(--env-red);
+  color: var(--s7-ink);
 }
 
 .warningList strong {
   display: block;
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .warningList p {
   margin: 3px 0 0;
-  color: #55503e;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
@@ -817,8 +924,8 @@
 
 .faultControls > p {
   margin: -1px 0 8px;
-  color: #515550;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.45;
 }
 
@@ -830,24 +937,52 @@
 }
 
 .faultButtons button {
-  min-height: 43px;
+  min-height: max(var(--s7-control-height), 43px);
   padding: 6px 8px;
-  border: 1px solid #656862;
-  color: #333632;
-  background: #efefea;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
   box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px #aaa;
+    1px 1px 0 var(--s7-shadow);
   cursor: pointer;
   text-align: left;
+  border-radius: var(--s7-control-radius);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.faultButtons button:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+.faultButtons button:disabled, .faultButtons button[aria-disabled="true"] {
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  border-color: var(--s7-shadow);
+  box-shadow: none;
+  cursor: default;
+}
+
+.faultButtons button:active:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+  box-shadow: none;
+}
+
+.faultButtons button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .faultButtons button:active:not(:disabled):not([aria-disabled="true"]) > strong, .faultButtons button:active:not(:disabled):not([aria-disabled="true"]) > small {
+  color: var(--s7-paper);
 }
 
 .faultButtons button[aria-pressed="true"] {
-  color: #fff;
-  background: var(--env-red);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
   box-shadow:
-    inset 1px 1px rgba(255, 255, 255, 0.25),
-    inset -1px -1px rgba(0, 0, 0, 0.35);
+    inset 1px 1px 0 var(--s7-ink);
 }
 
 .faultButtons strong,
@@ -856,12 +991,12 @@
 }
 
 .faultButtons strong {
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .faultButtons span {
   margin-top: 2px;
-  font-size: 8px;
+  font-size: var(--s7-small);
   opacity: 0.75;
 }
 
@@ -880,24 +1015,24 @@
 .outcomeCard {
   min-width: 0;
   padding: 10px;
-  border: 1px solid #696c66;
-  background: #efefea;
-  box-shadow: inset 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .outcomeCard.warning {
-  border-top: 5px solid var(--env-amber);
-  background: #f3ead2;
+  border-top: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .outcomeCard.blocked {
-  border-top: 5px solid var(--env-red);
-  background: #eddcdf;
+  border-top: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .outcomeCard.ready {
-  border-top: 5px solid var(--env-green);
-  background: #deebe3;
+  border-top: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .outcomeCard > header {
@@ -906,42 +1041,42 @@
   justify-content: space-between;
   gap: 8px;
   padding-bottom: 8px;
-  border-bottom: 1px dotted #8e918b;
+  border-bottom: 1px dotted var(--s7-shadow);
 }
 
 .outcomeCard > header span {
-  color: #555954;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .outcomeCard > header strong {
   padding: 3px 5px;
-  border: 1px solid currentColor;
-  font-size: 8px;
-  letter-spacing: 0.07em;
+  border: 1px solid var(--s7-shadow);
+  font-size: var(--s7-small);
+  letter-spacing: normal;
 }
 
 .outcomeCard.warning > header strong {
-  color: var(--env-amber);
+  color: var(--s7-ink);
 }
 
 .outcomeCard.blocked > header strong {
-  color: var(--env-red);
+  color: var(--s7-ink);
 }
 
 .outcomeCard h3 {
   margin: 10px 0 5px;
-  font-size: 12px;
-  line-height: 1.25;
+  font-size: var(--s7-heading);
+  line-height: 1.4;
 }
 
 .outcomeCard > p {
   min-height: 49px;
   margin: 0 0 9px;
-  color: #4e524d;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.5;
 }
 
@@ -959,16 +1094,16 @@
   gap: 6px;
   align-items: center;
   padding: 5px 6px;
-  border: 1px solid rgba(74, 78, 73, 0.35);
-  background: rgba(255, 255, 255, 0.42);
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  line-height: 1.35;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
+  line-height: 1.4;
 }
 
 .outcomeCard li span {
-  color: #636761;
-  font-weight: 900;
+  color: var(--s7-ink);
+  font-weight: 700;
 }
 
 .checkpointHeader,
@@ -983,39 +1118,39 @@
 .checkpointHeader,
 .diffHeader {
   margin-bottom: 1px;
-  background: #777a74;
+  background: var(--s7-chrome);
 }
 
 .checkpointHeader span,
 .diffHeader span {
   padding: 6px 7px;
-  color: #fff;
-  background: var(--env-dark);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.07em;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .checkpointRow,
 .diffRow {
   margin-bottom: 1px;
-  background: #a4a6a0;
+  background: var(--s7-paper);
 }
 
 .checkpointRow > *,
 .diffRow > * {
   margin: 0;
   padding: 7px;
-  color: #3e423d;
-  background: #f1f1ec;
-  font-size: 8px;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
   line-height: 1.4;
 }
 
 .checkpointRow strong,
 .diffRow strong {
-  color: #252825;
-  background: #deded9;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .manifestSummary > div {
@@ -1023,7 +1158,7 @@
 }
 
 .manifestSummary strong {
-  font-size: 18px;
+  font-size: var(--s7-heading);
 }
 
 .packagePanel {
@@ -1038,15 +1173,15 @@
 }
 
 .filterBar button {
-  min-height: 25px;
+  min-height: max(var(--s7-control-height), 25px);
   padding: 4px 8px;
   border: 1px solid #696c66;
   color: #383b37;
   background: #efefea;
   box-shadow: inset 1px 1px #fff;
   cursor: pointer;
-  font-size: 8px;
-  font-weight: 800;
+  font-size: var(--s7-ui);
+  font-weight: 700;
 }
 
 .filterBar button[aria-pressed="true"] {
@@ -1062,24 +1197,24 @@
 }
 
 .packageHeader {
-  background: #777a74;
+  background: var(--s7-chrome);
 }
 
 .packageHeader span {
   padding: 6px;
-  color: #fff;
-  background: var(--env-dark);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .packageRows {
   max-height: 250px;
   overflow: auto;
-  border: 1px solid #8b8e88;
+  border: 1px solid var(--s7-shadow);
   border-top: 0;
-  background: #a5a7a1;
+  background: var(--s7-paper);
 }
 
 .packageRow {
@@ -1098,39 +1233,39 @@
   margin: 0;
   padding: 5px 6px;
   overflow: hidden;
-  color: #343733;
-  background: #f4f4ef;
-  font-size: 8px;
-  line-height: 1.3;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-small);
+  line-height: 1.4;
   text-overflow: ellipsis;
 }
 
 .packageRow > span:first-child {
-  color: #666a64;
-  font-family: "Courier New", monospace;
-  background: #deded9;
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  background: var(--s7-paper);
 }
 
 .packageRow code {
-  font-family: "Courier New", monospace;
+  font-family: var(--s7-font-mono);
 }
 
 .packageRow em {
   justify-content: center;
-  font-size: 8px;
+  font-size: var(--s7-small);
   font-style: normal;
-  font-weight: 900;
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .packageRow em.ready {
-  color: var(--env-green);
-  background: var(--env-green-soft);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .packageRow em.warning {
-  color: var(--env-red);
-  background: var(--env-red-soft);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .manifestBottom {
@@ -1140,9 +1275,9 @@
 }
 
 .commandLines {
-  border: 1px solid #26322b;
-  background: #111a15;
-  box-shadow: inset 1px 1px #000;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .commandLines p {
@@ -1152,11 +1287,11 @@
   min-width: 0;
   margin: 0;
   padding: 6px 7px;
-  border-bottom: 1px solid #26352c;
-  color: #d6e4da;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  line-height: 1.35;
+  border-bottom: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-text);
+  line-height: 1.55;
 }
 
 .commandLines p:last-child {
@@ -1164,11 +1299,11 @@
 }
 
 .commandLines span {
-  color: #718b79;
+  color: var(--s7-ink);
 }
 
-.commandLines code {
-  color: #87b899;
+.commandLines .manifestLabel {
+  color: var(--s7-ink);
   font: inherit;
 }
 
@@ -1179,19 +1314,18 @@
 
 .reconciliationCard {
   padding: 10px;
-  border: 1px solid var(--env-green);
+  border: 1px solid var(--s7-shadow);
   background:
-    repeating-linear-gradient(-45deg, rgba(20, 95, 67, 0.035) 0 4px, transparent 4px 8px),
-    var(--env-green-soft);
-  box-shadow: inset 1px 1px #fff;
+    var(--s7-paper);
+  box-shadow: none;
 }
 
 .reconciliationCard > span {
   display: block;
-  color: var(--env-green);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .reconcileEquation {
@@ -1202,29 +1336,34 @@
   margin: 12px 0 7px;
 }
 
+.reconcileEquation > [data-math-equation] {
+  width: 100%;
+  font-size: var(--s7-heading);
+}
+
 .reconcileEquation strong {
   display: inline-flex;
   min-width: 31px;
   height: 31px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #315d47;
-  background: #fff;
-  font-family: "Courier New", monospace;
-  font-size: 14px;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-text);
 }
 
 .reconcileEquation i {
-  color: var(--env-green);
-  font-size: 12px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   font-style: normal;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .reconciliationCard > p {
   margin: 0 0 8px;
-  color: #435449;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.4;
 }
 
@@ -1233,15 +1372,15 @@
   gap: 3px;
   margin-bottom: 8px;
   padding: 7px;
-  border: 1px dotted #6f947d;
-  background: rgba(255, 255, 255, 0.45);
-  font-family: "Courier New", monospace;
-  font-size: 8px;
+  border: 1px dotted var(--s7-shadow);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
 }
 
 .reconciliationCard small {
-  color: #536158;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   line-height: 1.4;
 }
 
@@ -1250,7 +1389,7 @@
 }
 
 .evidenceHero strong {
-  font-size: 16px;
+  font-size: var(--s7-text);
 }
 
 .auditGrid {
@@ -1273,22 +1412,22 @@
   grid-template-columns: 105px minmax(0, 1fr);
   gap: 7px;
   padding: 7px;
-  border: 1px solid #a0a29c;
-  background: #f2f2ed;
+  border: 1px solid var(--s7-shadow);
+  background: var(--s7-paper);
 }
 
 .auditCard li strong {
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .auditCard li span {
-  color: #50544f;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
   line-height: 1.45;
 }
 
 .auditCard code {
-  font-family: "Courier New", monospace;
+  font-family: var(--s7-font-mono);
 }
 
 .diffPanel {
@@ -1305,25 +1444,25 @@
 .boundaryGrid > a {
   min-width: 0;
   padding: 10px;
-  border: 1px solid #696c66;
-  color: #343733;
-  background: #efefea;
-  box-shadow: inset 1px 1px #fff;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: none;
 }
 
 .boundaryGrid > section:first-child {
-  border-top: 4px solid var(--env-blue);
+  border-top: 1px solid var(--s7-shadow);
 }
 
 .boundaryGrid > section:nth-child(2) {
-  border-top: 4px solid var(--env-red);
+  border-top: 1px solid var(--s7-shadow);
 }
 
 .boundaryGrid > section.sourceBoundary {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-top: 4px solid var(--env-green);
+  border-top: 1px solid var(--s7-shadow);
 }
 
 .sourceBoundary strong,
@@ -1332,50 +1471,50 @@
 }
 
 .sourceBoundary strong {
-  color: var(--env-green);
-  font-size: 10px;
-  line-height: 1.3;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  line-height: 1.4;
 }
 
 .sourceBoundary small {
   margin-top: 5px;
-  color: #626660;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 .boundaryGrid > a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-top: 4px solid var(--env-green);
+  border-top: 1px solid var(--s7-shadow);
   text-decoration: none;
 }
 
 .boundaryGrid > a:hover {
-  color: #fff;
-  background: var(--env-green);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .boundaryGrid > section > span,
 .boundaryGrid > a > span {
   display: block;
   margin-bottom: 6px;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  font-size: var(--s7-small);
+  font-weight: 700;
+  letter-spacing: normal;
 }
 
 .boundaryGrid p {
   margin: 0;
-  color: #50544f;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-text);
   line-height: 1.5;
 }
 
 .boundaryGrid > a:hover span,
 .boundaryGrid > a:hover strong,
 .boundaryGrid > a:hover small {
-  color: #fff;
+  color: var(--s7-ink);
 }
 
 .boundaryGrid > a strong,
@@ -1384,15 +1523,15 @@
 }
 
 .boundaryGrid > a strong {
-  color: var(--env-green);
-  font-size: 10px;
-  line-height: 1.3;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
+  line-height: 1.4;
 }
 
 .boundaryGrid > a small {
   margin-top: 5px;
-  color: #626660;
-  font-size: 8px;
+  color: var(--s7-ink);
+  font-size: var(--s7-small);
 }
 
 @container (max-width: 860px) {
@@ -1450,7 +1589,7 @@
 
   .controls {
     border-right: 0;
-    border-bottom: 2px solid #83857f;
+    border-bottom: 1px solid var(--s7-shadow);
   }
 
   .pipeline {
@@ -1503,7 +1642,7 @@
   }
 
   .segmented button + button {
-    border-top: 1px solid #858782;
+    border-top: 1px solid var(--s7-ink);
     border-left: 0;
   }
 
@@ -1533,7 +1672,7 @@
     grid-template-columns: 1fr;
     gap: 0;
     margin-bottom: 6px;
-    border: 1px solid #858882;
+    border: 1px solid var(--s7-shadow);
   }
 
   .packageHeader,

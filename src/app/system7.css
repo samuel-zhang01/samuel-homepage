@@ -1,0 +1,251 @@
+/* Project document/control contract. Historical sources and modern adaptations:
+   docs/SYSTEM7_DESIGN_BENCHMARK.md. Explicit classes keep plots and math isolated. */
+:root {
+  --s7-ink: #000;
+  --s7-paper: #fff;
+  --s7-chrome: #ddd;
+  --s7-shadow: #aaa;
+  --s7-muted: #555;
+  --s7-selection: #11177a;
+  --s7-selection-text: #fff;
+  --s7-ui: 13px;
+  --s7-small: 12px;
+  --s7-text: 15px;
+  --s7-heading: 18px;
+  --s7-title: 22px;
+  --s7-control-height: 32px;
+  --s7-control-radius: 3px;
+  --s7-space: 8px;
+  --s7-font-ui: Chicago, Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
+  --s7-font-text: Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
+  --s7-font-mono: Monaco, "Courier New", Courier, monospace;
+}
+
+.system7-project {
+  --s7-font-ui: var(--chrome-font, Chicago, Geneva, Arial, sans-serif);
+  --s7-font-text: var(--system-font, Geneva, Arial, sans-serif);
+  --s7-font-mono: var(--system-mono, Monaco, "Courier New", monospace);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-text);
+  line-height: 1.55;
+  letter-spacing: normal;
+}
+
+:is(.s7-button, .mac-button),
+.system7-project :is(.s7-button, .mac-button) {
+  display: inline-flex;
+  min-width: 0;
+  min-height: var(--s7-control-height);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--s7-ink);
+  border-radius: var(--s7-control-radius);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: var(--s7-button-ring, 0 0 0 0 transparent), var(--s7-button-relief, 1px 1px 0 var(--s7-shadow));
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+:is(.s7-button, .mac-button).is-default {
+  --s7-button-ring: 0 0 0 1px var(--s7-paper), 0 0 0 4px var(--s7-ink);
+}
+
+:is(.s7-button, .mac-button):hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--s7-chrome);
+}
+
+:is(.s7-button, .mac-button)[aria-pressed]::before {
+  width: 1em;
+  flex: 0 0 1em;
+  content: "";
+}
+
+:is(.s7-button, .mac-button)[aria-pressed="true"] {
+  --s7-button-relief: inset 1px 1px 0 var(--s7-ink);
+  background: var(--s7-chrome);
+}
+
+:is(.s7-button, .mac-button)[aria-pressed="true"]::before { content: "✓"; }
+
+:is(.s7-button, .mac-button):active:not(:disabled):not([aria-disabled="true"]) {
+  --s7-button-relief: 0 0 0 0 transparent;
+  color: var(--s7-paper);
+  background: var(--s7-ink);
+}
+
+:is(.s7-button, .mac-button):disabled,
+:is(.s7-button, .mac-button)[aria-disabled="true"] {
+  --s7-button-relief: 0 0 0 0 transparent;
+  border-color: var(--s7-shadow);
+  color: var(--s7-muted);
+  background: var(--s7-chrome);
+  cursor: default;
+}
+
+.s7-button--icon {
+  width: var(--s7-control-height);
+  flex: 0 0 auto;
+  padding: 5px;
+}
+
+.s7-button--icon[aria-pressed]::before { display: none; }
+
+:is(.s7-button, .mac-button):focus-visible,
+.s7-tab:focus-visible,
+.s7-input:focus-visible,
+.s7-link:focus-visible {
+  outline: 2px dotted var(--s7-ink);
+  outline-offset: 3px;
+}
+
+:is(.s7-button, .mac-button).is-default:focus-visible { outline-offset: 6px; }
+
+.s7-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s7-space);
+  padding: 12px;
+  border-bottom: 1px solid var(--s7-shadow);
+  background: var(--s7-chrome);
+}
+
+.s7-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 4px 4px 0;
+  border-bottom: 1px solid var(--s7-ink);
+  background: var(--s7-chrome);
+}
+
+.s7-tab {
+  position: relative;
+  min-width: 0;
+  min-height: var(--s7-control-height);
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border: 1px solid var(--s7-ink);
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-ui);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.s7-tab[aria-selected="true"],
+.s7-tab[aria-current="page"] {
+  background: var(--s7-paper);
+  font-weight: 700;
+  box-shadow: inset 0 2px 0 var(--s7-ink);
+}
+
+.s7-tab:disabled { color: var(--s7-muted); cursor: default; }
+
+.s7-panel,
+.s7-note {
+  min-width: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--s7-shadow);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+}
+
+.s7-note { font-size: var(--s7-ui); line-height: 1.5; }
+
+.s7-title,
+.s7-heading {
+  color: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.s7-title { font-size: var(--s7-title); line-height: 1.2; }
+.s7-heading { font-size: var(--s7-heading); line-height: 1.3; }
+.s7-prose { font: 400 var(--s7-text)/1.55 var(--s7-font-text); letter-spacing: normal; }
+.s7-label { font: 400 var(--s7-ui)/1.4 var(--s7-font-ui); letter-spacing: normal; text-transform: none; }
+.s7-small { color: var(--s7-muted); font: 400 var(--s7-small)/1.45 var(--s7-font-text); letter-spacing: normal; text-transform: none; }
+.s7-link { color: var(--s7-selection); text-decoration: underline; text-underline-offset: 2px; }
+
+.s7-input {
+  min-width: 0;
+  min-height: var(--s7-control-height);
+  padding: 5px 7px;
+  border: 1px solid var(--s7-ink);
+  border-radius: 0;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  box-shadow: inset 1px 1px 0 var(--s7-shadow);
+  font: 400 var(--s7-ui)/1.4 var(--s7-font-text);
+}
+
+.s7-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-size: var(--s7-ui);
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+}
+
+.s7-table :where(th, td) { padding: 7px 10px; border-bottom: 1px solid var(--s7-shadow); vertical-align: top; }
+.s7-table :where(thead th) { background: var(--s7-chrome); font-family: var(--s7-font-ui); font-weight: 400; }
+.s7-table :where(tr[aria-selected="true"]) { color: var(--s7-selection-text); background: var(--s7-selection); }
+
+@media (pointer: coarse), (max-width: 520px) {
+  :root { --s7-control-height: 44px; }
+}
+
+:root:lang(zh-CN) {
+  --s7-font-ui: Chicago, Geneva, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --s7-font-text: Geneva, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --s7-font-mono: Monaco, "PingFang SC", "Microsoft YaHei", "Noto Sans Mono CJK SC", monospace;
+}
+
+:root:lang(zh-TW) {
+  --s7-font-ui: Chicago, Geneva, "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif;
+  --s7-font-text: Geneva, "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif;
+  --s7-font-mono: Monaco, "PingFang TC", "Microsoft JhengHei", "Noto Sans Mono CJK TC", monospace;
+}
+
+@media (forced-colors: active) {
+  :is(.s7-button, .mac-button),
+  .s7-tab,
+  .s7-panel,
+  .s7-note,
+  .s7-input { border-color: CanvasText; box-shadow: none; }
+  :is(.s7-button, .mac-button).is-default { outline: 3px solid ButtonText; outline-offset: 1px; }
+  :is(.s7-button, .mac-button).is-default:focus-visible { outline-style: dotted; outline-offset: 5px; }
+  :is(.s7-button, .mac-button):active:not(:disabled),
+  :is(.s7-button, .mac-button)[aria-pressed="true"],
+  .s7-tab[aria-selected="true"],
+  .s7-tab[aria-current="page"],
+  .s7-table :where(tr[aria-selected="true"]) { color: HighlightText; background: Highlight; forced-color-adjust: none; }
+}
