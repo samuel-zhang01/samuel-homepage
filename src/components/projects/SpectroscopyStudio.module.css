@@ -330,14 +330,14 @@
 
 .chartTitle {
   fill: #1c1d1b;
-  font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--s7-font-text);
   font-size: 14px;
   font-weight: 800;
 }
 
 .axisLabel {
   fill: #292a28;
-  font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--s7-font-text);
   font-size: 11px;
 }
 
@@ -357,7 +357,7 @@
 .emptyTitle,
 .emptyCopy {
   fill: #3a3b38;
-  font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--s7-font-text);
   font-size: 12px;
 }
 

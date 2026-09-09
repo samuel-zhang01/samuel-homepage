@@ -1,6 +1,7 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const desktopCopy = {
+  "Live demo": ["交互演示", "互動示範"],
   "Learning atlas · English PDF": ["学习图谱 · 英文 PDF", "學習圖譜 · 英文 PDF"],
   "CV + VOICE": ["简历 + 语音", "履歷 + 語音"],
   "Aranet Air Quality": ["Aranet 空气质量", "Aranet 空氣品質"],

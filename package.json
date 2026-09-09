@@ -36,7 +36,7 @@
     "check:learning": "node scripts/check-learning-experiments.mjs",
     "check:experiments": "node scripts/check-source-experiments.mjs && node scripts/check-finance-import.mjs && node scripts/check-mri-uncertainty.mjs",
     "check:graph": "node scripts/check-knowledge-graph.mjs",
-    "check:project-navigation": "node scripts/check-project-navigation.mjs",
+    "check:project-navigation": "node scripts/check-project-navigation.mjs && node scripts/check-project-activity.mjs",
     "check:scientific-media": "node scripts/check-scientific-media.mjs",
     "prepare:math": "node scripts/prepare-katex-assets.mjs",
     "check:math": "node scripts/prepare-katex-assets.mjs && node scripts/check-math-equations.mjs",

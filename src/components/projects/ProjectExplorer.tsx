@@ -75,20 +75,13 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
     return () => controller.abort();
   }, [locale, needIndex]);
   const [mapVisited, setMapVisited] = useState(true);
-  const [narrow, setNarrow] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<Array<HTMLButtonElement | null>>([]);
   const id = useId();
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    const observer = new ResizeObserver(() => setNarrow(root.clientWidth <= 760));
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, []);
+
 
   const updateAddress = (values: Record<string, string | null>, replace = false) => {
     const url = new URL(window.location.href);
@@ -239,7 +232,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
         </div>
       </aside>
       <section ref={detailRef} id={`${id}-detail`} tabIndex={-1} className={styles.detailPane} aria-label={t("Project details")}>
-        {selectedProject ? <ProjectDocument key={selectedProject.slug} slug={selectedProject.slug} locale={locale} onOpenApp={onOpenApp} onBack={backToList} onGraph={showConnections} embedded active={active && (!narrow || showDetail)} /> : <div className={styles.emptyDetail}><span aria-hidden="true">▤</span><h2>{t("No projects match.")}</h2><p>{t("Try another search or clear the filters.")}</p></div>}
+        {selectedProject ? <ProjectDocument key={selectedProject.slug} slug={selectedProject.slug} locale={locale} onOpenApp={onOpenApp} onBack={backToList} onGraph={showConnections} embedded /> : <div className={styles.emptyDetail}><span aria-hidden="true">▤</span><h2>{t("No projects match.")}</h2><p>{t("Try another search or clear the filters.")}</p></div>}
       </section>
     </section>}
   </div></ProjectLocaleProvider>;

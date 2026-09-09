@@ -19,6 +19,13 @@
   --s7-muted: #555;
   --s7-selection: #11177a;
   --s7-selection-text: #fff;
+  /* Blue is an action cue; quieter blue and warm paper separate supporting tiers. */
+  --s7-action: #214ea5;
+  --s7-action-hover: #173b84;
+  --s7-action-edge: #122d66;
+  --s7-action-soft: #e8eefb;
+  --s7-action-soft-hover: #f3f6ff;
+  --s7-context-paper: #f8f5ec;
   --s7-ui: 13px;
   --s7-small: 12px;
   --s7-text: 15px;
@@ -53,10 +60,10 @@
   justify-content: center;
   gap: 6px;
   padding: 5px 12px;
-  border: 1px solid var(--s7-ink);
+  border: 1px solid var(--s7-button-edge, var(--s7-ink));
   border-radius: var(--s7-control-radius);
-  color: var(--s7-ink);
-  background: var(--s7-raised);
+  color: var(--s7-button-text, var(--s7-ink));
+  background: var(--s7-button-face, var(--s7-raised));
   box-shadow: var(--s7-button-ring, 0 0 0 0 transparent), var(--s7-button-relief, var(--s7-relief-raised), 1px 1px 0 var(--s7-edge));
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
@@ -76,8 +83,29 @@
   background: var(--s7-paper);
 }
 
+/* Main destinations and sharing keep the same beveled control family. */
+:is(.s7-button, .mac-button).is-primary {
+  --s7-button-face: var(--s7-action);
+  --s7-button-hover: var(--s7-action-hover);
+  --s7-button-text: #fff;
+  --s7-button-edge: var(--s7-action-edge);
+  --s7-button-relief: inset 1px 1px 0 #7595d1, inset -1px -1px 0 var(--s7-action-edge), 1px 1px 0 var(--s7-edge);
+  min-height: 44px;
+  padding: 8px 16px;
+  font-weight: 700;
+}
+
+:is(.s7-button, .mac-button).is-share {
+  --s7-button-face: var(--s7-action-soft);
+  --s7-button-hover: var(--s7-action-soft-hover);
+  --s7-button-text: var(--s7-action-edge);
+  --s7-button-edge: var(--s7-action);
+  min-height: 44px;
+  padding: 8px 14px;
+}
+
 :is(.s7-button, .mac-button):hover:not(:disabled):not([aria-disabled="true"]):where(:not([aria-pressed="true"])) {
-  background: var(--s7-surface);
+  background: var(--s7-button-hover, var(--s7-surface));
 }
 
 :is(.s7-button, .mac-button)[aria-pressed]::before {

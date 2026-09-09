@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 import { DemoWindow } from "./DemoChrome";
 import styles from "./CfdArchitectureStudio.module.css";
+import { useProjectDemoActive } from "./ProjectDemoActivityContext";
 
 type ModelId = "fno" | "gnn" | "unet";
 type ViewMode = "diagram" | "table";
@@ -344,6 +345,7 @@ function FnoSpectrum({ phase, quadrant }: { phase: FnoPhase; quadrant: number })
 }
 
 function FnoStudio({ viewMode }: { viewMode: ViewMode }) {
+  const active = useProjectDemoActive();
   const [variantId, setVariantId] = useState<FnoVariantId>("baseline");
   const [phase, setPhase] = useState<FnoPhase>("weights");
   const [playing, setPlaying] = useState(false);
@@ -351,13 +353,13 @@ function FnoStudio({ viewMode }: { viewMode: ViewMode }) {
   const variant = FNO_VARIANTS[variantId];
 
   useEffect(() => {
-    if (!playing || viewMode !== "diagram") return;
+    if (!active || !playing || viewMode !== "diagram") return;
     const timer = window.setInterval(() => setPhase((current) => {
       const index = FNO_PHASES.findIndex((item) => item.id === current);
       return FNO_PHASES[(index + 1) % FNO_PHASES.length].id;
     }), 1800);
     return () => window.clearInterval(timer);
-  }, [playing, viewMode]);
+  }, [active, playing, viewMode]);
 
   return (
     <ProjectCopy copy={scientificCopy}><section className={styles.modelWorkspace} aria-labelledby="fno-heading">

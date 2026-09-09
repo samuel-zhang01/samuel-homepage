@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { System7Icon, type System7IconKind } from "./System7Icon";
 import { projects } from "@/data/projects";
+import { ProjectWindowContext } from "./projects/ProjectWindowContext";
+import { projectActivitySearch, resolveProjectActivity, type ProjectActivityRequest } from "@/lib/projectActivity";
 import { projectOrigins } from "@/data/projectOrigins";
 import dynamic from "next/dynamic";
 import {
@@ -84,6 +86,8 @@ const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplo
   },
 });
 
+const ProjectActivity = dynamic(() => import("@/components/projects/ProjectDocument").then(module => module.ProjectActivity), { loading: ClassicModuleLoading });
+
 const ProjectDocument = dynamic(() => import("@/components/projects/ProjectDocument"), { loading: ClassicModuleLoading });
 
 const SideQuestCabinetApp = dynamic(() => import("@/components/SideQuestCabinetApp"), {
@@ -104,6 +108,7 @@ export type AppId =
   | "experience"
   | "projects"
   | "project"
+  | "projectActivity"
   | "sidequest"
   | "skills"
   | "education"
@@ -282,6 +287,7 @@ const INITIAL_WINDOWS: WindowState[] = [
     open: false,
     maximized: false,
   },
+  { id: "projectActivity", title: "Project", x: 126, y: 70, width: 1120, height: 760, z: 19, open: false, maximized: false },
   { id: "project", title: "Project", x: 102, y: 58, width: 1060, height: 720, z: 18, open: false, maximized: false },
   {
     id: "sidequest",
@@ -529,6 +535,7 @@ const APP_ROUTES: Record<AppId, string> = {
   experience: "experience",
   projects: "projects",
   project: "projects",
+  projectActivity: "projects",
   sidequest: "sidequest",
   skills: "skills",
   education: "education",
@@ -736,7 +743,7 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
 }
 
 const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
-  .filter((item) => item.id !== "secret" && item.id !== "project")
+  .filter((item) => item.id !== "secret" && item.id !== "project" && item.id !== "projectActivity")
   .map((item) => {
     const desktopItem = DESKTOP_ICONS.find((icon) => icon.id === item.id);
     return {
@@ -1090,13 +1097,14 @@ function CoverdApp({ locale }: { locale: Locale }) {
 
 function CareerProjectLinks({ originId, locale }: { originId: string; locale: Locale }) {
   const openProject = useContext(ProjectOpenContext);
+  const openActivity = useContext(ProjectWindowContext);
   const origin = projectOrigins.find((item) => item.id === originId);
   if (!origin) return null;
   const t = (text: string) => translateText(locale, text);
   const projectLinks = origin.projects.map((slug) => {
       const project = projects.find((item) => item.slug === slug);
       const pdf = !project?.demo ? project?.artifacts?.find((artifact) => artifact.kind === "PDF") : undefined;
-      return project ? <a key={slug} onClick={event => { if (!pdf && openProject && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); openProject(slug); } }} href={pdf?.href ?? `/${localeSlug(locale)}/projects?project=${slug}`} target={pdf ? "_blank" : undefined} rel={pdf ? "noopener noreferrer" : undefined}>
+      return project ? <a key={slug} onClick={event => { if (openProject && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); if (pdf && openActivity) openActivity({ slug, kind: "pdf", artifactHref: pdf.href }); else openProject(slug); } }} href={pdf ? `/${localeSlug(locale)}/projects${projectActivitySearch({ slug, kind: "pdf", artifactHref: pdf.href })}` : `/${localeSlug(locale)}/projects?project=${slug}`} >
         <span>{t(pdf ? "Open showcase PDF" : "Open project")}</span><strong>{t(project.shortTitle ?? project.title)} →</strong>
       </a> : null;
     });
@@ -2209,7 +2217,8 @@ function AppContent({
   openApp,
   locale,
   initialProjectSlug,
-  initialProjectDemo,
+  activity,
+  onActivityBack,
   onProjectBack,
   onProjectGraph,
   active,
@@ -2218,7 +2227,8 @@ function AppContent({
   openApp: (id: AppId) => void;
   locale: Locale;
   initialProjectSlug?: string;
-  initialProjectDemo?: boolean;
+  activity: ProjectActivityRequest | null;
+  onActivityBack: () => void;
   onProjectBack: () => void;
   onProjectGraph: (slug: string) => void;
   active: boolean;
@@ -2228,7 +2238,8 @@ function AppContent({
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
     case "projects": return <ProjectExplorer active={active} locale={locale} onOpenApp={openApp} />;
-    case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} initialDemo={initialProjectDemo} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} /> : null;
+    case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} /> : null;
+    case "projectActivity": return activity ? <ProjectActivity key={`${activity.slug}:${activity.kind}:${activity.artifactHref ?? ""}`} {...activity} locale={locale} active={active} onBack={onActivityBack} /> : null;
     case "sidequest": return <SideQuestCabinetApp locale={locale} />;
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
@@ -2257,26 +2268,29 @@ export default function SystemSevenDesktop({
   initialLocale = "en-GB",
   initialProjectSlug,
   initialProjectDemo = false,
+  initialProjectArtifact,
 }: {
   initialApp?: AppId;
   skipBoot?: boolean;
   initialLocale?: Locale;
   initialProjectSlug?: string;
   initialProjectDemo?: boolean;
+  initialProjectArtifact?: string;
 }) {
   const initialProject = projects.find((project) => project.slug === initialProjectSlug);
-  const initialWindowId: AppId = initialApp === "projects" && initialProject ? "project" : initialApp;
+  const initialActivity = resolveProjectActivity(initialProjectSlug, initialProjectArtifact ? "pdf" : initialProjectDemo ? "demo" : undefined, initialProjectArtifact);
+  const initialWindowId: AppId = initialApp === "projects" && initialProject ? initialActivity ? "projectActivity" : "project" : initialApp;
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const [windows, setWindows] = useState(() =>
     INITIAL_WINDOWS.map((windowState) => ({
       ...windowState,
-      title: windowState.id === "project" && initialProject ? initialProject.title : windowState.title,
-      open: windowState.id === initialWindowId || (initialWindowId === "project" && windowState.id === "projects"),
+      title: ["project", "projectActivity"].includes(windowState.id) && initialProject ? initialProject.title : windowState.title,
+      open: windowState.id === initialWindowId || (["project", "projectActivity"].includes(initialWindowId) && windowState.id === "projects") || (initialWindowId === "projectActivity" && windowState.id === "project"),
       // Direct project and SideQuest permalinks are working surfaces rather
       // than small desktop previews. Give their interactive evidence views the
       // available canvas immediately; apps opened later from the desktop keep
       // their classic floating-window sizes.
-      maximized: ["project", "projects", "sidequest", "orbitals"].includes(windowState.id)
+      maximized: ["project", "projectActivity", "projects", "sidequest", "orbitals"].includes(windowState.id)
         && initialWindowId === windowState.id,
     })),
   );
@@ -2289,7 +2303,8 @@ export default function SystemSevenDesktop({
   const [pattern, setPattern] = useState<DesktopPattern>("classic");
   const [finderOpen, setFinderOpen] = useState(false);
   const [requestedProjectSlug, setRequestedProjectSlug] = useState(initialProjectSlug);
-  const [requestedProjectDemo, setRequestedProjectDemo] = useState(initialProjectDemo);
+  const [activity, setActivity] = useState<ProjectActivityRequest | null>(initialActivity);
+  const activityOrigin = useRef<AppId>("project");
   const [memoryMagic, setMemoryMagic] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [mobileGuide, setMobileGuide] = useState(false);
@@ -2310,7 +2325,8 @@ export default function SystemSevenDesktop({
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
   const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({
     projects: { search: "?view=map", hash: "" },
-    project: { search: initialProject ? `?project=${encodeURIComponent(initialProject.slug)}${initialProjectDemo ? "&view=demo" : ""}` : "", hash: "" },
+    project: { search: initialProject ? `?project=${encodeURIComponent(initialProject.slug)}` : "", hash: "" },
+    projectActivity: { search: initialActivity ? projectActivitySearch(initialActivity) : "", hash: "" },
   });
   const finderReturnFocus = useRef<HTMLElement | null>(null);
 
@@ -2528,7 +2544,11 @@ export default function SystemSevenDesktop({
     };
   }, []);
 
-  const activeTitle = windows.find((item) => item.id === activeId && item.open)?.title ?? "Finder";
+  const windowTitle = (item: WindowState) => item.id === "projectActivity" && activity
+    ? `${translateText(locale, item.title)} · ${activity.kind === "pdf" ? "PDF" : translateText(locale, "Live demo")}`
+    : item.title;
+  const activeWindow = windows.find(item => item.id === activeId && item.open);
+  const activeTitle = activeWindow ? windowTitle(activeWindow) : "Finder";
   const activeLocaleOption = localeOptions.find((option) => option.locale === locale) ?? localeOptions[0];
   const openWindows = useMemo(() => windows.filter((item) => item.open), [windows]);
   const selectedDesktopItem = DESKTOP_ICONS.find((item) => item.id === selectedIcon);
@@ -2542,7 +2562,7 @@ export default function SystemSevenDesktop({
       hash: currentUrl.hash,
     };
 
-    if (activeId === "projects" || activeId === "project" || activeId === "sidequest") {
+    if (activeId !== "secret") {
       routeStateByApp.current[activeId] = currentRouteState;
     }
 
@@ -2562,8 +2582,8 @@ export default function SystemSevenDesktop({
     const appRoute = id === "secret" ? currentPublicRoute : APP_ROUTES[id];
     const nextPath = appRoute ? `${localePrefix}/${appRoute}` : localePrefix || "/";
     const savedRouteState = id === activeId ? currentRouteState : routeStateByApp.current[id];
-    const nextSearch = id === "project" ? routeStateByApp.current.project?.search ?? "" : id === "projects" ? savedRouteState?.search ?? "" : "";
-    const nextHash = id === "sidequest" ? savedRouteState?.hash ?? "" : (id === "experience" || id === "education") && currentPublicRoute === appRoute ? currentUrl.hash : "";
+    const nextSearch = id === "projectActivity" ? routeStateByApp.current.projectActivity?.search ?? "" : id === "project" ? routeStateByApp.current.project?.search ?? "" : id === "projects" ? savedRouteState?.search ?? "" : "";
+    const nextHash = id === "sidequest" ? savedRouteState?.hash ?? "" : (id === "experience" || id === "education") ? savedRouteState?.hash ?? "" : "";
     const nextAddress = `${nextPath}${nextSearch}${nextHash}`;
 
     if (`${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}` !== nextAddress) {
@@ -2580,12 +2600,12 @@ export default function SystemSevenDesktop({
       const selectedSlug = nextUrl.searchParams.get("selected");
       const graphView = requestedView === "map"
         || (!requestedSlug && !["guided", "list", "files"].includes(requestedView ?? ""));
-      const requestedProject = (id === "project" || id === "projects") && !graphView
+      const requestedProject = (id === "project" || id === "projectActivity" || id === "projects") && !graphView
         ? projects.find((project) => project.slug === requestedSlug)
           ?? projects.find((project) => project.slug === selectedSlug)
         : undefined;
       const archiveTitle = translateText(nextLocale, "Project Archive");
-      const pageTitle = id === "projects" || id === "project"
+      const pageTitle = id === "projects" || id === "project" || id === "projectActivity"
         ? requestedProject
           ? `${translateText(nextLocale, requestedProject.title)} — ${archiveTitle}`
           : graphView ? translateText(nextLocale, "Knowledge graph") : archiveTitle
@@ -2670,14 +2690,13 @@ export default function SystemSevenDesktop({
     const project = projects.find((item) => item.slug === slug);
     if (!project) return;
     setRequestedProjectSlug(slug);
-    setRequestedProjectDemo(false);
     routeStateByApp.current.project = { search: `?project=${encodeURIComponent(slug)}`, hash: "" };
     setWindows(current => current.map(item => item.id === "project" ? { ...item, title: project.title } : item));
     // A single project document shares the desktop's native move, resize and
     // close controls. The archive remains open behind it with its graph state.
     if (activeId === "project") {
       const url = new URL(window.location.href);
-      url.searchParams.delete("view"); url.searchParams.delete("node"); url.searchParams.set("project", slug);
+      url.searchParams.delete("view"); url.searchParams.delete("artifact"); url.searchParams.delete("node"); url.searchParams.set("project", slug);
       window.history.pushState(window.history.state, "", `${url.pathname}${url.search}`);
     }
     const previousAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
@@ -2689,9 +2708,73 @@ export default function SystemSevenDesktop({
     }
   }, [activeId, openApp]);
 
+  const openProjectActivity = useCallback((request: ProjectActivityRequest) => {
+    const validated = resolveProjectActivity(request.slug, request.kind, request.artifactHref);
+    if (!validated) return;
+    const project = projects.find(item => item.slug === validated.slug)!;
+    if (activeId !== "projectActivity") activityOrigin.current = activeId;
+    setActivity(validated);
+    routeStateByApp.current.projectActivity = { search: projectActivitySearch(validated), hash: "" };
+    setWindows(current => current.map(item => item.id === "projectActivity" ? { ...item, title: project.title } : item));
+    const previousAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    // Same-window activity replacements need the new route before syncAddress saves it.
+    if (activeId === "projectActivity") {
+      window.history.pushState(window.history.state, "", `${window.location.pathname}${projectActivitySearch(validated)}`);
+    }
+    openApp("projectActivity");
+    const nextAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (activeId !== "projectActivity" && previousAddress !== nextAddress) {
+      window.history.replaceState(window.history.state, "", previousAddress);
+      window.history.pushState(window.history.state, "", nextAddress);
+    }
+  }, [activeId, openApp]);
+
+  const returnFromActivity = () => {
+    if (!activity) return;
+    setWindows(current => current.map(item => item.id === "projectActivity" ? { ...item, open: false } : item));
+    openProjectDocument(activity.slug);
+  };
+
+  const followDesktopLink = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[href]");
+    if (!anchor || anchor.hasAttribute("download") || anchor.closest(".pdf-reader__error, .documents-fallback")) return;
+    const url = new URL(anchor.href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    const pdfProject = projects.find(project => project.artifacts?.some(artifact => artifact.kind === "PDF" && new URL(artifact.href, url.origin).pathname === url.pathname));
+    const pdf = pdfProject?.artifacts?.find(artifact => artifact.kind === "PDF" && new URL(artifact.href, url.origin).pathname === url.pathname);
+    if (pdf && pdfProject) { event.preventDefault(); openProjectActivity({ slug: pdfProject.slug, kind: "pdf", artifactHref: pdf.href }); return; }
+    if (anchor.target && anchor.target !== "_self") return;
+    const segments = url.pathname.split("/").filter(Boolean);
+    const linkLocale = normaliseLocale(segments[0]);
+    if (linkLocale) segments.shift();
+    const route = segments.join("/");
+    const id = (Object.keys(APP_ROUTES) as AppId[]).find(id => APP_ROUTES[id] === route && id !== "project" && id !== "projectActivity" && id !== "secret");
+    if (!id) return;
+    event.preventDefault();
+    const slug = url.searchParams.get("project") ?? undefined;
+    const linkedActivity = resolveProjectActivity(slug, url.searchParams.get("view"), url.searchParams.get("artifact"));
+    if (linkedActivity) { openProjectActivity(linkedActivity); return; }
+    if (id === "projects" && projects.some(project => project.slug === slug)) { openProjectDocument(slug!); return; }
+    const previousAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    routeStateByApp.current[id] = { search: url.search, hash: url.hash };
+    openApp(id);
+    // The clicked address is authoritative for archive filters and origin anchors.
+    window.history.replaceState(window.history.state, "", previousAddress);
+    window.history.pushState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+    requestAnimationFrame(() => {
+      if (id === "projects") window.dispatchEvent(new Event("samuel-project-graph"));
+      if (url.hash) {
+        const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+        target?.scrollIntoView({ block: "start", behavior: "instant" });
+        if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
+      }
+    });
+  };
+
   const returnToProjects = (slug?: string) => {
     routeStateByApp.current.projects = { search: slug ? `?view=map&node=${encodeURIComponent(`project:${slug}`)}` : "?view=files", hash: "" };
-    setWindows(current => current.map(item => item.id === "project" ? { ...item, open: false } : item));
+    setWindows(current => current.map(item => ["project", "projectActivity"].includes(item.id) ? { ...item, open: false } : item));
     const previousAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     openApp("projects");
     const nextAddress = `${window.location.pathname}${window.location.search}${window.location.hash}`;
@@ -2705,15 +2788,29 @@ export default function SystemSevenDesktop({
   useEffect(() => {
     const restoreProjectRoute = () => {
       const url = new URL(window.location.href);
-      if (!/\/projects\/?$/.test(url.pathname)) return;
-      const project = projects.find(item => item.slug === url.searchParams.get("project"));
-      const id: AppId = project ? "project" : "projects";
+      const segments = url.pathname.split("/").filter(Boolean);
+      const restoredLocale = normaliseLocale(segments[0]);
+      if (restoredLocale) segments.shift();
+      setLocale(restoredLocale ?? "en-GB");
+      const route = segments.join("/");
+      const routeApp = (Object.keys(APP_ROUTES) as AppId[]).find(id => APP_ROUTES[id] === route && !["project", "projectActivity", "secret"].includes(id));
+      if (!routeApp) return;
+      const project = routeApp === "projects" ? projects.find(item => item.slug === url.searchParams.get("project")) : undefined;
+      const nextActivity = resolveProjectActivity(project?.slug, url.searchParams.get("view"), url.searchParams.get("artifact"));
+      const id: AppId = nextActivity ? "projectActivity" : project ? "project" : routeApp;
       routeStateByApp.current[id] = { search: url.search, hash: url.hash };
       if (project) setRequestedProjectSlug(project.slug);
-      setRequestedProjectDemo(Boolean(project) && url.searchParams.get("view") === "demo");
+      setActivity(nextActivity);
       setActiveId(id);
       const z = ++zCounter.current;
-      setWindows(current => current.map(item => item.id === id ? { ...item, open: true, z, title: project ? project.title : item.title } : item.id === "project" && !project ? { ...item, open: false } : item));
+      setWindows(current => current.map(item => item.id === id
+        ? { ...item, open: true, z, title: project ? project.title : item.title }
+        : (item.id === "projectActivity" && !nextActivity) || (item.id === "project" && routeApp === "projects" && !project) ? { ...item, open: false } : item));
+      requestAnimationFrame(() => {
+        const target = url.hash ? document.getElementById(decodeURIComponent(url.hash.slice(1))) : null;
+        if (target) { target.scrollIntoView({ block: "start", behavior: "instant" }); target.tabIndex = -1; target.focus({ preventScroll: true }); }
+        else document.querySelector<HTMLButtonElement>(`[data-app-id="${id}"] .window-close`)?.focus();
+      });
     };
     window.addEventListener("popstate", restoreProjectRoute);
     return () => window.removeEventListener("popstate", restoreProjectRoute);
@@ -2795,15 +2892,16 @@ export default function SystemSevenDesktop({
   };
 
   const closeApp = (id: AppId) => {
-    setWindows((current) => current.map((item) => item.id === id ? { ...item, open: false } : item));
     const remaining = windows.filter((item) => item.open && item.id !== id).sort((a, b) => b.z - a.z);
-    const nextActiveId = remaining[0]?.id ?? "about";
+    const nextActiveId = id === "projectActivity" && remaining.some(item => item.id === activityOrigin.current) ? activityOrigin.current : remaining[0]?.id ?? "about";
+    const z = ++zCounter.current;
+    setWindows(current => current.map(item => item.id === id ? { ...item, open: false } : item.id === nextActiveId ? { ...item, z } : item));
     setActiveId(nextActiveId);
     syncAddress(nextActiveId);
     window.requestAnimationFrame(() => {
       const returnTarget = returnFocusByApp.current[id];
-      if (returnTarget?.isConnected) returnTarget.focus();
-      else if (remaining[0]) document.querySelector<HTMLButtonElement>(`[data-app-id="${remaining[0].id}"] .window-close`)?.focus();
+      if (returnTarget?.isConnected && returnTarget.closest(`[data-app-id="${nextActiveId}"]`)) returnTarget.focus();
+      else document.querySelector<HTMLButtonElement>(`[data-app-id="${nextActiveId}"] .window-close`)?.focus();
     });
   };
 
@@ -2994,6 +3092,7 @@ export default function SystemSevenDesktop({
 
   return (
     <TranslationBoundary locale={locale}><main
+      onClick={followDesktopLink}
       className={`system-desktop desktop-pattern--${pattern}`}
       data-locale={locale}
       onPointerDown={(event) => {
@@ -3139,7 +3238,7 @@ export default function SystemSevenDesktop({
       {windows.filter((windowState) => windowState.open).map((windowState) => (
         <WindowChrome
           key={windowState.id}
-          windowState={windowState}
+          windowState={windowState.id === "projectActivity" ? { ...windowState, title: windowTitle(windowState) } : windowState}
           active={activeId === windowState.id}
           onFocus={() => focusWindow(windowState.id)}
           onClose={() => closeApp(windowState.id)}
@@ -3149,7 +3248,7 @@ export default function SystemSevenDesktop({
           onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <ProjectOpenContext.Provider value={openProjectDocument}><AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} initialProjectDemo={requestedProjectDemo} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider>
+          <ProjectWindowContext.Provider value={openProjectActivity}><ProjectOpenContext.Provider value={openProjectDocument}><AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} activity={activity} onActivityBack={returnFromActivity} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider></ProjectWindowContext.Provider>
         </WindowChrome>
       ))}
 
@@ -3165,9 +3264,9 @@ export default function SystemSevenDesktop({
       </div>
       <div className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
-          <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, item.title)}`}>
+          <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, windowTitle(item))}`}>
             <PixelIcon kind={UTILITY_ICONS[item.id] ?? DESKTOP_ICONS.find((icon) => icon.id === item.id)?.icon ?? "document"} small />
-            <span>{item.title}</span>
+            <span>{windowTitle(item)}</span>
           </button>
         ))}
       </div>

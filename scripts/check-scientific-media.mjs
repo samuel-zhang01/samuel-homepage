@@ -121,7 +121,7 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
     addEventListener(name, listener) { if (name === "visibilitychange") visibilityListeners.add(listener); },
     removeEventListener(name, listener) { if (name === "visibilitychange") visibilityListeners.delete(listener); },
   };
-  let stateIndex = 0, effectIndex = 0, dirty = false, nextTimer = 1;
+  let stateIndex = 0, effectIndex = 0, dirty = false, nextTimer = 1, active = true;
   const statefulReact = {
     ...React,
     useState(initial) {
@@ -159,6 +159,7 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
       if (name === "react") return statefulReact;
       if (name === "next/image") return { __esModule: true, default: "img" };
       if (name.endsWith("ProjectTranslationBoundary")) return { useProjectLocale: () => locale, ProjectCopy, ProjectTranslationBoundary: ({ children }) => children };
+      if (name.endsWith("ProjectDemoActivityContext")) return { useProjectDemoActive: () => active };
       if (name === "./copy/scientificCopy") return { scientificCopy };
       if (name === "@/lib/projectCopy") return loadCopyModule("src/lib/projectCopy.ts");
       if (["./CoverageShiftExperiment", "./ScientificFailureExperiments"].includes(name)) return new Proxy({}, { get: () => () => null });
@@ -185,6 +186,7 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
       throw new Error("Component did not settle");
     },
     setHidden(hidden) { document.hidden = hidden; for (const listener of visibilityListeners) listener(); },
+    setActive(value) { active = value; },
     get visibilityListenerCount() { return visibilityListeners.size; },
     tick() { for (const callback of timers.values()) callback(); },
     dispose() { effects.forEach((effect) => effect?.cleanup?.()); },
@@ -247,6 +249,29 @@ test("background playback preserves its frame and resumes without duplicate time
   app.setHidden(true); app.setHidden(false); assert.equal(app.timerCount, 0);
   click(app.render(), "Play flow"); app.render(); app.dispose();
   assert.equal(app.timerCount, 0); assert.equal(app.visibilityListenerCount, 0);
+});
+
+test("inactive demo windows preserve playback state and resume the same frame sequence", () => {
+  const app = harness("CfdFlowPlayer"); let tree = app.render();
+  click(tree, "Simulation sequence"); tree = app.render();
+  click(tree, "Pressure · p"); tree = app.render();
+  control(tree, "Flow frame").props.onChange({ target: { value: "11" } }); tree = app.render();
+  click(tree, "Play flow"); tree = app.render();
+  app.tick(); tree = app.render(); assertFrame(tree, "gnn-simulation", 12);
+  app.setActive(false); tree = app.render();
+  assert.equal(app.timerCount, 0, "Switching desktop windows clears the playback timer");
+  assert.equal(app.visibilityListenerCount, 0, "Inactive playback has no visibility listener");
+  app.setHidden(true); app.setHidden(false); app.tick(); tree = app.render();
+  assertFrame(tree, "gnn-simulation", 12);
+  assert.ok(images(tree)[0].props.src.endsWith("pressure.webp"), "Selected channel survives a window switch");
+  app.setActive(true); tree = app.render(); app.setActive(true); app.render();
+  assert.equal(app.timerCount, 1, "Refocusing resumes one timer without remounting the demo");
+  assertFrame(tree, "gnn-simulation", 12);
+  app.tick(); tree = app.render(); assertFrame(tree, "gnn-simulation", 13);
+  click(tree, "Pause flow"); app.render();
+  app.setActive(false); app.render(); app.setActive(true); app.render();
+  assert.equal(app.timerCount, 0, "A manual pause is retained across window switches");
+  app.dispose(); assert.equal(app.visibilityListenerCount, 0);
 });
 
 test("animation preload fetches only the selected channel", () => {
@@ -357,6 +382,13 @@ test("FNO operator walkthrough starts paused, cycles in order and cleans up", ()
   for (const expectedPhase of ["fft", "weights", "inverse", "spatial"]) {
     app.tick(); tree = app.render({ viewMode: "diagram" }); assert.equal(selectedPhase(tree), expectedPhase);
   }
+  app.tick(); tree = app.render({ viewMode: "diagram" }); assert.equal(selectedPhase(tree), "fft");
+  app.setActive(false); tree = app.render({ viewMode: "diagram" });
+  assert.equal(app.timerCount, 0, "An inactive desktop window pauses its operator animation");
+  app.tick(); tree = app.render({ viewMode: "diagram" }); assert.equal(selectedPhase(tree), "fft");
+  app.setActive(true); tree = app.render({ viewMode: "diagram" });
+  assert.equal(app.timerCount, 1); assert.equal(selectedPhase(tree), "fft", "Refocusing retains the selected phase");
+  app.tick(); tree = app.render({ viewMode: "diagram" }); assert.equal(selectedPhase(tree), "weights");
   click(tree, "Pause operator animation"); tree = app.render({ viewMode: "diagram" }); assert.equal(app.timerCount, 0);
   click(tree, "Play operator animation"); tree = app.render({ viewMode: "diagram" });
   app.render({ viewMode: "table" }); assert.equal(app.timerCount, 0, "Hidden diagram has no timer");

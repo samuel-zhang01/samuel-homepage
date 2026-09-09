@@ -7,6 +7,7 @@ import ClassicSelect from "@/components/ClassicSelect";
 import { useEffect, useState } from "react";
 import styles from "./ScientificPlayback.module.css";
 import { useProjectLocale } from "./ProjectTranslationBoundary";
+import { useProjectDemoActive } from "./ProjectDemoActivityContext";
 
 function useScientificText() {
   const locale = useProjectLocale();
@@ -25,6 +26,7 @@ const forecastModels = [
 ];
 
 export function CfdFlowPlayer() {
+  const active = useProjectDemoActive();
   const t = useScientificText();
   const [view, setView] = useState<"motion" | "forecasts">("motion");
   const [sequence, setSequence] = useState<FlowSequence>("gnn-rollout");
@@ -54,7 +56,7 @@ export function CfdFlowPlayer() {
     return () => { cancelled = true; };
   }, [frames, sequence, channelFilter, view]);
   useEffect(() => {
-    if (!playing || view !== "motion" || loaded < expectedFrames) return;
+    if (!active || !playing || view !== "motion" || loaded < expectedFrames) return;
     let timer: number | undefined;
     const syncPlayback = () => {
       window.clearInterval(timer);
@@ -64,7 +66,7 @@ export function CfdFlowPlayer() {
     syncPlayback();
     document.addEventListener("visibilitychange", syncPlayback);
     return () => { window.clearInterval(timer); document.removeEventListener("visibilitychange", syncPlayback); };
-  }, [playing, view, loaded, expectedFrames, frames, fps]);
+  }, [active, playing, view, loaded, expectedFrames, frames, fps]);
 
   return <ProjectCopy copy={scientificCopy}><section className={styles.studio} aria-label="Neural CFD flow explorer">
     <header className={styles.header}><span>Fluid dynamics · neural field prediction</span><h2>Neural CFD Surrogates</h2><p>Follow the wake behind a cylinder, move through the predicted frames, and explore Fourier, graph and convolutional models.</p></header>

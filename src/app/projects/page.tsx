@@ -2,7 +2,7 @@ import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 import { projects } from "@/data/projects";
 import type { Metadata } from "next";
 
-type ProjectSearchParams = Promise<{ project?: string | string[]; view?: string | string[] }>;
+type ProjectSearchParams = Promise<{ project?: string | string[]; view?: string | string[]; artifact?: string | string[] }>;
 
 export async function generateMetadata({
   searchParams,
@@ -41,7 +41,7 @@ export default async function ProjectsPage({
 }: {
   searchParams: ProjectSearchParams;
 }) {
-  const { project, view } = await searchParams;
+  const { project, view, artifact } = await searchParams;
   const initialProjectSlug = typeof project === "string" ? project : undefined;
-  return <SystemSevenDesktop initialApp="projects" initialProjectSlug={initialProjectSlug} initialProjectDemo={view === "demo"} skipBoot />;
+  return <SystemSevenDesktop initialApp="projects" initialProjectSlug={initialProjectSlug} initialProjectDemo={view === "demo"} initialProjectArtifact={view === "pdf" && typeof artifact === "string" ? artifact : undefined} skipBoot />;
 }

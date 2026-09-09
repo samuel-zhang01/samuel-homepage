@@ -4,7 +4,7 @@
   --demo-chrome: var(--s7-chrome);
   --demo-shadow: var(--s7-shadow);
   --demo-blue: var(--s7-selection);
-  --demo-blue-soft: #e4e6ff;
+  --demo-blue-soft: var(--s7-action-soft);
   --demo-green: #176746;
   --demo-green-soft: #dceddf;
   --demo-amber: #865200;
@@ -83,7 +83,7 @@
   gap: 16px;
   padding: 16px;
   border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  background: var(--s7-action-soft);
 }
 
 .demoHeader > div { min-width: 0; }
@@ -108,8 +108,8 @@
 }
 
 .statusBadge > span { width: 7px; height: 7px; flex: 0 0 7px; border: 1px solid var(--s7-ink); border-radius: 50%; background: var(--s7-shadow); }
-.statusBadge.safe > span { background: #176746; }
-.statusBadge.working > span { background: #865200; }
+.statusBadge.safe > span { background: var(--demo-green); }
+.statusBadge.working > span { background: var(--demo-amber); }
 .statusBadge.ready > span { background: var(--s7-muted); }
 .demoBody { min-width: 0; padding: 16px; background: var(--s7-paper); }
 .demoContract { border-bottom: 1px solid var(--s7-shadow); color: var(--s7-ink); background: var(--s7-paper); }

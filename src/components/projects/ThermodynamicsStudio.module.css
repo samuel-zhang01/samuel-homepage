@@ -260,13 +260,13 @@
 }
 
 .legendText {
-  font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--s7-font-text);
   font-size: 12px;
 }
 
 .axisLabel {
   fill: #252622;
-  font-family: Geneva, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--s7-font-text);
   font-size: 10px;
 }
 

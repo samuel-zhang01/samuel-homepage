@@ -12,12 +12,12 @@ const copy = {
   "Who it helps": ["适用人群", "適用對象"],
   "The aim": ["项目目标", "專案目標"],
   "Samuel’s contribution": ["Samuel 的贡献", "Samuel 的貢獻"],
-  "Try this exercise": ["开始这项练习", "開始這項練習"],
+  "Open live demo": ["打开交互演示", "開啟互動示範"],
   "Try it.": ["动手探索。", "動手探索。"],
 } satisfies ProjectCopyTable;
 
-export function ProjectCaseBrief({ project, locale, onExplore, demoOpen = false }: {
-  project: Project; locale: Locale; onExplore?: () => void; demoOpen?: boolean;
+export function ProjectCaseBrief({ project, locale, onExplore }: {
+  project: Project; locale: Locale; onExplore?: () => void;
 }) {
   const story = getProjectStory(project);
   const t = (source: string) => projectText(locale, copy, source);
@@ -38,7 +38,7 @@ export function ProjectCaseBrief({ project, locale, onExplore, demoOpen = false 
     {project.highlights.length > 0 && <section className={styles.results}><h2>{t("Results and capabilities")}</h2><ul>{project.highlights.map(highlight => <li key={highlight}>{getProjectText(locale, highlight)}</li>)}</ul></section>}
     {story && project.demo && <div className={styles.walkthrough}>
       <p><strong>{t("Try it.")}</strong> {getProjectText(locale, story.walkthrough)}</p>
-      {onExplore && <button className="s7-button" onClick={onExplore} aria-expanded={demoOpen} aria-controls={demoOpen ? `interactive-lab-${project.slug}` : undefined}>{t("Try this exercise")} ↓</button>}
+      {onExplore && <button type="button" className="s7-button is-primary" onClick={onExplore}>{t("Open live demo")} ↗</button>}
     </div>}
     <ProjectOriginLinks slug={project.slug} locale={locale} />
   </div>;

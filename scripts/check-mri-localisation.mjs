@@ -28,6 +28,7 @@ function load(file) {
     if (name.endsWith(".css")) return { __esModule: true, default: new Proxy({}, { get: (_, key) => key }) };
     if (name === "../ClassicSelect") return { __esModule: true, default: (props) => React.createElement("select", props) };
     if (name === "./MathEquation") return { MathEquation: () => null }; // Its label/TeX contract has separate tests.
+    if (name === "./ProjectDemoActivityContext") return { useProjectDemoActive: () => true };
     if (name.startsWith(".") || name.startsWith("@/")) {
       const path = name.startsWith("@/") ? resolve(root, "src", name.slice(2)) : resolve(dirname(absolute), name);
       return load(path + (existsSync(`${path}.tsx`) ? ".tsx" : ".ts"));
