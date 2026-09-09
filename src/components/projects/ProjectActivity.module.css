@@ -29,6 +29,8 @@
 }
 
 .toolbar > button, .toolbar > a { min-height: 44px; }
+.shortBackLabel { display: none; }
+.toolbar svg { flex: 0 0 auto; }
 
 .title {
   flex: 1 1 180px;
@@ -55,13 +57,19 @@
 .loading { display: grid; min-height: 160px; flex: 1; place-content: center; margin: 0; padding: 24px; text-align: center; }
 
 @container project-activity (max-width: 620px) {
-  .toolbar { gap: 6px; padding: 8px; }
-  .title { flex-basis: 100%; order: -1; padding-inline: 0; font-size: var(--s7-small); }
-  .toolbar > button, .toolbar > a { flex: 1 1 auto; }
+  .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; padding: 8px; }
+  .activity[data-kind="pdf"] .toolbar { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) 44px; }
+  .title { grid-column: 1 / -1; grid-row: 1; padding-inline: 0; font-size: var(--s7-small); }
+  .toolbar > button, .toolbar > a { padding-inline: 6px; }
+  .backButton, .shareButton { width: 100%; }
+  .fullBackLabel, .downloadLabel { display: none; }
+  .shortBackLabel { display: inline; }
+  .toolbar > .downloadButton { width: 44px; height: 44px; padding: 0; }
+  .shareStatus, .shareFallback { grid-column: 1 / -1; }
   .demo { padding: 5px; }
-  .reader :global(.pdf-reader__controls) { justify-content: flex-start; padding-inline: 4px; }
-  .reader :global(.pdf-reader__controls) output { min-width: 0; flex: 1 1 auto; overflow-wrap: anywhere; }
-  .reader :global(.pdf-reader__controls) button { flex: 0 0 44px; padding-inline: 3px; }
-  .reader :global(.pdf-reader__separator) { display: none; }
   .reader :global(.pdf-reader__stage) { padding: 8px; }
+}
+
+@container project-activity (max-width: 360px) {
+  .shareIcon { display: none; }
 }

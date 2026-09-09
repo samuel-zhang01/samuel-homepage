@@ -2,6 +2,13 @@
 
 Updated: 9 September 2026. Current implementation, checks and handoff.
 
+## Latest PDF reader follow-up
+
+- Fixed the reported mobile GROWMAT reader: one compact action row, descriptive document title, accurate page counter, visible **Fit width** reset and reachable horizontal overflow when zoomed.
+- The shared reader now measures actual padding, reserves each page's real aspect ratio, preserves the reading position through zoom/resizing and ignores hidden-window measurements. Canvas cancellation waits before reusing the canvas. The CV reader receives the same fixes.
+- Full prebuild gates, ESLint, six new PDF geometry regressions, production compilation and output checks passed. Native Edge computer use covered the 320px GROWMAT reader, 120% zoom, horizontal keyboard panning, fit reset, window switching and the 440px Traditional Chinese CV reader. See [PDF reader fixes](docs/PDF_READER_FIXES_2026-09-09.md).
+- The newest compiled reader build is `.next-reader`; preview uses port 5190, with port 5180 refreshed to the same build after validation. Development remains on port 5174. Earlier preview ports and output measurements below describe their dated checkpoints.
+
 ## Current result
 
 - The project browser starts with the knowledge graph. Selected work / All projects use a searchable, filterable left pane and independently scrolling right-hand document. Open live demo loads experiments on demand; Open in new tab opens the full document. Mobile Back to list restores the row and focus. History, graph connections and CV links remain available.

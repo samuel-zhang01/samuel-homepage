@@ -26,10 +26,10 @@
     "check:locales": "node scripts/check-locales.mjs",
     "check:output": "node scripts/check-build-output.mjs",
     "audit:dependencies": "npm audit --audit-level=moderate && npm audit signatures",
-    "prebuild": "npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:data && npm run check:desk && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
+    "prebuild": "npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
     "build": "next build",
     "postbuild": "npm run check:output",
-    "build:isolated": "npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:data && npm run check:desk && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy && NEXT_DIST_DIR=.next-build next build && node scripts/check-build-output.mjs .next-build",
+    "build:isolated": "npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy && NEXT_DIST_DIR=.next-build next build && node scripts/check-build-output.mjs .next-build",
     "check:release": "npm run check:deploy && npm run check:finder && npm run audit:dependencies && npm run lint && npm run build:isolated",
     "start": "next start",
     "lint": "eslint",
@@ -40,7 +40,8 @@
     "check:scientific-media": "node scripts/check-scientific-media.mjs",
     "prepare:math": "node scripts/prepare-katex-assets.mjs",
     "check:math": "node scripts/prepare-katex-assets.mjs && node scripts/check-math-equations.mjs",
-    "check:project-copy": "node scripts/check-project-copy.mjs && node scripts/check-mri-localisation.mjs && node scripts/check-learning-localisation.mjs && node scripts/check-physical-localisation.mjs && node scripts/check-project-narrative-copy.mjs"
+    "check:project-copy": "node scripts/check-project-copy.mjs && node scripts/check-mri-localisation.mjs && node scripts/check-learning-localisation.mjs && node scripts/check-physical-localisation.mjs && node scripts/check-project-narrative-copy.mjs",
+    "check:pdf": "node scripts/check-pdf-reader.mjs"
   },
   "dependencies": {
     "katex": "0.18.7",

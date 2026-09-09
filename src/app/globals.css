@@ -2429,61 +2429,56 @@ html:lang(zh-TW) .career-record {
 
 .pdf-reader {
   display: flex;
+  min-width: 0;
   min-height: 0;
   flex: 1;
   flex-direction: column;
+  container: pdf-reader / inline-size;
 }
 
 .pdf-reader__controls {
-  display: flex;
-  min-height: 34px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px minmax(64px, max-content) 44px;
+  min-height: 52px;
   flex: 0 0 auto;
   align-items: center;
-  justify-content: center;
   gap: 4px;
-  padding: 4px 7px;
-  border-bottom: 1px solid #555;
-  background: #c8c8c3;
-  font-size: 9px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--s7-edge, #555);
+  background: var(--s7-chrome, #ddd);
+  font: 400 var(--s7-ui, 13px)/1.3 var(--s7-font-ui);
 }
 
 .pdf-reader__controls button {
-  min-width: 28px;
-  min-height: 24px;
-  padding: 2px 7px;
-  border: 1px solid #555;
-  color: #111;
-  background: #eee;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #888;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 3px 6px;
+  border: 1px solid var(--s7-edge, #555);
+  color: var(--s7-ink, #111);
+  background: var(--s7-raised, #eee);
+  box-shadow: var(--s7-relief-raised);
   font: inherit;
   font-weight: 700;
+  cursor: pointer;
 }
-
-.pdf-reader__controls button:active:not(:disabled) {
-  box-shadow: inset 1px 1px #777;
-}
-
-.pdf-reader__controls button:disabled {
-  color: #777;
-  text-shadow: 1px 1px #fff;
-}
-
+.pdf-reader__controls button:active:not(:disabled) { box-shadow: var(--s7-relief-inset); }
+.pdf-reader__controls button:disabled { color: var(--s7-muted, #777); cursor: default; }
 .pdf-reader__controls output {
-  min-width: 190px;
-  color: #333;
+  min-width: 0;
+  color: var(--s7-ink, #333);
+  font-size: var(--s7-small, 12px);
   font-variant-numeric: tabular-nums;
-  text-align: center;
+  text-align: start;
+  overflow-wrap: normal;
 }
-
-.pdf-reader__separator {
-  width: 1px;
-  height: 20px;
-  margin: 0 3px;
-  background: #777;
-}
+.pdf-reader__fit { display: grid; justify-items: center; align-content: center; gap: 0; white-space: nowrap; }
+.pdf-reader__fit small { font-size: 10px; line-height: 1.2; font-weight: 400; }
+.pdf-reader__separator { display: none; }
 
 .pdf-reader__stage {
+  --pdf-page-gap: 18px;
   display: block;
+  position: relative;
   min-width: 0;
   min-height: 0;
   flex: 1;
@@ -2491,15 +2486,18 @@ html:lang(zh-TW) .career-record {
   padding: 14px;
   background: #777;
   overscroll-behavior: contain;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  overflow-anchor: none;
   scrollbar-color: #555 #bbb;
 }
+
+.pdf-reader__pages { width: 100%; }
 
 .pdf-reader__page {
   position: relative;
   display: block;
   overflow: hidden;
-  margin: 0 auto 18px;
+  margin: 0 auto var(--pdf-page-gap);
   background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,.45);
 }
@@ -2529,6 +2527,14 @@ html:lang(zh-TW) .career-record {
   font-family: var(--system-mono);
   font-size: 8px;
   pointer-events: none;
+}
+
+@container pdf-reader (max-width: 620px) {
+  .pdf-reader__controls { padding-inline: 6px; }
+  .pdf-reader__stage { padding: 8px; --pdf-page-gap: 12px; }
+}
+@container pdf-reader (max-width: 280px) {
+  .pdf-reader__controls { grid-template-columns: minmax(0, 1fr) 44px 60px 44px; padding-inline: 4px; gap: 3px; }
 }
 
 .pdf-reader__loading {
@@ -4983,27 +4989,6 @@ html:lang(zh-TW) .career-record {
 
   .documents-toolbar__hint {
     display: none;
-  }
-
-  .pdf-reader__controls {
-    justify-content: flex-start;
-    gap: 2px;
-    overflow: hidden;
-    padding-inline: 4px;
-  }
-
-  .pdf-reader__controls output {
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-
-  .pdf-reader__separator {
-    display: none;
-  }
-
-  .pdf-reader__controls button {
-    flex: 0 0 44px;
-    padding-inline: 3px;
   }
 
   .documents-toolbar {

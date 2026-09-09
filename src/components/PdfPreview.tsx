@@ -3,6 +3,8 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   type RefObject,
@@ -12,6 +14,7 @@ import type {
   PDFDocumentProxy,
   RenderTask,
 } from "pdfjs-dist/types/src/display/api";
+import { capturePdfScrollAnchor, getPdfCurrentPage, getPdfPageWidth, getPdfReadingOffset, restorePdfScrollAnchor, type PdfPageGeometry, type PdfScrollAnchor } from "@/lib/pdfReaderGeometry";
 import { translateText, type Locale } from "@/lib/i18n";
 
 type PdfPreviewProps = {
@@ -23,17 +26,17 @@ type PdfPreviewProps = {
 type ReaderStatus = "loading" | "rendering" | "ready" | "error";
 
 function formatPagePosition(locale: Locale, page: number, total: number | string) {
-  if (locale === "zh-CN") return `连续滚动 · 第 ${page} 页，共 ${total} 页`;
-  if (locale === "zh-TW") return `連續捲動 · 第 ${page} 頁，共 ${total} 頁`;
-  return `Continuous scroll · Page ${page} of ${total}`;
+  if (locale === "zh-CN") return `第 ${page} 页 / 共 ${total} 页`;
+  if (locale === "zh-TW") return `第 ${page} 頁 / 共 ${total} 頁`;
+  return `Page ${page} of ${total}`;
 }
 
 function PdfPage({
   documentProxy,
   pageNumber,
   stageRef,
-  stageWidth,
-  zoom,
+  pageWidth,
+  aspectRatio,
   title,
   locale,
   onRendered,
@@ -42,8 +45,8 @@ function PdfPage({
   documentProxy: PDFDocumentProxy;
   pageNumber: number;
   stageRef: RefObject<HTMLDivElement | null>;
-  stageWidth: number;
-  zoom: number;
+  pageWidth: number;
+  aspectRatio: number;
   title: string;
   locale: Locale;
   onRendered: (page: number) => void;
@@ -53,8 +56,7 @@ function PdfPage({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const renderTaskRef = useRef<RenderTask | null>(null);
   const [nearViewport, setNearViewport] = useState(pageNumber <= 2);
-  const availableWidth = Math.max(220, stageWidth - 28) * zoom;
-  const [aspectRatio, setAspectRatio] = useState(Math.SQRT2);
+  const availableWidth = pageWidth;
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -73,30 +75,30 @@ function PdfPage({
   }, [stageRef]);
 
   useEffect(() => {
-    if (!nearViewport || !canvasRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     let cancelled = false;
-    let pageCleanup: (() => void) | null = null;
+    let renderTask: RenderTask | null = null;
+    const previousTask = renderTaskRef.current;
+    previousTask?.cancel();
 
     void (async () => {
       try {
+        // PDF.js must release a cancelled canvas before another render can use it.
+        await previousTask?.promise.catch(() => {});
+        if (cancelled) return;
+        if (!nearViewport) { canvas.width = 1; canvas.height = 1; return; }
         const page = await documentProxy.getPage(pageNumber);
-        pageCleanup = () => page.cleanup();
-        if (cancelled || !canvasRef.current) return;
-
+        if (cancelled) return;
         const naturalViewport = page.getViewport({ scale: 1 });
-        setAspectRatio(naturalViewport.height / naturalViewport.width);
-        const fitScale = Math.max(0.25, availableWidth / naturalViewport.width);
-        const cssViewport = page.getViewport({ scale: fitScale });
+        const cssViewport = page.getViewport({ scale: availableWidth / naturalViewport.width });
         const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-        const renderViewport = page.getViewport({ scale: fitScale * pixelRatio });
-        const canvas = canvasRef.current;
-        canvas.width = Math.floor(renderViewport.width);
-        canvas.height = Math.floor(renderViewport.height);
-        canvas.style.width = `${Math.floor(cssViewport.width)}px`;
-        canvas.style.height = `${Math.floor(cssViewport.height)}px`;
-
-        renderTaskRef.current?.cancel();
-        const renderTask = page.render({ canvas, viewport: renderViewport });
+        const renderViewport = page.getViewport({ scale: cssViewport.scale * pixelRatio });
+        canvas.width = Math.ceil(renderViewport.width);
+        canvas.height = Math.ceil(renderViewport.height);
+        canvas.style.width = `${availableWidth}px`;
+        canvas.style.height = `${availableWidth * aspectRatio}px`;
+        renderTask = page.render({ canvas, viewport: renderViewport });
         renderTaskRef.current = renderTask;
         await renderTask.promise;
         if (!cancelled) onRendered(pageNumber);
@@ -104,22 +106,13 @@ function PdfPage({
         if (cancelled || (renderError instanceof Error && renderError.name === "RenderingCancelledException")) return;
         console.error(`PDF preview failed to render page ${pageNumber}`, renderError);
         onError();
+      } finally {
+        if (renderTask && renderTaskRef.current === renderTask) renderTaskRef.current = null;
       }
     })();
 
-    return () => {
-      cancelled = true;
-      renderTaskRef.current?.cancel();
-      renderTaskRef.current = null;
-      pageCleanup?.();
-    };
-  }, [availableWidth, documentProxy, nearViewport, onError, onRendered, pageNumber]);
-
-  useEffect(() => {
-    if (nearViewport || !canvasRef.current) return;
-    canvasRef.current.width = 1;
-    canvasRef.current.height = 1;
-  }, [nearViewport]);
+    return () => { cancelled = true; renderTask?.cancel(); };
+  }, [availableWidth, aspectRatio, documentProxy, nearViewport, onError, onRendered, pageNumber]);
 
   return (
     <article
@@ -127,7 +120,7 @@ function PdfPage({
       className="pdf-reader__page"
       data-pdf-page={pageNumber}
       aria-label={`${title}, ${formatPagePosition(locale, pageNumber, documentProxy.numPages)}`}
-      style={{ width: `${availableWidth}px`, minHeight: `${availableWidth * aspectRatio}px` }}
+      style={{ width: `${availableWidth}px`, height: `${availableWidth * aspectRatio}px` }}
     >
       <span className="pdf-reader__page-number" aria-hidden="true">{pageNumber}</span>
       <canvas
@@ -141,28 +134,79 @@ function PdfPage({
 
 export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
   const stageRef = useRef<HTMLDivElement | null>(null);
-  const loadingTaskRef = useRef<PDFDocumentLoadingTask | null>(null);
   const [documentProxy, setDocumentProxy] = useState<PDFDocumentProxy | null>(null);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [zoom, setZoom] = useState(1);
-  const [stageWidth, setStageWidth] = useState(640);
+  const [pageRatios, setPageRatios] = useState<number[]>([]);
+  const [stageMetrics, setStageMetrics] = useState({ width: 0, left: 0, right: 0, top: 0, gap: 18 });
+  const metricsRef = useRef(stageMetrics);
+  const geometryRef = useRef<PdfPageGeometry[]>([]);
+  const pendingAnchor = useRef<{ vertical: PdfScrollAnchor; leftFraction: number } | null>(null);
+  const pageWidth = getPdfPageWidth(stageMetrics.width, stageMetrics.left, stageMetrics.right, zoom) ?? 0;
+  const geometry = useMemo(() => {
+    let top = stageMetrics.top;
+    return pageRatios.map((ratio, index) => {
+      const page = { pageNumber: index + 1, top, height: pageWidth * ratio };
+      top += page.height + stageMetrics.gap;
+      return page;
+    });
+  }, [pageRatios, pageWidth, stageMetrics.top, stageMetrics.gap]);
+  const rememberPosition = useCallback(() => {
+    const stage = stageRef.current;
+    if (!stage || !stage.clientWidth || !geometryRef.current.length) return;
+    const vertical = capturePdfScrollAnchor(geometryRef.current, stage.scrollTop, getPdfReadingOffset(stage.clientHeight));
+    if (vertical) pendingAnchor.current = { vertical, leftFraction: stage.scrollLeft / Math.max(1, stage.scrollWidth) };
+  }, []);
+  const changeZoom = (next: number) => {
+    const nextZoom = Math.max(.6, Math.min(2, Math.round(next * 10) / 10));
+    if (nextZoom === zoom) return;
+    rememberPosition();
+    setZoom(nextZoom);
+  };
+
+  useLayoutEffect(() => {
+    const stage = stageRef.current;
+    geometryRef.current = geometry;
+    if (!stage || !pageWidth || !geometry.length || !stage.clientWidth) return;
+    if (pendingAnchor.current) {
+      stage.scrollTop = restorePdfScrollAnchor(geometry, pendingAnchor.current.vertical, stage.scrollHeight - stage.clientHeight);
+      stage.scrollLeft = pendingAnchor.current.leftFraction * stage.scrollWidth;
+      pendingAnchor.current = null;
+    }
+    setCurrentPage(getPdfCurrentPage(geometry, stage.scrollTop + getPdfReadingOffset(stage.clientHeight)));
+  }, [geometry, pageWidth]);
   const [firstPageReady, setFirstPageReady] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    const updateWidth = () => setStageWidth(Math.max(240, stage.clientWidth));
+    const updateWidth = () => {
+      if (!stage.clientWidth || !stage.clientHeight) return;
+      const css = window.getComputedStyle(stage);
+      const next = { width: stage.clientWidth, left: parseFloat(css.paddingLeft) || 0, right: parseFloat(css.paddingRight) || 0, top: parseFloat(css.paddingTop) || 0, gap: parseFloat(css.getPropertyValue("--pdf-page-gap")) || 18 };
+      if (Object.keys(next).every(key => metricsRef.current[key as keyof typeof next] === next[key as keyof typeof next])) {
+        setCurrentPage(getPdfCurrentPage(geometryRef.current, stage.scrollTop + getPdfReadingOffset(stage.clientHeight)));
+        return;
+      }
+      rememberPosition();
+      metricsRef.current = next;
+      setStageMetrics(next);
+    };
     updateWidth();
     const observer = new ResizeObserver(updateWidth);
     observer.observe(stage);
     return () => observer.disconnect();
-  }, []);
+  }, [rememberPosition]);
 
   useEffect(() => {
     let cancelled = false;
+    let loadingTask: PDFDocumentLoadingTask | null = null;
     setDocumentProxy(null);
+    setPageRatios([]);
+    pendingAnchor.current = null;
+    if (stageRef.current) { stageRef.current.scrollTop = 0; stageRef.current.scrollLeft = 0; }
     setPageCount(0);
     setCurrentPage(1);
     setZoom(1);
@@ -177,20 +221,30 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
         // asset to same-origin public storage for both dev and production.
         const pdfJsUrl = "/_vendor/pdfjs/pdf.min.mjs";
         const pdfjs = await import(/* webpackIgnore: true */ pdfJsUrl) as typeof import("pdfjs-dist");
+        if (cancelled) return;
         if (!pdfjs.GlobalWorkerOptions.workerSrc) {
           pdfjs.GlobalWorkerOptions.workerSrc = "/_vendor/pdfjs/pdf.worker.min.mjs";
         }
-        const loadingTask = pdfjs.getDocument({
+        loadingTask = pdfjs.getDocument({
           url: src,
           isEvalSupported: false,
           enableXfa: false,
         });
-        loadingTaskRef.current = loadingTask;
         const loadedDocument = await loadingTask.promise;
         if (cancelled) {
           await loadedDocument.destroy();
           return;
         }
+        // Resolve lightweight page geometry before mounting placeholders. Canvas
+        // rendering remains visibility-based; portrait/landscape pages never reflow later.
+        const ratios: number[] = [];
+        for (let pageNumber = 1; pageNumber <= loadedDocument.numPages; pageNumber++) {
+          const page = await loadedDocument.getPage(pageNumber);
+          if (cancelled) return;
+          const viewport = page.getViewport({ scale: 1 });
+          ratios.push(viewport.height / viewport.width);
+        }
+        setPageRatios(ratios);
         setDocumentProxy(loadedDocument);
         setPageCount(loadedDocument.numPages);
       } catch (loadError) {
@@ -202,8 +256,6 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
 
     return () => {
       cancelled = true;
-      const loadingTask = loadingTaskRef.current;
-      loadingTaskRef.current = null;
       if (loadingTask) void loadingTask.destroy();
     };
   }, [src]);
@@ -214,18 +266,8 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
     let animationFrame = 0;
     const updateCurrentPage = () => {
       animationFrame = 0;
-      const stageRect = stage.getBoundingClientRect();
-      const readingLine = stageRect.top + Math.min(stageRect.height * 0.32, 180);
-      let nearestPage = 1;
-      let nearestDistance = Number.POSITIVE_INFINITY;
-      stage.querySelectorAll<HTMLElement>("[data-pdf-page]").forEach((page) => {
-        const distance = Math.abs(page.getBoundingClientRect().top - readingLine);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nearestPage = Number(page.dataset.pdfPage) || 1;
-        }
-      });
-      setCurrentPage(nearestPage);
+      if (!stage.clientWidth || !stage.clientHeight) return;
+      setCurrentPage(getPdfCurrentPage(geometryRef.current, stage.scrollTop + getPdfReadingOffset(stage.clientHeight)));
     };
     const requestUpdate = () => {
       if (!animationFrame) animationFrame = window.requestAnimationFrame(updateCurrentPage);
@@ -236,7 +278,7 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
       stage.removeEventListener("scroll", requestUpdate);
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
-  }, [documentProxy, stageWidth, zoom]);
+  }, [documentProxy, geometry]);
 
   const handleRendered = useCallback((page: number) => {
     if (page === 1) setFirstPageReady(true);
@@ -250,34 +292,38 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
       : firstPageReady
         ? "ready"
         : "rendering";
-  const statusText = documentProxy
+  const statusText = error ? translateText(locale, "Preview unavailable") : documentProxy
     ? formatPagePosition(locale, currentPage, pageCount)
-    : translateText(locale, error ? "Preview unavailable" : "Loading document…");
+    : translateText(locale, "Loading document…");
+  const fitLabel = locale === "zh-CN" ? "适合宽度" : locale === "zh-TW" ? "符合寬度" : "Fit width";
+  const panHint = locale === "zh-CN" ? "横向滚动查看放大页面，或选择适合宽度。" : locale === "zh-TW" ? "橫向捲動查看放大的頁面，或選擇符合寬度。" : "Scroll sideways to read the enlarged page, or choose Fit width.";
 
   return (
-    <div className="pdf-reader" data-status={status}>
+    <div className="pdf-reader" data-status={status} data-zoomed={zoom > 1 || undefined}>
       <div className="pdf-reader__controls" aria-label={translateText(locale, "Document reader controls")}>
         <output aria-live="polite">{statusText}</output>
         <span className="pdf-reader__separator" aria-hidden="true" />
-        <button type="button" aria-label={translateText(locale, "Zoom out")} onClick={() => setZoom((value) => Math.max(0.6, value - 0.2))} disabled={zoom <= 0.6 || error}>−</button>
-        <button type="button" onClick={() => setZoom(1)} disabled={zoom === 1 || error}>{Math.round(zoom * 100)}%</button>
-        <button type="button" aria-label={translateText(locale, "Zoom in")} onClick={() => setZoom((value) => Math.min(2, value + 0.2))} disabled={zoom >= 2 || error}>+</button>
+        <button type="button" aria-label={translateText(locale, "Zoom out")} onClick={() => changeZoom(zoom - .2)} disabled={zoom <= .6 || !documentProxy || error}>−</button>
+        <button className="pdf-reader__fit" type="button" title={fitLabel} aria-label={`${fitLabel} (${Math.round(zoom * 100)}%)`} onClick={() => changeZoom(1)} disabled={!documentProxy || error}><span>{Math.round(zoom * 100)}%</span><small>{fitLabel}</small></button>
+        <button type="button" aria-label={translateText(locale, "Zoom in")} onClick={() => changeZoom(zoom + .2)} disabled={zoom >= 2 || !documentProxy || error}>+</button>
       </div>
-      <div ref={stageRef} className="pdf-reader__stage" tabIndex={0} aria-label={`${title} ${translateText(locale, "document preview")}`}>
-        {documentProxy && !error && Array.from({ length: pageCount }, (_, index) => (
+      <div ref={stageRef} className="pdf-reader__stage" tabIndex={0} aria-label={`${title} ${translateText(locale, "document preview")}`} aria-description={zoom > 1 ? panHint : undefined}>
+        <div className="pdf-reader__pages" style={{ minWidth: pageWidth || undefined }}>
+        {documentProxy && pageWidth > 0 && !error && Array.from({ length: pageCount }, (_, index) => (
           <PdfPage
             key={index + 1}
             documentProxy={documentProxy}
             pageNumber={index + 1}
             stageRef={stageRef}
-            stageWidth={stageWidth}
-            zoom={zoom}
+            pageWidth={pageWidth}
+            aspectRatio={pageRatios[index]}
             title={title}
             locale={locale}
             onRendered={handleRendered}
             onError={handleRenderError}
           />
         ))}
+        </div>
         {!documentProxy && !error && <p className="pdf-reader__loading">{translateText(locale, "Loading document…")}</p>}
         {error && (
           <p className="pdf-reader__error">
