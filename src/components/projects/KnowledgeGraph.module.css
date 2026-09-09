@@ -51,7 +51,7 @@
 }
 .searchResults strong { font-size: var(--s7-small); }
 .searchResults small { flex-shrink: 0; color: var(--s7-ink); font-size: var(--s7-small); }
-.searchResults button:hover { color: var(--s7-ink); background: var(--s7-paper); }
+.searchResults button:hover { color: var(--s7-ink); background: var(--s7-info-soft); }
 .searchResults button:hover small { color: var(--s7-ink); }
 .topics { display: flex; gap: 6px; overflow-x: auto; padding: 9px 12px; border-bottom: 1px solid var(--s7-edge); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); }
 .topics button, .toolbar button, .footer button, .navigator > button {
@@ -80,11 +80,10 @@
 .topics button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .topics button:active:not(:disabled):not([aria-disabled="true"]) > strong, .topics button:active:not(:disabled):not([aria-disabled="true"]) > small, .toolbar button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .toolbar button:active:not(:disabled):not([aria-disabled="true"]) > strong, .toolbar button:active:not(:disabled):not([aria-disabled="true"]) > small, .footer button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .footer button:active:not(:disabled):not([aria-disabled="true"]) > strong, .footer button:active:not(:disabled):not([aria-disabled="true"]) > small, .navigator > button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .navigator > button:active:not(:disabled):not([aria-disabled="true"]) > strong, .navigator > button:active:not(:disabled):not([aria-disabled="true"]) > small {
   color: var(--s7-paper);
 }
-/* The shared toggle supplies the checkmark; topic colours remain in the graph. */
-.topics button::before { border: 0; background: transparent; }
-.topics button[aria-pressed="true"], .toolbar button[aria-pressed="true"] { color: var(--s7-ink); background: var(--s7-chrome); box-shadow: inset 1px 1px 0 var(--s7-ink); }
+/* Selected topics use their existing pressed face without a leading marker. */
+.topics button[aria-pressed="true"], .toolbar button[aria-pressed="true"] { font-weight: 700; color: #fff; background: #11177a; border-color: #111; box-shadow: inset 1px 1px #777bb7; }
 .topics button:active:not(:disabled), .toolbar button:active:not(:disabled), .footer button:active:not(:disabled), .navigator > button:active:not(:disabled) { color: var(--s7-paper); background: var(--s7-ink); box-shadow: none; }
-.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: stretch; gap: 8px; min-width: 0; padding: 8px; background: var(--s7-recess); box-shadow: var(--s7-relief-inset); }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: stretch; gap: 8px; min-width: 0; padding: 8px; box-shadow: var(--s7-relief-inset); background: #d5d6cc; }
 .visual { min-width: 0; border: 1px solid var(--s7-edge); background: var(--s7-paper); box-shadow: var(--s7-frame-well); }
 .breadcrumb { display: flex; gap: 7px; align-items: center; min-height: 35px; padding: 4px 13px; overflow-x: auto; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-surface); color: var(--s7-ink); white-space: nowrap; }
 .breadcrumb > span { display: flex; gap: 7px; align-items: center; }
@@ -108,7 +107,7 @@
 .breadcrumb button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .breadcrumb button:active:not(:disabled):not([aria-disabled="true"]) > strong, .breadcrumb button:active:not(:disabled):not([aria-disabled="true"]) > small {
   color: var(--s7-paper);
 }
-.breadcrumb button[aria-current] { color: var(--s7-ink); background: var(--s7-chrome); border-color: var(--s7-ink); box-shadow: inset 1px 1px 0 var(--s7-ink); font-weight: 700; }
+.breadcrumb button[aria-current] { color: var(--s7-accent); background: var(--s7-accent-soft); border-color: var(--s7-accent); box-shadow: inset 1px 1px 0 var(--s7-ink); font-weight: 700; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; min-height: 47px; padding: 7px 11px; border-bottom: 1px solid var(--s7-edge); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); }
 .toolbar > div { display: flex; flex-wrap: wrap; gap: 3px; padding: 4px; border: 1px solid var(--s7-shadow); background: var(--s7-recess); box-shadow: var(--s7-relief-inset); }
 .toolbar button { min-width: 31px; }
@@ -148,7 +147,7 @@
 .nodeList button > span:first-child { grid-column: 1; color: var(--s7-ink); font-size: var(--s7-small); }
 .nodeList button > strong { font-size: var(--s7-small); line-height: 1.4; }
 .nodeList button > span:last-child { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--s7-ink); }
-.inspector { min-width: 0; padding: 17px 18px; border: 1px solid var(--s7-edge); background: var(--s7-surface); box-shadow: var(--s7-relief-raised), var(--s7-frame-well); }
+.inspector { min-width: 0; padding: 17px 18px; border: 1px solid var(--s7-edge); background: var(--s7-context-paper); box-shadow: var(--s7-relief-raised), var(--s7-frame-well); }
 .nodeType { display: flex; align-items: center; gap: 7px; padding: 5px 7px; border: 1px solid var(--s7-edge); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); color: var(--s7-ink); font: var(--s7-small)/1.4 var(--s7-font-text); }
 .nodeType i { width: 8px; height: 8px; border: 1px solid var(--s7-shadow); }
 .inspector h3 { margin: 7px 0 10px; color: var(--s7-ink); font-size: var(--s7-heading); line-height: 1.4; letter-spacing: normal; overflow-wrap: anywhere; }
@@ -174,6 +173,9 @@
 .primaryAction:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .primaryAction:active:not(:disabled):not([aria-disabled="true"]) > strong, .primaryAction:active:not(:disabled):not([aria-disabled="true"]) > small {
   color: var(--s7-paper);
 }
+.graph .primaryAction { background: var(--s7-button-face); color: var(--s7-button-text); border-color: var(--s7-button-edge); box-shadow: var(--s7-button-relief); }
+.graph .primaryAction:hover { background: var(--s7-button-hover); }
+.graph .shareAction { display: flex; width: 100%; margin-top: 16px; min-height: 44px; }
 .textAction { display: block; min-height: max(var(--s7-control-height), 34px); margin-top: 8px; padding: 6px 9px; border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); color: var(--s7-ink); background: var(--s7-paper); box-shadow: 1px 1px 0 var(--s7-shadow); font-size: var(--s7-ui); text-align: left; font-family: var(--s7-font-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; }
 .textAction:focus-visible {
   outline: 2px dotted var(--s7-ink);
@@ -218,7 +220,7 @@
 }
 .connections strong, .startRoutes strong { color: var(--s7-ink); font-size: var(--s7-small); line-height: 1.4; }
 .connections button > span, .startRoutes button > span { color: var(--s7-ink); font-size: var(--s7-small); line-height: 1.5; }
-.connections button:hover, .startRoutes button:hover, .nodeList button:hover { background: var(--s7-paper); }
+.connections button:hover, .startRoutes button:hover, .nodeList button:hover { background: var(--s7-info-soft); }
 .startRoutes { margin-top: 20px; }
 .smallNote { margin-top: 20px !important; color: var(--s7-ink) !important; font-size: var(--s7-small) !important; }
 .edgeNotes { margin-top: 18px; padding: 0 9px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); box-shadow: none; color: var(--s7-ink); font-size: var(--s7-small); }
@@ -288,6 +290,9 @@
 .connections button:active strong, .connections button:active span, .startRoutes button:active strong, .startRoutes button:active span, .nodeList button:active > span, .timelineProjects button:active small { color: var(--s7-paper); }
 .canvas:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: -4px; }
 .cssAnchor { --knowledge-styles-ready: 1; }
+.intro {
+  background: #eeeee6;
+}
 @container knowledge-map (max-width: 920px) {
   .workspace { grid-template-columns: minmax(0, 1fr) 260px; }
   .inspector { padding: 15px; }

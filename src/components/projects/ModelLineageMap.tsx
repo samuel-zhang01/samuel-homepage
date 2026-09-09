@@ -69,7 +69,7 @@ const MILESTONES = ([
     family: "Vision",
     kind: "data",
     title: "Correct image orientation before training",
-    detail: "Align image orientation metadata with pose labels so that preprocessing preserves the relationship between an image and the robot’s pitch and roll.",
+    detail: "Align image orientation metadata with pose labels so that preprocessing preserves the relationship between an image and the robot’s pitch and roll. The image-level split can still place adjacent video frames in both partitions; this is not an evaluation on unseen recordings.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -99,7 +99,7 @@ const MILESTONES = ([
     family: "Vision",
     kind: "selection",
     title: "Select models and prepare a prediction workflow",
-    detail: "Use the recorded comparisons to choose models for precise estimation and compact inference, then prepare the image-loading and prediction workflow.",
+    detail: "Use the recorded comparisons to choose models for precise estimation and compact inference, then prepare the image-loading and prediction workflow. A later 100% result is excluded because the test loader also guided epoch selection.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -109,7 +109,7 @@ const MILESTONES = ([
     family: "Vision",
     kind: "release",
     title: "Explain the final experiments and architectures",
-    detail: "Bring together the ResNet analysis, roll–pitch orientation grid, architecture descriptions and instructions for using the trained models.",
+    detail: "Bring together the ResNet analysis, roll–pitch orientation grid, architecture descriptions and instructions for using the trained models. The retained final regression records disagree on RMSE, so they do not support one verified final score.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -119,7 +119,7 @@ const MILESTONES = ([
     family: "Vision",
     kind: "drift",
     title: "Refine microscopy image loading",
-    detail: "Refine the image-loading and preprocessing workflow so new microscope images follow the same path into the prediction models.",
+    detail: "Refine the image-loading and preprocessing workflow so new microscope images follow the same path into the prediction models. The available SimpleCNN state predates the later learned projection skips, so the current architecture and recorded weights remain distinct.",
     projectSlug: "microrobot-vision",
   },
   {
@@ -139,7 +139,7 @@ const MILESTONES = ([
     family: "CFD",
     kind: "drift",
     title: "Predict flow directly on the mesh",
-    detail: "Complete node and edge encoders, ten residual message-passing blocks and an autoregressive prediction loop. Neighbouring mesh points exchange information while retaining the original geometry.",
+    detail: "Complete node and edge encoders, ten residual message-passing blocks and an autoregressive prediction loop. Neighbouring mesh points exchange information while retaining the original geometry. The saved checkpoint matches the earlier ReLU implementation; a later source revision changes the activation to ELU without changing tensor shapes.",
     projectSlug: "neural-cfd-surrogates",
   },
   {
@@ -149,7 +149,7 @@ const MILESTONES = ([
     family: "CFD",
     kind: "drift",
     title: "Learn global flow patterns with Fourier modes",
-    detail: "Train a three-block Fourier model and record relative L2 0.0163. A separate four-block extension adds more input context and normalisation.",
+    detail: "Train a three-block Fourier model and record relative L2 0.0163. A separate four-block extension adds more input context and normalisation. That score belongs to the executed three-input notebook; the six-input, four-block checkpoint is a separate configuration.",
     projectSlug: "neural-cfd-surrogates",
   },
   {
@@ -159,7 +159,7 @@ const MILESTONES = ([
     family: "CFD",
     kind: "run",
     title: "Explore residual and multi-scale Fourier designs",
-    detail: "Expand the design with wider residual blocks, physics terms, lightweight variants and several Fourier resolutions. The larger recorded run uses about 33.205 million parameters.",
+    detail: "Expand the design with wider residual blocks, physics terms, lightweight variants and several Fourier resolutions. The larger recorded run uses about 33.205 million parameters. Matching weights were not retained for the largest run, so the notebook output establishes execution rather than a reproducible deployment.",
     projectSlug: "neural-cfd-surrogates",
   },
   {
@@ -271,7 +271,7 @@ const CONFIGS = ([
     role: "Five-block residual spectral surrogate",
     origin: "Custom feature, normalisation and residual experiments",
     approach: "Wider blocks and more retained Fourier modes",
-    note: "Five width-48 blocks retain 12×12×5 modes. The count shown is the recorded run configuration; the evaluation set also guided model selection.",
+    note: "Five width-48 blocks retain 12×12×5 modes. The count shown is the recorded run configuration; the evaluation set also guided model selection. It includes an unused 21-parameter skip projection. The later standalone trainer removes that layer and has 33,204,899 parameters.",
     projectSlug: "neural-cfd-surrogates",
   },
   {

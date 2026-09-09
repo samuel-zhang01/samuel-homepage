@@ -2,6 +2,13 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Scientific methods and controls; explicit Mandarin pairs with reviewed Taiwan terminology. */
 export const scientificCopy = {
+  "The classification CSV and report agree exactly for ResNet34. The other models differ by 0.25–1.25 percentage points. I show both saved evaluations below so that the difference remains visible.": ["分类 CSV 与报告中 ResNet34 的结果完全一致，其他模型则相差 0.25–1.25 个百分点。我在下表列出两次保存的评估结果，保留这些差异。", "分類 CSV 與報告中 ResNet34 的結果完全一致，其他模型則相差 0.25–1.25 個百分點。我在下表列出兩次儲存的評估結果，保留這些差異。"],
+  "The final-retraining report gives ResNet34 depth RMSE as 0.204 in the abstract, 0.0141 in the prose and 0.0204 in the final table and conclusion. I keep those conflicting figures separate from the five-model comparison: its ResNet34 depth bar uses 0.0256.": ["最终重新训练报告在摘要中给出的 ResNet34 深度 RMSE 为 0.204，正文为 0.0141，最终表格和结论则为 0.0204。我将这些相互冲突的数值与五模型比较分开呈现；比较图中 ResNet34 的深度条形使用 0.0256。", "最終重新訓練報告在摘要中給出的 ResNet34 深度 RMSE 為 0.204，正文為 0.0141，最終表格和結論則為 0.0204。我將這些互相衝突的數值與五模型比較分開呈現；比較圖中 ResNet34 的深度長條使用 0.0256。"],
+  "Recorded classification accuracy comparison": ["已记录的分类准确率比较", "已記錄的分類準確率比較"],
+  "CSV test": ["CSV 测试结果", "CSV 測試結果"],
+  "Report test": ["报告测试结果", "報告測試結果"],
+  "Difference (percentage points)": ["差值（百分点）", "差值（百分點）"],
+
   "Fourier operator": [
     "傅里叶算子",
     "傅里葉算子"
@@ -128,7 +135,7 @@ export const scientificCopy = {
   ],
   "The first downsampled feature is concatenated with the 256→128 transposed-convolution output; the following 3×3 convolution maps 256 channels to 128.": [
     "第一次下采样的特征与 256→128 转置卷积输出拼接，随后由 3×3 卷积将 256 个通道映射为 128 个。",
-    "第一次下采樣的特徵與 256→128 轉置卷積輸出拼接，隨後由 3×3 卷積將 256 個通道映射為 128 個。"
+    "第一次下採樣的特徵與 256→128 轉置卷積輸出拼接，隨後由 3×3 卷積將 256 個通道映射為 128 個。"
   ],
   "The second encoder feature crosses the U at 20 × 80; concatenation temporarily forms 512 channels before the decoder convolution restores 256.": [
     "第二个编码器特征在 20 × 80 分辨率处跨越 U 形结构；拼接暂时形成 512 个通道，再由解码器卷积恢复为 256 个。",
@@ -776,7 +783,7 @@ export const scientificCopy = {
   ],
   "4×4 ↓2 then 3×3": [
     "4×4 下采样 2 倍，再进行 3×3 卷积",
-    "4×4 下采樣 2 倍，再進行 3×3 卷積"
+    "4×4 下採樣 2 倍，再進行 3×3 卷積"
   ],
   "Highlight skip {0}: {1} to {2}": [
     "突出显示跳跃连接 {0}：{1} 至 {2}",
@@ -1674,9 +1681,9 @@ export const scientificCopy = {
     "明确从灰度图像估计微型机器人方向和深度的问题，并规划多种图像模型系列的比较。",
     "明確從灰度影像估計微型機器人方向和深度的問題，並規劃多種影像模型系列的比較。"
   ],
-  "Align image orientation metadata with pose labels so that preprocessing preserves the relationship between an image and the robot’s pitch and roll.": [
-    "将图像方向元数据与姿态标签对齐，使预处理保留图像与机器人俯仰、横滚之间的对应关系。",
-    "將影像方向元資料與姿態標籤對齊，使預處理保留影像與機器人俯仰、滾轉之間的對應關係。"
+  "Align image orientation metadata with pose labels so that preprocessing preserves the relationship between an image and the robot’s pitch and roll. The image-level split can still place adjacent video frames in both partitions; this is not an evaluation on unseen recordings.": [
+    "将图像方向元数据与姿态标签对齐，使预处理保留图像与机器人俯仰、横滚之间的对应关系。按图像划分仍可能让相邻视频帧同时进入两个分区；这并非针对未见录像的评估。",
+    "將影像方向元資料與姿態標籤對齊，使預處理保留影像與機器人俯仰、滾轉之間的對應關係。按影像劃分仍可能讓相鄰影片影格同時進入兩個分區；這並非針對未見錄影的評估。"
   ],
   "Inspect pose errors, depth errors and image attention": [
     "检查姿态误差、深度误差与图像注意力",
@@ -1694,25 +1701,25 @@ export const scientificCopy = {
     "比较自定义 CNN 与 ResNet18、ResNet34、MobileNetV3-Small 和 ViT-B/16 在方向及深度估计上的表现。",
     "比較自訂 CNN 與 ResNet18、ResNet34、MobileNetV3-Small 和 ViT-B/16 在方向及深度估計上的表現。"
   ],
-  "Use the recorded comparisons to choose models for precise estimation and compact inference, then prepare the image-loading and prediction workflow.": [
-    "依据记录比较，选择用于精确估计和紧凑推理的模型，再准备图像加载及预测流程。",
-    "依據記錄比較，選擇用於精確估計和緊湊推理的模型，再準備影像載入及預測流程。"
+  "Use the recorded comparisons to choose models for precise estimation and compact inference, then prepare the image-loading and prediction workflow. A later 100% result is excluded because the test loader also guided epoch selection.": [
+    "依据记录比较，选择用于精确估计和紧凑推理的模型，再准备图像加载及预测流程。后来的 100% 结果未被采用，因为测试加载器也用于选择训练轮次。",
+    "依據記錄比較，選擇用於精確估計和緊湊推理的模型，再準備影像載入及預測流程。後來的 100% 結果未被採用，因為測試載入器也用於選擇訓練輪次。"
   ],
   "Explain the final experiments and architectures": [
     "解释最终实验与架构",
     "解釋最終實驗與架構"
   ],
-  "Bring together the ResNet analysis, roll–pitch orientation grid, architecture descriptions and instructions for using the trained models.": [
-    "汇总 ResNet 分析、横滚—俯仰方向网格、架构描述和训练模型的使用说明。",
-    "彙總 ResNet 分析、滾轉—俯仰方向網格、架構描述和訓練模型的使用說明。"
+  "Bring together the ResNet analysis, roll–pitch orientation grid, architecture descriptions and instructions for using the trained models. The retained final regression records disagree on RMSE, so they do not support one verified final score.": [
+    "汇总 ResNet 分析、横滚—俯仰方向网格、架构描述和训练模型的使用说明。保留的最终回归记录对 RMSE 存在分歧，因此不能支持单一、已核实的最终分数。",
+    "彙總 ResNet 分析、滾轉—俯仰方向網格、架構描述和訓練模型的使用說明。保留的最終迴歸記錄對 RMSE 存在分歧，因此不能支持單一、已核實的最終分數。"
   ],
   "Refine microscopy image loading": [
     "改进显微图像加载",
     "改進顯微影像載入"
   ],
-  "Refine the image-loading and preprocessing workflow so new microscope images follow the same path into the prediction models.": [
-    "改进图像加载与预处理流程，使新的显微图像沿着相同路径进入预测模型。",
-    "改進影像載入與預處理流程，使新的顯微影像沿著相同路徑進入預測模型。"
+  "Refine the image-loading and preprocessing workflow so new microscope images follow the same path into the prediction models. The available SimpleCNN state predates the later learned projection skips, so the current architecture and recorded weights remain distinct.": [
+    "改进图像加载与预处理流程，使新的显微图像沿着相同路径进入预测模型。现有 SimpleCNN 状态早于后来加入的可学习投影跳跃连接，因此当前架构与记录的权重需要区分。",
+    "改進影像載入與預處理流程，使新的顯微影像沿著相同路徑進入預測模型。現有 SimpleCNN 狀態早於後來加入的可學習投影跳躍連接，因此目前架構與記錄的權重需要區分。"
   ],
   "Learn flow updates on a regular grid": [
     "在规则网格上学习流场更新",
@@ -1726,17 +1733,17 @@ export const scientificCopy = {
     "直接在网格上预测流动",
     "直接在網格上預測流動"
   ],
-  "Complete node and edge encoders, ten residual message-passing blocks and an autoregressive prediction loop. Neighbouring mesh points exchange information while retaining the original geometry.": [
-    "完成节点与边编码器、十个残差消息传递模块和自回归预测循环。相邻网格点交换信息，同时保留原始几何结构。",
-    "完成節點與邊編碼器、十個殘差訊息傳遞模組和自迴歸預測循環。相鄰網格點交換資訊，同時保留原始幾何結構。"
+  "Complete node and edge encoders, ten residual message-passing blocks and an autoregressive prediction loop. Neighbouring mesh points exchange information while retaining the original geometry. The saved checkpoint matches the earlier ReLU implementation; a later source revision changes the activation to ELU without changing tensor shapes.": [
+    "完成节点与边编码器、十个残差消息传递模块和自回归预测循环。相邻网格点交换信息，同时保留原始几何结构。保存的检查点对应较早的 ReLU 实现；后来的源代码修订将激活改为 ELU，但未改变张量形状。",
+    "完成節點與邊編碼器、十個殘差訊息傳遞模組和自迴歸預測循環。相鄰網格點交換資訊，同時保留原始幾何結構。儲存的檢查點對應較早的 ReLU 實作；後來的原始碼修訂將啟用函數改為 ELU，但未改變張量形狀。"
   ],
   "Learn global flow patterns with Fourier modes": [
     "通过傅里叶模式学习全局流动规律",
     "透過傅里葉模式學習全局流動規律"
   ],
-  "Train a three-block Fourier model and record relative L2 0.0163. A separate four-block extension adds more input context and normalisation.": [
-    "训练三模块傅里叶模型，记录相对 L2 误差 0.0163。另一个四模块扩展增加输入信息与归一化。",
-    "訓練三模組傅里葉模型，記錄相對 L2 誤差 0.0163。另一個四模組擴展增加輸入資訊與正規化。"
+  "Train a three-block Fourier model and record relative L2 0.0163. A separate four-block extension adds more input context and normalisation. That score belongs to the executed three-input notebook; the six-input, four-block checkpoint is a separate configuration.": [
+    "训练三模块傅里叶模型，记录相对 L2 误差 0.0163。另一个四模块扩展增加输入信息与归一化。该分数属于已执行的三输入 Notebook；六输入、四模块检查点是独立配置。",
+    "訓練三模組傅里葉模型，記錄相對 L2 誤差 0.0163。另一個四模組擴展增加輸入資訊與正規化。該分數屬於已執行的三輸入 Notebook；六輸入、四模組檢查點是獨立配置。"
   ],
   "04 — 06 MAR 2026": [
     "2026年3月4—6日",
@@ -1746,9 +1753,9 @@ export const scientificCopy = {
     "探索残差与多尺度傅里叶设计",
     "探索殘差與多尺度傅里葉設計"
   ],
-  "Expand the design with wider residual blocks, physics terms, lightweight variants and several Fourier resolutions. The larger recorded run uses about 33.205 million parameters.": [
-    "通过更宽的残差模块、物理项、轻量变体和多种傅里叶分辨率扩展设计。较大的记录实验使用约 3,320.5 万个参数。",
-    "透過更寬的殘差模組、物理項、輕量變體和多種傅里葉解析度擴展設計。較大的記錄實驗使用約 3,320.5 萬個參數。"
+  "Expand the design with wider residual blocks, physics terms, lightweight variants and several Fourier resolutions. The larger recorded run uses about 33.205 million parameters. Matching weights were not retained for the largest run, so the notebook output establishes execution rather than a reproducible deployment.": [
+    "通过更宽的残差模块、物理项、轻量变体和多种傅里叶分辨率扩展设计。较大的记录实验使用约 3,320.5 万个参数。最大规模运行未保留匹配权重，因此 Notebook 输出证明的是已执行，而非可复现的部署。",
+    "透過更寬的殘差模組、物理項、輕量變體和多種傅里葉解析度擴展設計。較大的記錄實驗使用約 3,320.5 萬個參數。最大規模執行未保留匹配權重，因此 Notebook 輸出證明的是已執行，而非可重現的部署。"
   ],
   "03 APR 2026": [
     "2026年4月3日",
@@ -1850,9 +1857,9 @@ export const scientificCopy = {
     "五模块残差频谱替代模型",
     "五模組殘差頻譜替代模型"
   ],
-  "Five width-48 blocks retain 12×12×5 modes. The count shown is the recorded run configuration; the evaluation set also guided model selection.": [
-    "五个宽度为 48 的模块保留 12×12×5 个模式。参数数量对应记录实验的配置；同一评估集也参与了模型选择。",
-    "五個寬度為 48 的模組保留 12×12×5 個模式。參數數量對應記錄實驗的配置；同一評估集也參與了模型選擇。"
+  "Five width-48 blocks retain 12×12×5 modes. The count shown is the recorded run configuration; the evaluation set also guided model selection. It includes an unused 21-parameter skip projection. The later standalone trainer removes that layer and has 33,204,899 parameters.": [
+    "五个宽度为 48 的模块保留 12×12×5 个模式。参数数量对应记录实验的配置；同一评估集也参与了模型选择。该配置包含一个未使用的 21 参数跳跃投影。后来的独立训练器移除了该层，包含 33,204,899 个参数。",
+    "五個寬度為 48 的模組保留 12×12×5 個模式。參數數量對應記錄實驗的配置；同一評估集也參與了模型選擇。該配置包含一個未使用的 21 參數跳躍投影。後來的獨立訓練器移除了該層，包含 33,204,899 個參數。"
   ],
   "Grid U-Net · four-level surrogate": [
     "网格 U-Net · 四层替代模型",
@@ -2520,7 +2527,7 @@ export const scientificCopy = {
   ],
   "Downsampling collects wider spatial context. The decoder combines it with earlier feature maps through skip connections.": [
     "下采样收集更广的空间上下文，解码器通过跳跃连接将其与早期特征图结合。",
-    "下采樣收集更廣的空間上下文，解碼器透過跳躍連接將其與早期特徵圖結合。"
+    "下採樣收集更廣的空間上下文，解碼器透過跳躍連接將其與早期特徵圖結合。"
   ],
   "Microrobot vision results": [
     "微型机器人视觉结果",

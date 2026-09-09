@@ -18,7 +18,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Brokers must match a risk to suitable markets using placement history, market appetite and policy wording that can be incomplete or out of date.",
     objective: "Bring the relevant information together so a broker can compare candidates and decide where to place the risk.",
     contribution: "I built temporal learning-to-rank models, historical lead-share analysis and wording comparison, then integrated them into a broker-controlled prototype. The three signals remain separate because a combined recommendation has not been validated.",
-    pipeline: "risk and candidate markets → ranking, history and wording analysis → confidence and missing information → broker review",
+    pipeline: "risk and candidate markets → ranking, history and wording analysis → provenance, confidence and abstention → broker review",
     walkthrough: "Select a fictional market, compare its three signals, then raise the minimum-information requirement to see when the system asks for more review.",
   },
   "cv-keywords": {
@@ -34,7 +34,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Different bank formats, overlapping exports and transfers between accounts make it difficult to see what was actually earned or spent.",
     objective: "Build a reliable transaction history that supports useful views of spending, recurring payments and investments.",
     contribution: "I built provider parsers, transaction deduplication, balance checks and analytical views using FastAPI, SQLite and React. The demo uses a fictional ledger and lets visitors examine how repeated imports and changed transaction details are handled.",
-    pipeline: "statements → normalised transactions → duplicate and balance checks → categories, transfers and recurring patterns → financial overview",
+    pipeline: "statements → normalisation, duplicate and balance checks → recurring, transfer and anomaly analysis → spending and investment views",
     walkthrough: "Import an example statement twice to check that repeated rows are recognised, then explore recurring payments, transfers and the investment view.",
   },
   "scheduling": {
@@ -42,7 +42,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "A valid meeting time must work across time zones, busy calendars and allocation rules, even when two visitors try to book it together.",
     objective: "Offer usable meeting slots and carry each selected time safely through to a confirmed booking.",
     contribution: "I implemented individual, weighted round-robin, collective and first-available scheduling, with local working hours, buffers, UTC reservations and final conflict checks. The product also connects calendar events, email and booking-management links.",
-    pipeline: "working hours and busy calendars → candidate slots → host allocation → reservation and conflict check → confirmed booking",
+    pipeline: "working hours and busy calendars → host allocation → UTC reservation with ten-minute expiry → database conflict check → calendar, email and ICS",
     walkthrough: "Change the allocation mode, inspect why a slot is unavailable, then reserve an available time and try a competing booking.",
   },
   "italian-learning": {
@@ -50,7 +50,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Daily lessons, vocabulary review and writing practice become hard to sustain when they are scattered across separate materials.",
     objective: "Bring the course into a daily learning routine that records progress and works through interrupted connectivity.",
     contribution: "I organised 56 daily agendas and 28 lesson hubs, built adaptive practice and spaced repetition, and added progress tracking across five language-skill areas. Local caching and revision checks preserve learner work when synchronisation conflicts occur.",
-    pipeline: "daily plan → lesson and practice → spaced recall → progress and writing feedback → saved learning record",
+    pipeline: "daily plan → adaptive practice and four-way recall → mastery and five language-skill evidence lanes → revision-safe synchronisation",
     walkthrough: "Answer a practice question, inspect the progress update, grade a vocabulary card and explore how the app recovers a conflicting saved revision.",
   },
   "course-recommender": {
@@ -58,7 +58,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "A course catalogue can offer many options without making it clear which ones suit a learner’s interests and constraints.",
     objective: "Collect preferences, filter unsuitable courses and make the remaining ordering understandable.",
     contribution: "I built a four-step course-discovery prototype with a React interface and supporting API services. Its initial ranking was random; the browser companion adds an illustrative weighted comparison so visitors can examine how preference choices affect the order.",
-    pipeline: "learner preferences → course filters → candidate courses → random or weighted ordering → comparison",
+    pipeline: "learner preferences → browser filters and random ordering → separate API contract check → illustrative weighted comparison",
     walkthrough: "Choose preferences, compare two random orderings, then change one weight in the illustrative ranking and inspect which courses move.",
   },
   "rl-atlas": {
@@ -82,7 +82,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Guiding a microrobot requires knowing where it is and how it is tilted. A grayscale image must provide useful orientation and depth information.",
     objective: "Estimate one of 40 pitch–roll orientations and a continuous depth value from a 224×224 microscope image.",
     contribution: "I built a custom CNN, adapted ResNet18, ResNet34, MobileNetV3 and ViT to grayscale images, and trained separate pose and depth predictors. Error plots and Grad-CAM comparisons helped inspect the models; the image-level split still needs a stronger check on unseen recordings.",
-    pipeline: "orientation-corrected microscope image → image-model features → pose class or depth estimate → error and image-attention analysis",
+    pipeline: "orientation-corrected image → grayscale backbone → pose or depth head → checkpoint, error and split checks",
     walkthrough: "Switch between pose and depth, select a model and click a stage in its architecture. Compare both Grad-CAM views on the same microscope image, then try holding out complete recordings.",
   },
   "mri-trust": {
@@ -90,7 +90,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Collecting fewer MRI measurements can shorten acquisition, but reconstruction may lose anatomical detail or express confidence in an incorrect image.",
     objective: "Reconstruct useful cardiac images while checking measurement agreement, uncertainty and downstream segmentation.",
     contribution: "I designed a residual U-Net with three learnable data-consistency steps and studied MC-dropout, ensembles, adversarial perturbations and distribution shift. The reported R=4× result reaches 31.90 dB PSNR and 0.889 SSIM; the browser uses synthetic illustrations to explain the method.",
-    pipeline: "incomplete k-space measurements → initial image → residual reconstruction → data-consistency steps → uncertainty and segmentation checks",
+    pipeline: "undersampled k-space → zero-filled image → residual U-Net → three soft data-consistency steps → uncertainty and segmentation checks",
     walkthrough: "Change the acquisition budget, follow a U-Net skip into the consistency steps, then change uncertainty scale and ranking to see how calibration and retained error respond.",
   },
   "cfd-surrogates": {
@@ -146,7 +146,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Observed outcomes mix the effects of decisions with the circumstances that caused those decisions to be made.",
     objective: "Distinguish estimating an intervention’s effect from evaluating a new policy using previously logged decisions.",
     contribution: "I built a synthetic causal example and adapted the STUDY-RL off-policy estimators into an interactive lab. It compares IPS, SNIPS, Direct, doubly robust and SWITCH-DR estimates while making overlap and sample-weight concentration visible.",
-    pipeline: "observations or logged actions → adjustment or policy probabilities → effect and value estimates → overlap and effective sample size",
+    pipeline: "observations or logged context, action, reward and propensity → adjustment or ridge reward model → effect and value estimates → overlap and effective sample size",
     walkthrough: "Explore a confounder and a collider in the causal graph, then switch to policy evaluation and reduce overlap to see the estimates become less stable.",
   },
   "innovation-models": {
@@ -154,7 +154,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "New ventures need resources and freedom to explore, but they also need a workable relationship with the existing organisation.",
     objective: "Compare four organisational structures and examine how authority, ownership and resource allocation shape innovation.",
     contribution: "My innovation-management reflection connects disruption and organisational ambidexterity with the Opportunist, Enabler, Advocate and Producer models. The browser extends the comparison with fictional portfolio and transition scenarios; these are discussion tools rather than validated strategy recommendations.",
-    pipeline: "ownership and resource authority → organisational model → portfolio allocation → transition questions",
+    pipeline: "ownership and resource authority → organisational model → portfolio allocation, concentration and effective model count → transition questions",
     walkthrough: "Choose ownership and authority, rebalance a 100-token innovation portfolio, then change the evidence, integration and runway assumptions in the transition exercise.",
   },
   "venture-reasoning": {
@@ -170,7 +170,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Predicting pressure and phase behaviour requires a model that connects temperature, density and composition with molecular size and attraction.",
     objective: "Explore the contributions of chain packing and dispersion to a PC-SAFT fluid calculation.",
     contribution: "I developed Julia and Clapeyron workflows for bulk properties, phase equilibrium and critical behaviour. The browser isolates the non-associating PC-SAFT equations with invented fluids so their sensitivities can be explored without implying validated compound predictions.",
-    pipeline: "molecular parameters, temperature, density and composition → mixing and effective size → hard-chain and dispersion energy → compressibility and pressure",
+    pipeline: "molecular parameters and state → effective diameters and Lorentz–Berthelot mixing → hard-chain and dispersion Helmholtz terms → compressibility and pressure",
     walkthrough: "Change density and mixture interaction strength, inspect the pressure curve, then follow the equations to see which energy contribution changes.",
   },
   "solubility-workflow": {
@@ -202,7 +202,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Operating systems, processor architectures and accelerator drivers require different installation routes, and a completed install may still lack usable GPU support.",
     objective: "Automate environment setup and make platform-specific fallbacks and verification steps understandable.",
     contribution: "I built a Bash installer for a Python 3.13 Conda environment, scientific packages, PyTorch, TensorFlow and the Hugging Face CLI. The browser planner explains those branches and lets visitors simulate failures without installing anything.",
-    pipeline: "host and accelerator information → environment and framework choices → installation fallbacks → import and device checks",
+    pipeline: "host and accelerator → platform and CUDA/MPS route → 19 core, four framework and one CLI target → fallbacks → import and device checks",
     walkthrough: "Choose an Apple Silicon or CUDA example, simulate a framework failure and compare the resulting package and verification route.",
   },
   "home-lab-topology": {
@@ -210,7 +210,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Applications depend on networks, databases and scheduled jobs; a failure can affect several services and make recovery difficult.",
     objective: "Understand service dependencies and plan the storage and recovery work needed to maintain a self-hosted system.",
     contribution: "I built and maintained a containerised home lab with database services, scheduling and backup/restore tooling. The browser models a six-service portion using fictional identifiers; restore time and successful recovery have not been demonstrated by a retained drill.",
-    pipeline: "container services and shared storage → dependency paths → simulated failure → backup capacity and recovery planning",
+    pipeline: "Compose services, networks and mounts → declared dependency paths → simulated failure → backup capacity → recovery and health-check gaps",
     walkthrough: "Trace the scheduler-to-database connection, fail the database and inspect the affected paths, then change backup size and retention to estimate storage.",
   },
   "stock-market-engine": {
@@ -218,7 +218,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "Buy/sell direction, trade size and random impact can combine to produce price paths that are difficult to understand from a formula alone.",
     objective: "Show how a small set of event rules produces price movement and accumulated trading volume.",
     contribution: "I wrote a Julia single-stock simulation with sentiment-biased events and random, quantity-scaled price impact. The browser adds seeded replay and compares the original partial-day statistics with a corrected full-day window; it is a toy model rather than a market forecast.",
-    pipeline: "sentiment and five simulated traders → buy/sell event → random price impact → price and volume history → daily statistics",
+    pipeline: "sentiment and five traders × ten loops → quantity-scaled random price impact → 50-event ledger → original and full-day statistics",
     walkthrough: "Run a seeded day, change sentiment or the price-floor scenario, then compare the event trace and the two daily-statistic windows.",
   },
   "chemistry-coding": {

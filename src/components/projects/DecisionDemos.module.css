@@ -37,19 +37,19 @@
   gap: 10px;
   margin-bottom: 14px;
   padding: 10px 12px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #5c6098;
+  background: var(--decision-blue-soft);
+  box-shadow: inset 1px 1px 0 rgb(255 255 255 / 75%);
 }
 
 .sourceNote.amber {
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border-color: #8b671f;
+  background: var(--decision-amber-soft);
 }
 
 .sourceNote.green {
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border-color: #41745c;
+  background: var(--decision-green-soft);
 }
 
 .sourceIcon {
@@ -81,34 +81,34 @@
 }
 
 .sourceNote p {
-  color: var(--s7-ink);
+  color: #3f426b;
   font-size: var(--s7-text);
   line-height: 1.4;
 }
 
 .sourceNote.amber p {
-  color: var(--s7-ink);
+  color: #5c451a;
 }
 
 .sourceNote.green p {
-  color: var(--s7-ink);
+  color: #315342;
 }
 
 .surfaceTabs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   margin: 0 0 12px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 1px solid #242424;
+  background: #bcbcb6;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
 }
 
 .surfaceTabs button {
   min-height: var(--s7-control-height);
-  border: 1px solid var(--s7-ink);
-  border-right: 1px solid var(--s7-ink);
-  background: var(--s7-paper);
-  color: var(--s7-ink);
+  border: 0;
+  border-right: 1px solid #777;
+  background: #efefe9;
+  color: #222;
   cursor: pointer;
   font: 700 var(--s7-ui)/1.4 var(--s7-font-ui);
   border-radius: var(--s7-control-radius);
@@ -145,8 +145,8 @@
 }
 
 .surfaceTabs button:last-child { border-right: 0; }
-.surfaceTabs button:hover { background: var(--s7-paper); }
-.surfaceTabs button[aria-pressed="true"] { background: var(--s7-chrome); color: var(--s7-ink); }
+.surfaceTabs button:hover { background: #fff; }
+.surfaceTabs button[aria-pressed="true"] { background: var(--decision-blue); color: #fff; }
 .surfaceTabs button:focus-visible { position: relative; z-index: 1; outline: 2px dotted var(--s7-ink); outline-offset: -4px; }
 .surfaceTabs button[aria-pressed="true"]:focus-visible { outline-color: #fff; }
 
@@ -195,11 +195,11 @@
 .airDataFacts > div {
   min-width: 0;
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #777;
+  background: #f8f8f3;
 }
 
-.airDataFacts dt { color: var(--s7-ink); font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
+.airDataFacts dt { color: #5c5c58; font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
 .airDataFacts dd { margin-top: 3px !important; font-size: var(--s7-small); font-weight: 700; line-height: 1.4; }
 
 .missingBars {
@@ -228,39 +228,39 @@
 .modelWinner {
   margin-top: 10px;
   padding: 10px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid var(--decision-blue);
+  background: var(--decision-blue-soft);
 }
 
 .modelWinner span,
 .modelWinner strong { display: block; }
-.modelWinner span { color: var(--s7-ink); font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
-.modelWinner strong { margin-top: 4px; color: var(--s7-ink); font-size: var(--s7-heading); }
-.modelWinner p { margin-top: 5px !important; color: var(--s7-ink); font-size: var(--s7-text); line-height: 1.55; }
+.modelWinner span { color: #4f5277; font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
+.modelWinner strong { margin-top: 4px; color: var(--decision-blue); font-size: var(--s7-heading); }
+.modelWinner p { margin-top: 5px !important; color: #44455d; font-size: var(--s7-text); line-height: 1.55; }
 
 .modelTableWrap {
   margin-top: 10px;
   overflow-x: auto;
-  border: 1px solid var(--s7-shadow);
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 2px solid #202020;
+  border-color: #595955 #fff #fff #595955;
+  background: #fff;
 }
 
 .modelTableWrap:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
 .modelTable { width: 100%; min-width: 430px; border-collapse: collapse; font-size: var(--s7-small); font-variant-numeric: tabular-nums; }
 .modelTable th,
-.modelTable td { padding: 6px; border: 1px solid var(--s7-shadow); text-align: right; }
+.modelTable td { padding: 6px; border: 1px solid #ccc; text-align: right; }
 .modelTable th:first-child { text-align: left; }
-.modelTable thead th { background: var(--s7-chrome); }
-.modelTable tr[data-best="true"] { background: var(--s7-paper); }
+.modelTable thead th { background: #d8d8d2; }
+.modelTable tr[data-best="true"] { background: var(--decision-blue-soft); }
 
 .opeControls,
 .opeResults {
   min-width: 0;
   padding: 11px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 1px solid #242424;
+  background: #e5e5df;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #8e8e88;
 }
 
 .policyChoices {
@@ -285,17 +285,17 @@
   align-items: center;
   gap: 7px;
   padding: 5px 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #888;
+  background: #f7f7f3;
   cursor: pointer;
   font-size: var(--s7-small);
   font-weight: 700;
 }
 
-.policyChoices label.policyActive { border-color: var(--s7-shadow); color: var(--s7-selection-text); background: var(--s7-selection); }
+.policyChoices label.policyActive { border-color: var(--decision-blue); color: var(--s7-selection-text); background: var(--decision-blue-soft); }
 .policyChoices label.policyActive > span { color: inherit; }
 .policyChoices input { margin: 0; accent-color: var(--decision-blue); }
-.policyDescription { margin-top: 6px !important; color: var(--s7-ink); font-size: var(--s7-text); line-height: 1.55; }
+.policyDescription { margin-top: 6px !important; color: #555550; font-size: var(--s7-text); line-height: 1.55; }
 
 .essGood,
 .essDanger {
@@ -303,14 +303,14 @@
   min-height: 22px;
   align-items: center;
   padding: 4px 6px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  color: var(--s7-ink) !important;
+  border: 1px solid #3e684f;
+  background: var(--decision-green-soft);
+  color: var(--decision-green) !important;
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   letter-spacing: normal;
 }
 
-.essDanger { border-color: var(--s7-shadow); background: var(--s7-paper); color: var(--s7-ink) !important; }
+.essDanger { border-color: #8a4a2b; background: var(--decision-red-soft); color: var(--decision-red) !important; }
 
 .estimatorGrid {
   display: grid;
@@ -323,9 +323,9 @@
 .opeDiagnostics > div {
   min-width: 0;
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #555;
+  background: #fff;
+  box-shadow: inset -1px -1px #bbb;
 }
 
 .estimatorGrid span,
@@ -334,9 +334,9 @@
 .opeDiagnostics span,
 .opeDiagnostics strong { display: block; }
 .estimatorGrid span,
-.opeDiagnostics span { color: var(--s7-ink); font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
-.estimatorGrid strong { margin: 4px 0; color: var(--s7-ink); font: 700 var(--s7-text)/1.4 var(--s7-font-text); }
-.estimatorGrid small { color: var(--s7-ink); font-size: var(--s7-small); line-height: 1.4; }
+.opeDiagnostics span { color: #5c5c58; font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
+.estimatorGrid strong { margin: 4px 0; color: var(--decision-blue); font: 700 var(--s7-text)/1.4 var(--s7-font-text); }
+.estimatorGrid small { color: #666; font-size: var(--s7-small); line-height: 1.4; }
 
 .opeDiagnostics {
   display: grid;
@@ -351,9 +351,9 @@
   max-height: 247px;
   margin-top: 9px;
   overflow: auto;
-  border: 1px solid var(--s7-shadow);
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 2px solid #202020;
+  border-color: #595955 #fff #fff #595955;
+  background: #fff;
 }
 
 .logTableWrap:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
@@ -367,10 +367,10 @@
 }
 
 .logTable th,
-.logTable td { padding: 4px 5px; border: 1px solid var(--s7-shadow); text-align: right; }
+.logTable td { padding: 4px 5px; border: 1px solid #ccc; text-align: right; }
 .logTable th:first-child { text-align: left; }
-.logTable thead th { position: sticky; top: 0; z-index: 1; background: var(--s7-chrome); color: var(--s7-ink); }
-.logTable tr[data-risk="high"] { background: var(--s7-paper); }
+.logTable thead th { position: sticky; top: 0; z-index: 1; background: #d8d8d2; color: #222; }
+.logTable tr[data-risk="high"] { background: var(--decision-red-soft); }
 
 .controlPanel,
 .chartPanel,
@@ -381,7 +381,7 @@
 .costPanel {
   min-width: 0;
   border: 1px solid #242424;
-  background: var(--s7-raised);
+  background: #e5e5df;
   box-shadow:
     inset 1px 1px 0 #fff,
     inset -1px -1px 0 #8e8e88;
@@ -416,10 +416,10 @@
   height: 29px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
-  color: var(--s7-ink);
+  border: 1px solid #202020;
+  background: #fff;
+  box-shadow: inset -1px -1px 0 #aaa;
+  color: var(--decision-blue);
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -453,7 +453,7 @@
 }
 
 .rangeHeading output {
-  color: var(--s7-ink);
+  color: var(--decision-blue);
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -471,7 +471,7 @@
 .rangeField small {
   display: block;
   margin-top: 3px;
-  color: var(--s7-ink);
+  color: #5b5b57;
   font-size: var(--s7-small);
   line-height: 1.4;
 }
@@ -479,7 +479,7 @@
 .rangeTicks {
   display: flex;
   justify-content: space-between;
-  color: var(--s7-ink);
+  color: #70706b;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
@@ -490,17 +490,17 @@
 .identificationNote {
   margin-top: 12px;
   padding: 10px;
-  border: 1px solid var(--s7-shadow);
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 2px solid #202020;
+  border-color: #595955 #fff #fff #595955;
+  background: #fff;
 }
 
 .selectionFlag {
   display: inline-block;
   margin-bottom: 3px;
   padding: 2px 4px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #fff;
+  background: var(--decision-blue);
 }
 
 .bigMetric {
@@ -513,7 +513,7 @@
 }
 
 .bigMetric strong {
-  color: var(--s7-ink);
+  color: var(--decision-blue);
   font-family: var(--s7-font-mono);
   font-size: var(--s7-title);
   line-height: 1.4;
@@ -521,7 +521,7 @@
 }
 
 .bigMetric span {
-  color: var(--s7-ink);
+  color: #60605c;
   font-size: var(--s7-small);
   font-weight: 700;
   text-transform: none;
@@ -535,12 +535,12 @@
 
 .compactFacts > div {
   padding: 6px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #aaa;
+  background: #f0f0eb;
 }
 
 .compactFacts dt {
-  color: var(--s7-ink);
+  color: #666;
   font-size: var(--s7-small);
   font-weight: 700;
   text-transform: none;
@@ -562,16 +562,16 @@
 
 .sensorList span {
   padding: 3px 5px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #3d6d57;
+  color: #214f3b;
+  background: var(--decision-green-soft);
   font-size: var(--s7-small);
   font-weight: 700;
 }
 
 .nextStep {
   margin-top: 8px !important;
-  color: var(--s7-ink);
+  color: #565652;
   font-size: var(--s7-small);
 }
 
@@ -588,15 +588,15 @@
 }
 
 .hypothesisBadge {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink) !important;
-  background: var(--s7-paper);
+  border-color: #896b26;
+  color: #64420c !important;
+  background: var(--decision-amber-soft);
 }
 
 .lambdaBadge {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink) !important;
-  background: var(--s7-paper);
+  border-color: #555a92;
+  color: var(--decision-blue) !important;
+  background: var(--decision-blue-soft);
   font-family: var(--s7-font-text);
   font-size: var(--s7-small) !important;
 }
@@ -698,12 +698,12 @@
 }
 
 .solidKey {
-  border-top: 1px solid var(--s7-shadow);
+  border-top: 2px solid var(--decision-blue);
 }
 
 .dashedKey,
 .referenceKey {
-  border-top: 1px dashed var(--s7-shadow);
+  border-top: 2px dashed #88631c;
 }
 
 .chartPanel > .sourceNote {
@@ -716,7 +716,7 @@
   gap: 7px;
   margin: 10px 0 4px;
   padding-left: 45px;
-  color: var(--s7-ink);
+  color: #5e5e59;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -733,7 +733,7 @@
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   gap: 7px;
-  color: var(--s7-ink);
+  color: #5e5e59;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -808,7 +808,7 @@
 }
 
 .actionStrip > span {
-  color: var(--s7-ink);
+  color: #5b5b57;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
@@ -827,22 +827,22 @@
   flex-direction: column;
   justify-content: center;
   padding: 12px;
-  border: 1px solid var(--s7-shadow);
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 2px solid #202020;
+  border-color: #595955 #fff #fff #595955;
+  background: #fff;
 }
 
 .costSummary strong {
   margin: 4px 0;
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
+  color: var(--decision-blue);
   font-family: var(--s7-font-text);
   font-size: var(--s7-title);
   line-height: 1.4;
 }
 
 .costSummary small {
-  color: var(--s7-ink);
+  color: #5e5e59;
   font-size: var(--s7-small);
   line-height: 1.4;
 }
@@ -883,7 +883,7 @@
 }
 
 .currentKey {
-  border-top: 1px solid var(--s7-shadow);
+  border-top: 2px solid #d09b25;
 }
 
 .segmentedFieldset {
@@ -892,7 +892,7 @@
   gap: 0;
   margin-top: 12px !important;
   padding: 0;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #222;
 }
 
 .segmentedFieldset legend {
@@ -910,19 +910,19 @@
   display: grid;
   min-height: 31px;
   place-items: center;
-  background: var(--s7-paper);
-  box-shadow: none;
+  background: #f3f3ee;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999;
   cursor: pointer;
 }
 
 .segmentedFieldset label + label {
-  border-left: 1px solid var(--s7-shadow);
+  border-left: 1px solid #222;
 }
 
 .segmentedFieldset label.segmentActive {
-  color: var(--s7-selection-text);
-  background: var(--s7-selection);
-  box-shadow: none;
+  color: #fff;
+  background: var(--decision-blue);
+  box-shadow: inset 1px 1px 0 #080d4e;
 }
 
 .segmentedFieldset input {
@@ -948,7 +948,7 @@
   display: block;
   margin: 7px 0;
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
+  color: var(--decision-blue);
   font-family: var(--s7-font-mono);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -957,7 +957,7 @@
 .formulaCard p,
 .pathReadout,
 .identificationNote {
-  color: var(--s7-ink);
+  color: #555550;
   font-size: var(--s7-text);
   line-height: 1.4;
 }
@@ -982,19 +982,19 @@
 }
 
 .seriesA {
-  color: var(--s7-ink);
+  color: #101875;
 }
 
 .seriesB {
-  color: var(--s7-ink);
+  color: #a2342e;
 }
 
 .seriesC {
-  color: var(--s7-ink);
+  color: #1c704d;
 }
 
 .seriesD {
-  color: var(--s7-ink);
+  color: #9a650c;
 }
 
 .coefficientList {
@@ -1022,7 +1022,7 @@
   position: relative;
   height: 9px;
   border: 1px solid #aaa;
-  background: var(--s7-surface);
+  background: #f5f5f1;
 }
 
 .zeroLine {
@@ -1031,7 +1031,7 @@
   top: -2px;
   bottom: -2px;
   left: 50%;
-  border-left: 1px solid var(--s7-shadow);
+  border-left: 1px solid #333;
 }
 
 .positiveBar,
@@ -1060,7 +1060,7 @@
 .pathReadout {
   margin-top: 9px !important;
   padding-top: 7px;
-  border-top: 1px dotted var(--s7-shadow);
+  border-top: 1px dotted #888;
 }
 
 .dagCanvas {
@@ -1110,10 +1110,10 @@
   grid-template-rows: 1fr 1fr;
   align-items: center;
   padding: 5px;
-  border: 1px solid var(--s7-ink);
+  border: 2px solid #202020;
   border-radius: var(--s7-control-radius);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  background: #efefe9;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888, 2px 2px 0 rgb(0 0 0 / 18%);
   cursor: pointer;
   color: var(--s7-ink);
   font-family: var(--s7-font-ui);
@@ -1148,7 +1148,7 @@
 }
 
 .dagNode:hover {
-  background: var(--s7-paper);
+  background: #fff;
 }
 
 .dagNode > span {
@@ -1157,10 +1157,10 @@
   height: 27px;
   grid-row: 1 / 3;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #222;
   border-radius: 50%;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #fff;
+  background: var(--decision-blue);
   font-family: var(--s7-font-text);
   font-weight: 700;
 }
@@ -1173,7 +1173,7 @@
 
 .dagNode small {
   align-self: start;
-  color: var(--s7-ink);
+  color: #666;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1203,8 +1203,8 @@
 }
 
 .nodeSelected {
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  background: var(--decision-green-soft);
+  box-shadow: inset 0 0 0 2px #58a177, 2px 2px 0 rgb(0 0 0 / 18%);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   color: var(--s7-ink);
@@ -1241,12 +1241,12 @@
 }
 
 .nodeSelected > span {
-  background: var(--s7-paper);
+  background: var(--decision-green);
 }
 
 .nodeDanger {
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  background: var(--decision-red-soft);
+  box-shadow: inset 0 0 0 2px #be655f, 2px 2px 0 rgb(0 0 0 / 18%);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   color: var(--s7-ink);
@@ -1283,7 +1283,7 @@
 }
 
 .nodeDanger > span {
-  background: var(--s7-paper);
+  background: var(--decision-red);
 }
 
 .dagStatus {
@@ -1291,8 +1291,8 @@
   gap: 8px;
   margin-top: 8px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #8c6c2a;
+  background: var(--decision-amber-soft);
 }
 
 .dagStatus > span {
@@ -1301,7 +1301,7 @@
   height: 20px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid currentColor;
   border-radius: 50%;
   font-weight: 700;
 }
@@ -1312,28 +1312,28 @@
 }
 
 .dagStatus p {
-  color: var(--s7-ink);
+  color: #604918;
   font-size: var(--s7-text);
 }
 
 .dagStatus.success {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #47765f;
+  color: var(--decision-green);
+  background: var(--decision-green-soft);
 }
 
 .dagStatus.success p {
-  color: var(--s7-ink);
+  color: #315442;
 }
 
 .dagStatus.danger {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #9b4d48;
+  color: var(--decision-red);
+  background: var(--decision-red-soft);
 }
 
 .dagStatus.danger p {
-  color: var(--s7-ink);
+  color: #71322f;
 }
 
 .nodeInspector > span,
@@ -1347,7 +1347,7 @@
 }
 
 .nodeInspector p {
-  color: var(--s7-ink);
+  color: #585854;
   font-size: var(--s7-text);
   line-height: 1.4;
 }
@@ -1358,8 +1358,8 @@
   gap: 8px;
   margin-top: 10px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #888;
+  background: #f4f4ef;
   cursor: pointer;
 }
 
@@ -1381,7 +1381,7 @@
 
 .checkboxRow small {
   margin-top: 2px;
-  color: var(--s7-ink);
+  color: #5b5b57;
   font-size: var(--s7-small);
 }
 
@@ -1395,9 +1395,9 @@
 .opeMetrics > div {
   min-width: 0;
   padding: 8px 6px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #292929;
+  background: #fff;
+  box-shadow: inset -1px -1px 0 #aaa;
 }
 
 .opeMetrics span,
@@ -1408,13 +1408,13 @@
 
 .opeMetrics strong {
   margin: 3px 0;
-  color: var(--s7-ink);
+  color: var(--decision-blue);
   font-family: var(--s7-font-mono);
   font-size: var(--s7-heading);
 }
 
 .opeMetrics small {
-  color: var(--s7-ink);
+  color: #646460;
   font-size: var(--s7-small);
 }
 
@@ -1432,11 +1432,11 @@
 }
 
 .treatedKey {
-  background: var(--s7-paper);
+  background: var(--decision-blue);
 }
 
 .controlKey {
-  background: var(--s7-paper);
+  background: #bd6b1b;
 }
 
 .weightBars {
@@ -1463,9 +1463,9 @@
   display: block;
   width: 100%;
   min-height: 3px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #222;
   border-bottom: 0;
-  background: var(--s7-paper);
+  background: var(--decision-blue);
 }
 
 .weightColumn > span.controlBar {
@@ -1480,13 +1480,13 @@
   display: block;
   height: 15px;
   padding-top: 2px;
-  color: var(--s7-ink);
+  color: #555;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
 
 .identificationNote {
-  background: var(--s7-paper);
+  background: #f6f6f2;
 }
 
 @container (max-width: 820px) {

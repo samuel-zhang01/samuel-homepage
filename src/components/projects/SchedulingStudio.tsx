@@ -517,7 +517,7 @@ export function SchedulingStudio() {
   return (
     <ProjectCopy copy={schedulingCopy}><DemoWindow
       appName="YASA scheduling"
-      title="Explore shared availability"
+      title="Multi-host Scheduling Lab"
       status="Booking simulation"
       purpose="Explain how multi-host availability, time zones, buffers and collision protection become bookable slots."
       tryThis="Switch allocation policy, inspect a blocked slot, then reserve a free time and replay a collision."
@@ -587,8 +587,10 @@ export function SchedulingStudio() {
                 >
                   <span className={styles.avatar} aria-hidden="true">{host.name[0]}</span>
                   <span><strong>{host.name}</strong><small>{host.role}</small></span>
-                  <span className={styles.load}><b>{host.assigned}</b><small>load</small></span>
-                  <span className={styles.weight}><b>{mode === "first-available" ? `P${host.priority}` : `${host.weight}×`}</b><small>{mode === "first-available" ? "priority" : "weight"}</small></span>
+                  <span className={styles.hostStats}>
+                    <span className={styles.load}><b>{host.assigned}</b><small>load</small></span>
+                    <span className={styles.weight}><b>{mode === "first-available" ? `P${host.priority}` : `${host.weight}×`}</b><small>{mode === "first-available" ? "priority" : "weight"}</small></span>
+                  </span>
                 </button>
               );
             })}
@@ -606,10 +608,10 @@ export function SchedulingStudio() {
       </div>
 
       <div className={styles.metrics} aria-label="Availability calculation summary">
-        <div><strong>{candidateSlots}</strong><span>candidate slots</span></div>
-        <div><strong>{constraintsRemoved}</strong><span>constraints removed</span></div>
-        <div><strong>{availabilityCount}</strong><span>published slots</span></div>
-        <div><strong>{buffer * 2 + duration}m</strong><span>reserved interval</span></div>
+        <div data-tone="info"><strong>{candidateSlots}</strong><span>candidate slots</span></div>
+        <div data-tone="warning"><strong>{constraintsRemoved}</strong><span>constraints removed</span></div>
+        <div data-tone="success"><strong>{availabilityCount}</strong><span>published slots</span></div>
+        <div data-tone="accent"><strong>{buffer * 2 + duration}m</strong><span>reserved interval</span></div>
       </div>
 
       <div className={styles.workspace}>

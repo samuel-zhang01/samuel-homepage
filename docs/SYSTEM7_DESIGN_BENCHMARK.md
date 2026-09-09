@@ -4,7 +4,9 @@ The project interface should read as one Macintosh application: white documents,
 
 The 9 September 2026 refinement keeps the smoother typography and accessible navigation while restoring more of the original desktop's depth. Named gray surfaces, crisp bevels, recessed lists and small hard shadows distinguish the layers. This direction follows the user's current preference and supersedes the earlier restriction to a flatter paper/chrome palette.
 
-The subsequent usability polish adds a blue primary-action tier for opening live demos and documents, a pale-blue sharing tier, and quiet blue and warm-paper content surfaces. These are deliberate modern cues requested by the user; they retain the desktop's existing bevels, typography and neutral window frames.
+The subsequent usability polish adds a blue primary-action tier for opening live demos and documents, an indigo sharing tier, and quiet blue and warm-paper content surfaces. These are deliberate modern cues requested by the user; they retain the desktop's existing bevels, typography and neutral window frames.
+
+The latest site-wide review restores a middle ground between period chrome and modern content hierarchy. September 5 (`e7fdb43`) and the deployed `me.samuelzhang.co.uk` show that purposeful colour and detailed explanations are part of the portfolio, not decoration to remove. Warm paper, blue information, lavender context, teal outcomes and amber reservations/cautions belong throughout content. Preserve complete problem statements, workflows, technical specifics and results; instructions and contribution sections stay visible.
 
 ## Historical reference and visual evidence
 
@@ -34,9 +36,9 @@ Use one named vocabulary. Existing component classes may control placement and s
 | Share action | `.s7-button.is-share`: white label on indigo with a matching bevel. Project toolbar actions share a 44px minimum height. | Colour does not change the button's dimensions. Label sharing explicitly. Announce copy success and present a selectable address when clipboard access is unavailable. |
 | Pressed action | Native `:active`: black face and white lettering; relief disappears. | Momentary feedback while activating; distinct from persistent selection. |
 | Disabled action | Native `disabled`: muted gray text/edge, neutral face, no hover/press treatment. | Preserve readable label and disabled semantics. Do not use opacity on the entire control subtree. |
-| Toggle | `.s7-button[aria-pressed]`: consistent dimensions; checked marker and darker, recessed face when selected. | Selection retains its inset treatment on hover; pressing still inverts. Native button toggles one setting. Mutually exclusive form values should retain radio semantics. |
+| Toggle | `.s7-button[aria-pressed]`: label-sized content; recessed face when selected, with no generated checkmark or reserved marker slot. | Selection retains its inset treatment on hover; pressing still inverts. Native button toggles one setting. Mutually exclusive form values should retain radio semantics. |
 | Icon action | `.s7-button--icon`: compact square shape; restrained 16–20px artwork. | Accessible name is mandatory; tooltip is supplementary. Minimum 44px target on coarse pointers. |
-| View tabs | `.s7-tabs` with `.s7-tab`: recessed gray strip, beveled inactive tabs, white selected tab with a dark top rule, clear border and normal-case label. | ARIA tab pattern only when content is an actual tab panel; use links for navigation. Keyboard arrows, Home/End and focus behavior belong to the component. Tabs are a website adaptation, not a claimed stock 1992 Toolbox control. |
+| View tabs | `.s7-tabs` with `.s7-tab`: recessed gray strip, beveled inactive tabs, selected tab with inset relief, clear border and normal-case label. | ARIA tab pattern only when content is an actual tab panel; use links for navigation. Keyboard arrows, Home/End and focus behavior belong to the component. Tabs are a website adaptation, not a claimed stock 1992 Toolbox control. |
 | Select | `ClassicSelect`: square raised light-gray trigger, current value, downward triangle and 1px hard shadow; same UI font in trigger and list. The white option list sits inside a beveled gray frame with a small hard shadow. | Keep existing combobox/listbox, typeahead, disabled options, native form value, viewport placement and focus restoration. The expanded trigger inverts; selection uses blue plus a checkmark. |
 
 Use the shared gray relief for ordinary controls, the outlined ring for form defaults and solid blue for primary destinations. Keep bevels crisp and shallow; metallic gradients, soft glows and pill toggles do not belong in this control family. Dark navy identifies selected content and links; the brighter action blue highlights a clear next step. Scientific series retain their domain colors and legends.
@@ -98,9 +100,14 @@ Simplified Chinese uses PingFang SC / Microsoft YaHei / Noto Sans CJK SC fallbac
 | `--s7-share` | `#514293` | Sharing face; white text has 8.23:1 declared-colour contrast |
 | `--s7-share-hover` | `#403278` | Sharing hover face |
 | `--s7-share-edge` | `#302660` | Sharing boundary and dark bevel |
-| `--s7-context-paper` | `#f8f5ec` | Quiet contextual notes and the latest-project card |
+| `--s7-context-paper` | `#f8f5ec` | Warm reading and contextual surfaces |
+| `--s7-info` / `--s7-info-soft` | `#214ea5` / `#edf3ff` | Instructions, active controls and information panels |
+| `--s7-success` / `--s7-success-soft` | `#17664f` / `#e5f3ec` | Confirmed, valid, available and completed states |
+| `--s7-warning` / `--s7-warning-soft` | `#80510c` / `#fff3d6` | Reservations, conflicts, limitations and caution |
+| `--s7-accent` / `--s7-accent-soft` | `#514293` / `#f0ebfa` | Context, selected entities and comparison panels |
+| `--s7-danger` / `--s7-danger-soft` | `#993b40` / `#fbecee` | Errors, failed checks and rejected results |
 
-These tokens give each shade a consistent structural role. Reuse them for new chrome instead of introducing unrelated colors. White remains the main reading surface; depth comes from the surrounding frame and controls, with pale blue and warm paper reserved for supporting tiers. Primary white-on-blue text has 7.78:1 contrast, its hover state 10.53:1, and the sharing label 11.33:1. The selection colors and scientific palettes retain their separate meanings.
+These tokens give each shade a consistent structural role. Reuse them for new chrome instead of introducing unrelated colors. Use white and warm paper for reading, tinted content groups for hierarchy, and clear saturated accents for selected or primary actions. Grey remains the window furniture. Avoid flattening different states to one neutral background; pair colour with explicit text, checks, borders or patterns. Primary white-on-blue text has 7.78:1 contrast, its hover state 10.53:1, and the sharing label 8.23:1. The selection colors and scientific palettes retain their separate meanings.
 
 | Structural token | Contract |
 |---|---|
@@ -116,8 +123,8 @@ Components may add a small outer shadow to lift an action or frame. Selected tog
 - `.s7-panel` is a white bounded region. `.s7-well` adds a recessed white surface where a list or bounded content area needs it. `.s7-toolbar` groups related controls on beveled gray chrome with an 8px gap and wrapping. Use 12–16px panel padding and 16–24px between major sections.
 - Desktop windows use a narrow gray inner frame, a recessed document boundary and a hard outer shadow. Active title bars retain their horizontal pattern with gray lines and white highlights; the title itself stays on a solid, readable surface.
 - `.s7-table` uses a light-gray header with a top highlight, white rows, thin horizontal rules, left-aligned labels and tabular numerals. A selected row uses the selection colors. Wide data tables scroll in their own labeled region; prose must still reflow.
-- `.s7-note` is a plain labeled note with a thin border. Internal audit receipts belong in development documentation. A visitor-facing limitation belongs beside the result it qualifies. Remove tinted caution strips from ordinary explanation; actual errors retain explicit text and a recognizable status cue.
-- Keep color maps, molecule atoms, graph clusters, uncertainty bands and charts inside their bounded scientific region. Their legends carry meaning; shell unification must not recolor them.
+- `.s7-note` is a plain labeled note with a thin border. Internal audit receipts belong in development documentation. A visitor-facing limitation belongs beside the result it qualifies. Use an information tint for explanations, an accent tint for context and a caution tint only where caution is intended. Actual errors retain explicit text and a recognizable status cue.
+- Preserve color maps, molecule atoms, graph clusters, uncertainty bands and chart series in their scientific regions. Their legends carry domain meaning; the shared palette styles their surrounding controls and explanatory panels.
 
 ## Project browser
 
@@ -131,7 +138,7 @@ The graph uses the same recessed backing to separate its white canvas from the p
 
 Use at least 44px targets for coarse pointers and compact touch layouts as a deliberate project adaptation. WCAG 2.2 AA’s target-size criterion is 24 CSS pixels or qualifying spacing/exceptions; 44px is our more generous choice, not a System 7 measurement. [W3C target-size guidance][targets]
 
-Normal text needs at least 4.5:1 contrast; larger text has a 3:1 threshold. Default, focus, hover, selected and disabled states must remain distinguishable without relying on hue alone. [W3C contrast guidance][contrast] The keyboard focus indicator is separate from the default-button ring. Keep reduced-motion support, browser zoom, semantic headings, native disclosure controls, keyboard access and visible scrollbars. Test 320px, 390px, 768px and desktop widths in English, Simplified Chinese and Traditional Chinese, including 200% zoom.
+Normal text needs at least 4.5:1 contrast; larger text has a 3:1 threshold. Default, focus, hover, selected and disabled states must remain distinguishable without relying on hue alone. [W3C contrast guidance][contrast] The keyboard focus indicator is separate from the default-button ring. Keep reduced-motion support, browser zoom, semantic headings, keyboard access and visible scrollbars. Use disclosure controls for navigation or optional tools; project explanations, instructions, methods and contribution details stay visible. Test 320px, 390px, 768px and desktop widths in English, Simplified Chinese and Traditional Chinese, including 200% zoom.
 
 ## Repository findings and migration
 
@@ -140,7 +147,7 @@ The initial audit found 39 project CSS modules and 26 project TSX files importin
 | Location | Initial issue | Implementation guidance |
 |---|---|---|
 | `src/app/globals.css` | Global `.mac-button`, broad desktop/accessory styles, separate locale font variables. | Import `system7.css` once. Keep desktop behavior stable; reuse neutral/relief tokens for menu and window surfaces. Opt project documents into `.system7-project`. Do not append a universal button override. |
-| `DemoChrome.tsx/.module.css` | Separate MacButton skin; tinted paper, striped body, blue purpose card, 10px tracked metadata. | Emit shared root/button classes; simplify shared frame and instruction disclosure; retain props, localization and demo content. |
+| `DemoChrome.tsx/.module.css` | Separate MacButton skin; tinted paper, striped body, blue purpose card, 10px tracked metadata. | Emit shared root/button classes; unify the shared frame and always-visible instructions; retain props, localization and demo content. |
 | `ClassicSelect.module.css` | Tripled `.trigger` specificity and separately hardcoded palette/font values. | Consume shared tokens and use one explicit trigger attribute/class selector; preserve behavior and portal styling. |
 | Project CSS modules | Repeated `viewTabs`, `panelHeading`, `metricGrid`, action colors and literal font sizes. Some files contain a second appended “System 7 surface pass.” | Migrate a whole named control group at once. Delete its superseded skin declarations, retain layout rules, and add canonical classes in its TSX. |
 | Scientific/math panels | Broad descendant `span` selectors previously damaged KaTeX. Some SVG styles intentionally use color/size overrides. | Scope authored text selectors to actual children; leave SVG/canvas and `[data-math-equation]` subtrees untouched. |
@@ -167,3 +174,30 @@ Validation should include one control-state matrix covering normal/default/focus
 [gallery753]: https://guidebookgallery.org/screenshots/macos753/
 [targets]: https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
 [contrast]: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
+
+## Surgical style integration
+
+Use the deployed site's cream paper, striped window bars, inset controls, serif
+project titles and restrained colour as visual references. Historical CSS is evidence
+for individual choices, not a stylesheet to copy over the current application.
+Keep the new document structure, navigation, content, control sizes and responsive
+layouts. Edit named component rules instead of replacing every visual declaration.
+
+The shared project header now uses warm paper with a serif title and monospaced
+metadata. Project narratives retain their open reading layout; only context and
+interactive prompts receive inset framing. Primary actions use the existing deep
+indigo selection colour, while sharing uses neutral chrome. Generic coloured
+header rules and pastel explanation cards are removed.
+
+Finance's introductory panels use muted green paper; its analytical instrument
+retains the ocean palette. Molecular Recognition, Bandit and Chemistry Coding use
+light instrument headers with local colour and separate diagram displays. Selected
+ledger and risk rows retain explicit highlights.
+
+Desktop visual review covered the Finance document and demo and the Molecular
+Recognition demo. Responsive rules remain in place; narrow-screen visual review
+was unavailable when the computer-use preview stopped returning screenshots.
+
+Button selection uses its existing face, relief and ARIA state. Do not add leading
+checkmarks, empty marker columns or checkbox-like decorations to buttons. Native
+checkbox inputs and selection marks inside listbox options retain their own semantics.

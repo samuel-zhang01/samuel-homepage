@@ -51,7 +51,8 @@
   padding: 1.25rem;
   color: #111;
   background:
-    var(--s7-paper);
+    linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)),
+    repeating-linear-gradient(0deg, #d9d9d4 0 1px, #c9c9c4 1px 2px);
   font-size: var(--s7-ui);
 }
 
@@ -60,7 +61,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0 0 1rem;
+  padding: 1rem;
+  background: var(--s7-info-soft);
   border-bottom: 3px double #111;
 }
 
@@ -201,10 +203,10 @@
 .storageActions button {
   min-height: var(--s7-control-height);
   padding: .25rem .55rem;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 2px solid #111;
+  color: #111;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
   font: inherit;
   font-size: var(--s7-ui);
   cursor: pointer;
@@ -247,10 +249,10 @@
 .focusClock button {
   min-height: var(--s7-control-height);
   padding: .25rem .65rem;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 2px solid #111;
+  color: #111;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
   font-family: var(--chrome-font);
@@ -261,8 +263,8 @@
 .noteToolbar button:active,
 .paperTape button:active,
 .focusClock button:active {
-  background: var(--s7-ink);
-  box-shadow: none;
+  background: #bbb;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
   color: var(--s7-paper);
 }
 
@@ -411,7 +413,8 @@
   padding: 1rem;
   color: #111;
   background:
-    var(--s7-chrome);
+    radial-gradient(circle at 78% 12%, rgba(242, 193, 79, .34), transparent 25%),
+    #d6d6d1;
   font-size: var(--s7-ui);
 }
 
@@ -843,10 +846,10 @@
 .colourStudio button {
   min-height: var(--s7-control-height);
   padding: .25rem .6rem;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 2px solid #111;
+  color: #111;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
   font-family: var(--chrome-font);
@@ -859,8 +862,8 @@
 .pocketCalendar button:active,
 .unitConverter button:active,
 .colourStudio button:active {
-  background: var(--s7-ink);
-  box-shadow: none;
+  background: #bdbdb8;
+  box-shadow: inset 1px 1px #777, inset -1px -1px #fff;
   color: var(--s7-paper);
 }
 
@@ -876,6 +879,7 @@
 .defaultButton {
   outline: 3px solid var(--s7-ink);
   outline-offset: 2px;
+  border: 3px double #111;
 }
 
 .dangerButton {
@@ -1230,7 +1234,7 @@
 }
 
 .taskImportant {
-  box-shadow: inset 4px 0 #b83b3b;
+  box-shadow: none;
 }
 
 /* Pocket Calendar */
@@ -1338,7 +1342,7 @@
 }
 
 .calendarGrid .outsideMonth {
-  color: var(--s7-muted);
+  color: #858585;
   background: #e8e8e3;
 }
 

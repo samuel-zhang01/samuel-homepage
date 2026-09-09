@@ -248,7 +248,7 @@ function AppMenu({ active, setActive, bilingual }: { active: StudioView; setActi
   const views: { id: StudioView; it: string; en: string; icon: string }[] = [
     { id: "practice", it: "Oggi", en: "Today", icon: "✎" },
     { id: "recall", it: "Richiamo", en: "Recall", icon: "▱" },
-    { id: "rubric", it: "Rubrica", en: "Rubric", icon: "✓" },
+    { id: "rubric", it: "Rubrica", en: "Rubric", icon: "R" },
     { id: "evidence", it: "Prove", en: "Evidence", icon: "▥" },
     { id: "system", it: "Sistema", en: "System", icon: "⌘" },
   ];

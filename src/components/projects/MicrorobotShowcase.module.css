@@ -9,9 +9,9 @@
   align-items: stretch;
   margin-bottom: 10px;
   padding: 3px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 2px solid #111;
+  background: #aaa;
+  box-shadow: inset 1px 1px #666, 2px 2px #c3c3be;
 }
 
 .viewSwitch > div {
@@ -21,13 +21,13 @@
   justify-content: center;
   gap: 2px;
   padding: 5px 8px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 1px 1px #5b61b0;
 }
 
 .viewSwitch > div span {
-  color: var(--s7-ink);
+  color: #cbd0ff;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -48,10 +48,10 @@
   justify-content: center;
   gap: 6px;
   padding: 6px 9px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 0;
+  color: #171717;
+  background: #efefeb;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
   cursor: pointer;
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -86,13 +86,13 @@
 }
 
 .viewSwitch button:hover {
-  background: var(--s7-paper);
+  background: #fff;
 }
 
 .viewSwitch button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  color: #fff;
+  background: #262626;
+  box-shadow: inset 1px 1px #070707, inset -1px -1px #666;
 }
 
 .viewSwitch button span {
@@ -117,10 +117,10 @@
   }
 }
 
-.viewSwitch { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.viewSwitch > div { grid-column: 1 / -1; }
+.viewSwitch { grid-template-columns: repeat(4, minmax(0, 1fr)); border: 2px solid #111; background: #aaa; box-shadow: inset 1px 1px #666, 2px 2px #c3c3be; }
+.viewSwitch > div { grid-column: 1 / -1; color: #fff; background: #11177a; box-shadow: inset 1px 1px #5b61b0; }
 .viewSwitch > div strong { font-size: var(--s7-ui); white-space: normal; line-height: 1.45; }
-.viewSwitch button { min-height: 48px; white-space: normal; }
+.viewSwitch button { min-height: 48px; white-space: normal; border: 0; color: #171717; background: #efefeb; box-shadow: inset 1px 1px #fff, inset -1px -1px #777; }
 .viewSwitch button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: -5px; }
 @container (max-width: 680px) { .viewSwitch { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 420px) { .viewSwitch { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

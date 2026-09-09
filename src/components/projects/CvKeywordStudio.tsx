@@ -955,7 +955,7 @@ export function CvKeywordStudio() {
                           aria-pressed={isStaged}
                           onClick={() => toggleRewrite(suggestion.id)}
                         >
-                          {isStaged ? "✓ Staged in preview" : "+ Stage factual rewrite"}
+                          {isStaged ? "Staged in preview" : "+ Stage factual rewrite"}
                         </button>
                       ) : <span className={styles.manualOnly}>MANUAL VALIDATION REQUIRED</span>}
                     </article>

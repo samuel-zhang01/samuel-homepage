@@ -21,10 +21,11 @@
   gap: 11px;
   margin-bottom: 12px;
   padding: 10px 12px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #3b7157;
   background:
-    var(--s7-paper);
-  box-shadow: none;
+    linear-gradient(105deg, rgba(23, 103, 71, 0.12), transparent 58%),
+    var(--course-green-soft);
+  box-shadow: inset 1px 1px 0 #fff;
 }
 
 .safetyBanner > span {
@@ -32,10 +33,10 @@
   width: 30px;
   height: 30px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid var(--course-green);
   border-radius: 50%;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--course-green);
+  background: #fff;
   font-size: var(--s7-small);
   font-weight: 700;
 }
@@ -51,7 +52,7 @@
 
 .safetyBanner p {
   margin: 2px 0 0;
-  color: var(--s7-ink);
+  color: #365546;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
@@ -72,19 +73,19 @@
   gap: 6px;
   margin-bottom: 11px;
   padding: 5px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid var(--course-ink);
+  background: var(--course-chrome);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #8d8d87;
 }
 
 .modelSwitch button {
   position: relative;
   min-width: 0;
-  padding: 9px 10px 8px 37px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  padding: 9px 10px 8px;
+  border: 1px solid #74746f;
+  color: #40403d;
+  background: #efefe9;
+  box-shadow: inset 1px 1px 0 #fff;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -120,31 +121,6 @@
   color: var(--s7-paper);
 }
 
-.modelSwitch button::before {
-  position: absolute;
-  top: 50%;
-  left: 11px;
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--course-ink);
-  border-radius: var(--s7-control-radius);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  content: "";
-  transform: translateY(-50%);
-}
-
-.modelSwitch button::after {
-  position: absolute;
-  top: 50%;
-  left: 16px;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--s7-control-radius);
-  content: "";
-  transform: translateY(-50%);
-}
-
 .modelSwitch button > span,
 .modelSwitch button > strong,
 .modelSwitch button > small {
@@ -155,7 +131,7 @@
 }
 
 .modelSwitch button > span {
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -167,28 +143,20 @@
 }
 
 .modelSwitch button > small {
-  color: var(--s7-ink);
+  color: #6a6a65;
   font-size: var(--s7-small);
 }
 
 .modelSwitch .activeSource {
-  border-color: var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-}
-
-.modelSwitch .activeSource::after {
-  background: var(--s7-chrome);
+  border-color: #a76d0b;
+  color: #4f3408;
+  background: var(--course-amber-soft);
 }
 
 .modelSwitch .activeAdapted {
-  border-color: var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-}
-
-.modelSwitch .activeAdapted::after {
-  background: var(--s7-chrome);
+  border-color: var(--course-blue);
+  color: var(--course-blue);
+  background: var(--course-blue-soft);
 }
 
 .viewTabs {
@@ -196,19 +164,19 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
   padding: 4px 4px 0;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid var(--course-ink);
   border-bottom: 0;
-  background: var(--s7-chrome);
+  background: var(--course-chrome);
 }
 
 .viewTabs button {
   min-width: 0;
   padding: 7px 8px;
-  border: 1px solid var(--s7-ink);
+  border: 1px solid #777772;
   border-bottom: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  color: #464642;
+  background: #e8e8e2;
+  box-shadow: inset 1px 1px 0 #fff;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -245,7 +213,7 @@
 }
 
 .viewTabs button:hover {
-  background: var(--s7-paper);
+  background: #fff;
 }
 
 .viewTabs button strong,
@@ -263,16 +231,16 @@
 
 .viewTabs button span {
   margin-top: 1px;
-  color: var(--s7-ink);
+  color: #6c6c66;
   font-size: var(--s7-small);
 }
 
 .viewTabs .activeView {
   position: relative;
   z-index: 1;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  color: #fff;
+  background: var(--course-blue);
+  box-shadow: none;
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
@@ -308,7 +276,7 @@
 }
 
 .viewTabs .activeView span {
-  color: var(--s7-ink);
+  color: #dfe1ff;
 }
 
 .canvas {
@@ -323,9 +291,9 @@
 
 .panel {
   min-width: 0;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid var(--course-ink);
+  background: var(--course-paper);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
 }
 
 .panelHeading {
@@ -335,13 +303,13 @@
   justify-content: space-between;
   gap: 9px;
   padding: 7px 9px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
+  border-bottom: 1px solid #8f8f89;
+  background: #e7e7e1;
 }
 
 .panelHeading > div > span {
   display: block;
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -356,10 +324,10 @@
 .panelHeading > button,
 .emptyResults button {
   padding: 5px 8px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid var(--course-ink);
+  color: var(--course-ink);
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa, 1px 1px 0 #777;
   font-size: var(--s7-ui);
   font-weight: 400;
   cursor: pointer;
@@ -395,7 +363,7 @@
 }
 
 .panelHeading > button:disabled {
-  color: var(--s7-muted);
+  color: #888;
   cursor: not-allowed;
 }
 
@@ -414,7 +382,7 @@
 .categoryFieldset {
   margin: 10px 9px 8px;
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #989892;
 }
 
 .categoryFieldset legend {
@@ -439,8 +407,8 @@
   align-items: center;
   gap: 4px;
   padding: 4px 5px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #b4b4ae;
+  background: #fff;
   font-size: var(--s7-small);
   cursor: pointer;
 }
@@ -460,15 +428,15 @@
 
 .categoryFieldset label small {
   margin-left: auto;
-  color: var(--s7-ink);
+  color: var(--course-red);
   font-size: var(--s7-small);
   white-space: nowrap;
 }
 
 .categoryFieldset .checkedCategory {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: var(--course-blue);
+  color: var(--course-blue);
+  background: var(--course-blue-soft);
 }
 
 .selectGrid {
@@ -485,7 +453,7 @@
 
 .selectGrid label > span,
 .counterfactualIntro label > span {
-  color: var(--s7-ink);
+  color: #62625d;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -497,9 +465,9 @@
   width: 100%;
   min-height: 27px;
   padding: 4px 5px;
-  border: 1px solid var(--s7-ink);
+  border: 1px solid var(--course-ink);
   border-radius: 0;
-  background: var(--s7-paper);
+  background: #fff;
   font-size: var(--s7-small);
 }
 
@@ -507,9 +475,9 @@
 .weightEditor {
   margin: 0 9px 9px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #9a9a94;
+  background: #e5e5df;
+  box-shadow: inset 1px 1px 0 #fff;
 }
 
 .seedControl label {
@@ -524,7 +492,7 @@
   display: flex;
   justify-content: space-between;
   gap: 5px;
-  color: var(--s7-ink);
+  color: var(--course-amber);
   font-weight: 700;
   letter-spacing: normal;
 }
@@ -537,13 +505,13 @@
 
 .seedControl p {
   margin: 6px 0 0;
-  color: var(--s7-ink);
+  color: #5f5544;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
 
 .seedControl code {
-  color: var(--s7-ink);
+  color: var(--course-amber);
   font-weight: 700;
 }
 
@@ -552,7 +520,7 @@
   justify-content: space-between;
   gap: 8px;
   padding-bottom: 5px;
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid #aaa;
 }
 
 .weightTitle span,
@@ -561,13 +529,13 @@
 }
 
 .weightTitle span {
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-weight: 700;
   letter-spacing: normal;
 }
 
 .weightTitle strong {
-  color: var(--s7-ink);
+  color: #666660;
 }
 
 .weightEditor > label {
@@ -576,7 +544,7 @@
   align-items: center;
   gap: 6px;
   padding: 4px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #aaa;
 }
 
 .weightEditor > label:last-child {
@@ -590,25 +558,25 @@
 }
 
 .weightEditor > label span {
-  color: var(--s7-ink);
+  color: #5d5d58;
 }
 
 .weightEditor > label strong {
-  color: var(--s7-ink);
+  color: var(--course-blue);
   text-align: right;
 }
 
 .privacyFootnote {
   padding: 7px 9px;
-  border-top: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-top: 1px solid #9b9b95;
+  color: #4c6153;
+  background: var(--course-green-soft);
   font-size: var(--s7-small);
   line-height: 1.45;
 }
 
 .privacyFootnote strong {
-  color: var(--s7-ink);
+  color: var(--course-green);
 }
 
 .resultsPanel {
@@ -624,14 +592,14 @@
 .resultMetrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid #999993;
 }
 
 .resultMetrics > div {
   min-width: 0;
   padding: 7px 8px;
-  border-right: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-right: 1px solid #aaa;
+  background: #fff;
 }
 
 .resultMetrics > div:last-child {
@@ -645,7 +613,7 @@
 }
 
 .resultMetrics span {
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -653,34 +621,34 @@
 
 .resultMetrics strong {
   margin: 2px 0;
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-size: var(--s7-text);
   font-variant-numeric: tabular-nums;
 }
 
 .resultMetrics small {
-  color: var(--s7-ink);
+  color: #777771;
   font-size: var(--s7-small);
 }
 
 .sourceWarning,
 .adaptedNotice {
   padding: 7px 9px;
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid;
   font-size: var(--s7-small);
   line-height: 1.4;
 }
 
 .sourceWarning {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #c69b4e;
+  color: #6d4c12;
+  background: var(--course-amber-soft);
 }
 
 .adaptedNotice {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #6e73a9;
+  color: #3f4478;
+  background: var(--course-blue-soft);
 }
 
 .resultList {
@@ -693,9 +661,9 @@
   gap: 8px;
   margin-bottom: 6px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #969690;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #fff;
 }
 
 .resultCard:last-child {
@@ -704,8 +672,8 @@
 
 .resultCard:hover,
 .selectedCard {
-  border-color: var(--s7-shadow);
-  background: var(--s7-selection);
+  border-color: var(--course-blue);
+  background: #f3f4ff;
 }
 
 .resultCard:is(:hover, .selectedCard) .courseCopy > :is(span, h4) {
@@ -717,9 +685,9 @@
   width: 39px;
   height: 39px;
   align-content: center;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--course-ink);
+  color: #fff;
+  background: var(--course-blue);
   text-align: center;
 }
 
@@ -734,7 +702,7 @@
 }
 
 .rankStamp small {
-  color: var(--s7-ink);
+  color: #dfe1ff;
   font-size: var(--s7-small);
   letter-spacing: normal;
 }
@@ -745,7 +713,7 @@
 
 .courseCopy > span {
   display: block;
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -768,9 +736,9 @@
 
 .courseMeta span {
   padding: 2px 4px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #b4b4ae;
+  color: #5f5f5a;
+  background: #f0f0ea;
   font-size: var(--s7-small);
 }
 
@@ -787,9 +755,9 @@
   overflow: hidden;
   max-width: 100%;
   padding: 2px 4px;
-  border-left: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-left: 0;
+  color: #425248;
+  background: var(--course-green-soft);
   font-size: var(--s7-small);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -808,18 +776,18 @@
   width: 54px;
   height: 54px;
   place-content: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid var(--course-ink);
   border-radius: 50%;
-  box-shadow: none;
+  box-shadow: inset 0 0 0 5px #fff;
   text-align: center;
 }
 
 .sourceDial {
-  background: var(--s7-paper);
+  background: conic-gradient(#d28a0b var(--score), #ddd 0);
 }
 
 .adaptedDial {
-  background: var(--s7-paper);
+  background: conic-gradient(var(--course-blue) var(--score), #ddd 0);
 }
 
 .sourceDial strong,
@@ -844,9 +812,9 @@
 .scoreBlock button {
   min-width: 58px;
   padding: 3px 5px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--course-ink);
+  color: var(--course-blue);
+  background: #fff;
   font-size: var(--s7-ui);
   font-weight: 400;
   cursor: pointer;
@@ -884,14 +852,14 @@
 
 .emptyResults {
   padding: 54px 28px;
-  border: 1px dashed var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px dashed #9a9a94;
+  color: #555550;
+  background: #eeeae0;
   text-align: center;
 }
 
 .emptyResults strong {
-  color: var(--s7-ink);
+  color: var(--course-red);
   font-size: var(--s7-small);
   letter-spacing: normal;
 }
@@ -919,9 +887,9 @@
   width: 100%;
   margin-bottom: 4px;
   padding: 7px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #aaa;
+  color: var(--course-ink);
+  background: #fff;
   text-align: left;
   cursor: pointer;
 }
@@ -940,7 +908,7 @@
 }
 
 .courseSelector button span {
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -952,15 +920,15 @@
 }
 
 .courseSelector button small {
-  color: var(--s7-ink);
+  color: #6c6c66;
   font-size: var(--s7-small);
 }
 
 .courseSelector .activeCourse {
-  border-color: var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border-color: var(--course-blue);
+  color: var(--course-blue);
+  background: var(--course-blue-soft);
+  box-shadow: none;
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
@@ -1000,9 +968,9 @@
   min-width: 48px;
   height: 31px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--course-blue);
+  color: #fff;
+  background: var(--course-blue);
   font-size: var(--s7-text);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -1010,8 +978,8 @@
 
 .equation {
   padding: 9px 10px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #aaa;
+  background: #fff;
 }
 
 .equation > span:not([data-math-equation]) {
@@ -1026,9 +994,9 @@
   display: block;
   margin: 4px 0;
   padding: 6px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #aaa;
+  color: #292e68;
+  background: #f1f2ff;
   font-size: var(--s7-small);
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -1036,7 +1004,7 @@
 
 .equation p {
   margin: 0;
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-text);
 }
 
@@ -1046,7 +1014,7 @@
 
 .componentList article {
   padding: 7px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #aaa;
 }
 
 .componentList article:last-child {
@@ -1069,7 +1037,7 @@
 }
 
 .componentList article > div:first-child strong {
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1088,14 +1056,14 @@
 
 .componentList article > p {
   margin: 0;
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
 
 .componentList article > p code {
   margin-right: 5px;
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-weight: 700;
 }
 
@@ -1105,9 +1073,9 @@
 
 .boundaryNote {
   padding: 8px 9px;
-  border-top: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-top: 1px solid #aaa;
+  color: #664e1e;
+  background: var(--course-amber-soft);
 }
 
 .boundaryNote strong {
@@ -1132,12 +1100,12 @@
 .comparisonCards article {
   min-width: 0;
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #aaa;
+  background: #fff;
 }
 
 .comparisonCards .currentMode {
-  border-color: var(--s7-shadow);
+  border-color: var(--course-blue);
   box-shadow: none;
 }
 
@@ -1148,7 +1116,7 @@
 }
 
 .comparisonCards span {
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1156,19 +1124,19 @@
 
 .comparisonCards strong {
   margin: 3px 0 1px;
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-size: var(--s7-heading);
   font-variant-numeric: tabular-nums;
 }
 
 .comparisonCards small {
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
 }
 
 .comparisonCards p {
   margin: 5px 0 0;
-  color: var(--s7-ink);
+  color: #5f5f5a;
   font-size: var(--s7-text);
   line-height: 1.4;
 }
@@ -1183,7 +1151,7 @@
   grid-template-columns: minmax(70px, 1fr) minmax(0, 1fr);
   gap: 6px;
   padding: 6px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #aaa;
 }
 
 .catalogEvidence dt,
@@ -1192,7 +1160,7 @@
 }
 
 .catalogEvidence dt {
-  color: var(--s7-ink);
+  color: #666660;
 }
 
 .catalogEvidence dd {
@@ -1221,19 +1189,19 @@
 
 .counterfactualIntro > div {
   padding: 7px 9px;
-  border-left: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-left: 0;
+  background: var(--course-blue-soft);
 }
 
 .counterfactualIntro > div strong {
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-size: var(--s7-small);
   letter-spacing: normal;
 }
 
 .counterfactualIntro > div p {
   margin: 2px 0 0;
-  color: var(--s7-ink);
+  color: #484d7a;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
@@ -1241,7 +1209,7 @@
 .scenarioCourse {
   overflow: hidden;
   max-width: 210px;
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
   font-weight: 700;
   text-overflow: ellipsis;
@@ -1260,9 +1228,9 @@
 
 .scenarioTable th {
   padding: 6px 7px;
-  border-right: 1px solid var(--s7-shadow);
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-right: 1px solid #aaa;
+  border-bottom: 1px solid var(--course-ink);
+  background: var(--course-chrome);
   font-size: var(--s7-small);
   letter-spacing: normal;
   text-align: left;
@@ -1272,13 +1240,13 @@
 
 .scenarioTable td {
   padding: 8px 7px;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #aaa;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .scenarioTable tbody tr:nth-child(even) {
-  background: var(--s7-paper);
+  background: #ededE7;
 }
 
 .scenarioTable td:nth-child(n + 3):not(:last-child),
@@ -1288,17 +1256,17 @@
 
 .scenarioTable td:last-child small {
   display: block;
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
 }
 
 .positiveDelta {
-  color: var(--s7-ink);
+  color: var(--course-green);
   font-weight: 700;
 }
 
 .negativeDelta {
-  color: var(--s7-ink);
+  color: var(--course-red);
   font-weight: 700;
 }
 
@@ -1318,7 +1286,7 @@
 }
 
 .scenarioCards article > span {
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1332,7 +1300,7 @@
 
 .scenarioCards article > p {
   margin: 5px 0 0;
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-text);
   line-height: 1.4;
 }
@@ -1363,9 +1331,9 @@
 .sourceStats article {
   min-width: 0;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid var(--course-ink);
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
 }
 
 .sourceStats span,
@@ -1378,7 +1346,7 @@
 }
 
 .sourceStats span {
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1386,12 +1354,12 @@
 
 .sourceStats strong {
   margin: 2px 0;
-  color: var(--s7-ink);
+  color: var(--course-blue);
   font-size: var(--s7-heading);
 }
 
 .sourceStats small {
-  color: var(--s7-ink);
+  color: #6d6d67;
   font-size: var(--s7-small);
 }
 
@@ -1413,7 +1381,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #aaa;
 }
 
 .pipelineAudit li:last-child {
@@ -1425,9 +1393,9 @@
   width: 25px;
   height: 22px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--course-blue);
+  color: var(--course-blue);
+  background: var(--course-blue-soft);
   font-size: var(--s7-small);
   font-weight: 700;
 }
@@ -1438,16 +1406,16 @@
 
 .pipelineAudit li p {
   margin: 2px 0 0;
-  color: var(--s7-ink);
+  color: #666660;
   font-size: var(--s7-text);
   line-height: 1.4;
 }
 
 .pipelineAudit li em {
   padding: 2px 4px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #aaa;
+  color: #666660;
+  background: #eee;
   font-size: var(--s7-small);
   font-style: normal;
   font-weight: 700;
@@ -1462,13 +1430,13 @@
 .contractAudit th,
 .contractAudit td {
   padding: 7px;
-  border-right: 1px solid var(--s7-shadow);
-  border-bottom: 1px solid var(--s7-shadow);
+  border-right: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
   text-align: left;
 }
 
 .contractAudit th {
-  background: var(--s7-paper);
+  background: var(--course-chrome);
   font-size: var(--s7-small);
   letter-spacing: normal;
   text-transform: none;
@@ -1478,12 +1446,12 @@
 .unusedInputs {
   margin: 8px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #aaa;
 }
 
 .driftFinding {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #654a17;
+  background: var(--course-amber-soft);
 }
 
 .driftFinding strong {
@@ -1499,7 +1467,7 @@
 .unusedInputs > span {
   display: block;
   margin-bottom: 5px;
-  color: var(--s7-ink);
+  color: var(--course-red);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1539,29 +1507,29 @@
 }
 
 .boundaryCard > span {
-  color: var(--s7-ink);
+  color: var(--course-amber);
 }
 
 .safeBoundary > span {
-  color: var(--s7-ink);
+  color: var(--course-green);
 }
 
 .boundaryCard ul {
   margin: 6px 0 0;
   padding-left: 15px;
-  color: var(--s7-ink);
+  color: #5f5f5a;
   font-size: var(--s7-small);
   line-height: 1.55;
 }
 
 .licenceCard {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #96636c;
+  color: #66444a;
+  background: var(--course-red-soft);
 }
 
 .licenceCard > span {
-  color: var(--s7-ink);
+  color: var(--course-red);
 }
 
 .licenceCard p {

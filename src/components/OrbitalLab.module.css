@@ -8,8 +8,8 @@
 .presets { display: flex; flex-wrap: wrap; gap: 5px; }
 .presets button { font: var(--s7-ui)/1.45 var(--s7-font-ui); }
 .workbench { order: 2; display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(230px, 1fr); gap: 14px; align-items: start; }
-.viewer, .inspector { min-width: 0; border: 1px solid var(--s7-ink); background: var(--s7-paper); box-shadow: 1px 1px var(--s7-shadow); }
-.instrumentLabel { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 8px 10px; border-bottom: 1px solid #111; background: var(--s7-chrome); font: var(--s7-ui)/1.45 var(--s7-font-ui); }
+.viewer, .inspector { min-width: 0; border: 1px solid var(--s7-edge); background: var(--s7-paper); box-shadow: var(--s7-frame-well); }
+.instrumentLabel { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 8px 10px; border-bottom: 1px solid #111; background: var(--s7-raised); font: var(--s7-ui)/1.45 var(--s7-font-ui); }
 .renderControls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 8px 10px; border-bottom: 1px solid #aaa; }
 .renderControls > div { display: flex; gap: 6px; flex-wrap: wrap; }
 .renderControls > div button { padding-inline: 8px; }
@@ -22,20 +22,20 @@
 .compass text { fill: #444; font: 11px var(--system-mono); text-anchor: middle; }
 .opacityControl { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 10px; border-top: 1px solid #aaa; font-size: var(--s7-ui); }
 .opacityControl input { appearance: none; flex: 1; min-width: 90px; height: 28px; margin: 0; background: transparent; cursor: pointer; }
-.opacityControl input::-webkit-slider-runnable-track { height: 6px; border: 1px solid #555; background: #b9b9b1; box-shadow: inset 1px 1px #777; }
-.opacityControl input::-webkit-slider-thumb { appearance: none; width: 16px; height: 20px; margin-top: -8px; border: 1px solid #111; border-radius: 0; background: var(--s7-chrome); box-shadow: inset 1px 1px #fff, inset -1px -1px #777; }
-.opacityControl input::-moz-range-track { height: 4px; border: 1px solid #555; background: #b9b9b1; }
-.opacityControl input::-moz-range-thumb { width: 14px; height: 18px; border: 1px solid #111; border-radius: 0; background: var(--s7-chrome); box-shadow: inset 1px 1px #fff, inset -1px -1px #777; }
+.opacityControl input::-webkit-slider-runnable-track { height: 6px; border: 1px solid #555; background: var(--s7-recess); box-shadow: inset 1px 1px #777; }
+.opacityControl input::-webkit-slider-thumb { appearance: none; width: 16px; height: 20px; margin-top: -8px; border: 1px solid #111; border-radius: 0; background: var(--s7-raised); box-shadow: inset 1px 1px #fff, inset -1px -1px #777; }
+.opacityControl input::-moz-range-track { height: 4px; border: 1px solid #555; background: var(--s7-recess); }
+.opacityControl input::-moz-range-thumb { width: 14px; height: 18px; border: 1px solid #111; border-radius: 0; background: var(--s7-raised); box-shadow: inset 1px 1px #fff, inset -1px -1px #777; }
 .opacityControl input:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
 .opacityControl output { min-width: 4ch; font-family: var(--system-mono); }
-.renderStatus { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; background: #fffff3; text-align: center; font: var(--s7-small)/1.45 var(--s7-font-ui); pointer-events: none; }
-.viewer canvas { display: block; width: 100%; height: auto; touch-action: none; cursor: grab; background: #fffff3; }
+.renderStatus { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; background: var(--s7-paper); text-align: center; font: var(--s7-small)/1.45 var(--s7-font-ui); pointer-events: none; }
+.viewer canvas { display: block; width: 100%; height: auto; touch-action: none; cursor: grab; background: var(--s7-paper); }
 .viewer canvas:active { cursor: grabbing; }
 .legend { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; padding: 7px 10px; border-top: 1px solid #aaa; font: var(--s7-small)/1.45 var(--s7-font-ui); }
 .legend > span { display: flex; align-items: center; gap: 5px; }
 .legend i { display: inline-block; width: 8px; height: 8px; background: #11177a; }
 .legend i + i, .legend i:nth-of-type(2) { background: #99412c; }
-.viewOptions { display: flex; flex-wrap: wrap; gap: 18px; padding: 7px 10px; border-block: 1px solid #aaa; background: var(--s7-chrome); }
+.viewOptions { display: flex; flex-wrap: wrap; gap: 18px; padding: 7px 10px; border-block: 1px solid #aaa; background: var(--s7-raised); }
 .viewOptions label { display: flex; align-items: center; gap: 6px; min-height: var(--s7-control-height); cursor: pointer; font-size: var(--s7-ui); }
 .viewOptions input { appearance: none; width: 14px; height: 14px; margin: 0; background: #fff; border: 1px solid #111; border-radius: 0; box-shadow: inset 1px 1px #777; }
 .viewOptions input:checked::after { content: "×"; display: block; margin-top: -4px; text-align: center; font: 20px/20px var(--system-mono); }
@@ -49,7 +49,7 @@
 .elementPicker { display: flex; flex-direction: column; min-width: 0; gap: 5px; }
 .elementPicker > span { font-weight: 700; font-size: var(--s7-ui); }
 .elementPicker [data-classic-select] { width: 100%; text-align: left; }
-.elementCard { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 10px; border: 1px solid #111; background: var(--s7-paper); }
+.elementCard { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 10px; border: 1px solid #111; background: var(--s7-surface); }
 .elementCard > div { display: grid; text-align: center; }
 .elementCard small { font: var(--s7-small)/1.45 var(--s7-font-ui); }
 .elementCard strong { font: 700 40px/1.15 var(--system-font); }
@@ -77,15 +77,15 @@
 .nodes > div + div { border-left: 1px solid #aaa; }
 .nodes dt { font-size: var(--s7-small); overflow-wrap: anywhere; }
 .nodes dd { margin: 2px 0 0; font: 20px var(--system-mono); }
-.radial { margin: 0; border: 1px solid #aaa; background: #fffff3; }
+.radial { margin: 0; border: 1px solid #aaa; background: var(--s7-paper); }
 .radial figcaption { padding: 7px 8px; font: var(--s7-small)/1.45 var(--s7-font-ui); border-bottom: 1px solid #aaa; }
 .radial svg { display: block; width: 100%; max-height: 124px; }
 .radial text { font: 10px var(--system-mono); fill: #555; }
-.periodic, .notes { margin-top: 16px; border: 1px solid var(--s7-ink); background: var(--s7-paper); }
+.periodic, .notes { margin-top: 16px; border: 1px solid var(--s7-edge); background: var(--s7-paper); }
 .periodic { order: 1; margin: 0 0 16px; scroll-margin-top: 8px; }
 .periodic summary > span { float: right; margin-left: 12px; font: var(--s7-small)/1.45 var(--s7-font-ui); }
 .notes { order: 3; }
-.app summary { padding: 8px 10px; background: var(--s7-chrome); font-weight: 700; cursor: pointer; font-size: var(--s7-ui); line-height: 1.45; }
+.app summary { padding: 8px 10px; background: var(--s7-raised); font-weight: 700; cursor: pointer; font-size: var(--s7-ui); line-height: 1.45; }
 .periodic > p { margin: 10px 12px; font-size: var(--s7-text); }
 .tableSelection { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin: 0 12px 10px; font: var(--s7-small)/1.45 var(--s7-font-ui); }
 .tableScroll { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; padding: 0 10px 12px; }
@@ -109,7 +109,7 @@
 .seriesPlaceholder { align-self: center; text-align: center; font: var(--s7-small)/1.45 var(--s7-font-ui); }
 .seriesName { align-self: center; padding-right: 8px; text-align: right; font-size: var(--s7-small); }
 .notes { padding-bottom: 10px; }
-.notes > h3 { margin: 0; padding: 14px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-chrome); font: 700 var(--s7-heading)/1.35 var(--s7-font-text); }
+.notes > h3 { margin: 0; padding: 14px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-raised); font: 700 var(--s7-heading)/1.35 var(--s7-font-text); }
 .notes > h4 { font: 700 var(--s7-text)/1.4 var(--s7-font-text); }
 .notes h4, .notes p, .notes > div { margin: 10px 14px; }
 .notes p { font-size: var(--s7-text); max-width: 95ch; }

@@ -1148,5 +1148,14 @@ export const financeCopy = {
   "Fictional ledger · local": [
     "虚构账本 · 本地运行",
     "虛構賬本 · 本地執行"
-  ]
+  ],
+  "Recorded application scale": ["应用历史规模", "應用歷史規模"],
+  "What the application reconciled": ["应用完成了哪些对账工作", "應用完成了哪些對帳工作"],
+  "My earlier application handover recorded these aggregate counts. They describe that historical dataset; the interactive examples here use a separate fictional ledger.": ["我此前的应用交接记录了这些汇总数量。它们描述当时的数据集；此处的交互示例使用独立的虚构账本。", "我此前的應用交接記錄了這些彙總數量。它們描述當時的資料集；此處的互動示例使用獨立的虛構帳本。"],
+  "Transactions": ["交易", "交易"],
+  "Accounts": ["账户", "帳戶"],
+  "Statements reconciled": ["已完成对账的账单", "已完成對帳的帳單"],
+  "Recurring patterns": ["周期性模式", "週期性模式"],
+  "Transfer groups": ["转账组", "轉帳組"],
+  "Anomaly records": ["异常记录", "異常記錄"]
 } as const satisfies ProjectCopyTable;

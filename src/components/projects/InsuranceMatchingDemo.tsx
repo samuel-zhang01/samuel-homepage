@@ -625,7 +625,7 @@ export function InsuranceMatchingDemo() {
         </div>
         <div className={styles.modeButtons}>
           <button type="button" className={workbenchMode === "evidence" ? styles.modeActive : ""} aria-pressed={workbenchMode === "evidence"} onClick={() => setWorkbenchMode("evidence")}>
-            <span>✓ CURRENT</span><strong>Evidence view</strong><small>Preserve broker order</small>
+            <span>CURRENT</span><strong>Evidence view</strong><small>Preserve broker order</small>
           </button>
           <button type="button" className={workbenchMode === "retired-composite" ? styles.modeRetiredActive : ""} aria-pressed={workbenchMode === "retired-composite"} onClick={() => setWorkbenchMode("retired-composite")}>
             <span>⚠ RETIRED</span><strong>Composite sandbox</strong><small>Explore sensitivity only</small>
@@ -823,7 +823,7 @@ export function InsuranceMatchingDemo() {
                     aria-pressed={isPinned}
                     aria-label={isPinned ? `Remove ${candidate.name} from broker review` : `Pin ${candidate.name} for broker review`}
                   >
-                    {isPinned ? "✓ Pinned" : "Pin"}
+                    {isPinned ? "Pinned" : "Pin"}
                   </button>
                 </article>
               );

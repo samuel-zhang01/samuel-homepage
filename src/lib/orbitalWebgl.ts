@@ -1,4 +1,5 @@
 import type { OrbitalSamples } from "./orbitals";
+import { canvasBackground } from "./canvasTheme";
 
 const vertexSource = `
 attribute vec3 position;
@@ -59,6 +60,7 @@ void main() {
 }`;
 
 export function createOrbitalRenderer(canvas: HTMLCanvasElement) {
+  const { rgb: background } = canvasBackground(canvas);
   const gl = canvas.getContext("webgl", { antialias: true, alpha: false, powerPreference: "low-power", preserveDrawingBuffer: true });
   if (!gl) throw new Error("WebGL unavailable");
   const shaders: WebGLShader[] = [];
@@ -120,7 +122,7 @@ export function createOrbitalRenderer(canvas: HTMLCanvasElement) {
     },
     draw(yaw: number, pitch: number, ink: boolean, slice: boolean, representation: "points" | "surface", opacity: number) {
       gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.clearColor(1, 1, 243 / 255, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.clearColor(...background, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.uniform2f(uniforms.angles, yaw, pitch); gl.uniform1f(uniforms.aspect, canvas.width / canvas.height);
       gl.uniform1i(uniforms.phaseInk, ink ? 1 : 0); gl.uniform1i(uniforms.slice, slice ? 1 : 0);
       gl.uniform1i(uniforms.points, representation === "points" ? 1 : 0);

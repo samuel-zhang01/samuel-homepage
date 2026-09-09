@@ -1008,7 +1008,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
           </div>
           <p>Every applicant reviewed. A defensible shortlist with reasons.</p>
           <div className="coverd-actions">
-            <a className="coverd-link s7-button" href="https://coverd.ai/" target="_blank" rel="noopener noreferrer">Visit coverd.ai ↗</a>
+            <a className="coverd-link s7-button is-primary" href="https://coverd.ai/" target="_blank" rel="noopener noreferrer">Visit coverd.ai ↗</a>
             <span>FOUNDED 2026 · LONDON</span>
           </div>
         </div>
@@ -3149,7 +3149,7 @@ export default function SystemSevenDesktop({
               </div>
             )}
           </div>
-          <strong className="active-application">{activeTitle}</strong>
+          <strong className="active-application" title={activeTitle}><span>{activeTitle}</span></strong>
           <div className="menu-root">
             <button ref={(element) => { menuButtonRefs.current.file = element; }} type="button" className={openMenu === "file" ? "is-open" : ""} onClick={() => toggleSystemMenu("file")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "file")} aria-haspopup="menu" aria-controls={openMenu === "file" ? SYSTEM_MENU_ELEMENT_IDS.file : undefined} aria-expanded={openMenu === "file"}>File</button>
             {openMenu === "file" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.file} role="menu" aria-label="File" onKeyDown={(event) => handleSystemMenuKeyDown(event, "file")}><button type="button" role="menuitem" onClick={openFinder} aria-keyshortcuts="Meta+k Control+k">Find…</button><button type="button" role="menuitem" onClick={() => openApp("documents")}>Open Documents…</button><hr /><button type="button" role="menuitem" disabled={!openWindows.length} onClick={closeActive}>Close Window</button></div>}
@@ -3160,7 +3160,7 @@ export default function SystemSevenDesktop({
           </div>
           <div className="menu-root menu-optional">
             <button ref={(element) => { menuButtonRefs.current.view = element; }} type="button" className={openMenu === "view" ? "is-open" : ""} onClick={() => toggleSystemMenu("view")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "view")} aria-haspopup="menu" aria-controls={openMenu === "view" ? SYSTEM_MENU_ELEMENT_IDS.view : undefined} aria-expanded={openMenu === "view"}>View</button>
-            {openMenu === "view" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.view} role="menu" aria-label="View" onKeyDown={(event) => handleSystemMenuKeyDown(event, "view")}><button type="button" role="menuitemradio" aria-checked={pattern === "classic"} onClick={() => choosePattern("classic")}>{pattern === "classic" ? "✓ " : ""}Classic Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "blue"} onClick={() => choosePattern("blue")}>{pattern === "blue" ? "✓ " : ""}Blue Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "paper"} onClick={() => choosePattern("paper")}>{pattern === "paper" ? "✓ " : ""}Paper Pattern</button></div>}
+            {openMenu === "view" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.view} role="menu" aria-label="View" onKeyDown={(event) => handleSystemMenuKeyDown(event, "view")}><button type="button" role="menuitemradio" aria-checked={pattern === "classic"} onClick={() => choosePattern("classic")}>Classic Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "blue"} onClick={() => choosePattern("blue")}>Blue Pattern</button><button type="button" role="menuitemradio" aria-checked={pattern === "paper"} onClick={() => choosePattern("paper")}>Paper Pattern</button></div>}
           </div>
           <div className="menu-root menu-optional">
             <button ref={(element) => { menuButtonRefs.current.special = element; }} type="button" className={openMenu === "special" ? "is-open" : ""} onClick={() => toggleSystemMenu("special")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "special")} aria-haspopup="menu" aria-controls={openMenu === "special" ? SYSTEM_MENU_ELEMENT_IDS.special : undefined} aria-expanded={openMenu === "special"}>Special</button>
@@ -3204,7 +3204,6 @@ export default function SystemSevenDesktop({
                     role="menuitemradio"
                     aria-checked={locale === option.locale}
                   >
-                    <span className="language-check" aria-hidden="true">{locale === option.locale ? "✓" : ""}</span>
                     <span>{option.label}</span>
                     <small>{option.short}</small>
                   </button>

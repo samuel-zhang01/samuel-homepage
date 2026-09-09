@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, 
 import type { Locale } from "@/lib/i18n";
 import { elements, getOrbitalSamples, getRadialDistribution, orbitalLabel, orbitalNodes, ORBITAL_SOURCES, type ElementRecord } from "@/lib/orbitals";
 import ClassicSelect from "./ClassicSelect";
+import { canvasBackground } from "@/lib/canvasTheme";
 import OrbitalSurfaceCanvas from "./OrbitalSurfaceCanvas";
 import { localisedElementName, orbitalCopies } from "./orbitalI18n";
 import styles from "./OrbitalLab.module.css";
@@ -139,6 +140,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
+    const background = canvasBackground(canvas);
     const density = new Float32Array(cellColumns * cellRows);
     const sign = new Float32Array(cellColumns * cellRows);
     const draw = (view: OrbitalAngles) => {
@@ -164,9 +166,9 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
           sign[index] += point.phase * weight;
         }
       }
-      context.fillStyle = "#fffff3";
+      context.fillStyle = background.css;
       context.fillRect(0, 0, width, height);
-      context.strokeStyle = "#d3d3c5";
+      context.strokeStyle = "#d3d3d3";
       context.setLineDash([2, 5]);
       context.beginPath();
       context.moveTo(width / 2, 14); context.lineTo(width / 2, height - 14);

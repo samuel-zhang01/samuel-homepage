@@ -519,7 +519,7 @@ export const molecularCopy = {
   ],
   "Energy and population values are synthetic ranking aids, not measured conformer abundances or expansion temperature.": [
     "能量和占比是合成排序辅助值，不是实测构象丰度或膨胀温度。",
-    "能量和佔比是合成排序輔助值，不是實測構象丰度或膨脹溫度。"
+    "能量和佔比是合成排序輔助值，不是實測構象豐度或膨脹溫度。"
   ],
   "{0} moved to the analysis desk.": [
     "已将{0}移至分析台。",
@@ -792,7 +792,7 @@ export const molecularCopy = {
   ],
   "The illustrated Boltzmann fractions are a teaching calculation, not measured populations.": [
     "图中的玻尔兹曼占比是教学计算，不是实测丰度。",
-    "圖中的玻爾茲曼佔比是教學計算，不是實測丰度。"
+    "圖中的玻爾茲曼佔比是教學計算，不是實測豐度。"
   ],
   "Research outcome": [
     "研究成果",

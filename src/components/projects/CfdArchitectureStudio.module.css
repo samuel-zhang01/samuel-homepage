@@ -16,8 +16,8 @@
   --redSoft: #f9dee6;
   container-name: cfd-architecture;
   container-type: inline-size;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--ink);
+  background: #e9e9e3;
 }
 
 .studio button,
@@ -39,9 +39,9 @@
   gap: 12px;
   margin: 0 0 12px;
   padding: 10px 12px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 2px solid #22231f;
+  background: #fff5d6;
+  box-shadow: inset 1px 1px #fff, 2px 2px #b7b7af;
 }
 
 .boundaryBanner > div {
@@ -56,9 +56,9 @@
   width: 25px;
   height: 25px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  background: #fff;
   font-size: var(--s7-text);
   font-weight: 700;
 }
@@ -74,7 +74,7 @@
 }
 
 .boundaryBanner p {
-  color: var(--s7-ink);
+  color: #4f4735;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
@@ -92,7 +92,7 @@
   align-items: center;
   justify-content: center;
   padding: 3px 6px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid currentColor;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -101,28 +101,28 @@
 }
 
 .badgeAuthored {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--purple);
+  background: var(--purpleSoft);
 }
 
 .badgeScaffold {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--blue);
+  background: var(--blueSoft);
 }
 
 .badgeTrained {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--green);
+  background: var(--greenSoft);
 }
 
 .badgeDrift {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--red);
+  background: var(--redSoft);
 }
 
 .badgeBoundary {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--amber);
+  background: var(--amberSoft);
 }
 
 .topToolbar {
@@ -137,9 +137,9 @@
 .viewToggle {
   display: flex;
   min-width: 0;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 1px solid #42433e;
+  background: #cecec8;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #92938c;
 }
 
 .modelTabs button {
@@ -150,11 +150,11 @@
   align-content: center;
   gap: 2px;
   padding: 7px 11px;
-  border: 1px solid var(--s7-ink);
-  border-right: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 0;
+  border-right: 1px solid #777870;
+  color: #33342f;
+  background: #f3f3ee;
+  box-shadow: inset 1px 1px #fff;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -197,9 +197,9 @@
 .modelTabs button[aria-pressed="true"],
 .viewToggle button:hover,
 .viewToggle button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  color: #fff;
+  background: var(--blue);
+  box-shadow: inset 2px 2px #101d3d;
 }
 
 .modelTabs strong {
@@ -211,7 +211,7 @@
 
 .modelTabs span {
   overflow: hidden;
-  color: var(--s7-ink);
+  color: var(--muted);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-small);
   text-overflow: ellipsis;
@@ -220,7 +220,7 @@
 
 .modelTabs button:hover span,
 .modelTabs button[aria-pressed="true"] span {
-  color: var(--s7-ink);
+  color: #dbe4ff;
 }
 
 .viewToggle {
@@ -233,9 +233,9 @@
 .viewToggle > span {
   grid-column: 1 / -1;
   padding: 4px 7px;
-  border-bottom: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #777870;
+  color: var(--muted);
+  background: #deded8;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -244,9 +244,9 @@
 .viewToggle button {
   min-height: max(var(--s7-control-height), 34px);
   padding: 5px 8px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 0;
+  color: #34352f;
+  background: #f2f2ed;
   cursor: pointer;
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -282,7 +282,7 @@
 }
 
 .viewToggle button + button {
-  border-left: 1px solid var(--s7-ink);
+  border-left: 1px solid #777870;
 }
 
 .modelWorkspace,
@@ -291,9 +291,9 @@
   min-width: 0;
   margin-bottom: 13px;
   overflow: hidden;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #555650;
+  background: var(--paper);
+  box-shadow: inset 1px 1px #fff, 3px 3px #c4c4bd;
 }
 
 .sectionHeading {
@@ -303,9 +303,9 @@
   justify-content: space-between;
   gap: 12px;
   padding: 8px 10px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border-bottom: 1px solid #777870;
+  background: #ddddd7;
+  box-shadow: inset 0 1px #fff;
 }
 
 .sectionHeading > div:first-child {
@@ -320,7 +320,7 @@
 
 .sectionHeading > div:first-child > span,
 .timelinePolicy {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -329,7 +329,7 @@
 
 .sectionHeading h3 {
   margin-top: 2px;
-  color: var(--s7-ink);
+  color: #23241f;
   font-size: var(--s7-heading);
   line-height: 1.4;
 }
@@ -339,8 +339,8 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 7px;
   padding: 9px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #8d8e87;
+  background: #e9e9e3;
 }
 
 .variantStrip button {
@@ -351,10 +351,10 @@
   align-content: center;
   gap: 3px;
   padding: 7px 8px 7px 13px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid #686963;
+  color: #33342f;
+  background: #f8f8f4;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa, 2px 2px #ccc;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -393,28 +393,28 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: 6px;
-  content: "";
-  background: var(--s7-paper);
+  content: none;
+  background: var(--blue);
 }
 
 .variantStrip button:nth-child(2)::before {
-  background: var(--s7-paper);
+  background: var(--red);
 }
 
 .variantStrip button:nth-child(3)::before,
 .variantStrip button:nth-child(4)::before {
-  background: var(--s7-paper);
+  background: var(--purple);
 }
 
 .variantStrip button:hover,
 .variantStrip button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  color: #fff;
+  background: var(--blue);
+  box-shadow: inset 2px 2px #101d3d;
 }
 
 .variantStrip button[aria-pressed="true"]::before {
-  background: var(--s7-chrome);
+  background: #fff;
 }
 
 .variantStrip span,
@@ -428,7 +428,7 @@
 }
 
 .variantStrip span {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -440,7 +440,7 @@
 }
 
 .variantStrip small {
-  color: var(--s7-ink);
+  color: #60615b;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
@@ -449,20 +449,20 @@
 .variantStrip button:hover small,
 .variantStrip button[aria-pressed="true"] span,
 .variantStrip button[aria-pressed="true"] small {
-  color: var(--s7-ink);
+  color: #dce4ff;
 }
 
 .artifactPairing {
   display: grid;
   grid-template-columns: 1fr 1.2fr 0.9fr;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #84857e;
+  background: #f5f5f0;
 }
 
 .artifactPairing > div {
   min-width: 0;
   padding: 8px 10px;
-  border-right: 1px solid var(--s7-shadow);
+  border-right: 1px solid #b5b6af;
 }
 
 .artifactPairing > div:last-child {
@@ -475,7 +475,7 @@
 }
 
 .artifactPairing span {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -495,17 +495,17 @@
   align-items: center;
   gap: 6px;
   padding: 11px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #8b8c85;
+  background: #dddeda;
 }
 
 .pipeline article {
   min-width: 0;
   min-height: 70px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #666760;
+  background: #fafaf6;
+  box-shadow: inset 1px 1px #fff, 2px 2px #bcbdb5;
 }
 
 .pipeline span,
@@ -515,7 +515,7 @@
 }
 
 .pipeline span {
-  color: var(--s7-ink);
+  color: var(--blue);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -529,13 +529,13 @@
 }
 
 .pipeline small {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   line-height: 1.4;
 }
 
 .pipeline > i {
-  color: var(--s7-ink);
+  color: var(--blue);
   font-family: var(--s7-font-text);
   font-size: var(--s7-heading);
   font-style: normal;
@@ -546,22 +546,22 @@
   display: grid;
   grid-template-columns: minmax(185px, 0.45fr) minmax(0, 1fr);
   min-height: 330px;
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid #85867f;
 }
 
 .inspectorControls {
   min-width: 0;
   padding: 10px;
-  border-right: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
+  border-right: 1px solid #85867f;
+  background: #e7e7e1;
 }
 
 .controlLabel {
   margin-bottom: 7px;
   padding: 6px 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #777870;
+  background: #f7f7f2;
+  box-shadow: inset 1px 1px #fff;
 }
 
 .controlLabel span,
@@ -570,7 +570,7 @@
 }
 
 .controlLabel span {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -595,10 +595,10 @@
 .quadrantButtons button {
   min-height: max(var(--s7-control-height), 32px);
   padding: 5px 7px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid #777870;
+  color: #363731;
+  background: #f5f5f0;
+  box-shadow: inset 1px 1px #fff;
   cursor: pointer;
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -645,9 +645,9 @@
 .phaseButtons button[aria-pressed="true"],
 .quadrantButtons button:hover,
 .quadrantButtons button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  color: #fff;
+  background: var(--blue);
+  box-shadow: inset 2px 2px #101d3d;
 }
 
 .quadrantButtons {
@@ -665,21 +665,21 @@
 
 .quadrantButtons code {
   margin-top: 2px;
-  color: var(--s7-ink);
+  color: #62645d;
   font-size: var(--s7-small);
 }
 
 .quadrantButtons button:hover code,
 .quadrantButtons button[aria-pressed="true"] code {
-  color: var(--s7-ink);
+  color: #dce4ff;
 }
 
 .liveExplanation {
   margin: 0;
   padding: 8px;
-  border-left: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-left: 0;
+  color: #454640;
+  background: #fff;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
@@ -689,7 +689,7 @@
   min-width: 0;
   margin: 0;
   padding: 10px;
-  background: var(--s7-surface);
+  background: #f8f8f4;
 }
 
 .spectrumFigure svg,
@@ -699,7 +699,7 @@
   height: auto;
   min-height: 230px;
   border: 1px solid #73746d;
-  background: var(--s7-surface);
+  background: #f1f1ec;
   box-shadow: inset 1px 1px #fff;
 }
 
@@ -812,16 +812,16 @@
   gap: 10px;
   margin: 10px;
   padding: 9px 10px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--green);
+  color: #304a3e;
+  background: var(--greenSoft);
 }
 
 .driftNote,
 .shiftNote {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: var(--red);
+  color: #5f2537;
+  background: var(--redSoft);
 }
 
 .methodNote > strong,
@@ -875,16 +875,16 @@
 .metricStrip {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #85867f;
+  background: #e7e7e1;
 }
 
 .metricStrip article {
   min-width: 0;
   min-height: 72px;
   padding: 9px;
-  border-right: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-right: 1px solid #aaaBA4;
+  background: #f7f7f2;
 }
 
 .metricStrip article:last-child {
@@ -898,7 +898,7 @@
 }
 
 .metricStrip span {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -907,14 +907,14 @@
 .metricStrip strong {
   margin: 5px 0 3px;
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
+  color: var(--blue);
   font-family: var(--s7-font-mono);
   font-size: var(--s7-ui);
   line-height: 1.4;
 }
 
 .metricStrip small {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   line-height: 1.4;
 }
@@ -925,8 +925,8 @@
   align-items: center;
   gap: 8px;
   padding: 9px 10px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #85867f;
+  background: #e5e5df;
 }
 
 .processorControl > div span,
@@ -935,7 +935,7 @@
 }
 
 .processorControl > div span {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -949,10 +949,10 @@
 .processorControl button {
   width: 30px;
   min-height: var(--s7-control-height);
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid #555650;
+  color: #fff;
+  background: var(--blue);
+  box-shadow: inset 1px 1px #5f75aa, inset -1px -1px #101d3d;
   cursor: pointer;
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -987,8 +987,8 @@
 }
 
 .processorControl button:disabled {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
+  color: #888;
+  background: #ccc;
   box-shadow: none;
   cursor: not-allowed;
 }
@@ -1001,9 +1001,9 @@
 .processorControl output {
   min-width: 52px;
   padding: 6px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #62635d;
+  color: #fff;
+  background: #272923;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -1015,8 +1015,8 @@
   grid-template-columns: repeat(10, minmax(0, 1fr));
   gap: 4px;
   padding: 9px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #85867f;
+  background: #d7d8d1;
 }
 
 .processorRail button {
@@ -1025,10 +1025,10 @@
   min-height: 48px;
   place-items: center;
   padding: 4px 2px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid #686963;
+  color: #34352f;
+  background: #f7f7f2;
+  box-shadow: inset 1px 1px #fff, 1px 1px #aaa;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
@@ -1064,9 +1064,9 @@
 
 .processorRail button:hover,
 .processorRail button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  color: #fff;
+  background: var(--purple);
+  box-shadow: inset 2px 2px #351d3e;
 }
 
 .processorRail span,
@@ -1141,15 +1141,15 @@
   grid-template-columns: 1fr 1fr 0.85fr;
   gap: 8px;
   padding: 10px;
-  background: var(--s7-paper);
+  background: #e5e5df;
 }
 
 .gnnLedger article {
   min-width: 0;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #74756e;
+  background: #fff;
+  box-shadow: inset 1px 1px #fff;
 }
 
 .gnnLedger article > span:not([data-math-equation]),
@@ -1169,7 +1169,7 @@
 .gnnLedger strong {
   margin: 5px 0;
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
+  color: var(--blue);
   font-family: var(--s7-font-mono);
   font-size: var(--s7-small);
   line-height: 1.4;
@@ -1177,15 +1177,15 @@
 
 .gnnLedger p {
   margin: 0;
-  color: var(--s7-ink);
+  color: #555650;
   font-size: var(--s7-text);
   line-height: 1.4;
 }
 
 .unetWorkbench {
   padding: 11px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #85867f;
+  background: #e4e4de;
 }
 
 .unetInput,
@@ -1197,14 +1197,14 @@
   max-width: 540px;
   margin: 0 auto;
   padding: 7px 9px;
-  border: 1px solid var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: inset 1px 1px 0 var(--s7-shadow);
+  border: 1px solid #5f605a;
+  background: #fff;
+  box-shadow: inset 1px 1px #fff, 2px 2px #b8b9b2;
 }
 
 .unetInput span,
 .unetOutput span {
-  color: var(--s7-ink);
+  color: var(--blue);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1218,7 +1218,7 @@
 
 .unetInput small,
 .unetOutput small {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   text-align: right;
 }
@@ -1230,7 +1230,7 @@
   margin: 9px auto;
   padding: 10px;
   border: 1px solid #767770;
-  background: var(--s7-surface);
+  background: #f3f3ee;
   box-shadow: inset 1px 1px #fff;
 }
 
@@ -1244,9 +1244,9 @@
 .skipRow article {
   min-width: 0;
   padding: 7px 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #6b6c65;
+  background: #fff;
+  box-shadow: inset 1px 1px #fff, 2px 2px #c2c3bc;
 }
 
 .skipRow article:last-child {
@@ -1260,7 +1260,7 @@
 }
 
 .skipRow article span {
-  color: var(--s7-ink);
+  color: var(--blue);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1273,7 +1273,7 @@
 }
 
 .skipRow article small {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
 }
 
@@ -1284,9 +1284,9 @@
   align-items: center;
   gap: 4px;
   padding: 6px 2px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 0;
+  color: var(--purple);
+  background: transparent;
   cursor: pointer;
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1326,7 +1326,7 @@
   position: relative;
   display: block;
   height: 2px;
-  background: var(--s7-paper);
+  background: currentColor;
 }
 
 .skipRow > button i:first-child::before,
@@ -1337,7 +1337,7 @@
   height: 7px;
   border: 2px solid currentColor;
   border-radius: 50%;
-  background: var(--s7-paper);
+  background: #f3f3ee;
   content: "";
 }
 
@@ -1351,29 +1351,29 @@
 
 .skipRow > button:hover,
 .skipRow > button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
+  color: #fff;
+  background: var(--purple);
 }
 
 .skipRow > button:hover i:first-child::before,
 .skipRow > button:hover i:last-child::after,
 .skipRow > button[aria-pressed="true"] i:first-child::before,
 .skipRow > button[aria-pressed="true"] i:last-child::after {
-  background: var(--s7-paper);
+  background: var(--purple);
 }
 
 .skipRowSelected article {
-  border-color: var(--s7-shadow);
-  background: var(--s7-selection);
+  border-color: var(--purple);
+  background: var(--purpleSoft);
 }
 
 .unetBottleneck {
   width: min(48%, 360px);
   margin: 3px auto 0;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 2px solid var(--blue);
+  color: #fff;
+  background: var(--blue);
   text-align: center;
 }
 
@@ -1384,7 +1384,7 @@
 }
 
 .unetBottleneck span {
-  color: var(--s7-ink);
+  color: #c9d4f3;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1397,7 +1397,7 @@
 }
 
 .unetBottleneck small {
-  color: var(--s7-ink);
+  color: #dfe6fb;
   font-size: var(--s7-small);
 }
 
@@ -1408,9 +1408,9 @@
   gap: 9px;
   margin-top: 10px;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--purple);
+  color: #4e2958;
+  background: var(--purpleSoft);
 }
 
 .skipInspector span {
@@ -1430,8 +1430,8 @@
 
 .skipInspector code {
   padding: 5px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #b58fc0;
+  background: #fff;
   font-size: var(--s7-small);
   text-align: center;
 }
@@ -1449,8 +1449,8 @@
   max-width: 100%;
   margin: 11px;
   overflow: auto;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #62635d;
+  background: #fff;
 }
 
 .architectureTable {
@@ -1463,8 +1463,8 @@
 
 .architectureTable caption {
   padding: 8px 9px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #fff;
+  background: var(--blue);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1474,37 +1474,37 @@
 .architectureTable th,
 .architectureTable td {
   padding: 7px 8px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #b5b6af;
   text-align: left;
   vertical-align: top;
 }
 
 .architectureTable thead th {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
+  color: #30312c;
+  background: #d9d9d3;
   font-size: var(--s7-small);
   letter-spacing: normal;
 }
 
 .architectureTable tbody th {
   width: 112px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--blue);
+  background: #f0f0eb;
 }
 
 .architectureTable tbody tr:nth-child(even) td {
-  background: var(--s7-paper);
+  background: #f7f7f2;
 }
 
 .architectureTable code {
-  color: var(--s7-ink);
+  color: var(--purple);
   font-size: var(--s7-small);
   font-weight: 700;
 }
 
 .timelinePolicy {
   max-width: 275px;
-  color: var(--s7-ink);
+  color: var(--red);
   line-height: 1.4;
   text-align: right;
 }
@@ -1515,8 +1515,8 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: 14px 10px 10px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #85867f;
+  background: #e5e5df;
 }
 
 .timelineRail::before {
@@ -1525,7 +1525,7 @@
   right: 9%;
   left: 9%;
   height: 2px;
-  background: var(--s7-paper);
+  background: #8b8c85;
   content: "";
 }
 
@@ -1537,10 +1537,10 @@
   align-content: start;
   gap: 4px;
   padding: 25px 8px 7px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid #676861;
+  color: #34352f;
+  background: #f8f8f4;
+  box-shadow: inset 1px 1px #fff, 2px 2px #bcbdb6;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -1583,22 +1583,22 @@
   height: 11px;
   border: 2px solid var(--blue);
   border-radius: var(--s7-control-radius);
-  background: var(--s7-paper);
+  background: #fff;
   content: "";
   transform: translateX(-50%);
 }
 
 .timelineRail button:hover,
 .timelineRail button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  color: #fff;
+  background: var(--blue);
+  box-shadow: inset 2px 2px #101d3d;
 }
 
 .timelineRail button:hover::before,
 .timelineRail button[aria-pressed="true"]::before {
   border-color: #fff;
-  background: var(--s7-chrome);
+  background: var(--purple);
 }
 
 .timelineRail span,
@@ -1611,7 +1611,7 @@
 }
 
 .timelineRail span {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   font-weight: 700;
 }
@@ -1621,7 +1621,7 @@
 }
 
 .timelineRail small {
-  color: var(--s7-ink);
+  color: #60615b;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
@@ -1630,7 +1630,7 @@
 .timelineRail button:hover small,
 .timelineRail button[aria-pressed="true"] span,
 .timelineRail button[aria-pressed="true"] small {
-  color: var(--s7-ink);
+  color: #dce4ff;
 }
 
 .timelineDetail {
@@ -1639,14 +1639,14 @@
   align-items: center;
   gap: 13px;
   padding: 11px;
-  background: var(--s7-paper);
+  background: #fff;
 }
 
 .timelineDetail > div:first-child {
   min-width: 140px;
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #777870;
+  background: #f0f0eb;
 }
 
 .timelineDetail > div:first-child span,
@@ -1661,7 +1661,7 @@
 
 .timelineDetail > div:first-child code {
   margin-top: 4px;
-  color: var(--s7-ink);
+  color: var(--blue);
   font-size: var(--s7-small);
 }
 
@@ -1676,7 +1676,7 @@
 
 .timelineDetail p {
   margin-top: 4px;
-  color: var(--s7-ink);
+  color: #53544e;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
@@ -1687,13 +1687,13 @@
   margin-bottom: 0;
   padding: 10px;
   gap: 10px;
-  background: var(--s7-paper);
+  background: #deded8;
 }
 
 .evidenceKey > div {
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #777870;
+  background: #f7f7f2;
 }
 
 .evidenceKey > div span,
@@ -1703,7 +1703,7 @@
 }
 
 .evidenceKey > div span {
-  color: var(--s7-ink);
+  color: var(--muted);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1727,8 +1727,8 @@
   align-items: center;
   gap: 7px;
   padding: 6px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #aaaBA4;
+  background: #f7f7f2;
 }
 
 .evidenceKey dt,
@@ -1737,7 +1737,7 @@
 }
 
 .evidenceKey dd {
-  color: var(--s7-ink);
+  color: #4e4f49;
   font-size: var(--s7-small);
   line-height: 1.4;
 }
@@ -1770,7 +1770,7 @@
 
   .artifactPairing > div {
     border-right: 0;
-    border-bottom: 1px solid var(--s7-shadow);
+    border-bottom: 1px solid #b5b6af;
   }
 
   .artifactPairing > div:last-child {
@@ -1791,7 +1791,7 @@
 
   .inspectorControls {
     border-right: 0;
-    border-bottom: 1px solid var(--s7-shadow);
+    border-bottom: 1px solid #85867f;
   }
 
   .phaseButtons,
@@ -1801,7 +1801,7 @@
 
   .phaseButtons button:nth-child(n),
   .quadrantButtons button + button {
-    border: 1px solid var(--s7-ink);
+    border: 1px solid #777870;
   }
 
   .phaseButtons button + button,
@@ -1818,7 +1818,7 @@
   }
 
   .metricStrip article:nth-child(n + 4) {
-    border-top: 1px solid var(--s7-shadow);
+    border-top: 1px solid #aaaBA4;
   }
 
   .processorRail {
@@ -1897,7 +1897,7 @@
   .modelTabs button,
   .modelTabs button:last-child {
     border-right: 0;
-    border-bottom: 1px solid var(--s7-ink);
+    border-bottom: 1px solid #777870;
   }
 
   .modelTabs button:last-child {
@@ -1916,7 +1916,7 @@
 
   .phaseButtons button:nth-child(n),
   .quadrantButtons button:nth-child(n) {
-    border: 1px solid var(--s7-ink);
+    border: 1px solid #777870;
   }
 
   .phaseButtons button + button,
@@ -1944,7 +1944,7 @@
   .metricStrip article,
   .metricStrip article:nth-child(3) {
     border-right: 0;
-    border-bottom: 1px solid var(--s7-shadow);
+    border-bottom: 1px solid #aaaBA4;
   }
 
   .metricStrip article:nth-child(n + 4) {

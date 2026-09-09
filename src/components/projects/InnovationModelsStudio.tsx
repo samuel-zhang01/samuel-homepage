@@ -419,6 +419,15 @@ function TransitionView() {
 function EvidenceView() {
   return (
     <ProjectCopy copy={innovationModelsStudioCopy}><div className={styles.evidenceView}>
+      <section className={styles.artifactPanel}>
+        <div className={styles.panelHeading}><span>Development</span><strong>What I produced</strong></div>
+        <div className={styles.artifactRows}>
+          <div><span>Text</span><strong>1,251-word reflection</strong><small>TeX word count · 3 sections · 7 subsections</small></div>
+          <div><span>Diagram</span><strong>Four governance models</strong><small>Editable Draw.io matrix and its PDF export</small></div>
+          <div><span>References</span><strong>10 bibliography entries</strong><small>8 reference keys cited in the analysis</small></div>
+          <div><span>Iteration</span><strong>12 revisions · 12–17 October 2025</strong><small>Written analysis, references and diagram developed together</small></div>
+        </div>
+      </section>
       <section className={styles.claimLedger}>
         <div className={styles.panelHeading}><span>Method</span><strong>Framework and interactive assumptions</strong></div>
         {SOURCE_LEDGER.map((item) => <article key={item.title} className={styles[`ledger_${item.state}`]}><span>{item.label}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div></article>)}

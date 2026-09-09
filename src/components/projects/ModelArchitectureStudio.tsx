@@ -772,6 +772,17 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
             <p>Pose accuracy measures the fraction of images assigned to the correct orientation. Depth RMSE measures the size of the depth errors in normalised units. The parameter chart shows how much model capacity each design uses.</p>
             <p>The bars use the recorded five-model comparison, before final retraining. Pose scores varied slightly between recorded evaluations; the depth results shown here use one comparison table consistently.</p>
             <p className={styles.exclusion}>SimpleCNN scores describe an earlier version without the two learned projection skips shown in the developed architecture. The original image-level split may place related video frames in training and testing; the sequence experiment explores why that matters.</p>
+            <p>The classification CSV and report agree exactly for ResNet34. The other models differ by 0.25–1.25 percentage points. I show both saved evaluations below so that the difference remains visible.</p>
+            <div className={styles.comparisonScroll} tabIndex={0} role="region" aria-label="Recorded classification accuracy comparison">
+              <table>
+                <thead><tr><th scope="col">Model</th><th scope="col">CSV test</th><th scope="col">Report test</th><th scope="col">Difference (percentage points)</th></tr></thead>
+                <tbody>{models.map((model) => {
+                  const delta = model.classification.csvTestAccuracy - model.classification.reportAccuracy;
+                  return <tr key={model.id}><th scope="row">{model.shortName}</th><td>{(model.classification.csvTestAccuracy * 100).toFixed(2)}%</td><td>{(model.classification.reportAccuracy * 100).toFixed(2)}%</td><td>{delta > 0 ? "+" : ""}{(delta * 100).toFixed(2)}</td></tr>;
+                })}</tbody>
+              </table>
+            </div>
+            <p className={styles.exclusion}>The final-retraining report gives ResNet34 depth RMSE as 0.204 in the abstract, 0.0141 in the prose and 0.0204 in the final table and conclusion. I keep those conflicting figures separate from the five-model comparison: its ResNet34 depth bar uses 0.0256.</p>
           </div>
         </div>
       </section>

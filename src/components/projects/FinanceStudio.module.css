@@ -24,11 +24,12 @@
   gap: 12px;
   margin-bottom: 12px;
   padding: 11px 13px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
+  border: 1px solid #17605f;
+  color: var(--ocean-foam);
   background:
-    var(--s7-paper);
-  box-shadow: none;
+    linear-gradient(105deg, rgba(46, 196, 182, 0.2), transparent 58%),
+    var(--ocean-deep);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.12);
 }
 
 .privacyBanner > span {
@@ -36,32 +37,32 @@
   width: 32px;
   height: 32px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-heading);
+  border: 1px solid var(--ocean-teal);
+  color: var(--ocean-teal);
+  background: rgba(46, 196, 182, 0.08);
 }
 
 .privacyBanner strong {
   display: block;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-foam);
 }
 
 .privacyBanner p {
   margin: 2px 0 0;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
   line-height: 1.45;
+  color: var(--ocean-mist);
 }
 
 .privacyBanner code {
   padding: 7px 9px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-small);
   white-space: nowrap;
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-cyan);
+  background: rgba(6, 19, 28, 0.7);
 }
 
 .sourceScale {
@@ -71,40 +72,34 @@
   align-items: center;
   margin-bottom: 12px;
   padding: 10px 12px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #17605f;
+  color: var(--ocean-foam);
+  background: linear-gradient(100deg, var(--ocean-deep), var(--ocean-surface));
 }
 
-.sourceScale span { color: var(--s7-ink); font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
+.sourceScale span { font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; color: var(--ocean-teal); }
 .sourceScale h3 { margin: 3px 0 0; font-size: var(--s7-heading); line-height: 1.4; }
-.sourceScale p { margin: 4px 0 0; color: var(--s7-ink); font-size: var(--s7-text); line-height: 1.4; }
+.sourceScale p { margin: 4px 0 0; font-size: var(--s7-text); line-height: 1.4; color: var(--ocean-mist); }
 .sourceScale dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 0; }
-.sourceScale dl > div { min-width: 0; padding: 6px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); }
-.sourceScale dt { color: var(--s7-ink); font-size: var(--s7-small); line-height: 1.4; }
-.sourceScale dd { margin: 3px 0 0; color: var(--s7-ink); font: 700 var(--s7-text)/1.4 var(--s7-font-text); font-variant-numeric: tabular-nums; }
+.sourceScale dl > div { min-width: 0; padding: 6px; border: 1px solid var(--ocean-line); background: rgba(6, 19, 28, .7); }
+.sourceScale dt { font-size: var(--s7-small); line-height: 1.4; color: var(--ocean-mist); }
+.sourceScale dd { margin: 3px 0 0; font: 700 var(--s7-text)/1.4 var(--s7-font-text); font-variant-numeric: tabular-nums; color: var(--ocean-cyan); }
 
 .viewTabs {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 4px;
   padding: 4px 4px 0;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid var(--ocean-abyss);
   border-bottom: 0;
-  background: var(--s7-chrome);
+  background: #d8d8d3;
 }
 
 .viewTabs button {
   min-width: 0;
   padding: 8px 7px 7px;
-  border: 1px solid var(--s7-ink);
-  border-bottom: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
   text-align: left;
   cursor: pointer;
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -112,10 +107,15 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  border: 1px solid #5e6567;
+  border-bottom: 0;
+  color: #2d3f45;
+  background: #bfc7c8;
+  box-shadow: inset 1px 1px 0 #eef4f4;
 }
 
 .viewTabs button:hover {
-  background: var(--s7-paper);
+  background: #d8e1e1;
 }
 
 .viewTabs button strong,
@@ -133,18 +133,13 @@
 
 .viewTabs button span {
   margin-top: 1px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: #596b70;
 }
 
 .viewTabs .activeView {
   position: relative;
   z-index: 1;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -152,15 +147,21 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  box-shadow: inset 1px 1px #fff;
+  background: #163d43;
+  color: #f0f6ef;
 }
 
 .oceanCanvas {
   min-height: 590px;
   padding: 13px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
+  border: 1px solid var(--ocean-abyss);
+  color: var(--ocean-foam);
   background:
-    var(--s7-paper);
+    radial-gradient(circle at 86% -20%, rgba(53, 199, 224, 0.11), transparent 34%),
+    linear-gradient(rgba(228, 242, 247, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(228, 242, 247, 0.018) 1px, transparent 1px),
+    var(--ocean-abyss);
   background-size: auto, 22px 22px, 22px 22px, auto;
 }
 
@@ -185,11 +186,11 @@
 .ledgerFilters label > span,
 .parameterGrid label > span,
 .transferControls > label > span {
-  color: var(--ocean-mist);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: none;
+  color: var(--ocean-mist);
 }
 
 .scopeBar [data-classic-select],
@@ -200,17 +201,18 @@
   padding: 5px 7px;
   border: 1px solid var(--ocean-line);
   border-radius: 0;
-  color: var(--ocean-foam);
-  background: var(--ocean-surface);
+  color: #111;
+  background: #fff;
   font-size: var(--s7-small);
+  border-color: #555;
 }
 
 .scopeBar p {
   align-self: center;
   margin: 0;
-  color: var(--ocean-mist);
   font-size: var(--s7-text);
   text-align: right;
+  color: var(--ocean-mist);
 }
 
 .scopeBar p strong {
@@ -228,18 +230,16 @@
 .thresholdStrip button {
   min-height: var(--s7-control-height);
   padding: 5px 9px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-ui);
   font-weight: 400;
   cursor: pointer;
-  border-radius: var(--s7-control-radius);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
   font-family: var(--s7-font-ui);
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-surface);
 }
 
 .rangeSwitch button:focus-visible, .importMode button:focus-visible, .thresholdStrip button:focus-visible {
@@ -276,9 +276,9 @@
 .thresholdStrip .active {
   position: relative;
   z-index: 1;
-  border-color: var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
+  border-color: var(--ocean-teal);
+  color: var(--ocean-abyss);
+  background: var(--ocean-teal);
 }
 
 .metricStrip {
@@ -291,10 +291,11 @@
 .metricCard {
   min-width: 0;
   padding: 10px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid var(--ocean-line);
   background:
-    var(--s7-paper);
-  box-shadow: none;
+    linear-gradient(145deg, rgba(79, 157, 222, 0.08), transparent 70%),
+    var(--ocean-deep);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.06);
 }
 
 .metricCard > span,
@@ -304,50 +305,51 @@
 }
 
 .metricCard.default {
-  border-color: var(--s7-shadow);
+  border-color: var(--ocean-line);
 }
 
 .metricCard > span {
   overflow: hidden;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--ocean-mist);
 }
 
 .metricCard > strong {
   margin: 5px 0 1px;
-  color: var(--s7-ink);
   font-size: var(--s7-title);
   font-variant-numeric: tabular-nums;
   letter-spacing: normal;
+  color: var(--ocean-foam);
 }
 
 .metricCard > small {
   min-height: 21px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
+  color: var(--ocean-mist);
 }
 
 .metricCard.teal {
-  border-color: var(--s7-shadow);
+  border-color: rgba(46, 196, 182, 0.65);
   background:
-    var(--s7-paper);
+    linear-gradient(140deg, rgba(46, 196, 182, 0.18), transparent 70%),
+    var(--ocean-deep);
 }
 
 .metricCard.teal > strong {
-  color: var(--s7-ink);
+  color: var(--ocean-teal);
 }
 
 .metricCard.positive > strong {
-  color: var(--s7-ink);
+  color: var(--ocean-kelp);
 }
 
 .metricCard.negative > strong {
-  color: var(--s7-ink);
+  color: var(--ocean-coral);
 }
 
 .overviewGrid,
@@ -370,9 +372,9 @@
 
 .oceanPanel {
   min-width: 0;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid var(--ocean-line);
+  background: rgba(10, 32, 48, 0.94);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.045);
 }
 
 .panelTitle {
@@ -382,40 +384,38 @@
   justify-content: space-between;
   gap: 10px;
   padding: 7px 9px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid var(--ocean-line);
+  background: rgba(21, 57, 76, 0.7);
 }
 
 .panelTitle > div > span {
   display: block;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
+  color: var(--ocean-teal);
 }
 
 .panelTitle h3 {
   margin: 2px 0 0;
-  color: var(--s7-ink);
   font-size: var(--s7-heading);
   letter-spacing: normal;
+  color: var(--ocean-foam);
 }
 
 .panelTitle > button {
   padding: 4px 8px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-ui);
   cursor: pointer;
-  border-radius: var(--s7-control-radius);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
   font-family: var(--s7-font-ui);
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-deep);
 }
 
 .panelTitle > button:focus-visible {
@@ -444,8 +444,8 @@
 .legend {
   display: flex;
   gap: 9px;
-  color: var(--ocean-mist);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .legend span {
@@ -457,8 +457,8 @@
 .legend span::before {
   width: 8px;
   height: 8px;
-  border: 1px solid rgba(228, 242, 247, 0.35);
   content: "";
+  border: 1px solid rgba(228, 242, 247, 0.35);
 }
 
 .incomeSwatch::before {
@@ -487,20 +487,20 @@
   min-width: 43px;
   grid-template-rows: minmax(0, 1fr) auto auto;
   gap: 3px;
-  color: var(--s7-ink);
   text-align: center;
+  color: var(--ocean-mist);
 }
 
 .flowPeriod > strong {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   letter-spacing: normal;
+  color: var(--ocean-mist);
 }
 
 .flowPeriod > small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-variant-numeric: tabular-nums;
+  color: var(--ocean-foam);
 }
 
 .flowBars {
@@ -519,11 +519,11 @@
 }
 
 .flowIncome {
-  background: var(--s7-paper);
+  background: linear-gradient(180deg, var(--ocean-kelp), #177a5a);
 }
 
 .flowSpend {
-  background: var(--s7-paper);
+  background: repeating-linear-gradient(135deg, var(--ocean-coral) 0 3px, #8a3347 3px 6px);
 }
 
 .reconcileBar {
@@ -533,10 +533,10 @@
   justify-content: space-between;
   gap: 7px;
   padding: 6px 9px;
+  font-size: var(--s7-small);
   border-top: 1px solid var(--ocean-line);
   color: var(--ocean-mist);
   background: rgba(6, 19, 28, 0.6);
-  font-size: var(--s7-small);
 }
 
 .reconcileBar strong {
@@ -544,11 +544,11 @@
 }
 
 .pass {
-  color: var(--s7-ink) !important;
+  color: var(--ocean-kelp) !important;
 }
 
 .fail {
-  color: var(--s7-ink) !important;
+  color: var(--ocean-coral) !important;
 }
 
 .signalStack {
@@ -562,7 +562,7 @@
   grid-template-columns: 28px minmax(0, 1fr);
   gap: 8px;
   padding: 12px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.3);
 }
 
 .signalStack li:last-child {
@@ -574,21 +574,21 @@
   width: 27px;
   height: 23px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
   font-size: var(--s7-small);
   font-weight: 700;
+  border: 1px solid;
 }
 
 .signalGood {
-  border-color: var(--s7-shadow) !important;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #2f9e77 !important;
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.1);
 }
 
 .signalWarn {
-  border-color: var(--s7-shadow) !important;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #b97f18 !important;
+  color: var(--ocean-amber);
+  background: rgba(251, 191, 36, 0.1);
 }
 
 .signalStack strong,
@@ -597,15 +597,15 @@
 }
 
 .signalStack strong {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-foam);
 }
 
 .signalStack p {
   margin: 2px 0 0;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
   line-height: 1.4;
+  color: var(--ocean-mist);
 }
 
 .accountList {
@@ -618,7 +618,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
 }
 
 .accountList article:last-child {
@@ -637,19 +637,19 @@
 
 .accountList article > div strong,
 .accountList article > strong {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-foam);
 }
 
 .accountList article > div small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .accountList code {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   white-space: nowrap;
+  color: var(--ocean-mist);
 }
 
 .accountEquation {
@@ -660,13 +660,13 @@
 
 .accountList article > strong {
   min-width: 62px;
-  color: var(--s7-ink);
   font-variant-numeric: tabular-nums;
   text-align: right;
+  color: var(--ocean-kelp);
 }
 
 .accountList .debt {
-  color: var(--s7-ink);
+  color: var(--ocean-coral);
 }
 
 .categoryBars {
@@ -685,9 +685,9 @@
 
 .categoryBars > div > span {
   overflow: hidden;
-  color: var(--ocean-mist);
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--ocean-mist);
 }
 
 .categoryBars > div > div {
@@ -703,10 +703,10 @@
 }
 
 .categoryBars strong {
-  color: var(--ocean-foam);
   font-size: var(--s7-small);
   font-variant-numeric: tabular-nums;
   text-align: right;
+  color: var(--ocean-foam);
 }
 
 .thresholdStrip {
@@ -714,8 +714,8 @@
   align-items: center;
   gap: 0;
   margin: -1px 0 10px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .thresholdStrip > span {
@@ -727,8 +727,8 @@
 
 .thresholdStrip small {
   margin-left: 9px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .ledgerLayout {
@@ -741,12 +741,12 @@
 }
 
 .rowCount {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: none;
   white-space: nowrap;
+  color: var(--ocean-mist);
 }
 
 .ledgerFilters {
@@ -754,8 +754,8 @@
   grid-template-columns: minmax(160px, 1fr) minmax(125px, 0.75fr) minmax(160px, 0.9fr);
   gap: 7px;
   padding: 8px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid var(--ocean-line);
+  background: rgba(6, 19, 28, 0.45);
 }
 
 .ledgerTableWrap,
@@ -772,8 +772,8 @@
 .patternTable,
 .auditTable {
   width: 100%;
-  border-collapse: collapse;
   font-size: var(--s7-small);
+  border-collapse: collapse;
 }
 
 .ledgerTable thead,
@@ -788,35 +788,35 @@
 .patternTable th,
 .auditTable th {
   padding: 6px 7px;
-  border-right: 1px solid var(--s7-shadow);
-  border-bottom: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-small);
   letter-spacing: normal;
   text-align: left;
   text-transform: none;
   white-space: nowrap;
+  border-right: 1px solid var(--ocean-line);
+  border-bottom: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: #123347;
 }
 
 .ledgerTable td,
 .patternTable td,
 .auditTable td {
   padding: 7px;
-  border-bottom: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  border-bottom: 1px solid rgba(30, 79, 98, 0.55);
+  color: var(--ocean-mist);
 }
 
 .ledgerTable td:nth-child(3) button {
   width: 100%;
   padding: 0;
+  text-align: left;
+  cursor: pointer;
   border: 0;
   color: inherit;
   background: transparent;
-  text-align: left;
-  cursor: pointer;
 }
 
 .ledgerTable td:nth-child(3) strong,
@@ -828,13 +828,13 @@
 }
 
 .ledgerTable td:nth-child(3) strong {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-foam);
 }
 
 .ledgerTable td:nth-child(3) small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .ledgerTable th:last-child,
@@ -859,46 +859,46 @@
   align-items: center;
   min-height: 17px;
   padding: 2px 5px;
-  border: 1px solid var(--s7-shadow);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   white-space: nowrap;
+  border: 1px solid;
 }
 
 .categoryPill {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: rgba(79, 157, 222, 0.5);
+  color: #b7d9f5;
+  background: rgba(79, 157, 222, 0.1);
 }
 
 .cashflowPill,
 .activePattern,
 .auditPass {
-  border-color: var(--s7-shadow);
-  color: var(--s7-selection-text);
-  background: var(--s7-selection);
+  border-color: rgba(52, 211, 153, 0.45);
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.08);
 }
 
 .excludePill,
 .priceChange {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: rgba(251, 191, 36, 0.5);
+  color: var(--ocean-amber);
+  background: rgba(251, 191, 36, 0.08);
 }
 
 .cadencePill {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: rgba(46, 196, 182, 0.5);
+  color: var(--ocean-teal);
+  background: rgba(46, 196, 182, 0.08);
 }
 
 .amountIn {
-  color: var(--s7-ink) !important;
+  color: var(--ocean-kelp) !important;
 }
 
 .amountOut {
-  color: var(--s7-ink) !important;
+  color: var(--ocean-coral) !important;
 }
 
 .ledgerTotals {
@@ -907,14 +907,14 @@
   justify-content: space-between;
   gap: 8px;
   padding: 7px 9px;
-  border-top: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-small);
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
 }
 
 .ledgerTotals strong {
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .inspector {
@@ -928,7 +928,7 @@
 
 .inspectAmount {
   padding-bottom: 9px;
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid var(--ocean-line);
 }
 
 .inspectAmount span,
@@ -937,8 +937,8 @@
 }
 
 .inspectAmount span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .inspectAmount strong {
@@ -957,32 +957,32 @@
   grid-template-columns: 88px minmax(0, 1fr);
   gap: 7px;
   padding: 7px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
 }
 
 .inspector dt {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .inspector dd {
   margin: 0;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   overflow-wrap: anywhere;
+  color: var(--ocean-foam);
 }
 
 .inspector dd span {
   display: block;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .signatureBox,
 .matchFormula {
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid var(--ocean-line);
+  background: var(--ocean-abyss);
 }
 
 .signatureBox > span,
@@ -998,26 +998,26 @@
 .matchFormula code {
   display: block;
   margin: 5px 0;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.5;
   overflow-wrap: anywhere;
   white-space: normal;
+  color: var(--ocean-cyan);
 }
 
 .signatureBox p,
 .matchFormula p {
   margin: 0;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
   line-height: 1.4;
+  color: var(--ocean-mist);
 }
 
 .emptyState {
   padding: 24px !important;
-  color: var(--s7-ink) !important;
   text-align: center !important;
   white-space: normal !important;
+  color: var(--ocean-mist) !important;
 }
 
 .modelWorkbench {
@@ -1052,8 +1052,8 @@
 
 .parameterGrid label > span strong,
 .transferControls > label > span strong {
-  color: var(--ocean-foam);
   white-space: nowrap;
+  color: var(--ocean-foam);
 }
 
 .parameterGrid input[type="range"],
@@ -1065,9 +1065,9 @@
 .methodNote {
   margin: 0;
   padding: 0 10px 10px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.5;
+  color: var(--ocean-mist);
 }
 
 .patternMetrics {
@@ -1092,12 +1092,12 @@
 
 .patternTable td:first-child strong,
 .auditTable td:first-child strong {
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .auditTable td:first-child small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .transferLayout {
@@ -1123,8 +1123,8 @@
   gap: 8px;
   margin: 3px 11px 11px;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid var(--ocean-line);
+  background: rgba(6, 19, 28, 0.55);
 }
 
 .checkControl input {
@@ -1139,15 +1139,15 @@
 }
 
 .checkControl strong {
-  color: var(--s7-ink) !important;
   font-size: var(--s7-small);
+  color: var(--ocean-foam) !important;
 }
 
 .checkControl small {
   margin-top: 2px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
+  color: var(--ocean-mist);
 }
 
 .matchFormula {
@@ -1157,14 +1157,14 @@
 .transferMetrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--s7-shadow);
+  border-top: 1px solid var(--ocean-line);
 }
 
 .transferMetrics > div {
   min-width: 0;
   padding: 8px;
-  border-right: 1px solid var(--s7-shadow);
   text-align: center;
+  border-right: 1px solid var(--ocean-line);
 }
 
 .transferMetrics > div:last-child {
@@ -1177,16 +1177,16 @@
 }
 
 .transferMetrics span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   letter-spacing: normal;
+  color: var(--ocean-mist);
 }
 
 .transferMetrics strong {
   margin-top: 3px;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
   font-variant-numeric: tabular-nums;
+  color: var(--ocean-teal);
 }
 
 .transferFlows {
@@ -1195,7 +1195,7 @@
 
 .transferFlows article {
   padding: 11px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
 }
 
 .transferFlows article:last-child {
@@ -1211,11 +1211,11 @@
 
 .transferRoute > span {
   overflow: hidden;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--ocean-foam);
 }
 
 .transferRoute > span:last-child {
@@ -1235,13 +1235,13 @@
   left: 0;
   height: 6px;
   max-width: calc(100% - 12px);
-  background: var(--s7-paper);
+  background: linear-gradient(90deg, var(--ocean-blue), var(--ocean-teal));
 }
 
 .transferRoute b {
   position: absolute;
   right: 0;
-  color: var(--s7-ink);
+  color: var(--ocean-teal);
 }
 
 .transferDetail {
@@ -1249,25 +1249,25 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 8px;
   margin-top: 5px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .transferDetail strong {
-  color: var(--s7-ink);
+  color: var(--ocean-cyan);
 }
 
 .transferDetail code {
-  color: var(--s7-ink);
+  color: var(--ocean-teal);
 }
 
 .transferFootnote {
   padding: 8px 10px;
-  border-top: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-small);
   line-height: 1.45;
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
 }
 
 .importLayout {
@@ -1291,19 +1291,18 @@
   width: calc(100% - 20px);
   margin: 0 10px 10px;
   padding: 8px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
   font-size: var(--s7-ui);
   font-weight: 400;
   letter-spacing: normal;
   text-transform: none;
   cursor: pointer;
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   line-height: 1.4;
   min-height: var(--s7-control-height);
+  border: 1px solid #1c9c90;
+  color: var(--ocean-abyss);
+  background: var(--ocean-teal);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.55), 2px 2px 0 #031017;
 }
 
 .runButton:focus-visible {
@@ -1331,7 +1330,7 @@
 
 .runButton:active {
   transform: translate(1px, 1px);
-  box-shadow: none;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3), 1px 1px 0 #031017;
 }
 
 .pipelineSteps {
@@ -1346,7 +1345,7 @@
   align-items: center;
   gap: 8px;
   padding: 7px 0;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
 }
 
 .pipelineSteps li > span {
@@ -1354,9 +1353,9 @@
   width: 24px;
   height: 21px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
 }
 
 .pipelineSteps li strong,
@@ -1365,26 +1364,26 @@
 }
 
 .pipelineSteps li strong {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-foam);
 }
 
 .pipelineSteps li small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-mist);
 }
 
 .pipelineSteps .completeStep > span {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: var(--ocean-kelp);
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.08);
 }
 
 .importReceipt {
   margin: 10px 10px 0;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid var(--ocean-line);
+  background: var(--ocean-abyss);
 }
 
 .importReceipt span,
@@ -1393,23 +1392,23 @@
 }
 
 .importReceipt span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
+  color: var(--ocean-teal);
 }
 
 .importReceipt strong {
   margin: 3px 0;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--ocean-foam);
 }
 
 .importReceipt p {
   margin: 0;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
   line-height: 1.45;
+  color: var(--ocean-mist);
 }
 
 .auditPanel {
@@ -1424,23 +1423,51 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
-  border-top: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-top: 1px solid var(--ocean-line);
+  background: var(--ocean-line);
 }
 
 .auditNotes p {
   margin: 0;
   padding: 8px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-text);
   line-height: 1.45;
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
 }
 
 .auditNotes strong {
   display: block;
   margin-bottom: 2px;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
+}
+
+.privacyBanner, .sourceScale {
+  --ocean-foam: #203b39;
+  --ocean-mist: #465e59;
+  --ocean-teal: #276b60;
+  --ocean-cyan: #276b60;
+  color: #203b39;
+  background: #edf0e7;
+  border: 1px solid #75837a;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #c1c8bf;
+}
+
+.privacyBanner code, .sourceScale dl > div {
+  background: #fafbf6;
+  border-color: #99a69b;
+  color: #284a43;
+}
+
+.ledgerTable .selectedRow > td {
+  background: #19434a;
+  color: #eff8f3;
+  box-shadow: inset 0 1px #7cae9f, inset 0 -1px #7cae9f;
+}
+
+.financeStudio :where(button, input):focus-visible {
+  outline: 2px dotted currentColor;
+  outline-offset: 3px;
 }
 
 @container (max-width: 900px) {
@@ -1595,27 +1622,12 @@
 
   .transferMetrics > div {
     border-right: 0;
-    border-bottom: 1px solid var(--s7-shadow);
+    border-bottom: 1px solid var(--ocean-line);
   }
 }
 
-/* System 7 surface pass: preserve financial status colours and chart marks,
-   but move the control room from a dark glass dashboard to a light utility. */
+/* Historical project palette; current control geometry and responsive layout retained. */
 .financeStudio {
-  --ocean-abyss: #111;
-  --ocean-deep: #e5e5e0;
-  --ocean-surface: #f4f4ef;
-  --ocean-surface-2: #d8d8d3;
-  --ocean-line: #666;
-  --ocean-foam: #111;
-  --ocean-mist: #4d5b60;
-  --ocean-teal: #087f78;
-  --ocean-cyan: #087b91;
-  --ocean-blue: #28669e;
-  --ocean-kelp: #1e754f;
-  --ocean-coral: #a52f42;
-  --ocean-amber: #8a5a00;
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
 }
 
@@ -1625,44 +1637,7 @@
   font-family: var(--s7-font-mono);
 }
 
-.privacyBanner,
-.sourceScale {
-  border: 1px solid var(--s7-shadow);
-  border-radius: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.privacyBanner > span,
-.privacyBanner code,
-.sourceScale dl > div {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.privacyBanner strong,
-.privacyBanner p,
-.sourceScale p,
-.sourceScale dt {
-  color: var(--s7-ink);
-}
-
-.viewTabs {
-  border: 1px solid var(--s7-shadow);
-  border-bottom: 0;
-  background: var(--s7-chrome);
-}
-
 .viewTabs button {
-  border-color: var(--s7-ink);
-  border-radius: var(--s7-control-radius);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1678,29 +1653,10 @@
 }
 
 .viewTabs button:disabled, .viewTabs button[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
   cursor: default;
 }
 
-.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-
-.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
-
 .viewTabs .activeView {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1708,6 +1664,9 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  box-shadow: inset 1px 1px #fff;
+  background: #163d43;
+  color: #f0f6ef;
 }
 
 .viewTabs .activeView:focus-visible {
@@ -1716,51 +1675,7 @@
 }
 
 .viewTabs .activeView:disabled, .viewTabs .activeView[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
   cursor: default;
-}
-
-.viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-
-.viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
-
-.viewTabs .activeView span {
-  color: var(--s7-ink);
-}
-
-.oceanCanvas {
-  border: 1px solid var(--s7-shadow);
-  border-radius: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.scopeBar,
-.ledgerFilters,
-.controlPanel,
-.checkControl {
-  border-color: #777;
-  color: #111;
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
-}
-
-.scopeBar [data-classic-select],
-.ledgerFilters [data-classic-select],
-.ledgerFilters input {
-  border-color: #555;
-  color: #111;
-  background: #fff;
 }
 
 .rangeSwitch button,
@@ -1768,12 +1683,6 @@
 .thresholdStrip button,
 .panelTitle > button,
 .runButton {
-  border-color: var(--s7-ink);
-  border-radius: var(--s7-control-radius);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1789,33 +1698,13 @@
 }
 
 .rangeSwitch button:disabled, .rangeSwitch button[aria-disabled="true"], .importMode button:disabled, .importMode button[aria-disabled="true"], .thresholdStrip button:disabled, .thresholdStrip button[aria-disabled="true"], .panelTitle > button:disabled, .panelTitle > button[aria-disabled="true"], .runButton:disabled, .runButton[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
   cursor: default;
-}
-
-.rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]), .importMode button:active:not(:disabled):not([aria-disabled="true"]), .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]), .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]), .runButton:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-
-.rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > strong, .rangeSwitch button:active:not(:disabled):not([aria-disabled="true"]) > small, .importMode button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .importMode button:active:not(:disabled):not([aria-disabled="true"]) > strong, .importMode button:active:not(:disabled):not([aria-disabled="true"]) > small, .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > strong, .thresholdStrip button:active:not(:disabled):not([aria-disabled="true"]) > small, .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > strong, .panelTitle > button:active:not(:disabled):not([aria-disabled="true"]) > small, .runButton:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .runButton:active:not(:disabled):not([aria-disabled="true"]) > strong, .runButton:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
 }
 
 .rangeSwitch .active,
 .importMode .active,
 .thresholdStrip .active,
 .runButton {
-  border-color: var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1831,137 +1720,7 @@
 }
 
 .rangeSwitch .active:disabled, .rangeSwitch .active[aria-disabled="true"], .importMode .active:disabled, .importMode .active[aria-disabled="true"], .thresholdStrip .active:disabled, .thresholdStrip .active[aria-disabled="true"], .runButton:disabled, .runButton[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
   cursor: default;
-}
-
-.rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]), .importMode .active:active:not(:disabled):not([aria-disabled="true"]), .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]), .runButton:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-
-.rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]) > strong, .rangeSwitch .active:active:not(:disabled):not([aria-disabled="true"]) > small, .importMode .active:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .importMode .active:active:not(:disabled):not([aria-disabled="true"]) > strong, .importMode .active:active:not(:disabled):not([aria-disabled="true"]) > small, .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]) > strong, .thresholdStrip .active:active:not(:disabled):not([aria-disabled="true"]) > small, .runButton:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .runButton:active:not(:disabled):not([aria-disabled="true"]) > strong, .runButton:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
-
-.metricCard {
-  border-color: var(--s7-shadow);
-  border-radius: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.metricCard.teal {
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
-}
-
-.oceanPanel {
-  border: 1px solid var(--s7-shadow);
-  border-radius: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.panelTitle {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.panelTitle h3,
-.panelTitle > button,
-.legend,
-.flowPeriod,
-.reconcileBar,
-.accountList article > div strong,
-.accountList article > strong,
-.ledgerTotals,
-.inspector,
-.methodNote,
-.transferFootnote,
-.importReceipt,
-.auditNotes p {
-  color: #111;
-}
-
-.flowChart {
-  background: repeating-linear-gradient(to top, #e2e2dd 0 1px, transparent 1px 42px), #fff;
-}
-
-.reconcileBar,
-.ledgerFilters,
-.ledgerTotals,
-.signatureBox,
-.matchFormula,
-.checkControl,
-.transferFootnote,
-.importReceipt,
-.auditNotes p {
-  border-color: #777;
-  background: var(--s7-surface);
-  box-shadow: inset 1px 1px 0 #fff;
-}
-
-.signalGood {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-}
-
-.signalWarn {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-}
-
-.categoryBars > div > div {
-  border: 1px solid #777;
-  background: var(--s7-chrome);
-}
-
-.ledgerTable thead,
-.patternTable thead,
-.auditTable thead,
-.ledgerTable th,
-.patternTable th,
-.auditTable th {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-}
-
-.ledgerTable td,
-.patternTable td,
-.auditTable td {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-}
-
-.ledgerTable tbody tr:nth-child(even),
-.patternTable tbody tr:nth-child(even),
-.auditTable tbody tr:nth-child(even) {
-  background: var(--s7-paper);
-}
-
-.ledgerTable tbody tr:hover,
-.patternTable tbody tr:hover,
-.auditTable tbody tr:hover,
-.ledgerTable .selectedRow {
-  background: var(--s7-selection);
-}
-
-.ledgerTotals,
-.signatureBox,
-.matchFormula,
-.transferFootnote,
-.importReceipt {
-  border: 1px solid var(--s7-shadow);
 }
 
 /* Import identities are a sequential experiment, followed by the separate ledger audit. */

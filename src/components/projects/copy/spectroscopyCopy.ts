@@ -332,7 +332,7 @@ export const spectroscopyCopy = {
   ],
   "Max sample": [
     "最大采样值",
-    "最大采樣值"
+    "最大採樣值"
   ],
   "The first, strongest and last samples currently visible": [
     "当前可见的首个、最强及末个采样点",
@@ -356,7 +356,7 @@ export const spectroscopyCopy = {
   ],
   "Maximum sample": [
     "最大采样值",
-    "最大采樣值"
+    "最大採樣值"
   ],
   "Last visible": [
     "末个可见采样点",

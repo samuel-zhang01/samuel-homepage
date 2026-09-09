@@ -1,4 +1,5 @@
 .studio {
+  container-type: inline-size;
   --risk-ink: #17131d;
   --risk-deep: #231b2b;
   --risk-panel: #30243a;
@@ -16,7 +17,6 @@
   --demo-blue: #73538c;
   --demo-green: #3f725b;
   --demo-green-soft: #dceade;
-  container-type: inline-size;
 }
 
 .researchBanner {
@@ -26,11 +26,11 @@
   gap: 11px;
   margin-bottom: 11px;
   padding: 10px 12px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background:
-    var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #80684b;
+  background: #eee8d4;
+  color: #443a25;
+  border-color: #988b6b;
+  box-shadow: inset 1px 1px #fff9e7, inset -1px -1px #c5bca3;
 }
 
 .researchIcon {
@@ -38,12 +38,12 @@
   width: 34px;
   height: 34px;
   place-items: center;
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-heading);
   border: 1px solid #3c3020;
   color: #fff8dd;
   background: #59452d;
   box-shadow: inset 1px 1px 0 #9b8056;
-  font-family: var(--s7-font-text);
-  font-size: var(--s7-heading);
 }
 
 .researchBanner strong {
@@ -62,19 +62,19 @@
 .licencePanel a {
   min-height: 30px;
   padding: 7px 9px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
   font-size: var(--s7-small);
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
+  border: 1px solid #3d3121;
+  color: #211a10;
+  background: #f7e5b8;
+  box-shadow: inset 1px 1px 0 #fff9e7, 1px 1px 0 rgba(40, 30, 16, 0.35);
 }
 
 .researchBanner a:hover,
 .licencePanel a:hover {
-  background: var(--s7-paper);
+  background: #fff4d7;
 }
 
 .viewTabs {
@@ -82,33 +82,32 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 3px;
   padding: 4px 4px 0;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #4b4550;
   border-bottom: 0;
-  background: var(--s7-chrome);
+  background: #c5c1c3;
 }
 
 .viewTabs button {
   min-width: 0;
   min-height: max(var(--s7-control-height), 41px);
   padding: 7px 8px 6px;
-  border: 1px solid var(--s7-ink);
-  border-bottom: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
   text-align: left;
   cursor: pointer;
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
+  border: 1px solid #686169;
+  border-bottom: 0;
+  color: #3c3540;
+  background: #aaa6aa;
+  box-shadow: inset 1px 1px 0 #ebe8ea;
 }
 
 .viewTabs button:hover {
-  background: var(--s7-paper);
+  background: #c4bec6;
 }
 
 .viewTabs button strong,
@@ -127,18 +126,13 @@
 
 .viewTabs button span {
   margin-top: 2px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: #625a64;
 }
 
 .viewTabs .activeView {
   position: relative;
   z-index: 1;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -146,15 +140,21 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  color: var(--risk-paper);
+  background: var(--risk-deep);
+  box-shadow: inset 1px 1px #97839e;
 }
 
 .labCanvas {
   min-height: 650px;
   padding: 12px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
+  border: 1px solid var(--risk-shadow);
+  color: var(--risk-paper);
   background:
-    var(--s7-paper);
+    radial-gradient(circle at 90% -10%, rgba(182, 144, 223, 0.15), transparent 35%),
+    linear-gradient(rgba(244, 241, 233, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 241, 233, 0.02) 1px, transparent 1px),
+    var(--risk-ink);
   background-size: auto, 18px 18px, 18px 18px, auto;
 }
 
@@ -195,11 +195,11 @@
 .panelHeading > div > span,
 .sectionHeading > div > span,
 .kicker {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: none;
+  color: var(--risk-cyan);
 }
 
 .panelHeading h3,
@@ -208,9 +208,9 @@
 .opePanel h3,
 .licencePanel h3 {
   margin: 2px 0 0;
-  color: var(--s7-ink);
   font-size: var(--s7-heading);
   line-height: 1.4;
+  color: var(--risk-paper);
 }
 
 .sectionHeading {
@@ -219,10 +219,10 @@
 }
 
 .sectionHeading > span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
   text-align: right;
+  color: var(--risk-muted);
 }
 
 .modeSwitch {
@@ -234,18 +234,17 @@
 .deltaSwitch button {
   min-height: var(--s7-control-height);
   padding: 5px 10px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
   font-size: var(--s7-ui);
   font-weight: 400;
   cursor: pointer;
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
+  border: 1px solid var(--risk-line);
+  color: var(--risk-muted);
+  background: var(--risk-panel);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .modeSwitch button:focus-visible, .deltaSwitch button:focus-visible {
@@ -280,12 +279,6 @@
 .deltaSwitch .activeMode {
   position: relative;
   z-index: 1;
-  border-color: var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -293,6 +286,10 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  border-color: var(--risk-cyan);
+  color: var(--risk-ink);
+  background: var(--risk-cyan);
+  box-shadow: inset 1px 1px 0 #d5fffa;
 }
 
 .sliderGrid {
@@ -306,27 +303,27 @@
   min-width: 0;
   margin: 0;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #52415e;
+  background: rgba(48, 36, 58, 0.72);
 }
 
 .sliderGrid label > span,
 .deltaSwitch legend {
-  color: var(--risk-muted);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: none;
+  color: var(--risk-muted);
 }
 
 .sliderGrid output {
   display: block;
   min-height: 20px;
   margin-top: 4px;
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
+  color: var(--risk-paper);
 }
 
 .sliderGrid input[type="range"] {
@@ -344,9 +341,9 @@
 .sliderGrid small,
 .deltaSwitch small {
   display: block;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
+  color: var(--risk-muted);
 }
 
 .deltaSwitch div {
@@ -366,15 +363,15 @@
   gap: 10px;
   margin-top: 8px;
   padding: 7px 8px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #4d6a6b;
+  color: var(--risk-muted);
+  background: #18292d;
 }
 
 .ruleReadout code {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   white-space: normal;
+  color: var(--risk-cyan);
 }
 
 .ruleReadout > span:not([data-math-equation]) {
@@ -392,10 +389,11 @@
 .metricCard {
   min-width: 0;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid var(--risk-line);
   background:
-    var(--s7-paper);
-  box-shadow: none;
+    linear-gradient(145deg, rgba(115, 167, 232, 0.1), transparent 70%),
+    var(--risk-deep);
+  box-shadow: inset 1px 1px 0 rgba(244, 241, 233, 0.07);
 }
 
 .metricCard > span,
@@ -406,29 +404,29 @@
 
 .metricCard > span {
   overflow: hidden;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
+  color: var(--risk-muted);
 }
 
 .metricCard > strong {
   margin: 4px 0 2px;
-  color: var(--s7-ink);
   font-family: var(--s7-font-mono);
   font-size: var(--s7-heading);
   line-height: 1.4;
+  color: var(--risk-paper);
 }
 
 .metricCard > small {
   overflow: hidden;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
   text-overflow: ellipsis;
+  color: var(--risk-muted);
 }
 
 .metricCard sub {
@@ -436,13 +434,14 @@
 }
 
 .objectiveCard {
-  border-color: var(--s7-shadow);
+  border-color: #6d5d38;
   background:
-    var(--s7-paper);
+    linear-gradient(145deg, rgba(241, 201, 108, 0.13), transparent 70%),
+    var(--risk-deep);
 }
 
 .objectiveCard > strong {
-  color: var(--s7-ink);
+  color: var(--risk-amber);
 }
 
 .matchBanner {
@@ -451,17 +450,17 @@
   gap: 8px;
   margin-bottom: 10px;
   padding: 7px 9px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
   font-size: var(--s7-small);
   line-height: 1.4;
+  border: 1px solid #437560;
+  color: #dff7e9;
+  background: #254d3d;
+  box-shadow: inset 1px 1px 0 #55896f;
 }
 
 .matchBanner strong {
-  color: var(--s7-ink);
   white-space: nowrap;
+  color: #fff;
 }
 
 .viewStack {
@@ -480,9 +479,9 @@
   min-width: 0;
   min-height: 62px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid var(--risk-line);
+  background: var(--risk-deep);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .pipeline article > span,
@@ -492,9 +491,9 @@
 }
 
 .pipeline article > span {
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
+  color: var(--risk-cyan);
 }
 
 .pipeline article > strong {
@@ -503,16 +502,16 @@
 }
 
 .pipeline article > small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
+  color: var(--risk-muted);
 }
 
 .pipeline > i {
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
   font-size: var(--s7-title);
   font-style: normal;
+  color: var(--risk-purple);
 }
 
 .decisionGrid,
@@ -539,8 +538,8 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  color: var(--risk-muted);
   font-size: var(--s7-small);
+  color: var(--risk-muted);
 }
 
 .legend i {
@@ -619,29 +618,29 @@
 
 .chartNote {
   margin: 7px 0 0;
-  color: var(--risk-muted);
   font-size: var(--s7-small);
   line-height: 1.45;
+  color: var(--risk-muted);
 }
 
 .deferBadge,
 .retainBadge {
   padding: 5px 6px;
-  border: 1px solid var(--s7-shadow);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   white-space: nowrap;
+  border: 1px solid currentColor;
 }
 
 .deferBadge {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #ead7fa;
+  background: #553a69;
 }
 
 .retainBadge {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #d5fff7;
+  background: #285a55;
 }
 
 .claimFacts {
@@ -649,36 +648,36 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   margin: 0 0 9px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #493b53;
+  background: #493b53;
 }
 
 .claimFacts > div {
   min-width: 0;
   padding: 7px;
-  background: var(--s7-paper);
+  background: #2a2132;
 }
 
 .claimFacts dt {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   text-transform: none;
+  color: var(--risk-muted);
 }
 
 .claimFacts dd {
   overflow: hidden;
   margin: 2px 0 0;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--risk-paper);
 }
 
 .bayesTrace {
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #493b53;
+  background: #19151f;
 }
 
 .traceHeader {
@@ -690,8 +689,8 @@
 }
 
 .traceHeader span {
-  color: var(--s7-ink);
   text-align: right;
+  color: var(--risk-muted);
 }
 
 .traceRow {
@@ -705,27 +704,27 @@
 
 .traceRow > span {
   overflow: hidden;
-  color: var(--s7-ink);
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--risk-muted);
 }
 
 .traceRow code {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--risk-cyan);
 }
 
 .traceRow > div {
   height: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #4e4156;
+  background: #0f0c12;
 }
 
 .traceRow > div i {
   display: block;
   width: var(--trace-fill);
   height: 100%;
-  background: var(--s7-paper);
+  background: var(--risk-purple);
 }
 
 .traceRow > strong {
@@ -742,8 +741,8 @@
 
 .signalPair article {
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #4d4353;
+  background: #2a2330;
 }
 
 .signalPair span,
@@ -753,9 +752,9 @@
 }
 
 .signalPair span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   text-transform: none;
+  color: var(--risk-muted);
 }
 
 .signalPair strong {
@@ -765,32 +764,32 @@
 }
 
 .signalPair small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--risk-muted);
 }
 
 .signalPair .signalHot {
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border-color: var(--risk-amber);
+  background: #4b3c2a;
 }
 
 .tableScroll {
   overflow: auto;
   max-width: 100%;
-  border: 1px solid var(--s7-shadow);
   outline: none;
+  border: 1px solid #514258;
 }
 
 .tableScroll:focus-visible {
-  box-shadow: none;
+  box-shadow: 0 0 0 2px var(--risk-cyan);
 }
 
 .queuePanel table {
   width: 100%;
   min-width: 650px;
-  border-collapse: collapse;
-  background: var(--s7-paper);
   font-size: var(--s7-small);
+  border-collapse: collapse;
+  background: #1a151f;
 }
 
 .queuePanel th {
@@ -798,43 +797,41 @@
   top: 0;
   z-index: 1;
   padding: 6px 7px;
-  border-right: 1px solid var(--s7-shadow);
-  border-bottom: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font-size: var(--s7-small);
   letter-spacing: normal;
   text-align: left;
   text-transform: none;
   white-space: nowrap;
+  border-right: 1px solid #5a4a62;
+  border-bottom: 1px solid #776482;
+  color: var(--risk-paper);
+  background: #382b41;
 }
 
 .queuePanel td {
   padding: 6px 7px;
-  border-right: 1px solid var(--s7-shadow);
-  border-bottom: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
   white-space: nowrap;
+  border-right: 1px solid #3c3043;
+  border-bottom: 1px solid #3c3043;
+  color: var(--risk-muted);
 }
 
 .queuePanel td button {
   padding: 1px 2px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
   font: inherit;
   font-weight: 400;
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
-  border-radius: var(--s7-control-radius);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  border: 0;
+  color: var(--risk-cyan);
+  background: transparent;
 }
 
 .queuePanel td button:focus-visible {
@@ -865,11 +862,11 @@
   display: inline-block;
   min-width: 43px;
   padding: 3px 5px;
-  border: 1px solid currentColor;
   font-size: var(--s7-small);
   font-weight: 700;
   text-align: center;
   text-transform: none;
+  border: 1px solid currentColor;
 }
 
 .deferCell {
@@ -926,9 +923,10 @@
 
 .benchmarkHero {
   padding: 12px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #8066a0;
   background:
-    var(--s7-paper);
+    linear-gradient(145deg, rgba(182, 144, 223, 0.18), transparent 68%),
+    #2d2137;
 }
 
 .benchmarkHero > span,
@@ -939,19 +937,19 @@
 
 .benchmarkHero > span,
 .benchmarkPair span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: none;
+  color: var(--risk-muted);
 }
 
 .benchmarkHero > strong {
   margin-top: 5px;
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
   font-size: var(--s7-title);
   line-height: 1.4;
+  color: var(--risk-purple);
 }
 
 .benchmarkHero p {
@@ -961,9 +959,9 @@
 
 .benchmarkHero small,
 .benchmarkPair small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
+  color: var(--risk-muted);
 }
 
 .benchmarkPair {
@@ -976,24 +974,24 @@
 .benchmarkPair article {
   min-width: 0;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #51435a;
+  background: #292130;
 }
 
 .benchmarkPair strong {
   display: block;
   margin: 4px 0 2px;
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
   font-size: var(--s7-text);
+  color: var(--risk-paper);
 }
 
 .cautionBox {
   margin-top: 8px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #776139;
+  color: #f7e7bd;
+  background: #443821;
 }
 
 .cautionBox strong {
@@ -1016,12 +1014,12 @@
 .comparisonCards article {
   min-width: 0;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #514259;
+  background: #28202f;
 }
 
 .comparisonCards .activeComparison {
-  border-color: var(--s7-shadow);
+  border-color: var(--risk-cyan);
   box-shadow: none;
 }
 
@@ -1032,10 +1030,10 @@
 }
 
 .comparisonCards span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   text-transform: none;
+  color: var(--risk-muted);
 }
 
 .comparisonCards strong {
@@ -1046,13 +1044,13 @@
 
 .comparisonCards p {
   margin: 0 0 3px;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
+  color: var(--risk-paper);
 }
 
 .comparisonCards small {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--risk-muted);
 }
 
 .tailFormula {
@@ -1065,8 +1063,8 @@
 .tailFormula > div {
   min-width: 0;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #4d3f56;
+  background: #1b161f;
 }
 
 .tailFormula > div > span:not([data-math-equation]),
@@ -1082,14 +1080,14 @@
 
 .tailFormula code {
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--risk-cyan);
 }
 
 .tailFormula > b {
   align-self: center;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
+  color: var(--risk-purple);
 }
 
 .lossRail {
@@ -1098,14 +1096,14 @@
   height: 42px;
   margin-top: 12px;
   padding: 4px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #594965;
+  background: #100d13;
 }
 
 .lossRail i {
   flex: 1;
   min-width: 1px;
-  background: var(--s7-paper);
+  background: #365f5d;
 }
 
 .lossRail .tailSegment {
@@ -1117,15 +1115,15 @@
   justify-content: space-between;
   gap: 10px;
   margin-top: 4px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: var(--risk-muted);
 }
 
 .objectiveEquation {
   padding: 12px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
   text-align: center;
+  border: 1px solid #76633c;
+  background: #3b311f;
 }
 
 .objectiveEquation strong,
@@ -1134,16 +1132,16 @@
 }
 
 .objectiveEquation strong {
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
   font-size: var(--s7-title);
   line-height: 1.4;
+  color: var(--risk-amber);
 }
 
 .objectiveEquation code {
   margin-top: 5px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
+  color: #f7e7bd;
 }
 
 .objectivePanel dl {
@@ -1155,12 +1153,12 @@
   justify-content: space-between;
   gap: 10px;
   padding: 6px 3px;
-  border-bottom: 1px dotted var(--s7-shadow);
   font-size: var(--s7-small);
+  border-bottom: 1px dotted #5c4c64;
 }
 
 .objectivePanel dt {
-  color: var(--s7-ink);
+  color: var(--risk-muted);
 }
 
 .objectivePanel dd {
@@ -1175,16 +1173,16 @@
   width: 20px;
   height: 18px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid currentColor;
 }
 
 .zeroLoss {
-  color: var(--s7-ink);
+  color: var(--risk-green);
 }
 
 .oneLoss {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: var(--risk-red);
+  background: rgba(240, 122, 134, 0.12);
 }
 
 .significancePanel {
@@ -1193,16 +1191,16 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #71613d;
+  color: #f6e9c5;
+  background: #3c321f;
+  box-shadow: inset 1px 1px 0 #6f5c34;
 }
 
 .significancePanel > div {
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #79663d;
+  background: #2b2418;
 }
 
 .significancePanel > div > span,
@@ -1248,8 +1246,8 @@
 .provenanceGrid article {
   min-width: 0;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #504158;
+  background: #292030;
 }
 
 .provenanceGrid span,
@@ -1258,10 +1256,10 @@
 }
 
 .provenanceGrid span {
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
   text-transform: none;
+  color: var(--risk-cyan);
 }
 
 .provenanceGrid strong {
@@ -1271,9 +1269,9 @@
 
 .provenanceGrid p {
   margin: 0;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
   line-height: 1.45;
+  color: var(--risk-muted);
 }
 
 .methodColumns {
@@ -1290,9 +1288,9 @@
 .methodColumns ul {
   margin: 9px 0 0;
   padding-left: 18px;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.55;
+  color: var(--risk-muted);
 }
 
 .methodColumns li + li {
@@ -1300,7 +1298,7 @@
 }
 
 .methodColumns b {
-  color: var(--s7-ink);
+  color: var(--risk-paper);
 }
 
 .formulaCard {
@@ -1308,15 +1306,15 @@
   gap: 5px;
   margin-top: 10px;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #476664;
+  background: #172728;
 }
 
 .formulaCard code {
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
   font-size: var(--s7-small);
   line-height: 1.4;
+  color: var(--risk-cyan);
 }
 
 .opePanel,
@@ -1333,36 +1331,36 @@
   width: 58px;
   height: 58px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
   font-family: var(--s7-font-text);
   font-size: var(--s7-text);
   font-weight: 700;
+  border: 2px solid var(--risk-purple);
+  color: var(--risk-purple);
+  background: #1b1521;
+  box-shadow: inset 0 0 0 3px #362740;
 }
 
 .opePanel p,
 .licencePanel p {
   margin: 5px 0 0;
-  color: var(--s7-ink);
   font-size: var(--s7-text);
   line-height: 1.5;
+  color: var(--risk-muted);
 }
 
 .licencePanel {
   grid-template-columns: minmax(0, 1fr) auto;
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #7e6842;
+  color: #fff2ca;
+  background: #3b301e;
 }
 
 .licencePanel .kicker {
-  color: var(--s7-ink);
+  color: var(--risk-amber);
 }
 
 .licencePanel p {
-  color: var(--s7-ink);
+  color: #eadcb8;
 }
 
 .footerLine {
@@ -1386,6 +1384,12 @@
 .sliderGrid input:focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 2px;
+}
+
+.queuePanel tbody .selectedRow td {
+  background: #51405f;
+  color: #fff6e8;
+  box-shadow: inset 0 1px #c6b0d0, inset 0 -1px #c6b0d0;
 }
 
 @container (max-width: 860px) {
@@ -1519,7 +1523,7 @@
   }
 
   .viewTabs button {
-    border-bottom: 1px solid var(--s7-ink);
+    border-bottom: 1px solid #686169;
   }
 
   .sliderGrid {
@@ -1592,24 +1596,8 @@
   }
 }
 
-/* System 7 surface pass: the risk encodings remain coloured, but the large
-   dashboard canvas and its instruments now read as a classic light utility. */
+/* Historical project palette; current control geometry and responsive layout retained. */
 .studio {
-  --risk-ink: #111;
-  --risk-deep: #e5e5e0;
-  --risk-panel: #f4f4ef;
-  --risk-panel-soft: #fff;
-  --risk-line: #666;
-  --risk-paper: #111;
-  --risk-muted: #555;
-  --risk-cyan: #087f78;
-  --risk-blue: #245f9b;
-  --risk-purple: #6b4789;
-  --risk-amber: #8a5a00;
-  --risk-red: #a52f42;
-  --risk-green: #216e43;
-  --risk-shadow: #111;
-  color: var(--s7-ink);
   font-family: var(--s7-font-text);
 }
 
@@ -1633,26 +1621,7 @@
   font-family: var(--s7-font-mono);
 }
 
-.researchIcon {
-  border-color: #111;
-  color: #111;
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
-}
-
-.viewTabs {
-  border: 1px solid var(--s7-shadow);
-  border-bottom: 0;
-  background: var(--s7-chrome);
-}
-
 .viewTabs button {
-  border-color: var(--s7-ink);
-  border-radius: var(--s7-control-radius);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1668,29 +1637,10 @@
 }
 
 .viewTabs button:disabled, .viewTabs button[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
   cursor: default;
 }
 
-.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-
-.viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewTabs button:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
-
 .viewTabs .activeView {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1698,6 +1648,7 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
+  box-shadow: inset 1px 1px #97839e;
 }
 
 .viewTabs .activeView:focus-visible {
@@ -1706,81 +1657,11 @@
 }
 
 .viewTabs .activeView:disabled, .viewTabs .activeView[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
   cursor: default;
-}
-
-.viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-
-.viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > strong, .viewTabs .activeView:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
-
-.viewTabs .activeView span {
-  color: var(--s7-ink);
-}
-
-.labCanvas {
-  border: 1px solid var(--s7-shadow);
-  border-radius: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.policyPanel,
-.plotPanel,
-.claimInspector,
-.queuePanel,
-.benchmarkPanel,
-.policyComparison,
-.tailPanel,
-.objectivePanel,
-.provenancePanel,
-.methodColumns > article,
-.opePanel,
-.licencePanel {
-  border-color: #111;
-  border-radius: 0;
-  color: #111;
-  background: #fff;
-  box-shadow: inset 1px 1px 0 #fff, 2px 2px 0 #777;
-}
-
-.panelHeading h3,
-.sectionHeading h3,
-.methodColumns h3,
-.opePanel h3,
-.licencePanel h3 {
-  color: var(--s7-ink);
-}
-
-.modeSwitch button,
-.deltaSwitch button,
-.sliderGrid > label,
-.deltaSwitch {
-  border-color: var(--s7-shadow);
-  border-radius: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
 }
 
 .modeSwitch .activeMode,
 .deltaSwitch .activeMode {
-  border-color: var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
-  border: 1px solid var(--s7-ink);
-  border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
   font-weight: 400;
@@ -1796,55 +1677,7 @@
 }
 
 .modeSwitch .activeMode:disabled, .modeSwitch .activeMode[aria-disabled="true"], .deltaSwitch .activeMode:disabled, .deltaSwitch .activeMode[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
   cursor: default;
-}
-
-.modeSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]), .deltaSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-
-.modeSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .modeSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]) > strong, .modeSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]) > small, .deltaSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .deltaSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]) > strong, .deltaSwitch .activeMode:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
-
-.ruleReadout,
-.metricCard,
-.objectiveCard,
-.pipeline article {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.ruleReadout code,
-.metricCard > strong,
-.objectiveCard > strong {
-  color: var(--s7-ink);
-}
-
-.matchBanner {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
-}
-
-.matchBanner strong {
-  color: var(--s7-ink);
-}
-
-.uncertaintyMap,
-.coverageChart {
-  border: 2px solid #111;
-  background: var(--s7-surface);
-  box-shadow: inset 1px 1px 0 #bbb;
 }
 
 .plotBack {
@@ -1873,101 +1706,4 @@
 .baselinePoint,
 .xgbPoint {
   stroke: #111;
-}
-
-.deferBadge,
-.deferCell {
-  color: #5b3270;
-  background: #eee2f4;
-}
-
-.retainBadge,
-.retainCell {
-  color: #1f5b4f;
-  background: #dff1eb;
-}
-
-.claimFacts,
-.claimFacts > div,
-.bayesTrace,
-.signalPair article,
-.traceRow > div,
-.queuePanel table,
-.queuePanel th,
-.benchmarkHero,
-.benchmarkPair article,
-.comparisonCards article,
-.tailFormula > div,
-.objectiveEquation,
-.significancePanel,
-.significancePanel > div,
-.provenanceGrid article,
-.formulaCard,
-.opeBadge,
-.licencePanel {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-}
-
-.claimFacts {
-  background: var(--s7-paper);
-}
-
-.traceRow > div,
-.lossRail {
-  background: var(--s7-paper);
-}
-
-.signalPair .signalHot,
-.cautionBox,
-.objectiveEquation,
-.significancePanel,
-.significancePanel > div,
-.licencePanel {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-}
-
-.queuePanel th {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-}
-
-.queuePanel td {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-}
-
-.queuePanel tbody tr:nth-child(even) td {
-  background: var(--s7-paper);
-}
-
-.queuePanel tbody tr:hover td,
-.queuePanel tbody .selectedRow td {
-  color: var(--s7-selection-text);
-  background: var(--s7-selection);
-}
-
-.benchmarkHero,
-.benchmarkPair article,
-.comparisonCards article,
-.provenanceGrid article,
-.formulaCard,
-.opeBadge {
-  box-shadow: none;
-}
-
-.benchmarkPair strong,
-.comparisonCards p,
-.methodColumns b,
-.licencePanel p,
-.objectiveEquation code {
-  color: var(--s7-ink);
-}
-
-.opeBadge {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
 }

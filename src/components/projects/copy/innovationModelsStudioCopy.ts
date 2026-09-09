@@ -652,5 +652,19 @@ export const innovationModelsStudioCopy = {
   "Unallocated": [
     "未分配",
     "未分配"
-  ]
+  ],
+  "Development": ["开发过程", "開發過程"],
+  "What I produced": ["我完成的作品", "我完成的作品"],
+  "Text": ["文字", "文字"],
+  "1,251-word reflection": ["1,251 词反思文章", "1,251 詞反思文章"],
+  "TeX word count · 3 sections · 7 subsections": ["按 TeX 统计词数 · 3 个章节 · 7 个小节", "按 TeX 統計詞數 · 3 個章節 · 7 個小節"],
+  "Diagram": ["图示", "圖示"],
+  "Four governance models": ["四种治理模式", "四種治理模式"],
+  "Editable Draw.io matrix and its PDF export": ["可编辑的 Draw.io 矩阵及其 PDF 导出文件", "可編輯的 Draw.io 矩陣及其 PDF 匯出檔案"],
+  "References": ["参考文献", "參考文獻"],
+  "10 bibliography entries": ["10 条参考文献", "10 條參考文獻"],
+  "8 reference keys cited in the analysis": ["分析中引用了 8 项文献", "分析中引用了 8 項文獻"],
+  "Iteration": ["迭代", "迭代"],
+  "12 revisions · 12–17 October 2025": ["12 次修订 · 2025 年 10 月 12–17 日", "12 次修訂 · 2025 年 10 月 12–17 日"],
+  "Written analysis, references and diagram developed together": ["文字分析、参考文献与图示同步完善", "文字分析、參考文獻與圖示同步完善"]
 } satisfies ProjectCopyTable;

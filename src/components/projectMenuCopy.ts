@@ -4,11 +4,11 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 export const projectMenuCopy = {
   "Orbital Lab": [
     "原子轨道实验室",
-    "原子軌道實驗室"
+    "原子軌域實驗室"
   ],
   "Explore atomic orbitals in ASCII, a probability point cloud or a smooth 3D surface.": [
     "用字符图、概率点云或平滑的三维曲面探索原子轨道。",
-    "用字符圖、概率點雲或平滑的三維曲面探索原子軌道。"
+    "用 ASCII 字元、機率點雲或平滑三維曲面探索原子軌域。"
   ],
   "Note Pad": [
     "记事本",

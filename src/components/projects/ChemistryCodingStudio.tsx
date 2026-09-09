@@ -451,7 +451,7 @@ function MetropolisLab() {
               reset(value);
             }}
           />
-          <div className={`${styles.moveReceipt} ${lastMove?.accepted ? styles.moveAccepted : styles.moveRejected}`} aria-live="polite">
+          <div className={`${styles.moveReceipt} ${lastMove ? (lastMove.accepted ? styles.moveAccepted : styles.moveRejected) : ""}`} aria-live="polite">
             <span>Last proposal</span>
             <strong>{lastMove ? (lastMove.accepted ? "Accepted" : "Rejected") : "Ready"}</strong>
             <dl>

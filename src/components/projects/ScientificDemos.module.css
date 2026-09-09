@@ -14,22 +14,22 @@
   gap: 10px;
   margin-bottom: 14px;
   padding: 10px 12px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #4b5292;
+  color: #292d64;
+  background: #e6e8ff;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 .note_amber {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #9b6619;
+  color: #68430c;
+  background: #fff0bd;
 }
 
 .note_green {
-  border-color: var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-color: #39765a;
+  color: #24513d;
+  background: #dceddf;
 }
 
 .noteIcon {
@@ -49,7 +49,7 @@
 .evidenceNote strong {
   display: block;
   margin: 0 0 2px;
-  color: var(--s7-ink);
+  color: #171717;
   font-size: var(--s7-small);
 }
 
@@ -64,9 +64,9 @@
 .binaryToggle {
   display: inline-flex;
   min-width: 0;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 1px solid #171717;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff;
 }
 
 .tabStrip button,
@@ -74,11 +74,11 @@
 .binaryToggle button {
   min-height: var(--s7-control-height);
   padding: 5px 9px;
-  border: 1px solid var(--s7-ink);
-  border-right: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 0;
+  border-right: 1px solid #777772;
+  color: #292927;
+  background: #ecece7;
+  box-shadow: inset 1px 1px 0 #fff;
   font-size: var(--s7-ui);
   font-weight: 400;
   letter-spacing: normal;
@@ -121,15 +121,15 @@
 .tabStrip button:hover,
 .topologyToggle button:hover,
 .binaryToggle button:hover {
-  background: var(--s7-paper);
+  background: #fff;
 }
 
 .tabStrip .activeTab,
 .topologyToggle .toggleActive,
 .binaryToggle .toggleActive {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 1px 1px 0 #080c50;
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
@@ -188,7 +188,7 @@
 
 .modelRail {
   align-self: start;
-  background: var(--s7-paper);
+  background: #e8e8e3;
 }
 
 .railHeading,
@@ -203,9 +203,9 @@
   justify-content: space-between;
   gap: 9px;
   padding: 7px 9px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border-bottom: 1px solid #8e8e89;
+  background: #deded9;
+  box-shadow: inset 0 1px 0 #fff;
 }
 
 .railHeading {
@@ -248,10 +248,10 @@
   grid-template-rows: 1fr auto;
   gap: 2px 7px;
   padding: 9px;
-  border: 1px solid var(--s7-ink);
-  border-bottom: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 0;
+  border-bottom: 1px solid #979792;
+  color: #252523;
+  background: #f4f4ef;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -292,13 +292,13 @@
 }
 
 .modelCard:hover {
-  background: var(--s7-paper);
+  background: #fff;
 }
 
 .modelCardActive {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 2px 2px 0 #585ba4, inset -2px -2px 0 #080b49;
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
@@ -334,11 +334,11 @@
 }
 
 .modelCardActive:hover {
-  background: var(--s7-chrome);
+  background: #11177a;
 }
 
 .modelCardWarning:not(.modelCardActive) {
-  background: var(--s7-paper);
+  background: #fff2ce;
 }
 
 .modelIndex {
@@ -347,7 +347,7 @@
   height: 21px;
   grid-row: 1 / span 2;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid currentColor;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -372,23 +372,23 @@
 
 .modelCopy small {
   margin-top: 1px;
-  color: var(--s7-ink);
+  color: #666661;
   font-size: var(--s7-small);
 }
 
 .modelCardActive .modelCopy small {
-  color: var(--s7-ink);
+  color: #dfe1ff;
 }
 
 .modelScore {
-  color: var(--s7-ink);
+  color: #565652;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
 }
 
 .modelCardActive .modelScore {
-  color: var(--s7-ink);
+  color: #fff;
 }
 
 .fieldWorkspace {
@@ -402,8 +402,8 @@
   justify-content: space-between;
   gap: 8px;
   padding: 7px 8px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
+  border-bottom: 1px solid #171717;
+  background: #eeeeea;
 }
 
 .topologyToggle button {
@@ -412,13 +412,13 @@
 
 .fieldFigure {
   margin: 0;
-  background: var(--s7-paper);
+  background: #15182d;
 }
 
 .figureChrome {
   min-height: 25px;
   padding: 4px 7px;
-  color: var(--s7-ink);
+  color: #444440;
   font-size: var(--s7-small);
   letter-spacing: normal;
 }
@@ -428,7 +428,7 @@
   width: 100%;
   aspect-ratio: 560 / 270;
   max-height: 330px;
-  background: var(--s7-paper);
+  background: #11153f;
 }
 
 .streamLines {
@@ -500,9 +500,9 @@
   justify-content: space-between;
   gap: 10px;
   padding: 6px 8px;
-  border-top: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border-top: 1px solid #171717;
+  color: #4d4d49;
+  background: #f0f0eb;
 }
 
 .fieldFigure figcaption span {
@@ -527,7 +527,7 @@
   gap: 10px;
   padding: 7px 9px;
   border-top: 1px solid #999994;
-  background: var(--s7-chrome);
+  background: #e0e0dc;
 }
 
 .snapshotBar span,
@@ -552,25 +552,25 @@
   flex-direction: column;
   justify-content: center;
   padding: 13px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 2px 2px 0 #555ba3, inset -2px -2px 0 #080c50;
 }
 
 .heroMetricWarning {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
+  color: #33160d;
+  background: #e5a542;
+  box-shadow: inset 2px 2px 0 #ffe0a6, inset -2px -2px 0 #9e6411;
 }
 
 .heroMetric > span,
 .heroMetric > small {
-  color: var(--s7-ink);
+  color: #e3e5ff;
 }
 
 .heroMetricWarning > span,
 .heroMetricWarning > small {
-  color: var(--s7-ink);
+  color: #4e2a08;
 }
 
 .heroMetric strong {
@@ -590,7 +590,7 @@
   display: grid;
   margin: 0;
   padding: 6px 13px;
-  border-right: 1px solid var(--s7-shadow);
+  border-right: 1px solid #999994;
 }
 
 .modelDetails > div {
@@ -598,7 +598,7 @@
   grid-template-columns: 82px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #aaa;
 }
 
 .modelDetails > div:last-child {
@@ -606,7 +606,7 @@
 }
 
 .modelDetails dt {
-  color: var(--s7-ink);
+  color: #62625e;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -646,7 +646,7 @@
 .rankStrip small {
   display: block;
   margin-top: 3px;
-  color: var(--s7-ink);
+  color: #5f5f5a;
   font-size: var(--s7-small);
   line-height: 1.4;
 }
@@ -665,9 +665,9 @@
   gap: 10px;
   margin-bottom: 12px;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 1px solid #171717;
+  background: #d8d8d3;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #858581;
 }
 
 .visionControls label,
@@ -692,10 +692,10 @@
 .visionControls [data-classic-select] {
   width: 100%;
   min-height: 29px;
-  border: 1px solid var(--s7-ink);
-  border-color: var(--s7-ink);
+  border: 2px solid;
+  border-color: #555 #fff #fff #555;
   border-radius: 0;
-  background: var(--s7-chrome);
+  background: #fff;
   padding: 4px 7px;
   font-size: var(--s7-small);
 }
@@ -735,7 +735,7 @@
   aspect-ratio: 520 / 310;
   max-height: 360px;
   border-bottom: 1px solid #171717;
-  background: var(--s7-paper);
+  background: #798b91;
 }
 
 .scopeRings {
@@ -826,7 +826,7 @@
   align-items: center;
   gap: 12px;
   padding: 8px 10px;
-  background: var(--s7-paper);
+  background: #f1f1ec;
 }
 
 .viewerReadout strong {
@@ -834,7 +834,7 @@
 }
 
 .viewerReadout small {
-  color: var(--s7-ink);
+  color: #5d5d59;
   font-size: var(--s7-small);
   text-align: right;
 }
@@ -858,15 +858,15 @@
 
 .benchmarkPrimary {
   padding: 15px 12px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 2px 2px 0 #545aa4, inset -2px -2px 0 #080b4c;
 }
 
 .benchmarkPrimary > span,
 .benchmarkPrimary small {
   display: block;
-  color: var(--s7-ink);
+  color: #e1e3ff;
 }
 
 .benchmarkPrimary strong {
@@ -893,7 +893,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #aaa;
 }
 
 .benchmarkFacts div:last-child {
@@ -901,7 +901,7 @@
 }
 
 .benchmarkFacts dt {
-  color: var(--s7-ink);
+  color: #5d5d59;
   font-size: var(--s7-small);
 }
 
@@ -916,9 +916,9 @@
 .hundredCallout {
   margin: auto 9px 9px;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #9b6619;
+  color: #5b3907;
+  background: #fff0bd;
 }
 
 .hundredCallout span,
@@ -935,7 +935,7 @@
 
 .hundredCallout strong {
   margin: 2px 0;
-  color: var(--s7-ink);
+  color: #171717;
   font-family: var(--s7-font-text);
   font-size: var(--s7-title);
 }
@@ -979,7 +979,7 @@
 }
 
 .modelMatrix button:nth-of-type(even) {
-  background: var(--s7-surface);
+  background: #f1f1ec;
 }
 
 .modelMatrix button:last-child {
@@ -1106,9 +1106,9 @@
   flex-direction: column;
   justify-content: center;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #171717;
+  background: #f1f1ec;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
 }
 
 .calibrationMetrics strong {
@@ -1119,17 +1119,17 @@
 }
 
 .calibrationMetrics small {
-  color: var(--s7-ink);
+  color: #356349;
   font-size: var(--s7-small);
 }
 
 .calibrationMetrics .metricCaution {
-  border-color: var(--s7-shadow);
-  background: var(--s7-paper);
+  border-color: #9b6619;
+  background: #fff0bd;
 }
 
 .calibrationMetrics .metricCaution small {
-  color: var(--s7-ink);
+  color: #7b4c09;
 }
 
 .calibrationFinding {
@@ -1138,16 +1138,16 @@
   gap: 7px;
   margin: 0 10px 10px;
   padding: 9px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #9b6619;
+  color: #68430c;
+  background: #fff6d8;
 }
 
 .calibrationFinding > span {
   display: grid;
   height: 22px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid currentColor;
   font-weight: 700;
 }
 
@@ -1159,17 +1159,17 @@
 
 .splitBadge {
   padding: 4px 6px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink) !important;
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #171717;
+  color: #171717 !important;
+  background: #fff;
+  box-shadow: 1px 1px 0 #888;
   white-space: nowrap;
 }
 
 .coverageControl {
   padding: 13px 14px 9px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border-bottom: 1px solid #aaa;
+  background: #f5f5f0;
 }
 
 .coverageControl label {
@@ -1194,7 +1194,7 @@
 .rangeLabels {
   display: flex;
   justify-content: space-between;
-  color: var(--s7-ink);
+  color: #5d5d59;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
@@ -1208,20 +1208,20 @@
 
 .coverageReadout article {
   padding: 10px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #171717;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aaa;
 }
 
 .coverageReadout article:first-child {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: none;
+  color: #fff;
+  background: #11177a;
+  box-shadow: inset 1px 1px 0 #555ba3, inset -1px -1px 0 #080c50;
 }
 
 .coverageReadout article:first-child > span,
 .coverageReadout article:first-child small {
-  color: var(--s7-ink);
+  color: #e2e4ff;
 }
 
 .coverageReadout strong,
@@ -1238,7 +1238,7 @@
 }
 
 .coverageReadout small {
-  color: var(--s7-ink);
+  color: #62625e;
   font-size: var(--s7-small);
 }
 
@@ -1246,14 +1246,14 @@
   margin: 0 10px 10px;
   padding: 9px;
   border: 1px solid #999994;
-  background: var(--s7-raised);
+  background: #eeeeea;
   box-shadow: inset 1px 1px 0 #fff;
 }
 
 .intervalAxis {
   display: flex;
   justify-content: space-between;
-  color: var(--s7-ink);
+  color: #656560;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   text-transform: none;
@@ -1283,13 +1283,13 @@
   height: 27px;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 1px solid #171717;
+  background: rgba(17, 23, 122, 0.18);
   transition: width 180ms ease;
 }
 
 .intervalBand i {
-  border-top: 1px solid var(--s7-shadow);
+  border-top: 2px solid #11177a;
 }
 
 .intervalBand b {
@@ -1297,10 +1297,10 @@
   width: 24px;
   height: 24px;
   place-items: center;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #171717;
   border-radius: 50%;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #fff;
+  background: #11177a;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
@@ -1316,15 +1316,15 @@
   width: calc(100% - 20px);
   margin: 0 10px;
   border-collapse: collapse;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #171717;
   font-size: var(--s7-small);
 }
 
 .coverageTable caption {
   padding: 5px 7px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #171717;
   border-bottom: 0;
-  background: var(--s7-paper);
+  background: #deded9;
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1335,8 +1335,8 @@
 .coverageTable th,
 .coverageTable td {
   padding: 6px 7px;
-  border-right: 1px solid var(--s7-shadow);
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-right: 1px solid #aaa;
+  border-bottom: 1px dotted #aaa;
   text-align: right;
 }
 
@@ -1346,7 +1346,7 @@
 }
 
 .coverageTable th {
-  background: var(--s7-paper);
+  background: #ecece7;
   font-size: var(--s7-small);
   letter-spacing: normal;
   text-transform: none;
@@ -1357,16 +1357,16 @@
 }
 
 .coverageTable .coverageActive {
-  color: var(--s7-selection-text);
-  background: var(--s7-selection);
+  color: #fff;
+  background: #11177a;
 }
 
 .coverageTable button {
   width: 100%;
   padding: 0;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 0;
+  color: inherit;
+  background: transparent;
   font-weight: 400;
   text-align: left;
   cursor: pointer;
@@ -1405,7 +1405,7 @@
 
 .alphaReadout {
   margin: 6px 10px 9px;
-  color: var(--s7-ink);
+  color: #5c5c58;
   font-family: var(--s7-font-mono);
   font-size: var(--s7-small);
   text-align: right;
@@ -1428,7 +1428,7 @@
   }
 
   .modelCard {
-    border-right: 1px solid var(--s7-ink);
+    border-right: 1px solid #979792;
     border-bottom: 0;
   }
 
@@ -1498,7 +1498,7 @@
 
   .rankStrip {
     grid-column: 1 / -1;
-    border-top: 1px solid var(--s7-shadow);
+    border-top: 1px solid #999994;
   }
 
   .modelDetails {
@@ -1523,7 +1523,7 @@
   .modelCard {
     min-height: 54px;
     border-right: 0;
-    border-bottom: 1px solid var(--s7-ink);
+    border-bottom: 1px solid #979792;
   }
 
   .visionControls,

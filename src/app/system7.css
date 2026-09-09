@@ -19,16 +19,20 @@
   --s7-muted: #555;
   --s7-selection: #11177a;
   --s7-selection-text: #fff;
-  /* Blue marks primary actions; indigo makes sharing easy to spot. */
-  --s7-action: #214ea5;
-  --s7-action-hover: #173b84;
-  --s7-action-edge: #122d66;
-  --s7-action-soft: #e8eefb;
-  --s7-action-soft-hover: #f3f6ff;
-  --s7-share: #514293;
-  --s7-share-hover: #403278;
-  --s7-share-edge: #302660;
+  /* Deep indigo identifies primary actions; sharing uses neutral utility chrome. */
   --s7-context-paper: #f8f5ec;
+  /* Content colours restore useful hierarchy inside the neutral desktop frame.
+     Pair state colour with a label, check, border or pattern. */
+  --s7-info: #214ea5;
+  --s7-info-soft: #edf3ff;
+  --s7-success: #17664f;
+  --s7-success-soft: #e5f3ec;
+  --s7-warning: #80510c;
+  --s7-warning-soft: #fff3d6;
+  --s7-accent: #514293;
+  --s7-accent-soft: #f0ebfa;
+  --s7-danger: #993b40;
+  --s7-danger-soft: #fbecee;
   --s7-ui: 13px;
   --s7-small: 12px;
   --s7-text: 15px;
@@ -40,6 +44,14 @@
   --s7-font-ui: Chicago, Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
   --s7-font-text: Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
   --s7-font-mono: Monaco, "Courier New", Courier, monospace;
+  --s7-action: #11177a;
+  --s7-action-hover: #080d54;
+  --s7-action-edge: #080d54;
+  --s7-action-soft: #ecece6;
+  --s7-action-soft-hover: #f8f8f2;
+  --s7-share: #55554f;
+  --s7-share-hover: #3f3f3a;
+  --s7-share-edge: #33332f;
 }
 
 .system7-project {
@@ -110,18 +122,13 @@
   background: var(--s7-button-hover, var(--s7-surface));
 }
 
-:is(.s7-button, .mac-button)[aria-pressed]::before {
-  width: 1em;
-  flex: 0 0 1em;
-  content: "";
-}
-
 :is(.s7-button, .mac-button)[aria-pressed="true"] {
+  --s7-button-face: var(--s7-recess);
+  --s7-button-text: var(--s7-ink);
+  --s7-button-edge: var(--s7-ink);
   --s7-button-relief: var(--s7-relief-inset);
-  background: var(--s7-recess);
+  background: var(--s7-button-face);
 }
-
-:is(.s7-button, .mac-button)[aria-pressed="true"]::before { content: "✓"; }
 
 :is(.s7-button, .mac-button):active:not(:disabled):not([aria-disabled="true"]) {
   --s7-button-relief: 0 0 0 0 transparent;
@@ -144,7 +151,6 @@
   padding: 5px;
 }
 
-.s7-button--icon[aria-pressed]::before { display: none; }
 
 :is(.s7-button, .mac-button):focus-visible,
 .s7-tab:focus-visible,
@@ -202,9 +208,10 @@
 
 .s7-tab[aria-selected="true"],
 .s7-tab[aria-current="page"] {
+  color: var(--s7-ink);
   background: var(--s7-paper);
   font-weight: 700;
-  box-shadow: inset 0 2px 0 var(--s7-ink);
+  box-shadow: var(--s7-relief-inset);
 }
 
 .s7-tab:disabled { color: var(--s7-muted); cursor: default; }

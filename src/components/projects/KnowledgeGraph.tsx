@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { projects, isInteractiveProject } from "@/data/projects";
 import { projectOrigins } from "@/data/projectOrigins";
 import { buildKnowledgeGraph, KnowledgeGraphIndex, graphNodeHref, knowledgeTopics, type KnowledgeNode } from "@/data/knowledgeGraph";
@@ -9,6 +9,7 @@ import { clamp, initialGraphCamera, layoutKnowledgeGraph, layoutKnowledgeFocus, 
 import { type Locale } from "@/lib/i18n";
 import { getProjectText } from "@/lib/projectNarrative";
 import styles from "./KnowledgeGraph.module.css";
+import { ProjectWindowContext } from "./ProjectWindowContext";
 
 const CatalogueAnalysis = dynamic(() => import("./PortfolioMap"), { loading: () => <p style={{ padding: 18 }}>…</p> });
 
@@ -339,6 +340,7 @@ type Props = {
 };
 
 export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange, onOpenProject }: Props) {
+  const openActivity = useContext(ProjectWindowContext);
   const t = useCallback((source: string) => translateGraph(locale, source), [locale]);
   const validInitial = initialNode && nodeById.has(initialNode) ? initialNode : null;
   const [selectedId, setSelectedId] = useState<string | null>(validInitial);
@@ -632,11 +634,11 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
           {selectedProject && <>
             <p className={styles.projectYear}>{selectedProject.tools.map(t).join(" · ")}</p>
             {showcasePdf
-              ? <a className={`s7-button is-default ${styles.primaryAction}`} href={showcasePdf.href} target="_blank" rel="noreferrer">{t("Open GROWMAT showcase PDF")} <span aria-hidden="true">↗</span></a>
-              : <button className={`s7-button is-default ${styles.primaryAction}`} onClick={() => onOpenProject(selectedProject.slug, false, selectedId)}>{t("Open project")} <span aria-hidden="true">↗</span></button>}
+              ? <button className={`s7-button is-primary ${styles.primaryAction}`} onClick={() => openActivity?.({ slug: selectedProject.slug, kind: "pdf", artifactHref: showcasePdf.href })}>{t("Open GROWMAT showcase PDF")} <span aria-hidden="true">↗</span></button>
+              : <button className={`s7-button is-primary ${styles.primaryAction}`} onClick={() => onOpenProject(selectedProject.slug, false, selectedId)}>{t("Open project")} <span aria-hidden="true">↗</span></button>}
             {showcasePdf && <button className={styles.textAction} onClick={() => onOpenProject(selectedProject.slug, false, selectedId)}>{t("Open project")} →</button>}
           </>}
-          {selected.kind === "experience" && <a className={`s7-button is-default ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t(selected.section === "education" ? "Open education record" : "Open experience record")} <span aria-hidden="true">↗</span></a>}
+          {selected.kind === "experience" && <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t(selected.section === "education" ? "Open education record" : "Open experience record")} <span aria-hidden="true">↗</span></a>}
           <div className={styles.connections}>
             {(["experience", "project", "topic", "method"] as const).map((kind) => {
               const entries = neighbours.filter((entry) => entry.node.kind === kind);
@@ -648,7 +650,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
             })}
           </div>
           <section className={styles.edgeNotes}><h4>{t("Why these connections?")}</h4>{neighbours.map(({ node, edge }) => <p key={edge.id}><strong>{t(node.label)}</strong><br />{graphConnectionText(locale, edge)}</p>)}</section>
-          <button className={styles.textAction} onClick={share}>{t(copied ? "Link copied" : "Copy a link to this node")}</button>
+          <button className={`s7-button is-share ${styles.shareAction}`} onClick={share}>{t(copied ? "Link copied" : "Copy a link to this node")}</button>
         </> : <>
           <div className={styles.nodeType}>{t("Project graph")}</div><h3>{t("A few starting points")}</h3><p>{t("Select any node to see its story and connected work.")}</p>
           <div className={styles.startRoutes}>

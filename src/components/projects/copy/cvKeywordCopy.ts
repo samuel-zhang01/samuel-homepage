@@ -789,9 +789,9 @@ export const cvKeywordCopy = {
     "指导提示",
     "指導提示"
   ],
-  "✓ Staged in preview": [
-    "✓ 已暂存至预览",
-    "✓ 已暫存至預覽"
+  "Staged in preview": [
+    "已暂存至预览",
+    "已暫存至預覽"
   ],
   "+ Stage factual rewrite": [
     "+ 暂存事实改写",

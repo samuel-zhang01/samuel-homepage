@@ -6,9 +6,10 @@
   --muted: #5a5a55;
   container-type: inline-size;
   min-width: 0;
-  color: var(--s7-ink);
+  color: var(--ink);
   background:
-    var(--s7-paper);
+    linear-gradient(90deg, rgb(0 0 0 / 3%) 1px, transparent 1px) 0 0 / 8px 8px,
+    var(--paper);
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
 }
@@ -24,7 +25,7 @@
 .sourceTable > div:focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 2px;
-  box-shadow: inset 1px 1px 0 var(--s7-shadow);
+  box-shadow: 0 0 0 1px #fff;
 }
 
 .header {
@@ -32,9 +33,9 @@
   grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.8fr);
   gap: 14px;
   padding: 16px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 2px solid var(--ink);
+  background: #fff;
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 18%);
 }
 
 .header > div > span,
@@ -43,7 +44,7 @@
 .boundaryHero span,
 .definitionGrid span {
   display: block;
-  color: var(--s7-ink);
+  color: var(--blue);
   font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
   letter-spacing: normal;
   text-transform: none;
@@ -58,7 +59,7 @@
 .header p {
   max-width: 760px;
   margin: 0;
-  color: var(--s7-ink);
+  color: #444;
   font-size: var(--s7-text);
   line-height: 1.55;
 }
@@ -73,13 +74,13 @@
 .header dl div {
   min-width: 0;
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 1px solid #777;
+  background: #efefe9;
+  box-shadow: 1px 1px 0 #fff inset;
 }
 
 .header dt {
-  color: var(--s7-ink);
+  color: var(--muted);
   font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
   letter-spacing: normal;
   text-transform: none;
@@ -98,9 +99,9 @@
   gap: 10px;
   margin-top: 12px;
   padding: 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
-  box-shadow: none;
+  border: 2px solid var(--ink);
+  background: var(--chrome);
+  box-shadow: 2px 2px 0 #fff inset, -2px -2px 0 #777 inset;
 }
 
 .viewSwitch,
@@ -115,9 +116,9 @@
 .familySwitch button {
   min-height: max(var(--s7-control-height), 36px);
   padding: 5px 9px;
-  border: 1px solid var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 1px solid #222;
+  background: #f7f7f2;
+  box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #888 inset;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
   color: var(--s7-ink);
@@ -162,7 +163,7 @@
 }
 
 .viewSwitch button span {
-  color: var(--s7-ink);
+  color: var(--blue);
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
@@ -172,13 +173,13 @@
 
 .viewSwitch button[aria-pressed="true"],
 .familySwitch button[aria-pressed="true"] {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  color: #fff;
+  background: var(--blue);
+  box-shadow: 1px 1px 0 #5364ae inset, -1px -1px 0 #080d37 inset;
 }
 
 .viewSwitch button[aria-pressed="true"] span {
-  color: var(--s7-ink);
+  color: #f4d571;
 }
 
 .familySwitch {
@@ -187,7 +188,7 @@
 
 .familySwitch > span {
   padding: 0 4px;
-  color: var(--s7-ink);
+  color: #555;
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   letter-spacing: normal;
 }
@@ -211,8 +212,8 @@
 .scalePanel,
 .sourceTable {
   min-width: 0;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 2px solid var(--ink);
+  background: #fff;
 }
 
 .panelHeading {
@@ -222,8 +223,8 @@
   gap: 12px;
   min-height: 44px;
   padding: 7px 9px;
-  border-bottom: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
+  border-bottom: 3px double #333;
+  background: #efefe9;
 }
 
 .panelHeading strong {
@@ -244,16 +245,16 @@
   min-width: 0;
   height: 25px;
   padding: 2px 22px 2px 5px;
-  border: 1px solid var(--s7-ink);
-  background: var(--s7-chrome);
+  border: 1px solid #333;
+  background: #fff;
   font-size: var(--s7-small);
   text-transform: none;
 }
 
 .panelHeading output {
   padding: 5px 7px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-chrome);
+  border: 1px solid #555;
+  background: #fff;
   font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
   text-transform: none;
 }
@@ -263,7 +264,7 @@
   padding: 8px 10px;
   border-bottom: 1px solid #aaa;
   color: #50504b;
-  background: var(--s7-paper);
+  background: #fbfbf6;
   font-size: var(--s7-small);
   line-height: 1.45;
 }
@@ -281,7 +282,7 @@
 
 .timeline li {
   min-width: 0;
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid #b4b4ae;
 }
 
 .timeline li:last-child {
@@ -294,9 +295,9 @@
   width: 100%;
   min-height: 82px;
   padding: 0;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 0;
+  color: inherit;
+  background: #fff;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -334,11 +335,11 @@
 
 .timeline li > button:hover,
 .timeline li > button[aria-pressed="true"] {
-  background: var(--s7-chrome);
+  background: color-mix(in srgb, var(--family-colour) 9%, #fff);
 }
 
 .timeline li > button[aria-pressed="true"] {
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  box-shadow: 4px 0 0 var(--family-colour) inset;
 }
 
 .eventDate {
@@ -347,7 +348,7 @@
   gap: 5px;
   min-width: 0;
   padding: 10px;
-  border-right: 1px dotted var(--s7-shadow);
+  border-right: 1px dotted #888;
 }
 
 .eventDate time {
@@ -359,8 +360,8 @@
   max-width: 100%;
   padding: 2px 4px;
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #fff;
+  background: #333;
   font: 700 var(--s7-small)/1.4 var(--s7-font-mono);
 }
 
@@ -368,7 +369,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  background: var(--s7-paper);
+  background: linear-gradient(90deg, transparent 7px, #aaa 7px, #aaa 9px, transparent 9px);
 }
 
 .eventRail i {
@@ -376,9 +377,9 @@
   top: 50%;
   width: 11px;
   height: 11px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 2px solid #222;
+  background: var(--family-colour);
+  box-shadow: 0 0 0 2px #fff;
   transform: translateY(-50%) rotate(45deg);
 }
 
@@ -391,7 +392,7 @@
 }
 
 .eventCopy small {
-  color: var(--s7-ink);
+  color: var(--family-colour);
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   letter-spacing: normal;
 }
@@ -403,7 +404,7 @@
 .eventCopy em {
   display: -webkit-box;
   overflow: hidden;
-  color: var(--s7-ink);
+  color: #555;
   font-size: var(--s7-small);
   font-style: normal;
   line-height: 1.4;
@@ -427,10 +428,10 @@
   top: 0;
   min-width: 0;
   padding: 12px;
-  border: 1px solid var(--s7-shadow);
-  border-top: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 2px solid var(--ink);
+  border-top: 0;
+  background: #fff;
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 14%);
 }
 
 .emptyInspector {
@@ -438,7 +439,8 @@
 
   min-height: 150px;
   background:
-    var(--s7-paper);
+    repeating-linear-gradient(135deg, rgb(0 0 0 / 2%) 0 4px, transparent 4px 9px),
+    #fff;
 }
 
 .inspectorTop {
@@ -447,20 +449,20 @@
   justify-content: space-between;
   gap: 8px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 3px double #555;
 }
 
 .inspectorTop b {
   padding: 3px 5px;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #fff;
+  background: var(--family-colour);
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
 }
 
 .inspector > small {
   display: block;
   margin-top: 10px;
-  color: var(--s7-ink);
+  color: var(--family-colour);
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   letter-spacing: normal;
   text-transform: none;
@@ -478,14 +480,14 @@
   margin-bottom: 8px;
   padding: 3px 5px;
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #fff;
+  background: #333;
   font: 700 var(--s7-small)/1.4 var(--s7-font-mono);
 }
 
 .inspector > p {
   margin: 8px 0;
-  color: var(--s7-ink);
+  color: #464641;
   font-size: var(--s7-text);
   line-height: 1.48;
 }
@@ -494,13 +496,13 @@
   display: grid;
   gap: 0;
   margin: 10px 0;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #777;
 }
 
 .inspector dl div {
   display: grid;
   grid-template-columns: 78px minmax(0, 1fr);
-  border-bottom: 1px dotted var(--s7-shadow);
+  border-bottom: 1px dotted #999;
 }
 
 .inspector dl div:last-child {
@@ -517,8 +519,8 @@
 }
 
 .inspector dt {
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #555;
+  background: #eee;
   font-family: var(--s7-font-text);
   font-weight: 700;
   text-transform: none;
@@ -531,10 +533,10 @@
   width: 100%;
   min-height: max(var(--s7-control-height), 34px);
   padding: 7px 9px;
-  border: 1px solid var(--s7-ink);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
-  box-shadow: 1px 1px 0 var(--s7-shadow);
+  border: 2px solid #171717;
+  color: #fff;
+  background: var(--blue);
+  box-shadow: 2px 2px 0 #777;
   font-weight: 400;
   text-align: left;
   cursor: pointer;
@@ -578,13 +580,13 @@
   position: relative;
   height: 24px;
   margin: 0 116px 3px 184px;
-  border-bottom: 1px solid var(--s7-shadow);
+  border-bottom: 1px solid #333;
 }
 
 .scaleAxis span {
   position: absolute;
   bottom: 3px;
-  color: var(--s7-ink);
+  color: #555;
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   transform: translateX(-50%);
 }
@@ -595,7 +597,7 @@
   left: 50%;
   width: 1px;
   height: 8px;
-  background: var(--s7-paper);
+  background: #777;
   content: "";
 }
 
@@ -612,8 +614,8 @@
   min-width: 0;
   min-height: 46px;
   padding: 6px;
-  border: 1px solid var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #777;
+  background: #f9f9f5;
   text-align: left;
   cursor: pointer;
   border-radius: var(--s7-control-radius);
@@ -652,12 +654,12 @@
 
 .modelRows button:hover,
 .modelRows button[aria-pressed="true"] {
-  border-color: var(--s7-ink);
-  background: var(--s7-chrome);
+  border-color: #111;
+  background: color-mix(in srgb, var(--family-colour) 9%, #fff);
 }
 
 .modelRows button[aria-pressed="true"] {
-  box-shadow: inset 1px 1px 0 var(--s7-ink);
+  box-shadow: 4px 0 0 var(--family-colour) inset;
 }
 
 .modelIdentity {
@@ -667,7 +669,7 @@
 }
 
 .modelIdentity small {
-  color: var(--s7-ink);
+  color: var(--family-colour);
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   text-transform: none;
 }
@@ -754,13 +756,14 @@
 
 .boundaryHero > div {
   padding: 12px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
+  border: 2px solid #222;
+  background: #fff;
 }
 
 .boundaryHero > div:last-child {
   background:
-    var(--s7-paper);
+    repeating-linear-gradient(135deg, rgb(111 59 31 / 8%) 0, rgb(111 59 31 / 8%) 5px, transparent 5px, transparent 10px),
+    #fffaf2;
 }
 
 .boundaryHero strong {
@@ -771,7 +774,7 @@
 
 .boundaryHero p {
   margin: 0;
-  color: var(--s7-ink);
+  color: #4e4e49;
   font-size: var(--s7-text);
   line-height: 1.45;
 }
@@ -798,7 +801,7 @@
 .sourceTable th,
 .sourceTable td {
   padding: 8px;
-  border: 1px solid var(--s7-shadow);
+  border: 1px solid #aaa;
   vertical-align: top;
   font-size: var(--s7-small);
   line-height: 1.4;
@@ -806,15 +809,15 @@
 }
 
 .sourceTable thead th {
-  color: var(--s7-ink);
-  background: var(--s7-chrome);
+  color: #fff;
+  background: var(--blue);
   font: 700 var(--s7-small)/1.4 var(--s7-font-ui);
   letter-spacing: normal;
   text-transform: none;
 }
 
 .sourceTable tbody th {
-  background: var(--s7-paper);
+  background: #efefe9;
   font-family: var(--s7-font-text);
 }
 
@@ -827,9 +830,9 @@
 .definitionGrid section {
   min-width: 0;
   padding: 10px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-paper);
-  box-shadow: none;
+  border: 1px solid #777;
+  background: #fff;
+  box-shadow: 2px 2px 0 rgb(0 0 0 / 12%);
 }
 
 .definitionGrid strong {
@@ -840,7 +843,7 @@
 
 .definitionGrid p {
   margin: 0;
-  color: var(--s7-ink);
+  color: #51514c;
   font-size: var(--s7-text);
   line-height: 1.42;
 }
@@ -851,9 +854,9 @@
   gap: 10px;
   margin-top: 12px;
   padding: 7px 9px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid #333;
+  color: #fff;
+  background: #333;
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   letter-spacing: normal;
   text-transform: none;

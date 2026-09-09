@@ -1,6 +1,6 @@
 .library { display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; background: var(--s7-chrome); container: project-library / inline-size; }
 .header { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 24px; padding: 12px 18px; border-bottom: 3px double var(--s7-edge); background: var(--s7-surface); box-shadow: var(--s7-relief-raised); }
-.header h1 { font-size: var(--s7-title); margin: 0; }
+.header h1 { font-size: var(--s7-title); margin: 0; font-family: Georgia, "Times New Roman", serif; }
 .header p { margin: 0; font-size: var(--s7-ui); line-height: 1.45; }
 .tabs { flex-shrink: 0; gap: 5px; padding: 9px 16px 0; background: repeating-linear-gradient(90deg, var(--s7-chrome) 0 1px, var(--s7-recess) 1px 2px, var(--s7-chrome) 2px 4px); }
 .tabs > button { min-width: 130px; }
@@ -20,17 +20,17 @@
 .catalogue { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; background: var(--s7-surface); }
 .catalogue ul { list-style: none; margin: 0; padding: 0; }
 .folder { margin: 0; }
-.folder > summary { position: sticky; top: 0; z-index: 1; padding: 7px 10px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); cursor: pointer; font-size: var(--s7-small); }
+.folder > summary { position: sticky; top: 0; z-index: 1; padding: 7px 10px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); cursor: pointer; font-size: var(--s7-small); font-family: var(--s7-font-mono); }
 .folder > summary small { margin-left: 6px; font-size: inherit; color: var(--s7-muted); }
 .project { display: grid; grid-template-columns: 42px minmax(0, 1fr) 8px; gap: 10px; align-items: start; width: 100%; min-height: 94px; padding: 12px 10px; border: 0; border-bottom: 1px solid #ccc; border-radius: 0; background: var(--s7-paper); color: var(--s7-ink); text-align: left; font: inherit; cursor: pointer; box-shadow: inset 0 1px 0 var(--s7-highlight); }
 .catalogue li:nth-child(even) .project { background: var(--s7-surface); }
 .project > span:nth-child(2) { min-width: 0; display: grid; gap: 5px; }
-.project strong { font-size: var(--s7-text); line-height: 1.35; font-weight: 700; overflow-wrap: anywhere; }
+.project strong { font-size: var(--s7-text); line-height: 1.35; font-weight: 700; overflow-wrap: anywhere; font-family: Georgia, "Times New Roman", serif; }
 .project > span > span { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: var(--s7-small); line-height: 1.45; }
 .project small { font-size: var(--s7-small); color: var(--s7-muted); }
 .openArrow { align-self: center; font-size: 20px; }
 .project:hover, .catalogue li:nth-child(even) .project:hover { background: var(--s7-action-soft); }
-.project[aria-current="true"], .catalogue li:nth-child(even) .project[aria-current="true"] { background: var(--s7-selection); color: var(--s7-selection-text); box-shadow: inset 3px 0 0 #fff, inset 4px 0 0 var(--s7-selection); }
+.project[aria-current="true"], .catalogue li:nth-child(even) .project[aria-current="true"] { background: var(--s7-selection); color: var(--s7-selection-text); box-shadow: none; }
 .project[aria-current="true"] small { color: inherit; }
 .project:focus-visible { outline: 2px dotted currentColor; outline-offset: -5px; }
 .project:active { box-shadow: inset 1px 1px 0 var(--s7-ink); }
