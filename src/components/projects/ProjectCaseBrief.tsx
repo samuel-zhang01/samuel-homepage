@@ -9,21 +9,37 @@ import styles from "./ProjectCaseBrief.module.css";
 const copy = {
   "Development": ["开发过程", "開發過程"],
   "Results and capabilities": ["成果与功能", "成果與功能"],
-  "Try it": ["动手探索", "動手探索"],
+  "Who it helps": ["适用人群", "適用對象"],
+  "The aim": ["项目目标", "專案目標"],
+  "Samuel’s contribution": ["Samuel 的贡献", "Samuel 的貢獻"],
+  "Try this exercise": ["开始这项练习", "開始這項練習"],
+  "Try it.": ["动手探索。", "動手探索。"],
 } satisfies ProjectCopyTable;
 
-export function ProjectCaseBrief({ project, locale }: { project: Project; locale: Locale }) {
+export function ProjectCaseBrief({ project, locale, onExplore, demoOpen = false }: {
+  project: Project; locale: Locale; onExplore?: () => void; demoOpen?: boolean;
+}) {
   const story = getProjectStory(project);
   const t = (source: string) => projectText(locale, copy, source);
   return <div className={styles.brief}>
     <div className={styles.narrative}>
       <p>{getProjectText(locale, project.detail)}</p>
     </div>
+    {story && <div className={styles.context}>
+      <dl>
+        <div><dt>{t("Who it helps")}</dt><dd>{getProjectText(locale, story.audience)}</dd></div>
+        <div><dt>{t("The aim")}</dt><dd>{getProjectText(locale, story.objective)}</dd></div>
+      </dl>
+      <details className={styles.contribution}><summary>{t("Samuel’s contribution")}</summary><p>{getProjectText(locale, story.contribution)}</p></details>
+    </div>}
     <section className={styles.development}><h2>{t("Development")}</h2>
       <ol>{project.phases.map(phase => <li key={phase.label}>{getProjectText(locale, phase.text)}</li>)}</ol>
     </section>
     {project.highlights.length > 0 && <section className={styles.results}><h2>{t("Results and capabilities")}</h2><ul>{project.highlights.map(highlight => <li key={highlight}>{getProjectText(locale, highlight)}</li>)}</ul></section>}
-    {story && project.demo && <p className={styles.walkthrough}><strong>{t("Try it")}.</strong> {getProjectText(locale, story.walkthrough)}</p>}
+    {story && project.demo && <div className={styles.walkthrough}>
+      <p><strong>{t("Try it.")}</strong> {getProjectText(locale, story.walkthrough)}</p>
+      {onExplore && <button className="s7-button" onClick={onExplore} aria-expanded={demoOpen} aria-controls={demoOpen ? `interactive-lab-${project.slug}` : undefined}>{t("Try this exercise")} ↓</button>}
+    </div>}
     <ProjectOriginLinks slug={project.slug} locale={locale} />
   </div>;
 }

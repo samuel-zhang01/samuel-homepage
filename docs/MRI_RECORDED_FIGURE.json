@@ -1,0 +1,12 @@
+{
+  "repository": "samuel-zhang01/IX-Medical-Imaging",
+  "revision": "93bc9cd3e1175ed08a6d99a3443bdec3f1214f1e",
+  "source_path": "latex/figures/fig4_reconstruction_comparison.png",
+  "source_sha256": "b149cec640ace5d4f236354b7ff86661e08f6153c9b9f6d626419ab9d8a8cbc5",
+  "source_bytes": 1017964,
+  "delivery_path": "public/projects/mri/media/recorded-reconstruction.webp",
+  "delivery_sha256": "ebb9767f5e59b741c54c7e40e7a46515a8ad07bc0a2341ec1266f724c908f088",
+  "delivery_bytes": 363946,
+  "transformation": "Sharp resize from 4740x2043 to 2200x948, WebP quality88, no cropping or semantic edits. Full panel labels and source figure contents retained.",
+  "interpretation": "Saved repository figure, not rerun inference. Image-specific PSNR is separate from study-wide aggregate metrics. Public exported study figure; no raw dataset or model weights copied."
+}

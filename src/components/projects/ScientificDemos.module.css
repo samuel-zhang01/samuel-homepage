@@ -527,7 +527,7 @@
   gap: 10px;
   padding: 7px 9px;
   border-top: 1px solid #999994;
-  background: #e0e0dc;
+  background: var(--s7-chrome);
 }
 
 .snapshotBar span,
@@ -979,7 +979,7 @@
 }
 
 .modelMatrix button:nth-of-type(even) {
-  background: #f1f1ec;
+  background: var(--s7-surface);
 }
 
 .modelMatrix button:last-child {
@@ -1246,7 +1246,7 @@
   margin: 0 10px 10px;
   padding: 9px;
   border: 1px solid #999994;
-  background: #eeeeea;
+  background: var(--s7-raised);
   box-shadow: inset 1px 1px 0 #fff;
 }
 

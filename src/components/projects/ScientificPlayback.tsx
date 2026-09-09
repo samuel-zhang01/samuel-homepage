@@ -55,8 +55,15 @@ export function CfdFlowPlayer() {
   }, [frames, sequence, channelFilter, view]);
   useEffect(() => {
     if (!playing || view !== "motion" || loaded < expectedFrames) return;
-    const timer = window.setInterval(() => setFrame((value) => (value + 1) % frames), 1000 / fps);
-    return () => window.clearInterval(timer);
+    let timer: number | undefined;
+    const syncPlayback = () => {
+      window.clearInterval(timer);
+      timer = undefined;
+      if (!document.hidden) timer = window.setInterval(() => setFrame((value) => (value + 1) % frames), 1000 / fps);
+    };
+    syncPlayback();
+    document.addEventListener("visibilitychange", syncPlayback);
+    return () => { window.clearInterval(timer); document.removeEventListener("visibilitychange", syncPlayback); };
   }, [playing, view, loaded, expectedFrames, frames, fps]);
 
   return <ProjectCopy copy={scientificCopy}><section className={styles.studio} aria-label="Neural CFD flow explorer">

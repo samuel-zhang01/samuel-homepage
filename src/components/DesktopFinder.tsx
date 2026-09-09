@@ -5,6 +5,7 @@ import { projects } from "@/data/projects";
 import { translateText, type Locale } from "@/lib/i18n";
 import { foldSearch, parseProjectSearchIndex, searchExcerpt, type ProjectSearchIndex } from "@/lib/projectSearch";
 import type { AppId } from "./SystemSevenDesktop";
+import { System7Icon } from "./System7Icon";
 import styles from "./DesktopFinder.module.css";
 
 export type FinderApplication = {
@@ -222,7 +223,7 @@ export default function DesktopFinder({
               onClick={() => openResult(result)}
             >
               <span className={styles.itemIcon} aria-hidden="true">
-                {result.icon ?? <svg viewBox="0 0 20 20" width="20" height="20" shapeRendering="crispEdges"><path d="M2 3h7l2 3h7v11H2z" fill="#f0cb56" stroke="#111" /><path d="M3 8h14" stroke="#fff" /></svg>}
+                {result.icon ?? <System7Icon kind="folder" miniature />}
               </span>
               <span className={styles.itemCopy}>
                 <strong>{result.title}</strong>

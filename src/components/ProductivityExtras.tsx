@@ -645,7 +645,7 @@ function QuickList({ locale }: { locale: Locale }) {
         <div className={styles.segmentedControl} aria-label={t("Task filters")}>
           {(["all", "open", "done"] as const).map((value) => (
             <button key={value} type="button" className={filter === value ? styles.isSelected : undefined} onClick={() => setFilter(value)} aria-pressed={filter === value}>
-              {value === "all" ? t("All") : value === "open" ? t("Open") : t("Completed")}
+              {value === "all" ? t("All") : value === "open" ? t("To do") : t("Completed")}
             </button>
           ))}
         </div>

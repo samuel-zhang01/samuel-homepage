@@ -9,15 +9,16 @@ apply.
 ## Runtime dependencies
 
 The following declarations were checked against the installed package metadata
-on 5 September 2026. Exact versions are locked in `package-lock.json`; preserve
+on 9 September 2026. Exact versions are locked in `package-lock.json`; preserve
 the licence files distributed with those packages when redistributing them.
 
 | Direct dependency | Checked version | Declared licence |
 | --- | --- | --- |
-| Next.js (`next`) | 15.5.22 | MIT |
+| Next.js (`next`) | 15.5.25 | MIT |
 | React (`react`) | 19.1.0 | MIT |
 | React DOM (`react-dom`) | 19.1.0 | MIT |
 | PDF.js (`pdfjs-dist`) | 5.4.624 | Apache-2.0 |
+| KaTeX (`katex`) | 0.18.7 | MIT |
 
 This is a direct-dependency summary, not a complete software bill of materials.
 Transitive and platform-specific packages have their own terms. In the reviewed
@@ -25,8 +26,7 @@ installation, these include libvips under LGPL-3.0-or-later through `sharp`, and
 `caniuse-lite` under CC-BY-4.0. Development tools also have separate licences.
 Do not describe the complete application stack as MIT-licensed. Review the exact
 target-platform dependency set and its obligations before distributing a compiled
-application or container image; the local macOS installation is not a licence
-inventory of the Linux production image.
+application or container image; a local installation is not a licence inventory of every target production image.
 
 ### PDF.js browser files
 
@@ -111,3 +111,7 @@ publication; it is **not** a copyright clearance or licence checker. Consult the
 relevant rights holder before reusing portfolio assets. The owner's custom
 [LICENSE](LICENSE) covers only the stated original work and preserves these
 third-party and portfolio-content boundaries.
+
+### Saved IX scientific figures
+
+The MRI recorded-image view uses the owner's exported reconstruction comparison from [IX-Medical-Imaging, pinned revision 93bc9cd](https://github.com/samuel-zhang01/IX-Medical-Imaging/blob/93bc9cd3e1175ed08a6d99a3443bdec3f1214f1e/latex/figures/fig4_reconstruction_comparison.png), added at the owner's request. [The media record](docs/MRI_RECORDED_FIGURE.json) preserves source/delivery hashes and the resize/encoding operation. This saved public study figure does not confer a general licence to its underlying MM-WHS data or trained models. Source labels remain intact; translated captions identify the saved-image context.

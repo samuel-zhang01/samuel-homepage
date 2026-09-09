@@ -12,8 +12,8 @@
   border: 1px solid var(--s7-ink, #000);
   border-radius: 0;
   color: var(--s7-ink, #000);
-  background: var(--s7-paper, #fff);
-  box-shadow: 1px 1px 0 var(--s7-ink, #000);
+  background: var(--s7-raised, #e8e8e8);
+  box-shadow: var(--s7-relief-raised, inset 1px 1px #fff), 1px 1px 0 var(--s7-edge, #777);
   font-family: var(--s7-font-ui, Geneva, Arial, sans-serif);
   font-size: var(--s7-ui, 13px);
   font-weight: 400;
@@ -25,7 +25,8 @@
 }
 
 .trigger[data-classic-select]:focus-visible { outline: 2px dotted var(--s7-ink, #000); outline-offset: 3px; }
-.trigger[data-classic-select][aria-expanded="true"] { color: var(--s7-paper, #fff); background: var(--s7-ink, #000); }
+.trigger[data-classic-select]:hover:not(:disabled):not([aria-expanded="true"]) { background: var(--s7-surface, #f2f2f2); }
+.trigger[data-classic-select][aria-expanded="true"] { color: var(--s7-paper, #fff); background: var(--s7-ink, #000); box-shadow: none; }
 .trigger[data-classic-select]:disabled { color: var(--s7-muted, #555); background: var(--s7-chrome, #ddd); border-color: var(--s7-shadow, #aaa); box-shadow: none; cursor: default; }
 .value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .arrow { width: 0; height: 0; flex: 0 0 auto; border-top: 5px solid currentColor; border-right: 4px solid transparent; border-left: 4px solid transparent; }
@@ -37,14 +38,14 @@
   z-index: 2147483647;
   box-sizing: border-box;
   margin: 0;
-  padding: 2px;
+  padding: 3px;
   overflow: auto;
   overscroll-behavior: contain;
   border: 1px solid var(--s7-ink, #000);
   border-radius: 0;
   color: var(--s7-ink, #000);
-  background: var(--s7-paper, #fff);
-  box-shadow: 1px 1px 0 var(--s7-ink, #000);
+  background: var(--s7-chrome, #d6d6d6);
+  box-shadow: var(--s7-relief-raised, inset 1px 1px #fff), var(--s7-popup-shadow, 3px 3px #777);
   font-family: var(--s7-font-ui, Geneva, Arial, sans-serif);
   font-size: var(--s7-ui, 13px);
   font-weight: 400;

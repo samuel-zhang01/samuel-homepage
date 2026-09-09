@@ -1636,7 +1636,7 @@
 .researchIcon {
   border-color: #111;
   color: #111;
-  background: #d8d8d3;
+  background: var(--s7-chrome);
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
 }
 
@@ -1843,7 +1843,7 @@
 .uncertaintyMap,
 .coverageChart {
   border: 2px solid #111;
-  background: #f4f4ef;
+  background: var(--s7-surface);
   box-shadow: inset 1px 1px 0 #bbb;
 }
 

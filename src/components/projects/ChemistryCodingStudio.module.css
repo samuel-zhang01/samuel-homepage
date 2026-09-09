@@ -484,7 +484,7 @@
   gap: 6px;
   padding: 7px 9px;
   border-bottom: 1px solid #c1c8c8;
-  background: #eff2ef;
+  background: var(--s7-surface);
 }
 
 .historyCard > div > span { color: #52656b; font-size: var(--s7-small); }
@@ -746,7 +746,7 @@
   gap: 12px;
   padding: 8px 10px;
   border-top: 1px solid #8c979a;
-  background: #f2f4f1;
+  background: var(--s7-surface);
   color: #56656b;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
@@ -780,7 +780,7 @@
   width: 100%;
   height: auto;
   min-height: 270px;
-  background: #fbfcf9;
+  background: var(--s7-paper);
 }
 
 .chartGrid line {
@@ -923,7 +923,7 @@
   gap: 8px;
   padding: 10px;
   border-top: 1px solid #aab2b3;
-  background: #edf0ed;
+  background: var(--s7-surface);
 }
 
 .orbitalControls .rangeControl { padding: 8px; }

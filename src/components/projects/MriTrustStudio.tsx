@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { MriErrorExperiment } from "./SourceExperiments";
 
 import { useId, useMemo, useState } from "react";
@@ -11,7 +12,7 @@ import { MathEquation } from "./MathEquation";
 import { DemoWindow } from "./DemoChrome";
 import styles from "./MriTrustStudio.module.css";
 
-type View = "experiments" | "reconstruction" | "architecture" | "uncertainty" | "robustness" | "segmentation" | "audit";
+type View = "images" | "experiments" | "reconstruction" | "architecture" | "uncertainty" | "robustness" | "segmentation" | "audit";
 type Acceleration = 4 | 8;
 type ReconMethod = "zero" | "no-dc" | "dc";
 type UqMethod = "dropout" | "ensemble";
@@ -88,6 +89,7 @@ const segmentationResults = {
 } as const;
 
 const viewLabels: Array<{ id: View; number: string; label: string }> = [
+  { id: "images", number: "↗", label: "Recorded images" },
   { id: "experiments", number: "00", label: "Error experiments" },
   { id: "reconstruction", number: "01", label: "Reconstruct" },
   { id: "architecture", number: "02", label: "Architecture" },
@@ -1263,6 +1265,27 @@ function AuditView() {
   );
 }
 
+function RecordedImagesView() {
+  return <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-recorded-heading">
+    <div className={styles.sectionLead}><div>
+      <span className={styles.kicker}>Saved study figure</span>
+      <h3 id="mri-recorded-heading">From source slices to reconstructed images</h3>
+      <p>This exported figure compares the reference image, zero-filled inputs and U-Net reconstructions at R=4 and R=8, with absolute-error maps underneath.</p>
+    </div></div>
+    <figure className={styles.recordedFigure}>
+      <div className={styles.recordedScroll} role="region" tabIndex={0} aria-label="Recorded MRI reconstruction comparison">
+        <Image unoptimized src="/projects/mri/media/recorded-reconstruction.webp" width={2200} height={948} alt="Saved cardiac MRI comparison: reference, zero-filled and reconstructed images at two acceleration factors, with error maps below." />
+      </div>
+      <figcaption>These are saved images from the IX-Medical-Imaging repository. The PSNR values belong to the pictured examples, not the 236-slice averages in the reconstruction controls. Original figure labels are in English.</figcaption>
+    </figure>
+    <div className={styles.recordedActions}>
+      <a className="s7-button" href="/projects/mri/media/recorded-reconstruction.webp" target="_blank" rel="noopener noreferrer">Open full-size figure ↗</a>
+      <a className="s7-button" href={`${REPOSITORY_URL.replace("/tree/", "/blob/")}/latex/figures/fig4_reconstruction_comparison.png`} target="_blank" rel="noopener noreferrer">View original source ↗</a>
+    </div>
+    <p>The browser displays the saved figure without rerunning inference. The interactive reconstruction and uncertainty views remain teaching tools, with separately identified synthetic phantoms.</p>
+  </section></ProjectCopy>;
+}
+
 export function MriTrustStudio() {
   const [view, setView] = useState<View>("reconstruction");
 
@@ -1270,10 +1293,10 @@ export function MriTrustStudio() {
     <ProjectCopy copy={mriCopy}><DemoWindow
       appName="MRI reconstruction lab"
       title="Trustworthy MRI Reconstruction"
-      status="Study results · synthetic visuals"
+      status="Study results · recorded images · interactive phantoms"
       purpose="Test whether an accelerated MRI reconstruction is not only visually plausible but also data-consistent and useful for downstream evaluation."
       tryThis="Change acceleration and uncertainty settings, then inspect the trust gate and architecture path."
-      watchFor="Quality, consistency, uncertainty and downstream checks can disagree; visuals are synthetic and metrics are reported source results."
+      watchFor="Quality, consistency, uncertainty and downstream checks can disagree. Recorded images show saved study outputs; interactive phantoms are synthetic."
       statusTone="safe"
       className={styles.studio}
       footer={
@@ -1286,8 +1309,7 @@ export function MriTrustStudio() {
       <div className={styles.disclaimer} role="note">
         <span>RESEARCH SHOWCASE</span>
         <p>
-          Compare the study’s reported results and explore the calculations behind them.
-          Scan-like graphics are synthetic illustrations; this page does not run a trained MRI model.
+          Compare the study’s reported results and explore the calculations behind them. Recorded images contains a saved source figure; the interactive phantoms are synthetic. This page does not run a trained MRI model.
         </p>
         <strong>NOT FOR CLINICAL USE</strong>
       </div>
@@ -1302,6 +1324,7 @@ export function MriTrustStudio() {
       </nav>
 
       <div className={styles.viewShell}>
+        {view === "images" ? <RecordedImagesView /> : null}
         {view === "experiments" ? <MriErrorExperiment /> : null}
         {view === "reconstruction" ? <ReconstructionView /> : null}
         {view === "architecture" ? <ArchitectureView /> : null}

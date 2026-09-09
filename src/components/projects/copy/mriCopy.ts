@@ -2,6 +2,17 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Authored Simplified Mandarin with reviewed Taiwan wording; loaded with the MRI demo. */
 export const mriCopy = {
+  "Recorded images": ["已保存图像", "已儲存影像"],
+  "Saved study figure": ["已保存的研究图", "已儲存的研究圖"],
+  "From source slices to reconstructed images": ["从原始切片到重建图像", "從原始切片到重建影像"],
+  "This exported figure compares the reference image, zero-filled inputs and U-Net reconstructions at R=4 and R=8, with absolute-error maps underneath.": ["这张导出图比较参考图像、零填充输入以及 R=4 和 R=8 下的 U-Net 重建结果，下方为绝对误差图。", "這張匯出圖比較參考影像、零填補輸入以及 R=4 和 R=8 下的 U-Net 重建結果，下方為絕對誤差圖。"],
+  "Recorded MRI reconstruction comparison": ["已保存的 MRI 重建比较", "已儲存的 MRI 重建比較"],
+  "Saved cardiac MRI comparison: reference, zero-filled and reconstructed images at two acceleration factors, with error maps below.": ["已保存的心脏 MRI 比较：参考图像、两种加速倍数下的零填充与重建图像，下方为误差图。", "已儲存的心臟 MRI 比較：參考影像、兩種加速倍數下的零填補與重建影像，下方為誤差圖。"],
+  "These are saved images from the IX-Medical-Imaging repository. The PSNR values belong to the pictured examples, not the 236-slice averages in the reconstruction controls. Original figure labels are in English.": ["这些图像来自 IX-Medical-Imaging 仓库。PSNR 数值对应图中的示例，并非重建控件中 236 张切片的平均值。原图标签为英文。", "這些影像來自 IX-Medical-Imaging 儲存庫。PSNR 數值對應圖中的範例，並非重建控制項中 236 張切片的平均值。原圖標籤為英文。"],
+  "Open full-size figure ↗": ["打开完整尺寸图像 ↗", "開啟完整尺寸影像 ↗"],
+  "View original source ↗": ["查看原始来源 ↗", "查看原始來源 ↗"],
+  "The browser displays the saved figure without rerunning inference. The interactive reconstruction and uncertainty views remain teaching tools, with separately identified synthetic phantoms.": ["浏览器显示已保存的图像，不重新运行推理。交互式重建与不确定性视图仍是教学工具，其中的合成示意已单独标明。", "瀏覽器顯示已儲存的影像，不重新執行推論。互動式重建與不確定性檢視仍是教學工具，其中的合成示意已另行標明。"],
+
   "/ 64 lines retained": [
     "/ 64 条采样线保留",
     "/ 64 條取樣線保留"
@@ -134,10 +145,7 @@ export const mriCopy = {
     "更改加速倍数与不确定性设置，再检查可信门槛与架构路径。",
     "更改加速倍數與不確定性設定，再檢查可信門檻與架構路徑。"
   ],
-  "Quality, consistency, uncertainty and downstream checks can disagree; visuals are synthetic and metrics are reported source results.": [
-    "质量、一致性、不确定性与下游检查可能相互冲突；视觉内容为合成示意，指标来自已报告的源结果。",
-    "品質、一致性、不確定性與下游檢查可能相互衝突；視覺內容為合成示意，指標來自已報告的源結果。"
-  ],
+  "Quality, consistency, uncertainty and downstream checks can disagree. Recorded images show saved study outputs; interactive phantoms are synthetic.": ["质量、一致性、不确定性与下游检查可能相互冲突。已保存图像展示研究输出；交互示意为合成内容。", "品質、一致性、不確定性與下游檢查可能相互衝突。已儲存影像展示研究輸出；互動示意為合成內容。"],
   "MC Dropout": [
     "MC Dropout",
     "MC Dropout"
@@ -1302,10 +1310,7 @@ export const mriCopy = {
     "研究展示",
     "研究展示"
   ],
-  "Compare the study’s reported results and explore the calculations behind them. Scan-like graphics are synthetic illustrations; this page does not run a trained MRI model.": [
-    "比较研究报告的结果，并探索其背后的计算。类扫描图像均为合成示意；此页面不运行训练好的 MRI 模型。",
-    "比較研究報告的結果，並探索其背後的計算。類掃描影像均為合成示意；此頁面不執行訓練好的 MRI 模型。"
-  ],
+  "Compare the study’s reported results and explore the calculations behind them. Recorded images contains a saved source figure; the interactive phantoms are synthetic. This page does not run a trained MRI model.": ["比较研究报告的结果，并探索其背后的计算。已保存图像包含原始研究图；交互示意为合成内容。此页面不运行训练好的 MRI 模型。", "比較研究報告的結果，並探索其背後的計算。已儲存影像包含原始研究圖；互動示意為合成內容。此頁面不執行訓練好的 MRI 模型。"],
   "NOT FOR CLINICAL USE": [
     "不用于临床",
     "不用於臨床"
@@ -1318,8 +1323,5 @@ export const mriCopy = {
     "MRI 重建实验室",
     "MRI 重建實驗室"
   ],
-  "Study results · synthetic visuals": [
-    "研究结果 · 合成示意",
-    "研究結果 · 合成示意"
-  ]
+  "Study results · recorded images · interactive phantoms": ["研究结果 · 已保存图像 · 交互示意", "研究結果 · 已儲存影像 · 互動示意"],
 } as const satisfies ProjectCopyTable;

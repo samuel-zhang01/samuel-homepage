@@ -3,6 +3,7 @@
  * Hashes pin the reviewed image bytes; dimensions catch accidental stretching.
  */
 export const scientificMedia = [
+  ["projects/mri/media/recorded-reconstruction.webp", {"maximumBytes": 365000, "sha256": "ebb9767f5e59b741c54c7e40e7a46515a8ad07bc0a2341ec1266f724c908f088", "type": "webp", "width": 2200, "height": 948}],
   ["projects/neural-cfd/media/fno-baseline-prediction.webp",{"maximumBytes":6806,"sha256":"6f125e9d0de7c0b0a97e51e8fce7421dc7cddd855b27783c7d2db43568f3da1f","type":"webp","width":543,"height":172}],
   ["projects/neural-cfd/media/fno-multiscale-prediction.webp",{"maximumBytes":12594,"sha256":"a788f940d9fe58623250284630cee6296dd5127f0433484ff06af94df0c7067b","type":"webp","width":519,"height":389}],
   ["projects/neural-cfd/media/fno-residual-prediction.webp",{"maximumBytes":6662,"sha256":"91fbfa38f8d8b6568b9965f51544258294fdda2470c493a8991c75a2ee6a01b2","type":"webp","width":543,"height":172}],

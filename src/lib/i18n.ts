@@ -335,13 +335,14 @@ const zhCN: Record<string, string> = {
   "Normal": "普通",
   "Important": "重要",
   "Task filters": "任务筛选",
+  "To do": "待办",
   "Completed": "已完成",
   "Clear completed": "清除已完成项",
   "Nothing completed yet.": "还没有已完成的任务。",
   "Your desk is clear.": "桌面任务已清空。",
   "Finished tasks will collect here.": "已完成的任务会显示在这里。",
   "Add one useful next action above.": "在上方添加一个有用的下一步。",
-  "Reopen": "重新打开",
+  "Reopen": "重新标为待办",
   "Complete": "标记完成",
   "IMPORTANT": "重要",
   "Delete task": "删除任务",
@@ -1756,7 +1757,7 @@ const zhTWOverrides: Record<string, string> = {
   "That file is not a valid Desk Accessories backup.": "該備份檔案不是有效的桌面工具備份。",
   "Add task": "新增任務",
   "Add one useful next action above.": "請在上方新增一個實用的下一步。",
-  "Reopen": "重新開啟",
+  "Reopen": "重新標為待辦",
   "Copied": "已複製",
   "Copy unavailable": "無法複製",
   "Copy result": "複製結果",
@@ -1786,6 +1787,7 @@ const zhTWOverrides: Record<string, string> = {
   "Capture it before it disappears.": "趁想法還在，馬上記下。",
   "What needs doing?": "接下來要做什麼？",
   "Task filters": "任務篩選",
+  "To do": "待辦",
   "One quiet place for the day ahead.": "安靜規劃接下來的一天。",
   "Plan by day with a private note saved to this browser.": "按日規劃，私人備註儲存在此瀏覽器。",
   "Pick boldly. Check responsibly.": "大膽選色，仔細檢查。",
@@ -2158,6 +2160,23 @@ function toAmericanEnglish(value: string): string {
     .replaceAll("normalised", "normalized")
     .replaceAll("Normalise", "Normalize")
     .replaceAll("normalise", "normalize")
+    .replaceAll("Normalising", "Normalizing")
+    .replaceAll("normalising", "normalizing")
+    .replaceAll("Normalisation", "Normalization")
+    .replaceAll("normalisation", "normalization")
+    .replaceAll("Recognise", "Recognize")
+    .replaceAll("recognise", "recognize")
+    .replaceAll("Optimise", "Optimize")
+    .replaceAll("optimise", "optimize")
+    .replaceAll("Optimisation", "Optimization")
+    .replaceAll("optimisation", "optimization")
+    .replaceAll("Regularisation", "Regularization")
+    .replace(/\bAnalyse\b/g, "Analyze")
+    .replace(/\banalyse\b/g, "analyze")
+    .replaceAll("Labelled", "Labeled")
+    .replaceAll("labelled", "labeled")
+    .replaceAll("Realised", "Realized")
+    .replaceAll("realised", "realized")
     .replaceAll("Organisers", "Organizers")
     .replaceAll("organisers", "organizers")
     .replaceAll("Organiser", "Organizer")
@@ -2165,6 +2184,13 @@ function toAmericanEnglish(value: string): string {
     .replaceAll("Organised", "Organized")
     .replaceAll("organised", "organized")
     .replaceAll("organisational", "organizational")
+    .replaceAll("organisation", "organization")
+    .replaceAll("Organisation", "Organization")
+    .replaceAll("organise", "organize")
+    .replaceAll("Organise", "Organize")
+    .replaceAll("licence", "license")
+    .replaceAll("Licence", "License")
+    .replaceAll("LICENCE", "LICENSE")
     .replaceAll("regularisation", "regularization")
     .replaceAll("prioritisation", "prioritization")
     .replaceAll("MODELLING", "MODELING")

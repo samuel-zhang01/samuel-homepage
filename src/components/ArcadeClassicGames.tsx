@@ -67,6 +67,7 @@ type SnakeState = {
 type SnakeAction =
   | { type: "tick" }
   | { type: "turn"; direction: Direction }
+  | { type: "pause" }
   | { type: "toggle" }
   | { type: "reset" };
 
@@ -103,6 +104,8 @@ function nextSnakeFood(snake: Point[], cursor: number) {
 
 function snakeReducer(state: SnakeState, action: SnakeAction): SnakeState {
   if (action.type === "reset") return initialSnakeState();
+
+  if (action.type === "pause") return state.status === "running" ? { ...state, status: "paused" } : state;
 
   if (action.type === "toggle") {
     if (state.status === "won" || state.status === "lost") return state;
@@ -180,6 +183,12 @@ function snakeStatusText(status: PlayStatus) {
 export function SnakeGame({ locale }: GameProps) {
   const [state, dispatch] = useReducer(snakeReducer, undefined, initialSnakeState);
   const t = useCallback((text: string) => translateText(locale, text), [locale]);
+
+  useEffect(() => {
+    const pauseWhenHidden = () => { if (document.hidden) dispatch({ type: "pause" }); };
+    document.addEventListener("visibilitychange", pauseWhenHidden);
+    return () => document.removeEventListener("visibilitychange", pauseWhenHidden);
+  }, []);
 
   useEffect(() => {
     if (state.status !== "running") return;
@@ -354,6 +363,7 @@ type BrickState = {
 type BrickAction =
   | { type: "step"; delta: number; paddleDirection: -1 | 0 | 1 }
   | { type: "nudge"; amount: -1 | 1 }
+  | { type: "pause" }
   | { type: "toggle" }
   | { type: "reset" };
 
@@ -371,6 +381,8 @@ function initialBrickState(): BrickState {
 
 function brickReducer(state: BrickState, action: BrickAction): BrickState {
   if (action.type === "reset") return initialBrickState();
+
+  if (action.type === "pause") return state.status === "running" ? { ...state, status: "paused" } : state;
 
   if (action.type === "toggle") {
     if (state.status === "won" || state.status === "lost") return state;
@@ -536,6 +548,12 @@ export function BrickBreakerGame({ locale }: GameProps) {
   const paddleDirectionRef = useRef<-1 | 0 | 1>(0);
   const lastFrameRef = useRef<number | null>(null);
   const t = useCallback((text: string) => translateText(locale, text), [locale]);
+
+  useEffect(() => {
+    const pauseWhenHidden = () => { if (document.hidden) dispatch({ type: "pause" }); };
+    document.addEventListener("visibilitychange", pauseWhenHidden);
+    return () => document.removeEventListener("visibilitychange", pauseWhenHidden);
+  }, []);
 
   useEffect(() => {
     if (state.status !== "running") {

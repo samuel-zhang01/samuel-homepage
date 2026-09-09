@@ -1,15 +1,10 @@
-.archiveCssAnchor {
-  --project-demo-router-css-ready: 1;
-}
-
 .loading {
   display: grid;
   min-height: 24rem;
   place-content: center;
   gap: 0.8rem;
   border: 1px solid var(--s7-shadow);
-  background:
-    var(--s7-paper);
+  background: var(--s7-paper);
   color: var(--s7-ink);
   font-family: var(--s7-font-text);
   text-align: center;
@@ -21,7 +16,7 @@
   margin: auto;
   border: 1px solid var(--s7-shadow);
   box-shadow: none;
-  background: var(--s7-paper);
+  background: var(--s7-title-lines);
   animation: demo-loading 900ms steps(4, end) infinite;
 }
 
@@ -31,7 +26,7 @@
 }
 
 @keyframes demo-loading {
-  to { background-position: 16px 0; }
+  50% { opacity: 0.35; }
 }
 
 @media (prefers-reduced-motion: reduce) {

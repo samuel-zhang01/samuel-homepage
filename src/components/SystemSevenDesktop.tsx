@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { System7Icon, type System7IconKind } from "./System7Icon";
 import { projects } from "@/data/projects";
 import { projectOrigins } from "@/data/projectOrigins";
 import dynamic from "next/dynamic";
@@ -142,32 +143,7 @@ type DesktopIcon = {
   description: string;
 };
 
-type IconKind =
-  | "profile"
-  | "coverd"
-  | "computer"
-  | "briefcase"
-  | "folder"
-  | "document"
-  | "controls"
-  | "university"
-  | "network"
-  | "photos"
-  | "runner"
-  | "game"
-  | "accessories"
-  | "note"
-  | "sketch"
-  | "tasks"
-  | "clock"
-  | "calendar"
-  | "calculator"
-  | "converter"
-  | "palette"
-  | "orbital"
-  | "pdf"
-  | "mail"
-  | "secret";
+type IconKind = System7IconKind | "coverd";
 
 type SystemMenuId = "apple" | "file" | "edit" | "view" | "special" | "language";
 type DesktopPattern = "classic" | "blue" | "paper";
@@ -752,212 +728,9 @@ function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean })
     );
   }
 
-  const common = {
-    fill: "none",
-    stroke: "#111",
-    strokeWidth: 3,
-    strokeLinecap: "square" as const,
-    strokeLinejoin: "miter" as const,
-  };
-
-  const artwork: Record<Exclude<IconKind, "coverd">, React.ReactNode> = {
-    profile: (
-      <g {...common}>
-        <circle cx="24" cy="14" r="8" fill="#f2ca59" />
-        <path d="M8 44v-5c0-10 6-16 16-16s16 6 16 16v5z" fill="#d7d7d1" />
-        <path d="M15 40h18" stroke="#11177a" strokeWidth="2" />
-      </g>
-    ),
-    computer: (
-      <g {...common}>
-        <rect x="5" y="3" width="38" height="35" rx="2" fill="#d7d7d1" />
-        <rect x="10" y="8" width="28" height="20" fill="#fff" />
-        <path d="M17 17h2m9 0h2m-12 6c3 2 9 2 12 0" />
-        <path d="M16 38v5h16v-5" fill="#aaa" />
-      </g>
-    ),
-    folder: (
-      <g {...common}>
-        <path d="M3 14h16l4-6h10l4 6h8v29H3z" fill="#f2ca59" />
-        <path d="M3 18h42" stroke="#fff2ad" />
-        <path d="M7 38h34" stroke="#b68921" />
-      </g>
-    ),
-    briefcase: (
-      <g {...common}>
-        <path d="M16 14V8h16v6" />
-        <rect x="4" y="14" width="40" height="29" rx="1" fill="#c8b078" />
-        <path d="M4 25h40M20 23v6h8v-6" />
-        <path d="M9 39h30" stroke="#8c7544" strokeWidth="2" />
-      </g>
-    ),
-    document: (
-      <g {...common}>
-        <path d="M9 3h22l9 9v33H9z" fill="#fff" />
-        <path d="M31 3v10h9" fill="#aaa" />
-        <path d="M15 21h19M15 27h19M15 33h15M15 39h17" strokeWidth="2" />
-      </g>
-    ),
-    controls: (
-      <g {...common}>
-        <rect x="4" y="5" width="40" height="38" fill="#d7d7d1" />
-        <path d="M13 11v26M24 11v26M35 11v26" />
-        <rect x="9" y="17" width="8" height="7" fill="#fff" />
-        <rect x="20" y="29" width="8" height="7" fill="#fff" />
-        <rect x="31" y="14" width="8" height="7" fill="#fff" />
-      </g>
-    ),
-    university: (
-      <g {...common}>
-        <path d="M3 16 24 4l21 12z" fill="#d8d8d2" />
-        <path d="M7 20h34M5 42h38" />
-        <path d="M10 20v20M19 20v20M29 20v20M38 20v20" strokeWidth="4" />
-      </g>
-    ),
-    network: (
-      <g {...common}>
-        <path d="M24 16v9M11 30v-5h26v5" />
-        <rect x="17" y="3" width="14" height="13" fill="#d8d8d2" />
-        <rect x="4" y="30" width="14" height="13" fill="#fff" />
-        <rect x="30" y="30" width="14" height="13" fill="#fff" />
-        <path d="M20 12h8M7 39h8M33 39h8" strokeWidth="2" />
-      </g>
-    ),
-    photos: (
-      <g {...common}>
-        <path d="M5 8h37v33H5z" fill="#fff" />
-        <circle cx="31" cy="17" r="4" fill="#f2ca59" />
-        <path d="m8 36 10-12 7 7 5-5 9 10" fill="#7da574" />
-        <path d="M2 12V4h36" stroke="#888" />
-      </g>
-    ),
-    runner: (
-      <g {...common}>
-        <path d="M5 39h38" stroke="#777" strokeWidth="2" />
-        <circle cx="28" cy="9" r="5" fill="#f2ca59" />
-        <path d="m24 15-7 11 10 5 5-12z" fill="#d7ff55" />
-        <path d="m21 20-9 2-5 7m19 2-8 10m9-10 11 8m-5-18 8 4" />
-        <path d="M7 12h9M4 17h11" stroke="#67a8b8" strokeWidth="2" />
-      </g>
-    ),
-    game: (
-      <g {...common}>
-        <path d="M13 17h22l8 18-5 7-10-8h-8l-10 8-5-7z" fill="#d7d7d1" />
-        <path d="M16 23v10M11 28h10" />
-        <rect x="31" y="23" width="4" height="4" fill="#f26b3d" />
-        <rect x="36" y="29" width="4" height="4" fill="#3458a5" />
-        <path d="M20 17V8h8" />
-      </g>
-    ),
-    accessories: (
-      <g {...common}>
-        <path d="M3 14h16l4-6h10l4 6h8v29H3z" fill="#f2ca59" />
-        <path d="M8 20h13v17H8z" fill="#fff" strokeWidth="2" />
-        <path d="M12 25h5m-5 5h5" stroke="#6b78a8" strokeWidth="2" />
-        <circle cx="34" cy="29" r="8" fill="#d8d8d2" strokeWidth="2" />
-        <path d="M34 24v6l4 2" strokeWidth="2" />
-      </g>
-    ),
-    note: (
-      <g {...common}>
-        <path d="M8 4h31v40H8z" fill="#fffdf0" />
-        <path d="M14 13h19M14 20h19M14 27h19M14 34h13" stroke="#6b78a8" strokeWidth="2" />
-        <path d="M31 44v-9h8" fill="#f2ca59" />
-        <path d="M13 4v6M21 4v6M29 4v6" strokeWidth="2" />
-      </g>
-    ),
-    sketch: (
-      <g {...common}>
-        <path d="M5 7h31l7 7v28H5z" fill="#fff" />
-        <path d="M36 7v8h7" fill="#d8d8d2" />
-        <path d="m12 34 4-9 17-17 6 6-17 17z" fill="#f2ca59" />
-        <path d="m16 25 6 6" strokeWidth="2" />
-        <path d="M11 36c7-2 14-1 21 2" stroke="#11177a" strokeWidth="2" />
-      </g>
-    ),
-    tasks: (
-      <g {...common}>
-        <path d="M7 5h34v39H7z" fill="#fffdf0" />
-        <path d="m12 15 3 3 6-7M12 27l3 3 6-7" stroke="#237747" />
-        <path d="M24 15h11M24 27h11M12 38h23" stroke="#6b78a8" strokeWidth="2" />
-      </g>
-    ),
-    clock: (
-      <g {...common}>
-        <circle cx="24" cy="26" r="17" fill="#fff" />
-        <path d="M18 4h12M24 4v5M37 12l4 4M11 12l-4 4" />
-        <path d="M24 15v12l8 5" stroke="#11177a" />
-        <circle cx="24" cy="26" r="2" fill="#111" />
-      </g>
-    ),
-    calendar: (
-      <g {...common}>
-        <path d="M5 9h38v34H5z" fill="#fff" />
-        <path d="M5 9h38v10H5z" fill="#b83b3b" />
-        <path d="M14 4v10M34 4v10" />
-        <path d="M12 25h6v6h-6zm9 0h6v6h-6zm9 0h6v6h-6zM12 34h6v5h-6zm9 0h6v5h-6z" fill="#d8d8d2" strokeWidth="2" />
-      </g>
-    ),
-    calculator: (
-      <g {...common}>
-        <rect x="7" y="3" width="34" height="42" fill="#d8d8d2" />
-        <rect x="12" y="8" width="24" height="8" fill="#cfe0b8" strokeWidth="2" />
-        <path d="M12 22h6v5h-6zm9 0h6v5h-6zm9 0h6v5h-6zM12 31h6v5h-6zm9 0h6v5h-6zm9 0h6v5h-6z" fill="#fff" strokeWidth="2" />
-      </g>
-    ),
-    converter: (
-      <g {...common}>
-        <path d="M7 13h29M30 7l6 6-6 6" stroke="#11177a" />
-        <path d="M41 35H12M18 29l-6 6 6 6" stroke="#b83b3b" />
-        <rect x="5" y="6" width="8" height="14" fill="#f2ca59" strokeWidth="2" />
-        <rect x="35" y="28" width="8" height="14" fill="#d3e5c2" strokeWidth="2" />
-      </g>
-    ),
-    palette: (
-      <g {...common}>
-        <path d="M24 5c-12 0-20 8-20 18 0 8 7 16 15 16h4c3 0 4-3 2-5-2-3 0-7 4-7h7c5 0 8-4 8-8C44 11 35 5 24 5z" fill="#fff" />
-        <circle cx="13" cy="19" r="3" fill="#ef5647" strokeWidth="2" />
-        <circle cx="22" cy="13" r="3" fill="#f2ca59" strokeWidth="2" />
-        <circle cx="32" cy="16" r="3" fill="#4e9a61" strokeWidth="2" />
-        <circle cx="16" cy="29" r="3" fill="#4568b2" strokeWidth="2" />
-      </g>
-    ),
-    orbital: (
-      <g {...common}>
-        <path d="M7 7h34v34H7z" fill="#fffdf0" />
-        <path d="M23 23C3 22 6 4 17 10c5 3 7 8 6 13ZM25 25c20 1 17 19 6 13-5-3-7-8-6-13Z" fill="#11177a" strokeWidth="2" />
-        <path d="M25 23c1-20 19-17 13-6-3 5-8 7-13 6ZM23 25C22 45 4 42 10 31c3-5 8-7 13-6Z" fill="#bd674b" strokeWidth="2" />
-        <circle cx="24" cy="24" r="2" fill="#111" />
-      </g>
-    ),
-    pdf: (
-      <g {...common}>
-        <path d="M8 3h23l9 9v33H8z" fill="#fff" />
-        <path d="M31 3v10h9" fill="#aaa" />
-        <rect x="4" y="24" width="32" height="14" fill="#b74343" />
-        <path d="M9 28h5c4 0 4 6 0 6H9zm12 0v6m0-6h7m-7 3h5" stroke="#fff" strokeWidth="2" />
-      </g>
-    ),
-    mail: (
-      <g {...common}>
-        <rect x="4" y="9" width="40" height="31" fill="#fff" />
-        <path d="m6 12 18 15 18-15M6 38l13-14m23 14L29 24" strokeWidth="2" />
-        <path d="M9 43h30" stroke="#777" strokeWidth="2" />
-      </g>
-    ),
-    secret: (
-      <g {...common}>
-        <path d="m24 3 5 13 14 1-11 9 4 14-12-8-12 8 4-14-11-9 14-1z" fill="#f2ca59" />
-        <path d="M18 21h2m8 0h2m-11 6c3 2 7 2 10 0" strokeWidth="2" />
-      </g>
-    ),
-  };
-
   return (
     <span className={`pixel-icon pixel-icon--${kind}${small ? " pixel-icon--small" : ""}`} aria-hidden="true">
-      <svg className="pixel-icon__svg" viewBox="0 0 48 48" shapeRendering="crispEdges">
-        {artwork[kind]}
-      </svg>
+      <System7Icon kind={kind} miniature={small} />
     </span>
   );
 }
@@ -1566,7 +1339,7 @@ const supportingDocuments = [
   {
     id: "study-rl",
     title: "Reinforcement Learning Study Syllabus",
-    meta: "Learning atlas · PDF",
+    meta: "Learning atlas · English PDF",
     src: "/projects/study-rl/syllabus.pdf",
   },
 ];
@@ -1736,14 +1509,14 @@ validateSamWords();
 
 type ArcadeGameId = "minefield" | "snake" | "brickbreaker" | "puzzle" | "samword" | "memory" | "spectrum";
 
-const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: string; label: string; description: string }[] = [
-  { id: "minefield", icon: "M", label: "Minefield", description: "Clear the desk. Mind the paperwork." },
-  { id: "snake", icon: "S", label: "Snake", description: "Eat pixels, dodge the walls, become inconveniently long." },
-  { id: "brickbreaker", icon: "BB", label: "Brick Breaker", description: "One paddle, one ball and a very breakable filing cabinet." },
-  { id: "puzzle", icon: "15", label: "Sliding Puzzle", description: "Put every number back where it belongs." },
-  { id: "samword", icon: "SZ", label: "SamWord", description: "Six letters, profile clues and one suspicious password." },
-  { id: "memory", icon: "8", label: "Profile Pairs", description: "Match the work to the story behind it." },
-  { id: "spectrum", icon: "UV", label: "Peak Dock", description: "Fit randomised HPLC–UV peaks across three difficulty levels." },
+const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: System7IconKind; label: string; description: string }[] = [
+  { id: "minefield", icon: "minefield", label: "Minefield", description: "Clear the desk. Mind the paperwork." },
+  { id: "snake", icon: "snake", label: "Snake", description: "Eat pixels, dodge the walls, become inconveniently long." },
+  { id: "brickbreaker", icon: "brickbreaker", label: "Brick Breaker", description: "One paddle, one ball and a very breakable filing cabinet." },
+  { id: "puzzle", icon: "puzzle", label: "Sliding Puzzle", description: "Put every number back where it belongs." },
+  { id: "samword", icon: "word", label: "SamWord", description: "Six letters, profile clues and one suspicious password." },
+  { id: "memory", icon: "cards", label: "Profile Pairs", description: "Match the work to the story behind it." },
+  { id: "spectrum", icon: "spectrum", label: "Peak Dock", description: "Fit randomised HPLC–UV peaks across three difficulty levels." },
 ] as const;
 
 const MEMORY_PAIRS = [
@@ -1833,6 +1606,8 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
   const [gamesMenuCue, setGamesMenuCue] = useState<"left" | "right" | "both" | "none">("right");
   const memoryTimer = useRef<number | null>(null);
   const gamesMenuRef = useRef<HTMLElement | null>(null);
+  const gameStageRef = useRef<HTMLElement | null>(null);
+  useEffect(() => { if (gameStageRef.current) gameStageRef.current.scrollTop = 0; }, [game]);
   const mineSeed = useRef(91);
   const puzzleSeed = useRef(1991);
   const memorySeed = useRef(1991);
@@ -2063,7 +1838,7 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               onClick={() => setGame(item.id)}
               aria-pressed={game === item.id}
             >
-              <span className="game-mini-icon" aria-hidden="true">{item.icon}</span>
+              <span className="game-mini-icon" aria-hidden="true"><System7Icon kind={item.icon} /></span>
               {item.label}
             </button>
           ))}
@@ -2075,12 +1850,12 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
         )}
         <p>Seven tiny distractions.<br />Local only. No tracking.<br />One suspicious password.</p>
       </div>
-      <section className="game-stage">
+      <section ref={gameStageRef} className="game-stage">
         <div className="arcade-now-playing" aria-live="polite">
           <span><i aria-hidden="true" /> NOW PLAYING</span>
           <strong>{activeArcadeGame.label}</strong>
           <p>{activeArcadeGame.description}</p>
-          <b aria-hidden="true">{activeArcadeGame.icon}</b>
+          <b aria-hidden="true"><System7Icon kind={activeArcadeGame.icon} /></b>
         </div>
         {game === "minefield" && (
           <>
@@ -2256,37 +2031,45 @@ function SecretApp({ locale }: { locale: Locale }) {
   );
 }
 
-function ServiceIcon({ code, tone }: { code: string; tone: string }) {
-  return <span className={`service-pixel-icon service-pixel-icon--${tone}`} aria-hidden="true">{code}</span>;
+// Generic service pictograms describe the function; product names keep their own identity.
+const SERVICE_ICONS: Record<string, System7IconKind> = {
+  PX: "network", AI: "computer", DEV: "document", KVM: "computer",
+  NPM: "network", WG: "shield", DNS: "shield", F2B: "shield", RDP: "computer",
+  CT: "controls", CI: "tasks", HP: "folder", JOB: "calendar", SQL: "network",
+  CO2: "chart", HA: "network", RAID: "network", NAS: "folder", NC: "folder",
+  JF: "photos", KX: "book", ERP: "briefcase", ODO: "controls",
+};
+function ServiceIcon({ code }: { code: string }) {
+  return <span className="service-pixel-icon" aria-hidden="true"><System7Icon kind={SERVICE_ICONS[code] ?? "computer"} /></span>;
 }
 
 function LabApp({ locale }: { locale: Locale }) {
   const openProject = useContext(ProjectOpenContext);
   const [filter, setFilter] = useState("All");
   const services = [
-    { group: "Compute", code: "PX", tone: "violet", name: "Proxmox", host: "Virtualisation cluster", description: "Runs isolated VMs and Linux containers for the heavier parts of the lab." },
-    { group: "Compute", code: "AI", tone: "blue", name: "Local AI GPU", host: "Private GPU workspace", description: "Local model training and inference, with Open WebUI for everyday interaction." },
-    { group: "Compute", code: "DEV", tone: "navy", name: "Code Servers", host: "Browser IDEs", description: "GPU-connected VS Code environments for remote development and experiments." },
-    { group: "Compute", code: "KVM", tone: "grey", name: "GLKVM", host: "Physical console", description: "Out-of-band keyboard, video and mouse access when a server stops responding." },
-    { group: "Network", code: "NPM", tone: "green", name: "Nginx Proxy Manager", host: "TLS gateway", description: "Routes public domains to private services and manages HTTPS certificates." },
-    { group: "Network", code: "WG", tone: "blue", name: "WireGuard", host: "Private access", description: "Encrypted remote entry to the home network without exposing internal tools." },
-    { group: "Network", code: "DNS", tone: "red", name: "Pi-hole", host: "Network protection", description: "Network-wide DNS filtering for adverts, trackers and unwanted domains." },
-    { group: "Network", code: "F2B", tone: "orange", name: "Fail2ban", host: "Intrusion response", description: "Watches service logs and automatically blocks repeated hostile requests." },
-    { group: "Network", code: "RDP", tone: "violet", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
-    { group: "Operations", code: "CT", tone: "blue", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
-    { group: "Operations", code: "CI", tone: "green", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs across Samuel’s own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs." },
-    { group: "Operations", code: "HP", tone: "navy", name: "Homepage", host: "Service directory", description: "A documented directory for service links and operational notes." },
-    { group: "Operations", code: "JOB", tone: "orange", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
-    { group: "Data", code: "SQL", tone: "blue", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
-    { group: "Data", code: "CO2", tone: "green", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Documents a Bluetooth-to-dashboard path for CO₂, temperature, humidity and pressure." },
-    { group: "Data", code: "HA", tone: "amber", name: "Home Assistant", host: "Automation hub", description: "Connects sensors, energy data and smart-home devices into one event-driven system." },
-    { group: "Storage", code: "RAID", tone: "green", name: "Storage pool", host: "Private fleet inventory", description: "RAID storage for media and datasets, alongside database backup and recovery tooling. A successful restore still needs to be tested." },
-    { group: "Storage", code: "NAS", tone: "grey", name: "Synology Cloud", host: "Files & photos", description: "Private file sync, photo management and resilient network storage." },
-    { group: "Storage", code: "NC", tone: "blue", name: "Nextcloud", host: "Private cloud", description: "Self-hosted document access and synchronisation across personal devices." },
-    { group: "Media", code: "JF", tone: "violet", name: "Jellyfin", host: "Home cinema", description: "Documents a private media-library and playback-monitoring service." },
-    { group: "Media", code: "KX", tone: "amber", name: "Kiwix", host: "Offline knowledge", description: "Serves offline Wikipedia and reference libraries without an internet connection." },
-    { group: "Apps", code: "ERP", tone: "green", name: "Frappe / ERPNext", host: "Business systems lab", description: "A containerised environment for exploring open-source ERP and workflow software." },
-    { group: "Apps", code: "ODO", tone: "violet", name: "Odoo Lab", host: "Application sandbox", description: "A separate test stack for business application and database experiments." },
+    { group: "Compute", code: "PX", name: "Proxmox", host: "Virtualisation cluster", description: "Runs isolated VMs and Linux containers for the heavier parts of the lab." },
+    { group: "Compute", code: "AI", name: "Local AI GPU", host: "Private GPU workspace", description: "Local model training and inference, with Open WebUI for everyday interaction." },
+    { group: "Compute", code: "DEV", name: "Code Servers", host: "Browser IDEs", description: "GPU-connected VS Code environments for remote development and experiments." },
+    { group: "Compute", code: "KVM", name: "GLKVM", host: "Physical console", description: "Out-of-band keyboard, video and mouse access when a server stops responding." },
+    { group: "Network", code: "NPM", name: "Nginx Proxy Manager", host: "TLS gateway", description: "Routes public domains to private services and manages HTTPS certificates." },
+    { group: "Network", code: "WG", name: "WireGuard", host: "Private access", description: "Encrypted remote entry to the home network without exposing internal tools." },
+    { group: "Network", code: "DNS", name: "Pi-hole", host: "Network protection", description: "Network-wide DNS filtering for adverts, trackers and unwanted domains." },
+    { group: "Network", code: "F2B", name: "Fail2ban", host: "Intrusion response", description: "Watches service logs and automatically blocks repeated hostile requests." },
+    { group: "Network", code: "RDP", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
+    { group: "Operations", code: "CT", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
+    { group: "Operations", code: "CI", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs across Samuel’s own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs." },
+    { group: "Operations", code: "HP", name: "Homepage", host: "Service directory", description: "A documented directory for service links and operational notes." },
+    { group: "Operations", code: "JOB", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
+    { group: "Data", code: "SQL", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
+    { group: "Data", code: "CO2", name: "Aranet Air Quality", host: "BLE → SQL → Grafana", description: "Documents a Bluetooth-to-dashboard path for CO₂, temperature, humidity and pressure." },
+    { group: "Data", code: "HA", name: "Home Assistant", host: "Automation hub", description: "Connects sensors, energy data and smart-home devices into one event-driven system." },
+    { group: "Storage", code: "RAID", name: "Storage pool", host: "Private fleet inventory", description: "RAID storage for media and datasets, alongside database backup and recovery tooling. A successful restore still needs to be tested." },
+    { group: "Storage", code: "NAS", name: "Synology Cloud", host: "Files & photos", description: "Private file sync, photo management and resilient network storage." },
+    { group: "Storage", code: "NC", name: "Nextcloud", host: "Private cloud", description: "Self-hosted document access and synchronisation across personal devices." },
+    { group: "Media", code: "JF", name: "Jellyfin", host: "Home cinema", description: "Documents a private media-library and playback-monitoring service." },
+    { group: "Media", code: "KX", name: "Kiwix", host: "Offline knowledge", description: "Serves offline Wikipedia and reference libraries without an internet connection." },
+    { group: "Apps", code: "ERP", name: "Frappe / ERPNext", host: "Business systems lab", description: "A containerised environment for exploring open-source ERP and workflow software." },
+    { group: "Apps", code: "ODO", name: "Odoo Lab", host: "Application sandbox", description: "A separate test stack for business application and database experiments." },
   ];
   const groups = ["All", "Compute", "Network", "Operations", "Data", "Storage", "Media", "Apps"];
   const visibleServices = filter === "All" ? services : services.filter((service) => service.group === filter);
@@ -2316,7 +2099,7 @@ function LabApp({ locale }: { locale: Locale }) {
       <div className="service-grid">
         {visibleServices.map((service) => (
           <article className="service-card" key={service.name}>
-            <ServiceIcon code={service.code} tone={service.tone} />
+            <ServiceIcon code={service.code} />
             <div className="service-card__copy">
               <div><h4>{service.name}</h4></div>
               <strong>{service.host}</strong>
@@ -2426,7 +2209,7 @@ function AppContent({
   openApp,
   locale,
   initialProjectSlug,
-  onOpenProject,
+  initialProjectDemo,
   onProjectBack,
   onProjectGraph,
   active,
@@ -2435,7 +2218,7 @@ function AppContent({
   openApp: (id: AppId) => void;
   locale: Locale;
   initialProjectSlug?: string;
-  onOpenProject: (slug: string) => void;
+  initialProjectDemo?: boolean;
   onProjectBack: () => void;
   onProjectGraph: (slug: string) => void;
   active: boolean;
@@ -2444,8 +2227,8 @@ function AppContent({
     case "about": return <AboutApp openApp={openApp} locale={locale} />;
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
-    case "projects": return <ProjectExplorer active={active} locale={locale} onOpenApp={openApp} onOpenProject={onOpenProject} />;
-    case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} /> : null;
+    case "projects": return <ProjectExplorer active={active} locale={locale} onOpenApp={openApp} />;
+    case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} initialDemo={initialProjectDemo} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} /> : null;
     case "sidequest": return <SideQuestCabinetApp locale={locale} />;
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
@@ -2473,6 +2256,7 @@ export default function SystemSevenDesktop({
   skipBoot = false,
   initialLocale = "en-GB",
   initialProjectSlug,
+  initialProjectDemo = false,
 }: {
   initialApp?: AppId;
   skipBoot?: boolean;
@@ -2505,6 +2289,7 @@ export default function SystemSevenDesktop({
   const [pattern, setPattern] = useState<DesktopPattern>("classic");
   const [finderOpen, setFinderOpen] = useState(false);
   const [requestedProjectSlug, setRequestedProjectSlug] = useState(initialProjectSlug);
+  const [requestedProjectDemo, setRequestedProjectDemo] = useState(initialProjectDemo);
   const [memoryMagic, setMemoryMagic] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [mobileGuide, setMobileGuide] = useState(false);
@@ -2525,7 +2310,7 @@ export default function SystemSevenDesktop({
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
   const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({
     projects: { search: "?view=map", hash: "" },
-    project: { search: initialProject ? `?project=${encodeURIComponent(initialProject.slug)}` : "", hash: "" },
+    project: { search: initialProject ? `?project=${encodeURIComponent(initialProject.slug)}${initialProjectDemo ? "&view=demo" : ""}` : "", hash: "" },
   });
   const finderReturnFocus = useRef<HTMLElement | null>(null);
 
@@ -2792,10 +2577,12 @@ export default function SystemSevenDesktop({
       const nextUrl = new URL(nextAddress, currentUrl.origin);
       const requestedView = nextUrl.searchParams.get("view");
       const requestedSlug = nextUrl.searchParams.get("project");
+      const selectedSlug = nextUrl.searchParams.get("selected");
       const graphView = requestedView === "map"
         || (!requestedSlug && !["guided", "list", "files"].includes(requestedView ?? ""));
       const requestedProject = (id === "project" || id === "projects") && !graphView
         ? projects.find((project) => project.slug === requestedSlug)
+          ?? projects.find((project) => project.slug === selectedSlug)
         : undefined;
       const archiveTitle = translateText(nextLocale, "Project Archive");
       const pageTitle = id === "projects" || id === "project"
@@ -2883,6 +2670,7 @@ export default function SystemSevenDesktop({
     const project = projects.find((item) => item.slug === slug);
     if (!project) return;
     setRequestedProjectSlug(slug);
+    setRequestedProjectDemo(false);
     routeStateByApp.current.project = { search: `?project=${encodeURIComponent(slug)}`, hash: "" };
     setWindows(current => current.map(item => item.id === "project" ? { ...item, title: project.title } : item));
     // A single project document shares the desktop's native move, resize and
@@ -2922,6 +2710,7 @@ export default function SystemSevenDesktop({
       const id: AppId = project ? "project" : "projects";
       routeStateByApp.current[id] = { search: url.search, hash: url.hash };
       if (project) setRequestedProjectSlug(project.slug);
+      setRequestedProjectDemo(Boolean(project) && url.searchParams.get("view") === "demo");
       setActiveId(id);
       const z = ++zCounter.current;
       setWindows(current => current.map(item => item.id === id ? { ...item, open: true, z, title: project ? project.title : item.title } : item.id === "project" && !project ? { ...item, open: false } : item));
@@ -3360,7 +3149,7 @@ export default function SystemSevenDesktop({
           onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <ProjectOpenContext.Provider value={openProjectDocument}><AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} onOpenProject={openProjectDocument} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider>
+          <ProjectOpenContext.Provider value={openProjectDocument}><AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} initialProjectDemo={requestedProjectDemo} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider>
         </WindowChrome>
       ))}
 

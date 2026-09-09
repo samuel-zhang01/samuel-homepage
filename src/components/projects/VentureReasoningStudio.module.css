@@ -77,7 +77,7 @@
   margin-bottom: 10px;
   padding: 9px;
   border: 1px solid #62655e;
-  background: #dedcd4;
+  background: var(--s7-chrome);
   box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa9a2;
 }
 
@@ -451,7 +451,7 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid #5d6059;
-  background: #f5f3eb;
+  background: var(--s7-surface);
   box-shadow: inset 1px 1px #fff;
 }
 
@@ -672,7 +672,7 @@
   gap: 8px;
   padding: 7px;
   border-top: 1px solid #777a72;
-  background: #e2e0d8;
+  background: var(--s7-chrome);
 }
 
 .equationBar code {

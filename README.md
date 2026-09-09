@@ -15,16 +15,9 @@ tab—without an account, tracking API or server-side personal-data store.
 
 [Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
-Latest: [System 7 redesign and review](docs/SYSTEM7_REVIEW_2026-09-09.md).
-Design references: [Apple manuals and the shared control specification](docs/SYSTEM7_DESIGN_BENCHMARK.md).
-Restoration: [9 September baseline restoration](docs/RESTORATION_AUDIT_2026-09-09.md).
-Source review: [9 September project depth and source audit](docs/PROJECT_DEPTH_AUDIT_2026-09-09.md).
-Previous: [5 September interaction and reliability follow-up](docs/INTERACTION_AUDIT_2026-09-05.md).
-Detail pass: [ruled paper, classic menus and Orbital Lab](docs/ORBITAL_AND_DETAIL_AUDIT.md).
-Rendering follow-up: [high-DPI ASCII, density/surface 3D and icon alignment](docs/ORBITAL_RENDER_QUALITY_AUDIT.md).
-Archive follow-up: [desktop app records, detailed Find and verification](docs/ARCHIVE_SEARCH_AUDIT_2026-09-05.md).
+Current implementation and review: [documentation index](docs/README.md). Historical audits are kept in [the archive](docs/archive/README.md); their counts describe their original checkpoints.
 
-![Samuel System 7 desktop with its About window and classic desktop icons](docs/assets/desktop.png)
+![Samuel System 7 desktop with its About window and shared pixel icons](docs/reviews/wide-sweep-2026-09-09/desktop.png)
 
 ## A quick look
 
@@ -32,7 +25,7 @@ A familiar title bar. A useful little notebook. An orbital you can turn in your
 hands. The old desktop language is the starting point; the interactions are
 built for today's browsers, keyboards and touch screens.
 
-![Project Archive with 40 evidence files, guided workspaces and interactive exhibits](docs/assets/project-archive.png)
+![Searchable project list and independently scrolling project document](docs/reviews/wide-sweep-2026-09-09/projects.png)
 
 <table>
   <tr>
@@ -55,8 +48,7 @@ uses display-timed animation, starts paused, and respects reduced-motion setting
 
 </details>
 
-Screenshots document the 5 September desktop baseline; the new graph and restored demo additions are described in the restoration audit. The deployed site may remain on an
-earlier revision until the server owner runs the deployment script.
+The desktop and project-browser images show the latest local refinement; the orbital and Note Pad images retain their earlier capture dates. The deployed site may remain on an earlier revision until the server owner runs the deployment script.
 
 ## The desk apps
 
@@ -97,7 +89,7 @@ of permanent storage. Export a backup before clearing site data or changing devi
 
 The 9 September update adds direct career and education links, employer-aware project search and project context before launch. Demo URLs retain `&view=demo`. STUDY-RL now includes actual seeded CliffWalking Q-learning/SARSA, recorded small-model answer comparison, live LoRA updates and a DPO objective calculator. The source review records 25 executed notebooks, 448 lecture pages, 279 passing tests and one Week 25 failure.
 
-New experiments include finance import identity, overlap replay, provider-ID corrections and reconciliation edge cases; scheduling across daylight-saving changes, backup failure sequences, MRI residual patterns and acquisition budgets, CFD rollout amplification, vision sequence splits, spectral matching order and coverage under population shift. Their controls label calculated teaching examples separately from recorded source results. MRI also exposes uncertainty rescaling, ranking and pixel-removal budgets against an equal-budget oracle. Saved CFD sequences support pinned-frame comparison; microscopy supports pose/depth Grad-CAM comparison on the same source image. `npm run check:learning` checks 148 source transition fixtures, control semantics, learning calculations, response evidence and career references before production builds. `npm run check:experiments` checks eight scientific/product interaction suites, seven original finance-source fixture attempts and 70 MRI scale/ranking/removal configurations with independent numerical expectations and control interactions. `npm run check:scientific-media` checks the archived media and playback/comparison controls.
+New experiments include finance import identity, overlap replay, provider-ID corrections and reconciliation edge cases; scheduling across daylight-saving changes, backup failure sequences, MRI residual patterns and acquisition budgets, CFD rollout amplification, vision sequence splits, spectral matching order and coverage under population shift. Their controls label calculated teaching examples separately from recorded source results. MRI also exposes uncertainty rescaling, ranking and pixel-removal budgets against an equal-budget oracle. Saved CFD sequences support pinned-frame comparison; microscopy supports pose/depth Grad-CAM comparison on the same source image. MRI also offers a recorded reconstruction figure from its pinned IX repository, separate from the synthetic interactive phantoms. Large scientific images load only in their selected view. CFD playback suspends its timer in hidden browser tabs; Snake and Brick Breaker pause and wait for Resume. `npm run check:learning` checks 148 source transition fixtures, control semantics, learning calculations, response evidence and career references before production builds. `npm run check:experiments` checks eight scientific/product interaction suites, seven original finance-source fixture attempts and 70 MRI scale/ranking/removal configurations with independent numerical expectations and control interactions. `npm run check:scientific-media` checks the archived media and playback/comparison controls.
 
 ## System 7 design contract
 
@@ -117,7 +109,7 @@ clean black-and-white structure, and familiar visual metaphors.
   with one usable app surface, safe-area handling and coarse-pointer targets.
 
 The detailed evidence, viewport matrix and known boundaries live in the
-[release audit](docs/RELEASE_AUDIT.md). The visual reference is the
+[release audit](docs/archive/RELEASE_AUDIT.md). The visual reference is the
 [Macintosh Human Interface Guidelines (1992)](https://tecfa.unige.ch/tecfa/teaching/LME/lombard/HIGuidelines.pdf).
 
 ## Project archive
@@ -131,19 +123,19 @@ The Projects folder opens in a **System 7 knowledge graph with a 3D view** conne
 
 **Selected work** offers a short list of featured projects. **All projects** is a folder tree grouped by discipline, with a text filter and keyboard navigation. Press `/` while the archive is active to open that view and focus search. Enter or Down moves into its results. Detailed text is fetched only when someone searches; names, descriptions and tools still filter if that request fails.
 
-Selecting a record opens its own native project document. The problem, work, results and career/education context are visible immediately, followed by the interactive content. **Explore the project** scrolls within that same document. **Connections** returns to that project's graph neighbourhood. Browser Back/Forward, deep links and native window closing preserve the expected document or career context. There is no suite entrance or cross-project chapter strip. The 27 exhibit modules remain lazy-loaded; the nine native-app records launch their existing desktop windows.
+Selecting a record updates the right-hand project document beside the searchable, filterable list. The problem, work, results and career/education context are immediately available. **Open live demo** loads the experiment on request; **Open in new tab** opens the complete document. **Connections** returns to that project's graph neighbourhood. On phones, **Back to list** restores the selected row and keyboard focus. Browser Back/Forward preserves the selection and search. The nine native-app records launch their existing desktop windows.
 
 Project explanations focus on what the work does, why the method was chosen and how to explore it. Recorded measurements, illustrative calculations and their relevant limits remain distinguishable. Internal repository receipts, checkpoint reconciliation and file-by-file audit tables are developer material rather than visitor-facing project descriptions. GROWMAT opens the original linked showcase PDF.
 
 The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 40 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
 
-Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [Mandarin review](docs/SYSTEM7_MANDARIN_REVIEW_2026-09-09.md) for the exact tested scope.
+Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. All 118 element names are localized in both Mandarin editions, including accessible labels and orbital exports. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [current review](docs/WIDE_SWEEP_2026-09-09.md) for the tested scope and intentional source-language exceptions.
 
 `npm run prepare:search` builds four deterministic text indexes from each project's metadata and own public component copy. Translation dictionaries are not indiscriminately indexed into unrelated projects. Private notes, drawings, imported statements, linked PDFs and external websites are excluded. Rebuild these indexes after changing copy in an already-running dev session. Generated JSON is ignored in Git and rebuilt for production; it is absent from initial JavaScript.
 
-Project documents and controls share `src/app/system7.css`: white paper, one neutral chrome tone, black boundaries, a consistent type scale, hard button shadows, an outer default-button ring and separate pressed/selected/focus states. The [historical benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes Apple-era references from modern touch/accessibility adaptations. Scientific series retain meaningful colour. Wide figures scroll inside their own frame instead of shrinking their labels to phone-sized illegibility.
+Project documents and controls share `src/app/system7.css`: white paper, named grey surface layers, crisp bevels, black boundaries, a consistent type scale, hard button shadows, an outer default-button ring and separate pressed/selected/focus states. The [historical benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes Apple-era references from modern touch/accessibility adaptations. Scientific series retain meaningful colour. Wide figures scroll inside their own frame instead of shrinking their labels to phone-sized illegibility.
 
-Three commissioned project covers depict microrobot imaging, neural flow prediction and finance; the remaining records use subject-specific pixel artwork. Prompts, source images and optimized WebP exports are described in [Project artwork](docs/PROJECT_ARTWORK.md).
+Three generated project covers depict microrobot imaging, neural flow prediction and finance. Desktop, Finder, project, arcade and Home Lab pictograms share 39 editable SVG symbols and 11 transparent PNG variants. The [artwork guide](docs/PROJECT_ARTWORK.md) links generation prompts, delivered assets and the saved scientific-media sources.
 
 Mathematical expressions across the project studios use the shared `MathEquation` component with KaTeX 0.18.7 and accessible MathML. Equations retain their source meaning and readable labels; code and pseudocode remain code. The renderer loads on demand, with local CSS and fonts and no CDN dependency. Wide equation panels and aligned long expressions preserve readable typesetting within the System 7 framing.
 
@@ -314,7 +306,7 @@ command. You can run each `check:*` script separately while working.
 
 `npm run check:math` validates actual expressions with the strict KaTeX parser, accessible component output and local font assets. The output gate caps the shared math-renderer chunk at 300 KiB and rejects its inclusion in initial page entries. Initial-route JavaScript has a 270 KiB gzip ceiling. The aggregate lazy browser/runtime ceiling is 5 MiB excluding math, increased from 4 MiB for the explicit bilingual project dictionaries; this is separate from initial page cost. KaTeX uses 20 local WOFF2 fonts (253.7 KiB) and 30.6 KiB of CSS.
 
-Current measurements and the completed browser/check matrix are recorded in the [System 7 review](docs/SYSTEM7_REVIEW_2026-09-09.md). The earlier restoration report describes its own prior build, not the final redesign bundle.
+Current measurements and the completed browser/check matrix are recorded in the [System 7 review](docs/archive/SYSTEM7_REVIEW_2026-09-09.md). The earlier restoration report describes its own prior build, not the final redesign bundle.
 
 When a development server is already using `.next`, run `npm run build:isolated` instead. It writes the production checkpoint to `.next-build` so the live development cache is not replaced.
 

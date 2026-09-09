@@ -244,7 +244,7 @@
 .legend span::before { display: inline-block; width: 7px; height: 7px; margin-right: 3px; border: 1px solid #171717; content: ""; }
 .legend span[data-state="available"]::before { background: #dfe8ff; }
 .legend span[data-state="conflict"]::before { background: #ffe2c5; }
-.legend span[data-state="outside"]::before { background: #d7d7d2; }
+.legend span[data-state="outside"]::before { background: var(--s7-chrome); }
 
 .keyboardHelp {
   margin: 0;
@@ -289,7 +289,7 @@
 .emptyCell { display: grid; min-width: 0; min-height: 39px; place-content: center; padding: 3px; border: 0; border-right: 1px solid #bbb; border-bottom: 1px solid #bbb; }
 .calendarRow button { position: relative; cursor: pointer; }
 .calendarRow button[aria-disabled="true"] { cursor: not-allowed; }
-.emptyCell { color: #aaa; background: #f1f1ed; font: 700 var(--s7-small)/1.4 var(--s7-font-text); }
+.emptyCell { color: #aaa; background: var(--s7-surface); font: 700 var(--s7-small)/1.4 var(--s7-font-text); }
 .calendarRow button[data-state="available"] { background: var(--s7-paper); color: var(--s7-ink); }
 .calendarRow button[data-state="available"]:hover { background: var(--s7-paper); }
 .calendarRow button[data-state="conflict"] { background: var(--s7-paper); color: var(--s7-ink); }

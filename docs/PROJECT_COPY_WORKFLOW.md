@@ -49,3 +49,11 @@ Each dictionary adds its own `exampleCopy.audit.json` to avoid shared registry c
 `node scripts/check-project-copy.mjs` validates both locales, template placeholders, unexplained English identities and inventory coverage in registered files. It separately verifies immutable source/math, accessible prop and footer translation, explicit component boundaries and interpolation. The report intentionally names its registered coverage; unregistered files are pending work. A passing inventory is necessary, but every interactive view/state still needs visual/runtime review in both Mandarin editions.
 
 Before translating, rewrite internal audit/notebook/path receipts into visitor-facing purpose, contribution, interpretation and limitations. Preserve genuine method distinctions and reported vs illustrative results. Keep source links available with useful labels. Prefer natural Mandarin; review Traditional terminology (for example 資料, 訊息, 原始碼, 執行) rather than treating character conversion as editorial review.
+
+## Current language coverage and source figures
+
+The maintained routes are en-GB, en-US, zh-CN and zh-TW. Both Mandarin editions have explicit project prose, controls, error/empty states, accessible labels and all 118 element names; English US applies reviewed regional spelling. New MRI recorded-image captions, alternative text and navigation are part of the MRI render gate.
+
+Saved figures may contain original English labels. Retain scientific source pixels, identify that language in a translated caption, and supply a translated description and interpretation. Do not suppress the surrounding prose with `translate="no"`, and do not use image generation to translate or alter experimental evidence. Original PDFs, code, equations, proper names and source-language learning exercises retain their necessary text.
+
+The [current review](WIDE_SWEEP_2026-09-09.md) records the latest changed-state and browser checks. The complete preceding four-language crawl is retained in [the project-language review](archive/LOCALE_PROJECT_REVIEW_2026-09-09.md) and [shell-language review](archive/LOCALE_SHELL_REVIEW_2026-09-09.md). Coverage is a recorded scope, not a claim about every possible interaction.

@@ -44,16 +44,16 @@
   },
   "dependencies": {
     "katex": "0.18.7",
-    "next": "15.5.22",
+    "next": "15.5.25",
     "pdfjs-dist": "5.4.624",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "overrides": {
-    "js-yaml": "4.3.1",
+    "js-yaml": "4.3.2",
     "nanoid": "3.3.18",
     "postcss": "8.5.25",
-    "sharp": "0.35.3"
+    "sharp": "0.35.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -61,7 +61,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.22",
+    "eslint-config-next": "15.5.25",
     "opencc-js": "^1.4.2",
     "typescript": "^5"
   }

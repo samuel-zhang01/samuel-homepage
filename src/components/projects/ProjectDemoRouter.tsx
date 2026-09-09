@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { ComponentType } from "react";
 
 import type { ProjectDemoId } from "@/data/projects";
 import { translateText, type Locale } from "@/lib/i18n";
@@ -16,7 +17,6 @@ function DemoLoading() {
     </div>
   );
 }
-
 
 const BanditStudio = dynamic(
   () => import("./BanditStudio").then((module) => module.BanditStudio),
@@ -127,98 +127,41 @@ const VentureReasoningStudio = dynamic(
   { loading: DemoLoading },
 );
 
+// Keep selection declarative and exhaustive while preserving each lazy import.
+// Search indexing reads this same registry, so routing and search cannot drift.
+const demoComponents: Record<ProjectDemoId, ComponentType<{ locale?: Locale }>> = {
+  "bandits": BanditStudio,
+  "finance": FinanceStudio,
+  "cv-keywords": CvKeywordStudio,
+  "scheduling": SchedulingStudio,
+  "insurance-matching": InsuranceMatchingDemo,
+  "italian-learning": ItalianLearningStudio,
+  "course-recommender": CourseRecommenderStudio,
+  "spectroscopy": SpectroscopyStudio,
+  "thermodynamics": ThermodynamicsStudio,
+  "dl-environment": EnvironmentPlannerStudio,
+  "home-lab-topology": HomeLabTopologyStudio,
+  "chemistry-coding": ChemistryCodingStudio,
+  "stock-market-engine": StockMarketStudio,
+  "innovation-models": InnovationModelsStudio,
+  "molecular-recognition": MolecularRecognitionStudio,
+  "solubility-workflow": DrugSolubilityStudio,
+  "venture-reasoning": VentureReasoningStudio,
+  "rl-atlas": RlAtlasDemo,
+  "microrobot-vision": MicrorobotShowcase,
+  "mri-trust": MriTrustStudio,
+  "cfd-surrogates": CfdShowcase,
+  "reliability": ReliabilityLabDemo,
+  "deferral-risk": DeferralRiskStudio,
+  "air-quality": AirQualityBudgetDemo,
+  "cyber-threshold": CyberThresholdDemo,
+  "regularisation": RegularisationLabDemo,
+  "causal-ope": CausalOpeDemo,
+};
 
 export function ProjectDemoRouter({ demoId, locale = "en-GB" }: { demoId: ProjectDemoId; locale?: Locale }) {
-  let demo: React.ReactNode;
-  switch (demoId) {
-    case "bandits":
-      demo = <BanditStudio />;
-      break;
-    case "finance":
-      demo = <FinanceStudio />;
-      break;
-    case "cv-keywords":
-      demo = <CvKeywordStudio />;
-      break;
-    case "scheduling":
-      demo = <SchedulingStudio />;
-      break;
-    case "insurance-matching":
-      demo = <InsuranceMatchingDemo />;
-      break;
-    case "italian-learning":
-      demo = <ItalianLearningStudio />;
-      break;
-    case "course-recommender":
-      demo = <CourseRecommenderStudio />;
-      break;
-    case "spectroscopy":
-      demo = <SpectroscopyStudio />;
-      break;
-    case "thermodynamics":
-      demo = <ThermodynamicsStudio />;
-      break;
-    case "dl-environment":
-      demo = <EnvironmentPlannerStudio />;
-      break;
-    case "home-lab-topology":
-      demo = <HomeLabTopologyStudio />;
-      break;
-    case "chemistry-coding":
-      demo = <ChemistryCodingStudio />;
-      break;
-    case "stock-market-engine":
-      demo = <StockMarketStudio />;
-      break;
-    case "innovation-models":
-      demo = <InnovationModelsStudio />;
-      break;
-    case "molecular-recognition":
-      demo = <MolecularRecognitionStudio />;
-      break;
-    case "solubility-workflow":
-      demo = <DrugSolubilityStudio />;
-      break;
-    case "venture-reasoning":
-      demo = <VentureReasoningStudio />;
-      break;
-    case "rl-atlas":
-      demo = <RlAtlasDemo />;
-      break;
-    case "microrobot-vision":
-      demo = <MicrorobotShowcase locale={locale} />;
-      break;
-    case "mri-trust":
-      demo = <MriTrustStudio />;
-      break;
-    case "cfd-surrogates":
-      demo = <CfdShowcase />;
-      break;
-    case "reliability":
-      demo = <ReliabilityLabDemo />;
-      break;
-    case "deferral-risk":
-      demo = <DeferralRiskStudio />;
-      break;
-    case "air-quality":
-      demo = <AirQualityBudgetDemo />;
-      break;
-    case "cyber-threshold":
-      demo = <CyberThresholdDemo />;
-      break;
-    case "regularisation":
-      demo = <RegularisationLabDemo />;
-      break;
-    case "causal-ope":
-      demo = <CausalOpeDemo />;
-      break;
-    default: {
-      const unhandledDemo: never = demoId;
-      demo = unhandledDemo;
-    }
-  }
-
-  return <ProjectTranslationBoundary locale={locale}>{demo}</ProjectTranslationBoundary>;
+  const Demo = demoComponents[demoId];
+  return <ProjectTranslationBoundary locale={locale}><Demo locale={locale} /></ProjectTranslationBoundary>;
 }
 
 export default ProjectDemoRouter;

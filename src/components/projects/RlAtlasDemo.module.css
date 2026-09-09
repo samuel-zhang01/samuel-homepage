@@ -282,7 +282,7 @@
   margin-bottom: 14px;
   padding: 9px;
   border: 1px solid #171717;
-  background: #d8d8d3;
+  background: var(--s7-chrome);
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #858581;
 }
 
@@ -429,7 +429,7 @@
   padding: 6px 10px;
   border-bottom: 1px solid #b2b2ad;
   color: #62625e;
-  background: #f8f8f4;
+  background: var(--s7-surface);
   font-size: var(--s7-small);
 }
 
@@ -486,7 +486,7 @@
   align-content: center;
   padding: 7px 7px 7px 9px;
   border-right: 1px solid #a5a5a0;
-  background: #f0f0eb;
+  background: var(--s7-surface);
 }
 
 .trackLabel > span {

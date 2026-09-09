@@ -23,7 +23,7 @@
 .readouts div + div { border-left: 1px solid var(--s7-shadow); }
 .readouts span { font-size: var(--s7-small); line-height: 1.5; display: block; }
 .readouts strong { display: block; font: 700 var(--s7-title)/1.4 var(--s7-font-mono); margin-top: 5px; }
-.grid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 3px; padding: 8px; border: 2px solid #444; background: #deded9; }
+.grid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 3px; padding: 8px; border: 2px solid #444; background: var(--s7-chrome); }
 .grid button { min-width: 0; aspect-ratio: 1; padding: 0; border: 1px solid #888; background: white; color: #111; font: 700 clamp(12px,2vw,20px)/1 Geneva,Arial,sans-serif; cursor: pointer; }
 .grid .cliff { color: #7e1d29; background: repeating-linear-gradient(135deg,#f3dce1 0 4px,#e9c3cb 4px 5px); cursor: default; }
 .grid .path { background: #c6d6f6; }

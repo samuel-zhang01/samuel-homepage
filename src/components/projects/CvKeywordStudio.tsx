@@ -728,6 +728,7 @@ export function CvKeywordStudio() {
                 </span>
                 <textarea
                   lang="en"
+                  translate="no"
                   value={cvText}
                   onChange={(event) => setCvText(event.target.value)}
                   spellCheck="true"
@@ -742,6 +743,7 @@ export function CvKeywordStudio() {
                 </span>
                 <textarea
                   lang="en"
+                  translate="no"
                   value={jobText}
                   onChange={(event) => setJobText(event.target.value)}
                   spellCheck="true"

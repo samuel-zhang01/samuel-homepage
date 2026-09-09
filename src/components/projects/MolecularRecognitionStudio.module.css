@@ -451,7 +451,7 @@
 .moleculeCard {
   padding: 11px;
   border: 1px solid #66737a;
-  background: #f9faf6;
+  background: var(--s7-paper);
   box-shadow: inset 0 0 0 2px #e0e4df;
 }
 
@@ -601,7 +601,7 @@
 .candidateIdentity small { margin-top: 2px; color: var(--s7-ink); font-size: var(--s7-small); }
 .candidateGrid > button[aria-pressed="true"] .candidateIdentity small,
 .candidateGrid > button[aria-pressed="true"] .hitScore small { color: var(--s7-ink); }
-.populationBar { position: relative; grid-column: 1 / -1; height: 14px; border: 1px solid #9ba4a6; background: #dfe3df; }
+.populationBar { position: relative; grid-column: 1 / -1; height: 14px; border: 1px solid #9ba4a6; background: var(--s7-raised); }
 .populationBar i { position: absolute; top: 0; bottom: 0; left: 0; width: var(--bar-width); background: #79b4b4; }
 .populationBar small { position: absolute; top: 2px; right: 4px; z-index: 1; color: #172a32; font: var(--s7-small)/1.4 var(--s7-font-text); }
 .hitScore { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; }

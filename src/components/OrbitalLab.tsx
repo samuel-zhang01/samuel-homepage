@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/i18n";
 import { elements, getOrbitalSamples, getRadialDistribution, orbitalLabel, orbitalNodes, ORBITAL_SOURCES, type ElementRecord } from "@/lib/orbitals";
 import ClassicSelect from "./ClassicSelect";
 import OrbitalSurfaceCanvas from "./OrbitalSurfaceCanvas";
-import { orbitalCopies } from "./orbitalI18n";
+import { localisedElementName, orbitalCopies } from "./orbitalI18n";
 import styles from "./OrbitalLab.module.css";
 import { MathEquation } from "./projects/MathEquation";
 import { advanceOrbitalRotation, runOrbitalAnimation, type OrbitalAngles } from "@/lib/orbitalAnimation";
@@ -229,7 +229,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
   }
   function saveAscii() {
     const config = element.configuration.map((shell) => `${shell.n}${letters[shell.l]}${shell.electrons}`).join(" ");
-    const text = `${element.number} ${element.symbol} — ${element.name}\n${c.configuration}: ${config}\n${element.configurationStatus === "reference" ? c.reference : c.illustrative}\n${label} | n=${subshell.n}, l=${subshell.l}, real m=${component}\n${c.scale}\n${slice ? c.slice : c.density}\n\n${asciiRef.current}\n\n${phaseInk ? `${c.positive}: .:+# | ${c.negative}: ,;-=\n` : ""}${c.modelBody}\n${c.phaseBody}\n${c.projectionBody}\n${c.scaleBody}\n${c.configBody}\n\n${ORBITAL_SOURCES.configurations}\n${ORBITAL_SOURCES.elementIndex}\n${ORBITAL_SOURCES.hydrogen}\n`;
+    const text = `${element.number} ${element.symbol} — ${localisedElementName(locale, element.number, element.name)}\n${c.configuration}: ${config}\n${element.configurationStatus === "reference" ? c.reference : c.illustrative}\n${c.component}: ${label} | n=${subshell.n}, l=${subshell.l}, m=${component}\n${c.scale}\n${slice ? c.slice : c.density}\n\n${asciiRef.current}\n\n${phaseInk ? `${c.positive}: .:+# | ${c.negative}: ,;-=\n` : ""}${c.modelBody}\n${c.phaseBody}\n${c.projectionBody}\n${c.scaleBody}\n${c.configBody}\n\n${ORBITAL_SOURCES.configurations}\n${ORBITAL_SOURCES.elementIndex}\n${ORBITAL_SOURCES.hydrogen}\n`;
     const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
     const anchor = document.createElement("a");
     anchor.href = url; anchor.download = `orbital-${element.symbol}-${subshell.n}${letters[subshell.l]}-${component}.txt`;
@@ -274,7 +274,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
           <div className={styles.tableKey} aria-label={c.blockKey}>{letters.map((block) => <span key={block}><i data-block={block} />{block}</span>)}<a href={ORBITAL_SOURCES.elementIndex} target="_blank" rel="noreferrer">{c.referenceDetails} ↗</a></div>
           <span style={{ gridColumn: 4, gridRow: 7 }} className={styles.seriesPlaceholder}>57–71</span><span style={{ gridColumn: 4, gridRow: 8 }} className={styles.seriesPlaceholder}>89–103</span>
           <span className={styles.seriesName} style={{ gridColumn: "2 / 5", gridRow: 9 }}>{c.lanthanoids}</span><span className={styles.seriesName} style={{ gridColumn: "2 / 5", gridRow: 10 }}>{c.actinoids}</span>
-          {elements.map((entry) => <button type="button" key={entry.number} style={{ ...tablePosition(entry), gridColumn: tablePosition(entry).gridColumn + 1 }} data-block={entry.block} aria-pressed={entry.number === atomicNumber} tabIndex={entry.number === atomicNumber ? 0 : -1} aria-label={`${entry.number} ${entry.symbol}, ${entry.name}`} title={`${entry.number} ${entry.name} · ${c.period} ${entry.period} · ${c.block} ${entry.block}`} onClick={() => selectElement(entry.number)} onKeyDown={(event) => {
+          {elements.map((entry) => <button type="button" key={entry.number} style={{ ...tablePosition(entry), gridColumn: tablePosition(entry).gridColumn + 1 }} data-block={entry.block} aria-pressed={entry.number === atomicNumber} tabIndex={entry.number === atomicNumber ? 0 : -1} aria-label={`${entry.number} ${entry.symbol}, ${localisedElementName(locale, entry.number, entry.name)}`} title={`${entry.number} ${localisedElementName(locale, entry.number, entry.name)} · ${c.period} ${entry.period} · ${c.block} ${entry.block}`} onClick={() => selectElement(entry.number)} onKeyDown={(event) => {
             let number = entry.number;
             if (event.key === "ArrowLeft") number--; else if (event.key === "ArrowRight") number++;
             else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
@@ -320,8 +320,8 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
         <span className={styles.status} role="status">{status}</span>
       </section>
       <aside className={styles.inspector}>
-        <label className={styles.elementPicker}><span>{c.element}</span><ClassicSelect value={atomicNumber} onChange={(event) => selectElement(Number(event.target.value))}>{elements.map((entry) => <option key={entry.number} value={entry.number} lang="en-GB">{entry.number} · {entry.symbol} — {entry.name}</option>)}</ClassicSelect></label>
-        <div className={styles.elementCard}><button className="s7-button s7-button--icon" type="button" onClick={() => selectElement(atomicNumber - 1)} disabled={atomicNumber === 1} aria-label={c.previous}>‹</button><div><small>{atomicNumber}</small><strong>{element.symbol}</strong><span lang="en-GB">{element.name}</span></div><button className="s7-button s7-button--icon" type="button" onClick={() => selectElement(atomicNumber + 1)} disabled={atomicNumber === 118} aria-label={c.next}>›</button></div>
+        <label className={styles.elementPicker}><span>{c.element}</span><ClassicSelect value={atomicNumber} onChange={(event) => selectElement(Number(event.target.value))}>{elements.map((entry) => <option key={entry.number} value={entry.number} lang={locale}>{entry.number} · {entry.symbol} — {localisedElementName(locale, entry.number, entry.name)}</option>)}</ClassicSelect></label>
+        <div className={styles.elementCard}><button className="s7-button s7-button--icon" type="button" onClick={() => selectElement(atomicNumber - 1)} disabled={atomicNumber === 1} aria-label={c.previous}>‹</button><div><small>{atomicNumber}</small><strong>{element.symbol}</strong><span lang={locale}>{localisedElementName(locale, element.number, element.name)}</span></div><button className="s7-button s7-button--icon" type="button" onClick={() => selectElement(atomicNumber + 1)} disabled={atomicNumber === 118} aria-label={c.next}>›</button></div>
         <dl className={styles.elementFacts}><div><dt>{c.period}</dt><dd>{element.period}</dd></div><div><dt>{c.group}</dt><dd>{element.group ?? "—"}</dd></div><div><dt>{c.block}</dt><dd>{element.block}</dd></div><div><dt>{c.shells}</dt><dd>{shellCounts.join(" · ")}</dd></div></dl>
         <button className={`s7-button ${styles.tableShortcut}`} type="button" onClick={() => { setTableOpen(true); periodicRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }}>{c.chooseTable} ↑</button>
         <section className={styles.config}><h4>{c.configuration}</h4><p>{element.configuration.map((shell) => <span key={`${shell.n}-${shell.l}`}>{shell.n}{letters[shell.l]}<sup>{shell.electrons}</sup>{" "}</span>)}</p><small>{element.configurationStatus === "reference" ? c.reference : c.illustrative}</small></section>

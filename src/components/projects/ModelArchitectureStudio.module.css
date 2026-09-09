@@ -499,7 +499,7 @@
   margin: 9px 0;
   padding: 6px 8px;
   border: 1px solid #92938c;
-  background: #dcdcd6;
+  background: var(--s7-chrome);
   box-shadow: inset 1px 1px #fff;
 }
 
@@ -993,7 +993,7 @@
   min-width: 0;
   padding: 8px;
   border: 1px solid #b7b8b0;
-  background: #ecece7;
+  background: var(--s7-raised);
 }
 
 .metricChart button,

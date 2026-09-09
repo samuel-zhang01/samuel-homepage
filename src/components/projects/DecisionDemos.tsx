@@ -704,7 +704,7 @@ export function RegularisationLabDemo() {
               className={styles.pathChart}
               viewBox="0 0 430 158"
               role="img"
-              aria-label={`${method} coefficient paths at lambda ${lambda.toFixed(2)}. ${zeroCount} of 4 coefficients are zero.`}
+              aria-label={`${method === "ridge" ? "Ridge · L2" : "LASSO · L1"} coefficient paths at lambda ${lambda.toFixed(2)}. ${zeroCount} of 4 coefficients are zero.`}
             >
               <g className={styles.gridLines} aria-hidden="true">
                 <line x1="42" x2="402" y1="82" y2="82" />

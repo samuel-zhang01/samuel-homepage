@@ -328,7 +328,7 @@
   margin-bottom: 8px;
   padding: 5px 7px;
   border: 1px solid #737872;
-  background: #d9dad4;
+  background: var(--s7-chrome);
   box-shadow: inset 1px 1px #f9faf5;
 }
 
@@ -342,7 +342,7 @@
   min-height: max(var(--s7-control-height), 27px);
   padding: 4px 6px;
   color: #353a35;
-  background: #ecece7;
+  background: var(--s7-raised);
 }
 
 .representationBar button + button {
@@ -746,7 +746,7 @@
 .tableViewport {
   max-height: 548px;
   overflow: auto;
-  background: #f2f2ed;
+  background: var(--s7-surface);
 }
 
 .relationshipTable {

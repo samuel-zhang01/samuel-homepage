@@ -72,7 +72,7 @@ function assertMandarin(component, context) {
 }
 let cases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
-  for (const view of ["experiments", "reconstruction", "architecture", "uncertainty", "robustness", "segmentation", "audit"]) {
+  for (const view of ["images", "experiments", "reconstruction", "architecture", "uncertainty", "robustness", "segmentation", "audit"]) {
     for (const variant of [0, 1]) {
       states = {
         MriTrustStudio: [view], ReconstructionView: variant ? [8, "zero", .5] : [4, "dc", .72],

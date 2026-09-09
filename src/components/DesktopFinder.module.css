@@ -108,6 +108,7 @@
 .results button[aria-selected="true"] { background: #11177a; color: #fff; }
 .results button:hover { outline: 1px dotted currentColor; outline-offset: -4px; }
 .itemIcon { display: grid; place-items: center; flex: 0 0 24px; }
+.itemIcon > img { width: 16px; height: 16px; }
 .itemCopy { min-width: 0; flex: 1; }
 .itemCopy strong { display: block; font-weight: 600; }
 .itemCopy small { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; opacity: .85; }

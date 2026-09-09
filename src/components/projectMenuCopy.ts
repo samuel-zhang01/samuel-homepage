@@ -24,7 +24,7 @@ export const projectMenuCopy = {
   ],
   "Draw with mouse, trackpad or touch; undo freely and export a PNG.": [
     "用鼠标、触控板或手指绘图，随时撤销并导出 PNG。",
-    "用滑鼠、觸控板或手指繪圖，隨時撤銷並導出 PNG。"
+    "用滑鼠、觸控板或手指繪圖，隨時撤銷並匯出 PNG。"
   ],
   "Quick List": [
     "快速清单",
@@ -80,7 +80,7 @@ export const projectMenuCopy = {
   ],
   "An ATS-connected recruitment intelligence layer that evaluates every applicant, retains evidence and returns a reasoned shortlist while recruiters keep the decision.": [
     "连接现有 ATS 的招聘智能层：评估每位申请者，保留支持材料，并给出有理由的候选名单，最终决定仍由招聘人员作出。",
-    "連接現有 ATS 的招聘智能層：評估每位申請者，保留支持材料，並給出有理由的候選名單，最終決定仍由招聘人員作出。"
+    "連接現有 ATS 的招募智能層：評估每位申請者，保留佐證資料，並給出有理由的候選名單，最終決定仍由招募人員作出。"
   ],
   "GROWMAT": [
     "GROWMAT",
@@ -88,7 +88,7 @@ export const projectMenuCopy = {
   ],
   "A seven-component workload modelling platform designed to replace a fragile spreadsheet workflow with scheduled calculation, governed editing and live capacity views.": [
     "由七个组件组成的工作量建模平台，以定时计算、受控编辑和实时产能视图替代脆弱的电子表格流程。",
-    "由七個組件組成的工作量建模平臺，以定時計算、受控編輯和實時產能視圖替代脆弱的電子表格流程。"
+    "由七個元件組成的工作量建模平臺，以定時計算、受控編輯和實時產能視圖替代脆弱的電子表格流程。"
   ],
   "Insurance Lead-Market Matching": [
     "保险承保市场匹配",
@@ -100,11 +100,11 @@ export const projectMenuCopy = {
   ],
   "CV Keyword Automator": [
     "简历关键词自动化",
-    "簡歷關鍵詞自動化"
+    "履歷關鍵詞自動化"
   ],
   "A Python and LaTeX workflow that extracts role language, selects a pre-authored CV template and compiles a targeted application document.": [
     "用 Python 和 LaTeX 提取岗位用语、选择预先编写的简历模板，并生成有针对性的申请文档。",
-    "用 Python 和 LaTeX 提取崗位用語、選擇預先編寫的簡歷模板，並生成有針對性的申請文檔。"
+    "用 Python 和 LaTeX 提取職缺用語、選擇預先編寫的履歷模板，並生成有針對性的申請文檔。"
   ],
   "Ocean Depths Finance": [
     "Ocean Depths Finance",
@@ -124,7 +124,7 @@ export const projectMenuCopy = {
   ],
   "A self-hosted scheduling platform with four allocation modes, timezone-safe availability, calendar sync and race-resistant booking.": [
     "自托管预约平台，提供四种分配方式、时区安全的可用时间、日历同步和抵御并发冲突的预订。",
-    "自託管預約平臺，提供四種分配方式、時區安全的可用時間、日曆同步和抵禦併發衝突的預約。"
+    "自代管預約平臺，提供四種分配方式、時區安全的可用時間、日曆同步和抵禦併發衝突的預約。"
   ],
   "Parliamo! Italian Learning Portal": [
     "Parliamo! 意大利语学习门户",
@@ -340,7 +340,7 @@ export const projectMenuCopy = {
   ],
   "A compact MATLAB App Designer tool for turning two-column spectroscopy exports into presentation-ready plots with precise frequency navigation and high-resolution export.": [
     "小巧的 MATLAB App Designer 工具，将两列光谱导出数据变为可展示的图表，支持精确频率导航与高分辨率导出。",
-    "小巧的 MATLAB App Designer 工具，將兩列光譜導出資料變為可展示的圖表，支持精確頻率導航與高解析度導出。"
+    "小巧的 MATLAB App Designer 工具，將兩列光譜匯出資料變為可展示的圖表，支持精確頻率導覽與高解析度匯出。"
   ],
   "Accelerator Environment Planner": [
     "加速计算环境规划器",
@@ -376,7 +376,7 @@ export const projectMenuCopy = {
   ],
   "Building and maintaining a containerised home lab with connected services, scheduled database backups and recovery tooling.": [
     "构建并维护容器化家庭实验室，连接各项服务，定时备份数据库并配备恢复工具。",
-    "構建並維護容器化家庭實驗室，連接各項服務，定時備份資料庫並配備恢復工具。"
+    "建置並維護容器化家庭實驗室，連接各項服務，定時備份資料庫並配備恢復工具。"
   ],
   "Stochastic Market Impact Simulator": [
     "随机市场冲击模拟器",
@@ -392,11 +392,11 @@ export const projectMenuCopy = {
   ],
   "COVID-19 Decision Support": [
     "COVID-19 决策支持",
-    "COVID-19 決策支持"
+    "COVID-19 決策支援"
   ],
   "Decision support and workflow automation developed for pandemic-era emergency operations.": [
     "为疫情时期的应急行动开发决策支持和流程自动化。",
-    "為疫情時期的應急行動開發決策支持和流程自動化。"
+    "為疫情時期的應急行動開發決策支援和流程自動化。"
   ],
   "Computational Chemistry Coding Labs": [
     "计算化学编程实验",
@@ -408,6 +408,6 @@ export const projectMenuCopy = {
   ],
   "Computational chemistry exercises and extensions that turn sampling, polymer shape, molecular motion and quantum-energy ideas into working experiments.": [
     "将采样、高分子形状、分子运动与量子能量思想变为可运行实验的计算化学习题及扩展。",
-    "將採樣、高分子形狀、分子運動與量子能量思想變為可執行實驗的計算化學習題及擴展。"
+    "將取樣、高分子形狀、分子運動與量子能量思想變為可執行實驗的計算化學習題及擴展。"
   ]
 } satisfies ProjectCopyTable;

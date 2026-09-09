@@ -3,10 +3,10 @@
 :root {
   --black: var(--s7-ink);
   --ink: var(--s7-ink);
-  --paper: #fff;
+  --paper: var(--s7-paper);
   --chrome: var(--s7-chrome);
-  --chrome-dark: #777;
-  --chrome-light: #fff;
+  --chrome-dark: var(--s7-edge);
+  --chrome-light: var(--s7-highlight);
   --selection: #11177a;
   --selection-soft: #d9dcff;
   --desktop: #8587a8;
@@ -261,8 +261,8 @@ body {
   justify-content: space-between;
   border-bottom: 2px solid #111;
   color: #111;
-  background: #f4f4f0;
-  box-shadow: 0 1px 0 rgba(255,255,255,.65);
+  background: var(--s7-raised);
+  box-shadow: inset 0 1px 0 var(--s7-highlight), inset 0 -1px 0 var(--s7-shadow), 0 1px 0 var(--s7-highlight);
   font-size: 13px;
   font-weight: 500;
 }
@@ -365,8 +365,8 @@ body {
   padding: 4px 0 5px;
   border: 2px solid #111;
   color: #111;
-  background: #fff;
-  box-shadow: 3px 3px 0 rgba(0,0,0,.45);
+  background: var(--s7-surface);
+  box-shadow: var(--s7-relief-raised), var(--s7-popup-shadow);
 }
 
 .menu-dropdown button {
@@ -672,13 +672,18 @@ body {
   min-height: 190px;
   flex-direction: column;
   overflow: hidden;
+  padding: 2px;
   border: 2px solid #111;
   border-radius: 1px;
   color: #111;
   background: var(--chrome);
   box-shadow:
-    1px 1px 0 #fff,
+    var(--s7-relief-raised),
     4px 4px 0 rgba(0,0,0,.48);
+}
+
+.mac-window.is-active {
+  box-shadow: var(--s7-relief-raised), 1px 1px 0 var(--s7-highlight), 5px 5px 0 rgb(0 0 0 / 48%);
 }
 
 .mac-window.is-maximized {
@@ -697,15 +702,15 @@ body {
   flex: 0 0 26px;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #111;
-  background: #dedede;
+  border-bottom: 1px solid var(--s7-edge);
+  background: var(--s7-chrome);
+  box-shadow: inset 0 1px 0 var(--s7-highlight);
   cursor: grab;
   touch-action: none;
 }
 
 .mac-window.is-active .mac-titlebar {
-  background:
-    repeating-linear-gradient(to bottom, #fff 0 1px, #111 1px 2px, #fff 2px 4px);
+  background: var(--s7-title-lines);
 }
 
 .mac-titlebar:active {
@@ -721,17 +726,18 @@ body {
   overflow: hidden;
   padding: 1px 8px 2px;
   color: #111;
-  background: #dedede;
-  font-size: 12px;
+  background: var(--s7-chrome);
+  font-size: 13px;
   font-weight: 700;
-  line-height: 14px;
+  line-height: 1.4;
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(-50%,-50%);
 }
 
 .mac-window.is-active .mac-titlebar h2 {
-  background: #fff;
+  background: var(--s7-raised);
+  box-shadow: 1px 0 0 var(--s7-highlight), -1px 0 0 var(--s7-highlight);
 }
 
 .window-box {
@@ -755,8 +761,8 @@ body {
   width: 12px;
   height: 12px;
   border: 2px solid #111;
-  background: #dedede;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  background: var(--s7-chrome);
+  box-shadow: inset 1px 1px var(--s7-highlight), inset -1px -1px var(--s7-edge);
   transform: translateX(-50%);
 }
 
@@ -790,8 +796,8 @@ body {
   border-left: 1px solid #111;
   background:
     linear-gradient(135deg, transparent 0 43%, #111 44% 49%, transparent 50% 61%, #111 62% 67%, transparent 68%),
-    #dedede;
-  box-shadow: inset 1px 1px #fff;
+    var(--s7-chrome);
+  box-shadow: var(--s7-relief-raised);
   cursor: nwse-resize;
   touch-action: none;
 }
@@ -814,10 +820,12 @@ body {
   flex: 1;
   overflow: auto;
   container-type: inline-size;
+  border: 1px solid var(--s7-edge);
+  border-top: 0;
   color: var(--ink);
-  background: #fff;
+  background: var(--s7-paper);
   user-select: text;
-  scrollbar-color: #777 #d8d8d8;
+  scrollbar-color: var(--s7-edge) var(--s7-chrome);
   scrollbar-width: auto;
 }
 
@@ -841,14 +849,14 @@ body {
 .mac-window__content::-webkit-scrollbar-thumb {
   min-height: 28px;
   border: 2px solid #111;
-  background: #d8d8d8;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+  background: var(--s7-chrome);
+  box-shadow: inset 1px 1px var(--s7-highlight), inset -1px -1px var(--s7-edge);
 }
 
 .mac-window__content::-webkit-scrollbar-corner {
   border-top: 2px solid #111;
   border-left: 2px solid #111;
-  background: #d8d8d8;
+  background: var(--s7-chrome);
 }
 
 /* Shared app elements */
@@ -1952,125 +1960,6 @@ html:lang(zh-TW) .career-record {
   line-height: 1.5;
 }
 
-/* Projects */
-
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.project-card {
-  position: relative;
-  display: flex;
-  min-height: 235px;
-  flex-direction: column;
-  padding: 16px 16px 13px 50px;
-  border: 2px solid #111;
-  background: #fff;
-  box-shadow: 3px 3px 0 #aaa;
-}
-
-.project-number {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  width: 37px;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 16px;
-  color: #fff;
-  background: var(--selection);
-  font-family: "Courier New", monospace;
-  font-size: 16px;
-  font-weight: 700;
-  writing-mode: vertical-rl;
-}
-
-.project-card__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.project-card__head span {
-  color: #666;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
-
-.project-card h4 {
-  margin: 3px 0 0;
-  font-family: Georgia, serif;
-  font-size: 20px;
-  line-height: 1.05;
-}
-
-.project-card time {
-  font-family: "Courier New", monospace;
-  font-size: 9px;
-  font-weight: 700;
-}
-
-.project-card > p {
-  margin: 12px 0;
-  color: #444;
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-.project-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.project-tools span {
-  padding: 2px 5px;
-  border: 1px solid #777;
-  background: #eee;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-}
-
-.project-card__foot {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 13px;
-  border-top: 1px solid #aaa;
-}
-
-.project-card__foot strong {
-  font-family: "Courier New", monospace;
-  font-size: 9px;
-}
-
-.project-card__foot button {
-  min-height: 24px;
-  padding: 0;
-  border: 0;
-  color: var(--selection);
-  background: transparent;
-  font-family: inherit;
-  font-size: 10px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.project-card__foot button:hover {
-  text-decoration: underline;
-}
-
 /* Skills */
 
 .skills-app {
@@ -2342,7 +2231,7 @@ html:lang(zh-TW) .career-record {
 
 .chooser-detail h3 {
   margin: 0;
-  font-family: Georgia, serif;
+  font-family: var(--system-font);
   font-size: 26px;
 }
 
@@ -2713,7 +2602,7 @@ html:lang(zh-TW) .career-record {
   display: grid;
   min-height: 100%;
   grid-template-columns: 170px minmax(0,1fr);
-  background: #d7d7d2;
+  background: var(--s7-chrome);
 }
 
 .games-app[data-game="snake"] { --arcade-accent: #7bcf87; }
@@ -2729,10 +2618,9 @@ html:lang(zh-TW) .career-record {
   flex-direction: column;
   padding: 18px 12px;
   border-right: 2px solid #111;
-  color: #fff;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,.16) 1px, transparent 1px) 0 0/7px 7px,
-    #181b37;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-raised);
 }
 
 .games-logo {
@@ -2741,20 +2629,20 @@ html:lang(zh-TW) .career-record {
   gap: 10px;
   margin-bottom: 20px;
   padding: 0 5px 16px;
-  border-bottom: 1px solid rgba(255,255,255,.3);
-  font-family: Georgia, serif;
+  border-bottom: 1px solid var(--s7-edge);
+  font-family: var(--s7-font-ui);
   font-size: 18px;
-  line-height: .95;
+  line-height: 1.2;
 }
 
 .games-logo .pixel-icon {
-  filter: drop-shadow(2px 2px 0 rgba(0,0,0,.7));
+  flex: 0 0 32px;
 }
 
 .games-menu {
   min-height: 0;
   overflow-y: auto;
-  scrollbar-color: #7379ad #181b37;
+  scrollbar-color: var(--s7-edge) var(--s7-recess);
   scrollbar-width: thin;
 }
 
@@ -2766,37 +2654,34 @@ html:lang(zh-TW) .career-record {
   gap: 8px;
   margin: 5px 0;
   padding: 8px;
-  border: 1px solid transparent;
-  color: #fff;
-  background: transparent;
+  border: 1px solid var(--s7-edge);
+  color: var(--s7-ink);
+  background: var(--s7-raised);
+  box-shadow: var(--s7-relief-raised);
   font-family: inherit;
   text-align: left;
 }
 
 .games-menu button.is-active {
   border-color: #111;
-  color: #111;
-  background: var(--arcade-accent);
-  box-shadow: 2px 2px 0 #000;
+  color: var(--s7-selection-text);
+  background: var(--s7-selection);
+  box-shadow: var(--s7-relief-inset);
 }
 
 .game-mini-icon {
-  display: grid;
-  width: 25px;
-  height: 25px;
-  place-items: center;
-  border: 2px solid currentColor;
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-  font-weight: 900;
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
 }
 
 .games-sidebar > p {
   flex: 0 0 auto;
   margin: 24px 6px 0;
-  color: #bec3e4;
-  font-family: "Courier New", monospace;
-  font-size: 9px;
+  color: var(--s7-muted);
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-small);
   line-height: 1.6;
 }
 
@@ -2809,7 +2694,7 @@ html:lang(zh-TW) .career-record {
   overflow: auto;
   background:
     linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)),
-    repeating-linear-gradient(0deg,#d1d1cd 0 1px,#e1e1dc 1px 3px);
+    repeating-linear-gradient(0deg,var(--s7-chrome) 0 1px,var(--s7-raised) 1px 3px);
 }
 
 @media (min-width: 721px) {
@@ -2846,7 +2731,7 @@ html:lang(zh-TW) .career-record {
   overflow: hidden;
   border: 1px solid #777;
   border-left: 7px solid var(--arcade-accent);
-  background: #f8f8f3;
+  background: var(--s7-surface);
   box-shadow: inset 1px 1px #fff, inset -1px -1px #aaa;
 }
 
@@ -2868,24 +2753,19 @@ html:lang(zh-TW) .career-record {
 }
 
 .arcade-now-playing > strong {
-  font: 700 12px/1.2 Georgia, "Times New Roman", serif;
+  font: 700 var(--s7-ui)/1.4 var(--system-font);
 }
 
 .arcade-now-playing > p {
   margin: 0;
   color: #555;
-  font-size: 9px;
+  font-size: var(--s7-small);
 }
 
 .arcade-now-playing > b {
-  display: grid;
+  display: block;
   width: 34px;
-  height: 27px;
-  place-items: center;
-  border: 2px solid #111;
-  background: var(--arcade-accent);
-  font: 900 8px/1 var(--system-mono);
-  box-shadow: 2px 2px #777;
+  height: 34px;
 }
 
 .arcade-game__header {
@@ -2898,14 +2778,14 @@ html:lang(zh-TW) .career-record {
 
 .arcade-game__header h3 {
   margin: 3px 0 4px;
-  font: 700 25px/1 Georgia, "Times New Roman", serif;
+  font: 700 var(--s7-title)/1.3 var(--system-font);
 }
 
 .arcade-game__header p {
   max-width: 56ch;
   margin: 0;
   color: #555;
-  font-size: 10px;
+  font-size: var(--s7-small);
   line-height: 1.4;
 }
 
@@ -2931,9 +2811,9 @@ html:lang(zh-TW) .career-record {
 
 .arcade-game__scoreboard dt {
   color: #ccc;
-  font: 900 7px/1 var(--system-mono);
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  font: var(--s7-small)/1.4 var(--s7-font-text);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .arcade-game__scoreboard dd {
@@ -3168,8 +3048,8 @@ html:lang(zh-TW) .career-record {
   margin: 10px auto 8px;
   padding: 6px 9px;
   border: 1px solid #777;
-  background: #f8f8f3;
-  font: 800 9px/1.4 var(--system-mono);
+  background: var(--s7-surface);
+  font: var(--s7-small)/1.4 var(--s7-font-text);
   text-align: center;
 }
 
@@ -3191,9 +3071,9 @@ html:lang(zh-TW) .career-record {
 .arcade-game__actions button {
   min-height: 38px;
   border: 2px solid #111;
-  background: #f4f4ef;
+  background: var(--s7-raised);
   box-shadow: inset 1px 1px #fff, inset -1px -1px #777, 2px 2px #777;
-  font: 900 10px/1 var(--system-font);
+  font: 700 var(--s7-ui)/1.4 var(--s7-font-ui);
 }
 
 .snake-game__dpad button:active,
@@ -3238,7 +3118,7 @@ html:lang(zh-TW) .career-record {
 .arcade-game__keys {
   margin: 8px 0 0;
   color: #666;
-  font: 700 8px/1.3 var(--system-mono);
+  font: var(--s7-small)/1.4 var(--s7-font-text);
   text-align: center;
 }
 
@@ -3262,7 +3142,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-header h3 {
   margin: 4px 0 2px;
-  font: 700 27px/1 Georgia, "Times New Roman", serif;
+  font: 700 var(--s7-title)/1.3 var(--system-font);
 }
 
 .hplc-header p {
@@ -3785,7 +3665,7 @@ html:lang(zh-TW) .career-record {
 
 .game-header h3 {
   margin: 3px 0 0;
-  font-family: Georgia, serif;
+  font-family: var(--system-font);
   font-size: 31px;
 }
 
@@ -4151,7 +4031,7 @@ html:lang(zh-TW) .career-record {
 
 .secret-app h3 {
   margin: 8px 0;
-  font-family: Georgia, serif;
+  font-family: var(--system-font);
   font-size: 27px;
 }
 
@@ -4346,28 +4226,11 @@ html:lang(zh-TW) .career-record {
 }
 
 .service-pixel-icon {
-  display: grid;
+  display: block;
   width: 43px;
   height: 43px;
-  place-items: center;
-  border: 2px solid #111;
-  color: #fff;
-  background: #656a74;
-  box-shadow: inset 2px 2px rgba(255,255,255,.45), inset -3px -3px rgba(0,0,0,.32);
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: -.08em;
+  flex: 0 0 43px;
 }
-
-.service-pixel-icon--blue { background: #426bb5; }
-.service-pixel-icon--navy { background: #202c59; }
-.service-pixel-icon--violet { background: #725d99; }
-.service-pixel-icon--green { background: #4f8566; }
-.service-pixel-icon--red { background: #a14d55; }
-.service-pixel-icon--orange { background: #bd6c35; }
-.service-pixel-icon--amber { color: #111; background: #d8aa48; }
-.service-pixel-icon--grey { color: #111; background: #bcbcb5; }
 
 .service-card__copy > div {
   display: flex;
@@ -4526,9 +4389,6 @@ html:lang(zh-TW) .career-record {
     padding-left: 20px;
   }
 
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
 
   .coverd-product-grid,
   .coverd-pipeline {
@@ -4743,7 +4603,8 @@ html:lang(zh-TW) .career-record {
     overflow-x: auto;
     padding: 4px max(4px, env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
     border-top: 2px solid #111;
-    background: #d8d8d3;
+    background: var(--s7-chrome);
+    box-shadow: inset 0 1px 0 var(--s7-highlight);
   }
 
   .window-switcher button {
@@ -4754,9 +4615,9 @@ html:lang(zh-TW) .career-record {
     justify-content: center;
     gap: 4px;
     padding: 2px 5px;
-    border: 1px solid #777;
-    background: #eee;
-    box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+    border: 1px solid var(--s7-edge);
+    background: var(--s7-raised);
+    box-shadow: var(--s7-relief-raised);
   }
 
   .window-switcher button.is-active {
@@ -5032,10 +4893,6 @@ html:lang(zh-TW) .career-record {
     margin-top: 5px;
   }
 
-  .project-card {
-    min-height: 225px;
-    padding-right: 12px;
-  }
 
   .skills-app {
     padding: 16px 13px 25px;

@@ -1,20 +1,28 @@
-.archiveCssAnchor { --project-brief-css-loaded: 1; }
 .brief { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; margin: 0 32px 24px; color: var(--s7-ink, #000); font-family: var(--s7-font-text, Geneva, Arial, sans-serif); font-size: var(--s7-text, 15px); line-height: 1.55; }
-.narrative { grid-column: 1 / -1; max-width: 90ch; }
+.narrative { grid-column: 1 / -1; max-width: 72ch; }
 .narrative p { margin: 0 0 16px; }
-.opening { font-size: 17px; }
-.development, .results { margin-top: 24px; max-width: 82ch; }
-.brief h2 { margin: 0 0 10px; font-size: var(--s7-heading, 18px); line-height: 1.25; font-weight: 700; }
+/* A quiet inset context strip separates purpose from implementation detail. */
+.context { grid-column: 1 / -1; padding: 16px; border: 1px solid var(--s7-shadow); background: var(--s7-surface); box-shadow: var(--s7-relief-inset); }
+.context dl { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 0; }
+.context dt { font-weight: 700; margin-bottom: 4px; }
+.context dd { margin: 0; max-width: 62ch; }
+.contribution { margin-top: 16px; border-top: 1px solid var(--s7-shadow); padding-top: 12px; }
+.contribution summary { cursor: pointer; font-weight: 700; }
+.contribution p { max-width: 72ch; margin: 10px 0 0; }
+.walkthrough p { margin: 0; }
+.walkthrough button { margin-top: 12px; }
+.development, .results { margin-top: 24px; max-width: 82ch; border-top: 1px solid var(--s7-edge); padding-top: 12px; box-shadow: 0 -3px 0 var(--s7-raised); }
+.brief h2 { margin: 0 0 10px; font-size: var(--s7-heading, 18px); line-height: 1.4; font-weight: 700; }
 .brief ol, .brief ul { margin: 0; padding-left: 22px; }
 .brief li { margin-block: 7px; }
-.walkthrough { grid-column: 1 / -1; margin: 24px 0 0; padding: 14px 16px; border: 1px solid #000; background: var(--s7-paper, #fff); max-width: 90ch; }
-.origin { grid-column: 1 / -1; margin-top: 24px; padding-top: 14px; border-top: 1px solid #aaa; font-size: var(--s7-small, 12px); line-height: 1.5; }
+.walkthrough { grid-column: 1 / -1; margin: 24px 0 0; padding: 14px 16px; border: 1px solid var(--s7-edge); background: var(--s7-surface); box-shadow: var(--s7-relief-raised), 2px 2px 0 var(--s7-shadow); max-width: 72ch; }
+.origin { grid-column: 1 / -1; margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--s7-shadow); font-size: var(--s7-small, 12px); line-height: 1.5; }
 .origin > div + div { margin-top: 14px; }
 .origin a { color: var(--s7-selection, #11177a); text-underline-offset: 3px; }
 .origin small { margin-left: 12px; font-size: inherit; }
 .origin p { max-width: 84ch; margin: 6px 0 0; }
 @container (max-width: 620px) {
   .brief { display: block; margin-inline: 16px; font-size: var(--s7-text, 15px); }
-  .opening { font-size: 15px; }
+  .context dl { grid-template-columns: 1fr; gap: 14px; }
   .origin small { display: block; margin: 4px 0; }
 }

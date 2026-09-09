@@ -93,8 +93,23 @@ for (const locale of archiveLocales) {
     if (locale.startsWith("zh-") && key !== "radialAxis" && copy[key] === orbitalModule.orbitalCopies["en-GB"][key]) orbitalErrors.push(`${locale} untranslated orbital key: ${key}`);
   }
 }
+// Chemical names need their own regional vocabulary, including supplementary
+// Unicode characters used by recently named elements.
+for (const locale of ["zh-CN", "zh-TW"]) {
+  const names = orbitalModule.elementNames[locale];
+  if (names.length !== 118 || new Set(names).size !== 118) orbitalErrors.push(`${locale} needs 118 distinct element names`);
+  names.forEach((name, index) => {
+    if (!/^\p{Script=Han}$/u.test(name)) orbitalErrors.push(`${locale} element ${index + 1} must have a Chinese name`);
+    if (orbitalModule.localisedElementName(locale, index + 1, "missing") !== name) orbitalErrors.push(`${locale} element ${index + 1} resolves incorrectly`);
+  });
+}
 const acceptedArchiveIdentity = new Set(["SYSTEM 7", "PDF"]);
 const regionalisationChecks = [
+  ["en-US", "Analyse labelled and normalised data; preserve independent analyses.", "Analyze labeled and normalized data; preserve independent analyses."],
+  ["en-US", "Optimisation · Regularisation · normalising · normalisation · recognised · recognises · recognise · optimise · optimised · realised", "Optimization · Regularization · normalizing · normalization · recognized · recognizes · recognize · optimize · optimized · realized"],
+  ["en-US", "People & organisations", "People & organizations"],
+  ["en-US", "organise innovation", "organize innovation"],
+  ["en-US", "Check the licence and content notices before reuse.", "Check the license and content notices before reuse."],
   ["en-US", "CV & documents", "Resume & documents"],
   ["en-US", "Virtualisation cluster", "Virtualization cluster"],
   ["en-US", "Self-hosted document access and synchronisation across personal devices.", "Self-hosted document access and synchronization across personal devices."],
@@ -765,5 +780,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project metadata/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
+  `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales, with 118 names in each Mandarin element catalogue; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project metadata/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
 );

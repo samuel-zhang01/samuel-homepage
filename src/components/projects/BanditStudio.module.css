@@ -266,7 +266,7 @@
 .estimateReadout > span { display: block; }
 .estimateReadout strong { color: var(--s7-ink); font-family: var(--s7-font-mono); font-size: var(--s7-title); font-weight: 500; }
 .estimateReadout > span { color: var(--s7-ink); font: var(--s7-small)/1.4 var(--s7-font-mono); }
-.estimateTrack { position: relative; height: 13px; border: 1px solid #8b9699; background: #dfe3df; }
+.estimateTrack { position: relative; height: 13px; border: 1px solid #8b9699; background: var(--s7-raised); }
 .estimateTrack i { position: absolute; top: 0; bottom: 0; left: 0; background: linear-gradient(90deg, #318b94, #76c6c8); }
 .estimateTrack b { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--bandit-red); box-shadow: 0 0 0 1px #fff; }
 .armStats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 10px; border-top: 1px dotted var(--s7-shadow); }
@@ -672,7 +672,7 @@
 .cardCap {
   border-bottom: 1px solid #111;
   color: #111;
-  background: #d8d8d3;
+  background: var(--s7-chrome);
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
 }
 

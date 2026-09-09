@@ -80,7 +80,7 @@ test("reviewed scientific images have exact hashes and valid dimensions", () => 
     assert.equal(digest(bytes), entry.sha256, `${path}: reviewed content changed`);
     assert.deepEqual(webpSize(bytes), [entry.width, entry.height], `${path}: dimensions`);
   }
-  const actual = [...filesUnder("projects/neural-cfd/media"), ...filesUnder("projects/microrobot/media")];
+  const actual = [...filesUnder("projects/neural-cfd/media"), ...filesUnder("projects/microrobot/media"), ...filesUnder("projects/mri/media")];
   assert.deepEqual(actual.sort(), [...expected.keys()].sort());
   assert.ok(scientificMedia.reduce((sum, [, item]) => sum + item.maximumBytes, 0) < 3_600_000, "Scientific media exceed the combined transfer budget");
 });
@@ -115,6 +115,12 @@ const compiled = ts.transpileModule(readFileSync(sourcePath, "utf8"), {
 
 function harness(componentName, body = compiled, locale = "en-GB", expandChildren = false) {
   const values = [], effects = [], pending = [], timers = new Map(), requests = [];
+  const visibilityListeners = new Set();
+  const document = {
+    hidden: false,
+    addEventListener(name, listener) { if (name === "visibilitychange") visibilityListeners.add(listener); },
+    removeEventListener(name, listener) { if (name === "visibilitychange") visibilityListeners.delete(listener); },
+  };
   let stateIndex = 0, effectIndex = 0, dirty = false, nextTimer = 1;
   const statefulReact = {
     ...React,
@@ -146,6 +152,7 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
   }
   const exports = {};
   runInNewContext(body, {
+    document,
     module: { exports }, exports,
     require(name) {
       if (name === "./MathEquation") return { MathEquation: (props) => React.createElement("span", { "data-equation": props.tex }, props.label ?? props.tex) };
@@ -177,6 +184,8 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
       }
       throw new Error("Component did not settle");
     },
+    setHidden(hidden) { document.hidden = hidden; for (const listener of visibilityListeners) listener(); },
+    get visibilityListenerCount() { return visibilityListeners.size; },
     tick() { for (const callback of timers.values()) callback(); },
     dispose() { effects.forEach((effect) => effect?.cleanup?.()); },
     get timerCount() { return timers.size; },
@@ -223,6 +232,21 @@ test("playback wraps, scrubs, pauses and resets across complete sequences", () =
   click(tree, "Pressure · p"); tree = app.render(); assert.ok(images(tree)[0].props.src.endsWith("pressure.webp"));
   click(tree, "Play flow"); tree = app.render(); assert.equal(app.timerCount, 1);
   click(tree, "FNO & U-Net forecasts"); tree = app.render(); assert.equal(app.timerCount, 0);
+});
+
+test("background playback preserves its frame and resumes without duplicate timers", () => {
+  const app = harness("CfdFlowPlayer"); let tree = app.render();
+  click(tree, "Play flow"); app.render(); assert.equal(app.timerCount, 1);
+  app.tick(); tree = app.render(); assertFrame(tree, "gnn-rollout", 1);
+  app.setHidden(true); assert.equal(app.timerCount, 0);
+  app.tick(); tree = app.render(); assertFrame(tree, "gnn-rollout", 1);
+  app.setHidden(false); app.setHidden(false); assert.equal(app.timerCount, 1);
+  app.tick(); tree = app.render(); assertFrame(tree, "gnn-rollout", 2);
+  click(tree, "Pause flow"); app.render(); assert.equal(app.timerCount, 0);
+  assert.equal(app.visibilityListenerCount, 0);
+  app.setHidden(true); app.setHidden(false); assert.equal(app.timerCount, 0);
+  click(app.render(), "Play flow"); app.render(); app.dispose();
+  assert.equal(app.timerCount, 0); assert.equal(app.visibilityListenerCount, 0);
 });
 
 test("animation preload fetches only the selected channel", () => {

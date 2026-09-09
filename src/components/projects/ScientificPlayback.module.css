@@ -12,7 +12,7 @@
 .tabs { display: flex; gap: 8px; padding: 13px 26px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-chrome); }
 .sequenceBar { display: flex; align-items: center; gap: 15px; justify-content: space-between; flex-wrap: wrap; padding: 16px 27px; }
 .sequenceBar > div { display: flex; gap: 5px; }
-.sequenceBar > span { font: var(--s7-small)/1.4 var(--s7-font-text); color: #627485; }
+.sequenceBar > span { font: var(--s7-small)/1.4 var(--s7-font-text); color: var(--s7-muted); }
 .fieldStack { display: grid; gap: 14px; padding: 18px 28px 16px; background: var(--s7-paper); }
 .fieldStack figure { margin: 0; min-width: 0; }
 .fieldStack figcaption { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; color: var(--s7-ink); font-size: var(--s7-ui); }
@@ -22,7 +22,7 @@
 .playback { display: flex; align-items: center; gap: 10px; padding: 17px 26px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-paper); }
 .playback .playButton { display: flex; justify-content: space-between; gap: 16px; min-width: 130px; background: var(--s7-paper); color: var(--s7-ink); border-color: var(--s7-ink); }
 .scrubber { display: flex; flex-direction: column; flex: 1; min-width: 90px; gap: 5px; font: var(--s7-small)/1.4 var(--s7-font-text); color: var(--s7-ink); }
-.scrubber input { width: 100%; accent-color: #29567e; min-height: 30px; }
+.scrubber input { width: 100%; accent-color: var(--s7-selection); min-height: 30px; }
 .speed { display: flex; flex-direction: column; gap: 3px; font-size: var(--s7-small); color: var(--s7-ink); }
 .speed select { min-height: 34px; padding: 3px 6px; border: 1px solid var(--s7-ink); color: var(--s7-ink); background: var(--s7-paper); }
 .explanation { display: grid; grid-template-columns: 1.4fr 1fr; gap: 34px; padding: 24px 28px; }
@@ -88,7 +88,7 @@
 .robotControls { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 17px 26px; }
 .robotControls > div { display: flex; flex-wrap: wrap; gap: 7px; }
 .robotControls label { display: grid; grid-template-columns: 1fr auto; width: 240px; max-width: 100%; gap: 5px; font-size: var(--s7-text); }
-.robotControls input { grid-column: 1 / -1; width: 100%; min-height: 30px; accent-color: #11177a; }
+.robotControls input { grid-column: 1 / -1; width: 100%; min-height: 30px; accent-color: var(--s7-selection); }
 .robotPanels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; padding: 20px 26px; background: var(--s7-paper); border-block: 1px solid #111; }
 .robotPanels figure { margin: 0; padding: 8px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); }
 .robotPanels img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }

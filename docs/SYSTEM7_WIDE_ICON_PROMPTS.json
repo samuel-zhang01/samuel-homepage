@@ -1,0 +1,40 @@
+{
+  "mode": "Built-in image_gen; folder.png style reference; delivered PNGs resized to 128px with preserved alpha.",
+  "prompts": [
+    {
+      "name": "mri",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create a compact MRI scanner: pale grey square scanner body with a large black circular bore and short patient-free table extending toward the viewer; tiny periwinkle control panel. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "delivered": "public/system7-icons/mri.png"
+    },
+    {
+      "name": "network",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create three pale grey server boxes connected by an angular cable, one taller central server with two dark drive slots and tiny periwinkle indicator squares. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "delivered": "public/system7-icons/network.png"
+    },
+    {
+      "name": "molecule",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create a simple molecular ball-and-stick model: five square-edged octagonal atoms joined by dark straight rods, grey and muted periwinkle atoms and one ochre atom, legible asymmetrical silhouette. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "delivered": "public/system7-icons/molecule.png"
+    },
+    {
+      "name": "minefield",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a tiny square minesweeper board: four raised grey tiles and one small ochre flag planted in an open tile, stepped dark outlines, no letters or numerals. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "delivered": "public/system7-icons/minefield.png"
+    },
+    {
+      "name": "cards",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create two offset pale-grey playing cards with dark outlines, front card showing a single muted-periwinkle diamond and rear card a small ochre diamond, no numbers or letters. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "delivered": "public/system7-icons/cards.png"
+    },
+    {
+      "name": "snake",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a friendly short blocky periwinkle-blue snake bending in a right-angle S shape toward one small ochre pixel apple; dark square eyes and a simple stepped silhouette. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "delivered": "public/system7-icons/snake.png"
+    },
+    {
+      "name": "brickbreaker",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a small classic breakout scene isolated as an icon: two rows of three pale-grey and periwinkle bricks, a tiny ochre ball, and one grey horizontal paddle beneath, no surrounding screen or frame. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "delivered": "public/system7-icons/brickbreaker.png"
+    }
+  ]
+}

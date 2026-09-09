@@ -1,10 +1,12 @@
 # System 7 design benchmark
 
-The project interface should read as one Macintosh application: a quiet document surface, a compact control layer, legible content, and richer color inside the experiments. This specification targets the System 7 / 7.5 period around 1995, with explicit modern web adaptations. The values below are implementation decisions, not claims of pixel-perfect emulation.
+The project interface should read as one Macintosh application: white documents, layered gray chrome, compact controls, legible content, and richer color inside the experiments. This specification targets the System 7 / 7.5 period around 1995, with explicit modern web adaptations. The values below are implementation decisions, not claims of pixel-perfect emulation.
+
+The 9 September 2026 refinement keeps the smoother typography and accessible navigation while restoring more of the original desktop's depth. Named gray surfaces, crisp bevels, recessed lists and small hard shadows distinguish the layers. This direction follows the user's current preference and supersedes the earlier restriction to a flatter paper/chrome palette.
 
 ## Historical reference and visual evidence
 
-Apple’s 1992 guidance specifies 12-point Chicago for Roman system controls, with script-appropriate fonts and enough vertical space for other writing systems. Push buttons invert while pressed. A default button has a three-pixel outer black border separated by one white pixel. Pop-up menus show the current value and a triangle, retaining their font when opened. Color should communicate meaning and must not be the only cue. These are the historical anchors; the book does not prescribe this website’s CSS sizes or palette. [HIG, printed pp. 19–24, 60, 82–90, 204–207, 258–265][hig]
+Apple’s *Macintosh Human Interface Guidelines* was first published in November 1992; the linked copy is a 1995 printing. It specifies 12-point Chicago for Roman system controls, with script-appropriate fonts and enough vertical space for other writing systems. Push buttons invert while pressed. A default button has a three-pixel outer black border separated by one white pixel. Pop-up menus show the current value and a triangle, retaining their font when opened. Color should communicate meaning and must not be the only cue. These are the historical anchors; the book does not prescribe this website’s CSS sizes or palette. [HIG, printed pp. 19–24, 60, 82–90, 204–207, 258–265][hig]
 
 The contemporary Toolbox reference distinguishes rounded action buttons, square checkboxes marked with an X, radio buttons, pop-up menus, and scroll bars. It documents shared system controls rather than a separate bespoke skin for every application. Its illustrations are a primary reference for shape and behavior. [Inside Macintosh, chapter 5, pp. 5-2–5-7][toolbox]
 
@@ -24,16 +26,31 @@ Use one named vocabulary. Existing component classes may control placement and s
 
 | Control | Shared contract | Interaction and accessibility |
 |---|---|---|
-| Normal action | `.s7-button`: white face, black 1px boundary, 3px radius, hard 1px shadow, 13px UI font. | Native button; verb label; hover stays neutral; no movement or scale effect. |
-| Default action | `.s7-button.is-default`: white separation and black outer ring. | Visual priority only. The owning form/dialog must define any Return-key behavior; never hijack Enter in an editor. `MacButton primary` is a compatibility alias for this presentation. |
+| Normal action | `.s7-button`: raised light-gray face, black 1px boundary, 3px radius, highlight/shadow bevel, hard 1px outer shadow, 13px UI font. | Native button; verb label; hover lightens the neutral face; no movement or scale effect. |
+| Default action | `.s7-button.is-default`: white face, retained bevel, white separation and black outer ring. | Visual priority only. The owning form/dialog must define any Return-key behavior; never hijack Enter in an editor. `MacButton primary` is a compatibility alias for this presentation. |
 | Pressed action | Native `:active`: black face and white lettering; relief disappears. | Momentary feedback while activating; distinct from persistent selection. |
 | Disabled action | Native `disabled`: muted gray text/edge, neutral face, no hover/press treatment. | Preserve readable label and disabled semantics. Do not use opacity on the entire control subtree. |
-| Toggle | `.s7-button[aria-pressed]`: consistent dimensions; checked marker and inset face when selected. | Native button toggles one setting. Mutually exclusive form values should retain radio semantics. |
+| Toggle | `.s7-button[aria-pressed]`: consistent dimensions; checked marker and darker, recessed face when selected. | Selection retains its inset treatment on hover; pressing still inverts. Native button toggles one setting. Mutually exclusive form values should retain radio semantics. |
 | Icon action | `.s7-button--icon`: compact square shape; restrained 16–20px artwork. | Accessible name is mandatory; tooltip is supplementary. Minimum 44px target on coarse pointers. |
-| View tabs | `.s7-tabs` with `.s7-tab`: gray inactive tabs, white selected tab adjoining its document, clear border and normal-case label. | ARIA tab pattern only when content is an actual tab panel; use links for navigation. Keyboard arrows, Home/End and focus behavior belong to the component. Tabs are a website adaptation, not a claimed stock 1992 Toolbox control. |
-| Select | `ClassicSelect`: square white trigger, current value, downward triangle, 1px hard shadow; same UI font in trigger and list. | Keep existing combobox/listbox, typeahead, disabled options, native form value, viewport placement and focus restoration. Selection uses blue plus a checkmark. |
+| View tabs | `.s7-tabs` with `.s7-tab`: recessed gray strip, beveled inactive tabs, white selected tab with a dark top rule, clear border and normal-case label. | ARIA tab pattern only when content is an actual tab panel; use links for navigation. Keyboard arrows, Home/End and focus behavior belong to the component. Tabs are a website adaptation, not a claimed stock 1992 Toolbox control. |
+| Select | `ClassicSelect`: square raised light-gray trigger, current value, downward triangle and 1px hard shadow; same UI font in trigger and list. The white option list sits inside a beveled gray frame with a small hard shadow. | Keep existing combobox/listbox, typeahead, disabled options, native form value, viewport placement and focus restoration. The expanded trigger inverts; selection uses blue plus a checkmark. |
 
-Avoid mixing permanent blue action buttons, outlined default buttons, metallic gradients, colored call-to-action cards, and pill toggles in one toolbar. Blue identifies selected content and links. Scientific series retain their domain colors and legends.
+Use the shared gray relief for ordinary controls and the outlined ring for default actions. Keep bevels crisp and shallow; metallic gradients, soft glows and pill toggles do not belong in this control family. Blue identifies selected content and links. Scientific series retain their domain colors and legends.
+
+## Shared icon vocabulary
+
+Use [`System7Icon`](../src/components/System7Icon.tsx) and the assets in [`public/system7-icons`](../public/system7-icons) across desktop shortcuts, menus, Finder results and compact project artwork. The `System7IconKind` union is the canonical vocabulary. Reuse its subject or object before adding another drawing:
+
+| Role | Representative kinds |
+|---|---|
+| Navigation and records | `profile`, `computer`, `folder`, `document`, `briefcase`, `university`, `pdf`, `mail` |
+| Desk tools | `note`, `sketch`, `tasks`, `clock`, `calendar`, `calculator`, `converter`, `palette` |
+| Project subjects | `microscope`, `finance`, `chart`, `molecule`, `shield`, `book`, `mri`, `flow`, `network`, `orbital` |
+| Activities and collections | `runner`, `game`, `accessories`, `photos`, `controls`, `secret` |
+
+The family uses crisp dark outlines, light upper edges, a small neutral palette and restrained blue, gold or red details. Selected kinds use transparent generated PNGs; every kind has a companion SVG. Pass `miniature` for 16px menu/Finder artwork so fine raster details do not collapse. Existing desktop wrappers display 32px icons; compact project rows use 42px on desktop and 48px on narrow layouts. Let the surrounding control set the size and preserve square proportions.
+
+Icons are decorative (`alt=""`, `aria-hidden`); translated text names the destination or action. An icon-only control still needs its own accessible label. Keep the artwork recognizable against white, gray and selected navy backgrounds. Full project illustrations remain available in document headers, while compact rows use the shared subject icons. Retain the COVERD brand asset in its existing frame.
 
 ## Typography and localization
 
@@ -45,6 +62,7 @@ The hierarchy below is a modern screen specification. Historical points on a low
 | Section title | `--s7-heading` / `.s7-heading` | 18px, weight 700, line height 1.3 |
 | Explanatory prose | `--s7-text` / `.s7-prose` | 15px, normal weight, line height 1.55 |
 | Controls and table headings | `--s7-ui` / `.s7-label` | 13px, normal or deliberate 700 weight, line height 1.4 |
+| Window title | `.mac-titlebar h2` | 13px, weight 700, line height 1.4 |
 | Supporting metadata | `--s7-small` / `.s7-small` | 12px minimum, line height 1.45 |
 | Source code / aligned readings | `--s7-font-mono` | Monaco/Courier family; preserve authored formatting |
 | Equations | Existing `MathEquation` | KaTeX’s own glyph sizing, spacing and MathML; never style its descendant spans through a panel selector |
@@ -58,20 +76,44 @@ Simplified Chinese uses PingFang SC / Microsoft YaHei / Noto Sans CJK SC fallbac
 | Token | Value | Intended role |
 |---|---|---|
 | `--s7-ink` | `#000` | Text and primary boundaries |
-| `--s7-paper` | `#fff` | Documents, lists, inputs, normal button faces |
-| `--s7-chrome` | `#ddd` | Toolbars, tab backs, status areas |
-| `--s7-shadow` | `#aaa` | Hard relief and secondary structure |
+| `--s7-paper` | `#fff` | Documents, lists, inputs and default button faces |
+| `--s7-surface` | `#f2f2f2` | Light supporting surfaces, menus and control hover faces |
+| `--s7-raised` | `#e8e8e8` | Ordinary button/select faces, menu bar and active title label |
+| `--s7-chrome` | `#d6d6d6` | Toolbars, window frames, inactive tabs and status areas |
+| `--s7-recess` | `#bcbcbc` | Recessed tab strips, selected toggles and backing surfaces |
+| `--s7-highlight` | `#fff` | Top/left raised edges and bottom/right inset edges |
+| `--s7-edge` | `#777` | Raised/inset relief edges, secondary boundaries and hard control shadows |
+| `--s7-shadow` | `#aaa` | Fine rules and secondary structure |
 | `--s7-muted` | `#555` | Supporting text on white/gray |
 | `--s7-selection` | `#11177a` | Selected rows/options, links and navigation cues |
 | `--s7-selection-text` | `#fff` | Text on selection |
 
-These exact hex values are the project palette. They were chosen to remove the current collection of slightly different warm grays, navy shades and tinted paper surfaces.
+These neutral tokens give each shade a consistent structural role. Reuse them for new chrome instead of introducing unrelated grays. White remains the reading surface; depth comes from the surrounding frame and controls. The selection colors and scientific palettes retain their separate meanings.
+
+| Structural token | Contract |
+|---|---|
+| `--s7-relief-raised` | Inset 1px top/left white highlight and 1px bottom/right `--s7-edge` (`#777`) shadow. |
+| `--s7-relief-inset` | Inset 1px top/left `--s7-edge` shadow and 1px bottom/right white highlight. |
+| `--s7-frame-well` | Outer 1px top/left `--s7-edge` shadow and 1px bottom/right white highlight around a bounded well. |
+| `--s7-title-lines` | Repeating 4px horizontal pattern: 1px white, 1px `--s7-edge`, then 2px `--s7-raised`. Keep the title label on a solid face. |
+| `--s7-popup-shadow` | A 3px hard black shadow at 35% opacity. |
+
+Components may add a small outer shadow to lift an action or frame. Selected toggles and inputs use inset relief; `.s7-well` combines inset relief with the outer well frame. Apply textures to narrow chrome areas, such as title bars and the ribbed project-tab backing, while retaining plain reading surfaces.
 
 - Use one-pixel internal rules; reserve stronger boundaries for the window and default-action ring. Avoid putting every paragraph inside a raised box.
-- `.s7-panel` is a white bounded region. `.s7-toolbar` groups related controls with an 8px gap and wrapping. Use 12–16px panel padding and 16–24px between major sections.
-- `.s7-table` uses a gray header, white rows, thin horizontal rules, left-aligned labels and tabular numerals. A selected row uses the selection colors. Wide data tables scroll in their own labeled region; prose must still reflow.
+- `.s7-panel` is a white bounded region. `.s7-well` adds a recessed white surface where a list or bounded content area needs it. `.s7-toolbar` groups related controls on beveled gray chrome with an 8px gap and wrapping. Use 12–16px panel padding and 16–24px between major sections.
+- Desktop windows use a narrow gray inner frame, a recessed document boundary and a hard outer shadow. Active title bars retain their horizontal pattern with gray lines and white highlights; the title itself stays on a solid, readable surface.
+- `.s7-table` uses a light-gray header with a top highlight, white rows, thin horizontal rules, left-aligned labels and tabular numerals. A selected row uses the selection colors. Wide data tables scroll in their own labeled region; prose must still reflow.
 - `.s7-note` is a plain labeled note with a thin border. Internal audit receipts belong in development documentation. A visitor-facing limitation belongs beside the result it qualifies. Remove tinted caution strips from ordinary explanation; actual errors retain explicit text and a recognizable status cue.
 - Keep color maps, molecule atoms, graph clusters, uncertainty bands and charts inside their bounded scientific region. Their legends carry meaning; shell unification must not recolor them.
+
+## Project browser
+
+The knowledge graph remains the first view. **Selected work** and **All projects** use a left list pane with visible search and discipline filters, alongside the selected project's details in the right pane. Selecting a row updates those details within the same project window. The list and detail content scroll independently, with gray framing and white content wells separating their roles.
+
+Project details offer explicit **Open in new tab** and **Open live demo** actions where applicable, alongside the project's website, files, application and repository links. Embedded demonstrations open on request. **Connections** returns to the graph with the project selected. At narrow widths, the list and detail views take turns using the available width; **Back to list** restores browsing. Keep these controls and their labels available in English and both maintained Mandarin editions.
+
+The graph uses the same recessed backing to separate its white canvas from the pale inspector, with raised controls and disclosure bars around them. Documents use a double header seam, fine section rules and a recessed frame around live experiments. Demo anchor spacing follows the measured sticky toolbar height so wrapped controls remain clear of the destination. See the [depth refinement review](archive/SYSTEM7_DEPTH_REFINEMENT_2026-09-09.md) for the earlier-version comparison, inspected primary screenshots and representative browser checks.
 
 ## Modern accessibility requirements
 
@@ -81,11 +123,11 @@ Normal text needs at least 4.5:1 contrast; larger text has a 3:1 threshold. Defa
 
 ## Repository findings and migration
 
-The initial audit found 39 project CSS modules and 26 project TSX files importing `DemoChrome`. Shared controls exist, but several independent skins compete:
+The initial audit found 39 project CSS modules and 26 project TSX files importing `DemoChrome`. The following findings motivated the shared control library and remain useful guidance when extending it:
 
-| Current location | Concrete issue | Migration |
+| Location | Initial issue | Implementation guidance |
 |---|---|---|
-| `src/app/globals.css` | Global `.mac-button`, broad desktop/accessory styles, separate locale font variables. | Import `system7.css` once. Keep legacy desktop rules stable; opt project documents into `.system7-project`. Do not append a universal button override. |
+| `src/app/globals.css` | Global `.mac-button`, broad desktop/accessory styles, separate locale font variables. | Import `system7.css` once. Keep desktop behavior stable; reuse neutral/relief tokens for menu and window surfaces. Opt project documents into `.system7-project`. Do not append a universal button override. |
 | `DemoChrome.tsx/.module.css` | Separate MacButton skin; tinted paper, striped body, blue purpose card, 10px tracked metadata. | Emit shared root/button classes; simplify shared frame and instruction disclosure; retain props, localization and demo content. |
 | `ClassicSelect.module.css` | Tripled `.trigger` specificity and separately hardcoded palette/font values. | Consume shared tokens and use one explicit trigger attribute/class selector; preserve behavior and portal styling. |
 | Project CSS modules | Repeated `viewTabs`, `panelHeading`, `metricGrid`, action colors and literal font sizes. Some files contain a second appended “System 7 surface pass.” | Migrate a whole named control group at once. Delete its superseded skin declarations, retain layout rules, and add canonical classes in its TSX. |
@@ -97,7 +139,7 @@ Validation should include one control-state matrix covering normal/default/focus
 
 ## Sources
 
-1. Apple Computer, *Macintosh Human Interface Guidelines*, 1992. [Full primary document][hig]. Printed page numbers are 23 lower than the zero-index PDF page numbers in this copy.
+1. Apple Computer, *Macintosh Human Interface Guidelines*, first published November 1992; linked copy is a 1995 printing. [Full primary document][hig]. Printed page numbers are 23 lower than the zero-index PDF page numbers in this copy.
 2. Apple Computer, *Inside Macintosh: Macintosh Toolbox Essentials*. [Apple-hosted primary reference][toolbox], chapter 5, Control Manager.
 3. Apple Computer, *Macintosh System 7.5 Upgrade Guide*, 1994. [Primary manual mirrored by MacHut][upgrade], screenshots at printed pp. 11, 35 and 63.
 4. GUIdebook / Marcin Wichary, [System 7.0][gallery70] and [System 7.5.3][gallery753] screenshot collections. Supplementary period-software evidence; gallery publication/capture date differs from software release date.

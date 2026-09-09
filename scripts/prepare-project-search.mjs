@@ -224,7 +224,7 @@ async function componentText(path, name, output, visited, provenance) {
 
 async function demoRoots() {
   const path = "src/components/projects/ProjectDemoRouter.tsx";
-  const { source, declarations } = await sourceModule(path);
+  const { declarations } = await sourceModule(path);
   const dynamic = new Map();
   for (const [name, declaration] of declarations) {
     let file, exported;
@@ -236,18 +236,18 @@ async function demoRoots() {
     visit(declaration);
     if (file && exported) dynamic.set(name, [relative(root, resolve(root, dirname(path), `${file}.tsx`)), exported]);
   }
+  const registry = declarations.get("demoComponents")?.initializer;
+  if (!registry || !ts.isObjectLiteralExpression(registry)) throw new Error("Missing declarative demo registry");
   const result = new Map();
-  function visit(node) {
-    if (ts.isCaseClause(node) && ts.isStringLiteral(node.expression)) {
-      let component;
-      function find(child) { if (ts.isJsxSelfClosingElement(child)) component = child.tagName.getText(); ts.forEachChild(child, find); }
-      node.statements.forEach(find);
-      if (!dynamic.has(component)) throw new Error(`Missing search mapping for demo ${node.expression.text}`);
-      result.set(node.expression.text, dynamic.get(component));
+  for (const entry of registry.properties) {
+    if (!ts.isPropertyAssignment(entry) || !ts.isStringLiteral(entry.name) || !ts.isIdentifier(entry.initializer)) {
+      throw new Error("Demo search registry requires literal IDs and named components");
     }
-    ts.forEachChild(node, visit);
+    const component = entry.initializer.text;
+    if (!dynamic.has(component)) throw new Error(`Missing search mapping for demo ${entry.name.text}`);
+    if (result.has(entry.name.text)) throw new Error(`Duplicate demo search mapping: ${entry.name.text}`);
+    result.set(entry.name.text, dynamic.get(component));
   }
-  visit(source);
   return result;
 }
 

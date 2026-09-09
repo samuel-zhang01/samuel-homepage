@@ -165,10 +165,10 @@ function MatrixView() {
           <p>Move the structural axes; support horizon is displayed separately because it is a critique of the original two-axis model.</p>
         </div>
         <label><span>Organisational ownership <b>{ownership < 50 ? "Diffuse" : "Focused"} · {ownership}</b></span>
-          <input type="range" min="0" max="100" value={ownership} aria-valuetext={`${ownership}; ${ownership < 50 ? "diffuse" : "focused"} ownership`} onChange={(event) => setOwnership(Number(event.target.value))} />
+          <input type="range" min="0" max="100" value={ownership} aria-valuetext={`${ownership}; ${ownership < 50 ? "Diffuse" : "Focused"} ownership`} onChange={(event) => setOwnership(Number(event.target.value))} />
         </label>
         <label><span>Resource authority <b>{authority < 50 ? "Ad hoc" : "Dedicated"} · {authority}</b></span>
-          <input type="range" min="0" max="100" value={authority} aria-valuetext={`${authority}; ${authority < 50 ? "ad hoc" : "dedicated"} authority`} onChange={(event) => setAuthority(Number(event.target.value))} />
+          <input type="range" min="0" max="100" value={authority} aria-valuetext={`${authority}; ${authority < 50 ? "Ad hoc" : "Dedicated"} authority`} onChange={(event) => setAuthority(Number(event.target.value))} />
         </label>
         <label><span>Support horizon <b>{horizon} months</b></span>
           <input type="range" min="3" max="36" step="3" value={horizon} aria-valuetext={`${horizon} months`} onChange={(event) => setHorizon(Number(event.target.value))} />

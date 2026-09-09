@@ -631,7 +631,7 @@
   min-width: 0;
   padding: 8px;
   border: 1px solid #6c6f69;
-  background: #e7e7e2;
+  background: var(--s7-raised);
   box-shadow: inset 1px 1px #fff;
 }
 
@@ -1177,7 +1177,7 @@
   padding: 4px 8px;
   border: 1px solid #696c66;
   color: #383b37;
-  background: #efefea;
+  background: var(--s7-raised);
   box-shadow: inset 1px 1px #fff;
   cursor: pointer;
   font-size: var(--s7-ui);

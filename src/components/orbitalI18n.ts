@@ -20,7 +20,7 @@ const english = {
   model: "What is being modelled?", modelBody: "These are analytic one-electron hydrogen-like orbitals, sampled from |ψ|². Selecting an element shows its neutral configuration, then lets you study occupied subshell shapes at Z = 1. It does not solve that many-electron atom or a molecule.",
   phaseBody: "The two inks show wavefunction sign, not electric charge. For nonzero m, the real components are sine/cosine combinations, not states with a single Lz value. Node counts describe the analytic orbital; projection may hide a node.",
   scaleBody: "Each cloud is fitted to the viewing frame, so sizes across orbitals are not directly comparable. A slice shows points close to the fixed model z = 0 plane; it is not a new orbital.",
-  configBody: "Configurations through element 104 follow a NIST reference compilation, including its exceptions. Heavier elements use an explicitly illustrative filling rule, not a claim of their measured or relativistic ground states. Element names retain the English reference labels.",
+  configBody: "Configurations through element 104 follow a NIST reference compilation, including its exceptions. Heavier elements use an explicitly illustrative filling rule, not a claim of their measured or relativistic ground states.",
   sources: "Sources & model notes", sourceNist: "NIST atomic reference data", sourceMath: "Hydrogenic wavefunctions", empty: "No points in this slice.",
   occupancy: "Subshell electrons", capacity: "Capacity", unpaired: "Orbital boxes · Hund filling illustration", boxNote: "The boxes illustrate filling within this subshell; they are not a computed many-electron wavefunction.",
   motion: "Rotation is off initially and pauses when this app or browser tab is hidden.", canvas: "ASCII orbital probability cloud", componentHint: "Choose a real angular basis component; occupancies apply to the whole subshell.",
@@ -50,7 +50,7 @@ const simplified: Copy = {
   model: "这里模拟的是什么？", modelBody: "这里展示解析的单电子类氢轨道，按 |ψ|² 采样。选中元素后，可查看其中性电子排布，并在 Z = 1 的模型下研究已占据亚层的形状。这并未求解该多电子原子或分子。",
   phaseBody: "两种颜色表示波函数的正负号，而非电荷。m 非零时，实分量是正弦或余弦组合，不是具有单一 Lz 值的态。节点数描述解析轨道；投影可能遮住节点。",
   scaleBody: "每个概率云都会缩放以适合画框，因此不能直接比较不同轨道的大小。切片显示固定模型 z = 0 平面附近的采样点，并非一个新轨道。",
-  configBody: "前 104 号元素的排布依据 NIST 参考资料汇编，并保留其中的例外。更重的元素仅采用明确标注的示意性填充规则，不声称是其测得的或相对论基态。元素名称保留英文参考标签。",
+  configBody: "前 104 号元素的排布依据 NIST 参考资料汇编，并保留其中的例外。更重的元素仅采用明确标注的示意性填充规则，不声称是其测得的或相对论基态。",
   sources: "来源与模型说明", sourceNist: "NIST 原子参考数据", sourceMath: "类氢波函数", empty: "此切片没有采样点。",
   occupancy: "亚层电子数", capacity: "容量", unpaired: "轨道方框 · 洪特规则填充示意", boxNote: "方框仅说明这个亚层的电子填充，不是计算得出的多电子波函数。",
   motion: "初始不自动旋转；此应用或浏览器标签页隐藏时会暂停。", canvas: "ASCII 原子轨道概率云", componentHint: "选择实角向基函数分量；电子数属于整个亚层。",
@@ -79,7 +79,7 @@ const traditional: Copy = {
   model: "這裡模擬的是什麼？", modelBody: "這裡呈現解析的單電子類氫軌域，依 |ψ|² 取樣。選取元素後，可查看其中性電子組態，並在 Z = 1 的模型下研究已佔據副殼層的形狀。這並未求解該多電子原子或分子。",
   phaseBody: "兩種顏色代表波函數的正負號，而非電荷。m 非零時，實分量是正弦或餘弦組合，不是具有單一 Lz 值的態。節點數描述解析軌域；投影可能遮住節點。",
   scaleBody: "每個機率雲都會縮放以符合畫框，因此不能直接比較不同軌域的大小。切片顯示固定模型 z = 0 平面附近的取樣點，並非一個新軌域。",
-  configBody: "前 104 號元素的組態依據 NIST 參考資料彙編，並保留其中的例外。更重的元素僅採用明確標示的示意性填充規則，不宣稱是其測得的或相對論基態。元素名稱保留英文參考標籤。",
+  configBody: "前 104 號元素的組態依據 NIST 參考資料彙編，並保留其中的例外。更重的元素僅採用明確標示的示意性填充規則，不宣稱是其測得的或相對論基態。",
   sources: "來源與模型說明", sourceNist: "NIST 原子參考資料", sourceMath: "類氫波函數", empty: "此切片沒有取樣點。",
   occupancy: "副殼層電子數", capacity: "容量", unpaired: "軌域方框 · 洪德規則填充示意", boxNote: "方框僅說明這個副殼層的電子填充，不是計算所得的多電子波函數。",
   motion: "初始不自動旋轉；此應用程式或瀏覽器分頁隱藏時會暫停。", canvas: "ASCII 原子軌域機率雲", componentHint: "選擇實角向基底分量；電子數屬於整個副殼層。",
@@ -88,4 +88,48 @@ const traditional: Copy = {
   sliceNote: "模型 z = 0 附近的薄層，並非精確平面。此檢視會重新調整對比度。",
 };
 
-export const orbitalCopies: Record<Locale, Copy> = { "en-GB": english, "en-US": { ...english, model: "What is being modeled?" }, "zh-CN": simplified, "zh-TW": traditional };
+export const orbitalCopies: Record<Locale, Copy> = { "en-GB": english, "en-US": { ...english, model: "What is being modeled?", blockKey: "Color key: orbital blocks" }, "zh-CN": simplified, "zh-TW": traditional };
+
+// Ordered by atomic number. Keep Taiwan's scientific terminology (for example
+// 矽, 鎝, 鎦, 砈 and 鍅) explicit; a character-only conversion is insufficient.
+// Names checked against https://ptable.com/?lang=zh-hans and ?lang=zh-hant,
+// with Taiwan variants checked against https://physexp.thu.edu.tw/~mengwen/note/shs-note.pdf.
+export const elementNames: Record<"zh-CN" | "zh-TW", readonly string[]> = {
+  "zh-CN": [
+    "氢", "氦", "锂", "铍", "硼", "碳", "氮", "氧", "氟", "氖",
+    "钠", "镁", "铝", "硅", "磷", "硫", "氯", "氩", "钾", "钙",
+    "钪", "钛", "钒", "铬", "锰", "铁", "钴", "镍", "铜", "锌",
+    "镓", "锗", "砷", "硒", "溴", "氪", "铷", "锶", "钇", "锆",
+    "铌", "钼", "锝", "钌", "铑", "钯", "银", "镉", "铟", "锡",
+    "锑", "碲", "碘", "氙", "铯", "钡", "镧", "铈", "镨", "钕",
+    "钷", "钐", "铕", "钆", "铽", "镝", "钬", "铒", "铥", "镱",
+    "镥", "铪", "钽", "钨", "铼", "锇", "铱", "铂", "金", "汞",
+    "铊", "铅", "铋", "钋", "砹", "氡", "钫", "镭", "锕", "钍",
+    "镤", "铀", "镎", "钚", "镅", "锔", "锫", "锎", "锿", "镄",
+    "钔", "锘", "铹", "𬬻", "𬭊", "𬭳", "𬭛", "𬭶", "鿏", "𫟼",
+    "𬬭", "鿔", "鿭", "𫓧", "镆", "𫟷", "鿬", "鿫",
+  ],
+  "zh-TW": [
+    "氫", "氦", "鋰", "鈹", "硼", "碳", "氮", "氧", "氟", "氖",
+    "鈉", "鎂", "鋁", "矽", "磷", "硫", "氯", "氬", "鉀", "鈣",
+    "鈧", "鈦", "釩", "鉻", "錳", "鐵", "鈷", "鎳", "銅", "鋅",
+    "鎵", "鍺", "砷", "硒", "溴", "氪", "銣", "鍶", "釔", "鋯",
+    "鈮", "鉬", "鎝", "釕", "銠", "鈀", "銀", "鎘", "銦", "錫",
+    "銻", "碲", "碘", "氙", "銫", "鋇", "鑭", "鈰", "鐠", "釹",
+    "鉕", "釤", "銪", "釓", "鋱", "鏑", "鈥", "鉺", "銩", "鐿",
+    "鎦", "鉿", "鉭", "鎢", "錸", "鋨", "銥", "鉑", "金", "汞",
+    "鉈", "鉛", "鉍", "釙", "砈", "氡", "鍅", "鐳", "錒", "釷",
+    "鏷", "鈾", "錼", "鈽", "鋂", "鋦", "鉳", "鉲", "鑀", "鐨",
+    "鍆", "鍩", "鐒", "鑪", "𨧀", "𨭎", "𨨏", "𨭆", "䥑", "鐽",
+    "錀", "鎶", "鉨", "鈇", "鏌", "鉝", "鿬", "鿫",
+  ],
+};
+
+export function localisedElementName(locale: Locale, atomicNumber: number, referenceName: string): string {
+  if (locale === "zh-CN" || locale === "zh-TW") return elementNames[locale][atomicNumber - 1] ?? referenceName;
+  if (locale === "en-US") {
+    if (referenceName === "Aluminium") return "Aluminum";
+    if (referenceName === "Caesium") return "Cesium";
+  }
+  return referenceName;
+}

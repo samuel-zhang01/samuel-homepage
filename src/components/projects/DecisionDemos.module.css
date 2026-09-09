@@ -381,7 +381,7 @@
 .costPanel {
   min-width: 0;
   border: 1px solid #242424;
-  background: #e5e5df;
+  background: var(--s7-raised);
   box-shadow:
     inset 1px 1px 0 #fff,
     inset -1px -1px 0 #8e8e88;
@@ -1022,7 +1022,7 @@
   position: relative;
   height: 9px;
   border: 1px solid #aaa;
-  background: #f5f5f1;
+  background: var(--s7-surface);
 }
 
 .zeroLine {

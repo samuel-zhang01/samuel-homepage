@@ -386,7 +386,7 @@
 .specPanel,
 .datasetLedger {
   border: 1px solid #858681;
-  background: #eeeeea;
+  background: var(--s7-raised);
   box-shadow: inset 1px 1px #fff, 2px 2px #d1d1cc;
 }
 
@@ -788,7 +788,7 @@
   height: 10px;
   overflow: hidden;
   border: 1px solid #858681;
-  background: #d8d8d3;
+  background: var(--s7-chrome);
   box-shadow: inset 1px 1px #aaa;
 }
 
@@ -863,7 +863,7 @@
   display: block;
   width: 100%;
   border: 1px solid #bbbcb6;
-  background: #fafaf6;
+  background: var(--s7-paper);
 }
 
 .chartLegend {
@@ -2344,3 +2344,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+.recordedFigure { margin: 0; padding: 8px; border: 1px solid var(--s7-edge); background: var(--s7-chrome); box-shadow: var(--s7-relief-inset); }
+.recordedScroll { overflow-x: auto; background: var(--s7-paper); }
+.recordedScroll:focus-visible { outline: 2px solid var(--s7-selection); outline-offset: 2px; }
+.recordedScroll img { display: block; width: 100%; min-width: 1000px; height: auto; }
+.recordedFigure figcaption { margin-top: 8px; padding: 8px; font-size: var(--s7-small); line-height: 1.5; color: var(--s7-ink); background: var(--s7-paper); }
+.recordedActions { display: flex; gap: 8px; flex-wrap: wrap; }

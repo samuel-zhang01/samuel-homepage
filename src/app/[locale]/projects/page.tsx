@@ -1,7 +1,8 @@
 import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 import { getProjectArchiveCopy } from "@/components/projects/projectArchiveI18n";
 import { projects } from "@/data/projects";
-import { localeOptions, normaliseLocale, translateText } from "@/lib/i18n";
+import { localeOptions, normaliseLocale } from "@/lib/i18n";
+import { getProjectText } from "@/lib/projectNarrative";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -32,9 +33,9 @@ export async function generateMetadata({
 
   const slug = typeof projectParam === "string" ? projectParam : undefined;
   const project = projects.find((item) => item.slug === slug);
-  const title = project ? `${project.title} — ${copy.header.title}` : copy.header.title;
+  const title = project ? `${getProjectText(locale, project.title)} — ${copy.header.title}` : copy.header.title;
   const description = project
-    ? translateText(locale, project.summary)
+    ? getProjectText(locale, project.summary)
     : copy.header.description;
   const projectQuery = project ? `?project=${encodeURIComponent(project.slug)}` : "";
   const canonical = `/${localeSlug}/projects${projectQuery}`;
