@@ -23,7 +23,6 @@
 
 .studio button:focus-visible,
 .studio input:focus-visible,
-.studio summary:focus-visible,
 .studio [tabindex="0"]:focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 2px;
@@ -783,21 +782,20 @@
   background: var(--s7-paper);
 }
 
-.dataFallback summary {
+.dataFallback > h4 {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 10px;
-  cursor: pointer;
+  margin: 0;
+  padding: 12px;
   color: var(--s7-ink);
-  font-size: var(--s7-small);
-  font-weight: 700;
-  list-style-position: inside;
+  font: 700 var(--s7-text)/1.4 var(--s7-font-text);
 }
 
-.dataFallback summary span {
+.dataFallback > h4 span {
   color: var(--s7-ink);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .dataFallback .tableScroll {

@@ -318,9 +318,9 @@ export const thermodynamicsCopy = {
     "从分子尺寸到压力",
     "從分子尺寸到壓力"
   ],
-  "Samuel used Julia and Clapeyron to explore equations of state, saturation, phase boundaries and critical behaviour. This interactive model isolates the PC-SAFT pressure calculation so the effect of each molecular parameter is visible.": [
-    "Samuel 使用 Julia 和 Clapeyron 探索状态方程、饱和状态、相边界和临界行为。这个交互模型专门展示 PC-SAFT 的压力计算，便于看清每个分子参数的影响。",
-    "Samuel 使用 Julia 和 Clapeyron 探索狀態方程、飽和狀態、相邊界和臨界行為。這個交互模型專門展示 PC-SAFT 的壓力計算，便於看清每個分子參數的影響。"
+  "I used Julia and Clapeyron to explore equations of state, saturation, phase boundaries and critical behaviour. This interactive model isolates the PC-SAFT pressure calculation so the effect of each molecular parameter is visible.": [
+    "我使用 Julia 和 Clapeyron 探索状态方程、饱和状态、相边界和临界行为。这个交互模型专门展示 PC-SAFT 的压力计算，便于看清每个分子参数的影响。",
+    "我使用 Julia 和 Clapeyron 探索狀態方程、飽和狀態、相邊界和臨界行為。這個交互模型專門展示 PC-SAFT 的壓力計算，便於看清每個分子參數的影響。"
   ],
   "Try a controlled comparison": [
     "试做受控比较",

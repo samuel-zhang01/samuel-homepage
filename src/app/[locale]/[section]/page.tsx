@@ -35,7 +35,7 @@ const sectionMetadata: Record<string, { title: string; description: string }> = 
   },
   coverd: {
     title: "COVERD — Founder’s Desk",
-    description: "Samuel’s startup, product thesis and responsible-AI principles.",
+    description: "My startup, product thesis and responsible-AI principles.",
   },
   desk: {
     title: "Desk Accessories",
@@ -63,7 +63,7 @@ const sectionMetadata: Record<string, { title: string; description: string }> = 
   },
   lab: {
     title: "Home Lab Network",
-    description: "Samuel’s self-hosted AI, storage and automation infrastructure.",
+    description: "My self-hosted AI, storage and automation infrastructure.",
   },
   sidequest: {
     title: "RUN/HACK — Field Journal",

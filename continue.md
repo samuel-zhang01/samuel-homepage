@@ -2,6 +2,14 @@
 
 Updated: 9 September 2026. Current implementation, checks and handoff.
 
+## Latest window and content uniformity pass
+
+- Corrected the title-bar issue inherited from the September 4–5 implementation: close/zoom glyphs are centred, and 44px touch buttons sit inside a 45px title bar without negative margins. Fine-pointer desktop chrome remains compact. Dragging, zoom/restore and resizing still work.
+- Project sharing has a strong indigo face and the same height as neighbouring actions. Primary destinations remain blue. Mobile PDF and demo action rows retain 44px targets.
+- Project contributions, demo guidance and related explanatory/result sections are always visible. Personal narration uses I/my with matching Simplified and Traditional Chinese copy; identity labels, collaborators and source credits retain names.
+- Compiled route review passed 284/284, including checks that overview explanations, contributions and privacy text are outside disclosures. Native Edge checked desktop and 320px layouts, sharing, window close/restore/drag/resize, and visible CV demo guidance. Full lint, prebuild gates, production compilation and output checks passed. See [window and content uniformity](docs/WINDOW_CONTENT_UNIFORMITY_2026-09-09.md).
+- Current compiled build: `.next-uniform`, reviewed on port 5195; port 5180 is refreshed to this build at handoff. Earlier ports below describe previous checkpoints.
+
 ## Latest PDF reader follow-up
 
 - Fixed the reported mobile GROWMAT reader: one compact action row, descriptive document title, accurate page counter, visible **Fit width** reset and reachable horizontal overflow when zoomed.

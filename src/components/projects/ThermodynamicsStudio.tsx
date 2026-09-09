@@ -658,7 +658,7 @@ export function ThermodynamicsStudio() {
       </section>
 
       <section className={styles.boundaryLedger}>
-        <div><strong>From molecular size to pressure</strong><p>Samuel used Julia and Clapeyron to explore equations of state, saturation, phase boundaries and critical behaviour. This interactive model isolates the PC-SAFT pressure calculation so the effect of each molecular parameter is visible.</p></div>
+        <div><strong>From molecular size to pressure</strong><p>I used Julia and Clapeyron to explore equations of state, saturation, phase boundaries and critical behaviour. This interactive model isolates the PC-SAFT pressure calculation so the effect of each molecular parameter is visible.</p></div>
         <div><strong>Try a controlled comparison</strong><p>The two components have invented parameters. Change one input at a time and compare the pressure with the ideal-gas line. The curves illustrate model behaviour; they are not predictions for a real fluid.</p></div>
         <div><strong>Equations and attribution</strong><p>The browser calculation follows the MIT-licensed <a href={CLAPEYRON_PC_SAFT_SOURCE} target="_blank" rel="noreferrer">PC-SAFT core</a>, <a href={CLAPEYRON_SAFT_EQUATIONS} target="_blank" rel="noreferrer">SAFT equations</a> and <a href={CLAPEYRON_EOS_FUNCTIONS} target="_blank" rel="noreferrer">energy interface</a> in Clapeyron.jl, © 2020 Hon Wa Yew and Pierre Walker. <a href={CLAPEYRON_LICENSE} target="_blank" rel="noreferrer">Licence ↗</a></p></div>
       </section>

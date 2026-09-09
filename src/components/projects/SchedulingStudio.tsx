@@ -674,12 +674,12 @@ export function SchedulingStudio() {
             </div>
           </div>
           {removalReasons.length > 0 && (
-            <details className={styles.slotAudit}>
-              <summary>{constraintsRemoved} generated candidates removed — inspect reasons</summary>
+            <section className={styles.slotAudit}>
+              <h4>{constraintsRemoved} generated candidates removed — inspect reasons</h4>
               <ul>
                 {removalReasons.map(([reason, count]) => <li key={reason}><strong>{count}</strong><span>{reason}</span></li>)}
               </ul>
-            </details>
+            </section>
           )}
         </section>
 
@@ -717,7 +717,7 @@ export function SchedulingStudio() {
           </ol>
         </aside>
       </div>
-      <details className={styles.dstChapter}><summary>Explore daylight-saving gaps and repeated times</summary><SchedulingDstExperiment /></details>
+      <section className={styles.dstChapter}><h3>Explore daylight-saving gaps and repeated times</h3><SchedulingDstExperiment /></section>
     </DemoWindow></ProjectCopy>
   );
 }

@@ -71,7 +71,7 @@
   box-shadow: inset 1px 1px 0 var(--s7-paper), inset -1px -1px 0 var(--s7-shadow);
 }
 
-.demoWindow :where(button, input, textarea, summary):focus-visible {
+.demoWindow :where(button, input, textarea):focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 3px;
 }
@@ -112,46 +112,30 @@
 .statusBadge.working > span { background: var(--demo-amber); }
 .statusBadge.ready > span { background: var(--s7-muted); }
 .demoBody { min-width: 0; padding: 16px; background: var(--s7-paper); }
-.demoContract { border-bottom: 1px solid var(--s7-shadow); color: var(--s7-ink); background: var(--s7-paper); }
-
-.demoContract summary {
-  min-height: var(--s7-control-height);
-  padding: 8px 16px;
+.demoContract {
+  padding: 20px;
+  border-bottom: 1px solid var(--s7-shadow);
+  border-left: 4px solid var(--s7-selection);
   color: var(--s7-ink);
-  background: var(--s7-chrome);
-  font-family: var(--s7-font-ui);
-  font-size: var(--s7-ui);
-  font-weight: 400;
-  line-height: 1.4;
-  cursor: pointer;
+  background: var(--s7-paper);
 }
 
-.contractGrid { display: grid; grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--s7-shadow); }
-.contractGrid > div { min-width: 0; padding: 12px 16px; }
-.contractGrid > div + div { border-left: 1px solid var(--s7-shadow); }
-.contractGrid > div > span { display: flex; align-items: center; gap: 6px; color: var(--s7-ink); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 700; line-height: 1.4; letter-spacing: normal; }
-.contractGrid > div > span > i { color: var(--s7-muted); font-size: var(--s7-small); font-style: normal; font-weight: 400; }
-.contractGrid > div > strong,
-.contractGrid > div > p { display: block; margin: 6px 0 0; color: var(--s7-ink); font-size: var(--s7-text); font-weight: 400; line-height: 1.55; }
-.contractPurpose { background: var(--s7-paper); }
+.demoContract > h3 { margin: 0; font: 700 var(--s7-heading)/1.35 var(--s7-font-text); letter-spacing: normal; text-transform: none; }
+.contractPurpose { max-width: 90ch; margin: 10px 0 0; font-size: var(--s7-text); line-height: 1.6; }
+.contractGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin-top: 18px; }
+.contractGrid > div { min-width: 0; padding-top: 12px; border-top: 1px solid var(--s7-shadow); }
+.contractGrid h4 { margin: 0; color: var(--s7-ink); font: 700 var(--s7-text)/1.4 var(--s7-font-text); letter-spacing: normal; text-transform: none; }
+.contractGrid p { margin: 6px 0 0; color: var(--s7-ink); font-size: var(--s7-text); font-weight: 400; line-height: 1.6; }
 
 .statusBar { display: flex; min-height: 30px; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; padding: 6px 12px; border-top: 1px solid var(--s7-shadow); color: var(--s7-muted); background: var(--s7-chrome); font-size: var(--s7-small); line-height: 1.45; }
 .statusBar > * { min-width: 0; overflow-wrap: anywhere; }
 
-@container (max-width: 760px) {
-  .contractGrid { grid-template-columns: 1fr 1fr; }
-  .contractPurpose { grid-column: 1 / -1; }
-  .contractGrid > div:nth-child(2) { border-left: 0; }
-  .contractGrid > div:not(:first-child) { border-top: 1px solid var(--s7-shadow); }
-}
-
 @container (max-width: 500px) {
   .demoHeader { flex-direction: column; gap: 8px; }
   .demoBody { padding: 12px; }
+  .demoContract { padding: 16px 12px; }
   .statusBadge { max-width: 100%; }
   .contractGrid { grid-template-columns: 1fr; }
-  .contractPurpose { grid-column: auto; }
-  .contractGrid > div + div { border-left: 0; }
 }
 
 @media (pointer: coarse) {

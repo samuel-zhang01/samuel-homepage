@@ -385,7 +385,7 @@ const models: ModelRecord[] = [
       depth: { learningRate: "1e−3", optimiser: "Adam", epochs: 100 },
     },
     stages: simpleStages,
-    architectureNote: "Samuel’s custom CNN reduces 224→56→28→14→7, adds learned 1×1 skips where channels change, then combines the image into 512 features. The final layer changes for orientation or depth.",
+    architectureNote: "My custom CNN reduces 224→56→28→14→7, adds learned 1×1 skips where channels change, then combines the image into 512 features. The final layer changes for orientation or depth.",
   },
   {
     id: "resnet18",
@@ -578,7 +578,7 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
     >
       <section className={styles.provenance} aria-label="Project contribution">
         <span>Research context</span>
-        <p>Samuel built a custom CNN, adapted four pretrained image models to grayscale microscopy, and trained separate orientation and depth predictors. Image-orientation corrections, error plots and Grad-CAM comparisons helped examine what the models learned.</p>
+        <p>I built a custom CNN, adapted four pretrained image models to grayscale microscopy, and trained separate orientation and depth predictors. Image-orientation corrections, error plots and Grad-CAM comparisons helped examine what the models learned.</p>
         <strong>224 × 224 grayscale input · 40 orientations or one depth value</strong>
       </section>
 

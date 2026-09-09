@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Samuel System 7 — Samuel Zhang",
     short_name: "Samuel System 7",
     description:
-      "Samuel Zhang’s interactive System 7 portfolio: applied AI, product building, research, and coverd.ai.",
+      "My interactive System 7 portfolio: applied AI, product building, research, and coverd.ai.",
     start_url: "/",
     display: "standalone",
     background_color: "#8587a8",

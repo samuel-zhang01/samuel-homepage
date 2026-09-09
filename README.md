@@ -133,6 +133,8 @@ Descriptions, controls, feedback and accessible labels have explicit Simplified 
 
 `npm run prepare:search` builds four deterministic text indexes from each project's metadata and own public component copy. Translation dictionaries are not indiscriminately indexed into unrelated projects. Private notes, drawings, imported statements, linked PDFs and external websites are excluded. Rebuild these indexes after changing copy in an already-running dev session. Generated JSON is ignored in Git and rebuilt for production; it is absent from initial JavaScript.
 
+Project explanations use first-person narration. **What I did**, **How to use this interactive demo**, and related methodology, results and supporting notes are ordinary visible sections. Sharing uses a pronounced indigo face with the same height as neighbouring toolbar actions; primary destinations use blue.
+
 Project documents and controls share `src/app/system7.css`: white paper, named grey surface layers, crisp bevels, black boundaries, a consistent type scale, hard button shadows, an outer default-button ring and separate pressed/selected/focus states. The [historical benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes Apple-era references from modern touch/accessibility adaptations. Scientific series retain meaningful colour. Wide figures scroll inside their own frame instead of shrinking their labels to phone-sized illegibility.
 
 Three generated project covers depict microrobot imaging, neural flow prediction and finance. Desktop, Finder, project, arcade and Home Lab pictograms share 39 editable SVG symbols and 11 transparent PNG variants. The [artwork guide](docs/PROJECT_ARTWORK.md) links generation prompts, delivered assets and the saved scientific-media sources.

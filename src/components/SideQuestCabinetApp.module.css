@@ -365,7 +365,7 @@
 .teamCards strong { font-size: 15px; }
 .teamCards p { margin: 7px 0 0; color: #444; font-size: var(--s7-text); line-height: 1.55; }
 .supportLedger, .technicalNotes { margin-top: 16px; border: 1px solid var(--s7-ink); border-radius: 0; background: var(--s7-paper); box-shadow: none; }
-.supportLedger summary, .technicalNotes summary { min-height: 42px; padding: 12px 16px; color: var(--sky); font-size: var(--s7-ui); font-weight: 700; cursor: pointer; }
+.supportLedger > h3, .technicalNotes > h3 { margin: 0; padding: 16px; color: var(--sky); font: 700 var(--s7-heading)/1.35 var(--s7-font-text); }
 .supportLedger > div, .technicalNotes > div { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
 .supportLedger section, .technicalNotes section { padding: 19px; border-right: 1px solid var(--line); }
 .supportLedger section:last-child, .technicalNotes section:last-child { border-right: 0; }

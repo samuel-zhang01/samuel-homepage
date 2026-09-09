@@ -11,7 +11,7 @@
 .lab button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .lab button:active:not(:disabled):not([aria-disabled="true"]) > strong, .lab button:active:not(:disabled):not([aria-disabled="true"]) > small { color: var(--s7-paper); }
 .lab button[aria-pressed="true"] { background: var(--s7-chrome); color: var(--s7-ink); box-shadow: inset 1px 1px 0 var(--s7-ink); }
 .lab button:disabled { opacity: 1; cursor: default; }
-.lab button:focus-visible, .lab summary:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+.lab button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
 .panel { padding: 18px; }
 .question h4 { margin: 6px 0; font-size: var(--s7-heading); line-height: 1.4; }
 .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 16px 0; border: 1px solid var(--s7-shadow); }
@@ -35,7 +35,8 @@
 .comparison dd { font-weight: 700; margin: 0; }
 .note { font-size: var(--s7-text); line-height: 1.6; padding-left: 12px; border: 1px solid var(--s7-shadow); margin: 16px 0 0; }
 .receipt { margin-top: 16px; border: 1px solid var(--s7-shadow); padding: 12px; font-size: var(--s7-text); line-height: 1.6; overflow-x: auto; }
-.receipt summary { min-height: 32px; cursor: pointer; font-weight: 700; }
+.receipt > h4 { margin: 0 0 10px; font: 700 var(--s7-heading)/1.35 var(--s7-font-text); }
+.receipt > p { margin: 10px 0 0; max-width: 90ch; }
 .receipt table { width: 100%; border-collapse: collapse; font-size: var(--s7-text); }
 .receipt caption { text-align: left; margin: 8px 0; }
 .receipt th, .receipt td { border: 1px solid var(--s7-shadow); padding: 8px; text-align: left; }

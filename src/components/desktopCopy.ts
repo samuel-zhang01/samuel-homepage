@@ -34,17 +34,17 @@ export const desktopCopy = {
     "家庭实验室——通过 Proxmox 与 Docker 连接本地 AI、存储和自动化服务，并设置 PostgreSQL 定时备份与恢复工具。",
     "家庭實驗室——透過 Proxmox 與 Docker 串接本機 AI、儲存與自動化服務，並設置 PostgreSQL 排程備份與復原工具。"
   ],
-  "Samuel uses Docker for product services, deployments and a home lab that connects data, automation and everyday tools.": [
-    "Samuel 使用 Docker 部署产品服务，并在家庭实验室中连接数据、自动化与日常工具。",
-    "Samuel 使用 Docker 部署產品服務，並在家庭實驗室中串接資料、自動化與日常工具。"
+  "I use Docker for product services, deployments and a home lab that connects data, automation and everyday tools.": [
+    "我使用 Docker 部署产品服务，并在家庭实验室中连接数据、自动化与日常工具。",
+    "我使用 Docker 部署產品服務，並在家庭實驗室中串接資料、自動化與日常工具。"
   ],
-  "Samuel explores neural networks for locating microrobots, reconstructing MRI images and approximating fluid flow.": [
-    "Samuel 探索神经网络在微型机器人定位、MRI 图像重建与流体近似模拟中的应用。",
-    "Samuel 探索神經網路在微型機器人定位、MRI 影像重建與流體近似模擬中的應用。"
+  "I explore neural networks for locating microrobots, reconstructing MRI images and approximating fluid flow.": [
+    "我探索神经网络在微型机器人定位、MRI 图像重建与流体近似模拟中的应用。",
+    "我探索神經網路在微型機器人定位、MRI 影像重建與流體近似模擬中的應用。"
   ],
-  "Samuel’s projects include insurance-market decision support and a small stochastic model of stock-price impact.": [
-    "Samuel 的项目包括保险市场决策支持与股票价格冲击的随机模型。",
-    "Samuel 的專案包括保險市場決策支援與股價衝擊的隨機模型。"
+  "My projects include insurance-market decision support and a small stochastic model of stock-price impact.": [
+    "我的项目包括保险市场决策支持与股票价格冲击的随机模型。",
+    "我的專案包括保險市場決策支援與股價衝擊的隨機模型。"
   ],
   "A quantity tracked while simulating molecular motion.": [
     "模拟分子运动时跟踪的物理量。",
@@ -54,9 +54,9 @@ export const desktopCopy = {
     "科学模型展示张量如何经过网络层、跳跃连接，以及保持测量数据一致性的步骤。",
     "科學模型展示張量如何經過網路層、跳躍連接，以及保持量測資料一致性的步驟。"
   ],
-  "Samuel’s home lab connects local AI, storage and automation. Its interactive map follows six connected Docker services.": [
-    "Samuel 的家庭实验室连接本地 AI、存储与自动化；交互图展示六个相互连接的 Docker 服务。",
-    "Samuel 的家庭實驗室串接本機 AI、儲存與自動化；互動圖展示六個相互連接的 Docker 服務。"
+  "My home lab connects local AI, storage and automation. Its interactive map follows six connected Docker services.": [
+    "我的家庭实验室连接本地 AI、存储与自动化；交互图展示六个相互连接的 Docker 服务。",
+    "我的家庭實驗室串接本機 AI、儲存與自動化；互動圖展示六個相互連接的 Docker 服務。"
   ],
   "Local model training and inference, with Open WebUI for everyday interaction.": [
     "本地模型训练与推理，使用 Open WebUI 进行日常交互。",

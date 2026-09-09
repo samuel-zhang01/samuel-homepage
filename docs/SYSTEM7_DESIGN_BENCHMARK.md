@@ -31,7 +31,7 @@ Use one named vocabulary. Existing component classes may control placement and s
 | Normal action | `.s7-button`: raised light-gray face, black 1px boundary, 3px radius, highlight/shadow bevel, hard 1px outer shadow, 13px UI font. | Native button; verb label; hover lightens the neutral face; no movement or scale effect. |
 | Default action | `.s7-button.is-default`: white face, retained bevel, white separation and black outer ring. | Visual priority only. The owning form/dialog must define any Return-key behavior; never hijack Enter in an editor. `MacButton primary` is a compatibility alias for this presentation. |
 | Primary destination | `.s7-button.is-primary`: bold white label on blue, matching blue bevel and a 44px minimum target. | Use for live demos, applications and the principal document action. Retain an explicit verb label, hover feedback, keyboard focus and native disabled semantics. This does not imply a Return-key default. |
-| Share action | `.s7-button.is-share`: pale-blue face with a dark-blue label and edge, 44px minimum target. | Label sharing explicitly. Announce copy success and present a selectable address when clipboard access is unavailable. |
+| Share action | `.s7-button.is-share`: white label on indigo with a matching bevel. Project toolbar actions share a 44px minimum height. | Colour does not change the button's dimensions. Label sharing explicitly. Announce copy success and present a selectable address when clipboard access is unavailable. |
 | Pressed action | Native `:active`: black face and white lettering; relief disappears. | Momentary feedback while activating; distinct from persistent selection. |
 | Disabled action | Native `disabled`: muted gray text/edge, neutral face, no hover/press treatment. | Preserve readable label and disabled semantics. Do not use opacity on the entire control subtree. |
 | Toggle | `.s7-button[aria-pressed]`: consistent dimensions; checked marker and darker, recessed face when selected. | Selection retains its inset treatment on hover; pressing still inverts. Native button toggles one setting. Mutually exclusive form values should retain radio semantics. |
@@ -94,8 +94,10 @@ Simplified Chinese uses PingFang SC / Microsoft YaHei / Noto Sans CJK SC fallbac
 | `--s7-action` | `#214ea5` | Primary destination face and sharing edge |
 | `--s7-action-hover` | `#173b84` | Primary destination hover face |
 | `--s7-action-edge` | `#122d66` | Blue action boundary and sharing label |
-| `--s7-action-soft` | `#e8eefb` | Sharing face, document/demo headers and walkthrough surfaces |
-| `--s7-action-soft-hover` | `#f3f6ff` | Sharing hover face |
+| `--s7-action-soft` | `#e8eefb` | Document/demo headers and walkthrough surfaces |
+| `--s7-share` | `#514293` | Sharing face; white text has 8.23:1 declared-colour contrast |
+| `--s7-share-hover` | `#403278` | Sharing hover face |
+| `--s7-share-edge` | `#302660` | Sharing boundary and dark bevel |
 | `--s7-context-paper` | `#f8f5ec` | Quiet contextual notes and the latest-project card |
 
 These tokens give each shade a consistent structural role. Reuse them for new chrome instead of introducing unrelated colors. White remains the main reading surface; depth comes from the surrounding frame and controls, with pale blue and warm paper reserved for supporting tiers. Primary white-on-blue text has 7.78:1 contrast, its hover state 10.53:1, and the sharing label 11.33:1. The selection colors and scientific palettes retain their separate meanings.

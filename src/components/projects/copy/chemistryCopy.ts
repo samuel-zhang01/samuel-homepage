@@ -242,8 +242,8 @@ export const chemistryCopy = {
     "單粒子移動提議會改變 Lennard–Jones 相互作用能。降能移動會被接受，有限溫度下部分增能移動也會被接受。提議被拒絕後，已接受的構型和能量保持不變。"
   ],
   "The course exercises were extended with a React sampling experiment; this browser version lets you inspect each accepted or rejected move.": [
-    "Samuel 将课程练习扩展为 React 采样实验；此浏览器版本可逐步查看每次移动是否被接受。",
-    "Samuel 將課程練習擴展為 React 採樣實驗；此瀏覽器版本可逐步查看每次移動是否被接受。"
+    "我将课程练习扩展为 React 采样实验；此浏览器版本可逐步查看每次移动是否被接受。",
+    "我將課程練習擴展為 React 採樣實驗；此瀏覽器版本可逐步查看每次移動是否被接受。"
   ],
   "Rotatable polymer conformation lab": [
     "可旋转的聚合物构象实验室",
@@ -942,9 +942,9 @@ export const chemistryCopy = {
     "教学基础",
     "教學基礎"
   ],
-  "The exercises credit Micaela Matta, Towards AI, the SciPython Book, TU Delft computational-physics lectures, NZ Nano, Psi4Education and Mecozzi et al. Samuel completed and extended the computational work; the browser provides an interactive way to explore those methods.": [
-    "练习参考 Micaela Matta、Towards AI、SciPython Book、代尔夫特理工大学计算物理课程、NZ Nano、Psi4Education 和 Mecozzi 等人的工作。Samuel 完成并扩展了计算；浏览器提供交互式方法探索。",
-    "練習參考 Micaela Matta、Towards AI、SciPython Book、代爾夫特理工大學計算物理課程、NZ Nano、Psi4Education 和 Mecozzi 等人的工作。Samuel 完成並擴展了計算；瀏覽器提供交互式方法探索。"
+  "The exercises credit Micaela Matta, Towards AI, the SciPython Book, TU Delft computational-physics lectures, NZ Nano, Psi4Education and Mecozzi et al. I completed and extended the computational work; the browser provides an interactive way to explore those methods.": [
+    "练习参考 Micaela Matta、Towards AI、SciPython Book、代尔夫特理工大学计算物理课程、NZ Nano、Psi4Education 和 Mecozzi 等人的工作。我完成并扩展了计算；浏览器提供交互式方法探索。",
+    "練習參考 Micaela Matta、Towards AI、SciPython Book、代爾夫特理工大學計算物理課程、NZ Nano、Psi4Education 和 Mecozzi 等人的工作。我完成並擴展了計算；瀏覽器提供交互式方法探索。"
   ],
   "Chemistry Lab": [
     "化学实验室",
@@ -978,9 +978,9 @@ export const chemistryCopy = {
     "探索规则，观察结果。",
     "探索規則，觀察結果。"
   ],
-  "Samuel completed and extended computational-chemistry exercises, then built Julia and React experiments. These four labs connect the equations with configurations, trajectories and energy comparisons.": [
-    "Samuel 完成并扩展了计算化学练习，随后开发 Julia 和 React 实验。这四个实验将方程与构型、轨迹及能量比较联系起来。",
-    "Samuel 完成並擴展了計算化學練習，隨後開發 Julia 和 React 實驗。這四個實驗將方程與構型、軌跡及能量比較聯繫起來。"
+  "I completed and extended computational-chemistry exercises, then built Julia and React experiments. These four labs connect the equations with configurations, trajectories and energy comparisons.": [
+    "我完成并扩展了计算化学练习，随后开发 Julia 和 React 实验。这四个实验将方程与构型、轨迹及能量比较联系起来。",
+    "我完成並擴展了計算化學練習，隨後開發 Julia 和 React 實驗。這四個實驗將方程與構型、軌跡及能量比較聯繫起來。"
   ],
   "Four interactive chemistry labs": [
     "四个交互式化学实验",

@@ -775,7 +775,7 @@ export function MolecularRecognitionStudio() {
           <span>Molecular shape → rotational signature</span>
           <h2 id="recognition-studio-title">Compare theoretical predictions with the observed spectrum.</h2>
           <p>
-            Samuel contributed to the King’s College London research on flexible macrocyclic musks, presented at ISMS 2025.
+            I contributed to the King’s College London research on flexible macrocyclic musks, presented at ISMS 2025.
             Explore its assignment logic with synthetic spectra and molecular shapes.
           </p>
         </div>
@@ -1170,7 +1170,7 @@ export function MolecularRecognitionStudio() {
               <section className={styles.publicRecord} aria-labelledby="public-record-title">
                 <div className={styles.cardCap}><span>Conference presentation</span><strong>ISMS · 2025</strong></div>
                 <h4 id="public-record-title">Macrocyclic musk conformational landscape</h4>
-                <p>Samuel is a co-author of the King’s College London presentation, which describes:</p>
+                <p>I am a co-author of the King’s College London presentation, which describes:</p>
                 <ul>
                   <li>Muscone ({molecules.muscone.formula}) and Exaltenone ({molecules.exaltenone.formula}) as 15-membered macrocyclic ketones.</li>
                   <li>CP-FTMW spectroscopy across 2–8 GHz, supported by conformational searches and theoretical predictions.</li>
@@ -1183,7 +1183,7 @@ export function MolecularRecognitionStudio() {
               <section className={styles.sourceArtifact} aria-labelledby="source-artifact-title">
                 <div className={styles.cardCap}><span>Supporting research tool</span><strong>MATLAB · 2022</strong></div>
                 <h4 id="source-artifact-title">CPROT Fast Spectroscopy Plotter</h4>
-                <p>Samuel’s MATLAB App Designer tool makes frequency–intensity traces easier to inspect, with precise panning, labelling and high-resolution export. It supports the practical work of exploring a crowded rotational spectrum.</p>
+                <p>My MATLAB App Designer tool makes frequency–intensity traces easier to inspect, with precise panning, labelling and high-resolution export. It supports the practical work of exploring a crowded rotational spectrum.</p>
                 <a href={CPROT_URL} target="_blank" rel="noreferrer">View the plotting tool <span aria-hidden="true">↗</span></a>
               </section>
             </div>

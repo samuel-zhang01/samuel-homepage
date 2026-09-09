@@ -28,7 +28,7 @@
   box-shadow: var(--s7-relief-raised);
 }
 
-.toolbar > button, .toolbar > a { min-height: 44px; }
+.activity .toolbar > :is(button, a) { min-height: 44px; }
 .shortBackLabel { display: none; }
 .toolbar svg { flex: 0 0 auto; }
 
@@ -60,11 +60,11 @@
   .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; padding: 8px; }
   .activity[data-kind="pdf"] .toolbar { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) 44px; }
   .title { grid-column: 1 / -1; grid-row: 1; padding-inline: 0; font-size: var(--s7-small); }
-  .toolbar > button, .toolbar > a { padding-inline: 6px; }
+  .activity .toolbar > :is(button, a) { padding-inline: 6px; }
   .backButton, .shareButton { width: 100%; }
   .fullBackLabel, .downloadLabel { display: none; }
   .shortBackLabel { display: inline; }
-  .toolbar > .downloadButton { width: 44px; height: 44px; padding: 0; }
+  .activity .toolbar > .downloadButton { width: 44px; height: 44px; padding: 0; }
   .shareStatus, .shareFallback { grid-column: 1 / -1; }
   .demo { padding: 5px; }
   .reader :global(.pdf-reader__stage) { padding: 8px; }

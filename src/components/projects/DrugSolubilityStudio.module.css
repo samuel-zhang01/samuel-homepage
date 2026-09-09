@@ -23,7 +23,6 @@
 
 .studio button:focus-visible,
 .studio input:focus-visible,
-.studio summary:focus-visible,
 .studio a:focus-visible,
 .studio [tabindex="0"]:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
 
@@ -370,8 +369,8 @@
 .sourceLinks > p { margin: 0; padding: 8px 9px; border-top: 1px solid var(--s7-shadow); color: var(--s7-ink); background: var(--s7-paper); font-size: var(--s7-text); line-height: 1.45; }
 
 .dataFallback { margin-top: 9px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); }
-.dataFallback summary { display: flex; justify-content: space-between; gap: 10px; padding: 8px 10px; cursor: pointer; color: var(--s7-ink); font-size: var(--s7-small); font-weight: 700; }
-.dataFallback summary span { color: var(--s7-ink); font-weight: 600; }
+.dataFallback > h4 { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin: 0; padding: 12px; color: var(--s7-ink); font: 700 var(--s7-text)/1.4 var(--s7-font-text); }
+.dataFallback > h4 span { color: var(--s7-ink); font-weight: 400; }
 .tableScroll { max-width: 100%; overflow: auto; }
 .dataFallback .tableScroll { max-height: 300px; border-top: 1px solid var(--s7-shadow); }
 .studio table { width: 100%; border-collapse: collapse; font-size: var(--s7-small); }

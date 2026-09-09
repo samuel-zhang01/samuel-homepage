@@ -743,8 +743,10 @@ body {
 .window-box {
   position: relative;
   z-index: 1;
+  appearance: none;
   width: 26px;
   height: 24px;
+  flex: 0 0 auto;
   margin: 0 1px;
   padding: 0;
   border: 0;
@@ -756,56 +758,70 @@ body {
 .window-box::before {
   content: "";
   position: absolute;
-  top: 3px;
+  top: 50%;
   left: 50%;
-  width: 12px;
-  height: 12px;
-  border: 2px solid #111;
-  background: var(--s7-chrome);
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--s7-ink);
+  background: var(--s7-raised);
   box-shadow: inset 1px 1px var(--s7-highlight), inset -1px -1px var(--s7-edge);
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .window-zoom::after {
   content: "";
   position: absolute;
   z-index: 1;
-  top: 7px;
+  top: 50%;
   left: 50%;
-  width: 6px;
-  height: 6px;
-  border-top: 1px solid #111;
-  border-left: 1px solid #111;
-  transform: translateX(-50%);
+  box-sizing: border-box;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--s7-ink);
+  border-left: 1px solid var(--s7-ink);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
+.window-box:hover::before { background: var(--s7-paper); }
+
 .window-box:active::before {
-  background: #111;
+  background: var(--s7-ink);
+  box-shadow: none;
 }
+
+.window-zoom:active::after { border-color: var(--s7-paper); }
 
 .window-resize-handle {
   position: absolute;
   z-index: 6;
   right: 0;
   bottom: 0;
-  width: 19px;
-  height: 19px;
+  appearance: none;
+  width: 24px;
+  height: 24px;
   padding: 0;
   border: 0;
-  border-top: 1px solid #111;
-  border-left: 1px solid #111;
+  border-top: 1px solid var(--s7-ink);
+  border-left: 1px solid var(--s7-ink);
   background:
     linear-gradient(135deg, transparent 0 43%, #111 44% 49%, transparent 50% 61%, #111 62% 67%, transparent 68%),
-    var(--s7-chrome);
+    var(--s7-raised);
   box-shadow: var(--s7-relief-raised);
   cursor: nwse-resize;
   touch-action: none;
 }
 
-.window-resize-handle:focus-visible {
+.system-desktop .window-box:focus-visible,
+.system-desktop .window-resize-handle:focus-visible {
   outline: 2px solid var(--selection);
-  outline-offset: -4px;
+  outline-offset: -3px;
+  box-shadow: none;
 }
+
+.window-resize-handle:hover { background-color: var(--s7-paper); }
 
 .window-resize-handle:active {
   background:
@@ -4569,20 +4585,14 @@ html:lang(zh-TW) .career-record {
   }
 
   .mac-titlebar {
+    height: 45px;
+    flex-basis: 45px;
     cursor: default;
   }
 
   .window-box {
-    width: 40px;
-    height: 25px;
-  }
-
-  .window-box::before {
-    top: 5px;
-  }
-
-  .window-zoom::after {
-    top: 9px;
+    width: 44px;
+    height: 44px;
   }
 
   .window-zoom {
@@ -4590,7 +4600,7 @@ html:lang(zh-TW) .career-record {
   }
 
   .mac-titlebar h2 {
-    max-width: calc(100% - 58px);
+    max-width: calc(100% - 96px);
   }
 
   .window-resize-handle {
@@ -5463,11 +5473,24 @@ html:lang(zh-TW) .career-record {
     padding-inline: 12px;
   }
 
+  /* Keep the full touch target inside its chrome, clear of document actions. */
+  .mac-titlebar {
+    height: 45px;
+    flex-basis: 45px;
+  }
+
   .window-box {
     width: 44px;
     height: 44px;
-    margin-top: -9px;
-    margin-bottom: -9px;
+  }
+
+  .mac-titlebar h2 {
+    max-width: calc(100% - 96px);
+  }
+
+  .window-resize-handle {
+    width: 44px;
+    height: 44px;
   }
 }
 

@@ -1259,7 +1259,7 @@ function AuditLab() {
         </section>
       </div>
     </section>
-    <div className={styles.attributionPanel}><span>Teaching foundations</span><p>The exercises credit Micaela Matta, Towards AI, the SciPython Book, TU Delft computational-physics lectures, NZ Nano, Psi4Education and Mecozzi et al. Samuel completed and extended the computational work; the browser provides an interactive way to explore those methods.</p></div>
+    <div className={styles.attributionPanel}><span>Teaching foundations</span><p>The exercises credit Micaela Matta, Towards AI, the SciPython Book, TU Delft computational-physics lectures, NZ Nano, Psi4Education and Mecozzi et al. I completed and extended the computational work; the browser provides an interactive way to explore those methods.</p></div>
   </div></ProjectCopy>;
 }
 
@@ -1303,7 +1303,7 @@ export function ChemistryCodingStudio() {
           <div>
             <span>Computational chemistry</span>
             <h2>Explore the rules, then see what they produce.</h2>
-            <p>Samuel completed and extended computational-chemistry exercises, then built Julia and React experiments. These four labs connect the equations with configurations, trajectories and energy comparisons.</p>
+            <p>I completed and extended computational-chemistry exercises, then built Julia and React experiments. These four labs connect the equations with configurations, trajectories and energy comparisons.</p>
           </div>
           <div className={styles.heroSeal} aria-label="Four interactive chemistry labs">
             <span>Explore</span>

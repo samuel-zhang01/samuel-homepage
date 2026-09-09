@@ -19,12 +19,15 @@
   --s7-muted: #555;
   --s7-selection: #11177a;
   --s7-selection-text: #fff;
-  /* Blue is an action cue; quieter blue and warm paper separate supporting tiers. */
+  /* Blue marks primary actions; indigo makes sharing easy to spot. */
   --s7-action: #214ea5;
   --s7-action-hover: #173b84;
   --s7-action-edge: #122d66;
   --s7-action-soft: #e8eefb;
   --s7-action-soft-hover: #f3f6ff;
+  --s7-share: #514293;
+  --s7-share-hover: #403278;
+  --s7-share-edge: #302660;
   --s7-context-paper: #f8f5ec;
   --s7-ui: 13px;
   --s7-small: 12px;
@@ -96,12 +99,11 @@
 }
 
 :is(.s7-button, .mac-button).is-share {
-  --s7-button-face: var(--s7-action-soft);
-  --s7-button-hover: var(--s7-action-soft-hover);
-  --s7-button-text: var(--s7-action-edge);
-  --s7-button-edge: var(--s7-action);
-  min-height: 44px;
-  padding: 8px 14px;
+  --s7-button-face: var(--s7-share);
+  --s7-button-hover: var(--s7-share-hover);
+  --s7-button-text: #fff;
+  --s7-button-edge: var(--s7-share-edge);
+  --s7-button-relief: inset 1px 1px 0 #998ac9, inset -1px -1px 0 var(--s7-share-edge), 1px 1px 0 var(--s7-edge);
 }
 
 :is(.s7-button, .mac-button):hover:not(:disabled):not([aria-disabled="true"]):where(:not([aria-pressed="true"])) {

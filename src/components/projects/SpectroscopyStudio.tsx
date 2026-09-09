@@ -375,7 +375,7 @@ export function SpectroscopyStudio() {
         </>
       }
     >
-      <div className={styles.provenanceBanner} role="note"><p>Samuel built this plotting tool to navigate spectroscopy traces and prepare consistent figures. Try it with an illustrative spectrum: adjust the view, labels and export settings. The utility changes presentation; it does not process or identify spectral peaks.</p></div>
+      <div className={styles.provenanceBanner} role="note"><p>I built this plotting tool to navigate spectroscopy traces and prepare consistent figures. Try it with an illustrative spectrum: adjust the view, labels and export settings. The utility changes presentation; it does not process or identify spectral peaks.</p></div>
 
       <section className={styles.application} aria-label="Interactive spectroscopy plotting workbench">
         <aside className={styles.leftPanel} aria-label="Plot presentation controls">

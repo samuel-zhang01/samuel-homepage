@@ -589,8 +589,8 @@ export function StockMarketStudio() {
             </section>
           </div>
 
-          <details className={styles.dataFallback}>
-            <summary>Accessible price-series table <span>{result.history.length} observations</span></summary>
+          <section className={styles.dataFallback}>
+            <h4>Accessible price-series table <span>{result.history.length} observations</span></h4>
             <div className={styles.tableScroll} role="region" aria-label="Price history data" tabIndex={0}>
               <table>
                 <thead><tr><th>History index</th><th>Price</th><th>Submitted quantity</th><th>Cumulative volume</th></tr></thead>
@@ -603,7 +603,7 @@ export function StockMarketStudio() {
                 </tbody>
               </table>
             </div>
-          </details>
+          </section>
         </div>
       ) : null}
 

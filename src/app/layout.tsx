@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s · Samuel Zhang",
   },
   description:
-    "Samuel Zhang is an applied AI engineer, product builder and COVERD founder who builds useful, human-centred systems for ambiguous problems.",
+    "I am an applied AI engineer, product builder and COVERD founder. I build useful, human-centred systems for ambiguous problems.",
   keywords: [
     "Samuel Zhang",
     "Artificial Intelligence",
@@ -84,7 +84,7 @@ const legacyBrowserCopy: Record<Locale, {
   "en-GB": {
     notice: "This interactive System 7 portfolio needs a modern browser.",
     essentials: "Internet Explorer can still access the essentials:",
-    document: "read Samuel's CV",
+    document: "read my CV",
     beforeDocument: " ",
     betweenLinks: " or ",
     email: "send an email",
@@ -93,7 +93,7 @@ const legacyBrowserCopy: Record<Locale, {
   "en-US": {
     notice: "This interactive System 7 portfolio needs a modern browser.",
     essentials: "Internet Explorer can still access the essentials:",
-    document: "read Samuel's resume",
+    document: "read my resume",
     beforeDocument: " ",
     betweenLinks: " or ",
     email: "send an email",
@@ -102,7 +102,7 @@ const legacyBrowserCopy: Record<Locale, {
   "zh-CN": {
     notice: "这个交互式 System 7 作品集需要现代浏览器。",
     essentials: "Internet Explorer 仍可访问基本内容：",
-    document: "阅读 Samuel 的简历",
+    document: "阅读我的简历",
     beforeDocument: "",
     betweenLinks: "，或",
     email: "发送电子邮件",
@@ -111,7 +111,7 @@ const legacyBrowserCopy: Record<Locale, {
   "zh-TW": {
     notice: "這個互動式 System 7 作品集需要現代瀏覽器。",
     essentials: "Internet Explorer 仍可存取基本內容：",
-    document: "閱讀 Samuel 的履歷",
+    document: "閱讀我的履歷",
     beforeDocument: "",
     betweenLinks: "，或",
     email: "傳送電子郵件",

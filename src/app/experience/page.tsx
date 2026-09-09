@@ -2,7 +2,7 @@ import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 
 export const metadata = {
   title: "Experience",
-  description: "Samuel Zhang’s applied AI, product, research, teaching and public-service experience.",
+  description: "My applied AI, product, research, teaching and public-service experience.",
 };
 
 export default function ExperiencePage() {

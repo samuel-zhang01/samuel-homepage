@@ -4,6 +4,7 @@ Start with [continue.md](../continue.md) for the workspace handoff and [README.m
 
 | Document | Purpose |
 | --- | --- |
+| [Window and content uniformity](WINDOW_CONTENT_UNIFORMITY_2026-09-09.md) | Historical title-bar correction, equal toolbar buttons, visible explanations and first-person wording |
 | [Mobile PDF reader fixes](PDF_READER_FIXES_2026-09-09.md) | Compact controls, accurate page position, fit/zoom geometry and shared CV reader checks |
 | [Demo windows and visual polish](DEMO_WINDOW_POLISH_2026-09-09.md) | Dedicated demo/PDF windows, sharing, colour and typography, compiled route crawl |
 | [Repository cleanup](REPOSITORY_CLEANUP_2026-09-09.md) | Typed demo registry, unused-code checks, CSS cleanup and Git handoff |

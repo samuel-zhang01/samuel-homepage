@@ -447,12 +447,12 @@ export function DrugSolubilityStudio() {
             </section>
           </div>
 
-          <details className={styles.dataFallback}>
-            <summary>Accessible phase-boundary table <span>{curve.length} synthetic temperatures</span></summary>
+          <section className={styles.dataFallback}>
+            <h4>Accessible phase-boundary table <span>{curve.length} synthetic temperatures</span></h4>
             <div className={styles.tableScroll} role="region" aria-label="Synthetic solubility curve data" tabIndex={0}>
               <table><thead><tr><th>T / K</th><th>Ideal xQ</th><th>Activity-corrected xQ</th><th>Ideal mg g⁻¹</th><th>Corrected mg g⁻¹</th></tr></thead><tbody>{curve.map((point) => <tr key={point.temperature}><td>{point.temperature.toFixed(2)}</td><td>{formatScientific(point.idealX, 5)}</td><td>{formatScientific(point.nonIdealX, 5)}</td><td>{point.idealMass.toFixed(5)}</td><td>{point.nonIdealMass.toFixed(5)}</td></tr>)}</tbody></table>
             </div>
-          </details>
+          </section>
         </div>
       ) : null}
 

@@ -964,14 +964,14 @@ export function InsuranceMatchingDemo() {
         </p>
       </section>}
 
-      <details className={styles.modelCard}>
-        <summary>
-          <span><strong>Methodology & disclosure card</strong><small>What mirrors the research—and what is illustrative</small></span>
-          <span aria-hidden="true">OPEN</span>
-        </summary>
+      <section className={styles.modelCard}>
+        <header>
+          <h3>Methodology & disclosure card</h3>
+          <p>What mirrors the research—and what is illustrative</p>
+        </header>
         <div className={styles.modelCardGrid}>
           <section>
-            <span className={styles.groundedLabel}>Source-traced concepts</span>
+            <h4 className={styles.groundedLabel}>Source-traced concepts</h4>
             <ul>
               <li>A risk-layer candidate contract with broker-supplied market order and three separate evidence agents.</li>
               <li>Historical trading performance as a LightGBM/LambdaRank risk-to-market signal with temporal evidence discipline.</li>
@@ -982,7 +982,7 @@ export function InsuranceMatchingDemo() {
             </ul>
           </section>
           <section>
-            <span className={styles.illustrativeLabel}>Illustrative in this public demo</span>
+            <h4 className={styles.illustrativeLabel}>Illustrative in this public demo</h4>
             <ul>
               <li>Every risk, market identity, explanation, signal value and confidence level.</li>
               <li>The retired-sandbox adjustable weights, panel min–max transform and displayed composite equation.</li>
@@ -996,7 +996,7 @@ export function InsuranceMatchingDemo() {
           This is an interaction model for explaining the research architecture. It is not underwriting advice,
           current appetite, available capacity, a quote, or an insurer recommendation.
         </p>
-      </details>
+      </section>
     </DemoWindow></ProjectCopy>
   );
 }

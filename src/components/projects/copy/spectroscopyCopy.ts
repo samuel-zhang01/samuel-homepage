@@ -130,9 +130,9 @@ export const spectroscopyCopy = {
     "示意光谱",
     "示意光譜"
   ],
-  "Samuel built this plotting tool to navigate spectroscopy traces and prepare consistent figures. Try it with an illustrative spectrum: adjust the view, labels and export settings. The utility changes presentation; it does not process or identify spectral peaks.": [
-    "Samuel 制作这款绘图工具，用于浏览光谱数据并生成格式一致的图表。可用示意光谱试调视窗、标签和导出设置。这些操作改变图表呈现方式，不会处理数据或识别谱峰。",
-    "Samuel 製作這款繪圖工具，用於瀏覽光譜資料並生成格式一致的圖表。可用示意光譜試調視窗、標籤和匯出設置。這些操作改變圖表呈現方式，不會處理資料或識別譜峰。"
+  "I built this plotting tool to navigate spectroscopy traces and prepare consistent figures. Try it with an illustrative spectrum: adjust the view, labels and export settings. The utility changes presentation; it does not process or identify spectral peaks.": [
+    "我制作这款绘图工具，用于浏览光谱数据并生成格式一致的图表。可用示意光谱试调视窗、标签和导出设置。这些操作改变图表呈现方式，不会处理数据或识别谱峰。",
+    "我製作這款繪圖工具，用於瀏覽光譜資料並生成格式一致的圖表。可用示意光譜試調視窗、標籤和匯出設置。這些操作改變圖表呈現方式，不會處理資料或識別譜峰。"
   ],
   "Interactive spectroscopy plotting workbench": [
     "交互式光谱绘图工作台",

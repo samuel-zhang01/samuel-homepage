@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { translateText } from "@/lib/i18n";
 import { useProjectLocale } from "./ProjectTranslationBoundary";
 import styles from "./DemoChrome.module.css";
@@ -31,13 +31,14 @@ export function DemoWindow({
   className = "",
 }: DemoWindowProps) {
   const locale = useProjectLocale();
+  const guidanceId = useId();
   const t = (source: string) => translateText(locale, source);
 
   return (
     <section className={`system7-project ${styles.demoWindow} ${className}`} data-locale={locale} aria-label={`${t(title)} — ${t("interactive demo")}`}>
       <header className={styles.demoHeader}>
         <div>
-          <span className={styles.eyebrow}>{t(appName)} · {locale === "en-GB" ? "Interactive project file" : t("INTERACTIVE PROJECT FILE")}</span>
+          <span className={styles.eyebrow}>{t(appName)} · {locale.startsWith("en") ? "Interactive project file" : t("INTERACTIVE PROJECT FILE")}</span>
           <h2>{t(title)}</h2>
         </div>
         <span className={`${styles.statusBadge} ${styles[statusTone]}`}>
@@ -45,23 +46,20 @@ export function DemoWindow({
           {t(status)}
         </span>
       </header>
-      <details className={styles.demoContract} lang={locale}>
-        <summary>{t("How to use this interactive demo")}</summary>
+      <section className={styles.demoContract} lang={locale} aria-labelledby={guidanceId}>
+        <h3 id={guidanceId}>{t("How to use this interactive demo")}</h3>
+        <p className={styles.contractPurpose}>{t(purpose)}</p>
         <div className={styles.contractGrid}>
-          <div className={styles.contractPurpose}>
-            <span>{locale === "en-GB" ? "Purpose" : t("WHY THIS EXISTS")}</span>
-            <strong>{t(purpose)}</strong>
-          </div>
           <div>
-            <span><i aria-hidden="true">01</i> {locale === "en-GB" ? "Try this" : t("TRY THIS")}</span>
+            <h4>{locale.startsWith("en") ? "Try this" : t("TRY THIS")}</h4>
             <p>{t(tryThis)}</p>
           </div>
           <div>
-            <span><i aria-hidden="true">02</i> {locale === "en-GB" ? "Watch" : t("WATCH")}</span>
+            <h4>{locale.startsWith("en") ? "Watch" : t("WATCH")}</h4>
             <p>{t(watchFor)}</p>
           </div>
         </div>
-      </details>
+      </section>
       <div className={styles.demoBody}>{children}</div>
       {footer ? <footer className={styles.statusBar}>{footer}</footer> : null}
     </section>

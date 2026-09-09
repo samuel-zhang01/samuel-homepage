@@ -323,7 +323,7 @@ export const cvKeywordCopy = {
   ],
   "Role + CV": [
     "岗位与简历",
-    "崗位與簡歷"
+    "崗位與履歷"
   ],
   "Match": [
     "匹配",
@@ -355,7 +355,7 @@ export const cvKeywordCopy = {
   ],
   "The role asks for this signal, but the supplied CV contains no supporting sentence.": [
     "岗位要求此项信号，但提供的简历中没有支持它的句子。",
-    "崗位要求此項訊號，但提供的簡歷中沒有支援它的句子。"
+    "崗位要求此項訊號，但提供的履歷中沒有支援它的句子。"
   ],
   "Applied Machine Learning Engineer": [
     "应用机器学习工程师",
@@ -379,11 +379,11 @@ export const cvKeywordCopy = {
   ],
   "CV Keyword Studio": [
     "简历关键词工作室",
-    "簡歷關鍵詞工作室"
+    "履歷關鍵詞工作室"
   ],
   "Role-tailored CV build lab": [
     "面向岗位的简历构建实验室",
-    "面向崗位的簡歷構建實驗室"
+    "職位導向履歷製作實驗室"
   ],
   "EDITING · RUN TO REFRESH": [
     "编辑中 · 运行后更新",
@@ -403,7 +403,7 @@ export const cvKeywordCopy = {
   ],
   "Signal coverage and the output manifest change only after review; the demo never fabricates experience.": [
     "审核后才更新信号覆盖率和输出清单；演示不会虚构经历。",
-    "稽核後才更新訊號覆蓋率和輸出清單；演示不會虛構經歷。"
+    "稽核後才更新訊號覆蓋率和輸出清單；示範不會虛構經歷。"
   ],
   "Run #": [
     "第",
@@ -419,7 +419,7 @@ export const cvKeywordCopy = {
   ],
   "How this demonstration works": [
     "演示如何运行",
-    "演示如何執行"
+    "示範如何執行"
   ],
   "From job language to visible evidence.": [
     "从岗位语言到可见证据。",
@@ -459,7 +459,7 @@ export const cvKeywordCopy = {
   ],
   "CV build workflow": [
     "简历构建流程",
-    "簡歷構建流程"
+    "履歷構建流程"
   ],
   "INPUT SNAPSHOT": [
     "输入快照",
@@ -491,7 +491,7 @@ export const cvKeywordCopy = {
   ],
   "Sanitised CV evidence": [
     "已去除敏感信息的简历证据",
-    "已去除敏感資訊的簡歷證據"
+    "已去除敏感資訊的履歷證據"
   ],
   "chars": [
     "字符",
@@ -515,7 +515,7 @@ export const cvKeywordCopy = {
   ],
   "CV text present": [
     "已提供简历文本",
-    "已提供簡歷文本"
+    "已提供履歷文本"
   ],
   "Role brief present": [
     "已提供岗位说明",
@@ -655,7 +655,7 @@ export const cvKeywordCopy = {
   ],
   "CV evidence": [
     "简历证据",
-    "簡歷證據"
+    "履歷證據"
   ],
   "Support": [
     "支持项",
@@ -703,7 +703,7 @@ export const cvKeywordCopy = {
   ],
   "— NO CV EVIDENCE": [
     "— 无简历证据",
-    "— 無簡歷證據"
+    "— 無履歷證據"
   ],
   "· weight": [
     "· 权重",
@@ -727,7 +727,7 @@ export const cvKeywordCopy = {
   ],
   "CV EVIDENCE": [
     "简历证据",
-    "簡歷證據"
+    "履歷證據"
   ],
   "No matching sentence. Validate experience before adding this term.": [
     "没有匹配句子。添加此项前，请先核实相关经历。",
@@ -811,7 +811,7 @@ export const cvKeywordCopy = {
   ],
   "Visual simulation only; this page does not compile or download a personal CV.": [
     "仅作视觉模拟；本页不会编译或下载个人简历。",
-    "僅作視覺模擬；本頁不會編譯或下載個人簡歷。"
+    "僅作視覺模擬；本頁不會編譯或下載個人履歷。"
   ],
   "Choose one of the original workflow's eight template routes": [
     "从原始工作流的八种模板路径中选择",
@@ -931,7 +931,7 @@ export const cvKeywordCopy = {
   ],
   "Fictional CV output preview": [
     "虚构简历输出预览",
-    "虛構簡歷輸出預覽"
+    "虛構履歷輸出預覽"
   ],
   "PREVIEW · PAGE 1 / 1": [
     "预览 · 第 1／1 页",
@@ -983,7 +983,7 @@ export const cvKeywordCopy = {
   ],
   "Demonstration preview · fictional content · not a generated file": [
     "演示预览 · 虚构内容 · 并非生成的文件",
-    "演示預覽 · 虛構內容 · 並非生成的檔案"
+    "示範預覽 · 虛構內容 · 並非生成的檔案"
   ],
   "No validated snapshot": [
     "尚无已验证的快照",
@@ -991,7 +991,7 @@ export const cvKeywordCopy = {
   ],
   "Return to Brief, add CV evidence and a role description, then run the analysis before inspecting output.": [
     "返回“背景”，添加简历证据和岗位描述，运行分析后再查看输出。",
-    "返回“背景”，新增簡歷證據和崗位描述，執行分析後再檢視輸出。"
+    "返回“背景”，新增履歷證據和崗位描述，執行分析後再檢視輸出。"
   ],
   "OUTPUT MANIFEST": [
     "输出清单",
@@ -1091,7 +1091,7 @@ export const cvKeywordCopy = {
   ],
   "connect a job description to ranked signals, a role-specific LaTeX template and a dated output bundle. The original workflow validates structured keyword data, removes duplicates, handles LaTeX special characters and offers eight template families. This demonstration makes each signal visible and links it to evidence you can inspect.": [
     "将职位描述与排序后的信号、面向岗位的 LaTeX 模板及带日期的输出文件包连接起来。原始工作流验证结构化关键词数据、去重、处理 LaTeX 特殊字符，并提供八种模板。本演示让每项信号可见，并连接到可检查的证据。",
-    "將職位描述與排序後的訊號、面向崗位的 LaTeX 模板及帶日期的輸出檔案包連線起來。原始工作流驗證結構化關鍵詞資料、去重、處理 LaTeX 特殊字元，並提供八種模板。本演示讓每項訊號可見，並連線到可檢查的證據。"
+    "將職位描述與排序後的訊號、面向崗位的 LaTeX 模板及帶日期的輸出檔案包連線起來。原始工作流驗證結構化關鍵詞資料、去重、處理 LaTeX 特殊字元，並提供八種模板。本示範讓每項訊號可見，並連線到可檢查的證據。"
   ],
   "Browser adaptation:": [
     "浏览器扩展：",
@@ -1099,7 +1099,7 @@ export const cvKeywordCopy = {
   ],
   "this showcase replaces external model inference with a deterministic 18-signal dictionary.": [
     "本演示以确定性的 18 项信号词典替代外部模型推理。",
-    "本演示以確定性的 18 項訊號詞典替代外部模型推理。"
+    "本示範以確定性的 18 項訊號詞典替代外部模型推理。"
   ],
   "Repetition adds up to 2 points; essential wording adds 2 points. Proof quality separately checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.": [
     "重复最多加 2 分，必需项措辞加 2 分。证据质量分别检查相关句子、行动动词、带单位或百分比的测量或方向性结果，以及明确的结果用语；单纯的版本号不算成果。编辑准备度仅反馈文档情况，不模拟招聘系统、不评估就业能力，也不作自动招聘决定。",
@@ -1163,7 +1163,7 @@ export const cvKeywordCopy = {
   ],
   "No evidence located in the CV snapshot.": [
     "简历快照中没有找到证据。",
-    "簡歷快照中沒有找到證據。"
+    "履歷快照中沒有找到證據。"
   ],
   "If true, add: [action] {0} for [scope], resulting in [verified outcome].": [
     "如果属实，请补充：针对[范围]，[行动] {0}，取得[已核实的结果]。",

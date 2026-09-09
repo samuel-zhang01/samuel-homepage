@@ -305,10 +305,10 @@
 }
 
 .slotAudit { border-top: 1px solid var(--s7-shadow); background: var(--s7-paper); }
-.slotAudit summary { padding: 7px 9px; color: var(--s7-ink); font: 700 var(--s7-small)/1.4 var(--s7-font-text); cursor: pointer; }
-.slotAudit ul { display: grid; gap: 3px; margin: 0; padding: 0 9px 9px; list-style: none; }
-.slotAudit li { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: start; gap: 5px; color: var(--s7-ink); font-size: var(--s7-small); line-height: 1.4; }
-.slotAudit li strong { display: grid; min-height: 16px; place-items: center; border: 1px solid var(--s7-shadow); color: var(--s7-ink); background: var(--s7-paper); font: 700 var(--s7-small)/1.4 var(--s7-font-text); }
+.slotAudit > h4 { margin: 0; padding: 12px; color: var(--s7-ink); font: 700 var(--s7-text)/1.4 var(--s7-font-text); }
+.slotAudit ul { display: grid; gap: 6px; margin: 0; padding: 0 12px 12px; list-style: none; }
+.slotAudit li { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: start; gap: 8px; color: var(--s7-ink); font-size: var(--s7-text); line-height: 1.5; }
+.slotAudit li strong { display: grid; min-height: 24px; place-items: center; border: 1px solid var(--s7-shadow); color: var(--s7-ink); background: var(--s7-paper); font: 700 var(--s7-text)/1.4 var(--s7-font-text); }
 
 .reservationPanel { padding-bottom: 10px; }
 .holdClock { margin: 10px; padding: 11px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); text-align: center; box-shadow: none; }
@@ -362,4 +362,4 @@
 }
 
 .dstChapter { margin-top: 18px; border: 1px solid var(--s7-shadow); }
-.dstChapter > summary { cursor: pointer; padding: 14px; min-height: 44px; font-size: var(--s7-text); font-weight: 700; background: var(--s7-paper); }
+.dstChapter > h3 { margin: 0; padding: 16px; font: 700 var(--s7-heading)/1.35 var(--s7-font-text); background: var(--s7-paper); }

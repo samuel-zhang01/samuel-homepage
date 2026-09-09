@@ -1414,9 +1414,9 @@ export const scientificCopy = {
     "研究背景",
     "研究背景"
   ],
-  "Samuel built a custom CNN, adapted four pretrained image models to grayscale microscopy, and trained separate orientation and depth predictors. Image-orientation corrections, error plots and Grad-CAM comparisons helped examine what the models learned.": [
-    "Samuel 构建了自定义 CNN，将四种预训练图像模型适配到灰度显微图像，并分别训练方向和深度预测器。图像方向校正、误差图与 Grad-CAM 比较帮助检查模型学到了什么。",
-    "Samuel 構建了自訂 CNN，將四種預訓練影像模型適配到灰度顯微影像，並分別訓練方向和深度預測器。影像方向校正、誤差圖與 Grad-CAM 比較幫助檢查模型學到了什麼。"
+  "I built a custom CNN, adapted four pretrained image models to grayscale microscopy, and trained separate orientation and depth predictors. Image-orientation corrections, error plots and Grad-CAM comparisons helped examine what the models learned.": [
+    "我构建了自定义 CNN，将四种预训练图像模型适配到灰度显微图像，并分别训练方向和深度预测器。图像方向校正、误差图与 Grad-CAM 比较帮助检查模型学到了什么。",
+    "我構建了自訂 CNN，將四種預訓練影像模型適配到灰度顯微影像，並分別訓練方向和深度預測器。影像方向校正、誤差圖與 Grad-CAM 比較幫助檢查模型學到了什麼。"
   ],
   "Model selection": [
     "选择模型",
@@ -3758,9 +3758,9 @@ export const scientificCopy = {
     "自定义模型 · 从头训练",
     "自訂模型 · 從頭訓練"
   ],
-  "Samuel’s custom CNN reduces 224→56→28→14→7, adds learned 1×1 skips where channels change, then combines the image into 512 features. The final layer changes for orientation or depth.": [
-    "Samuel 的自定义 CNN 将分辨率逐步降低为 224→56→28→14→7，在通道变化处加入可学习的 1×1 跳跃连接，再将图像合成为 512 个特征。最后一层随方向或深度任务而改变。",
-    "Samuel 的自訂 CNN 將解析度逐步降低為 224→56→28→14→7，在通道變化處加入可學習的 1×1 跳躍連接，再將影像合成為 512 個特徵。最後一層隨方向或深度任務而改變。"
+  "My custom CNN reduces 224→56→28→14→7, adds learned 1×1 skips where channels change, then combines the image into 512 features. The final layer changes for orientation or depth.": [
+    "我的自定义 CNN 将分辨率逐步降低为 224→56→28→14→7，在通道变化处加入可学习的 1×1 跳跃连接，再将图像合成为 512 个特征。最后一层随方向或深度任务而改变。",
+    "我的自訂 CNN 將解析度逐步降低為 224→56→28→14→7，在通道變化處加入可學習的 1×1 跳躍連接，再將影像合成為 512 個特徵。最後一層隨方向或深度任務而改變。"
   ],
   "18-layer residual network": [
     "18 层残差网络",

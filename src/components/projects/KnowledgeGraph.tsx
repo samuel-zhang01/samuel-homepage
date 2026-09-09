@@ -647,7 +647,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
               </section>;
             })}
           </div>
-          <details className={styles.edgeNotes}><summary>{t("Why these connections?")}</summary>{neighbours.map(({ node, edge }) => <p key={edge.id}><strong>{t(node.label)}</strong><br />{graphConnectionText(locale, edge)}</p>)}</details>
+          <section className={styles.edgeNotes}><h4>{t("Why these connections?")}</h4>{neighbours.map(({ node, edge }) => <p key={edge.id}><strong>{t(node.label)}</strong><br />{graphConnectionText(locale, edge)}</p>)}</section>
           <button className={styles.textAction} onClick={share}>{t(copied ? "Link copied" : "Copy a link to this node")}</button>
         </> : <>
           <div className={styles.nodeType}>{t("Project graph")}</div><h3>{t("A few starting points")}</h3><p>{t("Select any node to see its story and connected work.")}</p>

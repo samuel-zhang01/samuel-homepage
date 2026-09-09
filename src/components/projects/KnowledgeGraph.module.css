@@ -222,7 +222,7 @@
 .startRoutes { margin-top: 20px; }
 .smallNote { margin-top: 20px !important; color: var(--s7-ink) !important; font-size: var(--s7-small) !important; }
 .edgeNotes { margin-top: 18px; padding: 0 9px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); box-shadow: none; color: var(--s7-ink); font-size: var(--s7-small); }
-.edgeNotes summary { min-height: 34px; padding: 9px 0; }
+.edgeNotes > h4 { margin: 0; padding: 12px 0; font: 700 var(--s7-text)/1.4 var(--s7-font-text); }
 .edgeNotes p { margin-top: 0; padding-top: 7px; border-top: 1px solid var(--s7-shadow); font-size: var(--s7-text); line-height: 1.55; }
 .timeline { border-top: 1px solid var(--s7-shadow); background: var(--s7-paper); scroll-margin-top: 10px; }
 .timeline > summary { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 15px; padding: 13px 18px; border-bottom: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }

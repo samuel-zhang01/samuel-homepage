@@ -2,7 +2,7 @@ import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 
 export const metadata = {
   title: "Skills & Capabilities",
-  description: "Technical, product, research and leadership capabilities, connected to the systems where Samuel Zhang has used them.",
+  description: "Technical, product, research and leadership capabilities, connected to the systems where I have used them.",
 };
 
 export default function SkillsPage() {

@@ -22,10 +22,10 @@ const panels: Array<{ id: PanelId; label: string; index: string }> = [
 ];
 
 const dayMoments = [
-  ["MORNING", "A 5K before the hackathon", "Samuel finished a RunThrough 5K in Regent’s Park with Axel Ehrnrooth, Yasmin Akhmedova and Thiruvikraman Anand, then crossed London for a second start line."],
+  ["MORNING", "A 5K before the hackathon", "I finished a RunThrough 5K in Regent’s Park with Axel Ehrnrooth, Yasmin Akhmedova and Thiruvikraman Anand, then crossed London for a second start line."],
   ["10:30", "The track opened", "More than 100 runners and builders gathered at London Stadium Community Track. There was a DJ, live commentary, food, recovery space and a lot of weather moving in."],
   ["12:30", "Run and build", "The five-and-a-half-hour relay began. Only the teammate out on the 400-metre loop could direct the build; stop running and the event rules required the build to stop too."],
-  ["15:00", "Mid-race checkpoint", "Ideas, context and sore legs changed hands. Samuel, Javiera Rubio and Andrés Daniel Godoy Ortiz kept SideQuest moving through phone dictation and repeated handovers."],
+  ["15:00", "Mid-race checkpoint", "Ideas, context and sore legs changed hands. Javiera Rubio, Andrés Daniel Godoy Ortiz and I kept SideQuest moving through phone dictation and repeated handovers."],
   ["17:54", "The last event-day commit", "The sixth hackathon commit landed at 17:54 London time—roughly six minutes before hands-in. The source history makes the deadline visible."],
   ["18:00", "Hands off", "The run/build window closed. Over the next hour, judges chose the final five; at 19:00 each finalist had five minutes and one screen."],
   ["RESULT", "Second place", "After 44 additional team kilometres in the rain, SideQuest placed second. The prize mattered; the people and the strange electricity of the day mattered more."],
@@ -54,9 +54,9 @@ const schedule = [
 ] as const;
 
 const creditGroups = {
-  team: ["Team SideQuest", "Three people, one moving keyboard", "Samuel Zhang, Javiera Rubio and Andrés Daniel Godoy Ortiz relayed both the running and the product context. The build only progressed while one of them was moving.", ["Samuel Zhang", "Javiera Rubio", "Andrés Daniel Godoy Ortiz"]],
+  team: ["Team SideQuest", "Three people, one moving keyboard", "Javiera Rubio, Andrés Daniel Godoy Ortiz and I relayed both the running and the product context. The build only progressed while one of us was moving.", ["Samuel Zhang", "Javiera Rubio", "Andrés Daniel Godoy Ortiz"]],
   makers: ["Event makers", "An experiment turned into a community", "Tijs Nieuwboer first tried building while running the previous October. The London event was made on the move by Tijs, Siena Kinsale, Luke Balabanovic, Rachel Macnaghten, Abdelaziz ‘Zizou’ Brahmi and Aruzhan N., with Elliott Callender and the crew keeping the day moving.", ["Tijs", "Siena", "Luke", "Rachel", "Zizou", "Aruzhan", "Elliott + crew"]],
-  community: ["Community", "The part worth remembering", "A loud DJ, constant laps, soaked clothes, founders swapping ideas and an unusually high concentration of people willing to try something unreasonable. Samuel left with more energy than he arrived with; his legs reported a different result.", ["100+ runners & builders", "London startup community", "Rain, music & handovers"]],
+  community: ["Community", "The part worth remembering", "A loud DJ, constant laps, soaked clothes, founders swapping ideas and an unusually high concentration of people willing to try something unreasonable. I left with more energy than I arrived with; my legs reported a different result.", ["100+ runners & builders", "London startup community", "Rain, music & handovers"]],
   backers: ["Backers", "Tools around the loop", "The event mixed voice, cloud agents, tracking, connectivity, wellness and go-to-market tools. Their role was to make an unusual format possible—not to become the main story.", ["Cognition", "Healf", "ElevenLabs", "Wispr Flow", "ROXFIT", "Deepline", "Tavily", "Thrad", "O2 + more"]],
 } as const;
 
@@ -205,20 +205,20 @@ function PeoplePanel({ locale }: { locale: Locale }) {
       <aside className={styles.prizeCard}>
         <span>SECOND PLACE</span><strong>A lovely signal—not the point of the day.</strong>
         <ul><li>£500 cash prize</li><li>3 × WHOOP One 5.0</li><li>3 × Healf blood kits</li><li>$1,000 Thrad credits</li><li>4 months Devin Max per teammate*</li></ul>
-        <p>*The Devin award is reported in Samuel&apos;s event post; it is not listed in the official prize table preserved in the source pack.</p>
+        <p>*The Devin award is reported in my event post; it is not listed in the official prize table preserved in the source pack.</p>
       </aside>
     </div>
     <div className={styles.teamCards}>
       {teammates.map((teammate) => <article key={teammate[1]}><span>{teammate[0]}</span><div><strong>{teammate[1]}</strong><p>{teammate[2]}</p></div></article>)}
     </div>
-    <details className={styles.supportLedger}>
-      <summary>Open the event backers & community ledger</summary>
+    <section className={styles.supportLedger}>
+      <h3>Event backers & community ledger</h3>
       <div>
         <section><span>EVENT BACKERS & TOOLS</span><p>ROXFIT / Traccar tracked movement; O2 kept the track connected; Wispr Flow and ElevenLabs supported voice; Cognition and Poke brought agents and messaging; Healf and Hyperice supported recovery; Deepline and Tavily covered traction and data. Additional backers: The Interaction Company · Thrad · algosoup · Delfa · Accelerate ME · PerfectTed.</p></section>
         <section><span>COMMUNITY SUPPORT</span><p>Unicorn Mafia · Pitchless Community / Poke.com · Security Builders Club</p></section>
         <section><span>TRACKSIDE CONNECTIONS</span><p>Anshul Yadav · Joseph Anthony · Samuel Klacman · Joakim Talling-Smith · Luke Balabanovic · Jack Rees · and many more</p></section>
       </div>
-    </details>
+    </section>
   </>)}</>;
 }
 
@@ -332,7 +332,7 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
       <article className={styles.sourceCard}>
         <div className={styles.cardLabel}><span>PRIVATE STRAVA ADAPTER</span><strong>READ ONLY</strong></div>
         <div className={styles.sourceNumbers}><div><strong>209</strong><span>usable activities</span></div><div><strong>188</strong><span>with heart rate</span></div><div><strong>10</strong><span>with perceived effort</span></div></div>
-        <p>These documented counts belong to Javi&apos;s owner-scoped export—not Samuel&apos;s running history. Coverage describes available evidence; it is not a health or fitness score.</p>
+        <p>These documented counts belong to Javi&apos;s owner-scoped export—not my running history. Coverage describes available evidence; it is not a health or fitness score.</p>
       </article>
       <form className={styles.runForm} onSubmit={normaliseRun}>
         <div className={styles.cardLabel}><span>TRY THE DATA SHAPE</span><strong>BROWSER ONLY</strong></div>
@@ -396,15 +396,15 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
       </article>
     </div>}
 
-    <details className={styles.technicalNotes}>
-      <summary>Open technical field notes & prototype boundaries</summary>
+    <section className={styles.technicalNotes}>
+      <h3>Technical field notes & prototype boundaries</h3>
       <div>
         <section><span>DATA</span><p>Private, owner-scoped Strava export; 209 aggregate runs belonged to Javi. Raw routes were never browser assets.</p></section>
         <section><span>SUBSEQUENT RUNS</span><p>Validated live GPS samples were normalised into the same distance, time, pace, effort and freshness contract, then reassessed.</p></section>
         <section><span>LIVE</span><p>Authenticated WebSocket sessions relayed ephemeral camera chunks. Spectators saw an abstracted route; cheers and challenge decisions persisted.</p></section>
         <section><span>HONEST LIMITS</span><p>The hackathon guest flow was not production authentication, pledge commitments did not charge money, and the live relay was designed for limited event concurrency.</p></section>
       </div>
-    </details>
+    </section>
     <div className={styles.buildLinks}><a className="s7-button" href="https://genesis.hiddenlayers.co.uk" target="_blank" rel="noreferrer">Original event deployment ↗</a><a className="s7-button" href="https://github.com/samuel-zhang01/sidequest" target="_blank" rel="noreferrer">SideQuest source ↗</a></div>
   </>)}</>;
 }
@@ -454,7 +454,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
         <div className={styles.heroCopy}>
           <p className={styles.kicker}>London Stadium · 400 m loop · 5½ hours</p>
           <h1 id="runhack-title">Running wasn&apos;t the break. It was the only time we could build.</h1>
-          <p>After a morning 5K, Samuel joined Javiera Rubio and Andrés Daniel Godoy Ortiz at an event billed as Europe&apos;s first running hackathon. Only the teammate on the track could direct the build. Through rain, phone dictation and 44 additional team kilometres, they shipped SideQuest.</p>
+          <p>After a morning 5K, I joined Javiera Rubio and Andrés Daniel Godoy Ortiz at an event billed as Europe&apos;s first running hackathon. Only the teammate on the track could direct the build. Through rain, phone dictation and 44 additional team kilometres, we shipped SideQuest.</p>
           <div className={styles.heroActions}>
             <button className="s7-button" type="button" onClick={() => selectPanel("rules", true)}>See how the hack worked</button>
             <button type="button" className={`s7-button ${styles.secondaryAction}`} onClick={() => selectPanel("build", true)}>Replay what we shipped</button>
@@ -485,7 +485,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
 
       <footer className={styles.footer}>
         <span>Source-grounded RUN/HACK field journal · documentary photos shared by Samuel Zhang</span>
-        <div><a href="https://www.therunninghackathon.com/" target="_blank" rel="noreferrer">Official event ↗</a><a href="https://www.linkedin.com/feed/update/urn:li:activity:7500232962580353024/" target="_blank" rel="noreferrer">Samuel&apos;s field note ↗</a></div>
+        <div><a href="https://www.therunninghackathon.com/" target="_blank" rel="noreferrer">Official event ↗</a><a href="https://www.linkedin.com/feed/update/urn:li:activity:7500232962580353024/" target="_blank" rel="noreferrer">My field note ↗</a></div>
       </footer>
     </div>
   ))}</>;

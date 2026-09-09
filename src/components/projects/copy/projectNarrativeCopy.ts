@@ -442,9 +442,9 @@ export const projectNarrativeCopy = {
     "连接现有 ATS 的招聘智能层：评估每位申请者，保留支持材料，并给出有理由的候选名单，最终决定仍由招聘人员作出。",
     "連接現有 ATS 的招募智能層：評估每位申請者，保留佐證資料，並給出有理由的候選名單，最終決定仍由招募人員作出。"
   ],
-  "Samuel founded COVERD to help recruiters review applications consistently while retaining the reasons behind each assessment. The product sits over an existing ATS and combines specialist review of skills, experience, domain knowledge, trajectory, communication and culture. Optional automated voice interviews add context, and the system returns a shortlist with supporting reasons for recruiter review.": [
-    "Samuel 创立 COVERD，帮助招聘人员一致地审阅申请，并保留每项判断的依据。产品连接现有 ATS，综合评估技能、经验、行业知识、职业发展、沟通和文化适配。可选的自动语音面试补充背景信息，系统再提供附有理由的候选名单，供招聘人员审阅。",
-    "Samuel 創立 COVERD，幫助招募人員一致地審閱申請，並保留每項判斷的依據。產品連接現有 ATS，綜合評估技能、經驗、行業知識、職業發展、溝通和文化適配。可選的自動語音面試補充背景資訊，系統再提供附有理由的候選名單，供招募人員審閱。"
+  "I founded COVERD to help recruiters review applications consistently while retaining the reasons behind each assessment. The product sits over an existing ATS and combines specialist review of skills, experience, domain knowledge, trajectory, communication and culture. Optional automated voice interviews add context, and the system returns a shortlist with supporting reasons for recruiter review.": [
+    "我创立 COVERD，帮助招聘人员一致地审阅申请，并保留每项判断的依据。产品连接现有 ATS，综合评估技能、经验、行业知识、职业发展、沟通和文化适配。可选的自动语音面试补充背景信息，系统再提供附有理由的候选名单，供招聘人员审阅。",
+    "我創立 COVERD，幫助招募人員一致地審閱申請，並保留每項判斷的依據。產品連接現有 ATS，綜合評估技能、經驗、行業知識、職業發展、溝通和文化適配。可選的自動語音面試補充背景資訊，系統再提供附有理由的候選名單，供招募人員審閱。"
   ],
   "Multi-agent AI": [
     "多智能体 AI",
@@ -590,9 +590,9 @@ export const projectNarrativeCopy = {
     "通过风险排序、历史承保模式和保单条款分析，帮助经纪人比较候选承保市场。",
     "透過風險排序、歷史承保模式和保單條款分析，幫助經紀人比較候選承保市場。"
   ],
-  "Samuel developed a prototype that brings three complementary views into an insurance-placement decision. Temporal LightGBM/LambdaRank models compare candidate markets for a risk; historical lead-share analysis adds context for established and unfamiliar markets; wording analysis presents relevant clauses and disagreements. Confidence and missing information remain visible, and brokers retain the final ordering. A combined recommendation has not been validated. The public experiment uses fictional risks and markets.": [
-    "Samuel 开发的原型为保险承保安排提供三个互补视角。采用时间切分的 LightGBM/LambdaRank 模型比较风险对应的候选市场；历史主承保份额为熟悉和陌生市场补充背景；条款分析展示相关约定和分歧。置信度与缺失信息始终可见，最终顺序由经纪人决定。综合推荐尚未验证；公开实验使用虚构风险和市场。",
-    "Samuel 開發的原型為保險承保安排提供三個互補視角。採用時間切分的 LightGBM/LambdaRank 模型比較風險對應的候選市場；歷史主承保份額為熟悉和陌生市場補充背景；條款分析展示相關約定和分歧。置信度與缺失資訊始終可見，最終順序由經紀人決定。綜合推薦尚未驗證；公開實驗使用虛構風險和市場。"
+  "I developed a prototype that brings three complementary views into an insurance-placement decision. Temporal LightGBM/LambdaRank models compare candidate markets for a risk; historical lead-share analysis adds context for established and unfamiliar markets; wording analysis presents relevant clauses and disagreements. Confidence and missing information remain visible, and brokers retain the final ordering. A combined recommendation has not been validated. The public experiment uses fictional risks and markets.": [
+    "我开发的原型为保险承保安排提供三个互补视角。采用时间切分的 LightGBM/LambdaRank 模型比较风险对应的候选市场；历史主承保份额为熟悉和陌生市场补充背景；条款分析展示相关约定和分歧。置信度与缺失信息始终可见，最终顺序由经纪人决定。综合推荐尚未验证；公开实验使用虚构风险和市场。",
+    "我開發的原型為保險承保安排提供三個互補視角。採用時間切分的 LightGBM/LambdaRank 模型比較風險對應的候選市場；歷史主承保份額為熟悉和陌生市場補充背景；條款分析展示相關約定和分歧。置信度與缺失資訊始終可見，最終順序由經紀人決定。綜合推薦尚未驗證；公開實驗使用虛構風險和市場。"
   ],
   "LightGBM / LambdaRank": [
     "LightGBM / LambdaRank",
@@ -730,9 +730,9 @@ export const projectNarrativeCopy = {
     "本地优先的财务应用，将账单、支出模式、转账和投资整合为可靠的统一视图。",
     "本地優先的財務應用，將帳單、支出模式、轉賬和投資整合為可靠的統一視圖。"
   ],
-  "Samuel built provider adapters for HSBC, Lloyds, Revolut and Trading 212, normalising their exports into SQLite behind FastAPI and React. The application checks balances, recognises repeated imports, links transfers and highlights recurring payments and unusual spending. Nine views connect everyday transactions with investment arithmetic. The demo contains 51 fictional ledger rows and a separate import experiment, where overlapping statements, repeated charges and changed provider details reveal how transaction identity works.": [
-    "Samuel 为 HSBC、Lloyds、Revolut 和 Trading 212 编写导入适配器，将导出数据标准化后存入 SQLite，由 FastAPI 和 React 提供应用界面。系统检查余额、识别重复导入、关联内部转账，并标出定期付款和异常支出。九个视图把日常交易与投资计算连接起来。演示包含 51 条虚构账目和独立的导入实验，可通过重叠账单、重复费用和修改后的提供方记录理解交易身份。",
-    "Samuel 為 HSBC、Lloyds、Revolut 和 Trading 212 編寫導入適配器，將匯出資料標準化後存入 SQLite，由 FastAPI 和 React 提供應用介面。系統檢查餘額、識別重複導入、關聯內部轉賬，並標出定期付款和異常支出。九個視圖把日常交易與投資計算連接起來。演示包含 51 條虛構帳目和獨立的導入實驗，可透過重疊帳單、重複費用和修改後的提供方記錄理解交易身份。"
+  "I built provider adapters for HSBC, Lloyds, Revolut and Trading 212, normalising their exports into SQLite behind FastAPI and React. The application checks balances, recognises repeated imports, links transfers and highlights recurring payments and unusual spending. Nine views connect everyday transactions with investment arithmetic. The demo contains 51 fictional ledger rows and a separate import experiment, where overlapping statements, repeated charges and changed provider details reveal how transaction identity works.": [
+    "我为 HSBC、Lloyds、Revolut 和 Trading 212 编写导入适配器，将导出数据标准化后存入 SQLite，由 FastAPI 和 React 提供应用界面。系统检查余额、识别重复导入、关联内部转账，并标出定期付款和异常支出。九个视图把日常交易与投资计算连接起来。演示包含 51 条虚构账目和独立的导入实验，可通过重叠账单、重复费用和修改后的提供方记录理解交易身份。",
+    "我為 HSBC、Lloyds、Revolut 和 Trading 212 編寫導入適配器，將匯出資料標準化後存入 SQLite，由 FastAPI 和 React 提供應用介面。系統檢查餘額、識別重複導入、關聯內部轉賬，並標出定期付款和異常支出。九個視圖把日常交易與投資計算連接起來。演示包含 51 條虛構帳目和獨立的導入實驗，可透過重疊帳單、重複費用和修改後的提供方記錄理解交易身份。"
   ],
   "FastAPI": [
     "FastAPI",
@@ -806,9 +806,9 @@ export const projectNarrativeCopy = {
     "自托管预约平台，提供四种分配方式、时区安全的可用时间、日历同步和抵御并发冲突的预订。",
     "自代管預約平臺，提供四種分配方式、時區安全的可用時間、日曆同步和抵禦併發衝突的預約。"
   ],
-  "Samuel built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The browser uses fictional calendars to make those scheduling decisions explorable.": [
-    "Samuel 构建了自托管预约产品，支持个人、加权轮询、集体和首位可用四种分配方式。主持人的本地工作时段、日历冲突、缓冲时间、提前通知和每日上限共同决定可选时间。UTC 预留和最终数据库冲突检查避免竞争预订。Microsoft Graph 与 Teams、电子邮件、ICS 邀请和签名管理链接支持完整预约流程。浏览器使用虚构日历，让排期决策可以交互探索。",
-    "Samuel 建置了自代管預約產品，支持個人、加權輪詢、集體和首位可用四種分配方式。主持人的本地工作時段、日曆衝突、緩衝時間、提前通知和每日上限共同決定可選時間。UTC 預留和最終資料庫衝突檢查避免競爭預約。Microsoft Graph 與 Teams、電子郵件、ICS 邀請和簽名管理連結支持完整預約流程。瀏覽器使用虛構日曆，讓排期決策可以互動探索。"
+  "I built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The browser uses fictional calendars to make those scheduling decisions explorable.": [
+    "我构建了自托管预约产品，支持个人、加权轮询、集体和首位可用四种分配方式。主持人的本地工作时段、日历冲突、缓冲时间、提前通知和每日上限共同决定可选时间。UTC 预留和最终数据库冲突检查避免竞争预订。Microsoft Graph 与 Teams、电子邮件、ICS 邀请和签名管理链接支持完整预约流程。浏览器使用虚构日历，让排期决策可以交互探索。",
+    "我建置了自代管預約產品，支持個人、加權輪詢、集體和首位可用四種分配方式。主持人的本地工作時段、日曆衝突、緩衝時間、提前通知和每日上限共同決定可選時間。UTC 預留和最終資料庫衝突檢查避免競爭預約。Microsoft Graph 與 Teams、電子郵件、ICS 邀請和簽名管理連結支持完整預約流程。瀏覽器使用虛構日曆，讓排期決策可以互動探索。"
   ],
   "Microsoft Graph": [
     "Microsoft Graph",
@@ -870,9 +870,9 @@ export const projectNarrativeCopy = {
     "双语意大利语 A1 门户，将 56 天课程变成每日学习、自适应练习和间隔词汇复习。",
     "雙語意大利語 A1 門戶，將 56 天課程變成每日學習、自適應練習和間隔詞彙複習。"
   ],
-  "Samuel organised a 5,070-minute study plan into 56 daily agendas and 28 lesson hubs, supported by a 753-record content library. The portal combines exercises, vocabulary recall, writing, speech and recording work with progress across listening, reading, interaction, spoken production and writing. Local caching keeps practice usable offline, while revision checks help recover synchronisation conflicts. The browser uses example attempts to demonstrate the learning and recovery workflows; its task-coverage feedback is not a judgement of language correctness.": [
-    "Samuel 将 5,070 分钟学习计划编排为 56 份每日安排和 28 个课程中心，并建立包含 753 条记录的内容库。门户将练习、词汇复习、写作、口语和录音任务结合起来，分别跟踪听力、阅读、互动、口语表达和写作。本地缓存支持离线练习，版本检查帮助恢复同步冲突。浏览器以示例作答展示学习与恢复流程；任务覆盖反馈不等同于语言正确性判断。",
-    "Samuel 將 5,070 分鐘學習計劃編排為 56 份每日安排和 28 個課程中心，並建立包含 753 條記錄的內容庫。門戶將練習、詞彙複習、寫作、口語和錄音任務結合起來，分別跟蹤聽力、閱讀、互動、口語表達和寫作。本地快取支持離線練習，版本檢查幫助恢復同步衝突。瀏覽器以示例作答展示學習與恢復流程；任務覆蓋反饋不等同於語言正確性判斷。"
+  "I organised a 5,070-minute study plan into 56 daily agendas and 28 lesson hubs, supported by a 753-record content library. The portal combines exercises, vocabulary recall, writing, speech and recording work with progress across listening, reading, interaction, spoken production and writing. Local caching keeps practice usable offline, while revision checks help recover synchronisation conflicts. The browser uses example attempts to demonstrate the learning and recovery workflows; its task-coverage feedback is not a judgement of language correctness.": [
+    "我将 5,070 分钟学习计划编排为 56 份每日安排和 28 个课程中心，并建立包含 753 条记录的内容库。门户将练习、词汇复习、写作、口语和录音任务结合起来，分别跟踪听力、阅读、互动、口语表达和写作。本地缓存支持离线练习，版本检查帮助恢复同步冲突。浏览器以示例作答展示学习与恢复流程；任务覆盖反馈不等同于语言正确性判断。",
+    "我將 5,070 分鐘學習計劃編排為 56 份每日安排和 28 個課程中心，並建立包含 753 條記錄的內容庫。門戶將練習、詞彙複習、寫作、口語和錄音任務結合起來，分別跟蹤聽力、閱讀、互動、口語表達和寫作。本地快取支持離線練習，版本檢查幫助恢復同步衝突。瀏覽器以示例作答展示學習與恢復流程；任務覆蓋反饋不等同於語言正確性判斷。"
   ],
   "React 19": [
     "React 19",
@@ -950,9 +950,9 @@ export const projectNarrativeCopy = {
     "收集学习偏好、筛选小型课程目录，并探索排序方式如何影响结果的课程发现原型。",
     "收集學習偏好、篩選小型課程目錄，並探索排序方式如何影響結果的課程發現原型。"
   ],
-  "Samuel built a four-step React preference flow with FastAPI and supporting data services. The initial browser prototype filters six example courses but orders them randomly, so it does not provide a learned recommendation. The interactive companion makes that behaviour visible and adds an illustrative weighted rubric with explanations and one-factor comparisons. Visitors can examine what a useful personalised ordering would need; neither version has been validated against learning outcomes.": [
-    "Samuel 构建了四步 React 偏好流程，并配套 FastAPI 和数据服务。最初的浏览器原型筛选六门示例课程，但随机排列结果，因此并不是经过学习的推荐系统。交互配套工具展示这一行为，并加入带说明和单因素比较的示例加权规则。访客可以探索个性化排序需要哪些条件；两个版本都未以学习成果进行验证。",
-    "Samuel 建置了四步 React 偏好流程，並配套 FastAPI 和資料服務。最初的瀏覽器原型篩選六門示例課程，但隨機排列結果，因此並不是經過學習的推薦系統。互動配套工具展示這一行為，並加入帶說明和單因素比較的示例加權規則。訪客可以探索個性化排序需要哪些條件；兩個版本都未以學習成果進行驗證。"
+  "I built a four-step React preference flow with FastAPI and supporting data services. The initial browser prototype filters six example courses but orders them randomly, so it does not provide a learned recommendation. The interactive companion makes that behaviour visible and adds an illustrative weighted rubric with explanations and one-factor comparisons. Visitors can examine what a useful personalised ordering would need; neither version has been validated against learning outcomes.": [
+    "我构建了四步 React 偏好流程，并配套 FastAPI 和数据服务。最初的浏览器原型筛选六门示例课程，但随机排列结果，因此并不是经过学习的推荐系统。交互配套工具展示这一行为，并加入带说明和单因素比较的示例加权规则。访客可以探索个性化排序需要哪些条件；两个版本都未以学习成果进行验证。",
+    "我建置了四步 React 偏好流程，並配套 FastAPI 和資料服務。最初的瀏覽器原型篩選六門示例課程，但隨機排列結果，因此並不是經過學習的推薦系統。互動配套工具展示這一行為，並加入帶說明和單因素比較的示例加權規則。訪客可以探索個性化排序需要哪些條件；兩個版本都未以學習成果進行驗證。"
   ],
   "Redis / RQ": [
     "Redis / RQ",
@@ -1014,9 +1014,9 @@ export const projectNarrativeCopy = {
     "连接强化学习数学、可运行算法和语言模型后训练的实践课程。",
     "連接強化學習數學、可執行演算法和語言模型後訓練的實踐課程。"
   ],
-  "Samuel developed and reviewed 25 modules with AI-assisted authorship, combining executed notebooks, teaching guides, 64 worked examples, 75 self-checks and 448 lecture pages. The route moves from bandits and Bellman updates through deep, offline and model-based RL to language-model post-training and applied decision problems. The browser adds live Q-learning, SARSA, LoRA and DPO exercises. A recorded SmolLM2-135M-Instruct experiment improves strict answer matching from 0 to 19 of 32 held-out synthetic prompts after supervised fine-tuning; generated-answer quality after DPO remains unevaluated. One final-module empirical-ordering check also remains unresolved.": [
-    "Samuel 在 AI 辅助创作下开发并审阅了 25 个模块，包含已执行笔记本、教学指南、64 个例题、75 项自测和 448 页讲义。学习路线从多臂老虎机与 Bellman 更新延伸到深度、离线和基于模型的强化学习，再进入语言模型后训练和实际决策问题。浏览器提供实时 Q-learning、SARSA、LoRA 和 DPO 练习。记录的 SmolLM2-135M-Instruct 实验在监督微调后，对 32 个留出的合成提示的严格答案匹配从 0 提升至 19；DPO 后的生成答案质量尚未评估，最后一个模块也仍有一项经验排序检查未解决。",
-    "Samuel 在 AI 輔助創作下開發並審閱了 25 個模塊，包含已執行筆記本、教學指南、64 個例題、75 項自測和 448 頁講義。學習路線從多臂老虎機與 Bellman 更新延伸到深度、離線和基於模型的強化學習，再進入語言模型後訓練和實際決策問題。瀏覽器提供實時 Q-learning、SARSA、LoRA 和 DPO 練習。記錄的 SmolLM2-135M-Instruct 實驗在監督微調後，對 32 個留出的合成提示的嚴格答案匹配從 0 提升至 19；DPO 後的生成答案質量尚未評估，最後一個模塊也仍有一項經驗排序檢查未解決。"
+  "I developed and reviewed 25 modules with AI-assisted authorship, combining executed notebooks, teaching guides, 64 worked examples, 75 self-checks and 448 lecture pages. The route moves from bandits and Bellman updates through deep, offline and model-based RL to language-model post-training and applied decision problems. The browser adds live Q-learning, SARSA, LoRA and DPO exercises. A recorded SmolLM2-135M-Instruct experiment improves strict answer matching from 0 to 19 of 32 held-out synthetic prompts after supervised fine-tuning; generated-answer quality after DPO remains unevaluated. One final-module empirical-ordering check also remains unresolved.": [
+    "我在 AI 辅助创作下开发并审阅了 25 个模块，包含已执行笔记本、教学指南、64 个例题、75 项自测和 448 页讲义。学习路线从多臂老虎机与 Bellman 更新延伸到深度、离线和基于模型的强化学习，再进入语言模型后训练和实际决策问题。浏览器提供实时 Q-learning、SARSA、LoRA 和 DPO 练习。记录的 SmolLM2-135M-Instruct 实验在监督微调后，对 32 个留出的合成提示的严格答案匹配从 0 提升至 19；DPO 后的生成答案质量尚未评估，最后一个模块也仍有一项经验排序检查未解决。",
+    "我在 AI 輔助創作下開發並審閱了 25 個模塊，包含已執行筆記本、教學指南、64 個例題、75 項自測和 448 頁講義。學習路線從多臂老虎機與 Bellman 更新延伸到深度、離線和基於模型的強化學習，再進入語言模型後訓練和實際決策問題。瀏覽器提供實時 Q-learning、SARSA、LoRA 和 DPO 練習。記錄的 SmolLM2-135M-Instruct 實驗在監督微調後，對 32 個留出的合成提示的嚴格答案匹配從 0 提升至 19；DPO 後的生成答案質量尚未評估，最後一個模塊也仍有一項經驗排序檢查未解決。"
   ],
   "PyTorch": [
     "PyTorch",
@@ -1158,9 +1158,9 @@ export const projectNarrativeCopy = {
     "利用灰度显微图像估计微型机器人的方向和深度，为跟踪与控制提供关键信息。",
     "利用灰度顯微圖像估計微型機器人的方向和深度，為跟蹤與控制提供關鍵資訊。"
   ],
-  "Samuel built a custom CNN and adapted ResNet18, ResNet34, MobileNetV3 and ViT to predict 40 pitch–roll classes or a continuous depth value from 224×224 images. The developed residual CNN has 4,154,856 pose-classification parameters. The interactive architecture view follows features through each model and changes the output head between tasks. Saved microscopy, pose predictions and Grad-CAM maps help explain the results. The original image-level split can mix related frames between training and testing; a fictional sequence exercise shows why unseen recordings provide a stronger evaluation.": [
-    "Samuel 构建了自定义 CNN，并将 ResNet18、ResNet34、MobileNetV3 和 ViT 改造为从 224×224 图像预测 40 种俯仰—横滚类别或连续深度值。开发后的残差 CNN 姿态分类模型包含 4,154,856 个参数。交互架构视图沿各模型追踪特征，并可切换两种任务的输出头。保存的显微图像、姿态预测和 Grad-CAM 图帮助解释结果。原有按图像切分可能把相关帧分散到训练集和测试集；虚构序列实验说明为何完整未见过的录像能提供更有力的评估。",
-    "Samuel 建置了自訂 CNN，並將 ResNet18、ResNet34、MobileNetV3 和 ViT 改造為從 224×224 圖像預測 40 種俯仰—橫滾類別或連續深度值。開發後的殘差 CNN 姿態分類模型包含 4,154,856 個參數。互動架構視圖沿各模型追蹤特徵，並可切換兩種任務的輸出頭。保存的顯微圖像、姿態預測和 Grad-CAM 圖幫助解釋結果。原有按圖像切分可能把相關影格分散到訓練集和測試集；虛構序列實驗說明為何完整未見過的錄影能提供更有力的評估。"
+  "I built a custom CNN and adapted ResNet18, ResNet34, MobileNetV3 and ViT to predict 40 pitch–roll classes or a continuous depth value from 224×224 images. The developed residual CNN has 4,154,856 pose-classification parameters. The interactive architecture view follows features through each model and changes the output head between tasks. Saved microscopy, pose predictions and Grad-CAM maps help explain the results. The original image-level split can mix related frames between training and testing; a fictional sequence exercise shows why unseen recordings provide a stronger evaluation.": [
+    "我构建了自定义 CNN，并将 ResNet18、ResNet34、MobileNetV3 和 ViT 改造为从 224×224 图像预测 40 种俯仰—横滚类别或连续深度值。开发后的残差 CNN 姿态分类模型包含 4,154,856 个参数。交互架构视图沿各模型追踪特征，并可切换两种任务的输出头。保存的显微图像、姿态预测和 Grad-CAM 图帮助解释结果。原有按图像切分可能把相关帧分散到训练集和测试集；虚构序列实验说明为何完整未见过的录像能提供更有力的评估。",
+    "我建置了自訂 CNN，並將 ResNet18、ResNet34、MobileNetV3 和 ViT 改造為從 224×224 圖像預測 40 種俯仰—橫滾類別或連續深度值。開發後的殘差 CNN 姿態分類模型包含 4,154,856 個參數。互動架構視圖沿各模型追蹤特徵，並可切換兩種任務的輸出頭。保存的顯微圖像、姿態預測和 Grad-CAM 圖幫助解釋結果。原有按圖像切分可能把相關影格分散到訓練集和測試集；虛構序列實驗說明為何完整未見過的錄影能提供更有力的評估。"
   ],
   "ResNet": [
     "ResNet",
@@ -1230,9 +1230,9 @@ export const projectNarrativeCopy = {
     "用更少测量重建心脏 MRI，同时检查解剖保真度、不确定性及与采集数据的一致性。",
     "用更少測量重建心臟 MRI，同時檢查解剖保真度、不確定性及與採集資料的一致性。"
   ],
-  "Samuel designed a four-level residual U-Net with three learnable soft data-consistency steps for retrospectively undersampled cardiac MRI. The study compares MC-dropout and deep ensembles, tests adversarial perturbations and MR-to-CT shift, and measures the effect on eight-class segmentation. At R=4×, the reported reconstruction reaches 31.90 dB PSNR and 0.889 SSIM. Synthetic browser experiments connect acquisition budget, error distribution and uncertainty ranking to the resulting measures.": [
-    "Samuel 为回顾性欠采样心脏 MRI 设计了四层残差 U-Net 和三个可学习的软数据一致性步骤。研究比较 MC-dropout 与深度集成，测试对抗扰动和 MR 到 CT 的分布变化，并衡量对八类分割的影响。在 R=4× 时，报告的重建结果达到 31.90 dB PSNR 和 0.889 SSIM。浏览器合成实验将采集预算、误差分布和不确定性排序与相应指标联系起来。",
-    "Samuel 為回顧性欠取樣心臟 MRI 設計了四層殘差 U-Net 和三個可學習的軟資料一致性步驟。研究比較 MC-dropout 與深度集成，測試對抗擾動和 MR 到 CT 的分佈變化，並衡量對八類分割的影響。在 R=4× 時，報告的重建結果達到 31.90 dB PSNR 和 0.889 SSIM。瀏覽器合成實驗將採集預算、誤差分佈和不確定性排序與相應指標聯繫起來。"
+  "I designed a four-level residual U-Net with three learnable soft data-consistency steps for retrospectively undersampled cardiac MRI. The study compares MC-dropout and deep ensembles, tests adversarial perturbations and MR-to-CT shift, and measures the effect on eight-class segmentation. At R=4×, the reported reconstruction reaches 31.90 dB PSNR and 0.889 SSIM. Synthetic browser experiments connect acquisition budget, error distribution and uncertainty ranking to the resulting measures.": [
+    "我为回顾性欠采样心脏 MRI 设计了四层残差 U-Net 和三个可学习的软数据一致性步骤。研究比较 MC-dropout 与深度集成，测试对抗扰动和 MR 到 CT 的分布变化，并衡量对八类分割的影响。在 R=4× 时，报告的重建结果达到 31.90 dB PSNR 和 0.889 SSIM。浏览器合成实验将采集预算、误差分布和不确定性排序与相应指标联系起来。",
+    "我為回顧性欠取樣心臟 MRI 設計了四層殘差 U-Net 和三個可學習的軟資料一致性步驟。研究比較 MC-dropout 與深度集成，測試對抗擾動和 MR 到 CT 的分佈變化，並衡量對八類分割的影響。在 R=4× 時，報告的重建結果達到 31.90 dB PSNR 和 0.889 SSIM。瀏覽器合成實驗將採集預算、誤差分佈和不確定性排序與相應指標聯繫起來。"
   ],
   "U-Net": [
     "U-Net",
@@ -1306,9 +1306,9 @@ export const projectNarrativeCopy = {
     "用 Fourier 算子、网格消息传递和规则网格 U-Net 学习近似昂贵的流体模拟。",
     "用 Fourier 算子、網格消息傳遞和規則網格 U-Net 學習近似昂貴的流體模擬。"
   ],
-  "Samuel completed and trained three neural approaches to predicting velocity and pressure. The Fourier operator maps ten input frames to ten future frames, MeshGraphNet predicts repeatedly on the original mesh, and U-Net predicts the next rasterised field. The browser explains their representations with an animated Fourier walkthrough, graph processors and selectable skip connections. Saved GNN sequences include 20 rollout frames and 30 simulation frames showing horizontal velocity, vertical velocity and pressure. Runs use different evaluation conditions, including a shifted U-Net result, so they do not form a common accuracy ranking.": [
-    "Samuel 完成并训练了三种预测速度和压力的神经网络方法。Fourier 算子把十帧输入映射为未来十帧，MeshGraphNet 在原始网格上反复预测，U-Net 则预测下一帧栅格化场。浏览器通过 Fourier 动画、图处理模块和可选跳跃连接解释表示方式。保存的 GNN 序列包含 20 帧递推预测与 30 帧模拟，展示水平速度、垂直速度和压力。各实验评估条件不同，U-Net 还使用了发生分布变化的数据，因此这些结果不能构成统一的准确度排名。",
-    "Samuel 完成並訓練了三種預測速度和壓力的神經網路方法。Fourier 算子把十影格輸入映射為未來十影格，MeshGraphNet 在原始網格上反覆預測，U-Net 則預測下一影格柵格化場。瀏覽器透過 Fourier 動畫、圖處理模塊和可選跳躍連接解釋表示方式。保存的 GNN 序列包含 20 個遞推預測影格與 30 個模擬影格，展示水平速度、垂直速度和壓力。各實驗評估條件不同，U-Net 還使用了發生分佈變化的資料，因此這些結果不能構成統一的準確度排名。"
+  "I completed and trained three neural approaches to predicting velocity and pressure. The Fourier operator maps ten input frames to ten future frames, MeshGraphNet predicts repeatedly on the original mesh, and U-Net predicts the next rasterised field. The browser explains their representations with an animated Fourier walkthrough, graph processors and selectable skip connections. Saved GNN sequences include 20 rollout frames and 30 simulation frames showing horizontal velocity, vertical velocity and pressure. Runs use different evaluation conditions, including a shifted U-Net result, so they do not form a common accuracy ranking.": [
+    "我完成并训练了三种预测速度和压力的神经网络方法。Fourier 算子把十帧输入映射为未来十帧，MeshGraphNet 在原始网格上反复预测，U-Net 则预测下一帧栅格化场。浏览器通过 Fourier 动画、图处理模块和可选跳跃连接解释表示方式。保存的 GNN 序列包含 20 帧递推预测与 30 帧模拟，展示水平速度、垂直速度和压力。各实验评估条件不同，U-Net 还使用了发生分布变化的数据，因此这些结果不能构成统一的准确度排名。",
+    "我完成並訓練了三種預測速度和壓力的神經網路方法。Fourier 算子把十影格輸入映射為未來十影格，MeshGraphNet 在原始網格上反覆預測，U-Net 則預測下一影格柵格化場。瀏覽器透過 Fourier 動畫、圖處理模塊和可選跳躍連接解釋表示方式。保存的 GNN 序列包含 20 個遞推預測影格與 30 個模擬影格，展示水平速度、垂直速度和壓力。各實驗評估條件不同，U-Net 還使用了發生分佈變化的資料，因此這些結果不能構成統一的準確度排名。"
   ],
   "FNO": [
     "FNO",
@@ -1382,9 +1382,9 @@ export const projectNarrativeCopy = {
     "预测一氧化碳浓度，同时平衡回归精度、可解释性和假设的传感器预算。",
     "預測一氧化碳濃度，同時平衡迴歸精度、可解釋性和假設的感測器預算。"
   ],
-  "Samuel used 7,674 ambient observations to predict CO(GT) from eleven sensor and environmental signals. Imputation and scaling were fitted on the training partition before comparing OLS, Ridge, LASSO and polynomial and RBF kernel models. A later exercise connects selected signals with assumed hardware prices. The browser presents the five recorded models and lets visitors explore sensor-cost and interpretability choices. The random 80/20 split does not establish performance at a future time or a new site.": [
-    "Samuel 使用 7,674 次环境观测，根据十一项传感器及环境信号预测 CO(GT)。在训练集上拟合缺失值填补与缩放，再比较 OLS、Ridge、LASSO、多项式和 RBF 核模型。后续练习将选定信号与假设硬件价格连接起来。浏览器展示五种记录模型，并支持探索传感器成本和可解释性选择。随机 80/20 切分不能证明未来时间或新地点的性能。",
-    "Samuel 使用 7,674 次環境觀測，根據十一項感測器及環境訊號預測 CO(GT)。在訓練集上擬合缺失值填補與縮放，再比較 OLS、Ridge、LASSO、多項式和 RBF 核模型。後續練習將選定訊號與假設硬體價格連接起來。瀏覽器展示五種記錄模型，並支持探索感測器成本和可解釋性選擇。隨機 80/20 切分不能證明未來時間或新地點的性能。"
+  "I used 7,674 ambient observations to predict CO(GT) from eleven sensor and environmental signals. Imputation and scaling were fitted on the training partition before comparing OLS, Ridge, LASSO and polynomial and RBF kernel models. A later exercise connects selected signals with assumed hardware prices. The browser presents the five recorded models and lets visitors explore sensor-cost and interpretability choices. The random 80/20 split does not establish performance at a future time or a new site.": [
+    "我使用 7,674 次环境观测，根据十一项传感器及环境信号预测 CO(GT)。在训练集上拟合缺失值填补与缩放，再比较 OLS、Ridge、LASSO、多项式和 RBF 核模型。后续练习将选定信号与假设硬件价格连接起来。浏览器展示五种记录模型，并支持探索传感器成本和可解释性选择。随机 80/20 切分不能证明未来时间或新地点的性能。",
+    "我使用 7,674 次環境觀測，根據十一項感測器及環境訊號預測 CO(GT)。在訓練集上擬合缺失值填補與縮放，再比較 OLS、Ridge、LASSO、多項式和 RBF 核模型。後續練習將選定訊號與假設硬體價格連接起來。瀏覽器展示五種記錄模型，並支持探索感測器成本和可解釋性選擇。隨機 80/20 切分不能證明未來時間或新地點的性能。"
   ],
   "scikit-learn": [
     "scikit-learn",
@@ -1454,9 +1454,9 @@ export const projectNarrativeCopy = {
     "在漏报攻击与误报成本不同的情况下，比较网络流量分类器与告警阈值。",
     "在漏報攻擊與誤報成本不同的情況下，比較網路流量分類器與告警閾值。"
   ],
-  "Samuel compared logistic and kernel classifiers, ROC behaviour and an expected-cost threshold model on 10,000 labelled network-flow rows. The work illustrates how operational priorities change the alert threshold. Later review found 4,904 duplicate rows beyond their first occurrence and 54.2% exact test-to-training overlap, alongside preprocessing and threshold-selection leakage. The recorded curves therefore explain the historical workflow, but require a clean, separate evaluation before they can support a detection-performance claim.": [
-    "Samuel 在 10,000 条标记网络流量记录上比较逻辑回归与核分类器、ROC 表现和期望成本阈值模型，展示业务优先级如何改变告警阈值。后续检查发现首次出现之外还有 4,904 条重复记录，测试集与训练集精确重叠达到 54.2%，同时存在预处理和阈值选择泄漏。因此记录曲线可以解释当时的流程，但要支持检测性能结论，仍需干净、独立的评估。",
-    "Samuel 在 10,000 條標記網路流量記錄上比較邏輯迴歸與核分類器、ROC 表現和期望成本閾值模型，展示業務優先級如何改變告警閾值。後續檢查發現首次出現之外還有 4,904 條重複記錄，測試集與訓練集精確重疊達到 54.2%，同時存在預處理和閾值選擇洩漏。因此記錄曲線可以解釋當時的流程，但要支持檢測性能結論，仍需乾淨、獨立的評估。"
+  "I compared logistic and kernel classifiers, ROC behaviour and an expected-cost threshold model on 10,000 labelled network-flow rows. The work illustrates how operational priorities change the alert threshold. Later review found 4,904 duplicate rows beyond their first occurrence and 54.2% exact test-to-training overlap, alongside preprocessing and threshold-selection leakage. The recorded curves therefore explain the historical workflow, but require a clean, separate evaluation before they can support a detection-performance claim.": [
+    "我在 10,000 条标记网络流量记录上比较逻辑回归与核分类器、ROC 表现和期望成本阈值模型，展示业务优先级如何改变告警阈值。后续检查发现首次出现之外还有 4,904 条重复记录，测试集与训练集精确重叠达到 54.2%，同时存在预处理和阈值选择泄漏。因此记录曲线可以解释当时的流程，但要支持检测性能结论，仍需干净、独立的评估。",
+    "我在 10,000 條標記網路流量記錄上比較邏輯迴歸與核分類器、ROC 表現和期望成本閾值模型，展示業務優先級如何改變告警閾值。後續檢查發現首次出現之外還有 4,904 條重複記錄，測試集與訓練集精確重疊達到 54.2%，同時存在預處理和閾值選擇洩漏。因此記錄曲線可以解釋當時的流程，但要支持檢測性能結論，仍需乾淨、獨立的評估。"
   ],
   "Data analysis": [
     "数据分析",
@@ -1566,9 +1566,9 @@ export const projectNarrativeCopy = {
     "通过不确定性估计、概率校准和共形预测，研究何时可以信任模型置信度。",
     "透過不確定性估計、概率校準和共形預測，研究何時可以信任模型置信度。"
   ],
-  "Samuel’s computational study moves from bootstrap and Bayesian uncertainty to temperature scaling and split-conformal prediction. Temperature scaling reduced ECE from 0.03994 to 0.03792 but slightly worsened test negative log-likelihood, showing that calibration measures can disagree. A recorded exchangeable-data experiment achieved 95.75% empirical coverage. The interactive companion explores why changing the input distribution can break that coverage guarantee.": [
-    "Samuel 的计算研究从自助重采样与贝叶斯不确定性，扩展到温度缩放和分割共形预测。温度缩放使 ECE 从 0.03994 降至 0.03792，但测试负对数似然略有恶化，说明校准指标可能给出不同结论。一个满足可交换性的记录实验达到 95.75% 经验覆盖率。交互配套工具探索输入分布变化为何可能破坏覆盖保证。",
-    "Samuel 的計算研究從自助重抽樣與貝氏不確定性，擴展到溫度縮放和分割共形預測。溫度縮放使 ECE 從 0.03994 降至 0.03792，但測試負對數似然略有惡化，說明校準指標可能給出不同結論。一個滿足可交換性的記錄實驗達到 95.75% 經驗覆蓋率。互動配套工具探索輸入分佈變化為何可能破壞覆蓋保證。"
+  "My computational study moves from bootstrap and Bayesian uncertainty to temperature scaling and split-conformal prediction. Temperature scaling reduced ECE from 0.03994 to 0.03792 but slightly worsened test negative log-likelihood, showing that calibration measures can disagree. A recorded exchangeable-data experiment achieved 95.75% empirical coverage. The interactive companion explores why changing the input distribution can break that coverage guarantee.": [
+    "我的计算研究从自助重采样与贝叶斯不确定性，扩展到温度缩放和分割共形预测。温度缩放使 ECE 从 0.03994 降至 0.03792，但测试负对数似然略有恶化，说明校准指标可能给出不同结论。一个满足可交换性的记录实验达到 95.75% 经验覆盖率。交互配套工具探索输入分布变化为何可能破坏覆盖保证。",
+    "我的計算研究從自助重抽樣與貝氏不確定性，擴展到溫度縮放和分割共形預測。溫度縮放使 ECE 從 0.03994 降至 0.03792，但測試負對數似然略有惡化，說明校準指標可能給出不同結論。一個滿足可交換性的記錄實驗達到 95.75% 經驗覆蓋率。互動配套工具探索輸入分佈變化為何可能破壞覆蓋保證。"
   ],
   "Bayesian modelling": [
     "贝叶斯建模",
@@ -1622,9 +1622,9 @@ export const projectNarrativeCopy = {
     "平衡自动处理覆盖率、不确定性和高成本误判，将欺诈预测与人工审阅结合起来。",
     "平衡自動處理覆蓋率、不確定性和高成本誤判，將欺詐預測與人工審閱結合起來。"
   ],
-  "Samuel Zhang, Miltiades Georgantzis and Sulieman Ibsais co-developed a study combining isotonic-calibrated XGBoost, sequential Bayesian uncertainty and a confidence-or-entropy deferral rule. A CVaR-aware threshold score considers the worst retained losses as well as average performance. The reported operating point gives 89.5% system accuracy at 64% coverage. Fictional claims in the browser let visitors inspect the arithmetic and the small tail sample; they do not provide independent validation.": [
-    "Samuel Zhang、Miltiades Georgantzis 和 Sulieman Ibsais 合作研究了保序校准的 XGBoost、序贯贝叶斯不确定性和置信度或熵触发的转交规则。考虑 CVaR 的阈值评分同时关注最严重的保留损失与平均表现。报告的工作点在 64% 覆盖率下达到 89.5% 系统准确率。浏览器中的虚构理赔用于检查计算和很小的尾部样本，并不提供独立验证。",
-    "Samuel Zhang、Miltiades Georgantzis 和 Sulieman Ibsais 合作研究了保序校準的 XGBoost、序貫貝氏不確定性和置信度或熵觸發的轉交規則。考慮 CVaR 的閾值評分同時關注最嚴重的保留損失與平均表現。報告的工作點在 64% 覆蓋率下達到 89.5% 系統準確率。瀏覽器中的虛構理賠用於檢查計算和很小的尾部樣本，並不提供獨立驗證。"
+  "I co-developed a study with Miltiades Georgantzis and Sulieman Ibsais, combining isotonic-calibrated XGBoost, sequential Bayesian uncertainty and a confidence-or-entropy deferral rule. A CVaR-aware threshold score considers the worst retained losses as well as average performance. The reported operating point gives 89.5% system accuracy at 64% coverage. Fictional claims in the browser let visitors inspect the arithmetic and the small tail sample; they do not provide independent validation.": [
+    "我与 Miltiades Georgantzis 和 Sulieman Ibsais 合作研究了保序校准的 XGBoost、序贯贝叶斯不确定性和置信度或熵触发的转交规则。考虑 CVaR 的阈值评分同时关注最严重的保留损失与平均表现。报告的工作点在 64% 覆盖率下达到 89.5% 系统准确率。浏览器中的虚构理赔用于检查计算和很小的尾部样本，并不提供独立验证。",
+    "我與 Miltiades Georgantzis 和 Sulieman Ibsais 合作研究了保序校準的 XGBoost、序貫貝氏不確定性和置信度或熵觸發的轉交規則。考慮 CVaR 的閾值評分同時關注最嚴重的保留損失與平均表現。報告的工作點在 64% 覆蓋率下達到 89.5% 系統準確率。瀏覽器中的虛構理賠用於檢查計算和很小的尾部樣本，並不提供獨立驗證。"
   ],
   "XGBoost": [
     "XGBoost",
@@ -1766,9 +1766,9 @@ export const projectNarrativeCopy = {
     "探索成熟企业如何通过机会主义者、赋能者、倡导者和生产者四种模式组织创新。",
     "探索成熟企業如何透過機會主義者、賦能者、倡導者和生產者四種模式組織創新。"
   ],
-  "Samuel’s innovation-management reflection connects disruption and organisational ambidexterity with two practical questions: who owns exploratory work, and who controls its resources? A two-axis diagram compares the four corporate-entrepreneurship structures. The browser adds a fictional 100-token portfolio and transition questions about evidence, integration and runway. Its concentration measures describe the chosen allocation; the scenarios are discussion aids rather than validated strategic advice.": [
-    "Samuel 的创新管理思考将颠覆和组织双元性与两个实际问题联系起来：谁负责探索工作，谁掌握其资源？双轴图比较四种企业创业结构。浏览器加入虚构的 100 单位资源组合，以及关于证据、整合和资金续航的转型问题。集中度指标描述所选分配；这些情境帮助讨论，不是经过验证的战略建议。",
-    "Samuel 的創新管理思考將顛覆和組織雙元性與兩個實際問題聯繫起來：誰負責探索工作，誰掌握其資源？雙軸圖比較四種企業創業結構。瀏覽器加入虛構的 100 單位資源組合，以及關於證據、整合和資金續航的轉型問題。集中度指標描述所選分配；這些情境幫助討論，不是經過驗證的戰略建議。"
+  "My innovation-management reflection connects disruption and organisational ambidexterity with two practical questions: who owns exploratory work, and who controls its resources? A two-axis diagram compares the four corporate-entrepreneurship structures. The browser adds a fictional 100-token portfolio and transition questions about evidence, integration and runway. Its concentration measures describe the chosen allocation; the scenarios are discussion aids rather than validated strategic advice.": [
+    "我的创新管理思考将颠覆和组织双元性与两个实际问题联系起来：谁负责探索工作，谁掌握其资源？双轴图比较四种企业创业结构。浏览器加入虚构的 100 单位资源组合，以及关于证据、整合和资金续航的转型问题。集中度指标描述所选分配；这些情境帮助讨论，不是经过验证的战略建议。",
+    "我的創新管理思考將顛覆和組織雙元性與兩個實際問題聯繫起來：誰負責探索工作，誰掌握其資源？雙軸圖比較四種企業創業結構。瀏覽器加入虛構的 100 單位資源組合，以及關於證據、整合和資金續航的轉型問題。集中度指標描述所選分配；這些情境幫助討論，不是經過驗證的戰略建議。"
   ],
   "Innovation strategy": [
     "创新战略",
@@ -1838,9 +1838,9 @@ export const projectNarrativeCopy = {
     "检验创业项目的客户证据、市场计算和融资要求能否支撑可信的下一步。",
     "檢驗創業專案的客戶證據、市場計算和融資要求能否支撐可信的下一步。"
   ],
-  "Samuel’s venture-writing exercises distinguish AI-generated pitch drafts from human critique, examining specificity, traction and investor relevance. The browser carries those questions into three fictional businesses. Visitors can strengthen or weaken supporting evidence, calculate a market from its segments and customer pipeline, and connect a funding ask with the runway needed for a milestone. All numeric assumptions are illustrative.": [
-    "Samuel 的创业写作练习区分 AI 生成的路演草稿与人工评议，检查具体程度、进展和投资者相关性。浏览器把这些问题转化为三个虚构企业。访客可以增强或削弱支持证据，根据细分市场和客户转化流程计算规模，并把融资额连接到完成里程碑所需的资金续航。所有数值假设均用于说明。",
-    "Samuel 的創業寫作練習區分 AI 生成的路演草稿與人工評議，檢查具體程度、進展和投資者相關性。瀏覽器把這些問題轉化為三個虛構企業。訪客可以增強或削弱佐證，根據細分市場和客戶轉化流程計算規模，並把融資額連接到完成里程碑所需的資金續航。所有數值假設均用於說明。"
+  "My venture-writing exercises distinguish AI-generated pitch drafts from human critique, examining specificity, traction and investor relevance. The browser carries those questions into three fictional businesses. Visitors can strengthen or weaken supporting evidence, calculate a market from its segments and customer pipeline, and connect a funding ask with the runway needed for a milestone. All numeric assumptions are illustrative.": [
+    "我的创业写作练习区分 AI 生成的路演草稿与人工评议，检查具体程度、进展和投资者相关性。浏览器把这些问题转化为三个虚构企业。访客可以增强或削弱支持证据，根据细分市场和客户转化流程计算规模，并把融资额连接到完成里程碑所需的资金续航。所有数值假设均用于说明。",
+    "我的創業寫作練習區分 AI 生成的路演草稿與人工評議，檢查具體程度、進展和投資者相關性。瀏覽器把這些問題轉化為三個虛構企業。訪客可以增強或削弱佐證，根據細分市場和客戶轉化流程計算規模，並把融資額連接到完成里程碑所需的資金續航。所有數值假設均用於說明。"
   ],
   "Venture critique": [
     "创业提案评议",
@@ -1910,9 +1910,9 @@ export const projectNarrativeCopy = {
     "用 Julia 和 Clapeyron 将分子相互作用与流体压力、相平衡和临界行为联系起来。",
     "用 Julia 和 Clapeyron 將分子相互作用與流體壓力、相平衡和臨界行為聯繫起來。"
   ],
-  "Samuel developed notebooks for bulk and energy properties, saturation, bubble/dew calculations and pure and mixture critical behaviour using PC-SAFT and other SAFT and cubic equations of state. The browser focuses on the non-associating PC-SAFT calculation: temperature, density, composition and segment parameters feed effective diameters, mixing rules, hard-chain and dispersion energies, then compressibility and pressure. The invented Fluid A/B example supports sensitivity exploration rather than validated compound predictions.": [
-    "Samuel 编写笔记本，使用 PC-SAFT、其他 SAFT 及立方状态方程计算体相和能量性质、饱和、泡点/露点以及纯物质和混合物的临界行为。浏览器聚焦非缔合 PC-SAFT：温度、密度、组成和链段参数进入有效直径、混合规则、硬链及色散能，进而得到压缩因子和压力。虚构 Fluid A/B 示例用于探索敏感性，不代表已验证的具体化合物预测。",
-    "Samuel 編寫筆記本，使用 PC-SAFT、其他 SAFT 及立方狀態方程計算體相和能量性質、飽和、泡點/露點以及純物質和混合物的臨界行為。瀏覽器聚焦非締合 PC-SAFT：溫度、密度、組成和鏈段參數進入有效直徑、混合規則、硬鏈及色散能，進而得到壓縮因子和壓力。虛構 Fluid A/B 示例用於探索敏感性，不代表已驗證的具體化合物預測。"
+  "I developed notebooks for bulk and energy properties, saturation, bubble/dew calculations and pure and mixture critical behaviour using PC-SAFT and other SAFT and cubic equations of state. The browser focuses on the non-associating PC-SAFT calculation: temperature, density, composition and segment parameters feed effective diameters, mixing rules, hard-chain and dispersion energies, then compressibility and pressure. The invented Fluid A/B example supports sensitivity exploration rather than validated compound predictions.": [
+    "我编写笔记本，使用 PC-SAFT、其他 SAFT 及立方状态方程计算体相和能量性质、饱和、泡点/露点以及纯物质和混合物的临界行为。浏览器聚焦非缔合 PC-SAFT：温度、密度、组成和链段参数进入有效直径、混合规则、硬链及色散能，进而得到压缩因子和压力。虚构 Fluid A/B 示例用于探索敏感性，不代表已验证的具体化合物预测。",
+    "我編寫筆記本，使用 PC-SAFT、其他 SAFT 及立方狀態方程計算體相和能量性質、飽和、泡點/露點以及純物質和混合物的臨界行為。瀏覽器聚焦非締合 PC-SAFT：溫度、密度、組成和鏈段參數進入有效直徑、混合規則、硬鏈及色散能，進而得到壓縮因子和壓力。虛構 Fluid A/B 示例用於探索敏感性，不代表已驗證的具體化合物預測。"
   ],
   "Clapeyron.jl": [
     "Clapeyron.jl",
@@ -1978,9 +1978,9 @@ export const projectNarrativeCopy = {
     "连接熔融热力学、液相相互作用和浓度单位，模拟固体在溶剂中的溶解量。",
     "連接熔融熱力學、液相相互作用和濃度單位，模擬固體在溶劑中的溶解量。"
   ],
-  "Samuel built Julia and Clapeyron workflows that combine a solid fusion model with a liquid-phase model, solve solid–liquid equilibrium and compare concentrations with observations. Converting mole fraction into milligrams per gram of solvent makes the calculation useful on the laboratory reporting basis. The browser uses invented Compound Q and Solvent L values to expose a log-space equilibrium solver, activity corrections and separate calibration and holdout rows.": [
-    "Samuel 构建了 Julia 和 Clapeyron 工作流，将固体熔融模型与液相模型结合，求解固液平衡并与观测浓度比较。将摩尔分数转换为每克溶剂中的毫克数，使计算符合实验室的报告单位。浏览器使用虚构 Compound Q 和 Solvent L，展示对数空间平衡求解、活度修正，以及分开的校准和留出数据。",
-    "Samuel 建置了 Julia 和 Clapeyron 工作流，將固體熔融模型與液相模型結合，求解固液平衡並與觀測濃度比較。將摩爾分數轉換為每克溶劑中的毫克數，使計算符合實驗室的報告單位。瀏覽器使用虛構 Compound Q 和 Solvent L，展示對數空間平衡求解、活度修正，以及分開的校準和留出資料。"
+  "I built Julia and Clapeyron workflows that combine a solid fusion model with a liquid-phase model, solve solid–liquid equilibrium and compare concentrations with observations. Converting mole fraction into milligrams per gram of solvent makes the calculation useful on the laboratory reporting basis. The browser uses invented Compound Q and Solvent L values to expose a log-space equilibrium solver, activity corrections and separate calibration and holdout rows.": [
+    "我构建了 Julia 和 Clapeyron 工作流，将固体熔融模型与液相模型结合，求解固液平衡并与观测浓度比较。将摩尔分数转换为每克溶剂中的毫克数，使计算符合实验室的报告单位。浏览器使用虚构 Compound Q 和 Solvent L，展示对数空间平衡求解、活度修正，以及分开的校准和留出数据。",
+    "我建置了 Julia 和 Clapeyron 工作流，將固體熔融模型與液相模型結合，求解固液平衡並與觀測濃度比較。將摩爾分數轉換為每克溶劑中的毫克數，使計算符合實驗室的報告單位。瀏覽器使用虛構 Compound Q 和 Solvent L，展示對數空間平衡求解、活度修正，以及分開的校準和留出資料。"
   ],
   "SolidHfus": [
     "SolidHfus",
@@ -2046,9 +2046,9 @@ export const projectNarrativeCopy = {
     "结合转动光谱与分子建模，区分柔性的 Exaltenone 和 Muscone 构象。",
     "結合轉動光譜與分子建模，區分柔性的 Exaltenone 和 Muscone 構象。"
   ],
-  "Samuel contributed to the King’s College London study and is named as a co-author in the 2025 ISMS conference programme. The work combines conformational search, theoretical spectroscopic predictions and 2–8 GHz CP-FTMW measurements to identify candidate structures. The group reported more than 20 Exaltenone and more than 30 Muscone conformations. Synthetic spectra and structures in the browser let visitors explore line matching, rotational constants and conformer comparisons.": [
-    "Samuel 参与了伦敦国王学院研究，并在 2025 年 ISMS 会议日程中列为共同作者。工作结合构象搜索、理论光谱预测和 2–8 GHz CP-FTMW 测量以识别候选结构。团队报告了超过 20 种 Exaltenone 和 30 种 Muscone 构象。浏览器中的合成光谱与结构支持探索谱线匹配、转动常数和构象比较。",
-    "Samuel 參與了倫敦國王學院研究，並在 2025 年 ISMS 會議日程中列為共同作者。工作結合構象搜尋、理論光譜預測和 2–8 GHz CP-FTMW 測量以識別候選結構。團隊報告了超過 20 種 Exaltenone 和 30 種 Muscone 構象。瀏覽器中的合成光譜與結構支持探索譜線匹配、轉動常數和構象比較。"
+  "I contributed to the King’s College London study and am named as a co-author in the 2025 ISMS conference programme. The work combines conformational search, theoretical spectroscopic predictions and 2–8 GHz CP-FTMW measurements to identify candidate structures. The group reported more than 20 Exaltenone and more than 30 Muscone conformations. Synthetic spectra and structures in the browser let visitors explore line matching, rotational constants and conformer comparisons.": [
+    "我参与了伦敦国王学院研究，并在 2025 年 ISMS 会议日程中列为共同作者。工作结合构象搜索、理论光谱预测和 2–8 GHz CP-FTMW 测量以识别候选结构。团队报告了超过 20 种 Exaltenone 和 30 种 Muscone 构象。浏览器中的合成光谱与结构支持探索谱线匹配、转动常数和构象比较。",
+    "我參與了倫敦國王學院研究，並在 2025 年 ISMS 會議日程中列為共同作者。工作結合構象搜尋、理論光譜預測和 2–8 GHz CP-FTMW 測量以識別候選結構。團隊報告了超過 20 種 Exaltenone 和 30 種 Muscone 構象。瀏覽器中的合成光譜與結構支持探索譜線匹配、轉動常數和構象比較。"
   ],
   "CP-FTMW spectroscopy": [
     "CP-FTMW 光谱",
@@ -2118,9 +2118,9 @@ export const projectNarrativeCopy = {
     "小巧的 MATLAB App Designer 工具，将两列光谱导出数据变为可展示的图表，支持精确频率导航与高分辨率导出。",
     "小巧的 MATLAB App Designer 工具，將兩列光譜匯出資料變為可展示的圖表，支持精確頻率導覽與高解析度匯出。"
   ],
-  "Samuel built a MATLAB App Designer utility that loads frequency and intensity columns, adds titles and axis labels, and provides grid, legend and colour controls. Direct or centred frequency windows and exact 0.1, 10 and 100 MHz pans make it easier to inspect spectral lines. High-resolution export supports figures for reports and presentations. The browser uses a generated trace to reproduce these plotting mechanics.": [
-    "Samuel 构建了 MATLAB App Designer 工具，可加载频率与强度列，添加标题和坐标标签，并控制网格、图例和颜色。直接或居中的频率窗口，以及精确的 0.1、10 和 100 MHz 平移，让谱线检查更方便。高分辨率导出适用于报告和展示图。浏览器用生成的谱线重现这些绘图操作。",
-    "Samuel 建置了 MATLAB App Designer 工具，可加載頻率與強度列，添加標題和座標標籤，並控制網格、圖例和顏色。直接或居中的頻率窗口，以及精確的 0.1、10 和 100 MHz 平移，讓譜線檢查更方便。高解析度匯出適用於報告和展示圖。瀏覽器用生成的譜線重現這些繪圖操作。"
+  "I built a MATLAB App Designer utility that loads frequency and intensity columns, adds titles and axis labels, and provides grid, legend and colour controls. Direct or centred frequency windows and exact 0.1, 10 and 100 MHz pans make it easier to inspect spectral lines. High-resolution export supports figures for reports and presentations. The browser uses a generated trace to reproduce these plotting mechanics.": [
+    "我构建了 MATLAB App Designer 工具，可加载频率与强度列，添加标题和坐标标签，并控制网格、图例和颜色。直接或居中的频率窗口，以及精确的 0.1、10 和 100 MHz 平移，让谱线检查更方便。高分辨率导出适用于报告和展示图。浏览器用生成的谱线重现这些绘图操作。",
+    "我建置了 MATLAB App Designer 工具，可加載頻率與強度列，添加標題和座標標籤，並控制網格、圖例和顏色。直接或居中的頻率窗口，以及精確的 0.1、10 和 100 MHz 平移，讓譜線檢查更方便。高解析度匯出適用於報告和展示圖。瀏覽器用生成的譜線重現這些繪圖操作。"
   ],
   "MATLAB App Designer": [
     "MATLAB App Designer",
@@ -2186,9 +2186,9 @@ export const projectNarrativeCopy = {
     "跨操作系统、处理器架构及 CPU/GPU 配置，自动搭建科学 Python 与深度学习环境。",
     "跨操作系統、處理器架構及 CPU/GPU 配置，自動搭建科學 Python 與深度學習環境。"
   ],
-  "Samuel built a Bash installer that detects the host and accelerator, creates a Python 3.13 Conda environment and installs a scientific package set with PyTorch, TensorFlow and the Hugging Face CLI. Platform-specific routes and fallbacks are followed by import and device checks. The browser planner lets visitors choose example hosts, simulate installation failures and compare more cautious architecture and verification checks. It runs no installer and does not guarantee current compatibility for every historical package route.": [
-    "Samuel 编写 Bash 安装器，检测主机与加速器，创建 Python 3.13 Conda 环境，并安装 PyTorch、TensorFlow、Hugging Face CLI 和科学软件包。按平台选择的安装路线与回退步骤之后，会检查导入和设备。浏览器规划器让访客选择示例主机、模拟安装失败，并比较更谨慎的架构与验证检查。它不运行安装程序，也不保证所有历史软件包路线今天仍然兼容。",
-    "Samuel 編寫 Bash 安裝器，檢測主機與加速器，創建 Python 3.13 Conda 環境，並安裝 PyTorch、TensorFlow、Hugging Face CLI 和科學套件。按平臺選擇的安裝路線與替代路徑步驟之後，會檢查導入和設備。瀏覽器規劃器讓訪客選擇示例主機、模擬安裝失敗，並比較更謹慎的架構與驗證檢查。它不執行安裝程式，也不保證所有歷史套件路線今天仍然兼容。"
+  "I built a Bash installer that detects the host and accelerator, creates a Python 3.13 Conda environment and installs a scientific package set with PyTorch, TensorFlow and the Hugging Face CLI. Platform-specific routes and fallbacks are followed by import and device checks. The browser planner lets visitors choose example hosts, simulate installation failures and compare more cautious architecture and verification checks. It runs no installer and does not guarantee current compatibility for every historical package route.": [
+    "我编写 Bash 安装器，检测主机与加速器，创建 Python 3.13 Conda 环境，并安装 PyTorch、TensorFlow、Hugging Face CLI 和科学软件包。按平台选择的安装路线与回退步骤之后，会检查导入和设备。浏览器规划器让访客选择示例主机、模拟安装失败，并比较更谨慎的架构与验证检查。它不运行安装程序，也不保证所有历史软件包路线今天仍然兼容。",
+    "我編寫 Bash 安裝器，檢測主機與加速器，創建 Python 3.13 Conda 環境，並安裝 PyTorch、TensorFlow、Hugging Face CLI 和科學套件。按平臺選擇的安裝路線與替代路徑步驟之後，會檢查導入和設備。瀏覽器規劃器讓訪客選擇示例主機、模擬安裝失敗，並比較更謹慎的架構與驗證檢查。它不執行安裝程式，也不保證所有歷史套件路線今天仍然兼容。"
   ],
   "Bash": [
     "Bash",
@@ -2258,9 +2258,9 @@ export const projectNarrativeCopy = {
     "为 Windows 工作站配置 GPU 科学计算容器，并完成初始 GROMACS 拓扑准备。",
     "為 Windows 工作站配置 GPU 科學計算容器，並完成初始 GROMACS 拓撲準備。"
   ],
-  "Samuel configured WSL 2, CUDA, NVIDIA Container Toolkit and Docker, then completed a containerised GROMACS topology-preparation step on a small tutorial structure. The work documents how the environment layers fit together and the preparation stage reached. It does not include a completed molecular-dynamics run or a simulation-performance result.": [
-    "Samuel 配置 WSL 2、CUDA、NVIDIA Container Toolkit 和 Docker，随后在容器中对小型教学结构完成 GROMACS 拓扑准备。工作记录了各环境层如何协作及已完成的准备阶段，不包括完整分子动力学运行或模拟性能结果。",
-    "Samuel 配置 WSL 2、CUDA、NVIDIA Container Toolkit 和 Docker，隨後在容器中對小型教學結構完成 GROMACS 拓撲準備。工作記錄了各環境層如何協作及已完成的準備階段，不包括完整分子動力學執行或模擬性能結果。"
+  "I configured WSL 2, CUDA, NVIDIA Container Toolkit and Docker, then completed a containerised GROMACS topology-preparation step on a small tutorial structure. The work documents how the environment layers fit together and the preparation stage reached. It does not include a completed molecular-dynamics run or a simulation-performance result.": [
+    "我配置 WSL 2、CUDA、NVIDIA Container Toolkit 和 Docker，随后在容器中对小型教学结构完成 GROMACS 拓扑准备。工作记录了各环境层如何协作及已完成的准备阶段，不包括完整分子动力学运行或模拟性能结果。",
+    "我配置 WSL 2、CUDA、NVIDIA Container Toolkit 和 Docker，隨後在容器中對小型教學結構完成 GROMACS 拓撲準備。工作記錄了各環境層如何協作及已完成的準備階段，不包括完整分子動力學執行或模擬性能結果。"
   ],
   "GROMACS": [
     "GROMACS",
@@ -2322,9 +2322,9 @@ export const projectNarrativeCopy = {
     "构建并维护容器化家庭实验室，连接各项服务，定时备份数据库并配备恢复工具。",
     "建置並維護容器化家庭實驗室，連接各項服務，定時備份資料庫並配備恢復工具。"
   ],
-  "Samuel’s home lab combines application, data, access and operations services through Docker Compose. The browser models a six-service portion with one network, three volumes and two direct service dependencies, using fictional identifiers. Visitors can trace connections, simulate a failure and estimate storage for daily database backups. Backup and restore scripts are part of the system, but recovery time and successful restoration have not been verified by a retained drill.": [
-    "Samuel 的家庭实验室通过 Docker Compose 组合应用、数据、访问和运维服务。浏览器用虚构标识建模其中六个服务，包含一个网络、三个卷和两条直接服务依赖。访客可以追踪连接、模拟故障，并估算每日数据库备份的存储需求。系统包含备份与恢复脚本，但保留记录中没有演练验证恢复时间或成功恢复结果。",
-    "Samuel 的家庭實驗室透過 Docker Compose 組合應用、資料、訪問和運維服務。瀏覽器用虛構標識建模其中六個服務，包含一個網路、三個卷和兩條直接服務依賴。訪客可以追蹤連接、模擬故障，並估算每日資料庫備份的存儲需求。系統包含備份與恢復腳本，但保留記錄中沒有演練驗證恢復時間或成功恢復結果。"
+  "My home lab combines application, data, access and operations services through Docker Compose. The browser models a six-service portion with one network, three volumes and two direct service dependencies, using fictional identifiers. Visitors can trace connections, simulate a failure and estimate storage for daily database backups. Backup and restore scripts are part of the system, but recovery time and successful restoration have not been verified by a retained drill.": [
+    "我的家庭实验室通过 Docker Compose 组合应用、数据、访问和运维服务。浏览器用虚构标识建模其中六个服务，包含一个网络、三个卷和两条直接服务依赖。访客可以追踪连接、模拟故障，并估算每日数据库备份的存储需求。系统包含备份与恢复脚本，但保留记录中没有演练验证恢复时间或成功恢复结果。",
+    "我的家庭實驗室透過 Docker Compose 組合應用、資料、訪問和運維服務。瀏覽器用虛構標識建模其中六個服務，包含一個網路、三個卷和兩條直接服務依賴。訪客可以追蹤連接、模擬故障，並估算每日資料庫備份的存儲需求。系統包含備份與恢復腳本，但保留記錄中沒有演練驗證恢復時間或成功恢復結果。"
   ],
   "Shell": [
     "Shell",
@@ -2382,9 +2382,9 @@ export const projectNarrativeCopy = {
     "Julia 简化模型，探索情绪、交易规模和随机冲击如何共同形成单只股票的价格路径。",
     "Julia 簡化模型，探索情緒、交易規模和隨機衝擊如何共同形成單隻股票的價格路徑。"
   ],
-  "Samuel wrote a simulation in which five traders act across ten loops per day, producing 50 buy/sell events. Perturbed sentiment affects direction, quantity scales the random impact and a $0.01 floor limits sell-side price changes. The browser adds seeded replay, price and volume traces, and a comparison between the original partial-day statistics and a corrected full-day window. It illustrates the chosen event rules rather than predicting a real market.": [
-    "Samuel 编写的模拟中，五名交易者每天进行十轮操作，产生 50 个买卖事件。受扰动的情绪影响方向，数量放大随机价格冲击，卖出时价格受 0.01 美元下限约束。浏览器加入带种子重放、价格与成交量曲线，并比较原始部分时段统计与修正后的全日窗口。它解释所选事件规则，不预测真实市场。",
-    "Samuel 編寫的模擬中，五名交易者每天進行十輪操作，產生 50 個買賣事件。受擾動的情緒影響方向，數量放大隨機價格衝擊，賣出時價格受 0.01 美元下限約束。瀏覽器加入帶種子重放、價格與成交量曲線，並比較原始部分時段統計與修正後的全日窗口。它解釋所選事件規則，不預測真實市場。"
+  "I wrote a simulation in which five traders act across ten loops per day, producing 50 buy/sell events. Perturbed sentiment affects direction, quantity scales the random impact and a $0.01 floor limits sell-side price changes. The browser adds seeded replay, price and volume traces, and a comparison between the original partial-day statistics and a corrected full-day window. It illustrates the chosen event rules rather than predicting a real market.": [
+    "我编写的模拟中，五名交易者每天进行十轮操作，产生 50 个买卖事件。受扰动的情绪影响方向，数量放大随机价格冲击，卖出时价格受 0.01 美元下限约束。浏览器加入带种子重放、价格与成交量曲线，并比较原始部分时段统计与修正后的全日窗口。它解释所选事件规则，不预测真实市场。",
+    "我編寫的模擬中，五名交易者每天進行十輪操作，產生 50 個買賣事件。受擾動的情緒影響方向，數量放大隨機價格衝擊，賣出時價格受 0.01 美元下限約束。瀏覽器加入帶種子重放、價格與成交量曲線，並比較原始部分時段統計與修正後的全日窗口。它解釋所選事件規則，不預測真實市場。"
   ],
   "Random / Statistics": [
     "Random / Statistics",
@@ -2438,9 +2438,9 @@ export const projectNarrativeCopy = {
     "为疫情时期的应急行动开发决策支持和流程自动化。",
     "為疫情時期的應急行動開發決策支援和流程自動化。"
   ],
-  "During national service, Samuel built decision support from public epidemiological information and automated parts of emergency-operations workflows. The work connected changing data with planning and activation needs under time pressure. Only the public contribution and outcome-level context are shared.": [
-    "在国民服役期间，Samuel 利用公开流行病学信息构建决策支持，并自动化部分应急行动流程。在时间压力下，这项工作把变化中的数据与规划和启动需求联系起来。这里只分享公开贡献和成果层面的背景。",
-    "在國民服役期間，Samuel 利用公開流行病學資訊建置決策支援，並自動化部分應急行動流程。在時間壓力下，這項工作把變化中的資料與規劃和啟動需求聯繫起來。這裡只分享公開貢獻和成果層面的背景。"
+  "During national service, I built decision support from public epidemiological information and automated parts of emergency-operations workflows. The work connected changing data with planning and activation needs under time pressure. Only the public contribution and outcome-level context are shared.": [
+    "在国民服役期间，我利用公开流行病学信息构建决策支持，并自动化部分应急行动流程。在时间压力下，这项工作把变化中的数据与规划和启动需求联系起来。这里只分享公开贡献和成果层面的背景。",
+    "在國民服役期間，我利用公開流行病學資訊建置決策支援，並自動化部分應急行動流程。在時間壓力下，這項工作把變化中的資料與規劃和啟動需求聯繫起來。這裡只分享公開貢獻和成果層面的背景。"
   ],
   "Decision support": [
     "决策支持",
@@ -2502,9 +2502,9 @@ export const projectNarrativeCopy = {
     "将采样、高分子形状、分子运动与量子能量思想变为可运行实验的计算化学习题及扩展。",
     "將取樣、高分子形狀、分子運動與量子能量思想變為可執行實驗的計算化學習題及擴展。"
   ],
-  "Samuel completed and extended scientific-computing notebooks covering Lennard-Jones Metropolis sampling, ideal and self-avoiding polymer walks, velocity-Verlet dynamics, basis-set convergence and cation–π energies. Later Julia and React experiments extend that work. The browser lets visitors replay a seeded sampler, rotate three polymer models, step through a four-particle periodic trajectory and inspect energy drift, then compare recorded quantum-chemistry calculations.": [
-    "Samuel 完成并扩展了科学计算笔记本，内容包括 Lennard-Jones Metropolis 采样、理想和自回避高分子行走、velocity-Verlet 动力学、基组收敛和阳离子–π 能量，之后又用 Julia 和 React 扩展实验。浏览器支持带种子的采样、三种高分子模型旋转、四粒子周期轨迹逐步积分与能量漂移检查，以及记录的量子化学计算比较。",
-    "Samuel 完成並擴展了科學計算筆記本，內容包括 Lennard-Jones Metropolis 取樣、理想和自迴避高分子行走、velocity-Verlet 動力學、基組收斂和陽離子–π 能量，之後又用 Julia 和 React 擴展實驗。瀏覽器支持帶種子的取樣、三種高分子模型旋轉、四粒子週期軌跡逐步積分與能量漂移檢查，以及記錄的量子化學計算比較。"
+  "I completed and extended scientific-computing notebooks covering Lennard-Jones Metropolis sampling, ideal and self-avoiding polymer walks, velocity-Verlet dynamics, basis-set convergence and cation–π energies. Later Julia and React experiments extend that work. The browser lets visitors replay a seeded sampler, rotate three polymer models, step through a four-particle periodic trajectory and inspect energy drift, then compare recorded quantum-chemistry calculations.": [
+    "我完成并扩展了科学计算笔记本，内容包括 Lennard-Jones Metropolis 采样、理想和自回避高分子行走、velocity-Verlet 动力学、基组收敛和阳离子–π 能量，之后又用 Julia 和 React 扩展实验。浏览器支持带种子的采样、三种高分子模型旋转、四粒子周期轨迹逐步积分与能量漂移检查，以及记录的量子化学计算比较。",
+    "我完成並擴展了科學計算筆記本，內容包括 Lennard-Jones Metropolis 取樣、理想和自迴避高分子行走、velocity-Verlet 動力學、基組收斂和陽離子–π 能量，之後又用 Julia 和 React 擴展實驗。瀏覽器支持帶種子的取樣、三種高分子模型旋轉、四粒子週期軌跡逐步積分與能量漂移檢查，以及記錄的量子化學計算比較。"
   ],
   "Monte Carlo": [
     "蒙特卡洛",
@@ -2558,9 +2558,9 @@ export const projectNarrativeCopy = {
     "整合相关信息，让经纪人比较候选市场并决定承保安排。",
     "整合相關資訊，讓經紀人比較候選市場並決定承保安排。"
   ],
-  "Samuel built temporal learning-to-rank models, historical lead-share analysis and wording comparison, then integrated them into a broker-controlled prototype. The three signals remain separate because a combined recommendation has not been validated.": [
-    "Samuel 构建了按时间评估的学习排序模型、历史主承保份额分析和条款比较，再将其整合为由经纪人掌控的原型。由于综合推荐尚未验证，三个信号仍分别展示。",
-    "Samuel 建置了按時間評估的學習排序模型、歷史主承保份額分析和條款比較，再將其整合為由經紀人掌控的原型。由於綜合推薦尚未驗證，三個訊號仍分別展示。"
+  "I built temporal learning-to-rank models, historical lead-share analysis and wording comparison, then integrated them into a broker-controlled prototype. The three signals remain separate because a combined recommendation has not been validated.": [
+    "我构建了按时间评估的学习排序模型、历史主承保份额分析和条款比较，再将其整合为由经纪人掌控的原型。由于综合推荐尚未验证，三个信号仍分别展示。",
+    "我建置了按時間評估的學習排序模型、歷史主承保份額分析和條款比較，再將其整合為由經紀人掌控的原型。由於綜合推薦尚未驗證，三個訊號仍分別展示。"
   ],
   "risk and candidate markets → ranking, history and wording analysis → confidence and missing information → broker review": [
     "风险与候选市场 → 排序、历史和条款分析 → 置信度与缺失信息 → 经纪人审阅",
@@ -2582,9 +2582,9 @@ export const projectNarrativeCopy = {
     "找出岗位的主要要求，并将相关经历组织为合适的申请文档。",
     "找出職缺的主要要求，並將相關經歷組織為合適的申請文檔。"
   ],
-  "Samuel built a Python workflow that extracts role language, selects a pre-authored CV template and compiles it with LaTeX. The browser companion adds an explicit review of whether the example CV supports each suggested change.": [
-    "Samuel 构建了 Python 工作流，提取岗位语言、选择预先编写的简历模板，并用 LaTeX 编译。浏览器配套工具进一步明确检查示例简历是否支持每项建议修改。",
-    "Samuel 建置了 Python 工作流，提取職缺語言、選擇預先編寫的履歷模板，並用 LaTeX 編譯。瀏覽器配套工具進一步明確檢查示例履歷是否支持每項建議修改。"
+  "I built a Python workflow that extracts role language, selects a pre-authored CV template and compiles it with LaTeX. The browser companion adds an explicit review of whether the example CV supports each suggested change.": [
+    "我构建了 Python 工作流，提取岗位语言、选择预先编写的简历模板，并用 LaTeX 编译。浏览器配套工具进一步明确检查示例简历是否支持每项建议修改。",
+    "我建置了 Python 工作流，提取職缺語言、選擇預先編寫的履歷模板，並用 LaTeX 編譯。瀏覽器配套工具進一步明確檢查示例履歷是否支持每項建議修改。"
   ],
   "job description → role language → template and relevant experience → reviewed wording → application document": [
     "职位说明 → 岗位用语 → 模板与相关经历 → 审阅措辞 → 申请文档",
@@ -2606,9 +2606,9 @@ export const projectNarrativeCopy = {
     "建立可靠的交易历史，以支持有用的支出、定期付款和投资视图。",
     "建立可靠的交易歷史，以支持有用的支出、定期付款和投資視圖。"
   ],
-  "Samuel built provider parsers, transaction deduplication, balance checks and analytical views using FastAPI, SQLite and React. The demo uses a fictional ledger and lets visitors examine how repeated imports and changed transaction details are handled.": [
-    "Samuel 使用 FastAPI、SQLite 和 React 构建提供方解析器、交易去重、余额检查和分析视图。演示使用虚构账目，让访客检查重复导入及交易详情变化的处理方式。",
-    "Samuel 使用 FastAPI、SQLite 和 React 建置提供方解析器、交易去重、餘額檢查和分析視圖。演示使用虛構帳目，讓訪客檢查重複導入及交易詳情變化的處理方式。"
+  "I built provider parsers, transaction deduplication, balance checks and analytical views using FastAPI, SQLite and React. The demo uses a fictional ledger and lets visitors examine how repeated imports and changed transaction details are handled.": [
+    "我使用 FastAPI、SQLite 和 React 构建提供方解析器、交易去重、余额检查和分析视图。演示使用虚构账目，让访客检查重复导入及交易详情变化的处理方式。",
+    "我使用 FastAPI、SQLite 和 React 建置提供方解析器、交易去重、餘額檢查和分析視圖。演示使用虛構帳目，讓訪客檢查重複導入及交易詳情變化的處理方式。"
   ],
   "statements → normalised transactions → duplicate and balance checks → categories, transfers and recurring patterns → financial overview": [
     "账单 → 标准化交易 → 重复与余额检查 → 分类、转账和定期模式 → 财务概览",
@@ -2630,9 +2630,9 @@ export const projectNarrativeCopy = {
     "提供可用会议时间，并可靠地把选择的时段转化为确认预约。",
     "提供可用會議時間，並可靠地把選擇的時段轉化為確認預約。"
   ],
-  "Samuel implemented individual, weighted round-robin, collective and first-available scheduling, with local working hours, buffers, UTC reservations and final conflict checks. The product also connects calendar events, email and booking-management links.": [
-    "Samuel 实现了个人、加权轮询、集体和首位可用排期，加入本地工作时段、缓冲、UTC 预留和最终冲突检查。产品还连接日历事件、邮件和预约管理链接。",
-    "Samuel 實現了個人、加權輪詢、集體和首位可用排期，加入本地工作時段、緩衝、UTC 預留和最終衝突檢查。產品還連接日曆事件、郵件和預約管理連結。"
+  "I implemented individual, weighted round-robin, collective and first-available scheduling, with local working hours, buffers, UTC reservations and final conflict checks. The product also connects calendar events, email and booking-management links.": [
+    "我实现了个人、加权轮询、集体和首位可用排期，加入本地工作时段、缓冲、UTC 预留和最终冲突检查。产品还连接日历事件、邮件和预约管理链接。",
+    "我實現了個人、加權輪詢、集體和首位可用排期，加入本地工作時段、緩衝、UTC 預留和最終衝突檢查。產品還連接日曆事件、郵件和預約管理連結。"
   ],
   "working hours and busy calendars → candidate slots → host allocation → reservation and conflict check → confirmed booking": [
     "工作时段与忙碌日历 → 候选时间 → 主持人分配 → 预留与冲突检查 → 确认预约",
@@ -2654,9 +2654,9 @@ export const projectNarrativeCopy = {
     "把课程整合为每日学习习惯，记录进展并适应断续网络连接。",
     "把課程整合為每日學習習慣，記錄進展並適應斷續網路連接。"
   ],
-  "Samuel organised 56 daily agendas and 28 lesson hubs, built adaptive practice and spaced repetition, and added progress tracking across five language-skill areas. Local caching and revision checks preserve learner work when synchronisation conflicts occur.": [
-    "Samuel 编排了 56 份每日计划和 28 个课程中心，构建自适应练习与间隔复习，并分别跟踪五项语言技能。本地缓存和版本检查在同步冲突时保护学习成果。",
-    "Samuel 編排了 56 份每日計劃和 28 個課程中心，建置自適應練習與間隔複習，並分別跟蹤五項語言技能。本地快取和版本檢查在同步衝突時保護學習成果。"
+  "I organised 56 daily agendas and 28 lesson hubs, built adaptive practice and spaced repetition, and added progress tracking across five language-skill areas. Local caching and revision checks preserve learner work when synchronisation conflicts occur.": [
+    "我编排了 56 份每日计划和 28 个课程中心，构建自适应练习与间隔复习，并分别跟踪五项语言技能。本地缓存和版本检查在同步冲突时保护学习成果。",
+    "我編排了 56 份每日計劃和 28 個課程中心，建置自適應練習與間隔複習，並分別跟蹤五項語言技能。本地快取和版本檢查在同步衝突時保護學習成果。"
   ],
   "daily plan → lesson and practice → spaced recall → progress and writing feedback → saved learning record": [
     "每日计划 → 课程与练习 → 间隔复习 → 进度和写作反馈 → 已保存的学习记录",
@@ -2678,9 +2678,9 @@ export const projectNarrativeCopy = {
     "收集偏好、排除不合适课程，并让剩余课程的顺序可以理解。",
     "收集偏好、排除不合適課程，並讓剩餘課程的順序可以理解。"
   ],
-  "Samuel built a four-step course-discovery prototype with a React interface and supporting API services. Its initial ranking was random; the browser companion adds an illustrative weighted comparison so visitors can examine how preference choices affect the order.": [
-    "Samuel 构建了四步课程发现原型，包含 React 界面与配套 API 服务。初始排序是随机的；浏览器配套工具加入说明性加权比较，让访客检查偏好如何影响排序。",
-    "Samuel 建置了四步課程發現原型，包含 React 介面與配套 API 服務。初始排序是隨機的；瀏覽器配套工具加入說明性加權比較，讓訪客檢查偏好如何影響排序。"
+  "I built a four-step course-discovery prototype with a React interface and supporting API services. Its initial ranking was random; the browser companion adds an illustrative weighted comparison so visitors can examine how preference choices affect the order.": [
+    "我构建了四步课程发现原型，包含 React 界面与配套 API 服务。初始排序是随机的；浏览器配套工具加入说明性加权比较，让访客检查偏好如何影响排序。",
+    "我建置了四步課程發現原型，包含 React 介面與配套 API 服務。初始排序是隨機的；瀏覽器配套工具加入說明性加權比較，讓訪客檢查偏好如何影響排序。"
   ],
   "learner preferences → course filters → candidate courses → random or weighted ordering → comparison": [
     "学习偏好 → 课程筛选 → 候选课程 → 随机或加权排序 → 比较",
@@ -2702,9 +2702,9 @@ export const projectNarrativeCopy = {
     "建立从多臂老虎机与价值更新到策略学习和语言模型后训练的实践路线。",
     "建立從多臂老虎機與價值更新到策略學習和語言模型後訓練的實踐路線。"
   ],
-  "Samuel developed and reviewed the 25-module curriculum with AI-assisted authorship, worked examples and executable notebooks. The learning workbench adds seeded Q-learning and SARSA, recorded small-model answer comparisons, and interactive LoRA and DPO exercises.": [
-    "Samuel 在 AI 辅助创作下开发并审阅了 25 模块课程、例题和可执行笔记本。学习工作台加入带种子的 Q-learning 与 SARSA、记录的小型模型答案比较，以及交互 LoRA 和 DPO 练习。",
-    "Samuel 在 AI 輔助創作下開發並審閱了 25 模塊課程、例題和可執行筆記本。學習工作臺加入帶種子的 Q-learning 與 SARSA、記錄的小型模型答案比較，以及互動 LoRA 和 DPO 練習。"
+  "I developed and reviewed the 25-module curriculum with AI-assisted authorship, worked examples and executable notebooks. The learning workbench adds seeded Q-learning and SARSA, recorded small-model answer comparisons, and interactive LoRA and DPO exercises.": [
+    "我在 AI 辅助创作下开发并审阅了 25 模块课程、例题和可执行笔记本。学习工作台加入带种子的 Q-learning 与 SARSA、记录的小型模型答案比较，以及交互 LoRA 和 DPO 练习。",
+    "我在 AI 輔助創作下開發並審閱了 25 模塊課程、例題和可執行筆記本。學習工作臺加入帶種子的 Q-learning 與 SARSA、記錄的小型模型答案比較，以及互動 LoRA 和 DPO 練習。"
   ],
   "bandits and value updates → policy and deep RL → offline and model-based learning → language-model post-training → applied decision problems": [
     "多臂老虎机与价值更新 → 策略和深度强化学习 → 离线与基于模型的学习 → 语言模型后训练 → 实际决策问题",
@@ -2726,9 +2726,9 @@ export const projectNarrativeCopy = {
     "通过重复且可重现的决策，把探索与利用的权衡展示出来。",
     "透過重複且可重現的決策，把探索與利用的權衡展示出來。"
   ],
-  "Samuel built a browser companion to the first STUDY-RL module with epsilon-greedy, UCB1 and Thompson Sampling, seeded rewards and twelve paired runs for comparison.": [
-    "Samuel 为 STUDY-RL 第一模块构建了浏览器配套工具，包含 epsilon-greedy、UCB1、Thompson Sampling、带种子的奖励和十二组配对比较。",
-    "Samuel 為 STUDY-RL 第一模塊建置了瀏覽器配套工具，包含 epsilon-greedy、UCB1、Thompson Sampling、帶種子的獎勵和十二組配對比較。"
+  "I built a browser companion to the first STUDY-RL module with epsilon-greedy, UCB1 and Thompson Sampling, seeded rewards and twelve paired runs for comparison.": [
+    "我为 STUDY-RL 第一模块构建了浏览器配套工具，包含 epsilon-greedy、UCB1、Thompson Sampling、带种子的奖励和十二组配对比较。",
+    "我為 STUDY-RL 第一模塊建置了瀏覽器配套工具，包含 epsilon-greedy、UCB1、Thompson Sampling、帶種子的獎勵和十二組配對比較。"
   ],
   "available actions → policy choice → reward → updated estimates → regret and repeated-run comparison": [
     "可选动作 → 策略选择 → 奖励 → 估计更新 → 遗憾与重复实验比较",
@@ -2750,9 +2750,9 @@ export const projectNarrativeCopy = {
     "从一张 224×224 显微图像估计 40 种俯仰—横滚方向之一和一个连续深度值。",
     "從一張 224×224 顯微圖像估計 40 種俯仰—橫滾方向之一和一個連續深度值。"
   ],
-  "Samuel built a custom CNN, adapted ResNet18, ResNet34, MobileNetV3 and ViT to grayscale images, and trained separate pose and depth predictors. Error plots and Grad-CAM comparisons helped inspect the models; the image-level split still needs a stronger check on unseen recordings.": [
-    "Samuel 构建自定义 CNN，把 ResNet18、ResNet34、MobileNetV3 和 ViT 改造成灰度图像模型，并分别训练姿态和深度预测器。误差图和 Grad-CAM 比较帮助检查模型；按图像划分的评估仍需要完整未见录像的更强检查。",
-    "Samuel 建置自訂 CNN，把 ResNet18、ResNet34、MobileNetV3 和 ViT 改造成灰度圖像模型，並分別訓練姿態和深度預測器。誤差圖和 Grad-CAM 比較幫助檢查模型；按圖像劃分的評估仍需要完整未見錄影的更強檢查。"
+  "I built a custom CNN, adapted ResNet18, ResNet34, MobileNetV3 and ViT to grayscale images, and trained separate pose and depth predictors. Error plots and Grad-CAM comparisons helped inspect the models; the image-level split still needs a stronger check on unseen recordings.": [
+    "我构建自定义 CNN，把 ResNet18、ResNet34、MobileNetV3 和 ViT 改造成灰度图像模型，并分别训练姿态和深度预测器。误差图和 Grad-CAM 比较帮助检查模型；按图像划分的评估仍需要完整未见录像的更强检查。",
+    "我建置自訂 CNN，把 ResNet18、ResNet34、MobileNetV3 和 ViT 改造成灰度圖像模型，並分別訓練姿態和深度預測器。誤差圖和 Grad-CAM 比較幫助檢查模型；按圖像劃分的評估仍需要完整未見錄影的更強檢查。"
   ],
   "orientation-corrected microscope image → image-model features → pose class or depth estimate → error and image-attention analysis": [
     "方向校正后的显微图像 → 图像模型特征 → 姿态类别或深度估计 → 误差与图像注意区域分析",
@@ -2774,9 +2774,9 @@ export const projectNarrativeCopy = {
     "重建有用的心脏图像，同时检查测量一致性、不确定性和下游分割。",
     "重建有用的心臟圖像，同時檢查測量一致性、不確定性和下游分割。"
   ],
-  "Samuel designed a residual U-Net with three learnable data-consistency steps and studied MC-dropout, ensembles, adversarial perturbations and distribution shift. The reported R=4× result reaches 31.90 dB PSNR and 0.889 SSIM; the browser uses synthetic illustrations to explain the method.": [
-    "Samuel 设计了带三个可学习数据一致性步骤的残差 U-Net，并研究 MC-dropout、集成、对抗扰动和分布变化。报告的 R=4× 结果为 PSNR 31.90 dB、SSIM 0.889；浏览器用合成示意图解释方法。",
-    "Samuel 設計了帶三個可學習資料一致性步驟的殘差 U-Net，並研究 MC-dropout、集成、對抗擾動和分佈變化。報告的 R=4× 結果為 PSNR 31.90 dB、SSIM 0.889；瀏覽器用合成示意圖解釋方法。"
+  "I designed a residual U-Net with three learnable data-consistency steps and studied MC-dropout, ensembles, adversarial perturbations and distribution shift. The reported R=4× result reaches 31.90 dB PSNR and 0.889 SSIM; the browser uses synthetic illustrations to explain the method.": [
+    "我设计了带三个可学习数据一致性步骤的残差 U-Net，并研究 MC-dropout、集成、对抗扰动和分布变化。报告的 R=4× 结果为 PSNR 31.90 dB、SSIM 0.889；浏览器用合成示意图解释方法。",
+    "我設計了帶三個可學習資料一致性步驟的殘差 U-Net，並研究 MC-dropout、集成、對抗擾動和分佈變化。報告的 R=4× 結果為 PSNR 31.90 dB、SSIM 0.889；瀏覽器用合成示意圖解釋方法。"
   ],
   "incomplete k-space measurements → initial image → residual reconstruction → data-consistency steps → uncertainty and segmentation checks": [
     "不完整 k-space 测量 → 初始图像 → 残差重建 → 数据一致性步骤 → 不确定性与分割检查",
@@ -2798,9 +2798,9 @@ export const projectNarrativeCopy = {
     "用 Fourier 模态、原始网格和规则图像栅格三种表示学习预测压力与速度。",
     "用 Fourier 模態、原始網格和規則圖像柵格三種表示學習預測壓力與速度。"
   ],
-  "Samuel completed and trained FNO, MeshGraphNet and U-Net models, built flow-processing and prediction workflows, and explored residual and multi-scale Fourier designs. Results remain attached to their evaluation conditions, including the U-Net’s poor performance on a shifted set.": [
-    "Samuel 完成并训练了 FNO、MeshGraphNet 和 U-Net，构建流场处理与预测流程，并探索残差和多尺度 Fourier 设计。结果保留各自评估条件，包括 U-Net 在分布变化数据上的较差表现。",
-    "Samuel 完成並訓練了 FNO、MeshGraphNet 和 U-Net，建置流場處理與預測流程，並探索殘差和多尺度 Fourier 設計。結果保留各自評估條件，包括 U-Net 在分佈變化資料上的較差表現。"
+  "I completed and trained FNO, MeshGraphNet and U-Net models, built flow-processing and prediction workflows, and explored residual and multi-scale Fourier designs. Results remain attached to their evaluation conditions, including the U-Net’s poor performance on a shifted set.": [
+    "我完成并训练了 FNO、MeshGraphNet 和 U-Net，构建流场处理与预测流程，并探索残差和多尺度 Fourier 设计。结果保留各自评估条件，包括 U-Net 在分布变化数据上的较差表现。",
+    "我完成並訓練了 FNO、MeshGraphNet 和 U-Net，建置流場處理與預測流程，並探索殘差和多尺度 Fourier 設計。結果保留各自評估條件，包括 U-Net 在分佈變化資料上的較差表現。"
   ],
   "previous mesh or grid flow fields → spectral, graph or convolutional model → future velocity and pressure → single-step and rollout evaluation": [
     "过去的网格或栅格流场 → 频谱、图或卷积模型 → 未来速度与压力 → 单步与滚动预测评估",
@@ -2822,9 +2822,9 @@ export const projectNarrativeCopy = {
     "比较熟悉与分布变化条件下的不确定性估计、概率校准和预测集合。",
     "比較熟悉與分佈變化條件下的不確定性估計、概率校準和預測集合。"
   ],
-  "Samuel studied bootstrap and Bayesian uncertainty, temperature scaling and split-conformal prediction through computational exercises. The work records a small ECE improvement and 95.75% empirical coverage under exchangeability, alongside cases where calibration or shift worsens other measures.": [
-    "Samuel 通过计算练习研究 自助重采样 与 贝叶斯 不确定性、温度缩放和分割共形预测。工作记录了小幅 ECE 改善及可交换条件下 95.75% 经验覆盖率，同时保留校准或分布变化使其他指标恶化的情况。",
-    "Samuel 透過計算練習研究 自助重抽樣 與 貝氏 不確定性、溫度縮放和分割共形預測。工作記錄了小幅 ECE 改善及可交換條件下 95.75% 經驗覆蓋率，同時保留校準或分佈變化使其他指標惡化的情況。"
+  "I studied bootstrap and Bayesian uncertainty, temperature scaling and split-conformal prediction through computational exercises. The work records a small ECE improvement and 95.75% empirical coverage under exchangeability, alongside cases where calibration or shift worsens other measures.": [
+    "我通过计算练习研究 自助重采样 与 贝叶斯 不确定性、温度缩放和分割共形预测。工作记录了小幅 ECE 改善及可交换条件下 95.75% 经验覆盖率，同时保留校准或分布变化使其他指标恶化的情况。",
+    "我透過計算練習研究 自助重抽樣 與 貝氏 不確定性、溫度縮放和分割共形預測。工作記錄了小幅 ECE 改善及可交換條件下 95.75% 經驗覆蓋率，同時保留校準或分佈變化使其他指標惡化的情況。"
   ],
   "model scores and labels → uncertainty and calibration → prediction sets → coverage and distribution-shift checks": [
     "模型分数与标签 → 不确定性和校准 → 预测集合 → 覆盖率与分布变化检查",
@@ -2846,9 +2846,9 @@ export const projectNarrativeCopy = {
     "预测一氧化碳浓度，理解模型选择与假设传感器预算之间的权衡。",
     "預測一氧化碳濃度，理解模型選擇與假設感測器預算之間的權衡。"
   ],
-  "Samuel analysed 7,674 ambient observations, fitted training-only imputation and scaling, and compared OLS, Ridge, LASSO and two kernel models. A later exercise connects selected signals to assumed hardware prices; the random split does not establish future-time or new-site performance.": [
-    "Samuel 分析了 7,674 次环境观测，仅在训练集拟合填补与缩放，并比较 OLS、Ridge、LASSO 和两种核模型。后续练习把选定信号连接到假设硬件价格；随机切分不能证明未来时间或新地点的性能。",
-    "Samuel 分析了 7,674 次環境觀測，僅在訓練集擬合填補與縮放，並比較 OLS、Ridge、LASSO 和兩種核模型。後續練習把選定訊號連接到假設硬體價格；隨機切分不能證明未來時間或新地點的性能。"
+  "I analysed 7,674 ambient observations, fitted training-only imputation and scaling, and compared OLS, Ridge, LASSO and two kernel models. A later exercise connects selected signals to assumed hardware prices; the random split does not establish future-time or new-site performance.": [
+    "我分析了 7,674 次环境观测，仅在训练集拟合填补与缩放，并比较 OLS、Ridge、LASSO 和两种核模型。后续练习把选定信号连接到假设硬件价格；随机切分不能证明未来时间或新地点的性能。",
+    "我分析了 7,674 次環境觀測，僅在訓練集擬合填補與縮放，並比較 OLS、Ridge、LASSO 和兩種核模型。後續練習把選定訊號連接到假設硬體價格；隨機切分不能證明未來時間或新地點的性能。"
   ],
   "sensor and environmental observations → missing-value handling and scaling → five regression models → error and sensor-cost comparison": [
     "传感器与环境观测 → 缺失处理和缩放 → 五种回归模型 → 误差与传感器成本比较",
@@ -2870,9 +2870,9 @@ export const projectNarrativeCopy = {
     "比较分类行为及不同告警阈值的期望成本。",
     "比較分類行為及不同告警閾值的期望成本。"
   ],
-  "Samuel compared logistic and kernel classifiers on 10,000 labelled network-flow rows. Later review found repeated rows across the split, preprocessing leakage and test-selected thresholds, so the historical curves are useful for learning the workflow but do not establish held-out detection performance.": [
-    "Samuel 在 10,000 条标记网络流量记录上比较逻辑回归与核分类器。后续检查发现切分两侧的重复记录、预处理泄漏和测试集选阈值，因此历史曲线可用于学习流程，却不能证明独立测试中的检测性能。",
-    "Samuel 在 10,000 條標記網路流量記錄上比較邏輯迴歸與核分類器。後續檢查發現切分兩側的重複記錄、預處理洩漏和測試集選閾值，因此歷史曲線可用於學習流程，卻不能證明獨立測試中的檢測性能。"
+  "I compared logistic and kernel classifiers on 10,000 labelled network-flow rows. Later review found repeated rows across the split, preprocessing leakage and test-selected thresholds, so the historical curves are useful for learning the workflow but do not establish held-out detection performance.": [
+    "我在 10,000 条标记网络流量记录上比较逻辑回归与核分类器。后续检查发现切分两侧的重复记录、预处理泄漏和测试集选阈值，因此历史曲线可用于学习流程，却不能证明独立测试中的检测性能。",
+    "我在 10,000 條標記網路流量記錄上比較邏輯迴歸與核分類器。後續檢查發現切分兩側的重複記錄、預處理洩漏和測試集選閾值，因此歷史曲線可用於學習流程，卻不能證明獨立測試中的檢測性能。"
   ],
   "network-flow features → classifier score → alert threshold → false alarms, missed attacks and expected cost": [
     "网络流量特征 → 分类器分数 → 告警阈值 → 误报、漏报与期望成本",
@@ -2894,9 +2894,9 @@ export const projectNarrativeCopy = {
     "展示 Ridge 如何收缩系数，以及 LASSO 如何完全移除部分系数。",
     "展示 Ridge 如何收縮係數，以及 LASSO 如何完全移除部分系數。"
   ],
-  "Samuel compared regularised regressions in the air-quality study and built a browser companion with an orthonormal synthetic example, where the shrinkage calculations can be followed exactly.": [
-    "Samuel 在空气质量研究中比较正则化回归，并建立正交归一合成示例的浏览器配套工具，让收缩计算可以精确追踪。",
-    "Samuel 在空氣質量研究中比較正則化迴歸，並建立正交歸一合成示例的瀏覽器配套工具，讓收縮計算可以精確追蹤。"
+  "I compared regularised regressions in the air-quality study and built a browser companion with an orthonormal synthetic example, where the shrinkage calculations can be followed exactly.": [
+    "我在空气质量研究中比较正则化回归，并建立正交归一合成示例的浏览器配套工具，让收缩计算可以精确追踪。",
+    "我在空氣質量研究中比較正則化迴歸，並建立正交歸一合成示例的瀏覽器配套工具，讓收縮計算可以精確追蹤。"
   ],
   "illustrative standardised coefficients → chosen penalty strength → shrinkage or soft threshold → coefficient paths and active features": [
     "说明性标准化系数 → 惩罚强度 → 收缩或软阈值 → 系数路径与有效特征",
@@ -2918,9 +2918,9 @@ export const projectNarrativeCopy = {
     "结合置信度、不确定性与最严重的保留损失，选择哪些理赔交由自动处理。",
     "結合置信度、不確定性與最嚴重的保留損失，選擇哪些理賠交由自動處理。"
   ],
-  "Samuel co-developed the study with Miltiades Georgantzis and Sulieman Ibsais, combining calibrated XGBoost predictions, Bayesian uncertainty and a CVaR-aware deferral rule. The reported operating point gives 89.5% system accuracy at 64% automated coverage; the browser explains its arithmetic with fictional claims.": [
-    "Samuel 与 Miltiades Georgantzis、Sulieman Ibsais 合作研究，结合校准后的 XGBoost、贝叶斯 不确定性和考虑 CVaR 的转交规则。报告工作点在 64% 自动覆盖率下达到 89.5% 系统准确率；浏览器用虚构理赔解释其计算。",
-    "Samuel 與 Miltiades Georgantzis、Sulieman Ibsais 合作研究，結合校準後的 XGBoost、貝氏 不確定性和考慮 CVaR 的轉交規則。報告工作點在 64% 自動覆蓋率下達到 89.5% 系統準確率；瀏覽器用虛構理賠解釋其計算。"
+  "I co-developed the study with Miltiades Georgantzis and Sulieman Ibsais, combining calibrated XGBoost predictions, Bayesian uncertainty and a CVaR-aware deferral rule. The reported operating point gives 89.5% system accuracy at 64% automated coverage; the browser explains its arithmetic with fictional claims.": [
+    "我与 Miltiades Georgantzis、Sulieman Ibsais 合作研究，结合校准后的 XGBoost、贝叶斯 不确定性和考虑 CVaR 的转交规则。报告工作点在 64% 自动覆盖率下达到 89.5% 系统准确率；浏览器用虚构理赔解释其计算。",
+    "我與 Miltiades Georgantzis、Sulieman Ibsais 合作研究，結合校準後的 XGBoost、貝氏 不確定性和考慮 CVaR 的轉交規則。報告工作點在 64% 自動覆蓋率下達到 89.5% 系統準確率；瀏覽器用虛構理賠解釋其計算。"
   ],
   "claim features → calibrated score and uncertainty → deferral rule → automated decisions or human review → coverage and tail risk": [
     "理赔特征 → 校准分数与不确定性 → 转交规则 → 自动决定或人工审阅 → 覆盖率与尾部风险",
@@ -2942,9 +2942,9 @@ export const projectNarrativeCopy = {
     "区分估计干预效果与利用已记录决策评估新策略这两个问题。",
     "區分估計干預效果與利用已記錄決策評估新策略這兩個問題。"
   ],
-  "Samuel built a synthetic causal example and adapted the STUDY-RL off-policy estimators into an interactive lab. It compares IPS, SNIPS, Direct, doubly robust and SWITCH-DR estimates while making overlap and sample-weight concentration visible.": [
-    "Samuel 构建合成因果示例，并把 STUDY-RL 离策略估计方法改造成交互实验室。它比较 IPS、SNIPS、Direct、双重稳健和 SWITCH-DR，同时显示重叠与样本权重集中程度。",
-    "Samuel 建置合成因果示例，並把 STUDY-RL 離策略估計方法改造成互動實驗室。它比較 IPS、SNIPS、Direct、雙重穩健和 SWITCH-DR，同時顯示重疊與樣本權重集中程度。"
+  "I built a synthetic causal example and adapted the STUDY-RL off-policy estimators into an interactive lab. It compares IPS, SNIPS, Direct, doubly robust and SWITCH-DR estimates while making overlap and sample-weight concentration visible.": [
+    "我构建合成因果示例，并把 STUDY-RL 离策略估计方法改造成交互实验室。它比较 IPS、SNIPS、Direct、双重稳健和 SWITCH-DR，同时显示重叠与样本权重集中程度。",
+    "我建置合成因果示例，並把 STUDY-RL 離策略估計方法改造成互動實驗室。它比較 IPS、SNIPS、Direct、雙重穩健和 SWITCH-DR，同時顯示重疊與樣本權重集中程度。"
   ],
   "observations or logged actions → adjustment or policy probabilities → effect and value estimates → overlap and effective sample size": [
     "观测或动作记录 → 调整或策略概率 → 效果和价值估计 → 重叠与有效样本量",
@@ -2966,9 +2966,9 @@ export const projectNarrativeCopy = {
     "比较四种组织结构，研究权限、责任归属与资源分配如何塑造创新。",
     "比較四種組織結構，研究權限、責任歸屬與資源分配如何塑造創新。"
   ],
-  "Samuel’s innovation-management reflection connects disruption and organisational ambidexterity with the Opportunist, Enabler, Advocate and Producer models. The browser extends the comparison with fictional portfolio and transition scenarios; these are discussion tools rather than validated strategy recommendations.": [
-    "Samuel 的创新管理思考把颠覆和组织双元性与机会主义者、赋能者、倡导者、生产者四种模式联系起来。浏览器用虚构组合和转型情境扩展比较；它们用于讨论，不是经过验证的战略建议。",
-    "Samuel 的創新管理思考把顛覆和組織雙元性與機會主義者、賦能者、倡導者、生產者四種模式聯繫起來。瀏覽器用虛構組合和轉型情境擴展比較；它們用於討論，不是經過驗證的戰略建議。"
+  "My innovation-management reflection connects disruption and organisational ambidexterity with the Opportunist, Enabler, Advocate and Producer models. The browser extends the comparison with fictional portfolio and transition scenarios; these are discussion tools rather than validated strategy recommendations.": [
+    "我的创新管理思考把颠覆和组织双元性与机会主义者、赋能者、倡导者、生产者四种模式联系起来。浏览器用虚构组合和转型情境扩展比较；它们用于讨论，不是经过验证的战略建议。",
+    "我的創新管理思考把顛覆和組織雙元性與機會主義者、賦能者、倡導者、生產者四種模式聯繫起來。瀏覽器用虛構組合和轉型情境擴展比較；它們用於討論，不是經過驗證的戰略建議。"
   ],
   "ownership and resource authority → organisational model → portfolio allocation → transition questions": [
     "责任归属与资源权限 → 组织模式 → 资源组合分配 → 转型问题",
@@ -2990,9 +2990,9 @@ export const projectNarrativeCopy = {
     "把创业主张、自下而上的市场计算和产生新证据所需资本联系起来。",
     "把創業主張、自下而上的市場計算和產生新證據所需資本聯繫起來。"
   ],
-  "Samuel completed venture-writing and critique exercises that distinguish AI-generated drafts from human evaluation. The browser turns that reasoning into fictional businesses with adjustable assumptions about demand, pipeline conversion, funding and runway.": [
-    "Samuel 完成创业写作与评议练习，区分 AI 草稿和人工评价。浏览器将这种推理变成虚构企业，允许调整需求、转化率、融资和资金续航假设。",
-    "Samuel 完成創業寫作與評議練習，區分 AI 草稿和人工評價。瀏覽器將這種推理變成虛構企業，允許調整需求、轉化率、融資和資金續航假設。"
+  "I completed venture-writing and critique exercises that distinguish AI-generated drafts from human evaluation. The browser turns that reasoning into fictional businesses with adjustable assumptions about demand, pipeline conversion, funding and runway.": [
+    "我完成创业写作与评议练习，区分 AI 草稿和人工评价。浏览器将这种推理变成虚构企业，允许调整需求、转化率、融资和资金续航假设。",
+    "我完成創業寫作與評議練習，區分 AI 草稿和人工評價。瀏覽器將這種推理變成虛構企業，允許調整需求、轉化率、融資和資金續航假設。"
   ],
   "venture claim → supporting evidence → market and customer pipeline → funding and runway → next milestone": [
     "创业主张 → 支持证据 → 市场与客户转化 → 融资和资金续航 → 下一里程碑",
@@ -3014,9 +3014,9 @@ export const projectNarrativeCopy = {
     "探索链堆积与色散对 PC-SAFT 流体计算的贡献。",
     "探索鏈堆積與色散對 PC-SAFT 流體計算的貢獻。"
   ],
-  "Samuel developed Julia and Clapeyron workflows for bulk properties, phase equilibrium and critical behaviour. The browser isolates the non-associating PC-SAFT equations with invented fluids so their sensitivities can be explored without implying validated compound predictions.": [
-    "Samuel 开发了计算体相性质、相平衡和临界行为的 Julia 与 Clapeyron 工作流。浏览器用虚构流体单独展示非缔合 PC-SAFT 方程，以探索敏感性，而不暗示已经验证具体化合物预测。",
-    "Samuel 開發了計算體相性質、相平衡和臨界行為的 Julia 與 Clapeyron 工作流。瀏覽器用虛構流體單獨展示非締合 PC-SAFT 方程，以探索敏感性，而不暗示已經驗證具體化合物預測。"
+  "I developed Julia and Clapeyron workflows for bulk properties, phase equilibrium and critical behaviour. The browser isolates the non-associating PC-SAFT equations with invented fluids so their sensitivities can be explored without implying validated compound predictions.": [
+    "我开发了计算体相性质、相平衡和临界行为的 Julia 与 Clapeyron 工作流。浏览器用虚构流体单独展示非缔合 PC-SAFT 方程，以探索敏感性，而不暗示已经验证具体化合物预测。",
+    "我開發了計算體相性質、相平衡和臨界行為的 Julia 與 Clapeyron 工作流。瀏覽器用虛構流體單獨展示非締合 PC-SAFT 方程，以探索敏感性，而不暗示已經驗證具體化合物預測。"
   ],
   "molecular parameters, temperature, density and composition → mixing and effective size → hard-chain and dispersion energy → compressibility and pressure": [
     "分子参数、温度、密度与组成 → 混合与有效尺寸 → 硬链和色散能 → 压缩因子与压力",
@@ -3038,9 +3038,9 @@ export const projectNarrativeCopy = {
     "把平衡计算与清晰的浓度基准及未用于拟合的观测检查联系起来。",
     "把平衡計算與清晰的濃度基準及未用於擬合的觀測檢查聯繫起來。"
   ],
-  "Samuel built Julia solid–liquid equilibrium workflows using fusion-property and liquid-phase models in Clapeyron. The public companion uses invented compounds to demonstrate a log-space solver, mole-to-mass conversion and separate calibration and holdout rows.": [
-    "Samuel 在 Clapeyron 中使用熔融性质和液相模型建立 Julia 固液平衡工作流。公开配套工具用虚构化合物展示对数空间求解、摩尔到质量转换，以及分开的校准和留出数据。",
-    "Samuel 在 Clapeyron 中使用熔融性質和液相模型建立 Julia 固液平衡工作流。公開配套工具用虛構化合物展示對數空間求解、摩爾到質量轉換，以及分開的校準和留出資料。"
+  "I built Julia solid–liquid equilibrium workflows using fusion-property and liquid-phase models in Clapeyron. The public companion uses invented compounds to demonstrate a log-space solver, mole-to-mass conversion and separate calibration and holdout rows.": [
+    "我在 Clapeyron 中使用熔融性质和液相模型建立 Julia 固液平衡工作流。公开配套工具用虚构化合物展示对数空间求解、摩尔到质量转换，以及分开的校准和留出数据。",
+    "我在 Clapeyron 中使用熔融性質和液相模型建立 Julia 固液平衡工作流。公開配套工具用虛構化合物展示對數空間求解、摩爾到質量轉換，以及分開的校準和留出資料。"
   ],
   "fusion properties, liquid interactions and temperature → equilibrium concentration → reporting-unit conversion → calibration and holdout comparison": [
     "熔融性质、液相相互作用与温度 → 平衡浓度 → 报告单位换算 → 校准与留出比较",
@@ -3062,9 +3062,9 @@ export const projectNarrativeCopy = {
     "结合预测分子指纹与 2–8 GHz 转动测量，区分 Exaltenone 和 Muscone 构象。",
     "結合預測分子指紋與 2–8 GHz 轉動測量，區分 Exaltenone 和 Muscone 構象。"
   ],
-  "Samuel contributed to the King’s College London conformer-analysis work and is a co-author of the 2025 ISMS conference record. The group reported more than 20 Exaltenone and 30 Muscone conformations; the browser uses synthetic structures and spectra to explain the assignment process.": [
-    "Samuel 参与伦敦国王学院的构象分析研究，是 2025 年 ISMS 会议记录的共同作者。团队报告了超过 20 种 Exaltenone 和 30 种 Muscone 构象；浏览器用合成结构和光谱解释指认过程。",
-    "Samuel 參與倫敦國王學院的構象分析研究，是 2025 年 ISMS 會議記錄的共同作者。團隊報告了超過 20 種 Exaltenone 和 30 種 Muscone 構象；瀏覽器用合成結構和光譜解釋指認過程。"
+  "I contributed to the King’s College London conformer-analysis work and am a co-author of the 2025 ISMS conference record. The group reported more than 20 Exaltenone and 30 Muscone conformations; the browser uses synthetic structures and spectra to explain the assignment process.": [
+    "我参与伦敦国王学院的构象分析研究，是 2025 年 ISMS 会议记录的共同作者。团队报告了超过 20 种 Exaltenone 和 30 种 Muscone 构象；浏览器用合成结构和光谱解释指认过程。",
+    "我參與倫敦國王學院的構象分析研究，是 2025 年 ISMS 會議記錄的共同作者。團隊報告了超過 20 種 Exaltenone 和 30 種 Muscone 構象；瀏覽器用合成結構和光譜解釋指認過程。"
   ],
   "conformer search → predicted spectroscopic parameters → CP-FTMW measurements → multiple line matches → candidate structure": [
     "构象搜索 → 预测光谱参数 → CP-FTMW 测量 → 多谱线匹配 → 候选结构",
@@ -3086,9 +3086,9 @@ export const projectNarrativeCopy = {
     "提供紧凑的界面来探索光谱并导出有用的图表。",
     "提供緊湊的介面來探索光譜並匯出有用的圖表。"
   ],
-  "Samuel built a MATLAB App Designer utility with titles, axis labels, colours, exact frequency panning and high-resolution export. The browser reproduces the plotting controls using a generated trace.": [
-    "Samuel 构建 MATLAB App Designer 工具，支持标题、坐标标签、颜色、精确频率平移与高分辨率导出。浏览器使用生成谱线重现这些绘图控制。",
-    "Samuel 建置 MATLAB App Designer 工具，支持標題、座標標籤、顏色、精確頻率平移與高解析度匯出。瀏覽器使用生成譜線重現這些繪圖控制。"
+  "I built a MATLAB App Designer utility with titles, axis labels, colours, exact frequency panning and high-resolution export. The browser reproduces the plotting controls using a generated trace.": [
+    "我构建 MATLAB App Designer 工具，支持标题、坐标标签、颜色、精确频率平移与高分辨率导出。浏览器使用生成谱线重现这些绘图控制。",
+    "我建置 MATLAB App Designer 工具，支持標題、座標標籤、顏色、精確頻率平移與高解析度匯出。瀏覽器使用生成譜線重現這些繪圖控制。"
   ],
   "frequency and intensity columns → labels and plot settings → selected frequency window → exported figure": [
     "频率与强度列 → 标签和绘图设置 → 选定频率窗口 → 导出图表",
@@ -3110,9 +3110,9 @@ export const projectNarrativeCopy = {
     "自动搭建环境，并让平台回退和验证步骤容易理解。",
     "自動搭建環境，並讓平臺替代路徑和驗證步驟容易理解。"
   ],
-  "Samuel built a Bash installer for a Python 3.13 Conda environment, scientific packages, PyTorch, TensorFlow and the Hugging Face CLI. The browser planner explains those branches and lets visitors simulate failures without installing anything.": [
-    "Samuel 编写 Bash 安装器，配置 Python 3.13 Conda、科学软件包、PyTorch、TensorFlow 和 Hugging Face CLI。浏览器规划器解释这些分支，让访客模拟失败而不安装任何东西。",
-    "Samuel 編寫 Bash 安裝器，配置 Python 3.13 Conda、科學套件、PyTorch、TensorFlow 和 Hugging Face CLI。瀏覽器規劃器解釋這些分支，讓訪客模擬失敗而不安裝任何東西。"
+  "I built a Bash installer for a Python 3.13 Conda environment, scientific packages, PyTorch, TensorFlow and the Hugging Face CLI. The browser planner explains those branches and lets visitors simulate failures without installing anything.": [
+    "我编写 Bash 安装器，配置 Python 3.13 Conda、科学软件包、PyTorch、TensorFlow 和 Hugging Face CLI。浏览器规划器解释这些分支，让访客模拟失败而不安装任何东西。",
+    "我編寫 Bash 安裝器，配置 Python 3.13 Conda、科學套件、PyTorch、TensorFlow 和 Hugging Face CLI。瀏覽器規劃器解釋這些分支，讓訪客模擬失敗而不安裝任何東西。"
   ],
   "host and accelerator information → environment and framework choices → installation fallbacks → import and device checks": [
     "主机与加速器信息 → 环境和框架选择 → 安装回退 → 导入与设备检查",
@@ -3134,9 +3134,9 @@ export const projectNarrativeCopy = {
     "理解服务依赖，规划维护自托管系统所需的存储与恢复工作。",
     "理解服務依賴，規劃維護自代管系統所需的存儲與恢復工作。"
   ],
-  "Samuel built and maintained a containerised home lab with database services, scheduling and backup/restore tooling. The browser models a six-service portion using fictional identifiers; restore time and successful recovery have not been demonstrated by a retained drill.": [
-    "Samuel 构建并维护容器化家庭实验室，包含数据库服务、调度及备份/恢复工具。浏览器用虚构标识建模其中六个服务；保留记录中没有演练证明恢复时间或恢复成功。",
-    "Samuel 建置並維護容器化家庭實驗室，包含資料庫服務、調度及備份/恢復工具。瀏覽器用虛構標識建模其中六個服務；保留記錄中沒有演練證明恢復時間或恢復成功。"
+  "I built and maintained a containerised home lab with database services, scheduling and backup/restore tooling. The browser models a six-service portion using fictional identifiers; restore time and successful recovery have not been demonstrated by a retained drill.": [
+    "我构建并维护容器化家庭实验室，包含数据库服务、调度及备份/恢复工具。浏览器用虚构标识建模其中六个服务；保留记录中没有演练证明恢复时间或恢复成功。",
+    "我建置並維護容器化家庭實驗室，包含資料庫服務、調度及備份/恢復工具。瀏覽器用虛構標識建模其中六個服務；保留記錄中沒有演練證明恢復時間或恢復成功。"
   ],
   "container services and shared storage → dependency paths → simulated failure → backup capacity and recovery planning": [
     "容器服务与共享存储 → 依赖路径 → 模拟故障 → 备份容量与恢复规划",
@@ -3158,9 +3158,9 @@ export const projectNarrativeCopy = {
     "展示少量事件规则如何产生价格变化和累计交易量。",
     "展示少量事件規則如何產生價格變化和累計交易量。"
   ],
-  "Samuel wrote a Julia single-stock simulation with sentiment-biased events and random, quantity-scaled price impact. The browser adds seeded replay and compares the original partial-day statistics with a corrected full-day window; it is a toy model rather than a market forecast.": [
-    "Samuel 编写 Julia 单股模拟，包含受情绪影响的事件和随数量变化的随机价格冲击。浏览器加入种子重放，比较原始部分日统计与修正后的全日窗口；它是简化模型，不是市场预测。",
-    "Samuel 編寫 Julia 單股模擬，包含受情緒影響的事件和隨數量變化的隨機價格衝擊。瀏覽器加入種子重放，比較原始部分日統計與修正後的全日窗口；它是簡化模型，不是市場預測。"
+  "I wrote a Julia single-stock simulation with sentiment-biased events and random, quantity-scaled price impact. The browser adds seeded replay and compares the original partial-day statistics with a corrected full-day window; it is a toy model rather than a market forecast.": [
+    "我编写 Julia 单股模拟，包含受情绪影响的事件和随数量变化的随机价格冲击。浏览器加入种子重放，比较原始部分日统计与修正后的全日窗口；它是简化模型，不是市场预测。",
+    "我編寫 Julia 單股模擬，包含受情緒影響的事件和隨數量變化的隨機價格衝擊。瀏覽器加入種子重放，比較原始部分日統計與修正後的全日窗口；它是簡化模型，不是市場預測。"
   ],
   "sentiment and five simulated traders → buy/sell event → random price impact → price and volume history → daily statistics": [
     "情绪与五名模拟交易者 → 买卖事件 → 随机价格冲击 → 价格与成交量历史 → 每日统计",
@@ -3182,9 +3182,9 @@ export const projectNarrativeCopy = {
     "通过 Monte Carlo、高分子模型、分子动力学和量子能量计算建立计算直觉。",
     "透過 Monte Carlo、高分子模型、分子動力學和量子能量計算建立計算直覺。"
   ],
-  "Samuel completed and extended scientific-computing course exercises, then added Julia and React experiments. The browser combines seeded Lennard-Jones sampling, three polymer models, a four-particle velocity-Verlet trajectory and recorded basis-set and cation–π calculations.": [
-    "Samuel 完成并扩展科学计算课程练习，之后加入 Julia 和 React 实验。浏览器组合带种子的 Lennard-Jones 采样、三种高分子模型、四粒子 velocity-Verlet 轨迹，以及记录的基组和阳离子–π 计算。",
-    "Samuel 完成並擴展科學計算課程練習，之後加入 Julia 和 React 實驗。瀏覽器組合帶種子的 Lennard-Jones 取樣、三種高分子模型、四粒子 velocity-Verlet 軌跡，以及記錄的基組和陽離子–π 計算。"
+  "I completed and extended scientific-computing course exercises, then added Julia and React experiments. The browser combines seeded Lennard-Jones sampling, three polymer models, a four-particle velocity-Verlet trajectory and recorded basis-set and cation–π calculations.": [
+    "我完成并扩展科学计算课程练习，之后加入 Julia 和 React 实验。浏览器组合带种子的 Lennard-Jones 采样、三种高分子模型、四粒子 velocity-Verlet 轨迹，以及记录的基组和阳离子–π 计算。",
+    "我完成並擴展科學計算課程練習，之後加入 Julia 和 React 實驗。瀏覽器組合帶種子的 Lennard-Jones 取樣、三種高分子模型、四粒子 velocity-Verlet 軌跡，以及記錄的基組和陽離子–π 計算。"
   ],
   "molecular model and parameters → sampling, integration or energy calculation → configurations and readouts → physical interpretation": [
     "分子模型与参数 → 采样、积分或能量计算 → 构型与数值 → 物理解释",
@@ -3206,9 +3206,9 @@ export const projectNarrativeCopy = {
     "返回附有理由和明确依据的候选名单，决定仍由招聘人员作出。",
     "返回附有理由和明確依據的候選名單，決定仍由招募人員作出。"
   ],
-  "Samuel founded and led the product, evolving company-aware voice interviews into an ATS-connected recruitment-intelligence layer.": [
-    "Samuel 创立并领导产品，将结合企业背景的语音面试发展为连接 ATS 的招聘智能层。",
-    "Samuel 創立並領導產品，將結合企業背景的語音面試發展為連接 ATS 的招募智能層。"
+  "I founded and led the product, evolving company-aware voice interviews into an ATS-connected recruitment-intelligence layer.": [
+    "我创立并领导产品，将结合企业背景的语音面试发展为连接 ATS 的招聘智能层。",
+    "我創立並領導產品，將結合企業背景的語音面試發展為連接 ATS 的招募智能層。"
   ],
   "ATS applications → specialist evidence review → voice enrichment → reasoned shortlist → recruiter decision": [
     "ATS 申请 → 专业材料审阅 → 语音信息补充 → 有理由的候选名单 → 招聘人员决定",
@@ -3230,9 +3230,9 @@ export const projectNarrativeCopy = {
     "准备支持 GPU 的环境，并完成初始 GROMACS 拓扑准备。",
     "準備支持 GPU 的環境，並完成初始 GROMACS 拓撲準備。"
   ],
-  "Samuel configured WSL 2, CUDA and Docker and completed a containerised GROMACS topology-preparation step. This work covers environment setup and preprocessing, not a full molecular-dynamics run.": [
-    "Samuel 配置 WSL 2、CUDA 和 Docker，完成容器内的 GROMACS 拓扑准备。这项工作涵盖环境配置和预处理，并非完整分子动力学运行。",
-    "Samuel 配置 WSL 2、CUDA 和 Docker，完成容器內的 GROMACS 拓撲準備。這項工作涵蓋環境配置和預處理，並非完整分子動力學執行。"
+  "I configured WSL 2, CUDA and Docker and completed a containerised GROMACS topology-preparation step. This work covers environment setup and preprocessing, not a full molecular-dynamics run.": [
+    "我配置 WSL 2、CUDA 和 Docker，完成容器内的 GROMACS 拓扑准备。这项工作涵盖环境配置和预处理，并非完整分子动力学运行。",
+    "我配置 WSL 2、CUDA 和 Docker，完成容器內的 GROMACS 拓撲準備。這項工作涵蓋環境配置和預處理，並非完整分子動力學執行。"
   ],
   "WSL 2 and GPU configuration → container execution → GROMACS topology preparation": [
     "WSL 2 与 GPU 配置 → 容器运行 → GROMACS 拓扑准备",
@@ -3254,9 +3254,9 @@ export const projectNarrativeCopy = {
     "把公开数据转化为有用的决策支持，同时保护行动背景。",
     "把公開資料轉化為有用的決策支援，同時保護行動背景。"
   ],
-  "Samuel built public-data decision support and workflow automation during COVID-19 emergency operations in national service.": [
-    "Samuel 在国民服役期间，为 COVID-19 应急行动构建公开数据决策支持和流程自动化。",
-    "Samuel 在國民服役期間，為 COVID-19 應急行動建置公開資料決策支援和流程自動化。"
+  "I built public-data decision support and workflow automation during COVID-19 emergency operations in national service.": [
+    "我在国民服役期间，为 COVID-19 应急行动构建公开数据决策支持和流程自动化。",
+    "我在國民服役期間，為 COVID-19 應急行動建置公開資料決策支援和流程自動化。"
   ],
   "public epidemiological data → analysis and workflow support → human operational review": [
     "公开流行病学数据 → 分析与流程支持 → 人工行动审阅",
@@ -3274,9 +3274,9 @@ export const projectNarrativeCopy = {
     "2026 年 5 月—至今",
     "2026 年 5 月—至今"
   ],
-  "Applied-AI research in a regulated insurance setting, with documented evaluation and broker review. The linked project uses fictional scenarios; client data and findings remain private.": [
-    "在受监管的保险环境中开展应用 AI 研究，记录评估并保留经纪人审阅。链接项目使用虚构情境；客户数据和研究发现保持私密。",
-    "在受監管的保險環境中開展應用 AI 研究，記錄評估並保留經紀人審閱。連結專案使用虛構情境；客戶資料和研究發現保持私密。"
+  "I carry out applied-AI research in a regulated insurance setting, with documented evaluation and broker review. The linked project uses fictional scenarios; client data and findings remain private.": [
+    "我在受监管的保险环境中开展应用 AI 研究，记录评估过程并保留经纪人审核。关联项目使用虚构情境；客户数据和研究发现不公开。",
+    "我在受監管的保險環境中開展應用 AI 研究，記錄評估過程並保留經紀人審核。關聯專案使用虛構情境；客戶資料和研究發現不公開。"
   ],
   "COVERD · Founder & Product Lead": [
     "COVERD · 创始人兼产品负责人",
@@ -3286,9 +3286,9 @@ export const projectNarrativeCopy = {
     "2026 年 3 月—至今",
     "2026 年 3 月—至今"
   ],
-  "Discovery with four design partners, three voice-interview architectures tested across 20 interviews by April 2026, and an ATS-connected product that preserves recruiter judgement.": [
-    "与四家设计合作伙伴开展探索；截至 2026 年 4 月，在 20 次面试中测试三种语音面试架构，并开发保留招聘人员判断权的 ATS 连接产品。",
-    "與四家設計合作伙伴開展探索；截至 2026 年 4 月，在 20 次面試中測試三種語音面試架構，並開發保留招募人員判斷權的 ATS 連接產品。"
+  "I worked with four design partners on discovery and tested three voice-interview architectures across 20 interviews by April 2026. My ATS-connected product preserves recruiter judgement.": [
+    "截至 2026 年 4 月，我与四家设计合作伙伴开展需求探索，并在 20 场面试中测试了三种语音面试架构。我的产品连接 ATS，并保留招聘人员的判断权。",
+    "截至 2026 年 4 月，我與四家設計合作夥伴開展需求探索，並在 20 場面試中測試了三種語音面試架構。我的產品連接 ATS，並保留招募人員的判斷權。"
   ],
   "Imperial · MSc AI Applications & Innovation": [
     "帝国理工 · AI 应用与创新硕士",
@@ -3298,9 +3298,9 @@ export const projectNarrativeCopy = {
     "2025 年 9 月—2026 年 9 月",
     "2025 年 9 月—2026 年 9 月"
   ],
-  "MSc study in deep learning, AI safety, medical imaging, climate applications and innovation management, connected to the corresponding research and coursework projects.": [
-    "硕士学习涵盖深度学习、AI 安全、医学影像、气候应用和创新管理，并与相应研究及课程项目连接。",
-    "碩士學習涵蓋深度學習、AI 安全、醫學影像、氣候應用和創新管理，並與相應研究及課程專案連接。"
+  "My MSc studies cover deep learning, AI safety, medical imaging, climate applications and innovation management, connected to the corresponding research and coursework projects.": [
+    "我的硕士学习涵盖深度学习、AI 安全、医学影像、气候应用和创新管理，并与相应研究及课程项目关联。",
+    "我的碩士學習涵蓋深度學習、AI 安全、醫學影像、氣候應用和創新管理，並與相應研究及課程專案關聯。"
   ],
   "Pfizer · Product ownership": [
     "Pfizer · 产品负责人",
@@ -3310,9 +3310,9 @@ export const projectNarrativeCopy = {
     "2024 年 10 月—2026 年 4 月",
     "2024 年 10 月—2026 年 4 月"
   ],
-  "Continued GROWMAT product ownership after the placement: roadmap, stakeholder adoption and development of workload and capacity planning for analytical R&D.": [
-    "实习结束后继续负责 GROWMAT 产品：管理路线图、推动利益相关者采用，并发展分析研发的工作量与产能规划。",
-    "實習結束後繼續負責 GROWMAT 產品：管理路線圖、推動利益相關者採用，並發展分析研發的工作量與產能規劃。"
+  "I continued GROWMAT product ownership after my placement, leading its roadmap, stakeholder adoption and development of workload and capacity planning for analytical R&D.": [
+    "实习结束后，我继续负责 GROWMAT 产品，推进路线图、利益相关方采用，以及分析研发的工作量与产能规划功能。",
+    "實習結束後，我繼續負責 GROWMAT 產品，推進路線圖、利害關係人採用，以及分析研發的工作量與產能規劃功能。"
   ],
   "Pfizer · Analytical R&D placement": [
     "Pfizer · 分析研发实习",
@@ -3322,9 +3322,9 @@ export const projectNarrativeCopy = {
     "2023 年 9 月—2024 年 8 月",
     "2023 年 9 月—2024 年 8 月"
   ],
-  "Built and delivered GROWMAT through product discovery, full-stack delivery, reliability and change management in a regulated R&D environment.": [
-    "在受监管研发环境中，通过产品探索、全栈交付、可靠性改进和变更管理构建并交付 GROWMAT。",
-    "在受監管研發環境中，透過產品探索、全棧交付、可靠性改進和變更管理建置並交付 GROWMAT。"
+  "I built and delivered GROWMAT through product discovery, full-stack delivery, reliability and change management in a regulated R&D environment.": [
+    "我在受监管的研发环境中构建并交付 GROWMAT，负责产品需求探索、全栈交付、可靠性和变更管理。",
+    "我在受監管的研發環境中建置並交付 GROWMAT，負責產品需求探索、全端交付、可靠性和變更管理。"
   ],
   "King’s · Summer research project": [
     "伦敦国王学院 · 暑期研究项目",
@@ -3334,9 +3334,9 @@ export const projectNarrativeCopy = {
     "2023 年 6—7 月",
     "2023 年 6—7 月"
   ],
-  "The 2023 research role provides related scientific context for the later GROMACS setup work completed in 2025. That separate project covers environment configuration and topology preparation; it is not presented as work completed during the 2023 role.": [
-    "2023 年研究岗位为之后于 2025 年完成的 GROMACS 环境工作提供相关科学背景。后者是独立项目，涵盖环境配置和拓扑准备，并不被描述为 2023 年任职期间完成的工作。",
-    "2023 年研究職缺為之後於 2025 年完成的 GROMACS 環境工作提供相關科學背景。後者是獨立專案，涵蓋環境配置和拓撲準備，並不被描述為 2023 年任職期間完成的工作。"
+  "My 2023 research role provides related scientific context for the GROMACS setup work I completed in 2025. That separate project covers environment configuration and topology preparation; it was not part of my 2023 role.": [
+    "我在 2023 年的研究经历为 2025 年完成的 GROMACS 配置工作提供相关科学背景。后者是独立项目，涵盖环境配置和拓扑准备，不属于我在 2023 年的研究工作。",
+    "我在 2023 年的研究經歷為 2025 年完成的 GROMACS 配置工作提供相關科學背景。後者是獨立專案，涵蓋環境配置和拓撲準備，不屬於我在 2023 年的研究工作。"
   ],
   "King’s · Coding Series Tutor": [
     "伦敦国王学院 · 编程系列导师",
@@ -3346,9 +3346,9 @@ export const projectNarrativeCopy = {
     "2023 年 1 月—2025 年 4 月",
     "2023 年 1 月—2025 年 4 月"
   ],
-  "Designed and delivered 20+ programming and data-analysis sessions for 80+ chemistry students. The linked computational-chemistry study archive supplies related subject context; its credited coursework is distinct from the tutor’s teaching curriculum.": [
-    "为 80 多名化学学生设计并教授 20 多场编程与数据分析课程。链接的计算化学学习项目提供相关学科背景；其中署名的课程作业与导师自行教授的课程不同。",
-    "為 80 多名化學學生設計並教授 20 多場編程與資料分析課程。連結的計算化學學習專案提供相關學科背景；其中署名的課程作業與導師自行教授的課程不同。"
+  "I designed and delivered 20+ programming and data-analysis sessions for 80+ chemistry students. My linked computational-chemistry study archive supplies related subject context; its credited coursework is distinct from my teaching curriculum.": [
+    "我为 80 多名化学学生设计并讲授了 20 多场编程与数据分析课程。关联的计算化学学习档案提供相关学科背景；其中注明来源的课程作业与我的教学课程不同。",
+    "我為 80 多名化學學生設計並講授了 20 多場程式設計與資料分析課程。關聯的計算化學學習檔案提供相關學科背景；其中註明來源的課程作業與我的教學課程不同。"
   ],
   "King’s · Undergraduate Research Fellow": [
     "伦敦国王学院 · 本科研究员",
@@ -3358,9 +3358,9 @@ export const projectNarrativeCopy = {
     "2022 年 6—7 月",
     "2022 年 6—7 月"
   ],
-  "Built MATLAB, Python and Excel tools for rotational spectroscopy. The related molecular-recognition work names Samuel as a co-author in the 2025 ISMS conference record.": [
-    "为转动光谱构建 MATLAB、Python 和 Excel 工具。相关分子识别研究在 2025 年 ISMS 会议记录中列 Samuel 为共同作者。",
-    "為轉動光譜建置 MATLAB、Python 和 Excel 工具。相關分子識別研究在 2025 年 ISMS 會議記錄中列 Samuel 為共同作者。"
+  "I built MATLAB, Python and Excel tools for rotational spectroscopy. The related molecular-recognition work names me as a co-author in the 2025 ISMS conference record.": [
+    "我为转动光谱构建 MATLAB、Python 和 Excel 工具。相关分子识别研究在 2025 年 ISMS 会议记录中列我为共同作者。",
+    "我為轉動光譜建置 MATLAB、Python 和 Excel 工具。相關分子識別研究在 2025 年 ISMS 會議記錄中列我為共同作者。"
   ],
   "King’s · BSc Chemistry with Biomedicine": [
     "伦敦国王学院 · 化学与生物医学学士",
@@ -3370,9 +3370,9 @@ export const projectNarrativeCopy = {
     "2021 年 9 月—2025 年 5 月",
     "2021 年 9 月—2025 年 5 月"
   ],
-  "First-Class Honours, a professional placement and study in computational chemistry, molecular biology, chemical biology and organic chemistry; also completed the Associate of King’s College London programme.": [
-    "获一等荣誉学位，完成专业实习，学习计算化学、分子生物学、化学生物学和有机化学，并完成 Associate of King’s College London（AKC）通识课程。",
-    "獲一等榮譽學位，完成專業實習，學習計算化學、分子生物學、化學生物學和有機化學，並完成 Associate of King’s College London（AKC）通識課程。"
+  "I graduated with First-Class Honours after a professional placement and study in computational chemistry, molecular biology, chemical biology and organic chemistry. I also completed the Associate of King’s College London programme.": [
+    "我完成专业实习，并学习计算化学、分子生物学、化学生物学和有机化学，以一等荣誉毕业。我也完成了伦敦国王学院院士课程（AKC）。",
+    "我完成專業實習，並學習計算化學、分子生物學、化學生物學和有機化學，以一等榮譽畢業。我也完成了倫敦國王學院院士課程（AKC）。"
   ],
   "Singapore Civil Defence Force · National service": [
     "新加坡民防部队 · 国民服役",
@@ -3382,9 +3382,9 @@ export const projectNarrativeCopy = {
     "2019 年 7 月—2021 年 7 月",
     "2019 年 7 月—2021 年 7 月"
   ],
-  "Public-data decision support and workflow automation during pandemic-era emergency operations, alongside time-critical support for senior leaders.": [
-    "在疫情应急行动中提供公开数据决策支持和流程自动化，同时为高级领导提供时效性要求很高的支持。",
-    "在疫情應急行動中提供公開資料決策支援和流程自動化，同時為高級領導提供時效性要求很高的支持。"
+  "I built public-data decision support and workflow automation during pandemic-era emergency operations, alongside time-critical support for senior leaders.": [
+    "我在疫情期间的应急行动中构建公开数据决策支持和流程自动化，并为高层领导提供时效紧迫的支持。",
+    "我在疫情期間的應急行動中建置公開資料決策支援和流程自動化，並為高層領導提供時效緊迫的支援。"
   ],
   "Independent · Technical projects": [
     "独立实践 · 技术项目",
@@ -3394,9 +3394,9 @@ export const projectNarrativeCopy = {
     "持续进行",
     "持續進行"
   ],
-  "The CV’s home-lab and Julia market-simulation projects connect to a wider independent practice in local applications, learning tools and infrastructure.": [
-    "简历中的家庭实验室和 Julia 市场模拟，连接到更广泛的本地应用、学习工具和基础设施独立实践。",
-    "履歷中的家庭實驗室和 Julia 市場模擬，連接到更廣泛的本地應用、學習工具和基礎設施獨立實踐。"
+  "My home-lab and Julia market-simulation projects connect to my wider independent work on local applications, learning tools and infrastructure.": [
+    "我的家庭实验室和 Julia 市场模拟项目与我更广泛的独立实践相连，涵盖本地应用、学习工具和基础设施。",
+    "我的家庭實驗室和 Julia 市場模擬專案與我更廣泛的獨立實踐相連，涵蓋本地應用、學習工具和基礎設施。"
   ],
   "Career and education connections": [
     "职业与教育关联",

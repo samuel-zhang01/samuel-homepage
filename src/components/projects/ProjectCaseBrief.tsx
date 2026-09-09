@@ -11,7 +11,7 @@ const copy = {
   "Results and capabilities": ["成果与功能", "成果與功能"],
   "Who it helps": ["适用人群", "適用對象"],
   "The aim": ["项目目标", "專案目標"],
-  "Samuel’s contribution": ["Samuel 的贡献", "Samuel 的貢獻"],
+  "What I did": ["我做了什么", "我做了什麼"],
   "Open live demo": ["打开交互演示", "開啟互動示範"],
   "Try it.": ["动手探索。", "動手探索。"],
 } satisfies ProjectCopyTable;
@@ -30,7 +30,7 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
         <div><dt>{t("Who it helps")}</dt><dd>{getProjectText(locale, story.audience)}</dd></div>
         <div><dt>{t("The aim")}</dt><dd>{getProjectText(locale, story.objective)}</dd></div>
       </dl>
-      <details className={styles.contribution}><summary>{t("Samuel’s contribution")}</summary><p>{getProjectText(locale, story.contribution)}</p></details>
+      <section className={styles.contribution}><h2>{t("What I did")}</h2><p>{getProjectText(locale, story.contribution)}</p></section>
     </div>}
     <section className={styles.development}><h2>{t("Development")}</h2>
       <ol>{project.phases.map(phase => <li key={phase.label}>{getProjectText(locale, phase.text)}</li>)}</ol>

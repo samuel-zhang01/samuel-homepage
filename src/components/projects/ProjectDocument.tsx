@@ -69,7 +69,7 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
       <button className={`s7-button ${embedded ? styles.backToList : ""}`} onClick={onBack}>← {t(embedded ? "Back to list" : "All projects")}</button>
       {embedded && <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer">{t("Open in new tab")} ↗</a>}
       <button className="s7-button" onClick={() => onGraph(slug)}>{t("Connections")} ↗</button>
-      <button className="s7-button is-share" onClick={share} title={t("Copy a link to share this project")}>{t("Share project")} ↗</button>
+      <button className="s7-button is-share" onClick={share} title={t("Copy a link to share this project")}>{t("Share project")}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1" /><path d="M15 8V4H4v11h4" /></svg></button>
       {shareStatus && <span role="status">{t(shareStatus)}</span>}
     </nav>
     {shareFallback && <label className={styles.shareFallback}>{t("Project link")}<input readOnly value={shareFallback} onFocus={event => event.target.select()} /></label>}
@@ -92,6 +92,6 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
       <Image src={project.preview.src} alt={getProjectText(locale, project.preview.alt)} width={543} height={172} sizes="(max-width: 720px) 90vw, 640px" />
       <figcaption>{getProjectText(locale, project.preview.caption)}</figcaption>
     </figure>}
-    {project.privacyNote && <details className={styles.boundary}><summary>{t("About the demonstration")}</summary><p>{getProjectText(locale, project.privacyNote)}</p></details>}
+    {project.privacyNote && <section className={styles.boundary}><h2>{t("About the demonstration")}</h2><p>{getProjectText(locale, project.privacyNote)}</p></section>}
   </article></ProjectLocaleProvider>;
 }

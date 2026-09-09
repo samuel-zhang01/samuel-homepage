@@ -1074,14 +1074,14 @@ export function CvKeywordStudio() {
           </section>
         ) : null}
 
-        <details className={styles.methodology}>
-          <summary>Method and interpretation</summary>
+        <section className={styles.methodology}>
+          <h3>Method and interpretation</h3>
           <div>
             <p><strong>Project workflow:</strong> connect a job description to ranked signals, a role-specific LaTeX template and a dated output bundle. The original workflow validates structured keyword data, removes duplicates, handles LaTeX special characters and offers eight template families. This demonstration makes each signal visible and links it to evidence you can inspect.</p>
             <p><strong>Browser adaptation:</strong> this showcase replaces external model inference with a deterministic 18-signal dictionary. <MathEquation tex={String.raw`\begin{aligned}\text{weight}={}&\text{base relevance}+\text{specificity}\\&+\min(\max(\text{frequency}-1,0),2)\\&+\begin{cases}2,&\text{essential wording}\\0,&\text{otherwise}\end{cases}\end{aligned}`} />Repetition adds up to 2 points; essential wording adds 2 points. Proof quality separately checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.</p>
             <p><strong>Review before editing:</strong> a missing signal is never inserted automatically. Only three rewrites grounded verbatim in the fictional sample can be staged, and every generated coaching prompt contains explicit placeholders for evidence that must be verified.</p>
           </div>
-        </details>
+        </section>
       </div>
     </DemoWindow></ProjectCopy>
   );

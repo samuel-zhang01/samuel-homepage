@@ -225,9 +225,9 @@ export const molecularCopy = {
     "将理论预测与观测光谱比较。",
     "將理論預測與觀測光譜比較。"
   ],
-  "Samuel contributed to the King’s College London research on flexible macrocyclic musks, presented at ISMS 2025. Explore its assignment logic with synthetic spectra and molecular shapes.": [
-    "Samuel 参与了伦敦国王学院关于柔性大环麝香分子的研究，并作为共同作者在 ISMS 2025 发表。这里用合成光谱和分子形状探索谱线指认的逻辑。",
-    "Samuel 參與了倫敦國王學院關於柔性大環麝香分子的研究，並作為共同作者在 ISMS 2025 發表。這裡用合成光譜和分子形狀探索譜線指認的邏輯。"
+  "I contributed to the King’s College London research on flexible macrocyclic musks, presented at ISMS 2025. Explore its assignment logic with synthetic spectra and molecular shapes.": [
+    "我参与了伦敦国王学院关于柔性大环麝香分子的研究，并作为共同作者在 ISMS 2025 发表。这里用合成光谱和分子形状探索谱线指认的逻辑。",
+    "我參與了倫敦國王學院關於柔性大環麝香分子的研究，並作為共同作者在 ISMS 2025 發表。這裡用合成光譜和分子形狀探索譜線指認的邏輯。"
   ],
   "About this example": [
     "关于这个示例",
@@ -661,9 +661,9 @@ export const molecularCopy = {
     "大环麝香分子的构象分布",
     "大環麝香分子的構象分佈"
   ],
-  "Samuel is a co-author of the King’s College London presentation, which describes:": [
-    "Samuel 是伦敦国王学院该会议报告的共同作者，报告内容包括：",
-    "Samuel 是倫敦國王學院該會議報告的共同作者，報告內容包括："
+  "I am a co-author of the King’s College London presentation, which describes:": [
+    "我是伦敦国王学院该会议报告的共同作者，报告内容包括：",
+    "我是倫敦國王學院該會議報告的共同作者，報告內容包括："
   ],
   "Muscone (": ["麝香酮（Muscone，","麝香酮（Muscone，"],
   ") and Exaltenone (": [
@@ -702,9 +702,9 @@ export const molecularCopy = {
     "CPROT 快速光谱绘图工具",
     "CPROT 快速光譜繪圖工具"
   ],
-  "Samuel’s MATLAB App Designer tool makes frequency–intensity traces easier to inspect, with precise panning, labelling and high-resolution export. It supports the practical work of exploring a crowded rotational spectrum.": [
-    "Samuel 使用 MATLAB App Designer 制作的工具支持精确平移、标签编辑及高分辨率导出，让频率–强度曲线更易查看，帮助探索拥挤的转动光谱。",
-    "Samuel 使用 MATLAB App Designer 製作的工具支持精確平移、標籤編輯及高解析度匯出，讓頻率–強度曲線更易查看，幫助探索擁擠的轉動光譜。"
+  "My MATLAB App Designer tool makes frequency–intensity traces easier to inspect, with precise panning, labelling and high-resolution export. It supports the practical work of exploring a crowded rotational spectrum.": [
+    "我使用 MATLAB App Designer 制作的工具支持精确平移、标签编辑及高分辨率导出，让频率–强度曲线更易查看，帮助探索拥挤的转动光谱。",
+    "我使用 MATLAB App Designer 製作的工具支持精確平移、標籤編輯及高解析度匯出，讓頻率–強度曲線更易查看，幫助探索擁擠的轉動光譜。"
   ],
   "View the plotting tool": [
     "查看绘图工具",

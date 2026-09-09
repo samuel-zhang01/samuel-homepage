@@ -15,8 +15,7 @@
 .studio button:focus-visible,
 .studio input:focus-visible,
 .studio [data-classic-select]:focus-visible,
-.studio textarea:focus-visible,
-.studio summary:focus-visible {
+.studio textarea:focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 2px;
 }
@@ -122,8 +121,7 @@
 .quotePair > div > span,
 .rewriteDiff span,
 .buildPanel dt,
-.paperToolbar,
-.methodology summary {
+.paperToolbar {
   color: var(--s7-ink);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -1596,22 +1594,20 @@
   background: var(--s7-paper);
 }
 
-.methodology summary {
-  padding: 8px 10px;
+.methodology > h3 {
+  margin: 0;
+  padding: 14px;
   color: var(--s7-ink);
   background: var(--s7-paper);
-  cursor: pointer;
-}
-
-.methodology[open] summary {
   border-bottom: 1px solid var(--s7-shadow);
+  font: 700 var(--s7-heading)/1.35 var(--s7-font-text);
 }
 
 .methodology > div {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  padding: 10px;
+  gap: 16px;
+  padding: 14px;
 }
 
 .methodology p {
@@ -1619,7 +1615,7 @@
   margin: 0;
   color: var(--s7-ink);
   font-size: var(--s7-text);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .emptyState {

@@ -215,7 +215,7 @@ const BOOT_MESSAGES = [
   "Asking Docker to please stay contained…",
   "Polishing one-bit icons by hand…",
   "Loading responsible AI responsibly…",
-  "Finding Samuel somewhere between London and the home lab…",
+  "Finding me somewhere between London and the home lab…",
   "Rewinding the startup chime…",
   "Almost ready. Pretending this took serious computing power…",
 ] as const;
@@ -503,15 +503,15 @@ const INITIAL_WINDOWS: WindowState[] = [
 const DESKTOP_ICONS: DesktopIcon[] = [
   { id: "about", label: "Start Here", icon: "profile", description: "Biography, current work, a recent field note and clear routes through the portfolio." },
   { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
-  { id: "coverd", label: "COVERD", icon: "coverd", description: "Samuel’s startup, product thesis and responsible-AI principles." },
+  { id: "coverd", label: "COVERD", icon: "coverd", description: "My startup, product thesis and responsible-AI principles." },
   { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
   { id: "documents", label: "Documents", icon: "pdf", description: "Read the Applied AI CV and learning material in one continuous reader." },
-  { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of Samuel’s work." },
+  { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of my work." },
   { id: "desk", label: "Desk Accessories", icon: "accessories", description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser." },
   { id: "orbitals", label: "Orbital Lab", icon: "orbital", description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory." },
   { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
   { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
-  { id: "lab", label: "Home Lab", icon: "network", description: "Samuel’s self-hosted AI, storage and automation infrastructure." },
+  { id: "lab", label: "Home Lab", icon: "network", description: "My self-hosted AI, storage and automation infrastructure." },
   { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
   { id: "contact", label: "Contact", icon: "mail", description: "Email, LinkedIn and GitHub without leaving the desktop." },
 ];
@@ -795,14 +795,16 @@ function WindowChrome({
       <div
         className="mac-titlebar"
         onPointerDown={onDragStart}
-        onDoubleClick={onZoom}
+        onDoubleClick={(event) => { if (!(event.target as HTMLElement).closest("button")) onZoom(); }}
       >
-        <button className="window-box window-close" onClick={onClose} aria-label={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} />
+        <button type="button" className="window-box window-close" onClick={onClose} aria-label={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} title={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} />
         <h2>{windowState.title}</h2>
         <button
+          type="button"
           className="window-box window-zoom"
           onClick={onZoom}
           aria-label={`${translateText(locale, windowState.maximized ? "Restore" : "Maximize")} ${translateText(locale, windowState.title)}`}
+          title={`${translateText(locale, windowState.maximized ? "Restore" : "Maximize")} ${translateText(locale, windowState.title)}`}
           aria-pressed={windowState.maximized}
         />
       </div>
@@ -871,10 +873,10 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             <button className="s7-button" type="button" onClick={() => openApp("sidequest")}>Read the RUN/HACK story →</button>
           </div>
         </article>
-        <nav className="identity-switchboard" aria-label="Samuel’s cabinet of curiosities">
+        <nav className="identity-switchboard" aria-label="My cabinet of curiosities">
           <div className="identity-switchboard__heading">
             <span>CABINET OF CURIOSITIES</span>
-            <b>Explore Samuel&apos;s work</b>
+            <b>Explore my work</b>
             <p>Each button opens one clear destination. Projects is the quickest tour.</p>
           </div>
           <button className="identity-drawer--projects" onClick={() => openApp("projects")}>
@@ -914,7 +916,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           <div className="arcade-invite__copy">
             <span>AFTER HOURS · LOCAL PLAY</span>
             <h2 id="arcade-invite-title">Play a little.</h2>
-            <p>Seven small games with hints of Samuel&apos;s work and old-Mac mischief. No account, no tracking, no stakes.</p>
+            <p>Seven small games with hints of my work and old-Mac mischief. No account, no tracking, no stakes.</p>
             <ul className="arcade-invite__games" aria-label="Games in Desk Arcade">
               {ARCADE_GAMES.map((item) => (
                 <li key={item.id}><b aria-hidden="true">{item.icon}</b><span>{item.label}</span></li>
@@ -1170,7 +1172,7 @@ function SkillsApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="skills-app">
       <div className="control-panel-intro">
         <PixelIcon kind="controls" />
-        <div><h3>Skills in practice.</h3><p>A broader engineering toolkit, connected to the products and systems where Samuel has used it.</p></div>
+        <div><h3>Skills in practice.</h3><p>My broader engineering toolkit, connected to the products and systems where I have used it.</p></div>
       </div>
       <div className="control-groups">
         {skillGroups.map((group) => (
@@ -1314,7 +1316,7 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
           <p>{activeService === "email"
             ? "Email is the most direct way to start a useful conversation."
             : activeService === "linkedin"
-              ? "Open Samuel’s professional profile for experience, projects and shared connections."
+              ? "Open my professional profile for experience, projects and shared connections."
               : "Available for conversations about applied AI, responsible technology, product leadership, and ambitious early-stage ventures."}</p>
           {activeService === "internet" && (
             <div className="contact-links">
@@ -1479,26 +1481,26 @@ function createPuzzle(seed = 1991) {
 }
 
 const SAM_WORDS = [
-  { answer: "COVERD", clue: "Samuel’s recruitment intelligence startup.", fact: "COVERD connects to existing ATS workflows, reviews applications across specialist dimensions and keeps recruiters responsible for the decision." },
-  { answer: "PFIZER", clue: "Where Samuel worked on a private enterprise product.", fact: "At Pfizer, Samuel delivered GROWMAT; its external showcase is public while live data and source remain private." },
-  { answer: "PYTHON", clue: "A language threading through Samuel’s research, teaching and AI work.", fact: "Samuel has taught programming and data analysis to more than 80 students." },
-  { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "Samuel’s work spans research, insurance, education and responsible AI across London." },
-  { answer: "DOCKER", clue: "The container tool linking shipped products, the home lab and reproducible environments.", fact: "Samuel uses Docker for product services, deployments and a home lab that connects data, automation and everyday tools." },
+  { answer: "COVERD", clue: "My recruitment intelligence startup.", fact: "COVERD connects to existing ATS workflows, reviews applications across specialist dimensions and keeps recruiters responsible for the decision." },
+  { answer: "PFIZER", clue: "Where I worked on a private enterprise product.", fact: "At Pfizer, I delivered GROWMAT; its external showcase is public while live data and source remain private." },
+  { answer: "PYTHON", clue: "A language threading through my research, teaching and AI work.", fact: "I have taught programming and data analysis to more than 80 students." },
+  { answer: "LONDON", clue: "The city connecting King’s, Imperial, Marsh and COVERD.", fact: "My work spans research, insurance, education and responsible AI across London." },
+  { answer: "DOCKER", clue: "The container tool linking shipped products, the home lab and reproducible environments.", fact: "I use Docker for product services, deployments and a home lab that connects data, automation and everyday tools." },
   { answer: "BANDIT", clue: "A sequential-decision problem balancing exploration with exploitation.", fact: "The Sequential Decisions Lab compares epsilon-greedy, UCB1 and Thompson Sampling over paired synthetic seeds." },
   { answer: "CAUSAL", clue: "The adjustment lens kept separate from off-policy evaluation.", fact: "The Causal Adjustment and OPE Lab distinguishes intervention questions from evaluation of a new logged policy." },
   { answer: "POLICY", clue: "What the OPE workbench evaluates without deploying it.", fact: "The local OPE fixture exposes propensity support, effective sample size and estimator disagreement before any policy claim." },
   { answer: "SENSOR", clue: "What the air-quality decision lab tries to choose economically.", fact: "The Air-Quality ML Decision Lab joins source data QA and model results to an explicit sensor-budget trade-off." },
-  { answer: "NEURAL", clue: "A family of scientific models whose internal structure Samuel opens for inspection.", fact: "Samuel explores neural networks for locating microrobots, reconstructing MRI images and approximating fluid flow." },
+  { answer: "NEURAL", clue: "A family of scientific models whose internal structure I open for inspection.", fact: "I explore neural networks for locating microrobots, reconstructing MRI images and approximating fluid flow." },
   { answer: "BROKER", clue: "The human who retains authority in the insurance decision-support workflow.", fact: "The insurance matching work keeps evidence pillars separate and leaves their final synthesis to broker judgement." },
-  { answer: "MARKET", clue: "A candidate destination for an insurance risk—and the subject of a tiny Julia simulator.", fact: "Samuel’s projects include insurance-market decision support and a small stochastic model of stock-price impact." },
+  { answer: "MARKET", clue: "A candidate destination for an insurance risk—and the subject of a tiny Julia simulator.", fact: "My projects include insurance-market decision support and a small stochastic model of stock-price impact." },
   { answer: "SOLUTE", clue: "The dissolved component in the solid–liquid equilibrium workbench.", fact: "The solubility exhibit solves an invented solute workflow in log-composition space and reconciles mole and mass reporting bases." },
   { answer: "ENERGY", clue: "A quantity tracked while simulating molecular motion.", fact: "The computational-chemistry exhibit reports deterministic velocity-Verlet energy drift so integrator error stays visible." },
-  { answer: "CAMERA", clue: "A tool from Samuel’s former professional life that is now kept for friends and nature.", fact: "Samuel previously photographed weddings professionally and now keeps photography playful and personal." },
-  { answer: "HIKING", clue: "An unhurried interest involving boots, conversation and somewhere new.", fact: "Samuel values long walks for curiosity, shared conversation and the story on the way home." },
+  { answer: "CAMERA", clue: "A tool from my former professional life that I now keep for friends and nature.", fact: "I previously photographed weddings professionally and now keep photography playful and personal." },
+  { answer: "HIKING", clue: "An unhurried interest involving boots, conversation and somewhere new.", fact: "I value long walks for curiosity, shared conversation and the story on the way home." },
   { answer: "LAMBDA", clue: "A symbol connecting regularisation paths and an insurance ranking model.", fact: "The archive discusses lambda shrinkage in the air-quality companion and LambdaRank in insurance decision support." },
   { answer: "TENSOR", clue: "The object followed through several rotatable model-architecture diagrams.", fact: "The scientific models show how tensors pass through layers, skip connections and steps that preserve measured data." },
   { answer: "RECALL", clue: "The spaced-practice loop inside the Italian learning portal.", fact: "Parliamo structures a 56-day plan around adaptive practice, four-way spaced recall and progress records." },
-  { answer: "CARBON", clue: "The element named in the air-quality telemetry’s CO₂ signal.", fact: "Samuel’s home telemetry includes Bluetooth air-quality measurements flowing into SQL-backed dashboards." },
+  { answer: "CARBON", clue: "The element named in the air-quality telemetry’s CO₂ signal.", fact: "My home telemetry includes Bluetooth air-quality measurements flowing into SQL-backed dashboards." },
 ] as const;
 
 function validateSamWords() {
@@ -1530,11 +1532,11 @@ const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: System7IconKind; label: s
 const MEMORY_PAIRS = [
   { id: "coverd", left: "ATS LAYER", right: "COVERD", fact: "COVERD reviews applications across specialist dimensions and uses voice interviews as an enrichment path." },
   { id: "growmat", left: "EXTERNAL", right: "GROWMAT", fact: "GROWMAT has an external showcase; source code, live data and credentials remain private." },
-  { id: "gpu", left: "PRIVATE", right: "LOCAL AI", fact: "Samuel’s private home-lab inventory includes local model-training and inference systems." },
+  { id: "gpu", left: "PRIVATE", right: "LOCAL AI", fact: "My private home-lab inventory includes local model-training and inference systems." },
   { id: "scdf", left: "SCDF", right: "OPERATIONS", fact: "Emergency planning systems supported protected operations in Singapore." },
-  { id: "teaching", left: "80+ STUDENTS", right: "CODING", fact: "Samuel designed an accessible programming and data curriculum." },
+  { id: "teaching", left: "80+ STUDENTS", right: "CODING", fact: "I designed an accessible programming and data curriculum." },
   { id: "science", left: "SCIENCE", right: "MODELLING", fact: "Scientific computing supported research inside a regulated environment." },
-  { id: "infra", left: "DOCKER", right: "HOME LAB", fact: "Samuel’s home lab connects local AI, storage and automation. Its interactive map follows six connected Docker services." },
+  { id: "infra", left: "DOCKER", right: "HOME LAB", fact: "My home lab connects local AI, storage and automation. Its interactive map follows six connected Docker services." },
   { id: "air", left: "CO₂", right: "GRAFANA", fact: "Bluetooth air-quality telemetry flows into SQL dashboards." },
 ] as const;
 
@@ -1605,7 +1607,7 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
   const [wordIndex, setWordIndex] = useState(0);
   const [wordInput, setWordInput] = useState("");
   const [wordGuesses, setWordGuesses] = useState<string[]>([]);
-  const [wordMessage, setWordMessage] = useState("Six letters. All clues lead back to Samuel.");
+  const [wordMessage, setWordMessage] = useState("Six letters. All clues lead back to me.");
   const [memoryDeck, setMemoryDeck] = useState(() => createMemoryDeck());
   const [memoryOpen, setMemoryOpen] = useState<number[]>([]);
   const [memoryMatched, setMemoryMatched] = useState<Set<string>>(() => new Set());
@@ -1987,8 +1989,8 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
               <div><span>PROFILE ACCESSORY 04</span><h3>Profile Pairs</h3></div>
               <div className="puzzle-counter">{memoryTurns}<small>TURNS</small></div>
             </div>
-            <p className="memory-intro">Match each clue to the part of Samuel’s profile it belongs to.</p>
-            <div className="memory-grid" role="group" aria-label="Samuel profile matching game">
+            <p className="memory-intro">Match each clue to the part of my profile it belongs to.</p>
+            <div className="memory-grid" role="group" aria-label="My profile matching game">
               {memoryDeck.map((card, index) => {
                 const visible = memoryOpen.includes(index) || memoryMatched.has(card.pairId);
                 return (
@@ -2007,7 +2009,7 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             </div>
             <div className="memory-status">
               <span aria-live="polite">{memoryMatched.size === MEMORY_PAIRS.length
-                ? "You now know suspiciously much about Samuel."
+                ? "You now know suspiciously much about me."
                 : locale === "zh-CN" ? `已找到 ${memoryMatched.size} / ${MEMORY_PAIRS.length} 组配对` : locale === "zh-TW" ? `已找到 ${memoryMatched.size} / ${MEMORY_PAIRS.length} 組配對` : `${memoryMatched.size} of ${MEMORY_PAIRS.length} connections found`}</span>
               <button className="mac-button" onClick={resetMemory}>Shuffle cards</button>
             </div>
@@ -2034,7 +2036,7 @@ function SecretApp({ locale }: { locale: Locale }) {
       <h3>Welcome, power user.</h3>
       <p>You found the part of the portfolio that contributes nothing to conversion metrics.</p>
       <blockquote>“The best interface is one with at least one completely unnecessary secret.”</blockquote>
-      <small>System note: OpenClaw did not, in fact, complete Samuel’s entire life. Results remain inconclusive.</small>
+      <small>System note: OpenClaw did not, in fact, complete my entire life. Results remain inconclusive.</small>
     </div></TranslationBoundary>
   );
 }
@@ -2065,7 +2067,7 @@ function LabApp({ locale }: { locale: Locale }) {
     { group: "Network", code: "F2B", name: "Fail2ban", host: "Intrusion response", description: "Watches service logs and automatically blocks repeated hostile requests." },
     { group: "Network", code: "RDP", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
     { group: "Operations", code: "CT", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
-    { group: "Operations", code: "CI", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs across Samuel’s own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs." },
+    { group: "Operations", code: "CI", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs across my own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs." },
     { group: "Operations", code: "HP", name: "Homepage", host: "Service directory", description: "A documented directory for service links and operational notes." },
     { group: "Operations", code: "JOB", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
     { group: "Data", code: "SQL", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },

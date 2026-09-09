@@ -70,11 +70,11 @@ export function FinanceImportExperiment() {
           {receipt.decisions.length === 0 && <p>Zero rows reached the insertion loop.</p>}
         </div>
       </>}
-      <details className={styles.receipt}><summary>Inspect the stored identities and import history</summary>
+      <section className={styles.receipt}><h4>Inspect the stored identities and import history</h4>
         <p>Each identity combines the fields used to recognise an existing transaction. Compare the incoming record with the retained ledger entry.</p>
         {state.ledger.map((row) => <p key={row.identity}><code style={{ overflowWrap: "anywhere" }}>{row.identity}</code> · {pounds(row.amount)}</p>)}
         <ol>{state.history.map((item, index) => <li key={index}>{`${item.name}: ${item.inserted} added, ${item.ignored} ignored, reconciliation ${item.reconciled ? "passed" : "failed"}.`}</li>)}</ol>
-      </details>
+      </section>
       <p className={styles.note}>Amounts use whole pennies. A repeated identity retains the first stored row, while reconciliation flags stay visible for review. The other finance views use a separate 51-row example ledger.</p>
     </div>
   </section></ProjectCopy>;

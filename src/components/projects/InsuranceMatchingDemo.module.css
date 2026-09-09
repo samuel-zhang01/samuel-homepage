@@ -16,15 +16,13 @@
 
 .window button,
 .window input,
-.window [data-classic-select],
-.window summary {
+.window [data-classic-select] {
   touch-action: manipulation;
 }
 
 .window button:focus-visible,
 .window input:focus-visible,
-.window [data-classic-select]:focus-visible,
-.window summary:focus-visible {
+.window [data-classic-select]:focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 2px;
 }
@@ -1681,48 +1679,21 @@
   overflow: hidden;
 }
 
-.modelCard summary {
-  display: flex;
-  min-height: 48px;
-  padding: 9px 12px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  background:
-    var(--s7-paper);
-  cursor: pointer;
-  list-style: none;
-}
-
-.modelCard summary::-webkit-details-marker {
-  display: none;
-}
-
-.modelCard summary > span:first-child {
-  display: grid;
-  gap: 1px;
-}
-
-.modelCard summary strong {
-  font-size: var(--s7-small);
-}
-
-.modelCard summary small {
-  color: var(--s7-ink);
-  font-size: var(--s7-small);
-}
-
-.modelCard summary > span:last-child {
-  padding: 4px 6px;
-  border: 1px solid var(--s7-shadow);
+.modelCard > header {
+  padding: 16px;
   background: var(--s7-paper);
-  font-size: var(--s7-small);
-  font-weight: 700;
 }
 
-.modelCard[open] summary > span:last-child {
+.modelCard > header h3 {
+  margin: 0;
+  font: 700 var(--s7-heading)/1.35 var(--s7-font-text);
+}
+
+.modelCard > header p {
+  margin: 8px 0 0;
   color: var(--s7-ink);
-  background: var(--s7-paper);
+  font-size: var(--s7-text);
+  line-height: 1.6;
 }
 
 .modelCardGrid {
@@ -1748,11 +1719,15 @@
 }
 
 .groundedLabel {
+  margin: 0;
   color: var(--s7-ink);
+  font: 700 var(--s7-text)/1.4 var(--s7-font-text);
 }
 
 .illustrativeLabel {
+  margin: 0;
   color: var(--s7-ink);
+  font: 700 var(--s7-text)/1.4 var(--s7-font-text);
 }
 
 .modelCardGrid ul {
@@ -1764,7 +1739,8 @@
 
 .modelCardGrid li {
   color: var(--s7-ink);
-  font-size: var(--s7-small);
+  font-size: var(--s7-text);
+  line-height: 1.6;
 }
 
 .modelBoundary {
@@ -1773,8 +1749,9 @@
   border-top: 1px solid var(--s7-shadow);
   color: var(--s7-ink);
   background: var(--s7-paper);
-  font-size: var(--s7-small);
-  font-weight: 700;
+  font-size: var(--s7-text);
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 @container (max-width: 900px) {
