@@ -8,7 +8,8 @@ Updated: 9 September 2026. Current implementation, checks and handoff.
 - Project sharing has a strong indigo face and the same height as neighbouring actions. Primary destinations remain blue. Mobile PDF and demo action rows retain 44px targets.
 - Project contributions, demo guidance and related explanatory/result sections are always visible. Personal narration uses I/my with matching Simplified and Traditional Chinese copy; identity labels, collaborators and source credits retain names.
 - Compiled route review passed 284/284, including checks that overview explanations, contributions and privacy text are outside disclosures. Native Edge checked desktop and 320px layouts, sharing, window close/restore/drag/resize, and visible CV demo guidance. Full lint, prebuild gates, production compilation and output checks passed. See [window and content uniformity](docs/WINDOW_CONTENT_UNIFORMITY_2026-09-09.md).
-- Current compiled build: `.next-uniform`, reviewed on port 5195; port 5180 is refreshed to this build at handoff. Earlier ports below describe previous checkpoints.
+- Follow-up: compact embedded toolbars with five actions now use two equal columns, preventing the final Share project button from stretching across the entire row. The 375px compiled phone view and copy-feedback row were checked with native Edge; CSS checks and production/output checks passed.
+- Current compiled build: `.next-toolbar`, reviewed on port 5196; ports 5180, 5190 and 5195 are refreshed to this build at handoff. Earlier ports below describe previous checkpoints.
 
 ## Latest PDF reader follow-up
 
