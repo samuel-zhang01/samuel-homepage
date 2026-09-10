@@ -36,9 +36,9 @@ function projectIcon(project: Project): System7IconKind {
 }
 
 export function ProjectArtwork({ project, compact = false }: { project: Project; compact?: boolean }) {
-  const cover = !compact && covers[project.slug];
+  const cover = covers[project.slug];
   return <div className={styles.artwork} data-compact={compact || undefined} data-cover={!!cover || undefined} aria-hidden="true">
-    {project.slug === "coverd-ai" ? <Image src="/coverd-logo-black-on-transparent.png" alt="" width={64} height={64} unoptimized /> : cover ? <Image src={cover} alt="" width={320} height={320} sizes="(max-width: 620px) 80px, 160px" />
+    {project.slug === "coverd-ai" ? <Image src="/coverd-logo-black-on-transparent.png" alt="" width={64} height={64} unoptimized /> : cover ? <Image src={cover} alt="" width={320} height={320} sizes={compact ? "48px" : "(max-width: 620px) 80px, 160px"} />
       : <System7Icon kind={projectIcon(project)} />}
   </div>;
 }

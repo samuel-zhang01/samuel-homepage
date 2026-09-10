@@ -497,7 +497,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 100px);
   grid-auto-flow: row;
-  grid-auto-rows: minmax(82px, auto);
+  grid-auto-rows: minmax(96px, auto);
   gap: 8px;
   align-content: start;
   justify-content: flex-end;
@@ -512,7 +512,7 @@ body {
   width: 100px;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 6px;
   padding: 3px 2px;
   border: 1px solid transparent;
   outline: 0;
@@ -521,16 +521,22 @@ body {
   text-align: center;
   text-shadow: 1px 1px 0 #111, -1px -1px 0 rgba(0,0,0,.25);
   cursor: pointer;
-  min-height: 82px;
+  min-height: 96px;
   justify-content: flex-start;
 }
 
 .desktop-icon__graphic {
   display: grid;
-  width: 40px;
-  height: 39px;
-  flex: 0 0 39px;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
   place-items: center;
+}
+
+.desktop-icon__graphic .pixel-icon,
+.desktop-icon__graphic .coverd-icon-plate {
+  width: 100%;
+  height: 100%;
 }
 
 .desktop-icon__label {
@@ -4636,7 +4642,7 @@ html:lang(zh-TW) .career-record {
     grid-auto-flow: row;
     grid-template-columns: repeat(3,minmax(0,1fr));
     grid-template-rows: none;
-    grid-auto-rows: minmax(82px, auto);
+    grid-auto-rows: minmax(96px, auto);
     max-height: calc(100dvh - 132px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     justify-content: stretch;
     gap: 8px 5px;
@@ -4644,7 +4650,7 @@ html:lang(zh-TW) .career-record {
 
   .desktop-icon {
     width: 100%;
-    min-height: 82px;
+    min-height: 96px;
   }
 
   .desktop-hint {

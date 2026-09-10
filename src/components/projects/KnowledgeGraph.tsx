@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from "react";
 import { projects, isInteractiveProject } from "@/data/projects";
 import { projectOrigins } from "@/data/projectOrigins";
 import { buildKnowledgeGraph, KnowledgeGraphIndex, graphNodeHref, knowledgeTopics, type KnowledgeNode } from "@/data/knowledgeGraph";
@@ -352,12 +352,12 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
   const [size, setSize] = useState({ width: 800, height: 490 });
   const [canvasReady, setCanvasReady] = useState(true);
   const [copied, setCopied] = useState(false);
-  const [navigatorOpen, setNavigatorOpen] = useState(false);
+  const navigatorId = useId();
   const [analysisOpen, setAnalysisOpen] = useState(false);
   const [resultLimit, setResultLimit] = useState(12);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const navigatorRef = useRef<HTMLDetailsElement>(null);
+  const navigatorRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDetailsElement>(null);
   const selectionCallback = useRef(onSelectionChange);
   selectionCallback.current = onSelectionChange;
@@ -570,7 +570,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
 
   const candidateNodes = query.trim() ? searchResults : selected ? neighbours.map((entry) => entry.node) : graph.nodes.filter((node) => node.kind === "topic");
   const listNodes = [...candidateNodes].sort((a, b) => Number(b.kind === "project") - Number(a.kind === "project"));
-  function browseConnections() { setNavigatorOpen(true); setResultLimit(graph.nodes.length); requestAnimationFrame(() => navigatorRef.current?.scrollIntoView({ block: "nearest" })); }
+  function browseConnections() { setResultLimit(graph.nodes.length); requestAnimationFrame(() => navigatorRef.current?.scrollIntoView({ block: "nearest" })); }
   async function share() { try { await navigator.clipboard.writeText(window.location.href); setCopied(true); } catch { setCopied(false); } }
   function exportGraph() {
     const url = URL.createObjectURL(new Blob([JSON.stringify(graph, null, 2)], { type: "application/json" }));
@@ -620,12 +620,12 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
           <div className={styles.stageStatus}>{flat ? "2D" : "3D"} · {shown.size} {t("visible nodes")}</div>
         </div>
         <p className={styles.gestureHelp}>{t(flat ? "Drag to pan. Use + / − to zoom. All connections are also available in the list." : "Drag to rotate. Shift-drag to pan. Use + / − to zoom. All connections are also available in the list.")}</p>
-        <details ref={navigatorRef} className={styles.navigator} open={navigatorOpen || !!query} onToggle={(event) => setNavigatorOpen(event.currentTarget.open)}>
-          <summary>{query ? `${searchResults.length} ${t("matches")}` : selected ? `${t("Browse connections")} · ${neighbours.length}` : t("Browse subjects")}</summary>
+        <section ref={navigatorRef} className={styles.navigator} aria-labelledby={navigatorId}>
+          <h3 id={navigatorId}>{query ? `${searchResults.length} ${t("matches")}` : selected ? `${t("Browse connections")} · ${neighbours.length}` : t("Browse subjects")}</h3>
           <div className={styles.nodeList}>{listNodes.slice(0, resultLimit).map((node) => <button key={node.id} onClick={() => select(node.id)}><span>{t(kindLabels[node.kind])}{node.period ? ` · ${t(node.period)}` : ""}</span><strong>{t(node.label)}</strong><span aria-hidden="true">→</span></button>)}</div>
           {listNodes.length > resultLimit && <button className="mac-button" onClick={() => setResultLimit((value) => value + 20)}>{t("Show more connections")}</button>}
           {query && searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}
-        </details>
+        </section>
       </div>
       <aside className={styles.inspector} aria-label={t("Selected node")} aria-live="polite">
         {selected ? <>
@@ -668,7 +668,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
         const linked = graphIndex.neighbours(node.id).filter((entry) => entry.node.kind === "project");
         return <article key={node.id}>
           <div className={styles.timelineDate}>{t(node.period ?? "")}</div>
-          <div className={styles.timelineRecord}><button onClick={() => { select(node.id); stageRef.current?.scrollIntoView({ block: "start" }); }} className={styles.timelineTitle}>{t(node.label)} ↗</button><p>{t(node.description)}</p><div className={styles.timelineProjects}>{linked.map(({ node: project, edge }) => <button key={project.id} onClick={() => { select(project.id); stageRef.current?.scrollIntoView({ block: "start" }); }} title={graphConnectionText(locale, edge)}>{t(project.shortLabel)} <small>{t(project.period ?? "")}</small> →</button>)}</div><a href={graphNodeHref(node, localeSlug)}>{t("Open CV record")} →</a></div>
+          <div className={styles.timelineRecord}><h4><button onClick={() => { select(node.id); stageRef.current?.scrollIntoView({ block: "start" }); }} className={styles.timelineTitle}><span>{t(node.label)}</span>{" "}<span aria-hidden="true">↗</span></button></h4><p>{t(node.description)}</p><div className={styles.timelineProjects}>{linked.map(({ node: project, edge }) => <button key={project.id} onClick={() => { select(project.id); stageRef.current?.scrollIntoView({ block: "start" }); }} title={graphConnectionText(locale, edge)}><span>{t(project.shortLabel)}</span>{" "}<small>{t(project.period ?? "")}</small>{" "}<span aria-hidden="true">→</span></button>)}</div><a href={graphNodeHref(node, localeSlug)}>{t("Open CV record")} →</a></div>
         </article>;
       })}</div>
     </details>

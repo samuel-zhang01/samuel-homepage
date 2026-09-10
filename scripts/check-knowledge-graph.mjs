@@ -135,20 +135,23 @@ check('Focused traversals stay centred with unique deterministic neighbour posit
     for (const point of layout.values()) assert.ok(Object.values(point).every(Number.isFinite));
   }
 });
-check('3D focus preserves overview geometry and depth; optional 2D remains flat', () => {
-  const overview = math.layoutKnowledgeGraph(graph);
-  for (const selectedId of ['topic:scientific-ml', 'project:neural-cfd-surrogates', 'experience:imperial']) {
+check('Focused views retain depth in 3D and distribute cross-topic neighbours evenly', () => {
+  for (const selectedId of ['topic:human-systems', 'topic:scientific-ml', 'project:neural-cfd-surrogates', 'experience:imperial']) {
     const visible = math.visibleKnowledgeNodes(graph, selectedId, true, true);
     const focused = math.layoutKnowledgeFocus(graph, selectedId, visible);
-    const origin = overview.get(selectedId);
     assert.ok([...focused.values()].some((point) => Math.abs(point.z) > 10), selectedId);
-    for (const [id, point] of focused) {
-      const original = overview.get(id);
-      assert.deepEqual(point, { x: original.x - origin.x, y: original.y - origin.y, z: original.z - origin.z });
-    }
     const flat = math.layoutKnowledgeFocus(graph, selectedId, visible, true);
     assert.ok([...flat.values()].every((point) => point.z === 0));
   }
+  const selectedId = 'topic:human-systems';
+  const visible = math.visibleKnowledgeNodes(graph, selectedId, true, true);
+  const neighbours = [...math.layoutKnowledgeFocus(graph, selectedId, visible)]
+    .filter(([id]) => id !== selectedId).map(([, point]) => point);
+  const distances = neighbours.map(point => Math.hypot(point.x, point.y, point.z));
+  assert.ok(Math.max(...distances) / Math.min(...distances) < 1.35, 'Cross-topic projects must not be distant outliers');
+  const centre = neighbours.reduce((sum, point) => ({ x: sum.x + point.x, y: sum.y + point.y }), { x: 0, y: 0 });
+  assert.ok(Math.hypot(centre.x, centre.y) / neighbours.length < Math.min(...distances) * .2, 'Neighbours balance around the selected node');
+  assert.equal(new Set(neighbours.map(point => `${point.x >= 0},${point.y >= 0}`)).size, 4, 'Use all four quadrants');
 });
 check('Rotation changes orientation and depth while shift-drag only changes pan', () => {
   const base = { ...math.initialGraphCamera, panX: 17, panY: -9 };
@@ -231,7 +234,7 @@ check('Camera zoom follows ratios while 3D positions and visibility ease between
     for (const opacity of frame.opacity.values()) assert.ok(opacity >= 0 && opacity <= 1);
   }
 });
-check('Intermediate projected motion remains continuous and retains pairwise 3D geometry', () => {
+check('Intermediate projected motion stays continuous while neighbours gather around the selection', () => {
   const from = makeTransitionScene(), to = makeTransitionScene('project:neural-cfd-surrogates');
   const id = 'project:neural-cfd-surrogates', otherId = 'experience:imperial';
   const project = (scene) => math.projectKnowledgePoint(scene.positions.get(id), scene.camera, 900, 500);
@@ -246,10 +249,13 @@ check('Intermediate projected motion remains continuous and retains pairwise 3D 
     const a = scene.positions.get(id), b = scene.positions.get(otherId);
     return { x: a.x - b.x, y: a.y - b.y, z: a.z - b.z };
   };
-  const original = separation(from);
+  const original = separation(from), target = separation(to);
   for (const progress of [.1, .5, .9]) {
     const frame = math.interpolateKnowledgeScene(from, to, progress);
-    for (const [axis, value] of Object.entries(separation(frame))) assert.ok(Math.abs(value - original[axis]) < 1e-10);
+    for (const [axis, value] of Object.entries(separation(frame))) {
+      assert.ok(value >= Math.min(original[axis], target[axis]) - 1e-10);
+      assert.ok(value <= Math.max(original[axis], target[axis]) + 1e-10);
+    }
   }
 });
 check('An interrupted transition rebases from the displayed positions, camera and fades', () => {

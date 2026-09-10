@@ -22,7 +22,7 @@
 .folder { margin: 0; }
 .folder > summary { position: sticky; top: 0; z-index: 1; padding: 7px 10px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); cursor: pointer; font-size: var(--s7-small); font-family: var(--s7-font-mono); }
 .folder > summary small { margin-left: 6px; font-size: inherit; color: var(--s7-muted); }
-.project { display: grid; grid-template-columns: 42px minmax(0, 1fr) 8px; gap: 10px; align-items: start; width: 100%; min-height: 94px; padding: 12px 10px; border: 0; border-bottom: 1px solid #ccc; border-radius: 0; background: var(--s7-paper); color: var(--s7-ink); text-align: left; font: inherit; cursor: pointer; box-shadow: inset 0 1px 0 var(--s7-highlight); }
+.project { display: grid; grid-template-columns: 48px minmax(0, 1fr) 8px; gap: 10px; align-items: start; width: 100%; min-height: 94px; padding: 12px 10px; border: 0; border-bottom: 1px solid #ccc; border-radius: 0; background: var(--s7-paper); color: var(--s7-ink); text-align: left; font: inherit; cursor: pointer; box-shadow: inset 0 1px 0 var(--s7-highlight); }
 .catalogue li:nth-child(even) .project { background: var(--s7-surface); }
 .project > span:nth-child(2) { min-width: 0; display: grid; gap: 5px; }
 .project strong { font-size: var(--s7-text); line-height: 1.35; font-weight: 700; overflow-wrap: anywhere; font-family: Georgia, "Times New Roman", serif; }

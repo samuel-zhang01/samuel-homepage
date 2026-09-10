@@ -83,7 +83,7 @@
 /* Selected topics use their existing pressed face without a leading marker. */
 .topics button[aria-pressed="true"], .toolbar button[aria-pressed="true"] { font-weight: 700; color: #fff; background: #11177a; border-color: #111; box-shadow: inset 1px 1px #777bb7; }
 .topics button:active:not(:disabled), .toolbar button:active:not(:disabled), .footer button:active:not(:disabled), .navigator > button:active:not(:disabled) { color: var(--s7-paper); background: var(--s7-ink); box-shadow: none; }
-.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: stretch; gap: 8px; min-width: 0; padding: 8px; box-shadow: var(--s7-relief-inset); background: #d5d6cc; }
+.workspace { display: grid; grid-template-columns: minmax(0, 3fr) minmax(300px, 2fr); align-items: start; gap: 8px; min-width: 0; padding: 8px; box-shadow: var(--s7-relief-inset); background: #d5d6cc; }
 .visual { min-width: 0; border: 1px solid var(--s7-edge); background: var(--s7-paper); box-shadow: var(--s7-frame-well); }
 .breadcrumb { display: flex; gap: 7px; align-items: center; min-height: 35px; padding: 4px 13px; overflow-x: auto; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-surface); color: var(--s7-ink); white-space: nowrap; }
 .breadcrumb > span { display: flex; gap: 7px; align-items: center; }
@@ -121,7 +121,7 @@
 .canvasFallback { position: absolute; top: 30%; left: 10%; width: 80%; color: var(--s7-ink); background: var(--s7-paper); }
 .gestureHelp { margin: 0; padding: 8px 13px; border-top: 1px solid var(--s7-shadow); color: var(--s7-muted); background: var(--s7-surface); font-size: var(--s7-small); }
 .navigator { padding: 0 12px 10px; border-top: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }
-.navigator > summary { min-height: 36px; padding: 9px 0 6px; font-size: var(--s7-small); font-weight: 700; }
+.navigator > h3 { min-height: 36px; margin: 0; padding: 9px 0 6px; font-size: var(--s7-small); font-weight: 700; }
 .navigator > button { margin-top: 9px; }
 .nodeList { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; padding: 8px; border: 1px solid var(--s7-edge); background: var(--s7-recess); box-shadow: var(--s7-relief-inset); }
 .nodeList button { display: grid; grid-template-columns: 1fr 14px; gap: 3px; min-height: 62px; padding: 8px; border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); background: var(--s7-paper); box-shadow: 1px 1px 0 var(--s7-shadow); text-align: left; color: var(--s7-ink); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; }
@@ -238,56 +238,37 @@
 .timelineDate { padding: 8px 17px 22px 0; color: var(--s7-ink); font: var(--s7-small)/1.4 var(--s7-font-text); }
 .timelineRecord { position: relative; min-width: 0; padding: 4px 0 24px 22px; border-left: 1px solid var(--s7-shadow); }
 .timelineRecord::before { position: absolute; content: ""; left: -4px; top: 11px; width: 7px; height: 7px; border: 1px solid #111; background: var(--s7-paper); }
-.timelineTitle { padding: 0; border: 1px solid var(--s7-ink); background: var(--s7-paper); color: var(--s7-ink) !important; font-size: var(--s7-ui); font-weight: 400 !important; text-align: left; border-radius: var(--s7-control-radius); box-shadow: 1px 1px 0 var(--s7-shadow); font-family: var(--s7-font-ui); line-height: 1.4; letter-spacing: normal; text-transform: none; min-height: var(--s7-control-height); }
-.timelineTitle:focus-visible {
-  outline: 2px dotted var(--s7-ink);
-  outline-offset: 3px;
+.timelineRecord h4 { margin: 0; }
+.timelineRecord .timelineTitle {
+  display: inline-flex; align-items: baseline; gap: 6px; max-width: 100%; min-height: var(--s7-control-height);
+  padding: 4px 0; border: 0; border-radius: 0; box-shadow: none;
+  background: transparent; color: var(--s7-ink); text-align: left;
+  font: 700 var(--s7-heading)/1.4 Georgia, "Times New Roman", serif;
+  overflow-wrap: anywhere; text-underline-offset: 4px;
 }
-.timelineTitle:disabled, .timelineTitle[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
-  cursor: default;
-}
-.timelineTitle:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-.timelineTitle:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .timelineTitle:active:not(:disabled):not([aria-disabled="true"]) > strong, .timelineTitle:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
+.timelineTitle > span:first-child { min-width: 0; }
+.timelineTitle > span:last-child { flex: 0 0 auto; }
+.timelineRecord .timelineTitle:hover { text-decoration: underline; text-decoration-thickness: 1px; }
 .timelineRecord p { max-width: 800px; margin: 6px 0 9px; color: var(--s7-ink); font-size: var(--s7-text); }
-.timelineProjects { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
-.timelineProjects button { display: flex; align-items: baseline; gap: 6px; padding: 6px 8px; border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); background: var(--s7-paper); box-shadow: 1px 1px 0 var(--s7-shadow); text-align: left; font-size: var(--s7-ui); color: var(--s7-ink); font-family: var(--s7-font-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; min-height: var(--s7-control-height); }
-.timelineProjects button:focus-visible {
-  outline: 2px dotted var(--s7-ink);
-  outline-offset: 3px;
+.timelineProjects { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 8px 0 4px; }
+.timelineProjects button {
+  display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px;
+  max-width: 100%; min-height: var(--s7-control-height); padding: 4px 0;
+  border: 0; border-radius: 0; box-shadow: none; background: transparent;
+  color: var(--s7-selection); text-align: left; font: inherit;
 }
-.timelineProjects button:disabled, .timelineProjects button[aria-disabled="true"] {
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
-  border-color: var(--s7-shadow);
-  box-shadow: none;
-  cursor: default;
-}
-.timelineProjects button:active:not(:disabled):not([aria-disabled="true"]) {
-  color: var(--s7-paper);
-  background: var(--s7-ink);
-  box-shadow: none;
-}
-.timelineProjects button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .timelineProjects button:active:not(:disabled):not([aria-disabled="true"]) > strong, .timelineProjects button:active:not(:disabled):not([aria-disabled="true"]) > small {
-  color: var(--s7-paper);
-}
-.timelineProjects button:hover { color: var(--s7-ink); background: var(--s7-paper); }
-.timelineProjects small { color: var(--s7-ink); font-size: var(--s7-small); }
-.timelineProjects button:hover small { color: var(--s7-ink); }
+.timelineProjects button > span:first-child { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.timelineProjects button:hover > span:first-child { text-decoration-thickness: 2px; }
+.timelineProjects small { color: var(--s7-muted); font-size: var(--s7-small); }
+.timelineRecord .timelineTitle:focus-visible,
+.timelineProjects button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+.timelineRecord .timelineTitle:active,
+.timelineProjects button:active { color: var(--s7-ink); background: transparent; }
 .timelineRecord > a { display: inline-block; padding: 4px 0; color: var(--s7-selection); font-size: var(--s7-small); text-underline-offset: 3px; }
 .footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 9px; padding: 9px 15px; border-top: 1px solid var(--s7-edge); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); color: var(--s7-ink); font-size: var(--s7-small); }
 .graph button[aria-pressed="true"]:focus-visible, .breadcrumb button[aria-current]:focus-visible { outline-color: var(--s7-ink); }
-.graph .primaryAction:active, .graph .textAction:active, .connections button:active, .startRoutes button:active, .nodeList button:active, .timelineProjects button:active { color: var(--s7-paper); background: var(--s7-ink); box-shadow: none; }
-.connections button:active strong, .connections button:active span, .startRoutes button:active strong, .startRoutes button:active span, .nodeList button:active > span, .timelineProjects button:active small { color: var(--s7-paper); }
+.graph .primaryAction:active, .graph .textAction:active, .connections button:active, .startRoutes button:active, .nodeList button:active { color: var(--s7-paper); background: var(--s7-ink); box-shadow: none; }
+.connections button:active strong, .connections button:active span, .startRoutes button:active strong, .startRoutes button:active span, .nodeList button:active > span { color: var(--s7-paper); }
 .canvas:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: -4px; }
 .cssAnchor { --knowledge-styles-ready: 1; }
 .intro {

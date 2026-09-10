@@ -4,3 +4,4 @@
 .artwork[data-compact] { padding: 0; }
 .artwork[data-cover] { overflow: hidden; padding: 3px; border: 1px solid var(--s7-edge); background: var(--s7-chrome); box-shadow: var(--s7-relief-inset), 1px 1px 0 var(--s7-highlight); }
 .artwork[data-cover] img { object-fit: cover; }
+.artwork[data-cover][data-compact] { padding: 1px; }

@@ -69,21 +69,11 @@ export function layoutKnowledgeGraph(graph: KnowledgeGraphData): Map<string, Poi
   return points;
 }
 
-/** Preserve the overview's spatial neighbourhood in 3D. Selecting a node
- * recentres the existing coordinates; it never flattens them into a new ring.
- * An optional flat projection uses rings for a compact, static diagram. */
+/** Gather direct connections around the selection so cross-topic links cannot
+ * pull a few neighbours far away from the rest. Stable rings stay readable in
+ * either view; shallow depth keeps the 3D view rotatable without flattening it. */
 export function layoutKnowledgeFocus(graph: KnowledgeGraphData, selectedId: string, visible: Set<string>, flat = false): Map<string, Point3> {
   const points = new Map<string, Point3>([[selectedId, { x: 0, y: 0, z: 0 }]]);
-  if (!flat) {
-    const overview = layoutKnowledgeGraph(graph);
-    const origin = overview.get(selectedId);
-    if (!origin) return points;
-    for (const id of visible) {
-      const point = overview.get(id);
-      if (point) points.set(id, { x: point.x - origin.x, y: point.y - origin.y, z: point.z - origin.z });
-    }
-    return points;
-  }
   const neighbours = graph.nodes.filter((node) => visible.has(node.id) && node.id !== selectedId)
     .sort((a, b) => a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
   neighbours.forEach((node, index) => {
@@ -91,7 +81,7 @@ export function layoutKnowledgeFocus(graph: KnowledgeGraphData, selectedId: stri
     const ringCount = Math.min(14, neighbours.length - ring * 14);
     const angle = (index % 14) / ringCount * Math.PI * 2 - Math.PI / 2 + ring * .17;
     const radius = 260 + ring * 115;
-    points.set(node.id, { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius * .84, z: 0 });
+    points.set(node.id, { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius * .84, z: flat ? 0 : Math.sin(angle * 2 + .6) * 65 });
   });
   return points;
 }
