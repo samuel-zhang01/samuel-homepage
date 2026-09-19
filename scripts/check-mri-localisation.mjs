@@ -129,9 +129,12 @@ const { FinanceStudio } = load("src/components/projects/FinanceStudio.tsx");
 for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/financeCopy.audit.json"), "utf8")).identities)) identity.add(name);
 let financeCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
-  for (const view of ["overview", "ledger", "recurring", "transfers", "import"]) {
-    for (const variant of [0, 1]) {
+  for (const view of ["wealth", "connections", "investments", "overview", "ledger", "recurring", "transfers", "import"]) {
+    for (const variant of [0, 1, 2]) {
       states = { FinanceStudio: [view, variant ? 30 : 90, "all", variant ? 2 : 3],
+        WealthView: variant === 0 ? [] : [variant === 1 ? ["harbour-current", "atlas-invest"] : []],
+        ConnectionsView: [["all", "banks", "brokers"][variant]],
+        InvestmentsView: [["all", "atlas-invest", "moomoo-invest"][variant]],
         LedgerView: ["all", "all", "", variant ? "tx-015" : "tx-001"],
         TransfersView: [variant ? 1 : 3, Boolean(variant)] };
       assertMandarin(FinanceStudio, `${locale}/finance/${view}/${variant}`);
@@ -139,7 +142,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
     }
   }
 }
-console.log(`Finance localization: ${financeCases} rendered view/range/locale cases passed.`);
+console.log(`Finance localization: ${financeCases} rendered view/filter/range/locale cases passed.`);
 
 const { HomeLabTopologyStudio } = load("src/components/projects/HomeLabTopologyStudio.tsx");
 for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/homeLabCopy.audit.json"), "utf8")).identities)) identity.add(name);
