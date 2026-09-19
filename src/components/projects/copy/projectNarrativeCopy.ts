@@ -4,7 +4,7 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 export const projectNarrativeCopy = {
   "CONNECTED ACCOUNTS, A CLEARER FINANCIAL PICTURE": ["连接账户，清晰掌握财务","連接賬戶，清晰掌握財務"],
   "A personal finance workspace for net worth, connected bank accounts, two trading platforms and recurring-payment checks.": ["个人财务工作台，集中查看净资产、银行账户、两个交易平台和定期付款。","個人財務工作臺，集中查看淨資產、銀行賬戶、兩個交易平臺和定期付款。"],
-  "Ledger brings Lunch Flow bank feeds and read-only SnapTrade investment connections together with retained PDF and CSV statement history. Net worth combines bank balances, broker cash, holdings and credit debt without counting connected and imported accounts twice. Spending, transaction review, recurring-payment checks and planning turn that account history into useful decisions. The ocean-themed demo showcases five bank and credit accounts and two trading platforms, Trading 212 and Moomoo, using fictional balances and transactions. Toggle accounts in net worth, inspect investment values, find price changes in regular bills or explore the import and transfer checks.": ["Ledger 将 Lunch Flow 银行数据和只读 SnapTrade 投资连接与 PDF、CSV 账单历史整合。净资产汇总银行余额、券商现金、持仓和信用卡债务，避免重复计算已连接和导入账户。支出、交易复核、定期付款检查和规划让账户历史帮助财务决策。海洋主题演示使用虚构余额和交易，展示五个银行及信用卡账户，以及 Trading 212 和 Moomoo 两个交易平台。可切换净资产账户、查看投资价值、发现定期账单价格变化，或探索导入与转账检查。","Ledger 將 Lunch Flow 銀行數據和只讀 SnapTrade 投資連接與 PDF、CSV 賬單歷史整合。淨資產彙總銀行餘額、券商現金、持倉和信用卡債務，避免重複計算已連接和導入賬戶。支出、交易複核、定期付款檢查和規劃讓賬戶歷史幫助財務決策。海洋主題演示使用虛構餘額和交易，展示五個銀行及信用卡賬戶，以及 Trading 212 和 Moomoo 兩個交易平臺。可切換淨資產賬戶、查看投資價值、發現定期賬單價格變化，或探索導入與轉賬檢查。"],
+  "Ledger brings Lunch Flow bank feeds and read-only SnapTrade investment connections together with retained PDF and CSV statement history. Net worth combines bank balances, broker cash, holdings and credit debt without counting connected and imported accounts twice. Spending, transaction review, recurring-payment checks and planning turn that account history into useful decisions. The System 7 demo showcases five bank and credit accounts and two trading platforms, Trading 212 and Moomoo, using fictional balances and transactions. Toggle accounts in net worth, inspect investment values, find price changes in regular bills or explore the import and transfer checks.": ["Ledger 将 Lunch Flow 银行数据和只读 SnapTrade 投资连接与 PDF、CSV 账单历史整合。净资产汇总银行余额、券商现金、持仓和信用卡债务，避免重复计算已连接和导入账户。支出、交易复核、定期付款检查和规划让账户历史帮助财务决策。System 7 风格演示使用虚构余额和交易，展示五个银行及信用卡账户，以及 Trading 212 和 Moomoo 两个交易平台。可切换净资产账户、查看投资价值、发现定期账单价格变化，或探索导入与转账检查。","Ledger 將 Lunch Flow 銀行數據和只讀 SnapTrade 投資連接與 PDF、CSV 賬單歷史整合。淨資產彙總銀行餘額、券商現金、持倉和信用卡債務，避免重複計算已連接和導入賬戶。支出、交易複核、定期付款檢查和規劃讓賬戶歷史幫助財務決策。System 7 風格演示使用虛構餘額和交易，展示五個銀行及信用卡賬戶，以及 Trading 212 和 Moomoo 兩個交易平臺。可切換淨資產賬戶、查看投資價值、發現定期賬單價格變化，或探索導入與轉賬檢查。"],
   "Net worth across five bank and credit accounts": ["五个银行及信用卡账户的净资产","五個銀行及信用卡賬戶的淨資產"],
   "Two trading platforms: Trading 212 and Moomoo": ["两个交易平台：Trading 212 和 Moomoo","兩個交易平臺：Trading 212 和 Moomoo"],
   "Recurring bills, price changes and spending review": ["定期账单、价格变化和支出复核","定期賬單、價格變化和支出複核"],
@@ -725,9 +725,9 @@ export const projectNarrativeCopy = {
     "加入浏览器配套工具，展示评分并审阅事实性改写。",
     "加入瀏覽器配套工具，展示評分並審閱事實性改寫。"
   ],
-  "Ocean Depths Finance": [
-    "Ocean Depths Finance",
-    "Ocean Depths Finance"
+  "Im I Broke?": [
+    "Im I Broke?",
+    "Im I Broke?"
   ],
   "PRIVATE STATEMENTS, A CLEARER FINANCIAL PICTURE": [
     "私人账单，清晰的财务视图",

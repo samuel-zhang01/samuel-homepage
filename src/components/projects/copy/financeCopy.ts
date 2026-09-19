@@ -921,10 +921,6 @@ export const financeCopy = {
     "不含结转的账单余额。其期末现金为零起始现金或预设现金，加上带正负号的交易变动；市场持仓另行估值。",
     "不含結轉的賬單餘額。其期末現金為零起始現金或預設現金，加上帶正負號的交易變動；市場持倉另行估值。"
   ],
-  "Finance App — Ocean Depths": [
-    "财务应用 — 深海",
-    "財務應用 — 深海"
-  ],
   "Bank Statement Intelligence Control Room": [
     "银行账单分析控制室",
     "銀行賬單分析控制室"
@@ -1205,9 +1201,9 @@ export const financeCopy = {
     "账户间转移",
     "帳戶間轉移"
   ],
-  "Ocean Depths Finance": [
-    "Ocean Depths Finance",
-    "Ocean Depths Finance"
+  "Im I Broke?": [
+    "Im I Broke?",
+    "Im I Broke?"
   ],
   "Explore the household ledger": [
     "探索家庭账本",

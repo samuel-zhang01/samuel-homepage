@@ -107,9 +107,9 @@ export const projectMenuCopy = {
     "用 Python 和 LaTeX 提取岗位用语、选择预先编写的简历模板，并生成有针对性的申请文档。",
     "用 Python 和 LaTeX 提取職缺用語、選擇預先編寫的履歷模板，並生成有針對性的申請文檔。"
   ],
-  "Ocean Depths Finance": [
-    "Ocean Depths Finance",
-    "Ocean Depths Finance"
+  "Im I Broke?": [
+    "Im I Broke?",
+    "Im I Broke?"
   ],
   "A local-first finance application that brings statements, spending patterns, transfers and investments into one reliable view.": [
     "本地优先的财务应用，将账单、支出模式、转账和投资整合为可靠的统一视图。",

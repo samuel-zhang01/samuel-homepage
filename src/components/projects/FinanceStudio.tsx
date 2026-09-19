@@ -106,7 +106,7 @@ const ACCOUNTS: Account[] = [
     kind: "current",
     adapter: "HSBC Debit PDF",
     openingBalance: 4150,
-    accent: "#2ec4b6",
+    accent: "var(--s7-info)",
   },
   {
     id: "tide-joint",
@@ -115,7 +115,7 @@ const ACCOUNTS: Account[] = [
     kind: "joint",
     adapter: "Revolut PDF",
     openingBalance: 1850,
-    accent: "#4f9dde",
+    accent: "var(--s7-accent)",
   },
   {
     id: "northstar-credit",
@@ -124,7 +124,7 @@ const ACCOUNTS: Account[] = [
     kind: "credit",
     adapter: "HSBC Credit PDF",
     openingBalance: -620,
-    accent: "#fb7185",
+    accent: "var(--s7-danger)",
   },
   {
     id: "quay-current",
@@ -133,7 +133,7 @@ const ACCOUNTS: Account[] = [
     kind: "current",
     adapter: "Lloyds PDF",
     openingBalance: 1200,
-    accent: "#a78bfa",
+    accent: "var(--s7-selection)",
   },
   {
     id: "atlas-invest",
@@ -142,13 +142,13 @@ const ACCOUNTS: Account[] = [
     kind: "investment",
     adapter: "Trading 212 CSV",
     openingBalance: 780,
-    accent: "#fbbf24",
+    accent: "var(--s7-warning)",
   },
 ];
 
 ACCOUNTS.push(
-  { id: "amex-credit", label: "American Express •08", shortLabel: "Amex", kind: "credit", adapter: "American Express PDF", openingBalance: -245, accent: "#35c7e0" },
-  { id: "moomoo-invest", label: "Moomoo •32", shortLabel: "Moomoo", kind: "investment", adapter: "Moomoo PDF", openingBalance: 3200, accent: "#fb923c" },
+  { id: "amex-credit", label: "American Express •08", shortLabel: "Amex", kind: "credit", adapter: "American Express PDF", openingBalance: -245, accent: "var(--s7-info)" },
+  { id: "moomoo-invest", label: "Moomoo •32", shortLabel: "Moomoo", kind: "investment", adapter: "Moomoo PDF", openingBalance: 3200, accent: "var(--s7-warning)" },
 );
 
 const LEDGER: LedgerTransaction[] = [
@@ -530,7 +530,7 @@ function WealthView() {
       </div>
     </section>
     <div className={styles.overviewGrid}>
-      <section className={styles.oceanPanel}>
+      <section className={styles.financePanel}>
         <div className={styles.panelTitle}><div><span>CHOOSE YOUR ACCOUNTS</span><h3>What counts towards net worth?</h3></div></div>
         <div className={styles.wealthAccounts}>{ACCOUNTS.map((account) => <label key={account.id}>
           <input type="checkbox" checked={included.includes(account.id)} onChange={() => setIncluded((current) => current.includes(account.id) ? current.filter((id) => id !== account.id) : [...current, account.id])} />
@@ -538,7 +538,7 @@ function WealthView() {
         </label>)}</div>
         <p className={styles.methodNote}>Balances are counted once. Imported history and a connected account must not become two separate assets.</p>
       </section>
-      <section className={styles.oceanPanel}>
+      <section className={styles.financePanel}>
         <div className={styles.panelTitle}><div><span>ONE PLACE FOR YOUR MONEY</span><h3>From balances to better decisions</h3></div></div>
         <ul className={styles.signalStack}>
           <li><span className={styles.signalGood}>5</span><div><strong>Bank and credit accounts</strong><p>Lunch Flow feeds, pending payments and retained statement history.</p></div></li>
@@ -558,7 +558,7 @@ function ConnectionsView() {
     <div className={styles.rangeSwitch}>
       {[["all", "All accounts"], ["banks", "Bank accounts"], ["brokers", "Trading platforms"]].map(([value, label]) => <button type="button" key={value} aria-pressed={kind === value} className={kind === value ? styles.active : ""} onClick={() => setKind(value)}>{label}</button>)}
     </div>
-    <div className={styles.connectionGrid}>{visible.map((account) => <article className={styles.oceanPanel} key={account.id}>
+    <div className={styles.connectionGrid}>{visible.map((account) => <article className={styles.financePanel} key={account.id}>
       <div className={styles.panelTitle}><div><span>{account.kind === "investment" ? "SnapTrade · read-only" : "Lunch Flow · bank feed"}</span><h3>{account.label}</h3></div><span className={styles.pass}>●</span></div>
       <div className={styles.connectionBody}><strong>{money(accountPosition(account.id))}</strong><p>Example snapshot · 18 Aug 2026 · GBP</p><small>{account.adapter}</small></div>
     </article>)}</div>
@@ -580,7 +580,7 @@ function InvestmentsView() {
       <MetricCard label="BROKER CASH" value={money(cash)} note="Included in account value" />
       <MetricCard label="OPEN POSITION GAIN" value={money(value - cash - cost, true)} note="Sample prices, before fees" tone={value - cash - cost >= 0 ? "positive" : "negative"} />
     </div>
-    <section className={styles.oceanPanel}>
+    <section className={styles.financePanel}>
       <div className={styles.panelTitle}><div><span>READ-ONLY PORTFOLIO</span><h3>Holdings</h3></div></div>
       <div className={styles.ledgerTableWrap}><table className={styles.ledgerTable}><thead><tr><th>Account</th><th>Security</th><th>Shares</th><th>Cost</th><th>Market value</th></tr></thead><tbody>{rows.map((row) => <tr key={row.id}><td>{accountFor(row.accountId).label}</td><td>{row.ticker}</td><td>{row.shares}</td><td>{money((row.shares ?? 0) * (row.unitPrice ?? 0))}</td><td>{money((row.shares ?? 0) * (HOLDING_PRICES.find((holding) => holding.ticker === row.ticker)?.price ?? 0))}</td></tr>)}{!rows.length && <tr><td colSpan={5}>No holdings in this example account; its cash still contributes to net worth.</td></tr>}</tbody></table></div>
       <p className={styles.methodNote}>The real investment workspace also includes saved activity, orders, allocation and dated snapshots. Example securities and prices here are fictional.</p>
@@ -667,7 +667,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
       </div>
 
       <div className={styles.overviewGrid}>
-        <section className={styles.oceanPanel} aria-labelledby="finance-flow-title">
+        <section className={styles.financePanel} aria-labelledby="finance-flow-title">
           <div className={styles.panelTitle}>
             <div><span>ONE LEDGER · ONE RESULT</span><h3 id="finance-flow-title">Income versus spending</h3></div>
             <div className={styles.legend}><span className={styles.incomeSwatch}>Income</span><span className={styles.spendSwatch}>Spend</span></div>
@@ -693,7 +693,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
           </div>
         </section>
 
-        <section className={styles.oceanPanel} aria-labelledby="finance-signals-title">
+        <section className={styles.financePanel} aria-labelledby="finance-signals-title">
           <div className={styles.panelTitle}><div><span>DETERMINISTIC INTELLIGENCE</span><h3 id="finance-signals-title">Explainable signals</h3></div></div>
           <ul className={styles.signalStack}>
             <li><span className={styles.signalGood}>✓</span><div><strong>{scopedTransfers.length} transfer groups neutralised</strong><p>{money(moved)} moved once between accounts; both legs stay outside income and spending.</p></div></li>
@@ -704,7 +704,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
       </div>
 
       <div className={styles.lowerGrid}>
-        <section className={styles.oceanPanel} aria-labelledby="finance-accounts-title">
+        <section className={styles.financePanel} aria-labelledby="finance-accounts-title">
           <div className={styles.panelTitle}><div><span>LIABILITY-AWARE</span><h3 id="finance-accounts-title">Account reconciliation</h3></div></div>
           <div className={styles.accountList}>
             {scopedAccounts.map((account) => {
@@ -722,7 +722,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
           </div>
         </section>
 
-        <section className={styles.oceanPanel} aria-labelledby="finance-category-title">
+        <section className={styles.financePanel} aria-labelledby="finance-category-title">
           <div className={styles.panelTitle}><div><span>ELIGIBLE OUTFLOWS ONLY</span><h3 id="finance-category-title">Category mix</h3></div></div>
           <div className={styles.categoryBars}>
             {categorySpend.slice(0, 6).map((item) => (
@@ -766,7 +766,7 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
 
   return (
     <ProjectCopy copy={financeCopy}><div className={styles.ledgerLayout}>
-      <section className={`${styles.oceanPanel} ${styles.ledgerPanel}`} aria-labelledby="finance-ledger-title">
+      <section className={`${styles.financePanel} ${styles.ledgerPanel}`} aria-labelledby="finance-ledger-title">
         <div className={styles.panelTitle}>
           <div><span>TRANSACTION DETAILS</span><h3 id="finance-ledger-title">Synthetic ledger</h3></div>
           <span className={styles.rowCount}>{filtered.length}/{rangeLedger.length} rows</span>
@@ -804,7 +804,7 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
         </div>
       </section>
 
-      <aside className={`${styles.oceanPanel} ${styles.inspector}`} aria-live="polite">
+      <aside className={`${styles.financePanel} ${styles.inspector}`} aria-live="polite">
         <div className={styles.panelTitle}><div><span>WHY THIS ROW?</span><h3>Why this record?</h3></div></div>
         {selected ? (
           <div className={styles.inspectorBody}>
@@ -832,7 +832,7 @@ function RecurringView() {
   return (
     <ProjectCopy copy={financeCopy}><>
       <div className={styles.modelWorkbench}>
-        <section className={`${styles.oceanPanel} ${styles.controlPanel}`} aria-labelledby="recurring-controls-title">
+        <section className={`${styles.financePanel} ${styles.controlPanel}`} aria-labelledby="recurring-controls-title">
           <div className={styles.panelTitle}><div><span>LIVE PARAMETERS</span><h3 id="recurring-controls-title">Cadence detector</h3></div><button type="button" onClick={() => setConfig({ minOccurrences: 3, regularity: 0.5, priceThreshold: 0.3, monthlyTolerance: 5 })}>Reset</button></div>
           <div className={styles.parameterGrid}>
             <label><span>Minimum occurrences <strong>{config.minOccurrences}</strong></span><input type="range" min={2} max={5} step={1} value={config.minOccurrences} onChange={(event) => setConfig((current) => ({ ...current, minOccurrences: Number(event.target.value) }))} /></label>
@@ -850,7 +850,7 @@ function RecurringView() {
         </div>
       </div>
 
-      <section className={styles.oceanPanel} aria-labelledby="patterns-table-title">
+      <section className={styles.financePanel} aria-labelledby="patterns-table-title">
         <div className={styles.panelTitle}><div><span>EXPLAINABLE RESULT SET</span><h3 id="patterns-table-title">Recurring candidates</h3></div><span className={styles.rowCount}>{patterns.length} pass</span></div>
         <div className={styles.patternTableWrap}>
           <table className={styles.patternTable}>
@@ -886,7 +886,7 @@ function TransfersView() {
 
   return (
     <ProjectCopy copy={financeCopy}><div className={styles.transferLayout}>
-      <section className={`${styles.oceanPanel} ${styles.transferControls}`} aria-labelledby="transfer-model-title">
+      <section className={`${styles.financePanel} ${styles.transferControls}`} aria-labelledby="transfer-model-title">
         <div className={styles.panelTitle}><div><span>CONFIGURABLE PRECISION</span><h3 id="transfer-model-title">Cross-account matcher</h3></div></div>
         <label><span>Date window <strong>{`±${windowDays} ${windowDays === 1 ? "day" : "days"}`}</strong></span><input type="range" min={0} max={5} step={1} value={windowDays} onChange={(event) => setWindowDays(Number(event.target.value))} /></label>
         <label className={styles.checkControl}><input type="checkbox" checked={requireEvidence} onChange={(event) => setRequireEvidence(event.target.checked)} /><span><strong>Require descriptor evidence</strong><small>Generic “account move”, “funding” or “settlement” tokens. Amount equality remains mandatory.</small></span></label>
@@ -898,7 +898,7 @@ function TransfersView() {
         </div>
       </section>
 
-      <section className={styles.oceanPanel} aria-labelledby="transfer-flow-title">
+      <section className={styles.financePanel} aria-labelledby="transfer-flow-title">
         <div className={styles.panelTitle}><div><span>ROUTE EVIDENCE</span><h3 id="transfer-flow-title">Matched money flows</h3></div><span className={styles.rowCount}>excluded from budget</span></div>
         <div className={styles.transferFlows}>
           {matches.map((match) => (
@@ -940,7 +940,7 @@ function ImportView() {
     <ProjectCopy copy={financeCopy}><div className={styles.importLayout}>
       <FinanceImportExperiment />
 
-      <section className={`${styles.oceanPanel} ${styles.auditPanel}`} aria-labelledby="reconciliation-title">
+      <section className={`${styles.financePanel} ${styles.auditPanel}`} aria-labelledby="reconciliation-title">
         <div className={styles.panelTitle}><div><span>PENNY-CLOSE CONTROL</span><h3 id="reconciliation-title">Example ledger: balance checks</h3></div><span className={`${styles.rowCount} ${reconciledBanks.length === bankStatements.length ? styles.pass : styles.fail}`}>{reconciledBanks.length}/{bankStatements.length} pass</span></div>
         <div className={styles.auditTableWrap}>
           <table className={styles.auditTable}>
@@ -987,7 +987,7 @@ export function FinanceStudio() {
 
   return (
     <ProjectCopy copy={financeCopy}><DemoWindow
-      appName="Ocean Depths Finance"
+      appName="Im I Broke?"
       title="Your money, connected"
       status="Fictional ledger · local"
       purpose="Bring bank balances, investments, debt and recurring payments into one financial picture."
@@ -1016,7 +1016,7 @@ export function FinanceStudio() {
         ))}
       </nav>
 
-      <div className={styles.oceanCanvas}>
+      <div className={styles.financeCanvas}>
         {(view === "overview" || view === "ledger") && (
           <ScopeControls range={range} setRange={setRange} accountId={accountId} setAccountId={setAccountId} />
         )}
