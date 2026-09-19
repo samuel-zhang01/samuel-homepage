@@ -1130,25 +1130,25 @@ body {
   align-items: center;
   margin-top: 14px;
   padding: 16px;
-  border: 2px solid var(--s7-ink);
-  background: var(--s7-surface);
-  box-shadow: inset 1px 1px var(--s7-highlight), 3px 3px var(--s7-shadow);
+  border: 2px solid #111;
+  background: #e8f4f1;
+  box-shadow: inset 1px 1px #fff, 3px 3px #888;
 }
 .finance-update-card__art {
   display: grid;
   place-items: center;
   padding: 8px;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-chrome);
-  color: var(--s7-selection);
+  border: 1px solid #285765;
+  background: #0a2030;
+  color: #56ded1;
 }
 .finance-update-card__art svg { width: 100%; height: auto; }
 .finance-update-card__copy { min-width: 0; }
-.finance-update-card__copy > span { color: var(--s7-muted); font: 400 var(--s7-small)/1.5 var(--chrome-font); }
-.finance-update-card h2 { margin: 4px 0; color: var(--s7-ink); font: 700 var(--s7-title)/1.25 var(--system-font); }
-.finance-update-card p { margin: 0; color: var(--s7-muted); font-size: var(--s7-text); line-height: 1.5; }
-.finance-update-card a { display: inline-flex; margin-top: 9px; padding: 4px 8px; color: var(--s7-selection-text); background: var(--s7-action); text-decoration: none; border: 2px solid var(--s7-ink); box-shadow: inset 1px 1px var(--s7-edge), 2px 2px var(--s7-ink); }
-.finance-update-card a:focus-visible { outline: 2px solid var(--s7-action); outline-offset: 4px; }
+.finance-update-card__copy > span { color: #285c54; font: 400 var(--s7-small)/1.5 var(--chrome-font); }
+.finance-update-card h2 { margin: 4px 0; color: #123c42; font: 700 var(--s7-title)/1.25 var(--system-font); }
+.finance-update-card p { margin: 0; color: #354c49; font-size: var(--s7-text); line-height: 1.5; }
+.finance-update-card a { display: inline-flex; margin-top: 9px; padding: 4px 8px; color: #f0fffc; background: #164e50; text-decoration: none; border: 2px solid #111; box-shadow: inset 1px 1px #518b88, 2px 2px #111; }
+.finance-update-card a:focus-visible { outline: 2px solid #164e50; outline-offset: 4px; }
 @media (max-width: 600px) {
   .finance-update-card { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 13px; }
   .finance-update-card__art { display: none; }

@@ -1,7 +1,20 @@
 .financeStudio {
-  --demo-blue: var(--s7-info);
-  --demo-green: var(--s7-success);
-  --demo-green-soft: var(--s7-success-soft);
+  --ocean-abyss: #06131c;
+  --ocean-deep: #0a2030;
+  --ocean-surface: #0f2c3c;
+  --ocean-surface-2: #15394c;
+  --ocean-line: #1e4f62;
+  --ocean-foam: #e4f2f7;
+  --ocean-mist: #9dc0cd;
+  --ocean-teal: #2ec4b6;
+  --ocean-cyan: #35c7e0;
+  --ocean-blue: #4f9dde;
+  --ocean-kelp: #34d399;
+  --ocean-coral: #fb7185;
+  --ocean-amber: #fbbf24;
+  --demo-blue: #0d6c72;
+  --demo-green: #176746;
+  --demo-green-soft: #dceddf;
 }
 
 .privacyBanner {
@@ -11,10 +24,12 @@
   gap: 12px;
   margin-bottom: 12px;
   padding: 11px 13px;
-  border: 1px solid var(--s7-edge);
-  color: var(--s7-ink);
-  background: var(--s7-surface);
-  box-shadow: inset 1px 1px 0 var(--s7-highlight);
+  border: 1px solid #17605f;
+  color: var(--ocean-foam);
+  background:
+    linear-gradient(105deg, rgba(46, 196, 182, 0.2), transparent 58%),
+    var(--ocean-deep);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.12);
 }
 
 .privacyBanner > span {
@@ -23,31 +38,31 @@
   height: 32px;
   place-items: center;
   font-size: var(--s7-heading);
-  border: 1px solid var(--s7-selection);
-  color: var(--s7-selection);
-  background: var(--s7-info-soft);
+  border: 1px solid var(--ocean-teal);
+  color: var(--ocean-teal);
+  background: rgba(46, 196, 182, 0.08);
 }
 
 .privacyBanner strong {
   display: block;
   font-size: var(--s7-small);
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .privacyBanner p {
   margin: 2px 0 0;
   font-size: var(--s7-text);
   line-height: 1.45;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .privacyBanner code {
   padding: 7px 9px;
   font-size: var(--s7-small);
   white-space: nowrap;
-  border: 1px solid var(--s7-edge);
-  color: var(--s7-info);
-  background: var(--s7-surface);
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-cyan);
+  background: rgba(6, 19, 28, 0.7);
 }
 
 .sourceScale {
@@ -57,27 +72,27 @@
   align-items: center;
   margin-bottom: 12px;
   padding: 10px 12px;
-  border: 1px solid var(--s7-edge);
-  color: var(--s7-ink);
-  background: linear-gradient(100deg, var(--s7-surface), var(--s7-raised));
+  border: 1px solid #17605f;
+  color: var(--ocean-foam);
+  background: linear-gradient(100deg, var(--ocean-deep), var(--ocean-surface));
 }
 
-.sourceScale span { font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; color: var(--s7-selection); }
+.sourceScale span { font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; color: var(--ocean-teal); }
 .sourceScale h3 { margin: 3px 0 0; font-size: var(--s7-heading); line-height: 1.4; }
-.sourceScale p { margin: 4px 0 0; font-size: var(--s7-text); line-height: 1.4; color: var(--s7-muted); }
+.sourceScale p { margin: 4px 0 0; font-size: var(--s7-text); line-height: 1.4; color: var(--ocean-mist); }
 .sourceScale dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 0; }
-.sourceScale dl > div { min-width: 0; padding: 6px; border: 1px solid var(--s7-edge); background: var(--s7-surface); }
-.sourceScale dt { font-size: var(--s7-small); line-height: 1.4; color: var(--s7-muted); }
-.sourceScale dd { margin: 3px 0 0; font: 700 var(--s7-text)/1.4 var(--s7-font-text); font-variant-numeric: tabular-nums; color: var(--s7-info); }
+.sourceScale dl > div { min-width: 0; padding: 6px; border: 1px solid var(--ocean-line); background: rgba(6, 19, 28, .7); }
+.sourceScale dt { font-size: var(--s7-small); line-height: 1.4; color: var(--ocean-mist); }
+.sourceScale dd { margin: 3px 0 0; font: 700 var(--s7-text)/1.4 var(--s7-font-text); font-variant-numeric: tabular-nums; color: var(--ocean-cyan); }
 
 .viewTabs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
   padding: 4px 4px 0;
-  border: 1px solid var(--s7-paper);
+  border: 1px solid var(--ocean-abyss);
   border-bottom: 0;
-  background: var(--s7-chrome);
+  background: #d8d8d3;
 }
 
 .viewTabs button {
@@ -92,15 +107,15 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
-  border: 1px solid var(--s7-edge);
+  border: 1px solid #5e6567;
   border-bottom: 0;
-  color: var(--s7-ink);
-  background: var(--s7-raised);
-  box-shadow: inset 1px 1px 0 var(--s7-highlight);
+  color: #2d3f45;
+  background: #bfc7c8;
+  box-shadow: inset 1px 1px 0 #eef4f4;
 }
 
 .viewTabs button:hover:not(.activeView) {
-  background: var(--s7-surface);
+  background: #d8e1e1;
 }
 
 .viewTabs button strong,
@@ -119,7 +134,7 @@
 .viewTabs button span {
   margin-top: 1px;
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: #596b70;
 }
 
 .viewTabs .activeView {
@@ -132,17 +147,22 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
-  box-shadow: inset 1px 1px var(--s7-paper);
-  background: var(--s7-selection);
-  color: var(--s7-selection-text);
+  box-shadow: inset 1px 1px #fff;
+  background: #163d43;
+  color: #f0f6ef;
 }
 
 .financeCanvas {
   min-height: 590px;
   padding: 13px;
-  border: 1px solid var(--s7-paper);
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  border: 1px solid var(--ocean-abyss);
+  color: var(--ocean-foam);
+  background:
+    radial-gradient(circle at 86% -20%, rgba(53, 199, 224, 0.11), transparent 34%),
+    linear-gradient(rgba(228, 242, 247, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(228, 242, 247, 0.018) 1px, transparent 1px),
+    var(--ocean-abyss);
+  background-size: auto, 22px 22px, 22px 22px, auto;
 }
 
 .scopeBar {
@@ -152,8 +172,8 @@
   gap: 10px;
   margin-bottom: 11px;
   padding: 8px;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-surface);
+  border: 1px solid var(--ocean-line);
+  background: rgba(10, 32, 48, 0.88);
 }
 
 .scopeBar label,
@@ -170,7 +190,7 @@
   font-weight: 700;
   letter-spacing: normal;
   text-transform: none;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .scopeBar [data-classic-select],
@@ -179,12 +199,12 @@
   width: 100%;
   min-height: 29px;
   padding: 5px 7px;
-  border: 1px solid var(--s7-edge);
+  border: 1px solid var(--ocean-line);
   border-radius: 0;
-  color: var(--s7-ink);
-  background: var(--s7-paper);
+  color: #111;
+  background: #fff;
   font-size: var(--s7-small);
-  border-color: var(--s7-muted);
+  border-color: #555;
 }
 
 .scopeBar p {
@@ -192,11 +212,11 @@
   margin: 0;
   font-size: var(--s7-text);
   text-align: right;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .scopeBar p strong {
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .rangeSwitch,
@@ -217,9 +237,9 @@
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
-  border: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
-  background: var(--s7-raised);
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-surface);
 }
 
 .rangeSwitch button:focus-visible, .importMode button:focus-visible, .thresholdStrip button:focus-visible {
@@ -256,9 +276,9 @@
 .thresholdStrip .active {
   position: relative;
   z-index: 1;
-  border-color: var(--s7-selection);
-  color: var(--s7-paper);
-  background: var(--s7-selection);
+  border-color: var(--ocean-teal);
+  color: var(--ocean-abyss);
+  background: var(--ocean-teal);
 }
 
 .metricStrip {
@@ -271,9 +291,11 @@
 .metricCard {
   min-width: 0;
   padding: 10px;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-surface);
-  box-shadow: inset 1px 1px 0 var(--s7-highlight);
+  border: 1px solid var(--ocean-line);
+  background:
+    linear-gradient(145deg, rgba(79, 157, 222, 0.08), transparent 70%),
+    var(--ocean-deep);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.06);
 }
 
 .metricCard > span,
@@ -283,7 +305,7 @@
 }
 
 .metricCard.default {
-  border-color: var(--s7-edge);
+  border-color: var(--ocean-line);
 }
 
 .metricCard > span {
@@ -293,7 +315,7 @@
   letter-spacing: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .metricCard > strong {
@@ -301,31 +323,33 @@
   font-size: var(--s7-title);
   font-variant-numeric: tabular-nums;
   letter-spacing: normal;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .metricCard > small {
   min-height: 21px;
   font-size: var(--s7-small);
   line-height: 1.4;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .metricCard.teal {
-  border-color: var(--s7-info);
-  background: var(--s7-surface);
+  border-color: rgba(46, 196, 182, 0.65);
+  background:
+    linear-gradient(140deg, rgba(46, 196, 182, 0.18), transparent 70%),
+    var(--ocean-deep);
 }
 
 .metricCard.teal > strong {
-  color: var(--s7-selection);
+  color: var(--ocean-teal);
 }
 
 .metricCard.positive > strong {
-  color: var(--s7-success);
+  color: var(--ocean-kelp);
 }
 
 .metricCard.negative > strong {
-  color: var(--s7-danger);
+  color: var(--ocean-coral);
 }
 
 .overviewGrid,
@@ -348,9 +372,9 @@
 
 .financePanel {
   min-width: 0;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-surface);
-  box-shadow: inset 1px 1px 0 var(--s7-highlight);
+  border: 1px solid var(--ocean-line);
+  background: rgba(10, 32, 48, 0.94);
+  box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.045);
 }
 
 .panelTitle {
@@ -360,8 +384,8 @@
   justify-content: space-between;
   gap: 10px;
   padding: 7px 9px;
-  border-bottom: 1px solid var(--s7-edge);
-  background: var(--s7-chrome);
+  border-bottom: 1px solid var(--ocean-line);
+  background: rgba(21, 57, 76, 0.7);
 }
 
 .panelTitle > div > span {
@@ -369,14 +393,14 @@
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
-  color: var(--s7-selection);
+  color: var(--ocean-teal);
 }
 
 .panelTitle h3 {
   margin: 2px 0 0;
   font-size: var(--s7-heading);
   letter-spacing: normal;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .panelTitle > button {
@@ -389,9 +413,9 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
-  border: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
-  background: var(--s7-surface);
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-deep);
 }
 
 .panelTitle > button:focus-visible {
@@ -421,7 +445,7 @@
   display: flex;
   gap: 9px;
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .legend span {
@@ -434,15 +458,15 @@
   width: 8px;
   height: 8px;
   content: "";
-  border: 1px solid var(--s7-highlight);
+  border: 1px solid rgba(228, 242, 247, 0.35);
 }
 
 .incomeSwatch::before {
-  background: var(--s7-success);
+  background: var(--ocean-kelp);
 }
 
 .spendSwatch::before {
-  background: repeating-linear-gradient(135deg, var(--s7-danger) 0 2px, transparent 2px 4px);
+  background: repeating-linear-gradient(135deg, var(--ocean-coral) 0 2px, transparent 2px 4px);
 }
 
 .flowChart {
@@ -453,8 +477,8 @@
   gap: 16px;
   padding: 16px 17px 10px;
   background:
-    repeating-linear-gradient(to top, var(--s7-edge) 0 1px, transparent 1px 42px),
-    linear-gradient(180deg, var(--s7-info-soft), transparent);
+    repeating-linear-gradient(to top, rgba(157, 192, 205, 0.14) 0 1px, transparent 1px 42px),
+    linear-gradient(180deg, rgba(53, 199, 224, 0.025), transparent);
 }
 
 .flowPeriod {
@@ -464,19 +488,19 @@
   grid-template-rows: minmax(0, 1fr) auto auto;
   gap: 3px;
   text-align: center;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .flowPeriod > strong {
   font-size: var(--s7-small);
   letter-spacing: normal;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .flowPeriod > small {
   font-size: var(--s7-small);
   font-variant-numeric: tabular-nums;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .flowBars {
@@ -491,15 +515,15 @@
   display: block;
   width: 19px;
   min-height: 0;
-  border: 1px solid var(--s7-highlight);
+  border: 1px solid rgba(228, 242, 247, 0.28);
 }
 
 .flowIncome {
-  background: linear-gradient(180deg, var(--s7-success), var(--s7-success));
+  background: linear-gradient(180deg, var(--ocean-kelp), #177a5a);
 }
 
 .flowSpend {
-  background: repeating-linear-gradient(135deg, var(--s7-danger) 0 3px, var(--s7-danger) 3px 6px);
+  background: repeating-linear-gradient(135deg, var(--ocean-coral) 0 3px, #8a3347 3px 6px);
 }
 
 .reconcileBar {
@@ -510,21 +534,21 @@
   gap: 7px;
   padding: 6px 9px;
   font-size: var(--s7-small);
-  border-top: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
-  background: var(--s7-surface);
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: rgba(6, 19, 28, 0.6);
 }
 
 .reconcileBar strong {
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .pass {
-  color: var(--s7-success) !important;
+  color: var(--ocean-kelp) !important;
 }
 
 .fail {
-  color: var(--s7-danger) !important;
+  color: var(--ocean-coral) !important;
 }
 
 .signalStack {
@@ -538,7 +562,7 @@
   grid-template-columns: 28px minmax(0, 1fr);
   gap: 8px;
   padding: 12px 0;
-  border-bottom: 1px dotted var(--s7-edge);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.3);
 }
 
 .signalStack li:last-child {
@@ -556,15 +580,15 @@
 }
 
 .signalGood {
-  border-color: var(--s7-success) !important;
-  color: var(--s7-success);
-  background: var(--s7-success-soft);
+  border-color: #2f9e77 !important;
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.1);
 }
 
 .signalWarn {
-  border-color: var(--s7-warning) !important;
-  color: var(--s7-warning);
-  background: var(--s7-warning-soft);
+  border-color: #b97f18 !important;
+  color: var(--ocean-amber);
+  background: rgba(251, 191, 36, 0.1);
 }
 
 .signalStack strong,
@@ -574,14 +598,14 @@
 
 .signalStack strong {
   font-size: var(--s7-small);
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .signalStack p {
   margin: 2px 0 0;
   font-size: var(--s7-text);
   line-height: 1.4;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .accountList {
@@ -594,7 +618,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px dotted var(--s7-edge);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
 }
 
 .accountList article:last-child {
@@ -614,18 +638,18 @@
 .accountList article > div strong,
 .accountList article > strong {
   font-size: var(--s7-small);
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .accountList article > div small {
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .accountList code {
   font-size: var(--s7-small);
   white-space: nowrap;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .accountEquation {
@@ -638,11 +662,11 @@
   min-width: 62px;
   font-variant-numeric: tabular-nums;
   text-align: right;
-  color: var(--s7-success);
+  color: var(--ocean-kelp);
 }
 
 .accountList .debt {
-  color: var(--s7-danger);
+  color: var(--ocean-coral);
 }
 
 .categoryBars {
@@ -663,26 +687,26 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .categoryBars > div > div {
   height: 8px;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-paper);
+  border: 1px solid rgba(157, 192, 205, 0.22);
+  background: var(--ocean-abyss);
 }
 
 .categoryBars i {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--s7-info), var(--s7-info));
+  background: linear-gradient(90deg, var(--ocean-blue), var(--ocean-cyan));
 }
 
 .categoryBars strong {
   font-size: var(--s7-small);
   font-variant-numeric: tabular-nums;
   text-align: right;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .thresholdStrip {
@@ -691,7 +715,7 @@
   gap: 0;
   margin: -1px 0 10px;
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .thresholdStrip > span {
@@ -704,7 +728,7 @@
 .thresholdStrip small {
   margin-left: 9px;
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .ledgerLayout {
@@ -722,7 +746,7 @@
   letter-spacing: normal;
   text-transform: none;
   white-space: nowrap;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .ledgerFilters {
@@ -730,8 +754,8 @@
   grid-template-columns: minmax(160px, 1fr) minmax(125px, 0.75fr) minmax(160px, 0.9fr);
   gap: 7px;
   padding: 8px;
-  border-bottom: 1px solid var(--s7-edge);
-  background: var(--s7-surface);
+  border-bottom: 1px solid var(--ocean-line);
+  background: rgba(6, 19, 28, 0.45);
 }
 
 .ledgerTableWrap,
@@ -769,10 +793,10 @@
   text-align: left;
   text-transform: none;
   white-space: nowrap;
-  border-right: 1px solid var(--s7-edge);
-  border-bottom: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
-  background: var(--s7-chrome);
+  border-right: 1px solid var(--ocean-line);
+  border-bottom: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: #123347;
 }
 
 .ledgerTable td,
@@ -781,8 +805,8 @@
   padding: 7px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  border-bottom: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
+  border-bottom: 1px solid rgba(30, 79, 98, 0.55);
+  color: var(--ocean-mist);
 }
 
 .ledgerTable td:nth-child(3) button {
@@ -805,12 +829,12 @@
 
 .ledgerTable td:nth-child(3) strong {
   font-size: var(--s7-small);
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .ledgerTable td:nth-child(3) small {
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .ledgerTable th:last-child,
@@ -843,38 +867,38 @@
 }
 
 .categoryPill {
-  border-color: var(--s7-info);
-  color: var(--s7-info);
-  background: var(--s7-info-soft);
+  border-color: rgba(79, 157, 222, 0.5);
+  color: #b7d9f5;
+  background: rgba(79, 157, 222, 0.1);
 }
 
 .cashflowPill,
 .activePattern,
 .auditPass {
-  border-color: var(--s7-success);
-  color: var(--s7-success);
-  background: var(--s7-success-soft);
+  border-color: rgba(52, 211, 153, 0.45);
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.08);
 }
 
 .excludePill,
 .priceChange {
-  border-color: var(--s7-warning);
-  color: var(--s7-warning);
-  background: var(--s7-warning-soft);
+  border-color: rgba(251, 191, 36, 0.5);
+  color: var(--ocean-amber);
+  background: rgba(251, 191, 36, 0.08);
 }
 
 .cadencePill {
-  border-color: var(--s7-info);
-  color: var(--s7-selection);
-  background: var(--s7-info-soft);
+  border-color: rgba(46, 196, 182, 0.5);
+  color: var(--ocean-teal);
+  background: rgba(46, 196, 182, 0.08);
 }
 
 .amountIn {
-  color: var(--s7-success) !important;
+  color: var(--ocean-kelp) !important;
 }
 
 .amountOut {
-  color: var(--s7-danger) !important;
+  color: var(--ocean-coral) !important;
 }
 
 .ledgerTotals {
@@ -884,13 +908,13 @@
   gap: 8px;
   padding: 7px 9px;
   font-size: var(--s7-small);
-  border-top: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
-  background: var(--s7-paper);
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
 }
 
 .ledgerTotals strong {
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .inspector {
@@ -904,7 +928,7 @@
 
 .inspectAmount {
   padding-bottom: 9px;
-  border-bottom: 1px solid var(--s7-edge);
+  border-bottom: 1px solid var(--ocean-line);
 }
 
 .inspectAmount span,
@@ -914,7 +938,7 @@
 
 .inspectAmount span {
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .inspectAmount strong {
@@ -933,32 +957,32 @@
   grid-template-columns: 88px minmax(0, 1fr);
   gap: 7px;
   padding: 7px 0;
-  border-bottom: 1px dotted var(--s7-edge);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
 }
 
 .inspector dt {
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .inspector dd {
   margin: 0;
   font-size: var(--s7-small);
   overflow-wrap: anywhere;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .inspector dd span {
   display: block;
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .signatureBox,
 .matchFormula {
   padding: 8px;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-paper);
+  border: 1px solid var(--ocean-line);
+  background: var(--ocean-abyss);
 }
 
 .signatureBox > span,
@@ -978,7 +1002,7 @@
   line-height: 1.5;
   overflow-wrap: anywhere;
   white-space: normal;
-  color: var(--s7-info);
+  color: var(--ocean-cyan);
 }
 
 .signatureBox p,
@@ -986,14 +1010,14 @@
   margin: 0;
   font-size: var(--s7-text);
   line-height: 1.4;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .emptyState {
   padding: 24px !important;
   text-align: center !important;
   white-space: normal !important;
-  color: var(--s7-muted) !important;
+  color: var(--ocean-mist) !important;
 }
 
 .modelWorkbench {
@@ -1029,13 +1053,13 @@
 .parameterGrid label > span strong,
 .transferControls > label > span strong {
   white-space: nowrap;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .parameterGrid input[type="range"],
 .transferControls input[type="range"] {
   width: 100%;
-  accent-color: var(--s7-selection);
+  accent-color: var(--ocean-teal);
 }
 
 .methodNote {
@@ -1043,7 +1067,7 @@
   padding: 0 10px 10px;
   font-size: var(--s7-small);
   line-height: 1.5;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .patternMetrics {
@@ -1068,12 +1092,12 @@
 
 .patternTable td:first-child strong,
 .auditTable td:first-child strong {
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .auditTable td:first-child small {
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .transferLayout {
@@ -1099,13 +1123,13 @@
   gap: 8px;
   margin: 3px 11px 11px;
   padding: 9px;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-surface);
+  border: 1px solid var(--ocean-line);
+  background: rgba(6, 19, 28, 0.55);
 }
 
 .checkControl input {
   margin: 2px 0 0;
-  accent-color: var(--s7-selection);
+  accent-color: var(--ocean-teal);
 }
 
 .checkControl span,
@@ -1116,14 +1140,14 @@
 
 .checkControl strong {
   font-size: var(--s7-small);
-  color: var(--s7-ink) !important;
+  color: var(--ocean-foam) !important;
 }
 
 .checkControl small {
   margin-top: 2px;
   font-size: var(--s7-small);
   line-height: 1.4;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .matchFormula {
@@ -1133,14 +1157,14 @@
 .transferMetrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--s7-edge);
+  border-top: 1px solid var(--ocean-line);
 }
 
 .transferMetrics > div {
   min-width: 0;
   padding: 8px;
   text-align: center;
-  border-right: 1px solid var(--s7-edge);
+  border-right: 1px solid var(--ocean-line);
 }
 
 .transferMetrics > div:last-child {
@@ -1155,14 +1179,14 @@
 .transferMetrics span {
   font-size: var(--s7-small);
   letter-spacing: normal;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .transferMetrics strong {
   margin-top: 3px;
   font-size: var(--s7-text);
   font-variant-numeric: tabular-nums;
-  color: var(--s7-selection);
+  color: var(--ocean-teal);
 }
 
 .transferFlows {
@@ -1171,7 +1195,7 @@
 
 .transferFlows article {
   padding: 11px 0;
-  border-bottom: 1px dotted var(--s7-edge);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.28);
 }
 
 .transferFlows article:last-child {
@@ -1191,7 +1215,7 @@
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .transferRoute > span:last-child {
@@ -1211,13 +1235,13 @@
   left: 0;
   height: 6px;
   max-width: calc(100% - 12px);
-  background: linear-gradient(90deg, var(--s7-info), var(--s7-selection));
+  background: linear-gradient(90deg, var(--ocean-blue), var(--ocean-teal));
 }
 
 .transferRoute b {
   position: absolute;
   right: 0;
-  color: var(--s7-selection);
+  color: var(--ocean-teal);
 }
 
 .transferDetail {
@@ -1226,24 +1250,24 @@
   gap: 8px;
   margin-top: 5px;
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .transferDetail strong {
-  color: var(--s7-info);
+  color: var(--ocean-cyan);
 }
 
 .transferDetail code {
-  color: var(--s7-selection);
+  color: var(--ocean-teal);
 }
 
 .transferFootnote {
   padding: 8px 10px;
   font-size: var(--s7-small);
   line-height: 1.45;
-  border-top: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
-  background: var(--s7-paper);
+  border-top: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
 }
 
 .importLayout {
@@ -1275,10 +1299,10 @@
   font-family: var(--s7-font-ui);
   line-height: 1.4;
   min-height: var(--s7-control-height);
-  border: 1px solid var(--s7-selection);
-  color: var(--s7-paper);
-  background: var(--s7-selection);
-  box-shadow: inset 1px 1px 0 var(--s7-highlight), 2px 2px 0 var(--s7-ink);
+  border: 1px solid #1c9c90;
+  color: var(--ocean-abyss);
+  background: var(--ocean-teal);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.55), 2px 2px 0 #031017;
 }
 
 .runButton:focus-visible {
@@ -1306,7 +1330,7 @@
 
 .runButton:active {
   transform: translate(1px, 1px);
-  box-shadow: inset 1px 1px 0 var(--s7-highlight), 1px 1px 0 var(--s7-ink);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3), 1px 1px 0 #031017;
 }
 
 .pipelineSteps {
@@ -1321,7 +1345,7 @@
   align-items: center;
   gap: 8px;
   padding: 7px 0;
-  border-bottom: 1px dotted var(--s7-edge);
+  border-bottom: 1px dotted rgba(157, 192, 205, 0.25);
 }
 
 .pipelineSteps li > span {
@@ -1330,8 +1354,8 @@
   height: 21px;
   place-items: center;
   font-size: var(--s7-small);
-  border: 1px solid var(--s7-edge);
-  color: var(--s7-muted);
+  border: 1px solid var(--ocean-line);
+  color: var(--ocean-mist);
 }
 
 .pipelineSteps li strong,
@@ -1341,25 +1365,25 @@
 
 .pipelineSteps li strong {
   font-size: var(--s7-small);
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .pipelineSteps li small {
   font-size: var(--s7-small);
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .pipelineSteps .completeStep > span {
-  border-color: var(--s7-success);
-  color: var(--s7-success);
-  background: var(--s7-success-soft);
+  border-color: var(--ocean-kelp);
+  color: var(--ocean-kelp);
+  background: rgba(52, 211, 153, 0.08);
 }
 
 .importReceipt {
   margin: 10px 10px 0;
   padding: 9px;
-  border: 1px solid var(--s7-edge);
-  background: var(--s7-paper);
+  border: 1px solid var(--ocean-line);
+  background: var(--ocean-abyss);
 }
 
 .importReceipt span,
@@ -1371,20 +1395,20 @@
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
-  color: var(--s7-selection);
+  color: var(--ocean-teal);
 }
 
 .importReceipt strong {
   margin: 3px 0;
   font-size: var(--s7-small);
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .importReceipt p {
   margin: 0;
   font-size: var(--s7-text);
   line-height: 1.45;
-  color: var(--s7-muted);
+  color: var(--ocean-mist);
 }
 
 .auditPanel {
@@ -1399,8 +1423,8 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
-  border-top: 1px solid var(--s7-edge);
-  background: var(--s7-edge);
+  border-top: 1px solid var(--ocean-line);
+  background: var(--ocean-line);
 }
 
 .auditNotes p {
@@ -1408,33 +1432,37 @@
   padding: 8px;
   font-size: var(--s7-text);
   line-height: 1.45;
-  color: var(--s7-muted);
-  background: var(--s7-paper);
+  color: var(--ocean-mist);
+  background: var(--ocean-abyss);
 }
 
 .auditNotes strong {
   display: block;
   margin-bottom: 2px;
-  color: var(--s7-ink);
+  color: var(--ocean-foam);
 }
 
 .privacyBanner, .sourceScale {
-  color: var(--s7-ink);
-  background: var(--s7-surface);
-  border: 1px solid var(--s7-edge);
-  box-shadow: inset 1px 1px var(--s7-paper), inset -1px -1px var(--s7-shadow);
+  --ocean-foam: #203b39;
+  --ocean-mist: #465e59;
+  --ocean-teal: #276b60;
+  --ocean-cyan: #276b60;
+  color: #203b39;
+  background: #edf0e7;
+  border: 1px solid #75837a;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #c1c8bf;
 }
 
 .privacyBanner code, .sourceScale dl > div {
-  background: var(--s7-paper);
-  border-color: var(--s7-edge);
-  color: var(--s7-ink);
+  background: #fafbf6;
+  border-color: #99a69b;
+  color: #284a43;
 }
 
 .ledgerTable .selectedRow > td {
-  background: var(--s7-selection);
-  color: var(--s7-selection-text);
-  box-shadow: inset 0 1px var(--s7-edge), inset 0 -1px var(--s7-edge);
+  background: #19434a;
+  color: #eff8f3;
+  box-shadow: inset 0 1px #7cae9f, inset 0 -1px #7cae9f;
 }
 
 .financeStudio :where(button, input):focus-visible {
@@ -1594,11 +1622,11 @@
 
   .transferMetrics > div {
     border-right: 0;
-    border-bottom: 1px solid var(--s7-edge);
+    border-bottom: 1px solid var(--ocean-line);
   }
 }
 
-/* Shared System 7 typography and controls. */
+/* Historical project palette; current control geometry and responsive layout retained. */
 .financeStudio {
   font-family: var(--s7-font-text);
 }
@@ -1636,9 +1664,9 @@
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
-  box-shadow: inset 1px 1px var(--s7-paper);
-  background: var(--s7-selection);
-  color: var(--s7-selection-text);
+  box-shadow: inset 1px 1px #fff;
+  background: #163d43;
+  color: #f0f6ef;
 }
 
 .viewTabs .activeView:focus-visible {
@@ -1698,19 +1726,19 @@
 /* Import identities are a sequential experiment, followed by the separate ledger audit. */
 .importLayout { grid-template-columns: minmax(0, 1fr); }
 
-.wealthHero { padding: 24px; margin-bottom: 16px; border: 1px solid var(--s7-edge); background: var(--s7-surface); box-shadow: var(--s7-relief-raised); }
-.wealthHero h2 { margin: 8px 0; color: var(--s7-ink); font-size: clamp(32px, 6cqi, 56px); font-variant-numeric: tabular-nums; }
-.wealthHero p, .wealthHero small { color: var(--s7-muted); }
-.wealthHero > div > span { color: var(--s7-selection); }
+.wealthHero { padding: 24px; margin-bottom: 16px; border: 1px solid var(--ocean-line); background: radial-gradient(ellipse at top right, #18536a, transparent 70%), var(--ocean-abyss); }
+.wealthHero h2 { margin: 8px 0; color: var(--ocean-foam); font-size: clamp(32px, 6cqi, 56px); font-variant-numeric: tabular-nums; }
+.wealthHero p, .wealthHero small { color: var(--ocean-mist); }
+.wealthHero > div > span { color: var(--ocean-teal); }
 .wealthBreakdown { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
 .wealthAccounts { padding: 10px 14px; }
-.wealthAccounts label { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--s7-edge); }
-.wealthAccounts input { accent-color: var(--s7-selection); }
+.wealthAccounts label { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--ocean-line); }
+.wealthAccounts input { accent-color: var(--ocean-teal); }
 .wealthAccounts strong { margin-left: auto; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .connectionGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
 .connectionBody { padding: 16px; }
-.connectionBody > strong { font-size: 26px; color: var(--s7-ink); }
-.connectionBody p, .connectionBody small { color: var(--s7-muted); }
+.connectionBody > strong { font-size: 26px; color: var(--ocean-foam); }
+.connectionBody p, .connectionBody small { color: var(--ocean-mist); }
 .brokerPicker { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 @container (max-width: 600px) {
   .wealthBreakdown, .connectionGrid { grid-template-columns: minmax(0, 1fr); }
@@ -1718,7 +1746,7 @@
   .wealthAccounts label { flex-wrap: wrap; }
 }
 
-.viewTabs .activeView span { color: var(--s7-selection-text); }
-.financeStudio .ledgerTable .selectedRow :is(strong, small, button, td) { color: var(--s7-selection-text); }
-
-.financeStudio .ledgerTable .selectedRow td { color: var(--s7-selection-text) !important; }
+/* Keep active controls and selected rows readable against the blue surfaces. */
+.viewTabs .activeView span { color: var(--ocean-foam); }
+.financeStudio .ledgerTable .selectedRow :is(strong, small, button, td) { color: var(--ocean-foam); }
+.financeStudio .ledgerTable .selectedRow td { color: var(--ocean-foam) !important; }

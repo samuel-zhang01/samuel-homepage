@@ -6,6 +6,7 @@ import styles from "./ProjectArtwork.module.css";
 const covers: Record<string, string> = {
   "microrobot-vision": "/project-art/microrobot.webp",
   "neural-cfd-surrogates": "/project-art/neural-cfd.webp",
+  "ocean-depths-finance": "/project-art/finance.webp",
 };
 
 function projectIcon(project: Project): System7IconKind {

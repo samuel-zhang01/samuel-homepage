@@ -106,7 +106,7 @@ const ACCOUNTS: Account[] = [
     kind: "current",
     adapter: "HSBC Debit PDF",
     openingBalance: 4150,
-    accent: "var(--s7-info)",
+    accent: "#2ec4b6",
   },
   {
     id: "tide-joint",
@@ -115,7 +115,7 @@ const ACCOUNTS: Account[] = [
     kind: "joint",
     adapter: "Revolut PDF",
     openingBalance: 1850,
-    accent: "var(--s7-accent)",
+    accent: "#4f9dde",
   },
   {
     id: "northstar-credit",
@@ -124,7 +124,7 @@ const ACCOUNTS: Account[] = [
     kind: "credit",
     adapter: "HSBC Credit PDF",
     openingBalance: -620,
-    accent: "var(--s7-danger)",
+    accent: "#fb7185",
   },
   {
     id: "quay-current",
@@ -133,7 +133,7 @@ const ACCOUNTS: Account[] = [
     kind: "current",
     adapter: "Lloyds PDF",
     openingBalance: 1200,
-    accent: "var(--s7-selection)",
+    accent: "#a78bfa",
   },
   {
     id: "atlas-invest",
@@ -142,13 +142,13 @@ const ACCOUNTS: Account[] = [
     kind: "investment",
     adapter: "Trading 212 CSV",
     openingBalance: 780,
-    accent: "var(--s7-warning)",
+    accent: "#fbbf24",
   },
 ];
 
 ACCOUNTS.push(
-  { id: "amex-credit", label: "American Express •08", shortLabel: "Amex", kind: "credit", adapter: "American Express PDF", openingBalance: -245, accent: "var(--s7-info)" },
-  { id: "moomoo-invest", label: "Moomoo •32", shortLabel: "Moomoo", kind: "investment", adapter: "Moomoo PDF", openingBalance: 3200, accent: "var(--s7-warning)" },
+  { id: "amex-credit", label: "American Express •08", shortLabel: "Amex", kind: "credit", adapter: "American Express PDF", openingBalance: -245, accent: "#35c7e0" },
+  { id: "moomoo-invest", label: "Moomoo •32", shortLabel: "Moomoo", kind: "investment", adapter: "Moomoo PDF", openingBalance: 3200, accent: "#fb923c" },
 );
 
 const LEDGER: LedgerTransaction[] = [
