@@ -1,6 +1,8 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const financeCopy = {
+  "±{0} day": ["±{0} 天", "±{0} 天"],
+  "±{0} days": ["±{0} 天", "±{0} 天"],
   "HSBC Current •01": ["汇丰活期账户 •01","滙豐活期賬戶 •01"],
   "Revolut Joint •12": ["Revolut 联名账户 •12","Revolut 聯名賬戶 •12"],
   "HSBC Credit •07": ["汇丰信用卡 •07","滙豐信用卡 •07"],

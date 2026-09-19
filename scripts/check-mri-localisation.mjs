@@ -138,6 +138,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
         LedgerView: ["all", "all", "", variant ? "tx-015" : "tx-001"],
         TransfersView: [variant ? 1 : 3, Boolean(variant)] };
       assertMandarin(FinanceStudio, `${locale}/finance/${view}/${variant}`);
+      assert.ok(!strings.includes("s"), `${locale}/finance/${view}/${variant}: English plural suffix must not leak into Mandarin`);
       financeCases += 1;
     }
   }

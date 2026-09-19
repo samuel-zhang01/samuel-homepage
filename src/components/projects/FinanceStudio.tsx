@@ -888,7 +888,7 @@ function TransfersView() {
     <ProjectCopy copy={financeCopy}><div className={styles.transferLayout}>
       <section className={`${styles.oceanPanel} ${styles.transferControls}`} aria-labelledby="transfer-model-title">
         <div className={styles.panelTitle}><div><span>CONFIGURABLE PRECISION</span><h3 id="transfer-model-title">Cross-account matcher</h3></div></div>
-        <label><span>Date window <strong>±{windowDays} day{windowDays === 1 ? "" : "s"}</strong></span><input type="range" min={0} max={5} step={1} value={windowDays} onChange={(event) => setWindowDays(Number(event.target.value))} /></label>
+        <label><span>Date window <strong>{`±${windowDays} ${windowDays === 1 ? "day" : "days"}`}</strong></span><input type="range" min={0} max={5} step={1} value={windowDays} onChange={(event) => setWindowDays(Number(event.target.value))} /></label>
         <label className={styles.checkControl}><input type="checkbox" checked={requireEvidence} onChange={(event) => setRequireEvidence(event.target.checked)} /><span><strong>Require descriptor evidence</strong><small>Generic “account move”, “funding” or “settlement” tokens. Amount equality remains mandatory.</small></span></label>
         <div className={styles.matchFormula}><span>SCORE</span><MathEquation tex={String.raw`10-|\Delta d|+5\,\mathbf{1}_{\mathrm{descriptor}}`} label="Transfer matching score" /><p>Greedy one-to-one matching prevents an incoming row from being reused. Same-account pairs are rejected.</p></div>
         <div className={styles.transferMetrics}>
