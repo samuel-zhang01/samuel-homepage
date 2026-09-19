@@ -45,6 +45,11 @@ const usOverrides: Record<string, string> = {
 };
 
 const zhCN: Record<string, string> = {
+  "JUST UPDATED · OCEAN DEPTHS FINANCE": "刚刚更新 · Ocean Depths Finance",
+  "Your money, connected.": "连接你的财务。",
+  "Net worth, five bank and credit accounts, two trading platforms, and a recurring-payment checker.": "净资产、五个银行及信用卡账户、两个交易平台，以及定期付款检查。",
+  "Explore the finance demo →": "体验财务演示 →",
+
   "Uncertainty scale and ranking experiment": "不确定性的尺度与排序实验",
   "CALCULATED HERE · EIGHT SYNTHETIC PIXELS": "实时计算 · 八个合成像素",
   "What does a low uncertainty score actually tell you?": "较低的不确定性评分究竟说明了什么？",

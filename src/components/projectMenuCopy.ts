@@ -2,6 +2,7 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Desktop project names and summaries only; long narratives stay in the lazy project document. */
 export const projectMenuCopy = {
+  "A personal finance workspace for net worth, connected bank accounts, two trading platforms and recurring-payment checks.": ["个人财务工作台，集中查看净资产、银行账户、两个交易平台和定期付款。","個人財務工作臺，集中查看淨資產、銀行賬戶、兩個交易平臺和定期付款。"],
   "Orbital Lab": [
     "原子轨道实验室",
     "原子軌域實驗室"

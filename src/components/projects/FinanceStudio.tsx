@@ -13,9 +13,9 @@ import { projectText } from "@/lib/projectCopy";
 import type { Locale } from "@/lib/i18n";
 import { financeCopy } from "./copy/financeCopy";
 
-type ViewId = "overview" | "ledger" | "recurring" | "transfers" | "import";
+type ViewId = "wealth" | "connections" | "investments" | "overview" | "ledger" | "recurring" | "transfers" | "import";
 type AccountKind = "current" | "joint" | "credit" | "investment";
-type SourceAdapter = "HSBC Debit PDF" | "HSBC Credit PDF" | "Lloyds PDF" | "Revolut PDF" | "Trading 212 CSV";
+type SourceAdapter = "HSBC Debit PDF" | "HSBC Credit PDF" | "Lloyds PDF" | "Revolut PDF" | "Trading 212 CSV" | "American Express PDF" | "Moomoo PDF";
 type Category =
   | "Income"
   | "Housing"
@@ -101,7 +101,7 @@ const ANCHOR_DATE = "18 Aug 2026";
 const ACCOUNTS: Account[] = [
   {
     id: "harbour-current",
-    label: "Harbour Current •01",
+    label: "HSBC Current •01",
     shortLabel: "Harbour",
     kind: "current",
     adapter: "HSBC Debit PDF",
@@ -110,7 +110,7 @@ const ACCOUNTS: Account[] = [
   },
   {
     id: "tide-joint",
-    label: "Tide Joint •12",
+    label: "Revolut Joint •12",
     shortLabel: "Tide",
     kind: "joint",
     adapter: "Revolut PDF",
@@ -119,7 +119,7 @@ const ACCOUNTS: Account[] = [
   },
   {
     id: "northstar-credit",
-    label: "Northstar Credit •07",
+    label: "HSBC Credit •07",
     shortLabel: "Northstar",
     kind: "credit",
     adapter: "HSBC Credit PDF",
@@ -128,7 +128,7 @@ const ACCOUNTS: Account[] = [
   },
   {
     id: "quay-current",
-    label: "Quay Current •34",
+    label: "Lloyds Current •34",
     shortLabel: "Quay",
     kind: "current",
     adapter: "Lloyds PDF",
@@ -137,7 +137,7 @@ const ACCOUNTS: Account[] = [
   },
   {
     id: "atlas-invest",
-    label: "Atlas Invest •21",
+    label: "Trading 212 •21",
     shortLabel: "Atlas",
     kind: "investment",
     adapter: "Trading 212 CSV",
@@ -145,6 +145,11 @@ const ACCOUNTS: Account[] = [
     accent: "#fbbf24",
   },
 ];
+
+ACCOUNTS.push(
+  { id: "amex-credit", label: "American Express •08", shortLabel: "Amex", kind: "credit", adapter: "American Express PDF", openingBalance: -245, accent: "#35c7e0" },
+  { id: "moomoo-invest", label: "Moomoo •32", shortLabel: "Moomoo", kind: "investment", adapter: "Moomoo PDF", openingBalance: 3200, accent: "#fb923c" },
+);
 
 const LEDGER: LedgerTransaction[] = [
   { id: "tx-001", accountId: "harbour-current", date: "2026-08-18", age: 0, description: "ACME DESIGN PAYROLL", merchant: "Acme Design Payroll", category: "Income", amount: 3400, confidence: 99, categorySource: "rule" },
@@ -212,12 +217,17 @@ const DECLARED_CLOSINGS: Record<Account["id"], number> = {
   "northstar-credit": -991.96,
   "quay-current": 855.5,
   "atlas-invest": 466.5,
+  "amex-credit": -245,
+  "moomoo-invest": 3200,
 };
 
 const VIEWS: { id: ViewId; label: string; hint: string }[] = [
-  { id: "overview", label: "Overview", hint: "Reconciled cash flow" },
+  { id: "wealth", label: "Net worth", hint: "Your whole financial picture" },
+  { id: "connections", label: "Connected accounts", hint: "5 bank accounts · 2 brokers" },
+  { id: "investments", label: "Investments", hint: "Holdings + broker cash" },
+  { id: "overview", label: "Spending", hint: "Reconciled cash flow" },
   { id: "ledger", label: "Ledger", hint: "Why each category" },
-  { id: "recurring", label: "Patterns", hint: "Cadence detector" },
+  { id: "recurring", label: "Recurring payments", hint: "Cadence detector" },
   { id: "transfers", label: "Transfers", hint: "Cross-account matching" },
   { id: "import", label: "Import checks", hint: "Parser + dedupe pipeline" },
 ];
@@ -502,6 +512,82 @@ function accountPosition(accountId: string) {
   return roundMoney(cash + holdingsValue);
 }
 
+function WealthView() {
+  const [included, setIncluded] = useState(ACCOUNTS.map((account) => account.id));
+  const selected = ACCOUNTS.filter((account) => included.includes(account.id));
+  const banks = selected.filter((account) => account.kind !== "investment");
+  const cash = banks.reduce((sum, account) => sum + Math.max(0, accountPosition(account.id)), 0);
+  const debt = -banks.reduce((sum, account) => sum + Math.min(0, accountPosition(account.id)), 0);
+  const investments = selected.filter((account) => account.kind === "investment").reduce((sum, account) => sum + accountPosition(account.id), 0);
+  const total = cash + investments - debt;
+  return <ProjectCopy copy={financeCopy}><>
+    <section className={styles.wealthHero} aria-live="polite">
+      <div><span>NET WORTH</span><h2>{money(total)}</h2><p>Bank balances + investments − credit debt</p><small>Example snapshot · 18 Aug 2026 · GBP</small></div>
+      <div className={styles.wealthBreakdown}>
+        <MetricCard label="BANK BALANCES" value={money(cash)} note="Positive bank balances" tone="positive" />
+        <MetricCard label="INVESTMENTS" value={money(investments)} note="Holdings + broker cash" tone="teal" />
+        <MetricCard label="CREDIT DEBT" value={money(-debt)} note="Deducted from net worth" tone="negative" />
+      </div>
+    </section>
+    <div className={styles.overviewGrid}>
+      <section className={styles.oceanPanel}>
+        <div className={styles.panelTitle}><div><span>CHOOSE YOUR ACCOUNTS</span><h3>What counts towards net worth?</h3></div></div>
+        <div className={styles.wealthAccounts}>{ACCOUNTS.map((account) => <label key={account.id}>
+          <input type="checkbox" checked={included.includes(account.id)} onChange={() => setIncluded((current) => current.includes(account.id) ? current.filter((id) => id !== account.id) : [...current, account.id])} />
+          <span>{account.label}</span><strong className={accountPosition(account.id) < 0 ? styles.debt : ""}>{money(accountPosition(account.id))}</strong>
+        </label>)}</div>
+        <p className={styles.methodNote}>Balances are counted once. Imported history and a connected account must not become two separate assets.</p>
+      </section>
+      <section className={styles.oceanPanel}>
+        <div className={styles.panelTitle}><div><span>ONE PLACE FOR YOUR MONEY</span><h3>From balances to better decisions</h3></div></div>
+        <ul className={styles.signalStack}>
+          <li><span className={styles.signalGood}>5</span><div><strong>Bank and credit accounts</strong><p>Lunch Flow feeds, pending payments and retained statement history.</p></div></li>
+          <li><span className={styles.signalGood}>2</span><div><strong>Trading platforms</strong><p>Trading 212 and Moomoo: read-only investment connections, holdings and account values.</p></div></li>
+          <li><span className={styles.signalWarn}>↻</span><div><strong>Recurring payment checker</strong><p>Find regular bills, estimate monthly commitments and flag changing prices.</p></div></li>
+        </ul>
+      </section>
+    </div>
+  </></ProjectCopy>;
+}
+
+function ConnectionsView() {
+  const [kind, setKind] = useState("all");
+  const visible = ACCOUNTS.filter((account) => kind === "all" || (kind === "banks" ? account.kind !== "investment" : account.kind === "investment"));
+  return <ProjectCopy copy={financeCopy}><>
+    <div className={styles.panelTitle}><div><span>EXAMPLE CONNECTIONS</span><h3>5 bank accounts · 2 trading platforms</h3></div></div>
+    <div className={styles.rangeSwitch}>
+      {[["all", "All accounts"], ["banks", "Bank accounts"], ["brokers", "Trading platforms"]].map(([value, label]) => <button type="button" key={value} aria-pressed={kind === value} className={kind === value ? styles.active : ""} onClick={() => setKind(value)}>{label}</button>)}
+    </div>
+    <div className={styles.connectionGrid}>{visible.map((account) => <article className={styles.oceanPanel} key={account.id}>
+      <div className={styles.panelTitle}><div><span>{account.kind === "investment" ? "SnapTrade · read-only" : "Lunch Flow · bank feed"}</span><h3>{account.label}</h3></div><span className={styles.pass}>●</span></div>
+      <div className={styles.connectionBody}><strong>{money(accountPosition(account.id))}</strong><p>Example snapshot · 18 Aug 2026 · GBP</p><small>{account.adapter}</small></div>
+    </article>)}</div>
+    <p className={styles.methodNote}>Sample connection states only. The real app caches account activity, tracks connection health and preserves imported statement history.</p>
+  </></ProjectCopy>;
+}
+
+function InvestmentsView() {
+  const [broker, setBroker] = useState("all");
+  const brokers = ACCOUNTS.filter((account) => account.kind === "investment" && (broker === "all" || broker === account.id));
+  const rows = LEDGER.filter((row) => brokers.some((account) => account.id === row.accountId) && row.shares && row.ticker);
+  const cash = brokers.reduce((sum, account) => sum + closingBalance(account), 0);
+  const value = brokers.reduce((sum, account) => sum + accountPosition(account.id), 0);
+  const cost = rows.reduce((sum, row) => sum + (row.shares ?? 0) * (row.unitPrice ?? 0), 0);
+  return <ProjectCopy copy={financeCopy}><>
+    <label className={styles.brokerPicker}><span>Trading platforms</span><ClassicSelect value={broker} onChange={(event) => setBroker(event.target.value)}><option value="all">Both platforms</option>{ACCOUNTS.filter((account) => account.kind === "investment").map((account) => <option key={account.id} value={account.id}>{account.label}</option>)}</ClassicSelect></label>
+    <div className={styles.wealthBreakdown}>
+      <MetricCard label="ACCOUNT VALUE" value={money(value)} note="Holdings + broker cash" tone="teal" />
+      <MetricCard label="BROKER CASH" value={money(cash)} note="Included in account value" />
+      <MetricCard label="OPEN POSITION GAIN" value={money(value - cash - cost, true)} note="Sample prices, before fees" tone={value - cash - cost >= 0 ? "positive" : "negative"} />
+    </div>
+    <section className={styles.oceanPanel}>
+      <div className={styles.panelTitle}><div><span>READ-ONLY PORTFOLIO</span><h3>Holdings</h3></div></div>
+      <div className={styles.ledgerTableWrap}><table className={styles.ledgerTable}><thead><tr><th>Account</th><th>Security</th><th>Shares</th><th>Cost</th><th>Market value</th></tr></thead><tbody>{rows.map((row) => <tr key={row.id}><td>{accountFor(row.accountId).label}</td><td>{row.ticker}</td><td>{row.shares}</td><td>{money((row.shares ?? 0) * (row.unitPrice ?? 0))}</td><td>{money((row.shares ?? 0) * (HOLDING_PRICES.find((holding) => holding.ticker === row.ticker)?.price ?? 0))}</td></tr>)}{!rows.length && <tr><td colSpan={5}>No holdings in this example account; its cash still contributes to net worth.</td></tr>}</tbody></table></div>
+      <p className={styles.methodNote}>The real investment workspace also includes saved activity, orders, allocation and dated snapshots. Example securities and prices here are fictional.</p>
+    </section>
+  </></ProjectCopy>;
+}
+
 function ScopeControls({ range, setRange, accountId, setAccountId }: {
   range: 30 | 90;
   setRange: (range: 30 | 90) => void;
@@ -517,7 +603,7 @@ function ScopeControls({ range, setRange, accountId, setAccountId }: {
       <label>
         <span>Account scope</span>
         <ClassicSelect value={accountId} onChange={(event) => setAccountId(event.target.value)}>
-          <option value="all">All five accounts</option>
+          <option value="all">All seven accounts</option>
           {ACCOUNTS.map((account) => <option value={account.id} key={account.id}>{account.label}</option>)}
         </ClassicSelect>
       </label>
@@ -573,7 +659,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
   return (
     <ProjectCopy copy={financeCopy}><>
       <div className={styles.metricStrip}>
-        <MetricCard label="SCOPE POSITION" value={money(scopedPosition)} note="At anchor; cash + holdings, debt negative" tone="teal" />
+        <MetricCard label="NET WORTH" value={money(scopedPosition)} note="At anchor; cash + holdings, debt negative" tone="teal" />
         <MetricCard label="HOUSEHOLD INFLOWS" value={money(income)} note={`${range}-day eligible ledger`} tone="positive" />
         <MetricCard label="HOUSEHOLD OUTFLOWS" value={money(spending)} note={`${income ? Math.round((spending / income) * 100) : 0}% of eligible inflows`} tone="negative" />
         <MetricCard label="NET CASH FLOW" value={money(net, true)} note={`${money(income)} − ${money(spending)}`} tone={net >= 0 ? "positive" : "negative"} />
@@ -612,7 +698,7 @@ function OverviewView({ range, accountId, rangeLedger, allTransfers, anomalies }
           <ul className={styles.signalStack}>
             <li><span className={styles.signalGood}>✓</span><div><strong>{scopedTransfers.length} transfer groups neutralised</strong><p>{money(moved)} moved once between accounts; both legs stay outside income and spending.</p></div></li>
             <li><span className={anomalies.length ? styles.signalWarn : styles.signalGood}>{anomalies.length || "✓"}</span><div><strong>{anomalies.length ? "Review queue has evidence" : "No anomalies at this threshold"}</strong><p>{anomalies[0]?.reason ?? "Category z-score and two-day duplicate checks are clear."}</p></div></li>
-            <li><span className={styles.signalGood}>✓</span><div><strong>Four bank adapters reconcile</strong><p>Opening + normalised movements = closing. The investment CSV is treated as a cash ledger.</p></div></li>
+            <li><span className={styles.signalGood}>✓</span><div><strong>Bank balances reconcile</strong><p>Opening + normalised movements = closing. The investment CSV is treated as a cash ledger.</p></div></li>
           </ul>
         </section>
       </div>
@@ -855,7 +941,7 @@ function ImportView() {
       <FinanceImportExperiment />
 
       <section className={`${styles.oceanPanel} ${styles.auditPanel}`} aria-labelledby="reconciliation-title">
-        <div className={styles.panelTitle}><div><span>PENNY-CLOSE CONTROL</span><h3 id="reconciliation-title">Separate 51-row ledger: balance checks</h3></div><span className={`${styles.rowCount} ${reconciledBanks.length === bankStatements.length ? styles.pass : styles.fail}`}>{reconciledBanks.length}/{bankStatements.length} pass</span></div>
+        <div className={styles.panelTitle}><div><span>PENNY-CLOSE CONTROL</span><h3 id="reconciliation-title">Example ledger: balance checks</h3></div><span className={`${styles.rowCount} ${reconciledBanks.length === bankStatements.length ? styles.pass : styles.fail}`}>{reconciledBanks.length}/{bankStatements.length} pass</span></div>
         <div className={styles.auditTableWrap}>
           <table className={styles.auditTable}>
             <thead><tr><th>Adapter</th><th>Rows</th><th>Opening</th><th>Σ movement</th><th>Closing</th><th>Difference</th><th>Control</th></tr></thead>
@@ -885,7 +971,7 @@ function ImportView() {
 }
 
 export function FinanceStudio() {
-  const [view, setView] = useState<ViewId>("import");
+  const [view, setView] = useState<ViewId>("wealth");
   const [range, setRange] = useState<30 | 90>(90);
   const [accountId, setAccountId] = useState("all");
   const [anomalyThreshold, setAnomalyThreshold] = useState(3);
@@ -902,11 +988,11 @@ export function FinanceStudio() {
   return (
     <ProjectCopy copy={financeCopy}><DemoWindow
       appName="Ocean Depths Finance"
-      title="Explore the household ledger"
+      title="Your money, connected"
       status="Fictional ledger · local"
-      purpose="Trace statement identity, reconciliation status and the calculations behind a household ledger."
-      tryThis="Import two repeated charges, replay the export, then inspect a corrected amount under the same provider ID."
-      watchFor="Import receipts expose stored and skipped rows; separate controls explore recurring and transfer rules over the fictional ledger."
+      purpose="Bring bank balances, investments, debt and recurring payments into one financial picture."
+      tryThis="Toggle accounts in Net worth, inspect both trading platforms, then check recurring payments for price changes."
+      watchFor="Debt reduces net worth; broker cash and holdings count once. Every amount here is fictional."
       statusTone="safe"
       className={styles.financeStudio}
       footer={
@@ -918,41 +1004,9 @@ export function FinanceStudio() {
     >
       <div className={styles.privacyBanner} role="note">
         <span aria-hidden="true">◈</span>
-        <div><strong>Example accounts and transactions</strong><p>Import, reconcile and categorise a fictional household ledger.</p></div>
-        <code>PDF / CSV → SQLite → FastAPI → React</code>
+        <div><strong>Example accounts and transactions</strong><p>Explore Ledger’s connected-finance workflow with fictional balances. No live bank connections or private data.</p></div>
+        <code>Lunch Flow + SnapTrade + PDF / CSV</code>
       </div>
-
-      <section className={styles.sourceScale} aria-labelledby="finance-source-scale-title">
-        <div>
-          <span>STATEMENT IMPORT RULES</span>
-          <h3 id="finance-source-scale-title">The rules behind the ledger</h3>
-          <p>Import statements into an empty ledger, or explore spending patterns across 51 example transactions.</p>
-        </div>
-        <dl>
-          <div><dt>Provider adapters</dt><dd>5</dd></div>
-          <div><dt>Balance tolerance</dt><dd>£0.02</dd></div>
-          <div><dt>Identity paths</dt><dd>2</dd></div>
-          <div><dt>Repeated rows</dt><dd>Occurrence key</dd></div>
-          <div><dt>Transfer window</dt><dd>3 days</dd></div>
-          <div><dt>Recurring minimum</dt><dd>3 dates</dd></div>
-        </dl>
-      </section>
-
-      <section className={styles.sourceScale} aria-labelledby="finance-recorded-scale-title">
-        <div>
-          <span>Recorded application scale</span>
-          <h3 id="finance-recorded-scale-title">What the application reconciled</h3>
-          <p>My earlier application handover recorded these aggregate counts. They describe that historical dataset; the interactive examples here use a separate fictional ledger.</p>
-        </div>
-        <dl>
-          <div><dt>Transactions</dt><dd>3,875</dd></div>
-          <div><dt>Accounts</dt><dd>6</dd></div>
-          <div><dt>Statements reconciled</dt><dd>67 / 67</dd></div>
-          <div><dt>Recurring patterns</dt><dd>36</dd></div>
-          <div><dt>Transfer groups</dt><dd>100</dd></div>
-          <div><dt>Anomaly records</dt><dd>122</dd></div>
-        </dl>
-      </section>
 
       <nav className={styles.viewTabs} aria-label="Finance intelligence views">
         {VIEWS.map((item) => (
@@ -973,6 +1027,9 @@ export function FinanceStudio() {
             <small>{`Flagged records: ${anomalies.length}, including duplicate evidence`}</small>
           </div>
         )}
+        {view === "wealth" && <WealthView />}
+        {view === "connections" && <ConnectionsView />}
+        {view === "investments" && <InvestmentsView />}
         {view === "overview" && <OverviewView range={range} accountId={accountId} rangeLedger={rangeLedger} allTransfers={defaultTransfers} anomalies={anomalies} />}
         {view === "ledger" && <LedgerView key={`${range}-${accountId}`} rangeLedger={rangeLedger} defaultTransfers={defaultTransfers} anomalies={anomalies} />}
         {view === "recurring" && <RecurringView />}

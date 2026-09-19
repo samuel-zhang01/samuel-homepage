@@ -854,6 +854,17 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
           <legend>Working style</legend>
           <p>Technically curious, attentive in a room, and happiest when helping other people do their best work.</p>
         </fieldset>
+        <article className="finance-update-card" aria-labelledby="finance-update-title">
+          <div className="finance-update-card__art" aria-hidden="true">
+            <svg viewBox="0 0 80 64" fill="none"><path d="M8 52H72M8 12V52" stroke="currentColor" opacity=".35" /><path d="M14 43L28 34L40 38L54 21L68 13" stroke="currentColor" strokeWidth="3" /><circle cx="68" cy="13" r="4" fill="currentColor" /></svg>
+          </div>
+          <div className="finance-update-card__copy">
+            <span>JUST UPDATED · OCEAN DEPTHS FINANCE</span>
+            <h2 id="finance-update-title">Your money, connected.</h2>
+            <p>Net worth, five bank and credit accounts, two trading platforms, and a recurring-payment checker.</p>
+            <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=ocean-depths-finance&view=demo`}>Explore the finance demo →</a>
+          </div>
+        </article>
         <article className="latest-update-card" aria-labelledby="latest-update-title">
           <div className="latest-update-card__photo">
             <Image
