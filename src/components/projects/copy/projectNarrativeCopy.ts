@@ -101,10 +101,7 @@ export const projectNarrativeCopy = {
     "记下想法，翻到下一页，下次打开还能找到。",
     "記下想法，翻到下一頁，下次打開還能找到。"
   ],
-  "Eight ruled pages keep short notes in this browser. Insert the date, move between pages and save a text copy; the Desk Accessories backup also includes the notebook.": [
-    "八页横线纸将简短笔记保存在此浏览器中。可以插入日期、翻页并保存文本副本；桌面工具的备份也包含整本笔记。",
-    "八頁橫線紙將簡短筆記保存在此瀏覽器中。可以插入日期、翻頁並保存文字副本；桌面工具的備份也包含整本筆記。"
-  ],
+  "Eight ruled pages save notes in this browser. Insert the date, export a text copy, or include the notebook in a Desk Accessories backup.": ["八页横线纸将笔记保存在此浏览器中。可插入日期、导出文本副本，或将笔记本纳入桌面小工具备份。", "八頁橫線紙將筆記儲存在此瀏覽器中。可插入日期、匯出文字副本，或將筆記本納入桌面小工具備份。"],
   "Local storage": [
     "本地存储",
     "本機儲存"
@@ -445,10 +442,7 @@ export const projectNarrativeCopy = {
     "负责任的招聘智能",
     "負責任的招募智能"
   ],
-  "An ATS-connected recruitment intelligence layer that evaluates every applicant, retains evidence and returns a reasoned shortlist while recruiters keep the decision.": [
-    "连接现有 ATS 的招聘智能层：评估每位申请者，保留支持材料，并给出有理由的候选名单，最终决定仍由招聘人员作出。",
-    "連接現有 ATS 的招募智能層：評估每位申請者，保留佐證資料，並給出有理由的候選名單，最終決定仍由招募人員作出。"
-  ],
+  "COVERD reviews applications from an applicant tracking system and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.": ["COVERD 审查申请人追踪系统中的申请，并向招聘人员提供附有理由的候选名单。最终决定由招聘人员作出。", "COVERD 審查應徵者追蹤系統中的申請，並向招募人員提供附有理由的候選名單。最終決定由招募人員作出。"],
   "I founded COVERD to help recruiters review applications consistently while retaining the reasons behind each assessment. The product sits over an existing ATS and combines specialist review of skills, experience, domain knowledge, trajectory, communication and culture. Optional automated voice interviews add context, and the system returns a shortlist with supporting reasons for recruiter review.": [
     "我创立 COVERD，帮助招聘人员一致地审阅申请，并保留每项判断的依据。产品连接现有 ATS，综合评估技能、经验、行业知识、职业发展、沟通和文化适配。可选的自动语音面试补充背景信息，系统再提供附有理由的候选名单，供招聘人员审阅。",
     "我創立 COVERD，幫助招募人員一致地審閱申請，並保留每項判斷的依據。產品連接現有 ATS，綜合評估技能、經驗、行業知識、職業發展、溝通和文化適配。可選的自動語音面試補充背景資訊，系統再提供附有理由的候選名單，供招募人員審閱。"
@@ -673,14 +667,8 @@ export const projectNarrativeCopy = {
     "智能文档工作流",
     "智能文檔工作流"
   ],
-  "A Python and LaTeX workflow that extracts role language, selects a pre-authored CV template and compiles a targeted application document.": [
-    "用 Python 和 LaTeX 提取岗位用语、选择预先编写的简历模板，并生成有针对性的申请文档。",
-    "用 Python 和 LaTeX 提取職缺用語、選擇預先編寫的履歷模板，並生成有針對性的申請文檔。"
-  ],
-  "The Python workflow gathers role and company context, extracts the job’s main requirements, selects a pre-authored CV template and compiles a targeted PDF with LaTeX. It can also prepare a cover-letter draft. The browser companion uses invented text and lets visitors review which requirements are supported by the example CV before staging a rewrite. The companion deduplicates role signals, maps them to CV evidence and shows a LaTeX-safe output manifest after a rewrite is reviewed.": [
-    "Python 工作流收集岗位与公司背景，提取职位的主要要求，选择预先编写的简历模板，再用 LaTeX 生成定制 PDF，也可以准备求职信草稿。浏览器配套工具使用虚构文本，让访客先核对示例简历是否支持每项要求，再安排改写。配套演示对职位信号去重，将其对应到简历证据，并在改写经过审阅后展示可安全用于 LaTeX 的输出清单。",
-    "Python 工作流收集職缺與公司背景，提取職位的主要要求，選擇預先編寫的履歷模板，再用 LaTeX 生成客製 PDF，也可以準備求職信草稿。瀏覽器配套工具使用虛構文字，讓訪客先核對示例履歷是否支持每項要求，再安排改寫。配套示範對職位訊號去重，將其對應到履歷證據，並在改寫經過審閱後展示可安全用於 LaTeX 的輸出清單。"
-  ],
+  "Review how a CV supports a job’s requirements before preparing an application.": ["准备求职申请前，检查简历中的经历如何支持岗位要求。", "準備求職申請前，檢查履歷中的經歷如何支持職位要求。"],
+  "I built a Python workflow that extracts job requirements, selects a pre-authored CV template and compiles a PDF with LaTeX. The browser demo uses fictional text to show which suggested changes the sample CV supports.": ["我开发了 Python 工作流，提取岗位要求、选择预先编写的简历模板，并用 LaTeX 编译 PDF。浏览器演示使用虚构文本，展示示例简历支持哪些修改建议。", "我開發了 Python 工作流程，擷取職位要求、選擇預先編寫的履歷範本，並用 LaTeX 編譯 PDF。瀏覽器示範使用虛構文字，展示範例履歷支持哪些修改建議。"],
   "Python": [
     "Python",
     "Python"
@@ -2589,10 +2577,6 @@ export const projectNarrativeCopy = {
     "找出岗位的主要要求，并将相关经历组织为合适的申请文档。",
     "找出職缺的主要要求，並將相關經歷組織為合適的申請文檔。"
   ],
-  "I built a Python workflow that extracts role language, selects a pre-authored CV template and compiles it with LaTeX. The browser companion adds an explicit review of whether the example CV supports each suggested change.": [
-    "我构建了 Python 工作流，提取岗位语言、选择预先编写的简历模板，并用 LaTeX 编译。浏览器配套工具进一步明确检查示例简历是否支持每项建议修改。",
-    "我建置了 Python 工作流，提取職缺語言、選擇預先編寫的履歷模板，並用 LaTeX 編譯。瀏覽器配套工具進一步明確檢查示例履歷是否支持每項建議修改。"
-  ],
   "job description → role language → template and relevant experience → reviewed wording → application document": [
     "职位说明 → 岗位用语 → 模板与相关经历 → 审阅措辞 → 申请文档",
     "職位說明 → 職缺用語 → 模板與相關經歷 → 審閱措辭 → 申請文檔"
@@ -3201,10 +3185,7 @@ export const projectNarrativeCopy = {
     "运行 Metropolis 采样器，比较高分子形状，逐步执行 velocity Verlet 并检查能量漂移，再计算基组或阳离子–π 能量差。",
     "執行 Metropolis 取樣器，比較高分子形狀，逐步執行 velocity Verlet 並檢查能量漂移，再計算基組或陽離子–π 能量差。"
   ],
-  "Recruiters reviewing applications across specialist evidence dimensions.": [
-    "从多个专业维度审阅申请的招聘人员。",
-    "從多個專業維度審閱申請的招募人員。"
-  ],
+  "Recruiters reviewing job applications.": ["审查求职申请的招聘人员。", "審查求職申請的招募人員。"],
   "Application evidence and interview context arrive in separate systems, making a shortlist difficult to explain.": [
     "申请材料和面试背景分散在不同系统中，使候选名单难以解释。",
     "申請材料和麵試背景分散在不同系統中，使候選名單難以解釋。"
@@ -3213,10 +3194,7 @@ export const projectNarrativeCopy = {
     "返回附有理由和明确依据的候选名单，决定仍由招聘人员作出。",
     "返回附有理由和明確依據的候選名單，決定仍由招募人員作出。"
   ],
-  "I founded and led the product, evolving company-aware voice interviews into an ATS-connected recruitment-intelligence layer.": [
-    "我创立并领导产品，将结合企业背景的语音面试发展为连接 ATS 的招聘智能层。",
-    "我創立並領導產品，將結合企業背景的語音面試發展為連接 ATS 的招募智能層。"
-  ],
+  "I founded COVERD and led work on application review and company-aware voice interviews within recruiters’ existing applicant tracking systems.": ["我创立 COVERD，并带领团队在招聘人员现有的申请人追踪系统中开发申请审查和结合公司背景的语音面试。", "我創立 COVERD，並帶領團隊在招募人員現有的應徵者追蹤系統中開發申請審查及結合公司背景的語音面試。"],
   "ATS applications → specialist evidence review → voice enrichment → reasoned shortlist → recruiter decision": [
     "ATS 申请 → 专业材料审阅 → 语音信息补充 → 有理由的候选名单 → 招聘人员决定",
     "ATS 申請 → 專業材料審閱 → 語音資訊補充 → 有理由的候選名單 → 招募人員決定"

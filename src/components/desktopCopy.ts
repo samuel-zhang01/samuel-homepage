@@ -1,7 +1,8 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const desktopCopy = {
-  "Live demo": ["交互演示", "互動示範"],
+  "Interactive demo": ["交互演示", "互動示範"],
+  "COVERD reviews applications from an applicant tracking system and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.": ["COVERD 审查申请人追踪系统中的申请，并向招聘人员提供附有理由的候选名单。最终决定由招聘人员作出。", "COVERD 審查應徵者追蹤系統中的申請，並向招募人員提供附有理由的候選名單。最終決定由招募人員作出。"],
   "Learning atlas · English PDF": ["学习图谱 · 英文 PDF", "學習圖譜 · 英文 PDF"],
   "CV + VOICE": ["简历 + 语音", "履歷 + 語音"],
   "Aranet Air Quality": ["Aranet 空气质量", "Aranet 空氣品質"],

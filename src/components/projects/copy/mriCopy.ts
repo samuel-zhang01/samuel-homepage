@@ -1246,10 +1246,7 @@ export const mriCopy = {
     "测试",
     "測試"
   ],
-  "Images are referenced by the study but are not present in this showcase. K-space was retrospectively simulated from magnitude images.": [
-    "研究使用这些图像，但本页面未提供原始图像。k 空间数据是从幅值图像回顾性模拟得到的。",
-    "研究使用這些影像，但本頁面未提供原始影像。k 空間資料是從幅值影像回顧性模擬得到的。"
-  ],
+  "The Recorded images tab shows a saved reconstruction comparison. K-space was retrospectively simulated from magnitude images.": ["“已保存图像”标签页展示已保存的重建对比。K 空间由幅度图像回顾性模拟生成。", "「已儲存影像」分頁展示已儲存的重建比較。K 空間由幅度影像回顧性模擬產生。"],
   "Acquisition realism": [
     "采集真实性",
     "採集真實性"
@@ -1310,7 +1307,7 @@ export const mriCopy = {
     "研究展示",
     "研究展示"
   ],
-  "Compare the study’s reported results and explore the calculations behind them. Recorded images contains a saved source figure; the interactive phantoms are synthetic. This page does not run a trained MRI model.": ["比较研究报告的结果，并探索其背后的计算。已保存图像包含原始研究图；交互示意为合成内容。此页面不运行训练好的 MRI 模型。", "比較研究報告的結果，並探索其背後的計算。已儲存影像包含原始研究圖；互動示意為合成內容。此頁面不執行訓練好的 MRI 模型。"],
+  "Compare the study’s reported results and explore the calculations behind them. The Recorded images tab contains a saved source figure; the interactive phantoms are synthetic. This page does not run a trained MRI model.": ["比较研究报告的结果，并探索其背后的计算。“已保存图像”标签页包含原始研究图；交互模体是合成的。此页面不运行训练好的 MRI 模型。", "比較研究報告的結果，並探索其背後的計算。「已儲存影像」分頁包含原始研究圖；互動假體是合成的。此頁面不執行訓練好的 MRI 模型。"],
   "NOT FOR CLINICAL USE": [
     "不用于临床",
     "不用於臨床"

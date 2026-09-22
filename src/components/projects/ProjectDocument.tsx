@@ -18,6 +18,7 @@ import styles from "./ProjectDocument.module.css";
 const copy = {
   "Ongoing": ["持续进行", "持續進行"],
   "All projects": ["全部项目", "全部專案"],
+  "More actions": ["更多操作", "更多操作"],
   "Connections": ["项目关联", "專案關聯"],
   "Explore the project": ["探索项目", "探索專案"],
   "Open showcase PDF": ["打开展示 PDF", "開啟展示 PDF"],
@@ -37,10 +38,10 @@ const copy = {
   "About the demonstration": ["演示说明", "示範說明"],
   "Back to list": ["返回列表", "返回清單"],
   "Open in new tab": ["在新标签页打开", "在新分頁開啟"],
-  "Open live demo": ["打开交互演示", "開啟互動示範"],
+  "Open interactive demo": ["打开交互演示", "開啟互動示範"],
   "Closing clears this demo’s unsaved changes.": ["关闭后，此演示中未保存的更改将被清除。", "關閉後，此示範中未儲存的變更將被清除。"],
   "Close demo and return to overview": ["关闭演示并返回概览", "關閉示範並返回概覽"],
-  "Go to live demo": ["前往交互演示", "前往互動示範"],
+  "Return to demo": ["前往交互演示", "前往互動示範"],
 } satisfies ProjectCopyTable;
 
 type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";
@@ -64,14 +65,19 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
   if (!project) return null;
   return <ProjectLocaleProvider locale={locale}><article className={`system7-project ${styles.document}`} data-embedded={embedded} lang={locale}>
     <nav className={`s7-toolbar ${styles.toolbar}`} aria-label={t("Project navigation")}>
-      {project.demo && <button className="s7-button is-primary" onClick={openDemo} title={t("Opens in a desktop window")}>{t("Open live demo")} ↗</button>}
+      {project.demo && <button className="s7-button is-primary" onClick={openDemo} title={t("Opens in a desktop window")}>{t("Open interactive demo")} ↗</button>}
       {primaryPdf && <button className="s7-button is-primary" onClick={() => openActivity?.({ slug, kind: "pdf", artifactHref: primaryPdf.href })} title={getProjectText(locale, primaryPdf.label)}>{t(slug === "growmat" ? "Open showcase PDF" : "Open PDF")} ↗</button>}
       <button className={`s7-button ${embedded ? styles.backToList : ""}`} onClick={onBack}>← {t(embedded ? "Back to list" : "All projects")}</button>
+      {shareStatus && <span role="status">{t(shareStatus)}</span>}
+    </nav>
+    <details className={styles.secondaryActions}>
+      <summary>{t("More actions")}</summary>
+      <div>
       {embedded && <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer">{t("Open in new tab")} ↗</a>}
       <button className="s7-button" onClick={() => onGraph(slug)}>{t("Connections")} ↗</button>
       <button className="s7-button is-share" onClick={share} title={t("Copy a link to share this project")}>{t("Share project")}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1" /><path d="M15 8V4H4v11h4" /></svg></button>
-      {shareStatus && <span role="status">{t(shareStatus)}</span>}
-    </nav>
+      </div>
+    </details>
     {shareFallback && <label className={styles.shareFallback}>{t("Project link")}<input readOnly value={shareFallback} onFocus={event => event.target.select()} /></label>}
     <header className={styles.header}>
       <ProjectArtwork project={project} />
@@ -92,6 +98,6 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
       <Image src={project.preview.src} alt={getProjectText(locale, project.preview.alt)} width={543} height={172} sizes="(max-width: 720px) 90vw, 640px" />
       <figcaption>{getProjectText(locale, project.preview.caption)}</figcaption>
     </figure>}
-    {project.privacyNote && <section className={styles.boundary}><h2>{t("About the demonstration")}</h2><p>{getProjectText(locale, project.privacyNote)}</p></section>}
+    {project.privacyNote && !project.demo && <section className={styles.boundary}><h2>{t("About the demonstration")}</h2><p>{getProjectText(locale, project.privacyNote)}</p></section>}
   </article></ProjectLocaleProvider>;
 }

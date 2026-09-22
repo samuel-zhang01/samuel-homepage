@@ -656,15 +656,6 @@ export function CvKeywordStudio() {
       <div style={studioStyle}>
         <p className={styles.liveRegion} role="status" aria-live="polite">{announcement}</p>
 
-        <aside className={styles.privacyBanner} aria-label="How this demonstration works">
-          <span className={styles.shield} aria-hidden="true">✓</span>
-          <div>
-            <strong>From job language to visible evidence.</strong>
-            <p>The original workflow combined model-assisted extraction with LaTeX templates. This local edition uses 18 explicit English signal rules, so you can inspect each match, weight and evidence check. The sample documents remain in English to show exactly what the matcher reads.</p>
-          </div>
-          <span className={styles.memoryBadge}>SESSION MEMORY ONLY</span>
-        </aside>
-
         <div className={styles.commandStrip}>
           <div className={styles.commandGroup}>
             <MacButton onClick={runAnalysis} primary disabled={!isDirty || !cvText.trim() || !jobText.trim()}>
@@ -681,6 +672,15 @@ export function CvKeywordStudio() {
             </ClassicSelect>
           </label>
         </div>
+
+        <aside className={styles.privacyBanner} aria-label="How this demonstration works">
+          <span className={styles.shield} aria-hidden="true">✓</span>
+          <div>
+            <strong>From job language to visible evidence.</strong>
+            <p>The original workflow combined model-assisted extraction with LaTeX templates. This local edition uses 18 explicit English signal rules, so you can inspect each match, weight and evidence check. The sample documents remain in English to show exactly what the matcher reads.</p>
+          </div>
+          <span className={styles.memoryBadge}>SESSION MEMORY ONLY</span>
+        </aside>
 
         <nav className={styles.stepTabs} role="tablist" aria-label="CV build workflow">
           {TABS.map((tab) => (

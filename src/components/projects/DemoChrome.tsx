@@ -38,7 +38,7 @@ export function DemoWindow({
     <section className={`system7-project ${styles.demoWindow} ${className}`} data-locale={locale} aria-label={`${t(title)} — ${t("interactive demo")}`}>
       <header className={styles.demoHeader}>
         <div>
-          <span className={styles.eyebrow}>{t(appName)} · {locale.startsWith("en") ? "Interactive project file" : t("INTERACTIVE PROJECT FILE")}</span>
+          <span className={styles.eyebrow}>{t(appName)}<span className={styles.fileContext}> · {locale.startsWith("en") ? "Interactive project file" : t("INTERACTIVE PROJECT FILE")}</span></span>
           <h2>{t(title)}</h2>
         </div>
         <span className={`${styles.statusBadge} ${styles[statusTone]}`}>

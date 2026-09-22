@@ -79,10 +79,7 @@ export const projectMenuCopy = {
     "coverd.ai",
     "coverd.ai"
   ],
-  "An ATS-connected recruitment intelligence layer that evaluates every applicant, retains evidence and returns a reasoned shortlist while recruiters keep the decision.": [
-    "连接现有 ATS 的招聘智能层：评估每位申请者，保留支持材料，并给出有理由的候选名单，最终决定仍由招聘人员作出。",
-    "連接現有 ATS 的招募智能層：評估每位申請者，保留佐證資料，並給出有理由的候選名單，最終決定仍由招募人員作出。"
-  ],
+  "COVERD reviews applications from an applicant tracking system and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.": ["COVERD 审查申请人追踪系统中的申请，并向招聘人员提供附有理由的候选名单。最终决定由招聘人员作出。", "COVERD 審查應徵者追蹤系統中的申請，並向招募人員提供附有理由的候選名單。最終決定由招募人員作出。"],
   "GROWMAT": [
     "GROWMAT",
     "GROWMAT"
@@ -103,10 +100,7 @@ export const projectMenuCopy = {
     "简历关键词自动化",
     "履歷關鍵詞自動化"
   ],
-  "A Python and LaTeX workflow that extracts role language, selects a pre-authored CV template and compiles a targeted application document.": [
-    "用 Python 和 LaTeX 提取岗位用语、选择预先编写的简历模板，并生成有针对性的申请文档。",
-    "用 Python 和 LaTeX 提取職缺用語、選擇預先編寫的履歷模板，並生成有針對性的申請文檔。"
-  ],
+  "Review how a CV supports a job’s requirements before preparing an application.": ["准备求职申请前，检查简历中的经历如何支持岗位要求。", "準備求職申請前，檢查履歷中的經歷如何支持職位要求。"],
   "Im I Broke?": [
     "Im I Broke?",
     "Im I Broke?"

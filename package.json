@@ -16,7 +16,7 @@
     "dev:lan": "next dev --hostname 0.0.0.0 --port 5174",
     "check:artifacts": "node scripts/check-project-artifacts.mjs",
     "check:data": "node scripts/check-project-csv-fixtures.mjs",
-    "check:desk": "node scripts/check-desk-behavior.mjs",
+    "check:desk": "node scripts/check-desk-behavior.mjs && node scripts/check-desk-persistence.mjs",
     "check:controls": "node scripts/check-classic-select.mjs",
     "check:orbitals": "node scripts/check-orbitals.mjs",
     "check:deploy": "node scripts/check-deploy.mjs",

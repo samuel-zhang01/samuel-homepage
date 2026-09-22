@@ -824,7 +824,7 @@ function WindowChrome({
   );
 }
 
-function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
+function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: AppId) => void; locale: Locale; openSelectedProjects: () => void }) {
   return (
     <TranslationBoundary locale={locale}><div className="about-app">
       <div className="about-sidebar">
@@ -890,7 +890,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             <b>Explore my work</b>
             <p>Each button opens one clear destination. Projects is the quickest tour.</p>
           </div>
-          <button className="identity-drawer--projects" onClick={() => openApp("projects")}>
+          <button className="identity-drawer--projects" onClick={openSelectedProjects}>
             <PixelIcon kind="folder" small />
             <span className="identity-copy identity-copy--product">
               <b>Selected projects</b>
@@ -930,7 +930,7 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             <p>Seven small games with hints of my work and old-Mac mischief. No account, no tracking, no stakes.</p>
             <ul className="arcade-invite__games" aria-label="Games in Desk Arcade">
               {ARCADE_GAMES.map((item) => (
-                <li key={item.id}><b aria-hidden="true">{item.icon}</b><span>{item.label}</span></li>
+                <li key={item.id}><b aria-hidden="true"><System7Icon kind={item.icon} /></b><span>{item.label}</span></li>
               ))}
             </ul>
           </div>
@@ -960,43 +960,10 @@ function AboutApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
 }
 
 function CoverdApp({ locale }: { locale: Locale }) {
-  const products = [
-    {
-      code: "01",
-      title: "ATS Intelligence Layer",
-      copy: "Connects to an existing applicant-tracking workflow so teams keep the system they already use while COVERD adds structured evaluation.",
-    },
-    {
-      code: "02",
-      title: "Six Specialist Reviews",
-      copy: "Examines skills, experience, domain knowledge, trajectory, communication and culture as separate evidence dimensions, each with its own rationale.",
-    },
-    {
-      code: "03",
-      title: "Voice Enrichment",
-      copy: "Automated voice interviews and follow-ups can add evidence when an application alone leaves important questions unresolved.",
-    },
-    {
-      code: "04",
-      title: "Candidate Compass",
-      copy: "Maps the applicant pool into a shortlist, review set and rejection set so recruiters can examine the whole pipeline at once.",
-    },
-    {
-      code: "05",
-      title: "Reasons & Review",
-      copy: "Retains the evidence behind each assessment, flags uncertainty for human review and shows recruiters the basis for every judgement.",
-    },
-    {
-      code: "06",
-      title: "Outcome Learning",
-      copy: "Uses aggregated hiring outcomes to improve role understanding while recruiters remain responsible for every consequential decision.",
-    },
-  ];
-
   const pipeline = [
-    ["01", "Connect the ATS", "Keep the existing recruiting workflow and add an intelligence layer over the incoming application pool."],
+    ["01", "Connect the ATS", "Read applications from the team’s existing applicant tracking system (ATS)."],
     ["02", "Read every application", "Apply the same structured review to every candidate without reviewer-fatigue shortcuts."],
-    ["03", "Separate the evidence", "Run specialist assessments across six dimensions and retain the reasons behind each result."],
+    ["03", "Separate the evidence", "Review skills, experience, domain knowledge, trajectory, communication and culture separately, retaining the reasons for each assessment."],
     ["04", "Enrich when useful", "Use voice interviews, portfolio review or follow-ups when the existing record leaves material gaps."],
     ["05", "Shortlist with reasons", "Return a reviewable pipeline; recruiters examine uncertainty and make the final decision."],
   ];
@@ -1005,7 +972,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="coverd-app">
       <header className="coverd-hero">
         <div className="coverd-brand">
-          <span className="coverd-kicker">RECRUITMENT INTELLIGENCE LAYER</span>
+          <span className="coverd-kicker">APPLICATION REVIEW</span>
           <div className="coverd-wordmark">
             <Image
               src="/coverd-logo-black-on-transparent.png"
@@ -1026,50 +993,10 @@ function CoverdApp({ locale }: { locale: Locale }) {
         <div className="founder-note">
           <span>CURRENT PRODUCT / AUG 2026</span>
           <p>
-            COVERD began with candidate-side CV tooling and company-aware voice-interview
-            experiments. That research now feeds a broader product: an intelligence layer
-            over an existing ATS that evaluates applications, preserves evidence, enriches
-            profiles when needed and returns a reasoned shortlist for recruiter review.
+            COVERD reviews applications from an applicant tracking system and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.
           </p>
         </div>
       </header>
-
-      <section className="coverd-thesis">
-        <div>
-          <span className="eyebrow">THE THESIS</span>
-          <h4>Review every applicant.<br />Keep people in control.</h4>
-        </div>
-        <p>
-          Application volume makes consistent review difficult. COVERD applies specialist
-          evaluation across six dimensions, keeps the evidence behind each assessment and
-          adds automated voice interviews when another signal would help. The result is a
-          ranked pipeline that recruiters can inspect. It does not replace recruiter judgement. Candidate
-          records, prompts and production internals remain outside this public portfolio.
-        </p>
-      </section>
-
-      <section className="coverd-numbers">
-        <div><strong>6</strong><span>specialist dimensions</span></div>
-        <div><strong>ATS</strong><span>existing workflow</span></div>
-        <div><strong>CV + VOICE</strong><span>evidence paths</span></div>
-        <div><strong>HUMAN</strong><span>decision owner</span></div>
-      </section>
-
-      <section className="coverd-section" id="coverd-products">
-        <div className="coverd-section__heading">
-          <span>PRODUCT SYSTEM</span>
-          <h4>One review layer across the hiring pipeline.</h4>
-        </div>
-        <div className="coverd-product-grid">
-          {products.map((product) => (
-            <article key={product.code}>
-              <span>{product.code}</span>
-              <h5>{product.title}</h5>
-              <p>{product.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
 
       <section className="coverd-section coverd-section--pipeline">
         <div className="coverd-section__heading">
@@ -1090,7 +1017,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
         <div className="coverd-ethics__intro">
           <span className="eyebrow">RESPONSIBLE BY DESIGN</span>
           <h4>Hiring intelligence people can inspect.</h4>
-          <p>Trust comes from evidence, visible uncertainty, candidate agency and accountable human decisions.</p>
+          <p>Recruiters can inspect the evidence behind each assessment and review uncertain cases before deciding.</p>
         </div>
         <div className="coverd-principles">
           <article><strong>Every score has a reason</strong><p>Recruiters receive the evidence, reasoning and supporting record behind each assessment.</p></article>
@@ -1608,7 +1535,7 @@ function describeWordGuess(
   return `Guess ${guess}. ${details}`;
 }
 
-function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
+function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; locale: Locale; active: boolean }) {
   const [game, setGame] = useState<ArcadeGameId>("minefield");
   const [minefield, setMinefield] = useState(() => createMinefield());
   const [mineStatus, setMineStatus] = useState<"playing" | "won" | "lost">("playing");
@@ -2029,8 +1956,8 @@ function GamesApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: L
             )}
           </>
         )}
-        {game === "snake" && <SnakeGame locale={locale} />}
-        {game === "brickbreaker" && <BrickBreakerGame locale={locale} />}
+        {game === "snake" && <SnakeGame locale={locale} active={active} />}
+        {game === "brickbreaker" && <BrickBreakerGame locale={locale} active={active} />}
         {game === "spectrum" && <HplcPeakDock locale={locale} />}
       </section>
     </div></TranslationBoundary>
@@ -2078,7 +2005,7 @@ function LabApp({ locale }: { locale: Locale }) {
     { group: "Network", code: "F2B", name: "Fail2ban", host: "Intrusion response", description: "Watches service logs and automatically blocks repeated hostile requests." },
     { group: "Network", code: "RDP", name: "Guacamole", host: "Remote desktop", description: "Browser-based access to SSH, VNC and remote desktop sessions." },
     { group: "Operations", code: "CT", name: "Portainer", host: "Container operations", description: "A visual control room for container health, deployments, images and networks." },
-    { group: "Operations", code: "CI", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs deployment jobs across my own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs." },
+    { group: "Operations", code: "CI", name: "GitHub Actions Runner", host: "Self-hosted CI", description: "Runs CI jobs on my hardware across different CPU architectures." },
     { group: "Operations", code: "HP", name: "Homepage", host: "Service directory", description: "A documented directory for service links and operational notes." },
     { group: "Operations", code: "JOB", name: "Ofelia", host: "Job scheduler", description: "Runs automated database backups and recurring maintenance inside Docker." },
     { group: "Data", code: "SQL", name: "PostgreSQL", host: "Application data", description: "Stores environmental telemetry, product data and historical measurements." },
@@ -2233,6 +2160,7 @@ function AppContent({
   activity,
   onActivityBack,
   onProjectBack,
+  openSelectedProjects,
   onProjectGraph,
   active,
 }: {
@@ -2243,11 +2171,12 @@ function AppContent({
   activity: ProjectActivityRequest | null;
   onActivityBack: () => void;
   onProjectBack: () => void;
+  openSelectedProjects: () => void;
   onProjectGraph: (slug: string) => void;
   active: boolean;
 }) {
   switch (id) {
-    case "about": return <AboutApp openApp={openApp} locale={locale} />;
+    case "about": return <AboutApp openApp={openApp} locale={locale} openSelectedProjects={openSelectedProjects} />;
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
     case "projects": return <ProjectExplorer active={active} locale={locale} onOpenApp={openApp} />;
@@ -2257,7 +2186,7 @@ function AppContent({
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
     case "documents": return <DocumentsApp locale={locale} />;
-    case "games": return <GamesApp openApp={openApp} locale={locale} />;
+    case "games": return <GamesApp openApp={openApp} locale={locale} active={active} />;
     case "desk": return <ProductivityApps app="desk" openApp={openApp} locale={locale} />;
     case "notepad": return <ProductivityApps app="notepad" openApp={openApp} locale={locale} />;
     case "sketch": return <ProductivityApps app="sketch" openApp={openApp} locale={locale} />;
@@ -2558,7 +2487,7 @@ export default function SystemSevenDesktop({
   }, []);
 
   const windowTitle = (item: WindowState) => item.id === "projectActivity" && activity
-    ? `${translateText(locale, item.title)} · ${activity.kind === "pdf" ? "PDF" : translateText(locale, "Live demo")}`
+    ? `${translateText(locale, item.title)} · ${activity.kind === "pdf" ? "PDF" : translateText(locale, "Interactive demo")}`
     : item.title;
   const activeWindow = windows.find(item => item.id === activeId && item.open);
   const activeTitle = activeWindow ? windowTitle(activeWindow) : "Finder";
@@ -2698,6 +2627,12 @@ export default function SystemSevenDesktop({
       document.querySelector<HTMLButtonElement>(`[data-app-id="${id}"] .window-close`)?.focus();
     });
   }, [syncAddress]);
+
+  const openSelectedProjects = () => {
+    routeStateByApp.current.projects = { search: "?view=guided", hash: "" };
+    openApp("projects");
+    requestAnimationFrame(() => window.dispatchEvent(new Event("samuel-project-graph")));
+  };
 
   const openProjectDocument = useCallback((slug: string) => {
     const project = projects.find((item) => item.slug === slug);
@@ -3260,7 +3195,7 @@ export default function SystemSevenDesktop({
           onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <ProjectWindowContext.Provider value={openProjectActivity}><ProjectOpenContext.Provider value={openProjectDocument}><AppContent id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} activity={activity} onActivityBack={returnFromActivity} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider></ProjectWindowContext.Provider>
+          <ProjectWindowContext.Provider value={openProjectActivity}><ProjectOpenContext.Provider value={openProjectDocument}><AppContent openSelectedProjects={openSelectedProjects} id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} activity={activity} onActivityBack={returnFromActivity} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider></ProjectWindowContext.Provider>
         </WindowChrome>
       ))}
 
