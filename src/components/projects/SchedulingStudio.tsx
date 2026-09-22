@@ -1,4 +1,5 @@
 "use client";
+import { useProjectActivity } from "./ProjectActivity";
 import { SchedulingDstExperiment } from "./SourceExperiments";
 
 import ClassicSelect from "../ClassicSelect";
@@ -198,6 +199,7 @@ function calendarCellKey(day: DayId, start: number) {
 }
 
 export function SchedulingStudio() {
+  const active = useProjectActivity();
   const locale = useProjectLocale();
   const [mode, setMode] = useState<Mode>("round-robin");
   const [selectedHostIds, setSelectedHostIds] = useState<string[]>(HOSTS.map((host) => host.id));
@@ -252,12 +254,12 @@ export function SchedulingStudio() {
   }, [candidateStartsByDay]);
 
   useEffect(() => {
-    if (!selection) return;
+    if (!active || !selection) return;
     const timer = window.setInterval(() => {
       setReservationSeconds((current) => Math.max(0, current - 1));
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [selection]);
+  }, [active, selection]);
 
   useEffect(() => {
     if (!selection || reservationSeconds > 0) return;

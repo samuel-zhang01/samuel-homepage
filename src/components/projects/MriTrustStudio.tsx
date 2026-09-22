@@ -1236,7 +1236,7 @@ function AuditView() {
           <div role="row"><strong role="rowheader">MR</strong><span role="cell">1,738</span><span role="cell">254</span><span role="cell">236</span></div>
           <div role="row"><strong role="rowheader">CT</strong><span role="cell">3,389</span><span role="cell">382</span><span role="cell">484</span></div>
         </div>
-        <p>Images are referenced by the study but are not present in this showcase. K-space was retrospectively simulated from magnitude images.</p>
+        <p>The Recorded images tab shows a saved reconstruction comparison. K-space was retrospectively simulated from magnitude images.</p>
       </div>
 
       <div className={styles.limitations}>
@@ -1309,7 +1309,7 @@ export function MriTrustStudio() {
       <div className={styles.disclaimer} role="note">
         <span>RESEARCH SHOWCASE</span>
         <p>
-          Compare the study’s reported results and explore the calculations behind them. Recorded images contains a saved source figure; the interactive phantoms are synthetic. This page does not run a trained MRI model.
+          Compare the study’s reported results and explore the calculations behind them. The Recorded images tab contains a saved source figure; the interactive phantoms are synthetic. This page does not run a trained MRI model.
         </p>
         <strong>NOT FOR CLINICAL USE</strong>
       </div>

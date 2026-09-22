@@ -6,7 +6,7 @@
 .context dl { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 0; }
 .context dt { font-weight: 700; margin-bottom: 4px; }
 .context dd { margin: 0; max-width: 62ch; }
-.contribution { margin-top: 16px; border-top: 1px solid var(--s7-shadow); padding-top: 12px; }
+.contribution { grid-column: 1 / -1; margin-top: 16px; border-top: 1px solid var(--s7-shadow); padding-top: 12px; }
 .contribution summary { cursor: pointer; font-weight: 700; }
 .contribution p { max-width: 72ch; margin: 10px 0 0; }
 .walkthrough p { margin: 0; }

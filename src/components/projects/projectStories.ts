@@ -25,7 +25,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     audience: "Candidates preparing a focused, truthful application.",
     problem: "Adapting a CV to each role takes time, and important experience can be overlooked when the job description uses different language.",
     objective: "Find the role’s main requirements and organise relevant experience into a suitable application document.",
-    contribution: "Samuel built a Python workflow that extracts role language, selects a pre-authored CV template and compiles it with LaTeX. The browser companion adds an explicit review of whether the example CV supports each suggested change.",
+    contribution: "Samuel built a Python workflow that extracts job requirements, selects a pre-authored CV template and compiles a PDF with LaTeX. The browser demo uses fictional text to show which suggested changes the sample CV supports.",
     pipeline: "job description → role language → template and relevant experience → reviewed wording → application document",
     walkthrough: "Edit an example CV sentence, analyse the job description, and review a missing requirement before accepting a factual rewrite.",
   },
@@ -234,10 +234,10 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
 export const projectCaseStudies: Record<string, ProjectStory> = {
 
   "coverd-ai": {
-    audience: "Recruiters reviewing applications across specialist evidence dimensions.",
+    audience: "Recruiters reviewing job applications.",
     problem: "Application evidence and interview context arrive in separate systems, making a shortlist difficult to explain.",
     objective: "Return reasoned shortlists with explicit evidence while recruiters retain the decision.",
-    contribution: "Samuel founded and led the product, evolving company-aware voice interviews into an ATS-connected recruitment-intelligence layer.",
+    contribution: "Samuel founded COVERD and led work on application review and company-aware voice interviews within recruiters’ existing applicant tracking systems.",
     pipeline: "ATS applications → specialist evidence review → voice enrichment → reasoned shortlist → recruiter decision",
     walkthrough: "Open the COVERD product file and trace one application through evidence review, voice enrichment and the human decision boundary.",
   },

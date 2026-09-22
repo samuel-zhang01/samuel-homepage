@@ -121,7 +121,7 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
     addEventListener(name, listener) { if (name === "visibilitychange") visibilityListeners.add(listener); },
     removeEventListener(name, listener) { if (name === "visibilitychange") visibilityListeners.delete(listener); },
   };
-  let stateIndex = 0, effectIndex = 0, dirty = false, nextTimer = 1;
+  let stateIndex = 0, effectIndex = 0, dirty = false, nextTimer = 1, active = true;
   const statefulReact = {
     ...React,
     useState(initial) {
@@ -157,6 +157,7 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
     require(name) {
       if (name === "./MathEquation") return { MathEquation: (props) => React.createElement("span", { "data-equation": props.tex }, props.label ?? props.tex) };
       if (name === "react") return statefulReact;
+      if (name === "./ProjectActivity") return { useProjectActivity: () => active };
       if (name === "next/image") return { __esModule: true, default: "img" };
       if (name.endsWith("ProjectTranslationBoundary")) return { useProjectLocale: () => locale, ProjectCopy, ProjectTranslationBoundary: ({ children }) => children };
       if (name === "./copy/scientificCopy") return { scientificCopy };
@@ -184,6 +185,7 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
       }
       throw new Error("Component did not settle");
     },
+    setActive(value) { active = value; },
     setHidden(hidden) { document.hidden = hidden; for (const listener of visibilityListeners) listener(); },
     get visibilityListenerCount() { return visibilityListeners.size; },
     tick() { for (const callback of timers.values()) callback(); },
@@ -232,6 +234,18 @@ test("playback wraps, scrubs, pauses and resets across complete sequences", () =
   click(tree, "Pressure · p"); tree = app.render(); assert.ok(images(tree)[0].props.src.endsWith("pressure.webp"));
   click(tree, "Play flow"); tree = app.render(); assert.equal(app.timerCount, 1);
   click(tree, "FNO & U-Net forecasts"); tree = app.render(); assert.equal(app.timerCount, 0);
+});
+
+test("desktop inactivity preserves playback frames without duplicate timers", () => {
+  const app = harness("CfdFlowPlayer"); let tree = app.render();
+  click(tree, "Play flow"); app.render(); app.tick(); tree = app.render();
+  assertFrame(tree, "gnn-rollout", 1);
+  for (let cycle = 0; cycle < 3; cycle++) {
+    app.setActive(false); tree = app.render(); assert.equal(app.timerCount, 0);
+    app.tick(); tree = app.render(); assertFrame(tree, "gnn-rollout", 1);
+    app.setActive(true); app.render(); assert.equal(app.timerCount, 1);
+  }
+  app.dispose(); assert.equal(app.timerCount, 0);
 });
 
 test("background playback preserves its frame and resumes without duplicate timers", () => {

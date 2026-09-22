@@ -45,6 +45,8 @@ const usOverrides: Record<string, string> = {
 };
 
 const zhCN: Record<string, string> = {
+  "Use previously saved version": "使用先前保存的版本",
+  "Use incoming version": "使用传入的版本",
   "Uncertainty scale and ranking experiment": "不确定性的尺度与排序实验",
   "CALCULATED HERE · EIGHT SYNTHETIC PIXELS": "实时计算 · 八个合成像素",
   "What does a low uncertainty score actually tell you?": "较低的不确定性评分究竟说明了什么？",
@@ -123,7 +125,7 @@ const zhCN: Record<string, string> = {
   "Eight everyday tools and a fast atomic-orbital lab, all in your browser.": "八款日常工具和一个快速的原子轨道实验室，均在浏览器中运行。",
   "A SMALL QUANTUM LABORATORY": "一个小小的量子实验室",
   "Explore atomic orbitals in a fast, browser-local ASCII laboratory.": "在快速、本地运行的 ASCII 实验室中探索原子轨道。",
-  "Eight everyday tools and an orbital lab, all in this browser. Your notes, drawings and plans stay on this device; nothing is uploaded or synced.": "八款日常工具和一个原子轨道实验室，均在此浏览器中运行。笔记、绘图和计划只保存在此设备上，不会上传或同步。",
+
   "Language": "语言",
   "Current time": "当前时间",
   "About Samuel Zhang": "关于 Samuel Zhang",
@@ -245,7 +247,7 @@ const zhCN: Record<string, string> = {
   "Build accessible palettes, check contrast and save favourite swatches.": "创建无障碍配色、检查对比度并保存常用色板。",
   "Inspired by the desk accessories tucked into the classic Macintosh Apple menu.": "灵感来自经典 Macintosh Apple 菜单中的桌面附件。",
   "Desk data and backup": "桌面数据与备份",
-  "Local autosave is on": "本地自动保存已开启",
+
   "Export one backup file whenever you want to move your desk.": "需要迁移桌面数据时，可随时导出一个备份文件。",
   "Export backup": "导出备份",
   "Restore backup…": "恢复备份…",
@@ -354,7 +356,7 @@ const zhCN: Record<string, string> = {
   "completed": "已完成",
 
   "POCKET CALENDAR": "便携日历",
-  "One quiet place for the day ahead.": "安静规划接下来的一天。",
+
   "Previous month": "上个月",
   "Next month": "下个月",
   "Today": "今天",
@@ -398,7 +400,7 @@ const zhCN: Record<string, string> = {
   "Enter a number to begin.": "输入数字即可开始。",
 
   "COLOUR STUDIO": "色彩工作室",
-  "Pick boldly. Check responsibly.": "大胆选色，认真检查。",
+
   "Colour preview": "颜色预览",
   "White text": "白色文字",
   "Black text": "黑色文字",
@@ -830,7 +832,7 @@ const zhCN: Record<string, string> = {
   "Container operations": "容器运维",
   "A visual control room for container health, deployments, images and networks.": "集中查看容器健康、部署、镜像与网络的可视化控制台。",
   "Self-hosted CI": "自托管持续集成",
-  "Runs deployment jobs across Samuel’s own hardware, coordinates different CPU architectures and avoids substantial hosted-runner costs.": "在 Samuel 自有硬件上运行部署任务，协调不同 CPU 架构，并避免高昂的托管运行器成本。",
+
   "Service directory": "服务目录",
   "A documented directory for service links and operational notes.": "用于记录服务链接与运维说明的目录。",
   "Job scheduler": "任务调度器",
@@ -887,7 +889,7 @@ const zhCN: Record<string, string> = {
   "Evidence beats elegance": "证据胜过形式上的优雅",
   "Recruiters remain accountable": "招聘人员始终负责",
   "AI carries repetition and context; people retain the judgement and responsibility.": "人工智能承担重复工作与语境记忆，人保留判断权与责任。",
-  "RECRUITMENT INTELLIGENCE LAYER": "招聘智能层",
+
   "Every applicant reviewed. A defensible shortlist with reasons.": "审查每一份申请，并给出有依据、可解释的候选名单。",
   "Visit coverd.ai ↗": "访问 coverd.ai ↗",
   "CURRENT PRODUCT / AUG 2026": "当前产品 / 2026 年 8 月",
@@ -912,16 +914,16 @@ const zhCN: Record<string, string> = {
   "Uses aggregated hiring outcomes to improve role understanding while recruiters remain responsible for every consequential decision.": "利用汇总后的招聘结果改进对岗位的理解，同时由招聘人员对每项重要决定负责。",
   "From application volume to a reasoned shortlist.": "从大量申请走向有依据的候选名单。",
   "Connect the ATS": "连接招聘管理系统",
-  "Keep the existing recruiting workflow and add an intelligence layer over the incoming application pool.": "保留现有招聘流程，并在进入的申请池之上增加智能层。",
+
   "Read every application": "审查每一份申请",
   "Apply the same structured review to every candidate without reviewer-fatigue shortcuts.": "对每位候选人采用同一套结构化审查，避免因审查疲劳而走捷径。",
   "Separate the evidence": "分离证据维度",
-  "Run specialist assessments across six dimensions and retain the reasons behind each result.": "在六个维度上运行专业评估，并保留每项结果背后的理由。",
+
   "Enrich when useful": "在有价值时补充信息",
   "Use voice interviews, portfolio review or follow-ups when the existing record leaves material gaps.": "当现有记录存在重要缺口时，使用语音面试、作品集审查或追问补充信息。",
   "Shortlist with reasons": "给出有理由的候选名单",
   "Return a reviewable pipeline; recruiters examine uncertainty and make the final decision.": "返回可供复核的流程；招聘人员检查不确定性并作出最终决定。",
-  "Trust comes from evidence, visible uncertainty, candidate agency and accountable human decisions.": "信任来自证据、可见的不确定性、候选人的自主权，以及可追责的人类决定。",
+
   "Every score has a reason": "每个分数都有理由",
   "Recruiters receive the evidence, reasoning and supporting record behind each assessment.": "招聘人员会收到每项评估所依据的证据、推理与支持记录。",
   "Candidate agency matters": "候选人的自主权很重要",
@@ -1488,10 +1490,10 @@ const zhCN: Record<string, string> = {
   "Supporting Prototype & Code Audits": "配套原型与代码审计",
   "Small source projects presented as audits of what the code establishes and where its limits lie.": "将小型源代码项目呈现为审计，说明代码能证明什么以及其边界在哪里。",
 
-  "An ATS-connected recruitment intelligence layer that evaluates every applicant, retains evidence and returns a reasoned shortlist while recruiters keep the decision.": "一个接入招聘管理系统的招聘智能层，可评估每位申请者、保留证据并返回可解释的候选名单，同时由招聘人员保留最终决定权。",
+
   "A seven-component workload modelling platform designed to replace a fragile spreadsheet workflow with scheduled calculation, governed editing and live capacity views.": "一个由七个组件构成的工作负载建模平台，旨在用定时计算、受控编辑和实时容量视图取代脆弱的电子表格流程。",
   "An auditable lead-market decision-support system combining temporal learning-to-rank, point-in-time historical lead-share evidence and market-conditional wording analysis.": "一个可审计的商机—市场决策支持系统，结合时序学习排序、基于当时信息的历史商机份额证据，以及随市场条件变化的措辞分析。",
-  "A Python and LaTeX workflow that extracts role language, selects a pre-authored CV template and compiles a targeted application document.": "一个 Python 与 LaTeX 工作流，可提取职位用语、选择预先撰写的简历模板，并编译针对特定职位的求职文档。",
+
   "A local-first statement intelligence system covering import audit, reconciliation, recurring patterns, transfer matching, anomalies and investments.": "一个本地优先的账单智能系统，涵盖导入审计、核对、周期性模式、转账匹配、异常和投资。",
   "A self-hosted scheduling platform with four allocation modes, timezone-safe availability, calendar sync and race-resistant booking.": "一个自托管排期平台，提供四种分配模式、时区安全的可用时段、日历同步及可避免竞态冲突的预约机制。",
   "A private, bilingual Italian A1 portal that structures a 56-day curriculum around adaptive practice, spaced recall and progress records.": "一个私密的意大利语 A1 双语学习门户，围绕自适应练习、间隔复习和进度记录组织 56 天课程。",
@@ -1556,7 +1558,7 @@ const zhCN: Record<string, string> = {
   "Compare phase, density and radial probability.": "比较相位、密度与径向概率。",
   "Check the model boundary and export the view.": "查看模型适用范围并导出视图。",
   "Calculations run in this browser. This is an educational atomic model, not a quantum-chemistry solver.": "计算在当前浏览器中运行。这是用于教学的原子模型，不是量子化学求解器。",
-  "Eight ruled pages keep short notes in this browser. Insert the date, move between pages and save a text copy; the Desk Accessories backup also includes the notebook.": "八页横线纸将简短笔记保存在当前浏览器中。可以插入日期、翻页并保存文本副本；桌面附件备份也会包含这本记事本。",
+
   "Local storage": "本地存储",
   "Text export": "文本导出",
   "Eight ruled pages": "八页横线纸",
@@ -1610,9 +1612,31 @@ const zhCN: Record<string, string> = {
   "You found the part of the portfolio that contributes nothing to conversion metrics.": "你找到了作品集中对转化指标毫无贡献的部分。",
   "“The best interface is one with at least one completely unnecessary secret.”": "“最好的界面，至少应藏着一个完全没必要的秘密。”",
   "System note: OpenClaw did not, in fact, complete Samuel’s entire life. Results remain inconclusive.": "系统备注：OpenClaw 事实上并没有替 Samuel 完成整个人生。结果仍无定论。",
+  "Notes, drawings and plans are saved in this browser. There is no cloud backup; export a backup to move them.": "笔记、绘图和计划保存在此浏览器中。没有云端备份；请导出备份以迁移资料。",
+  "Saved in this browser": "保存在此浏览器中",
+  "Choose a date and add a note.": "选择日期并添加笔记。",
+  "Compare text and background colours.": "比较文字和背景颜色。",
+  "Runs CI jobs on Samuel’s hardware across different CPU architectures.": "在 Samuel 的硬件上跨不同 CPU 架构运行 CI 任务。",
+  "Recruiters can inspect the evidence behind each assessment and review uncertain cases before deciding.": "招聘人员可以查看每项评估的依据，并在作出决定前审查不确定的情况。",
+  "COVERD reviews applications from an applicant tracking system and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.": "COVERD 审查申请人追踪系统中的申请，并向招聘人员提供附有理由的候选名单。最终决定由招聘人员作出。",
+  "Eight ruled pages save notes in this browser. Insert the date, export a text copy, or include the notebook in a Desk Accessories backup.": "八页横线纸将笔记保存在此浏览器中。可插入日期、导出文本副本，或将笔记本纳入桌面小工具备份。",
+  "Review how a CV supports a job’s requirements before preparing an application.": "准备求职申请前，检查简历中的经历如何支持岗位要求。",
+  "Conflicting drafts": "冲突草稿",
+  "Another tab edited the same data. Both drafts are kept here until you dismiss them.": "另一个标签页编辑了相同资料。两份草稿会保留在这里，直到您将其关闭。",
+  "Review saved drafts": "查看保存的草稿",
+  "Previously saved draft": "先前保存的草稿",
+  "Incoming draft": "传入的草稿",
+  "Download both drafts": "下载两份草稿",
+  "Keep current data and dismiss drafts": "保留当前资料并关闭草稿",
+
+  "APPLICATION REVIEW": "求职申请审查",
+  "Read applications from the team’s existing applicant tracking system (ATS).": "读取团队现有申请人追踪系统（ATS）中的申请。",
+  "Review skills, experience, domain knowledge, trajectory, communication and culture separately, retaining the reasons for each assessment.": "分别审查技能、经验、领域知识、职业发展、沟通和文化，并保留每项评估的理由。",
 };
 
 const zhTWOverrides: Record<string, string> = {
+  "Use previously saved version": "使用先前儲存的版本",
+  "Use incoming version": "使用傳入的版本",
   "Uncertainty scale and ranking experiment": "不確定性的尺度與排序實驗",
   "CALCULATED HERE · EIGHT SYNTHETIC PIXELS": "即時計算 · 八個合成像素",
   "What does a low uncertainty score actually tell you?": "較低的不確定性評分究竟說明了什麼？",
@@ -1692,7 +1716,7 @@ const zhTWOverrides: Record<string, string> = {
   "Eight everyday tools and a fast atomic-orbital lab, all in your browser.": "八款日常工具和一個快速的原子軌域實驗室，均在瀏覽器中執行。",
   "A SMALL QUANTUM LABORATORY": "一個小小的量子實驗室",
   "Explore atomic orbitals in a fast, browser-local ASCII laboratory.": "在快速、本機執行的 ASCII 實驗室中探索原子軌域。",
-  "Eight everyday tools and an orbital lab, all in this browser. Your notes, drawings and plans stay on this device; nothing is uploaded or synced.": "八款日常工具和一個原子軌域實驗室，均在此瀏覽器中執行。筆記、繪圖和計畫只儲存在此裝置上，不會上傳或同步。",
+
   "Find…": "尋找…",
   "Close Find": "關閉尋找視窗",
   "Find an app, a project, or a useful little distraction.": "找個應用程式、專案，或讓自己放鬆一下的小遊戲。",
@@ -1722,7 +1746,7 @@ const zhTWOverrides: Record<string, string> = {
   "CV & documents": "履歷與文件",
   "Read or download the current CV and supporting public documents.": "閱讀或下載最新履歷及相關公開文件。",
   "Current Applied AI CV and reviewed learning material in one continuous reader.": "在連續閱讀器中查看最新應用人工智慧履歷與經過審閱的學習材料。",
-  "An ATS-connected recruitment intelligence layer that evaluates every applicant, retains evidence and returns a reasoned shortlist while recruiters keep the decision.": "一個與招募管理系統串接的招募智慧層，可評估每位申請者、保留證據並回傳附有理由的候選名單，同時由招募人員保留最終決定權。",
+
   "A three-stage ML decision lab connecting air-quality data QA, regression-family comparison and a hypothetical physical-sensor budget.": "一個三階段機器學習決策實驗室，串連空氣品質資料檢查、迴歸模型系列比較，以及假設性的實體感測器預算。",
   "A private innovation-management reflection connecting incumbent disruption, organisational ambidexterity and four corporate-entrepreneurship structures, rebuilt as a synthetic strategy workbench.": "一份私密的創新管理反思，連結既有企業的顛覆議題、組織雙元性與四種企業內創業架構，並重建為合成策略工作台。",
   "A reconstruction of a deep-learning environment installer that exposes platform, accelerator and framework routes, injects failures and audits every package and verification boundary before running anything.": "一個深度學習環境安裝工具的重建版本，可呈現平台、加速器與框架路徑、注入故障，並在執行前稽核每個套件及驗證邊界。",
@@ -1788,9 +1812,9 @@ const zhTWOverrides: Record<string, string> = {
   "What needs doing?": "接下來要做什麼？",
   "Task filters": "任務篩選",
   "To do": "待辦",
-  "One quiet place for the day ahead.": "安靜規劃接下來的一天。",
+
   "Plan by day with a private note saved to this browser.": "按日規劃，私人備註儲存在此瀏覽器。",
-  "Pick boldly. Check responsibly.": "大膽選色，仔細檢查。",
+
   "Large text only": "僅適合大字",
   "Build accessible palettes, check contrast and save favourite swatches.": "建立無障礙配色、檢查對比度並儲存常用色樣。",
   "Backup restored. Open accessories are refreshed.": "備份已還原，已開啟的工具也已更新。",
@@ -1799,6 +1823,26 @@ const zhTWOverrides: Record<string, string> = {
   "Calendar holds notes for up to 370 days. Clear an older note first.": "日曆最多可儲存 370 天的備註。請先清除較早的備註。",
   "Colour Studio holds 12 swatches. Remove one before saving another.": "色彩工作室最多可儲存 12 個色樣。請先移除一個再儲存新色樣。",
   "Private cloud": "私有雲",
+  "Notes, drawings and plans are saved in this browser. There is no cloud backup; export a backup to move them.": "筆記、繪圖和計畫儲存在此瀏覽器中。沒有雲端備份；請匯出備份以移轉資料。",
+  "Saved in this browser": "儲存在此瀏覽器中",
+  "Choose a date and add a note.": "選擇日期並新增筆記。",
+  "Compare text and background colours.": "比較文字和背景顏色。",
+  "Runs CI jobs on Samuel’s hardware across different CPU architectures.": "在 Samuel 的硬體上跨不同 CPU 架構執行 CI 工作。",
+  "Recruiters can inspect the evidence behind each assessment and review uncertain cases before deciding.": "招募人員可以查看每項評估的依據，並在作出決定前審查不確定的情況。",
+  "COVERD reviews applications from an applicant tracking system and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.": "COVERD 審查應徵者追蹤系統中的申請，並向招募人員提供附有理由的候選名單。最終決定由招募人員作出。",
+  "Eight ruled pages save notes in this browser. Insert the date, export a text copy, or include the notebook in a Desk Accessories backup.": "八頁橫線紙將筆記儲存在此瀏覽器中。可插入日期、匯出文字副本，或將筆記本納入桌面小工具備份。",
+  "Review how a CV supports a job’s requirements before preparing an application.": "準備求職申請前，檢查履歷中的經歷如何支持職位要求。",
+  "Conflicting drafts": "衝突草稿",
+  "Another tab edited the same data. Both drafts are kept here until you dismiss them.": "另一個分頁編輯了相同資料。兩份草稿會保留在這裡，直到您將其關閉。",
+  "Review saved drafts": "查看已儲存的草稿",
+  "Previously saved draft": "先前儲存的草稿",
+  "Incoming draft": "傳入的草稿",
+  "Download both drafts": "下載兩份草稿",
+  "Keep current data and dismiss drafts": "保留目前資料並關閉草稿",
+
+  "APPLICATION REVIEW": "求職申請審查",
+  "Read applications from the team’s existing applicant tracking system (ATS).": "讀取團隊現有應徵者追蹤系統（ATS）中的申請。",
+  "Review skills, experience, domain knowledge, trajectory, communication and culture separately, retaining the reasons for each assessment.": "分別審查技能、經驗、領域知識、職涯發展、溝通和文化，並保留每項評估的理由。",
 };
 
 const traditionalPhrases: Array<[string, string]> = [

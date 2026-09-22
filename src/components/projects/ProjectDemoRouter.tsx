@@ -5,6 +5,7 @@ import type { ComponentType } from "react";
 
 import type { ProjectDemoId } from "@/data/projects";
 import { translateText, type Locale } from "@/lib/i18n";
+import { ProjectActivityProvider } from "./ProjectActivity";
 import styles from "./ProjectDemoRouter.module.css";
 import { ProjectTranslationBoundary, useProjectLocale } from "./ProjectTranslationBoundary";
 
@@ -159,9 +160,9 @@ const demoComponents: Record<ProjectDemoId, ComponentType<{ locale?: Locale }>> 
   "causal-ope": CausalOpeDemo,
 };
 
-export function ProjectDemoRouter({ demoId, locale = "en-GB" }: { demoId: ProjectDemoId; locale?: Locale }) {
+export function ProjectDemoRouter({ demoId, locale = "en-GB", active = true }: { demoId: ProjectDemoId; locale?: Locale; active?: boolean }) {
   const Demo = demoComponents[demoId];
-  return <ProjectTranslationBoundary locale={locale}><Demo locale={locale} /></ProjectTranslationBoundary>;
+  return <ProjectActivityProvider active={active}><ProjectTranslationBoundary locale={locale}><Demo locale={locale} /></ProjectTranslationBoundary></ProjectActivityProvider>;
 }
 
 export default ProjectDemoRouter;

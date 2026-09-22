@@ -169,3 +169,8 @@
   .statusBadge,
   .statusBar { border-color: CanvasText; }
 }
+
+@container (max-width: 380px) {
+  .demoHeader { padding: 10px; gap: 4px; }
+  .fileContext { display: none; }
+}

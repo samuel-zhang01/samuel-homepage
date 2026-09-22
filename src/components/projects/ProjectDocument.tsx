@@ -16,6 +16,7 @@ import styles from "./ProjectDocument.module.css";
 const copy = {
   "Ongoing": ["持续进行", "持續進行"],
   "All projects": ["全部项目", "全部專案"],
+  "More actions": ["更多操作", "更多操作"],
   "Connections": ["项目关联", "專案關聯"],
   "Explore the project": ["探索项目", "探索專案"],
   "Copy link": ["复制链接", "複製連結"],
@@ -29,10 +30,10 @@ const copy = {
   "About the demonstration": ["演示说明", "示範說明"],
   "Back to list": ["返回列表", "返回清單"],
   "Open in new tab": ["在新标签页打开", "在新分頁開啟"],
-  "Open live demo": ["打开交互演示", "開啟互動示範"],
+  "Open interactive demo": ["打开交互演示", "開啟互動示範"],
   "Closing clears this demo’s unsaved changes.": ["关闭后，此演示中未保存的更改将被清除。", "關閉後，此示範中未儲存的變更將被清除。"],
   "Close demo and return to overview": ["关闭演示并返回概览", "關閉示範並返回概覽"],
-  "Go to live demo": ["前往交互演示", "前往互動示範"],
+  "Return to demo": ["前往交互演示", "前往互動示範"],
 } satisfies ProjectCopyTable;
 
 type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";
@@ -60,7 +61,6 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
     observer.observe(toolbar);
     return () => observer.disconnect();
   }, []);
-  useEffect(() => { if (embedded && !active) setDemoOpen(false); }, [embedded, active]);
   useEffect(() => {
     if (!initialDemo) return;
     setDemoOpen(true);
@@ -93,12 +93,17 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
   return <ProjectLocaleProvider locale={locale}><article ref={documentRef} className={`system7-project ${styles.document}`} data-embedded={embedded} lang={locale}>
     <nav ref={toolbarRef} className={`s7-toolbar ${styles.toolbar}`} aria-label={t("Project navigation")}>
       <button className={`s7-button ${embedded ? styles.backToList : ""}`} onClick={onBack}>← {t(embedded ? "Back to list" : "All projects")}</button>
-      {embedded && <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer">{t("Open in new tab")} ↗</a>}
-      {project.demo && <button ref={launchRef} className="s7-button" onClick={scrollToExperiment} aria-expanded={demoOpen} aria-controls={demoOpen ? `interactive-lab-${slug}` : undefined}>{t(embedded ? demoOpen ? "Go to live demo" : "Open live demo" : "Explore the project")} ↓</button>}
-      <button className="s7-button" onClick={() => onGraph(slug)}>{t("Connections")} ↗</button>
-      <button className="s7-button" onClick={share}>{t("Copy link")}</button>
+      {project.demo && <button ref={launchRef} className="s7-button" onClick={scrollToExperiment} aria-expanded={demoOpen} aria-controls={demoOpen ? `interactive-lab-${slug}` : undefined}>{t(embedded ? demoOpen ? "Return to demo" : "Open interactive demo" : "Explore the project")} ↓</button>}
       {shareStatus && <span role="status">{shareStatus}</span>}
     </nav>
+    <details className={styles.secondaryActions}>
+      <summary>{t("More actions")}</summary>
+      <div>
+      {embedded && <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer">{t("Open in new tab")} ↗</a>}
+      <button className="s7-button" onClick={() => onGraph(slug)}>{t("Connections")} ↗</button>
+      <button className="s7-button" onClick={share}>{t("Copy link")}</button>
+      </div>
+    </details>
     <header className={styles.header}>
       <ProjectArtwork project={project} />
       <div><p className={styles.context}>{getProjectText(locale, project.area)} · {project.year === "ONGOING" ? t("Ongoing") : project.year}</p>
@@ -118,10 +123,10 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
       <Image src={project.preview.src} alt={getProjectText(locale, project.preview.alt)} width={543} height={172} sizes="(max-width: 720px) 90vw, 640px" />
       <figcaption>{getProjectText(locale, project.preview.caption)}</figcaption>
     </figure>}
-    {project.demo && demoOpen && active && <div className={styles.experiment} id={`interactive-lab-${slug}`} ref={experimentRef} tabIndex={-1}>
+    {project.demo && demoOpen && <div className={styles.experiment} id={`interactive-lab-${slug}`} ref={experimentRef} tabIndex={-1}>
+      <ProjectDemoRouter demoId={project.demo} locale={locale} active={active} />
       <div className={styles.experimentActions}><p>{t("Closing clears this demo’s unsaved changes.")}</p><button className="s7-button" onClick={closeDemo}>↑ {t("Close demo and return to overview")}</button></div>
-      <ProjectDemoRouter demoId={project.demo} locale={locale} />
     </div>}
-    {project.privacyNote && <details className={styles.boundary}><summary>{t("About the demonstration")}</summary><p>{getProjectText(locale, project.privacyNote)}</p></details>}
+    {project.privacyNote && !project.demo && <details className={styles.boundary}><summary>{t("About the demonstration")}</summary><p>{getProjectText(locale, project.privacyNote)}</p></details>}
   </article></ProjectLocaleProvider>;
 }
