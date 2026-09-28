@@ -28,7 +28,7 @@ const searchAliases: Record<string, string> = { "topic:reinforcement-learning": 
 const graphTranslations: Record<string, string> = {
   "Open project": "打开项目",
   "Compare projects": "比较项目", "Explore dates, tools and model families": "探索日期、工具与模型系列", "3D view": "三维视图", "2D view": "二维视图", "Projection": "投影视图", "Drag to rotate. Shift-drag to pan. Use + / − to zoom. All connections are also available in the list.": "拖动旋转，按住 Shift 拖动平移。使用 + / − 缩放，也可以通过列表探索全部关联。", "Open GROWMAT showcase PDF": "打开 GROWMAT 展示 PDF", "Project graph": "项目关系图", "PROJECTS · IDEAS · EXPERIENCE": "项目 · 知识 · 经历", "Follow the connections.": "沿着关联探索。",
-  "Choose a subject or a point in the timeline. Follow its connections to a project, then open the full story or demo.": "选择一个主题或时间线上的经历，沿着关联找到项目，再打开完整介绍或演示。",
+  "Pick a subject or date, then click through to a project. Each one has a write-up or demo.": "选择一个主题或日期，再点击相关项目。每个项目都有介绍或演示。",
   "Find a subject, project or experience": "查找主题、项目或经历", "Try Fourier, chemistry, Pfizer…": "试试傅里叶、化学、辉瑞…", "Search results": "搜索结果", "matches": "个结果",
   "All work": "全部项目", "Subject": "主题", "Method": "方法", "Project": "项目", "Education": "教育", "Work & education": "工作与教育", "Reinforcement learning": "强化学习", "Scientific ML": "科学机器学习", "Chemistry": "化学", "Decision systems": "决策系统", "Products & tools": "产品与工具", "Computing & systems": "计算与系统", "Data & evaluation": "数据与评估", "People & organisations": "人与组织",
   "Explore a subject": "探索主题", "Exploration path": "探索路径", "Map controls": "关系图控制", "Zoom out": "缩小", "Zoom in": "放大", "Fit view": "适应视图", "Show all work": "显示全部项目", "Focus connections": "聚焦关联", "visible nodes": "个可见节点",
@@ -37,7 +37,7 @@ const graphTranslations: Record<string, string> = {
   "Projects to explore": "探索相关项目", "Related subjects": "相关主题", "Methods in this work": "项目中的方法", "Why these connections?": "这些关联的依据是什么？", "Copy a link to this node": "复制此节点链接", "Link copied": "链接已复制",
   "Browse connections": "浏览关联", "Browse subjects": "浏览主题", "Show more connections": "显示更多关联", "Browse all connections": "浏览全部关联", "Try a broader subject such as chemistry, learning or computing.": "试试更广泛的主题，例如化学、学习或计算。",
   "A few starting points": "从这里开始", "Explore scientific ML": "探索科学机器学习", "Fourier operators, imaging and microrobots": "傅里叶算子、成像与微型机器人", "Follow the Imperial work": "探索帝国理工项目", "Coursework, research and experiments": "课程、研究与实验", "Start from experience": "从工作经历出发", "Pfizer → GROWMAT → workload planning": "辉瑞 → GROWMAT → 工作负荷规划",
-  "Select any node to see its story and connected work.": "选择任一节点，查看其介绍及相关项目。", "subjects": "个主题", "projects": "个项目", "contexts": "段工作与教育经历",
+  "Select a node to read about it and see related projects.": "选择一个节点，阅读介绍并查看相关项目。", "subjects": "个主题", "projects": "个项目", "contexts": "段工作与教育经历",
   "Projects along the timeline": "时间线上的项目", "Expand the timeline": "展开时间线", "Open CV record": "打开履历记录", "View in graph": "在关系图中查看", "Topic links describe shared ideas. Timeline links explain where the work belongs.": "主题关联展现共同的知识；时间线关联说明项目所属的经历。", "Export graph data": "导出关系图数据",
   "Explores this subject": "探索此主题", "Uses this method": "使用此方法", "Part of this subject": "属于此主题", "Developed in this context": "在此经历中开展", "Related research context": "相关研究背景", "Project in this subject": "此主题下的项目", "Project using this method": "使用此方法的项目", "Method in this subject": "此主题中的方法", "Project from this experience": "此经历中的项目",
 };
@@ -48,7 +48,7 @@ const graphTranslations: Record<string, string> = {
 const traditionalGraphTranslations: Record<string, string> = {
   "Open project": "開啟專案",
   "Compare projects": "比較專案", "Explore dates, tools and model families": "探索日期、工具與模型系列", "3D view": "三維檢視", "2D view": "二維檢視", "Projection": "投影檢視", "Drag to rotate. Shift-drag to pan. Use + / − to zoom. All connections are also available in the list.": "拖曳旋轉，按住 Shift 拖曳平移。使用 + / − 縮放，也可以透過清單探索全部關聯。", "Open GROWMAT showcase PDF": "開啟 GROWMAT 展示 PDF", "Project graph": "專案關係圖", "PROJECTS · IDEAS · EXPERIENCE": "專案 · 知識 · 經歷", "Follow the connections.": "沿著關聯探索。",
-  "Choose a subject or a point in the timeline. Follow its connections to a project, then open the full story or demo.": "選擇一個主題或時間軸上的經歷，沿著關聯找到專案，再開啟完整介紹或示範。",
+  "Pick a subject or date, then click through to a project. Each one has a write-up or demo.": "選擇一個主題或日期，再點擊相關專案。每個專案都有介紹或展示。",
   "Find a subject, project or experience": "尋找主題、專案或經歷", "Try Fourier, chemistry, Pfizer…": "試試傅立葉、化學、輝瑞…", "Search results": "搜尋結果", "matches": "個結果",
   "All work": "全部專案", "Subject": "主題", "Method": "方法", "Project": "專案", "Education": "教育", "Work & education": "工作與教育", "Reinforcement learning": "強化學習", "Scientific ML": "科學機器學習", "Chemistry": "化學", "Decision systems": "決策系統", "Products & tools": "產品與工具", "Computing & systems": "計算與系統", "Data & evaluation": "資料與評估", "People & organisations": "人與組織",
   "Explore a subject": "探索主題", "Exploration path": "探索路徑", "Map controls": "關係圖控制", "Zoom out": "縮小", "Zoom in": "放大", "Fit view": "符合檢視範圍", "Show all work": "顯示全部專案", "Focus connections": "聚焦關聯", "visible nodes": "個可見節點",
@@ -57,7 +57,7 @@ const traditionalGraphTranslations: Record<string, string> = {
   "Projects to explore": "探索相關專案", "Related subjects": "相關主題", "Methods in this work": "專案中的方法", "Why these connections?": "這些關聯的依據是什麼？", "Copy a link to this node": "複製此節點連結", "Link copied": "連結已複製",
   "Browse connections": "瀏覽關聯", "Browse subjects": "瀏覽主題", "Show more connections": "顯示更多關聯", "Browse all connections": "瀏覽全部關聯", "Try a broader subject such as chemistry, learning or computing.": "試試更廣泛的主題，例如化學、學習或計算。",
   "A few starting points": "從這裡開始", "Explore scientific ML": "探索科學機器學習", "Fourier operators, imaging and microrobots": "傅立葉算子、成像與微型機器人", "Follow the Imperial work": "探索帝國理工專案", "Coursework, research and experiments": "課程、研究與實驗", "Start from experience": "從工作經歷出發", "Pfizer → GROWMAT → workload planning": "輝瑞 → GROWMAT → 工作負荷規劃",
-  "Select any node to see its story and connected work.": "選擇任一節點，查看其介紹及相關專案。", "subjects": "個主題", "projects": "個專案", "contexts": "段工作與教育經歷",
+  "Select a node to read about it and see related projects.": "選擇一個節點，閱讀介紹並查看相關專案。", "subjects": "個主題", "projects": "個專案", "contexts": "段工作與教育經歷",
   "Projects along the timeline": "時間軸上的專案", "Expand the timeline": "展開時間軸", "Open CV record": "開啟履歷記錄", "View in graph": "在關係圖中查看", "Topic links describe shared ideas. Timeline links explain where the work belongs.": "主題關聯呈現共同的知識；時間軸關聯說明專案所屬的經歷。", "Export graph data": "匯出關係圖資料",
   "Explores this subject": "探索此主題", "Uses this method": "使用此方法", "Part of this subject": "屬於此主題", "Developed in this context": "在此經歷中開展", "Related research context": "相關研究背景", "Project in this subject": "此主題下的專案", "Project using this method": "使用此方法的專案", "Method in this subject": "此主題中的方法", "Project from this experience": "此經歷中的專案",
 };
@@ -65,61 +65,61 @@ const traditionalGraphTranslations: Record<string, string> = {
 // Graph concepts are independent of catalogue prose and have their own reviewed copy.
 const graphMetadataTranslations: Record<string, readonly [string, string]> = {
   "Independent": ["独立实践", "獨立實踐"],
-  "How agents learn through action, feedback and repeated decisions. Follow value functions, exploration, policy evaluation and language-model post-training.": [
-    "智能体如何通过行动、反馈和反复决策学习。探索价值函数、探索策略、策略评估与语言模型后训练。",
-    "智慧代理如何透過行動、回饋和反覆決策學習。探索價值函數、探索策略、策略評估與語言模型後訓練。"
+  "Projects on agents that learn from feedback, including bandits, value updates, policy evaluation and language-model post-training.": [
+    "这些项目研究智能体如何从反馈中学习，包括多臂老虎机、价值更新、策略评估和语言模型后训练。",
+    "這些專案研究代理如何從回饋中學習，包括多臂老虎機、價值更新、策略評估和語言模型後訓練。"
   ],
   "Scientific machine learning": [
     "科学机器学习",
     "科學機器學習"
   ],
-  "Learning the behaviour of physical systems: fluid fields, medical images and microrobots. Explore model structure alongside the experiments used to assess it.": [
-    "学习物理系统的行为，包括流场、医学影像和微型机器人。结合评估实验，探索模型结构。",
-    "學習物理系統的行為，包括流場、醫學影像和微型機器人。結合評估實驗，探索模型結構。"
+  "My work here uses machine learning with flow fields, medical images and microrobot microscopy. I show the models and how I assessed them.": [
+    "我用机器学习处理流场、医学影像和微型机器人显微图像。这些项目也说明了我如何评估模型。",
+    "我用機器學習處理流場、醫學影像和微型機器人的顯微影像。這些專案也說明了我如何評估模型。"
   ],
   "Chemistry & molecular science": [
     "化学与分子科学",
     "化學與分子科學"
   ],
-  "From molecular spectra and phase equilibria to quantum orbitals. Follow the measurements, calculations and tools behind a chemical interpretation.": [
-    "从分子光谱、相平衡到量子轨道，探索化学解释背后的测量、计算与工具。",
-    "從分子光譜、相平衡到量子軌域，探索化學解釋背後的測量、計算與工具。"
+  "I have worked with rotational spectra, fluid equations and orbital calculations. The projects show the measurements and assumptions behind each result.": [
+    "我做过转动光谱、流体方程和轨道计算方面的工作。这些项目展示了各项结果所依据的测量与假设。",
+    "我做過轉動光譜、流體方程和軌域計算方面的工作。這些專案展示了各項結果所依據的測量與假設。"
   ],
-  "Models that support a consequential choice: allocating insurance leads, deferring uncertain cases, estimating effects and reviewing operational evidence.": [
-    "支持重要决策的模型：分配保险业务线索、转交不确定案件、估计因果效应，以及审阅运营证据。",
-    "支援重要決策的模型：分配保險業務線索、轉交不確定案件、估計因果效應，以及審閱營運證據。"
+  "These projects look at insurance lead allocation, human review and causal analysis, with the evidence for each choice kept visible.": [
+    "这些项目涉及保险线索分配、人工审阅和因果分析，也保留了每项选择的依据。",
+    "這些專案涉及保險線索分配、人工審閱和因果分析，也保留了每項選擇的依據。"
   ],
-  "Software people use to organise work, learn, plan and create. Trace a working interaction back to its data, rules and product context.": [
-    "帮助人们组织工作、学习、规划和创作的软件。从实际交互追溯其数据、规则与产品背景。",
-    "幫助人們組織工作、學習、規劃和創作的軟體。從實際互動追溯其資料、規則與產品背景。"
+  "Apps for planning, learning and everyday tasks. Each project explains the data and rules behind the screen.": [
+    "用于规划、学习和日常事务的应用。每个项目都会说明界面背后的数据和规则。",
+    "用於規劃、學習和日常事務的應用程式。每個專案都會說明介面背後的資料和規則。"
   ],
   "Computing & infrastructure": [
     "计算与基础设施",
     "計算與基礎設施"
   ],
-  "The environments and services that make experiments and products usable: accelerators, containers, local storage and recovery procedures.": [
-    "让实验和产品能够运行的环境与服务：加速器、容器、本地存储和恢复流程。",
-    "讓實驗和產品能夠執行的環境與服務：加速器、容器、本機儲存和復原流程。"
+  "GPU setups, containers, local storage and backups that keep the work running.": [
+    "让项目持续运行的 GPU 配置、容器、本地存储和备份。",
+    "讓專案持續運作的 GPU 設定、容器、本機儲存和備份。"
   ],
   "Data & model evaluation": [
     "数据与模型评估",
     "資料與模型評估"
   ],
-  "How datasets become evidence. Inspect split design, leakage, regularisation, calibration, error measures and the assumptions behind a reported result.": [
-    "数据集如何成为证据。检查数据划分、泄漏、正则化、校准、误差指标，以及研究结果背后的假设。",
-    "資料集如何成為證據。檢查資料劃分、洩漏、正則化、校準、誤差指標，以及研究結果背後的假設。"
+  "These projects check model results against data splits, leakage, calibration, regularisation and error measures.": [
+    "这些项目检查模型结果所依赖的数据划分、数据泄漏、校准、正则化和误差指标。",
+    "這些專案檢查模型結果所依賴的資料劃分、資料洩漏、校準、正則化和誤差指標。"
   ],
   "People, organisations & AI": [
     "人与组织及人工智能",
     "人與組織及人工智慧"
   ],
-  "The organisational side of technical work: research ethics, innovation, capacity planning, product ownership and human review.": [
-    "技术工作的组织层面：研究伦理、创新、产能规划、产品责任与人工审阅。",
-    "技術工作的組織層面：研究倫理、創新、產能規劃、產品責任與人工審閱。"
+  "Projects about the people and organisations using technical systems: research ethics, capacity planning, product ownership and human review.": [
+    "这些项目关注使用技术系统的人与组织，包括研究伦理、产能规划、产品管理和人工审阅。",
+    "這些專案關注使用技術系統的人與組織，包括研究倫理、產能規劃、產品管理和人工審閱。"
   ],
   "Values & policies": [
-    "价值与策略",
-    "價值與策略"
+    "价值函数与策略",
+    "價值函數與策略"
   ],
   "Estimate future return, choose actions and inspect the update rule that changes an agent’s behaviour.": [
     "估计未来回报，选择行动，并检查改变智能体行为的更新规则。",
@@ -222,12 +222,12 @@ const graphMetadataTranslations: Record<string, readonly [string, string]> = {
     "區分關聯與因果效應，並在明確假設下評估其他決策。"
   ],
   "Human review & deferral": [
-    "人工审阅与转交",
-    "人工審閱與轉交"
+    "人工审阅与模型转交",
+    "人工審閱與模型轉交"
   ],
   "Route evidence to a person, retain the basis of a recommendation and decide when a model should defer.": [
-    "将证据交给人审阅，保留建议依据，并决定模型何时应当转交。",
-    "將證據交給人審閱，保留建議依據，並決定模型何時應當轉交。"
+    "把证据交给人审阅，保留建议依据，并判断模型何时该交由人处理。",
+    "把證據交給人審閱，保留建議依據，並判斷模型何時該交由人處理。"
   ],
   "Connect measured frequencies and intensities to molecular structure through prediction, matching and visual analysis.": [
     "通过预测、匹配和可视化分析，将测量频率及强度与分子结构联系起来。",
@@ -309,20 +309,7 @@ function translateGraph(locale: Locale, source: string) {
 }
 
 function graphConnectionText(locale: Locale, edge: (typeof graph.edges)[number]) {
-  if (locale !== "zh-CN" && locale !== "zh-TW") return edge.explanation;
-  if (edge.relation === "developed-in" || edge.relation === "related-context") return translateGraph(locale, edge.explanation);
-  const source = nodeById.get(edge.source)!;
-  const target = nodeById.get(edge.target)!;
-  const from = translateGraph(locale, source.label);
-  const to = translateGraph(locale, target.label);
-  if (edge.relation === "part-of") return locale === "zh-CN" ? `${from}是探索${to}的一条路径。` : `${from}是探索${to}的一條路徑。`;
-  if (edge.relation === "uses") return `${from}包含${to}。${translateGraph(locale, target.description)}`;
-  const through = edge.explanation.match(/ through (.+)\.$/)?.[1];
-  const method = through && graph.nodes.find((node) => node.kind === "method" && node.label.toLowerCase() === through);
-  if (method) return locale === "zh-CN"
-    ? `${from}通过${translateGraph(locale, method.label)}关联到${to}。`
-    : `${from}透過${translateGraph(locale, method.label)}關聯到${to}。`;
-  return `${from}探索${to}。`;
+  return translateGraph(locale, edge.explanation);
 }
 
 function relationLabel(selected: KnowledgeNode, node: KnowledgeNode, relation: string) {
@@ -353,10 +340,13 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
   const [canvasReady, setCanvasReady] = useState(true);
   const [copied, setCopied] = useState(false);
   const navigatorId = useId();
+  const inspectorTitleId = useId();
   const [analysisOpen, setAnalysisOpen] = useState(false);
   const [resultLimit, setResultLimit] = useState(12);
+  const graphRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const inspectorRef = useRef<HTMLElement>(null);
   const navigatorRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDetailsElement>(null);
   const selectionCallback = useRef(onSelectionChange);
@@ -367,6 +357,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
   const selectedProject = selected?.slug ? projectBySlug.get(selected.slug) : undefined;
   const showcasePdf = selectedProject?.slug === "growmat" && !isInteractiveProject(selectedProject) ? selectedProject.artifacts?.find((artifact) => artifact.kind === "PDF") : undefined;
   const neighbours = useMemo(() => selectedId ? graphIndex.neighbours(selectedId) : [], [selectedId]);
+  useEffect(() => { if (inspectorRef.current) inspectorRef.current.scrollTop = 0; }, [selectedId]);
   const neighbourIds = useMemo(() => new Set(neighbours.map((entry) => entry.node.id)), [neighbours]);
   const shown = useMemo(() => visibleKnowledgeNodes(graph, selectedId, !!selectedId, local), [selectedId, local]);
   // Keep coordinates for hidden nodes too, so they can fade through the same
@@ -448,11 +439,15 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}`);
   }
 
-  function select(id: string, append = true) {
+  function select(id: string, append = true, reveal = false) {
     if (!nodeById.has(id)) return;
     setSelectedId(id); onSelectionChange(id); setQuery(""); setResultLimit(12); setLocal(true);
     if (append) setTrail((current) => [...current.filter((item) => item !== id), id].slice(-6));
     writeSelection(id); setCopied(false);
+    if (reveal || (graphRef.current?.clientWidth ?? Infinity) <= 920) requestAnimationFrame(() => {
+      inspectorRef.current?.scrollIntoView({ block: "start" });
+      inspectorRef.current?.focus({ preventScroll: true });
+    });
   }
 
   function reset() {
@@ -578,11 +573,11 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  return <section className={`system7-project ${styles.graph}`} aria-label={t("Project graph")} lang={locale}>
+  return <section ref={graphRef} className={`system7-project ${styles.graph}`} aria-label={t("Project graph")} lang={locale}>
     <header className={styles.header}>
-      <div><p>{t("Choose a subject or a point in the timeline. Follow its connections to a project, then open the full story or demo.")}</p></div>
-      <div className={styles.searchContainer}><label className={styles.search}><span>{t("Find a subject, project or experience")}</span><input type="search" value={query} placeholder={t("Try Fourier, chemistry, Pfizer…")} onChange={(event) => { setQuery(event.target.value); setResultLimit(12); }} onKeyDown={(event) => { if (event.key === "Escape") setQuery(""); if (event.key === "Enter" && searchResults[0]) { event.preventDefault(); select(searchResults[0].id); } }} /></label>
-        {query.trim() && <div className={styles.searchResults} aria-label={t("Search results")}><span aria-live="polite">{searchResults.length} {t("matches")}</span>{searchResults.slice(0, 8).map((result) => <button key={result.id} onClick={() => select(result.id)}><strong>{t(result.label)}</strong><small>{t(kindLabels[result.kind])}</small></button>)}{searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}{searchResults.length > 8 && <button onClick={browseConnections}>{t("Browse all connections")} ↓</button>}</div>}
+      <div><p>{t("Pick a subject or date, then click through to a project. Each one has a write-up or demo.")}</p></div>
+      <div className={styles.searchContainer}><label className={styles.search}><span>{t("Find a subject, project or experience")}</span><input type="search" value={query} placeholder={t("Try Fourier, chemistry, Pfizer…")} onChange={(event) => { setQuery(event.target.value); setResultLimit(12); }} onKeyDown={(event) => { if (event.key === "Escape") setQuery(""); if (event.key === "Enter" && searchResults[0]) { event.preventDefault(); select(searchResults[0].id, true, true); } }} /></label>
+        {query.trim() && <div className={styles.searchResults} aria-label={t("Search results")}><span aria-live="polite">{searchResults.length} {t("matches")}</span>{searchResults.slice(0, 8).map((result) => <button key={result.id} onClick={() => select(result.id, true, true)}><strong>{t(result.label)}</strong><small>{t(kindLabels[result.kind])}</small></button>)}{searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}{searchResults.length > 8 && <button onClick={browseConnections}>{t("Browse all connections")} ↓</button>}</div>}
       </div>
     </header>
     <nav className={styles.topics} aria-label={t("Explore a subject")}>
@@ -615,22 +610,16 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
               drag.current = null; if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
             }}
             onPointerCancel={() => { drag.current = null; }} onPointerLeave={() => setHoverId(null)} />
-          {!canvasReady && <p className={styles.canvasFallback}>{t("Select any node to see its story and connected work.")}</p>}
+          {!canvasReady && <p className={styles.canvasFallback}>{t("Select a node to read about it and see related projects.")}</p>}
           <div className={styles.legend}><span>● {t("Topics")}</span><span>● {t("Projects")}</span><span>◇ {t("Work & education")}</span>{selected && <span>· {t("Methods")}</span>}</div>
           <div className={styles.stageStatus}>{flat ? "2D" : "3D"} · {shown.size} {t("visible nodes")}</div>
         </div>
         <p className={styles.gestureHelp}>{t(flat ? "Drag to pan. Use + / − to zoom. All connections are also available in the list." : "Drag to rotate. Shift-drag to pan. Use + / − to zoom. All connections are also available in the list.")}</p>
-        <section ref={navigatorRef} className={styles.navigator} aria-labelledby={navigatorId}>
-          <h3 id={navigatorId}>{query ? `${searchResults.length} ${t("matches")}` : selected ? `${t("Browse connections")} · ${neighbours.length}` : t("Browse subjects")}</h3>
-          <div className={styles.nodeList}>{listNodes.slice(0, resultLimit).map((node) => <button key={node.id} onClick={() => select(node.id)}><span>{t(kindLabels[node.kind])}{node.period ? ` · ${t(node.period)}` : ""}</span><strong>{t(node.label)}</strong><span aria-hidden="true">→</span></button>)}</div>
-          {listNodes.length > resultLimit && <button className="mac-button" onClick={() => setResultLimit((value) => value + 20)}>{t("Show more connections")}</button>}
-          {query && searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}
-        </section>
       </div>
-      <aside className={styles.inspector} aria-label={t("Selected node")} aria-live="polite">
+      <aside ref={inspectorRef} className={styles.inspector} aria-labelledby={inspectorTitleId} tabIndex={-1}>
         {selected ? <>
           <div className={styles.nodeType}><i style={{ background: canvasColour(selected) }} />{t(selected.kind === "experience" && selected.section === "education" ? "Education" : kindLabels[selected.kind])}</div>
-          <h3>{t(selected.label)}</h3>{selected.period && <p className={styles.projectYear}>{t(selected.period)}</p>}<p>{t(selected.description)}</p>
+          <h3 id={inspectorTitleId}>{t(selected.label)}</h3>{selected.period && <p className={styles.projectYear}>{t(selected.period)}</p>}<p>{t(selected.description)}</p>
           {selectedProject && <>
             <p className={styles.projectYear}>{selectedProject.tools.map(t).join(" · ")}</p>
             {showcasePdf
@@ -644,24 +633,30 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
               const entries = neighbours.filter((entry) => entry.node.kind === kind);
               if (!entries.length) return null;
               return <section key={kind}><h4>{t(kind === "experience" ? "Work & education" : kind === "project" ? "Projects to explore" : kind === "topic" ? "Related subjects" : "Methods in this work")} <span>{entries.length}</span></h4>
-                {entries.slice(0, 6).map(({ node, edge }) => <button key={edge.id} onClick={() => select(node.id)} title={graphConnectionText(locale, edge)}><strong>{t(node.label)}</strong><span>{node.period ? `${t(node.period)} · ` : ""}{t(relationLabel(selected, node, edge.relation))} →</span></button>)}
+                {entries.slice(0, 6).map(({ node, edge }) => <button key={edge.id} onClick={() => select(node.id, true, true)} title={graphConnectionText(locale, edge)}><strong>{t(node.label)}</strong><span>{node.period ? `${t(node.period)} · ` : ""}{t(relationLabel(selected, node, edge.relation))} →</span></button>)}
                 {entries.length > 6 && <button className={styles.textAction} onClick={browseConnections}>{t("Browse all connections")} ↓</button>}
               </section>;
             })}
           </div>
-          <section className={styles.edgeNotes}><h4>{t("Why these connections?")}</h4>{neighbours.map(({ node, edge }) => <p key={edge.id}><strong>{t(node.label)}</strong><br />{graphConnectionText(locale, edge)}</p>)}</section>
+          <details className={styles.edgeNotes}><summary>{t("Why these connections?")}</summary>{neighbours.map(({ node, edge }) => <p key={edge.id}><strong>{t(node.label)}</strong><br />{graphConnectionText(locale, edge)}</p>)}</details>
           <button className={`s7-button is-share ${styles.shareAction}`} onClick={share}>{t(copied ? "Link copied" : "Copy a link to this node")}</button>
         </> : <>
-          <div className={styles.nodeType}>{t("Project graph")}</div><h3>{t("A few starting points")}</h3><p>{t("Select any node to see its story and connected work.")}</p>
+          <div className={styles.nodeType}>{t("Project graph")}</div><h3 id={inspectorTitleId}>{t("A few starting points")}</h3><p>{t("Select a node to read about it and see related projects.")}</p>
           <div className={styles.startRoutes}>
-            <button onClick={() => select("topic:scientific-ml")}><strong>{t("Explore scientific ML")}</strong><span>{t("Fourier operators, imaging and microrobots")} →</span></button>
-            <button onClick={() => select("experience:imperial")}><strong>{t("Follow the Imperial work")}</strong><span>{t("Coursework, research and experiments")} →</span></button>
-            <button onClick={() => select("experience:pfizer")}><strong>{t("Start from experience")}</strong><span>{t("Pfizer → GROWMAT → workload planning")} →</span></button>
+            <button onClick={() => select("topic:scientific-ml", true, true)}><strong>{t("Explore scientific ML")}</strong><span>{t("Fourier operators, imaging and microrobots")} →</span></button>
+            <button onClick={() => select("experience:imperial", true, true)}><strong>{t("Follow the Imperial work")}</strong><span>{t("Coursework, research and experiments")} →</span></button>
+            <button onClick={() => select("experience:pfizer", true, true)}><strong>{t("Start from experience")}</strong><span>{t("Pfizer → GROWMAT → workload planning")} →</span></button>
           </div>
           <p className={styles.smallNote}>{projects.length} {t("projects")} · {knowledgeTopics.length} {t("subjects")} · {timeline.length} {t("contexts")}</p>
         </>}
       </aside>
     </div>
+    <section ref={navigatorRef} className={styles.navigator} aria-labelledby={navigatorId}>
+      <h3 id={navigatorId}>{query ? `${searchResults.length} ${t("matches")}` : selected ? `${t("Browse connections")} · ${neighbours.length}` : t("Browse subjects")}</h3>
+      <div className={styles.nodeList}>{listNodes.slice(0, resultLimit).map((node) => <button key={node.id} onClick={() => select(node.id, true, true)}><span>{t(kindLabels[node.kind])}{node.period ? ` · ${t(node.period)}` : ""}</span><strong>{t(node.label)}</strong><span aria-hidden="true">→</span></button>)}</div>
+      {listNodes.length > resultLimit && <button className="mac-button" onClick={() => setResultLimit((value) => value + 20)}>{t("Show more connections")}</button>}
+      {query && searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}
+    </section>
     <details ref={timelineRef} className={styles.timeline} id="project-graph-timeline">
       <summary><strong>{t("Projects along the timeline")}</strong><span>{t("Work & education")} · {timeline.length}</span></summary>
       <div className={styles.timelineRows}>{timeline.map((node) => {

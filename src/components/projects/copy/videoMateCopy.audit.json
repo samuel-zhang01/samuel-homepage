@@ -1,0 +1,12 @@
+{
+  "dictionary": "videoMateCopy.ts",
+  "exportName": "videoMateCopy",
+  "sources": ["src/components/projects/VideoMateStudio.tsx"],
+  "identities": {
+    "VideoMate": "Product name retained for technical recognition in both Mandarin editions.",
+    "MP4 · H.264 / AAC": "Codec and container identifiers are technical names shared by both language editions.",
+    "MOV · H.264 / PCM": "Codec and container identifiers are technical names shared by both language editions.",
+    "MP4 · HEVC / AAC": "Codec and container identifiers are technical names shared by both language editions.",
+    "TXT": "Standard text-file extension kept unchanged for technical recognition."
+  }
+}

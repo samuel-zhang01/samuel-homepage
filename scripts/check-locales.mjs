@@ -111,6 +111,9 @@ const regionalisationChecks = [
   ["en-US", "organise innovation", "organize innovation"],
   ["en-US", "Check the licence and content notices before reuse.", "Check the license and content notices before reuse."],
   ["en-US", "CV & documents", "Resume & documents"],
+  ["en-US", "CVaR ledger and CV notes", "CVaR ledger and resume notes"],
+  ["en-US", "The modelled results were analysed and visualised.", "The modeled results were analyzed and visualized."],
+  ["en-US", "Browse the course catalogue.", "Browse the course catalog."],
   ["en-US", "Virtualisation cluster", "Virtualization cluster"],
   ["en-US", "Self-hosted document access and synchronisation across personal devices.", "Self-hosted document access and synchronization across personal devices."],
   ["en-US", "A containerised environment for exploring open-source ERP and workflow software.", "A containerized environment for exploring open-source ERP and workflow software."],
@@ -759,6 +762,29 @@ const missingProjectKeys = [...projectTranslationSources]
   .filter(([value]) => !zhKeys.has(value) && !projectNarrativeCopy[value]?.every(translation => typeof translation === "string" && translation.trim()))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 
+const graphDataPath = resolve(projectRoot, "src/data/knowledgeGraph.ts");
+const graphUiPath = resolve(projectRoot, "src/components/projects/KnowledgeGraph.tsx");
+const graphData = await compileModule(await readFile(graphDataPath, "utf8"), graphDataPath);
+const graphUiSource = ts.createSourceFile(graphUiPath, await readFile(graphUiPath, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const graphMetadataDeclaration = graphUiSource.statements
+  .filter(ts.isVariableStatement)
+  .flatMap(statement => [...statement.declarationList.declarations])
+  .find(declaration => declaration.name.getText(graphUiSource) === "graphMetadataTranslations");
+const graphMetadata = graphMetadataDeclaration?.initializer;
+const graphEntries = new Map(ts.isObjectLiteralExpression(graphMetadata)
+  ? graphMetadata.properties.filter(ts.isPropertyAssignment).map(property => [property.name.getText(graphUiSource).slice(1, -1), property.initializer])
+  : []);
+const graphDescriptions = [...graphData.knowledgeTopics, ...graphData.knowledgeMethods].map(node => node.description);
+const graphErrors = graphDescriptions.flatMap(description => {
+  const pair = graphEntries.get(description);
+  if (!pair || !ts.isArrayLiteralExpression(pair) || pair.elements.length !== 2) return [`Graph description has no Mandarin pair: ${description}`];
+  if (pair.elements.some(value => !ts.isStringLiteral(value) || !value.text.trim())) return [`Graph description has an empty Mandarin value: ${description}`];
+  if (pair.elements.some(value => value.text === description)) return [`Graph description retains English source text: ${description}`];
+  const traditional = pair.elements[1].text;
+  const residue = findTraditionalResidue(traditional);
+  return residue ? [`Graph description has Traditional Chinese residue ${residue}: ${description}`] : [];
+});
+
 const errors = [
   ...desktopCopyErrors,
   ...orbitalErrors,
@@ -770,6 +796,7 @@ const errors = [
   ...missingCoreKeys.map((entry) => `missing zhCN translation: ${entry}`),
   ...missingSideQuestKeys.map((entry) => `missing SideQuest zhCN translation: ${entry}`),
   ...missingProjectKeys.map((entry) => `missing project zhCN translation: ${entry}`),
+  ...graphErrors,
   ...traditionalResiduals.map((entry) => `Traditional Chinese residue: ${entry}`),
 ];
 
@@ -780,5 +807,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales, with 118 names in each Mandarin element catalogue; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project metadata/suite strings and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
+  `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales, with 118 names in each Mandarin element catalogue; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project metadata/suite strings, ${graphDescriptions.length} graph descriptions and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
 );

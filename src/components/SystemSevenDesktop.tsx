@@ -852,7 +852,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
         </p>
         <fieldset className="about-panel">
           <legend>Working style</legend>
-          <p>Technically curious, attentive in a room, and happiest when helping other people do their best work.</p>
+          <p>I like getting into the technical details. I also like working with people and helping them do their best work.</p>
         </fieldset>
         <article className="finance-update-card" aria-labelledby="finance-update-title">
           <div className="finance-update-card__art" aria-hidden="true">
@@ -860,7 +860,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
           </div>
           <div className="finance-update-card__copy">
             <span>JUST UPDATED · IM I BROKE?</span>
-            <h2 id="finance-update-title">Your money, connected.</h2>
+            <h2 id="finance-update-title">The finance app I&apos;ve been building.</h2>
             <p>Net worth, five bank and credit accounts, two trading platforms, and a recurring-payment checker.</p>
             <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=ocean-depths-finance&view=demo`}>Explore the finance demo →</a>
           </div>
@@ -888,7 +888,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
           <div className="identity-switchboard__heading">
             <span>CABINET OF CURIOSITIES</span>
             <b>Explore my work</b>
-            <p>Each button opens one clear destination. Projects is the quickest tour.</p>
+            <p>If you&apos;re new here, start with Selected projects.</p>
           </div>
           <button className="identity-drawer--projects" onClick={openSelectedProjects}>
             <PixelIcon kind="folder" small />
@@ -900,7 +900,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
           </button>
           <button onClick={() => openApp("coverd")}>
             <PixelIcon kind="coverd" small />
-            <span className="identity-copy"><b>COVERD · Founder&apos;s desk</b><span className="identity-detail">The startup, product thesis and approach to evidence-led recruitment decisions.</span></span>
+            <span className="identity-copy"><b>COVERD · Founder&apos;s desk</b><span className="identity-detail">How COVERD reviews applications and gives recruiters reasons they can check.</span></span>
           </button>
           <button onClick={() => openApp("experience")}>
             <PixelIcon kind="briefcase" small />
@@ -912,7 +912,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
           </button>
           <button onClick={() => openApp("lab")}>
             <PixelIcon kind="network" small />
-            <span className="identity-copy"><b>Home lab &amp; systems</b><span className="identity-detail">Self-hosted services, infrastructure boundaries and recovery lessons.</span></span>
+            <span className="identity-copy"><b>Home lab &amp; systems</b><span className="identity-detail">What I run at home, how it fits together, and what I learned after losing a database.</span></span>
           </button>
           <button onClick={() => openApp("scrapbook")}>
             <PixelIcon kind="photos" small />

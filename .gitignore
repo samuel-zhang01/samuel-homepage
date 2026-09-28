@@ -96,3 +96,5 @@ next-env.d.ts
 
 # Local privacy/security audit reports must never be published.
 /.codex/reports/
+
+/videomate/VideoMate

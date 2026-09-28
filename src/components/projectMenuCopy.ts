@@ -2,6 +2,8 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Desktop project names and summaries only; long narratives stay in the lazy project document. */
 export const projectMenuCopy = {
+  "VideoMate": ["VideoMate", "VideoMate"],
+  "Inspect damaged videos, recover readable material and re-encode mixed collections with qualified GPU acceleration.": ["检查受损视频，恢复可读取的内容，并在合格的 GPU 加速路径上重新编码混合媒体集合。", "檢查受損影片、復原可讀取的內容，並透過合格的 GPU 加速途徑重新編碼混合媒體集合。"],
   "A personal finance workspace for net worth, connected bank accounts, two trading platforms and recurring-payment checks.": ["个人财务工作台，集中查看净资产、银行账户、两个交易平台和定期付款。","個人財務工作臺，集中查看淨資產、銀行賬戶、兩個交易平臺和定期付款。"],
   "Orbital Lab": [
     "原子轨道实验室",

@@ -17,14 +17,14 @@ type Topic = { id: string; label: string; shortLabel: string; description: strin
 type Method = { id: string; label: string; topic: string; description: string };
 
 export const knowledgeTopics: Topic[] = [
-  { id: "reinforcement-learning", label: "Reinforcement learning", shortLabel: "Reinforcement learning", colour: "#126887", description: "How agents learn through action, feedback and repeated decisions. Follow value functions, exploration, policy evaluation and language-model post-training." },
-  { id: "scientific-ml", label: "Scientific machine learning", shortLabel: "Scientific ML", colour: "#67418c", description: "Learning the behaviour of physical systems: fluid fields, medical images and microrobots. Explore model structure alongside the experiments used to assess it." },
-  { id: "chemistry", label: "Chemistry & molecular science", shortLabel: "Chemistry", colour: "#88590b", description: "From molecular spectra and phase equilibria to quantum orbitals. Follow the measurements, calculations and tools behind a chemical interpretation." },
-  { id: "decisions", label: "Decision systems", shortLabel: "Decision systems", colour: "#27694d", description: "Models that support a consequential choice: allocating insurance leads, deferring uncertain cases, estimating effects and reviewing operational evidence." },
-  { id: "products", label: "Products & tools", shortLabel: "Products & tools", colour: "#963758", description: "Software people use to organise work, learn, plan and create. Trace a working interaction back to its data, rules and product context." },
-  { id: "infrastructure", label: "Computing & infrastructure", shortLabel: "Computing & systems", colour: "#3e5482", description: "The environments and services that make experiments and products usable: accelerators, containers, local storage and recovery procedures." },
-  { id: "data-science", label: "Data & model evaluation", shortLabel: "Data & evaluation", colour: "#76630b", description: "How datasets become evidence. Inspect split design, leakage, regularisation, calibration, error measures and the assumptions behind a reported result." },
-  { id: "human-systems", label: "People, organisations & AI", shortLabel: "People & organisations", colour: "#9b4824", description: "The organisational side of technical work: research ethics, innovation, capacity planning, product ownership and human review." },
+  { id: "reinforcement-learning", label: "Reinforcement learning", shortLabel: "Reinforcement learning", colour: "#126887", description: "Projects on agents that learn from feedback, including bandits, value updates, policy evaluation and language-model post-training." },
+  { id: "scientific-ml", label: "Scientific machine learning", shortLabel: "Scientific ML", colour: "#67418c", description: "My work here uses machine learning with flow fields, medical images and microrobot microscopy. I show the models and how I assessed them." },
+  { id: "chemistry", label: "Chemistry & molecular science", shortLabel: "Chemistry", colour: "#88590b", description: "I have worked with rotational spectra, fluid equations and orbital calculations. The projects show the measurements and assumptions behind each result." },
+  { id: "decisions", label: "Decision systems", shortLabel: "Decision systems", colour: "#27694d", description: "These projects look at insurance lead allocation, human review and causal analysis, with the evidence for each choice kept visible." },
+  { id: "products", label: "Products & tools", shortLabel: "Products & tools", colour: "#963758", description: "Apps for planning, learning and everyday tasks. Each project explains the data and rules behind the screen." },
+  { id: "infrastructure", label: "Computing & infrastructure", shortLabel: "Computing & systems", colour: "#3e5482", description: "GPU setups, containers, local storage and backups that keep the work running." },
+  { id: "data-science", label: "Data & model evaluation", shortLabel: "Data & evaluation", colour: "#76630b", description: "These projects check model results against data splits, leakage, calibration, regularisation and error measures." },
+  { id: "human-systems", label: "People, organisations & AI", shortLabel: "People & organisations", colour: "#9b4824", description: "Projects about the people and organisations using technical systems: research ethics, capacity planning, product ownership and human review." },
 ];
 
 export const knowledgeMethods: Method[] = [
@@ -110,7 +110,7 @@ export function buildKnowledgeGraph(catalogue: Project[], origins: ProjectOrigin
   };
   for (const method of knowledgeMethods) {
     nodes.push({ ...method, id: `method:${method.id}`, kind: "method", shortLabel: method.label, colour: topicMap.get(method.topic)!.colour });
-    addEdge(`method:${method.id}`, `topic:${method.topic}`, "part-of", `${method.label} is a route into ${topicMap.get(method.topic)!.label.toLowerCase()}.`);
+    addEdge(`method:${method.id}`, `topic:${method.topic}`, "part-of", method.description);
   }
   for (const project of catalogue) {
     const concepts = project.concepts ?? projectConcepts[project.slug] ?? [areaFallback[project.area]];
@@ -118,11 +118,11 @@ export function buildKnowledgeGraph(catalogue: Project[], origins: ProjectOrigin
     const id = `project:${project.slug}`;
     nodes.push({ id, kind: "project", label: project.title, shortLabel: project.shortTitle ?? project.title, description: project.summary, slug: project.slug, period: project.year, topic, colour: topicMap.get(topic)!.colour });
     for (const concept of concepts) {
-      if (topicMap.has(concept)) addEdge(id, `topic:${concept}`, "explores", `${project.title} explores ${topicMap.get(concept)!.label.toLowerCase()}.`);
+      if (topicMap.has(concept)) addEdge(id, `topic:${concept}`, "explores", project.summary);
       else if (methodMap.has(concept)) {
         const method = methodMap.get(concept)!;
-        addEdge(id, `method:${concept}`, "uses", `${project.title} includes ${method.label.toLowerCase()}. ${method.description}`);
-        addEdge(id, `topic:${method.topic}`, "explores", `${project.title} connects to ${topicMap.get(method.topic)!.label.toLowerCase()} through ${method.label.toLowerCase()}.`);
+        addEdge(id, `method:${concept}`, "uses", method.description);
+        addEdge(id, `topic:${method.topic}`, "explores", project.summary);
       } else throw new Error(`Unknown knowledge concept ${concept} on ${project.slug}`);
     }
   }

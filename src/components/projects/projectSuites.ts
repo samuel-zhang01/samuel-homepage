@@ -94,6 +94,7 @@ export const projectShelfSpecs: readonly ProjectShelfSpec[] = [
     id: "products-operations",
     code: "P/O",
     experiences: [
+      { kind: "project", slug: "videomate" },
       { kind: "project", slug: "insurance-lead-matching" },
       { kind: "project", slug: "cv-keyword-automator" },
       { kind: "project", slug: "ocean-depths-finance" },

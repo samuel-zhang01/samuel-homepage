@@ -13,6 +13,7 @@ export type ProjectArea =
   | "Education";
 
 export type ProjectDemoId =
+  | "videomate"
   | "cv-keywords"
   | "finance"
   | "bandits"
@@ -96,6 +97,29 @@ const phases = (
 ];
 
 export const projects: Project[] = [
+  {
+    slug: "videomate",
+    title: "VideoMate",
+    year: "2026",
+    area: "Products",
+    access: "public-demo",
+    status: "Active",
+    featured: true,
+    eyebrow: "LOCAL VIDEO REPAIR AND RE-ENCODING",
+    summary: "Inspect damaged videos, recover readable material and re-encode mixed collections with qualified GPU acceleration.",
+    detail: "VideoMate is a native, offline GUI and CLI for inspecting damaged video, recovering readable material and building verified mixed-folder migrations. It preserves originals, checks integrity with software decoding and publishes candidates only after independent verification. Eligible repairs and HEVC migration use qualified GPU encoders with software fallback. The browser companion models these choices with fictional inputs; no visitor media is uploaded or processed.",
+    tools: ["Python", "Tkinter", "FFmpeg / FFprobe", "Hardware encoding", "Offline desktop app"],
+    concepts: ["products", "recovery", "local-first"],
+    highlights: ["Software-decoded inspection and independent output verification", "GPU-qualified HEVC migration with software fallback", "Original-preserving recovery, migration and private resume", "Native GUI and CLI; platform qualification is still in progress"],
+    phases: phases(
+      "Build local video inspection and verified repair while preserving originals.",
+      "Add folder migration, processing profiles and qualified hardware encoding routes.",
+      "Develop native packages, interruption recovery and privacy-conscious diagnostics.",
+    ),
+    demo: "videomate",
+    privacyNote: "This browser demo is a deterministic simulation with invented sample items. It does not accept uploads, inspect media, run FFmpeg or promise that missing source bytes can be reconstructed. VideoMate is a separate native application; public distribution is planned for the future.",
+    visual: "flow",
+  },
   {
     slug: "orbital-lab", title: "Orbital Lab", year: "2026", area: "Education", access: "public-demo", status: "Active",
     eyebrow: "A SMALL QUANTUM LABORATORY",

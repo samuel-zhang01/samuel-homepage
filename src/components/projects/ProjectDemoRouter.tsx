@@ -127,10 +127,15 @@ const VentureReasoningStudio = dynamic(
   () => import("./VentureReasoningStudio").then((module) => module.VentureReasoningStudio),
   { loading: DemoLoading },
 );
+const VideoMateStudio = dynamic(
+  () => import("./VideoMateStudio").then((module) => module.VideoMateStudio),
+  { loading: DemoLoading },
+);
 
 // Keep selection declarative and exhaustive while preserving each lazy import.
 // Search indexing reads this same registry, so routing and search cannot drift.
 const demoComponents: Record<ProjectDemoId, ComponentType<{ locale?: Locale }>> = {
+  "videomate": VideoMateStudio,
   "bandits": BanditStudio,
   "finance": FinanceStudio,
   "cv-keywords": CvKeywordStudio,

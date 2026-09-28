@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { normaliseLocale } from "@/lib/i18n";
 
 const descriptions = {
-  "en-GB": "I am an applied AI engineer, product builder and COVERD founder. I build useful, human-centred systems for ambiguous problems.",
-  "en-US": "I am an applied AI engineer, product builder, and COVERD founder. I build useful, human-centered systems for ambiguous problems.",
-  "zh-CN": "我是应用人工智能工程师、产品开发者与 COVERD 创始人，专注为需求尚不明确的问题打造实用、以人为本的系统。",
-  "zh-TW": "我是應用人工智慧工程師、產品開發者與 COVERD 創辦人，專注為需求尚未明確的問題打造實用、以人為本的系統。",
+  "en-GB": "I'm Samuel Zhang, an applied AI engineer and founder of COVERD. Here are the products, research projects and small tools I've built, with working demos where I can show them.",
+  "en-US": "I'm Samuel Zhang, an applied AI engineer and founder of COVERD. Here are the products, research projects, and small tools I've built, with working demos where I can show them.",
+  "zh-CN": "我是 Samuel Zhang，应用人工智能工程师，也是 COVERD 的创始人。这里有我做过的产品、研究项目和小工具；能公开演示的，我也放上了可试用的版本。",
+  "zh-TW": "我是 Samuel Zhang，應用人工智慧工程師，也是 COVERD 的創辦人。這裡有我做過的產品、研究專案和小工具；能公開展示的，也附上了可試用的版本。",
 } as const;
 
 export async function generateMetadata({

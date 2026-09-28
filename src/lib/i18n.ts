@@ -46,7 +46,7 @@ const usOverrides: Record<string, string> = {
 
 const zhCN: Record<string, string> = {
   "JUST UPDATED · IM I BROKE?": "刚刚更新 · Im I Broke?",
-  "Your money, connected.": "连接你的财务。",
+  "The finance app I've been building.": "我正在做的理财应用。",
   "Net worth, five bank and credit accounts, two trading platforms, and a recurring-payment checker.": "净资产、五个银行及信用卡账户、两个交易平台，以及定期付款检查。",
   "Explore the finance demo →": "体验财务演示 →",
 
@@ -442,7 +442,7 @@ const zhCN: Record<string, string> = {
 
   "I'm an applied AI engineer and founder. I build products for ambiguous, domain-heavy problems. My current work covers responsible AI research and COVERD, an ATS-connected recruitment product that can add evidence through automated voice interviews. I previously delivered GROWMAT, an internal enterprise product documented in an external showcase; live company data, source code, credentials and non-public operating context remain private.": "我是一名应用人工智能工程师与创业者，专门处理定义模糊、依赖领域知识的产品问题。目前，我从事负责任人工智能研究，并开发 COVERD。这款产品接入现有招聘管理系统，并可通过自动语音面试补充申请信息。我此前交付了内部企业产品 GROWMAT，外部展示记录了它的架构与成果；实时公司数据、源代码、凭据及未公开的运营信息仍保持保密。",
   "Working style": "工作方式",
-  "Technically curious, attentive in a room, and happiest when helping other people do their best work.": "对技术保持好奇，在团队中认真倾听；最开心的时刻，是帮助他人发挥出最佳水平。",
+  "I like getting into the technical details. I also like working with people and helping them do their best work.": "我喜欢钻研技术细节，也喜欢与人合作，帮助他们把工作做好。",
   "Start Here": "从这里开始",
   "Biography, current work, a recent field note and clear routes through the portfolio.": "个人经历、当前工作、最新现场记录，以及清晰的作品集浏览路径。",
   "Samuel and another participant using their phones while moving around the London Stadium Community Track.": "Samuel 与另一位参与者在伦敦体育场社区跑道上一边移动，一边使用手机。",
@@ -455,17 +455,17 @@ const zhCN: Record<string, string> = {
   "Choose a drawer to open the corresponding part of the portfolio.": "选择一个抽屉，打开作品集中的相应内容。",
   "My cabinet of curiosities": "我的好奇心陈列柜",
   "Explore my work": "探索我的作品",
-  "Each button opens one clear destination. Projects is the quickest tour.": "每个按钮对应一个清晰页面；“项目”是最快的浏览入口。",
+  "If you're new here, start with Selected projects.": "如果是第一次来，可以先看看「精选项目」。",
   "Products, applied AI, scientific research and interactive technical walkthroughs.": "产品、应用人工智能、科学研究与互动技术导览。",
   "OPEN PROJECTS →": "打开项目 →",
   "COVERD · Founder's desk": "COVERD · 创始人工作台",
-  "The startup, product thesis and approach to evidence-led recruitment decisions.": "了解这家创业公司、产品理念，以及以证据支持招聘决策的方法。",
+  "How COVERD reviews applications and gives recruiters reasons they can check.": "COVERD 如何审阅求职申请，并让招聘人员核对每项判断的理由。",
   "Experience & career": "经历与职业生涯",
   "Professional history across applied AI, product, research, teaching and public service.": "涵盖应用人工智能、产品、研究、教学与公共服务的职业经历。",
   "CV & documents": "简历与文档",
   "Read or download the current CV and supporting public documents.": "阅读或下载最新简历及相关公开文档。",
   "Home lab & systems": "家庭实验室与系统",
-  "Self-hosted services, infrastructure boundaries and recovery lessons.": "自托管服务、基础设施边界与恢复经验。",
+  "What I run at home, how it fits together, and what I learned after losing a database.": "看看我在家运行哪些服务、它们如何协作，以及丢失数据库后学到的经验。",
   "Interests & notes": "兴趣与札记",
   "Music, photography, hiking, teaching and the stories behind the technical work.": "音乐、摄影、徒步、教学，以及技术工作背后的故事。",
   "Seven playful, local games with old-Mac mischief and small pieces of my work.": "七款充满老式 Mac 趣味、并融入我工作片段的本地小游戏。",
@@ -1640,6 +1640,10 @@ const zhCN: Record<string, string> = {
 };
 
 const zhTWOverrides: Record<string, string> = {
+  "The finance app I've been building.": "我正在做的理財 App。",
+  "I like getting into the technical details. I also like working with people and helping them do their best work.": "我喜歡鑽研技術細節，也喜歡與人合作，幫助他們把工作做好。",
+  "How COVERD reviews applications and gives recruiters reasons they can check.": "COVERD 如何審閱求職申請，並讓招募人員核對每項判斷的理由。",
+  "What I run at home, how it fits together, and what I learned after losing a database.": "看看我在家執行哪些服務、它們如何協作，以及遺失資料庫後學到的經驗。",
   "How to use this interactive demo": "如何使用這個互動示範",
   "interactive demo": "互動示範",
   "INTERACTIVE PROJECT FILE": "互動專案檔案",
@@ -2208,6 +2212,26 @@ function toAmericanEnglish(value: string): string {
     .replaceAll("artefacts", "artifacts")
     .replaceAll("artefact", "artifact")
     .replaceAll("modelling", "modeling")
+    .replaceAll("catalogue", "catalog")
+    .replaceAll("Catalogue", "Catalog")
+    .replaceAll("modelled", "modeled")
+    .replaceAll("Modelled", "Modeled")
+    .replaceAll("analysed", "analyzed")
+    .replaceAll("Analysed", "Analyzed")
+    .replaceAll("analysing", "analyzing")
+    .replaceAll("Analysing", "Analyzing")
+    .replaceAll("visualisation", "visualization")
+    .replaceAll("Visualisation", "Visualization")
+    .replaceAll("visualised", "visualized")
+    .replaceAll("Visualised", "Visualized")
+    .replaceAll("visualising", "visualizing")
+    .replaceAll("Visualising", "Visualizing")
+    .replaceAll("visualise", "visualize")
+    .replaceAll("Visualise", "Visualize")
+    .replaceAll("standardised", "standardized")
+    .replaceAll("Standardised", "Standardized")
+    .replaceAll("generalisation", "generalization")
+    .replaceAll("Generalisation", "Generalization")
     .replaceAll("Normalised", "Normalized")
     .replaceAll("normalised", "normalized")
     .replaceAll("Normalise", "Normalize")
@@ -2266,7 +2290,8 @@ function toAmericanEnglish(value: string): string {
     .replaceAll("favourite", "favorite")
     .replaceAll("centre", "center")
     .replaceAll("programme", "program")
-    .replaceAll("CV", "resume")
+    .replace(/\bCVs\b/g, "resumes")
+    .replace(/\bCV\b/g, "resume")
     .replaceAll("Résumé", "Resume");
 }
 

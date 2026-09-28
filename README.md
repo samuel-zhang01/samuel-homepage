@@ -1,17 +1,17 @@
 # Samuel System 7
 
-### A personal website with a desktop's curiosity.
+### A personal website that works like an old Mac desktop.
 
-Samuel Zhang's personal portfolio, presented as a carefully researched
-System 7-inspired desktop. Biography, experience, projects, COVERD, games, CVs
-and supporting documents open as movable desktop windows inside one browser
-tab—without an account, tracking API or server-side personal-data store.
+This is Samuel Zhang's portfolio, built as a System 7-inspired desktop.
+Biography, experience, projects, COVERD, games, CVs and documents open in
+movable windows in one browser tab. There is no account, tracking API or
+server-side store of personal data.
 
 **[Open the live desktop](https://me.samuelzhang.co.uk)** ·
 **[Browse the project archive](https://me.samuelzhang.co.uk/projects)** ·
 **[Explore Orbital Lab](https://me.samuelzhang.co.uk/orbitals)**
 
-**40 project files · 9 useful desk apps · 4 languages · no account required**
+**41 project files · 9 desk apps · 4 languages · no account required**
 
 [Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
@@ -75,11 +75,11 @@ of permanent storage. Export a backup before clearing site data or changing devi
 - A language selector with locale persistence and mobile-safe menus.
 - One Documents app with localised Applied AI CVs and continuously scrolling reviewed PDF previews.
 - Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.
-- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches all 22 apps and 40 project files. Optional Detailed search includes public project/demo text with matching excerpts; arrow keys choose a result, Return opens it and Escape closes Find.
+- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches the apps and 41 project files. Optional Detailed search includes public project/demo text with matching excerpts; arrow keys choose a result, Return opens it and Escape closes Find.
 - A browser-native Orbital Lab: all 118 elements, real s/p/d/f orbital clouds in high-DPI ASCII, density points or smooth 3D, refresh-synchronised rotation, subshell inspection, radial curves, node counts and exports.
 - Shared System 7 pop-up menus throughout accessories, project filters and interactive labs, with keyboard/typeahead navigation and bounded touch-friendly lists.
 - Three persistent desktop patterns and a menu-bar clock that opens Pocket Calendar with one click.
-- A 40-record project archive organised into six guided shelves and 16 experiences: 27 lazy-loaded interactive chapters plus nine entries launching the existing Orbital Lab and desk apps, five reviewed external-or-artifact actions, an expert file catalogue and a source-derived portfolio map.
+- A 41-record project archive organised into six shelves and 17 curated experiences: interactive chapters, entries for Orbital Lab and the desk apps, five reviewed PDF or external links, a searchable file list and a portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
@@ -127,7 +127,7 @@ Selecting a record updates the right-hand project document beside the searchable
 
 Project explanations focus on what the work does, why the method was chosen and how to explore it. Recorded measurements, illustrative calculations and their relevant limits remain distinguishable. Internal repository receipts, checkpoint reconciliation and file-by-file audit tables are developer material rather than visitor-facing project descriptions. GROWMAT’s blue **Open showcase PDF** action opens the original document in the same desktop window system, using the shared continuous PDF reader with zoom and download controls. Career showcase links and the other catalogue PDFs use this reader too. Compact mobile controls leave more room for the document; **Fit width**, zoom and resizing preserve the passage being read. The same reader serves the CVs in Documents. Closing an activity restores the originating window and keyboard focus; inactive demos preserve their working state while playback pauses.
 
-The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 40 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
+The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 41 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
 
 Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. All 118 element names are localized in both Mandarin editions, including accessible labels and orbital exports. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [current review](docs/WIDE_SWEEP_2026-09-09.md) for the tested scope and intentional source-language exceptions.
 
@@ -154,7 +154,7 @@ Private entries use labels, lock icons and patterns as well as colour. Insurance
 
 ## RUN/HACK cabinet exhibit
 
-The `/sidequest` route opens a first-class System 7 app about the 29 August 2026 Running Hackathon. It separates Samuel’s 5K race and the team’s additional 44K relay from the product evidence: the documented 209-run Strava source profile belongs to teammate Javiera Rubio. The exhibit shows only reviewed aggregate counts and a browser-local hypothetical-run sandbox; raw Strava activities and GPS coordinates are not published.
+The `/sidequest` route opens a System 7 app about the 29 August 2026 Running Hackathon. It keeps Samuel’s 5K race and the team’s additional 44K relay separate from the product evidence: the documented 209-run Strava source profile belongs to teammate Javiera Rubio. The exhibit shows reviewed aggregate counts and a browser-local hypothetical-run sandbox; raw Strava activities and GPS coordinates are not published.
 
 The Live room is an explicit interactive replay. It demonstrates the original camera/GPS, spectator-cheer and runner-controlled challenge flow without requesting camera, microphone or location permission from portfolio visitors. Links to the original SideQuest deployment and source remain external, and deployment availability is not guaranteed; the source repository has no declared licence, and ephemeral prototype video was not recorded.
 

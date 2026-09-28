@@ -13,6 +13,14 @@ export type ProjectStory = {
 // catalogue card so the archive can explain the human problem before launching
 // a dense workbench, while detailed method explanations remain reusable.
 export const projectStories: Record<ProjectDemoId, ProjectStory> = {
+  "videomate": {
+    audience: "People sorting mixed video collections after damage, interrupted transfers or format changes.",
+    problem: "A file can open yet hide decode errors; an encoder can exit successfully while its output fails verification. The operator needs a clear boundary between readable, recovered and unresolved material.",
+    objective: "Inspect locally, choose a bounded recovery or migration policy, and publish only independently verified results while preserving originals.",
+    contribution: "I built the native GUI and CLI around FFprobe, FFmpeg, software-decode integrity checks, hardware-encoder qualification and independent candidate verification. The browser companion illustrates these decisions using invented sample states rather than processing visitor media.",
+    pipeline: "local selection → full software decode → copy, remux or qualified encode → independent output verification → published result or review",
+    walkthrough: "Select the broken-index item, compare Repair and Migrate, then turn off the qualified GPU route and run the sample job. The missing-tail item remains withheld.",
+  },
   "insurance-matching": {
     audience: "Specialty-insurance brokers choosing markets for a risk.",
     problem: "Brokers must match a risk to suitable markets using placement history, market appetite and policy wording that can be incomplete or out of date.",

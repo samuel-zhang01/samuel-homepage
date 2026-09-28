@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s · Samuel Zhang",
   },
   description:
-    "I am an applied AI engineer, product builder and COVERD founder. I build useful, human-centred systems for ambiguous problems.",
+    "I'm Samuel Zhang, an applied AI engineer and founder of COVERD. Here are the products, research projects and small tools I've built, with working demos where I can show them.",
   keywords: [
     "Samuel Zhang",
     "Artificial Intelligence",
@@ -52,14 +52,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Samuel System 7 — Samuel Zhang",
     description:
-      "Meet an applied AI engineer, product builder and COVERD founder—inside a playful classic Macintosh-inspired desktop.",
+      "Samuel Zhang's products, research projects and small tools, laid out as a System 7 desktop.",
     type: "website",
     url: "https://me.samuelzhang.co.uk",
   },
   twitter: {
     card: "summary",
     title: "Samuel System 7 — Samuel Zhang",
-    description: "Applied AI engineer, product builder and COVERD founder, presented as a tiny Macintosh desktop.",
+    description: "Samuel Zhang's products, research projects and small tools, laid out as a System 7 desktop.",
   },
 };
 

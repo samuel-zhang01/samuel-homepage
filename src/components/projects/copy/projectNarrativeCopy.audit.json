@@ -9,6 +9,7 @@
   ],
   "coverageCheck": "scripts/check-project-narrative-copy.mjs",
   "identities": {
+    "VideoMate": "Product name retained unchanged in both Mandarin editions.",
     "TypeScript": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
     "WebGL": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
     "Web Workers": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
