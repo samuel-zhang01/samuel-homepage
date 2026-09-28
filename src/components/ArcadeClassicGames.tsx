@@ -12,6 +12,7 @@ import { translateText, type Locale } from "@/lib/i18n";
 
 type GameProps = {
   locale: Locale;
+  active?: boolean;
 };
 
 type PlayStatus = "ready" | "running" | "paused" | "won" | "lost";
@@ -180,9 +181,13 @@ function snakeStatusText(status: PlayStatus) {
   }
 }
 
-export function SnakeGame({ locale }: GameProps) {
+export function SnakeGame({ locale, active = true }: GameProps) {
   const [state, dispatch] = useReducer(snakeReducer, undefined, initialSnakeState);
   const t = useCallback((text: string) => translateText(locale, text), [locale]);
+
+  useEffect(() => {
+    if (!active) dispatch({ type: "pause" });
+  }, [active]);
 
   useEffect(() => {
     const pauseWhenHidden = () => { if (document.hidden) dispatch({ type: "pause" }); };
@@ -191,10 +196,10 @@ export function SnakeGame({ locale }: GameProps) {
   }, []);
 
   useEffect(() => {
-    if (state.status !== "running") return;
+    if (!active || state.status !== "running") return;
     const timer = window.setInterval(() => dispatch({ type: "tick" }), 155);
     return () => window.clearInterval(timer);
-  }, [state.status]);
+  }, [active, state.status]);
 
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
@@ -543,11 +548,15 @@ function brickStatusText(status: PlayStatus) {
   }
 }
 
-export function BrickBreakerGame({ locale }: GameProps) {
+export function BrickBreakerGame({ locale, active = true }: GameProps) {
   const [state, dispatch] = useReducer(brickReducer, undefined, initialBrickState);
   const paddleDirectionRef = useRef<-1 | 0 | 1>(0);
   const lastFrameRef = useRef<number | null>(null);
   const t = useCallback((text: string) => translateText(locale, text), [locale]);
+
+  useEffect(() => {
+    if (!active) dispatch({ type: "pause" });
+  }, [active]);
 
   useEffect(() => {
     const pauseWhenHidden = () => { if (document.hidden) dispatch({ type: "pause" }); };
@@ -556,7 +565,7 @@ export function BrickBreakerGame({ locale }: GameProps) {
   }, []);
 
   useEffect(() => {
-    if (state.status !== "running") {
+    if (!active || state.status !== "running") {
       lastFrameRef.current = null;
       return;
     }
@@ -580,7 +589,7 @@ export function BrickBreakerGame({ locale }: GameProps) {
       window.cancelAnimationFrame(animationFrame);
       lastFrameRef.current = null;
     };
-  }, [state.status]);
+  }, [active, state.status]);
 
   useEffect(() => {
     const stopPaddle = () => {

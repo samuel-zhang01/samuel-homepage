@@ -161,3 +161,17 @@
   .statusBadge,
   .statusBar { border-color: CanvasText; }
 }
+
+@container (max-width: 380px) {
+  .demoHeader { padding: 10px; gap: 4px; }
+  .fileContext { display: none; }
+}
+
+/* Put operable controls before the full guidance on small work surfaces. */
+@container (max-width: 500px) {
+  .demoWindow { display: flex; flex-direction: column; }
+  .demoHeader { order: 0; }
+  .demoBody { order: 1; }
+  .demoContract { order: 2; }
+  .statusBar { order: 3; }
+}

@@ -73,3 +73,10 @@
 @container project-activity (max-width: 360px) {
   .shareIcon { display: none; }
 }
+
+@container project-activity (max-width: 620px) {
+  .activity[data-kind="demo"] .toolbar { position: static; }
+}
+@media (max-height: 650px) {
+  .activity[data-kind="demo"] .toolbar { position: static; }
+}

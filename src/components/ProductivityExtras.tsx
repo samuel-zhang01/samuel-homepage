@@ -7,132 +7,24 @@ import {
   useMemo,
   useRef,
   useState,
-  type Dispatch,
   type FormEvent,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
-  type SetStateAction,
 } from "react";
 import { translateText, type Locale } from "@/lib/i18n";
 import { parseConverterInput } from "@/lib/deskBehavior";
+import { useDeskPersistence as usePersistentState, type SaveState } from "@/hooks/useDeskPersistence";
+import { DeskConflicts } from "./DeskConflicts";
 import styles from "./ProductivityApps.module.css";
 
 export type ProductivityExtraId = "sketch" | "tasks" | "calendar" | "converter" | "palette";
 
-type SaveState = "loading" | "saving" | "saved" | "unavailable";
-
 const RESTORE_EVENT = "samuel-desk-storage-restored";
-const FLUSH_EVENT = "samuel-desk-storage-flush";
 const SKETCH_STORAGE_KEY = "samuel-system7-sketch-v1";
 const TASKS_STORAGE_KEY = "samuel-system7-tasks-v1";
 const CALENDAR_STORAGE_KEY = "samuel-system7-calendar-v1";
 const CONVERTER_STORAGE_KEY = "samuel-system7-converter-v1";
 const PALETTE_STORAGE_KEY = "samuel-system7-palette-v1";
-type DeskFlushDetail = { failedKeys: string[] };
-
-function reportFlushFailure(event: Event | undefined, key: string) {
-  const detail = (event as CustomEvent<DeskFlushDetail> | undefined)?.detail;
-  if (Array.isArray(detail?.failedKeys) && !detail.failedKeys.includes(key)) detail.failedKeys.push(key);
-}
-
-function usePersistentState<T>(
-  key: string,
-  initialValue: T,
-  validate: (value: unknown) => T | null,
-): [T, Dispatch<SetStateAction<T>>, SaveState] {
-  const [value, setValue] = useState<T>(initialValue);
-  const [ready, setReady] = useState(false);
-  const [saveState, setSaveState] = useState<SaveState>("loading");
-  const latestValue = useRef(value);
-  const initialValueRef = useRef(initialValue);
-  const readyRef = useRef(false);
-  const validateRef = useRef(validate);
-
-  latestValue.current = value;
-  validateRef.current = validate;
-
-  useEffect(() => {
-    const load = (raw: string | null) => {
-      if (!raw) {
-        latestValue.current = initialValueRef.current;
-        setValue(initialValueRef.current);
-        return;
-      }
-      try {
-        const envelope = JSON.parse(raw) as { version?: unknown; data?: unknown };
-        const restored = envelope.version === 1 ? validateRef.current(envelope.data) : null;
-        if (restored !== null) {
-          // Keep the synchronous flush ref aligned during React Strict Mode's
-          // setup/cleanup probe so a valid saved value is never overwritten by
-          // the hook's empty initial value before the first rerender.
-          latestValue.current = restored;
-          setValue(restored);
-        }
-      } catch {
-        // A corrupt entry is ignored so the accessory can still open safely.
-      }
-    };
-
-    try {
-      load(window.localStorage.getItem(key));
-      setSaveState("saved");
-    } catch {
-      setSaveState("unavailable");
-    } finally {
-      readyRef.current = true;
-      setReady(true);
-    }
-
-    const handleStorage = (event: StorageEvent) => {
-      if (event.storageArea === window.localStorage && (event.key === key || event.key === null)) load(event.newValue);
-    };
-    const handleRestore = () => {
-      try {
-        load(window.localStorage.getItem(key));
-      } catch {
-        setSaveState("unavailable");
-      }
-    };
-    const flush = (event?: Event) => {
-      if (!readyRef.current) return;
-      try {
-        window.localStorage.setItem(key, JSON.stringify({ version: 1, data: latestValue.current }));
-        setSaveState("saved");
-      } catch {
-        setSaveState("unavailable");
-        reportFlushFailure(event, key);
-      }
-    };
-
-    window.addEventListener("storage", handleStorage);
-    window.addEventListener(RESTORE_EVENT, handleRestore);
-    window.addEventListener(FLUSH_EVENT, flush);
-    window.addEventListener("pagehide", flush);
-    return () => {
-      flush();
-      window.removeEventListener("storage", handleStorage);
-      window.removeEventListener(RESTORE_EVENT, handleRestore);
-      window.removeEventListener(FLUSH_EVENT, flush);
-      window.removeEventListener("pagehide", flush);
-    };
-  }, [key]);
-
-  useEffect(() => {
-    if (!ready) return;
-    setSaveState("saving");
-    const timer = window.setTimeout(() => {
-      try {
-        window.localStorage.setItem(key, JSON.stringify({ version: 1, data: value }));
-        setSaveState("saved");
-      } catch {
-        setSaveState("unavailable");
-      }
-    }, 180);
-    return () => window.clearTimeout(timer);
-  }, [key, ready, value]);
-
-  return [value, setValue, saveState];
-}
 
 function SaveBadge({ locale, state }: { locale: Locale; state: SaveState }) {
   const t = (value: string) => translateText(locale, value);
@@ -282,7 +174,7 @@ function renderSketch(canvas: HTMLCanvasElement, strokes: DrawStroke[]) {
 
 function SketchPad({ locale }: { locale: Locale }) {
   const t = (value: string) => translateText(locale, value);
-  const [drawing, setDrawing, saveState] = usePersistentState<SketchData>(
+  const [drawing, setDrawing, saveState, conflicts, dismissConflicts] = usePersistentState<SketchData>(
     SKETCH_STORAGE_KEY,
     { strokes: [] },
     validateSketch,
@@ -468,6 +360,7 @@ function SketchPad({ locale }: { locale: Locale }) {
           <strong>{t("A canvas for quick thinking.")}</strong>
         </div>
         <SaveBadge locale={locale} state={saveState} />
+        <DeskConflicts locale={locale} conflicts={conflicts} dismiss={dismissConflicts} onRestore={setDrawing} />
       </header>
       <div className={styles.sketchToolbar} role="toolbar" aria-label={t("Drawing tools")}>
         <div className={styles.segmentedControl}>
@@ -562,7 +455,7 @@ function validateTasks(value: unknown): TaskData | null {
 
 function QuickList({ locale }: { locale: Locale }) {
   const t = (value: string) => translateText(locale, value);
-  const [tasks, setTasks, saveState] = usePersistentState<TaskData>(TASKS_STORAGE_KEY, { items: [] }, validateTasks);
+  const [tasks, setTasks, saveState, conflicts, dismissConflicts] = usePersistentState<TaskData>(TASKS_STORAGE_KEY, { items: [] }, validateTasks);
   const [draft, setDraft] = useState("");
   const [priority, setPriority] = useState<TaskPriority>("normal");
   const [filter, setFilter] = useState<"all" | "open" | "done">("all");
@@ -622,6 +515,7 @@ function QuickList({ locale }: { locale: Locale }) {
           <strong>{t("Capture it before it disappears.")}</strong>
         </div>
         <SaveBadge locale={locale} state={saveState} />
+        <DeskConflicts locale={locale} conflicts={conflicts} dismiss={dismissConflicts} onRestore={setTasks} />
       </header>
       <form className={styles.taskComposer} onSubmit={addTask}>
         <label htmlFor="quick-task">{t("New task")}</label>
@@ -734,7 +628,7 @@ function PocketCalendar({ locale }: { locale: Locale }) {
         <header className={styles.utilityHeader}>
           <div>
             <span className={styles.eyebrow}>{t("POCKET CALENDAR")}</span>
-            <strong>{t("One quiet place for the day ahead.")}</strong>
+            <strong>{t("Choose a date and add a note.")}</strong>
           </div>
         </header>
         <div className={styles.utilityEmpty} role="status">{t("Loading saved data…")}</div>
@@ -750,7 +644,7 @@ function PocketCalendarReady({ locale }: { locale: Locale }) {
   const todayKey = calendarDateKey(today);
   const [selectedKey, setSelectedKey] = useState(todayKey);
   const [viewMonth, setViewMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
-  const [calendar, setCalendar, saveState] = usePersistentState<CalendarData>(CALENDAR_STORAGE_KEY, { notes: {} }, validateCalendar);
+  const [calendar, setCalendar, saveState, conflicts, dismissConflicts] = usePersistentState<CalendarData>(CALENDAR_STORAGE_KEY, { notes: {} }, validateCalendar);
   const [limitMessage, setLimitMessage] = useState("");
   const [clearArmed, setClearArmed] = useState(false);
   const monthPanelRef = useRef<HTMLElement | null>(null);
@@ -858,9 +752,10 @@ function PocketCalendarReady({ locale }: { locale: Locale }) {
       <header className={styles.utilityHeader}>
         <div>
           <span className={styles.eyebrow}>{t("POCKET CALENDAR")}</span>
-          <strong>{t("One quiet place for the day ahead.")}</strong>
+          <strong>{t("Choose a date and add a note.")}</strong>
         </div>
         <SaveBadge locale={locale} state={saveState} />
+        <DeskConflicts locale={locale} conflicts={conflicts} dismiss={dismissConflicts} onRestore={setCalendar} />
       </header>
       <div className={styles.calendarLayout}>
         <section ref={monthPanelRef} className={styles.monthPanel} aria-label={monthLabel}>
@@ -1001,7 +896,7 @@ function validateConverter(value: unknown): ConverterData | null {
 
 function UnitConverter({ locale }: { locale: Locale }) {
   const t = (value: string) => translateText(locale, value);
-  const [converter, setConverter, saveState] = usePersistentState<ConverterData>(
+  const [converter, setConverter, saveState, conflicts, dismissConflicts] = usePersistentState<ConverterData>(
     CONVERTER_STORAGE_KEY,
     { category: "length", from: "m", to: "ft", input: "1" },
     validateConverter,
@@ -1047,6 +942,7 @@ function UnitConverter({ locale }: { locale: Locale }) {
           <strong>{t("Useful answers, without a search box.")}</strong>
         </div>
         <SaveBadge locale={locale} state={saveState} />
+        <DeskConflicts locale={locale} conflicts={conflicts} dismiss={dismissConflicts} onRestore={setConverter} />
       </header>
       <nav className={styles.converterCategories} aria-label={t("Conversion category")}>
         {(Object.keys(CONVERTER_GROUPS) as ConverterCategory[]).map((category) => (
@@ -1143,7 +1039,7 @@ function contrastRatio(left: number, right: number): number {
 
 function ColourStudio({ locale }: { locale: Locale }) {
   const t = (value: string) => translateText(locale, value);
-  const [palette, setPalette, saveState] = usePersistentState<PaletteData>(
+  const [palette, setPalette, saveState, conflicts, dismissConflicts] = usePersistentState<PaletteData>(
     PALETTE_STORAGE_KEY,
     { hex: "#11177A", swatches: ["#11177A", "#F2C14F", "#237747", "#B83B3B"] },
     validatePalette,
@@ -1194,9 +1090,10 @@ function ColourStudio({ locale }: { locale: Locale }) {
       <header className={styles.utilityHeader}>
         <div>
           <span className={styles.eyebrow}>{t("COLOUR STUDIO")}</span>
-          <strong>{t("Pick boldly. Check responsibly.")}</strong>
+          <strong>{t("Compare text and background colours.")}</strong>
         </div>
         <SaveBadge locale={locale} state={saveState} />
+        <DeskConflicts locale={locale} conflicts={conflicts} dismiss={dismissConflicts} onRestore={setPalette} />
       </header>
       <div className={styles.colourLayout}>
         <section className={styles.colourPreview} style={{ backgroundColor: palette.hex }} aria-label={`${t("Colour preview")} ${palette.hex}`}>

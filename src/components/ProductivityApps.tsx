@@ -10,6 +10,9 @@ import {
 import { translateText, type Locale } from "@/lib/i18n";
 import { advanceFocusState, enterCalculatorDecimal, enterCalculatorDigit, localDateKey, type FocusState } from "@/lib/deskBehavior";
 import ProductivityExtras, { normaliseProductivityExtraBackup } from "./ProductivityExtras";
+import { useDeskPersistence, type DeskFlushDetail } from "@/hooks/useDeskPersistence";
+import { commitDeskDrafts, withDeskLock, pendingPrefix, storageKeys } from "@/lib/deskPersistence";
+import { DeskConflicts } from "./DeskConflicts";
 import styles from "./ProductivityApps.module.css";
 
 export type ProductivityAppId =
@@ -52,7 +55,6 @@ const DESK_STORAGE_KEYS = [
   "samuel-system7-palette-v1",
 ] as const;
 
-type DeskFlushDetail = { failedKeys: string[] };
 
 function reportFlushFailure(event: Event | undefined, key: string) {
   const detail = (event as CustomEvent<DeskFlushDetail> | undefined)?.detail;
@@ -126,6 +128,26 @@ function normaliseDeskBackupEntry(key: string, raw: string): string | null {
     return null;
   }
   return null;
+}
+
+// Include edits staged by an accessory that closed before its asynchronous commit.
+async function flushPendingAccessories() {
+  await withDeskLock(() => {
+    for (const key of DESK_STORAGE_KEYS) {
+      const pending = storageKeys(pendingPrefix(key))[0];
+      if (!pending) continue;
+      const validate = (data: unknown) => {
+        const encoded = JSON.stringify(key === NOTE_STORAGE_KEY ? { version: 1, ...data as object } : { version: 1, data });
+        const normalised = normaliseDeskBackupEntry(key, encoded);
+        if (!normalised) return null;
+        const parsed = JSON.parse(normalised);
+        return key === NOTE_STORAGE_KEY ? { activePage: parsed.activePage, pages: parsed.pages } : parsed.data;
+      };
+      const initial = validate(JSON.parse(localStorage.getItem(pending)!).base);
+      if (initial === null) throw new Error("Invalid pending accessory data");
+      commitDeskDrafts(key, initial, validate);
+    }
+  });
 }
 
 function AccessoryIcon({ kind, compact = false }: { kind: AccessoryKind; compact?: boolean }) {
@@ -303,11 +325,13 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
     },
   ];
 
-  const exportBackup = () => {
+  const exportBackup = async () => {
     try {
-      const flushDetail: DeskFlushDetail = { failedKeys: [] };
+      const flushDetail: DeskFlushDetail = { failedKeys: [], pending: [] };
       window.dispatchEvent(new CustomEvent<DeskFlushDetail>(DESK_FLUSH_EVENT, { detail: flushDetail }));
+      await Promise.all(flushDetail.pending ?? []);
       if (flushDetail.failedKeys.length > 0) throw new Error("flush-failed");
+      await flushPendingAccessories();
       const apps: Record<string, string> = {};
       for (const key of DESK_STORAGE_KEYS) {
         const value = window.localStorage.getItem(key);
@@ -355,24 +379,27 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         candidates.set(key, normalised);
       }
       if (!window.confirm(t("Restore this backup? It will replace your current Desk Accessories data."))) return;
-      const originals = new Map(DESK_STORAGE_KEYS.map((key) => [key, window.localStorage.getItem(key)]));
-      try {
-        for (const key of DESK_STORAGE_KEYS) {
-          const value = candidates.get(key);
-          if (value === undefined) window.localStorage.removeItem(key);
-          else window.localStorage.setItem(key, value);
-        }
-      } catch (error) {
-        for (const [key, value] of originals) {
-          try {
-            if (value === null) window.localStorage.removeItem(key);
+      await flushPendingAccessories();
+      await withDeskLock(() => {
+        const originals = new Map(DESK_STORAGE_KEYS.map((key) => [key, window.localStorage.getItem(key)]));
+        try {
+          for (const key of DESK_STORAGE_KEYS) {
+            const value = candidates.get(key);
+            if (value === undefined) window.localStorage.removeItem(key);
             else window.localStorage.setItem(key, value);
-          } catch {
-            // Continue restoring every original entry on a best-effort basis.
           }
+        } catch (error) {
+          for (const [key, value] of originals) {
+            try {
+              if (value === null) window.localStorage.removeItem(key);
+              else window.localStorage.setItem(key, value);
+            } catch {
+              // Continue restoring every original entry on a best-effort basis.
+            }
+          }
+          throw error;
         }
-        throw error;
-      }
+      });
       window.dispatchEvent(new Event(DESK_RESTORE_EVENT));
       setBackupStatus("Backup restored. Open accessories are refreshed.");
     } catch {
@@ -390,12 +417,12 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         <AccessoryIcon kind="desk" />
       </header>
       <p className={styles.launcherIntro}>
-        {t("Eight everyday tools and an orbital lab, all in this browser. Your notes, drawings and plans stay on this device; nothing is uploaded or synced.")}
+        {t("Notes, drawings and plans are saved in this browser. There is no cloud backup; export a backup to move them.")}
       </p>
       <section className={styles.storageStrip} aria-label={t("Desk data and backup")}>
         <span className={styles.storageLamp} aria-hidden="true" />
         <div>
-          <strong>{t("Local autosave is on")}</strong>
+          <strong>{t("Saved in this browser")}</strong>
           <small>{t("Export one backup file whenever you want to move your desk.")}</small>
         </div>
         <div className={styles.storageActions}>
@@ -467,101 +494,21 @@ function formatNoteEditorLabel(locale: Locale, page: number): string {
 
 function NotePad({ locale }: { locale: Locale }) {
   const t = (value: string) => translateText(locale, value);
-  const [pages, setPages] = useState<string[]>(emptyNotePages);
+  const [notebook, setNotebook, saveState, conflicts, dismissConflicts] = useDeskPersistence(
+    NOTE_STORAGE_KEY,
+    { activePage: 0, pages: emptyNotePages() },
+    value => {
+      const raw = normaliseDeskBackupEntry(NOTE_STORAGE_KEY, JSON.stringify({ version: 1, ...value as object }));
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as { activePage: number; pages: string[] };
+      return { activePage: parsed.activePage, pages: parsed.pages };
+    },
+  );
+  const { pages } = notebook;
+  // Page selection belongs to this editor; another tab must not turn its page.
   const [activePage, setActivePage] = useState(0);
-  const [storageReady, setStorageReady] = useState(false);
-  const [saveState, setSaveState] = useState<"saved" | "saving" | "unavailable">("saved");
   const [clearArmed, setClearArmed] = useState(false);
   const editorRef = useRef<HTMLTextAreaElement | null>(null);
-  const storageAvailableRef = useRef(true);
-  const latestNoteRef = useRef({ activePage: 0, pages: emptyNotePages() });
-  latestNoteRef.current = { activePage, pages };
-
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(NOTE_STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored) as { version?: number; activePage?: number; pages?: unknown };
-        const storedPages = parsed.pages;
-        if (parsed.version === 1 && Array.isArray(storedPages)) {
-          const restored = emptyNotePages().map((_, index) => (
-            typeof storedPages[index] === "string" ? storedPages[index].slice(0, 8_000) : ""
-          ));
-          const restoredPage = Number.isInteger(parsed.activePage) && parsed.activePage! >= 0 && parsed.activePage! < NOTE_PAGE_COUNT
-            ? parsed.activePage!
-            : 0;
-          latestNoteRef.current = { activePage: restoredPage, pages: restored };
-          setPages(restored);
-          setActivePage(restoredPage);
-        }
-      }
-    } catch {
-      storageAvailableRef.current = false;
-      setSaveState("unavailable");
-    } finally {
-      setStorageReady(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!storageReady || !storageAvailableRef.current) return;
-    setSaveState("saving");
-    const saveTimer = window.setTimeout(() => {
-      try {
-        window.localStorage.setItem(NOTE_STORAGE_KEY, JSON.stringify({ version: 1, activePage, pages }));
-        setSaveState("saved");
-      } catch {
-        storageAvailableRef.current = false;
-        setSaveState("unavailable");
-      }
-    }, 180);
-    return () => window.clearTimeout(saveTimer);
-  }, [activePage, pages, storageReady]);
-
-  useEffect(() => {
-    if (!storageReady) return;
-    const flush = (event?: Event) => {
-      try {
-        window.localStorage.setItem(NOTE_STORAGE_KEY, JSON.stringify({ version: 1, ...latestNoteRef.current }));
-        storageAvailableRef.current = true;
-        setSaveState("saved");
-      } catch {
-        storageAvailableRef.current = false;
-        setSaveState("unavailable");
-        reportFlushFailure(event, NOTE_STORAGE_KEY);
-      }
-    };
-    const restore = () => {
-      try {
-        const raw = window.localStorage.getItem(NOTE_STORAGE_KEY);
-        const parsed = raw ? JSON.parse(normaliseDeskBackupEntry(NOTE_STORAGE_KEY, raw) ?? "null") as { activePage: number; pages: string[] } | null : null;
-        const next = parsed ?? { activePage: 0, pages: emptyNotePages() };
-        latestNoteRef.current = next;
-        setActivePage(next.activePage);
-        setPages(next.pages);
-        setClearArmed(false);
-        storageAvailableRef.current = true;
-        setSaveState("saved");
-      } catch {
-        storageAvailableRef.current = false;
-        setSaveState("unavailable");
-      }
-    };
-    const restoreFromStorage = (event: StorageEvent) => {
-      if (event.storageArea === window.localStorage && (event.key === NOTE_STORAGE_KEY || event.key === null)) restore();
-    };
-    window.addEventListener(DESK_FLUSH_EVENT, flush);
-    window.addEventListener(DESK_RESTORE_EVENT, restore);
-    window.addEventListener("storage", restoreFromStorage);
-    window.addEventListener("pagehide", flush);
-    return () => {
-      flush();
-      window.removeEventListener(DESK_FLUSH_EVENT, flush);
-      window.removeEventListener(DESK_RESTORE_EVENT, restore);
-      window.removeEventListener("storage", restoreFromStorage);
-      window.removeEventListener("pagehide", flush);
-    };
-  }, [storageReady]);
 
   useEffect(() => {
     if (!clearArmed) return;
@@ -573,7 +520,7 @@ function NotePad({ locale }: { locale: Locale }) {
   const wordCount = countWords(body, locale);
 
   const updateBody = (value: string) => {
-    setPages((current) => current.map((page, index) => index === activePage ? value.slice(0, 8_000) : page));
+    setNotebook(current => ({ ...current, activePage, pages: current.pages.map((page, index) => index === activePage ? value.slice(0, 8_000) : page) }));
     setClearArmed(false);
   };
 
@@ -620,12 +567,15 @@ function NotePad({ locale }: { locale: Locale }) {
 
   const saveLabel = saveState === "unavailable"
     ? t("Browser storage unavailable")
-    : saveState === "saving"
+    : saveState === "loading"
+      ? t("Loading saved data…")
+      : saveState === "saving"
       ? t("Saving…")
       : t("Saved on this browser");
 
   return (
     <div className={styles.notePad}>
+      <DeskConflicts locale={locale} conflicts={conflicts} dismiss={dismissConflicts} onRestore={setNotebook} />
       <div className={styles.noteToolbar}>
         <button type="button" onClick={insertDate}>{t("Insert date")}</button>
         <button type="button" onClick={downloadPage} disabled={!body}>{t("Save a copy…")}</button>

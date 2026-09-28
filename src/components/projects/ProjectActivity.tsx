@@ -23,7 +23,7 @@ const copy = {
   "Italian practice workbook": ["意大利语练习册", "義大利語練習冊"],
   "Bilingual reading workbook": ["双语阅读练习册", "雙語閱讀練習冊"],
   "Curriculum syllabus": ["课程大纲", "課程大綱"],
-  "Live demo": ["交互演示", "互動示範"],
+  "Interactive demo": ["交互演示", "互動示範"],
   "Project activity navigation": ["项目内容导航", "專案內容導覽"],
   "Loading document…": ["正在加载文档…", "正在載入文件…"],
   "This project activity is unavailable.": ["此项目内容暂不可用。", "此專案內容暫時無法使用。"],
@@ -92,7 +92,7 @@ export default function ProjectActivity({ slug, locale, kind, artifactHref, acti
         <span className={styles.shortBackLabel}>{t("Project")}</span>
       </button>
       {valid && <>
-        <h1 className={styles.title}>{artifact ? documentTitle : `${getProjectText(locale, project!.title)} · ${t("Live demo")}`}</h1>
+        <h1 className={styles.title}>{artifact ? documentTitle : `${getProjectText(locale, project!.title)} · ${t("Interactive demo")}`}</h1>
         <button type="button" className={`s7-button is-share ${styles.shareButton}`} onClick={share}>
           {t(kind === "demo" ? "Share demo" : "Share PDF")}
           <svg className={styles.shareIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1" /><path d="M15 8V4H4v11h4" /></svg>

@@ -39,3 +39,10 @@
   .header, .document[data-embedded="true"] .header { grid-template-columns: 1fr; gap: 16px; }
   .header > div:first-child { width: 72px; }
 }
+
+.secondaryActions { padding: 8px 16px; border-bottom: 1px solid var(--s7-shadow); }
+.secondaryActions summary { cursor: pointer; min-height: 44px; align-content: center; }
+.secondaryActions > div { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 8px; }
+.secondaryActions :is(button, a) { min-height: 44px; }
+@container (max-width: 620px) { .document .toolbar { position: static; } }
+@media (max-height: 650px) { .toolbar { position: static; } }

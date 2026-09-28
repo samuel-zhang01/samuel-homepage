@@ -87,7 +87,7 @@
 
 .viewTabs {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
   padding: 4px 4px 0;
   border: 1px solid var(--ocean-abyss);
@@ -114,7 +114,7 @@
   box-shadow: inset 1px 1px 0 #eef4f4;
 }
 
-.viewTabs button:hover {
+.viewTabs button:hover:not(.activeView) {
   background: #d8e1e1;
 }
 
@@ -152,7 +152,7 @@
   color: #f0f6ef;
 }
 
-.oceanCanvas {
+.financeCanvas {
   min-height: 590px;
   padding: 13px;
   border: 1px solid var(--ocean-abyss);
@@ -370,7 +370,7 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(250px, 0.9fr);
 }
 
-.oceanPanel {
+.financePanel {
   min-width: 0;
   border: 1px solid var(--ocean-line);
   background: rgba(10, 32, 48, 0.94);
@@ -1542,7 +1542,7 @@
 }
 
 @container (max-width: 500px) {
-  .oceanCanvas {
+  .financeCanvas {
     padding: 9px;
   }
 
@@ -1725,3 +1725,28 @@
 
 /* Import identities are a sequential experiment, followed by the separate ledger audit. */
 .importLayout { grid-template-columns: minmax(0, 1fr); }
+
+.wealthHero { padding: 24px; margin-bottom: 16px; border: 1px solid var(--ocean-line); background: radial-gradient(ellipse at top right, #18536a, transparent 70%), var(--ocean-abyss); }
+.wealthHero h2 { margin: 8px 0; color: var(--ocean-foam); font-size: clamp(32px, 6cqi, 56px); font-variant-numeric: tabular-nums; }
+.wealthHero p, .wealthHero small { color: var(--ocean-mist); }
+.wealthHero > div > span { color: var(--ocean-teal); }
+.wealthBreakdown { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
+.wealthAccounts { padding: 10px 14px; }
+.wealthAccounts label { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--ocean-line); }
+.wealthAccounts input { accent-color: var(--ocean-teal); }
+.wealthAccounts strong { margin-left: auto; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.connectionGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.connectionBody { padding: 16px; }
+.connectionBody > strong { font-size: 26px; color: var(--ocean-foam); }
+.connectionBody p, .connectionBody small { color: var(--ocean-mist); }
+.brokerPicker { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+@container (max-width: 600px) {
+  .wealthBreakdown, .connectionGrid { grid-template-columns: minmax(0, 1fr); }
+  .wealthHero { padding: 16px; }
+  .wealthAccounts label { flex-wrap: wrap; }
+}
+
+/* Keep active controls and selected rows readable against the blue surfaces. */
+.viewTabs .activeView span { color: var(--ocean-foam); }
+.financeStudio .ledgerTable .selectedRow :is(strong, small, button, td) { color: var(--ocean-foam); }
+.financeStudio .ledgerTable .selectedRow td { color: var(--ocean-foam) !important; }

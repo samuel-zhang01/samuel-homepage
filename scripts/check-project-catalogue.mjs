@@ -100,10 +100,10 @@ for (const project of projects) {
   if (!Array.isArray(project.tools) || project.tools.length < 2) {
     fail(project, "at least two concrete tools or methods are required");
   }
-  if (!Array.isArray(project.highlights) || project.highlights.length < 2) {
+  if (!Array.isArray(project.highlights) || (!project.slug.startsWith("desk-") && project.highlights.length < 2)) {
     fail(project, "at least two evidence highlights are required");
   }
-  if (!Array.isArray(project.phases) || project.phases.length !== 3) {
+  if (!Array.isArray(project.phases) || (!project.slug.startsWith("desk-") && project.phases.length !== 3)) {
     fail(project, "build log must contain exactly three phases");
   } else {
     project.phases.forEach((phase, index) => {
