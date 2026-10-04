@@ -260,3 +260,52 @@ Implementation commit `c3f462b` deployed successfully through `VERIFY_PUBLIC_ORI
 The new image `sha256:e66f61dd3d015e0941af24a857d62bc583f1fe387fe0d4fa946903f8ba046d1d` is healthy, with build ID `itpLlzYYrdxLoydxLip5F`. Container route probes, HTTP 404 and untrusted-host rejection, security headers and canonical public HTTPS route checks passed. Runtime inspection confirmed that `others`, `docs`, `.git`, `.env` and `.codex` are absent. Public HTTPS and local production expose the same eight compiled script URLs, and all 42 public canonical PNGs match their repository hashes.
 
 Focused Chromium 154 verification passed **eight profiles across all four locales at 1440px and 320px**, covering 16 real CV/GROWMAT canvas renders, PDF source responses, keyboard document selection/zoom/fit/focus/close, bounded layouts and canonical icons in document, desktop-menu and Finder states. Passing profiles recorded no page/console errors or failed responses. The first QA attempt waited indefinitely for an offscreen lazy image to decode and was intentionally stopped; the ignored runner was corrected to check viewport/clipping visibility. Its original machine receipt was overwritten before preservation, so only the observed harness diagnosis is retained in `initial-browser-attempt.txt`. No application change was needed. This focused deployment verification does not replace the historical multi-engine browser matrices.
+
+## Icon visibility and System 7 chrome follow-up
+
+The user's screenshots exposed weak icon silhouettes, small project identities, a generated substitute for the COVERD brand and inconsistent title chrome. An independent judge, a visibility adversary and a chrome/interaction reviewer challenged successive changes. The requested stopping rule was **both visual scores at least 9/10, or 15 evaluated improvement rounds**. The work passed after three improvement rounds and retained its scores on a separate compiled preview.
+
+| Independent screenshot review | Coherence | Visibility | Reason and next improvement |
+| --- | ---: | ---: | --- |
+| Baseline | 7.5 | 6.0 | Wrong COVERD identity and weak compact silhouettes; restore the owned mark and improve useful artwork size. |
+| Round 1 | 8.8 | 8.0 | Brand and framing improved, but short-phone Find actions and the LinkedIn caption were hidden; contain the results and expose all three Contact destinations. |
+| Round 2 | 9.1 | 8.5 | Chrome, Contact and Find became coherent; scrolled 320px graph captions still overlapped in English and Traditional Chinese. |
+| Round 3 | **9.1** | **9.1** | Complete intended graph captions are separated, stable on hover and connected to their markers; no material brand, chrome or readability blocker remains in the reviewed set. |
+| Compiled reconfirmation | **9.1** | **9.1** | The same visual hierarchy and readability hold on the production build. |
+
+Round 3 directly reviewed **22 actual images**, and compiled reconfirmation reviewed **21**. These are representative visual judgments, not scores inferred from image decode counts. The final compiled capture contains 45 UI states, 252 gallery decodes and five scrolled graph supplements. Long secondary Find summaries and switcher names can ellipsize; primary identities and actions remain usable. “Complete intended captions” includes the reviewed UI label **Scientific ML**, not an assertion that every caption expands its longer author-facing subject title.
+
+### Delivered visual changes
+
+- **Original COVERD identity:** every shared identity surface uses the unchanged 512px transparent owned logo. The generated résumé/coin substitute was removed from public assets; its retired generation provenance remains in the manifest.
+- **Consistent optical size:** actual alpha bounds center silhouettes at a 90% span with identical scaling on both axes. All 41 generated 128px subjects remain byte-identical and pixelated. COVERD uses smooth rendering on white. Current delivery is **42 subjects / 165,038 bytes**; no image generation or source-image editing was needed in this follow-up.
+- **Clear hierarchy:** 16px inline/menu, 32px cards/Find/Contact/phone switcher and 48px desktop/primary project headings. Project artwork aligns with the title rather than the metadata. Phone switchers retain visible captions; desktop selection highlights fit the caption.
+- **System 7 title chrome:** centered text and a bounded 14px gray stripe band replace title-bar identity pictures and dense full-height stripes. Active/inactive states, coarse-pointer controls, dragging, zoom and keyboard resizing remain usable. Application identity sits beside the right menu status.
+- **Short-phone layouts:** Find keeps Open/Cancel visible around a scrolling results region. Contact presents all three identities and wrapping captions without a hidden destination. Graph topic captions use collision-aware placement, leaders and stable hover ordering; the legend sits above the canvas rather than covering a caption.
+
+The [updated family sheet](assets/system7-icon-family.png) shows actual component rendering at **16/32/48px**; the [desktop screenshot](assets/desktop.png) comes from the compiled preview. The [artwork guide](PROJECT_ARTWORK.md), [design contract](SYSTEM7_DESIGN_BENCHMARK.md), prompt manifest and agent instructions now describe this final system. Scientific originals, photographs, translations and portfolio evidence were preserved.
+
+### Fresh verification and scope
+
+`npm run check:release` passed on **587 frozen inputs**, including lint, types, source/locale gates, 27 deployment scenarios, 72 request-security fixtures, scientific-media checks, dependency audit, compilation and unchanged output limits. Dependency verification reported **zero vulnerabilities, 307 verified signatures and 58 attestations**. The build generated **88 pages**, with **120 browser files / 5.18 MiB total**, including 257.1 KiB deferred math, **261.5 KiB initial JavaScript gzip**, 2,067 traced files and **4.98 MiB application runtime**. All frozen input hashes matched through the release run. Documentation prose and screenshots were updated afterward; all **225 scored application source hashes** remained unchanged through compiled verification.
+
+| Fresh compiled checks | Result |
+| --- | --- |
+| Canonical icon inventory, three engines × four locales × desktop/320px | **2,280 states**, 47,016 rendered observations, **39,288 visible decodes**, 72 screenshots; zero failed images or page errors. Explicit 250ms navigation pacing retains the historical WebKit qualification. |
+| Chrome, Contact and graph, three engines × English/Traditional Chinese × 1440/390/320px | **54 primary profiles** passed; Contact exercised 54 pointer and 126 keyboard activations. Graph passed 198 states, 198 legend-position checks and 36 exact Products/Data center selections. |
+| Selected graph returned to the canvas | **18 supplemental profiles / 126 states**, 36 further exact center selections; selected and neighboring captions visible. |
+| Find titles, descriptions, aliases, search, footer and focus | **24 profiles** across three engines and four locales; 1,104 visible fields, 552 decodes and 858 search checks. |
+| Find index loading, HTTP failure, retry and no results | **16 Chromium 320×568 cases** across four locales; visible actions/status and restored focus. |
+| Optional Find chunk delay/failure | **8 Chromium cases** at desktop/phone; dismissal, Escape, cleared inert state, no late reopening; axe 4.13.0 reported zero violations or incomplete results. |
+| Routes, delivered assets and HTTP challenges | **680 groups / 1,250 requests**, zero failures; canonical PNG delivery hashes and MIME types matched. |
+| Repository ownership and imports | **225/225 managed sources**, no unresolved imports or unowned public runtime assets. |
+
+The focused engines were Chromium 153.0.8010.12, Firefox 155.0 and WebKit 26.6. Independent final diff review found no actionable correctness or cleanup issue. The new bounds module is a required imported source file, not temporary review material.
+
+Raw receipts, input hashes and screenshots remain under ignored `.codex/reports/visual-harmony/`: `judge-iteration-*.json`, `judge-production-reconfirmation.json`, `strict-release-iteration-3.log`, `final-frozen-inputs.json`, `iteration-3-production/`, and `production/`. Failed frame drafts, pre-freeze graph captures and the helper's initial ambiguous-canvas, localized-label and generated-CSS scope failures remain preserved. Helper corrections did not change application source; passing reruns do not erase those receipts.
+
+Graph selection intentionally scrolls to its details; the selected-caption supplement returns to the canvas before asserting viewport visibility. Synthetic denser layouts can exhaust safe caption centers; the tested **106-node / 387-edge** portfolio passed. Existing genuine-write WebKit quotas, unexplained historical timeouts and native-device/screen-reader qualifications remain applicable. The full historical journey, PDF-worker and native-history matrices were not repeated here.
+
+The retired `public/system7-icons/coverd.png` is absent in both source and compiled output. A direct request for its old URL on the new compiled preview returns **HTTP 200 text/html recovery content**, not a PNG. A never-existent shallow `.png` path reproduces that behavior on both the compiled preview and public HTTPS: extension paths bypass the finite-page middleware check, then invalid two-segment parameters render the recovery component directly. Those routing sources are byte-identical to `HEAD`; this is a pre-existing limitation outside the visual repair, and the audit does not claim the retired URL returns 404. Public HTTPS still returned the old PNG through a **Cloudflare cache HIT**; this is earlier public delivery, not evidence of the new frozen build or the origin-container revision. Raw responses and scope are preserved in `production/routing/qualification.json`, separately from the passing registered-asset crawl.
+
+Git history and `origin/main` record publication of these changes; they have **not been deployed**. The latest deployed implementation remains `c3f462b`, with its deployment evidence recorded through `ef6d106`. Owned review previews are stopped after verification; tracked documentation contains only maintained guides, this audit, the handoff and final screenshot exports. The final publication update changes only these status statements; application and public-asset inputs still match the reviewed build.

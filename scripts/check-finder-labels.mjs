@@ -55,6 +55,8 @@ const { desktopCopy } = load("src/components/desktopCopy.ts");
 const { foldSearch } = load("src/lib/projectSearch.ts");
 const { SYSTEM7_ICONS } = load("src/lib/system7Icons.ts");
 const { applicationIconKinds, projectIconKinds } = load("src/lib/iconIdentity.ts");
+const canonicalPaths = new Set(Object.values(SYSTEM7_ICONS));
+const isCanonicalRequest = url => canonicalPaths.has(new URL(url).pathname);
 const { projects } = load("src/data/projects.ts");
 const settings = applications.find(app => app.id === "settings");
 assert.ok(settings && Object.hasOwn(desktopCopy, settings.title) && Object.hasOwn(desktopCopy, settings.description), "Settings title and description have reviewed desktop copy");
@@ -91,16 +93,31 @@ async function visibleField(field, expected, label) {
 async function resultIcon(row, id) {
   const image = row.locator("img[data-system7-icon]");
   assert.equal(await image.count(), 1, `${id}: one canonical result icon`);
-  await visibleElement(image, `${id}: generated icon`);
+  await visibleElement(image, `${id}: canonical icon`);
   const decoded = await image.evaluate(async node => {
     await node.decode();
     return { kind: node.dataset.system7Icon, source: node.getAttribute("src"), width: node.naturalWidth, height: node.naturalHeight, rendering: getComputedStyle(node).imageRendering };
   });
   assert.equal(decoded.kind, applicationIconKinds[id], `${id}: canonical application kind`);
   assert.equal(decoded.source, SYSTEM7_ICONS[decoded.kind], `${id}: canonical PNG`);
-  assert.equal(decoded.width, 128, `${id}: decoded width`);
-  assert.equal(decoded.height, 128, `${id}: decoded height`);
-  assert.equal(decoded.rendering, "pixelated", `${id}: crisp logical pixels`);
+  const canvas = decoded.kind === "coverd" ? 512 : 128;
+  assert.equal(decoded.width, canvas, `${id}: decoded width`);
+  assert.equal(decoded.height, canvas, `${id}: decoded height`);
+  assert.equal(decoded.rendering, decoded.kind === "coverd" ? "auto" : "pixelated", `${id}: subject-appropriate rendering`);
+}
+async function visibleActions(dialog, label, width) {
+  const geometry = await dialog.locator("footer button").evaluateAll(buttons => {
+    const modal = buttons[0]?.closest("dialog").getBoundingClientRect();
+    return buttons.map(button => {
+      const box = button.getBoundingClientRect();
+      return { text: button.textContent, width: box.width, height: box.height, contained: box.left >= Math.max(0, modal.left) && box.right <= Math.min(innerWidth, modal.right) && box.top >= Math.max(0, modal.top) && box.bottom <= Math.min(innerHeight, modal.bottom) };
+    });
+  });
+  assert.equal(geometry.length, 2, `${label}: both Find actions exist`);
+  for (const action of geometry) {
+    assert.ok(action.contained, `${label}: ${action.text} visible inside dialog and viewport`);
+    assert.ok(action.width >= 44 && action.height >= (width === 320 ? 44 : 30), `${label}: ${action.text} usable target`);
+  }
 }
 async function searchApplications(page, dialog, locale, query, target) {
   const words = foldSearch(query).trim().split(/\s+/u).filter(Boolean);
@@ -126,8 +143,8 @@ try {
     const context = await browser.newContext({ viewport: { width, height: width === 320 ? 568 : 1000 } });
     const page = await context.newPage(); page.setDefaultTimeout(30000);
     page.on("pageerror", error => profile.pageErrors.push(error.stack));
-    page.on("response", response => { if (response.url().includes("/system7-icons/") && response.status() >= 400) profile.failedImages.push({ url: response.url(), status: response.status() }); });
-    page.on("requestfailed", request => { const failure = request.failure()?.errorText ?? ""; if (request.url().includes("/system7-icons/") && !/ERR_ABORTED|NS_BINDING_ABORTED|cancelled|canceled/i.test(failure)) profile.failedImages.push({ url: request.url(), failure }); });
+    page.on("response", response => { if (isCanonicalRequest(response.url()) && response.status() >= 400) profile.failedImages.push({ url: response.url(), status: response.status() }); });
+    page.on("requestfailed", request => { const failure = request.failure()?.errorText ?? ""; if (isCanonicalRequest(request.url()) && !/ERR_ABORTED|NS_BINDING_ABORTED|cancelled|canceled/i.test(failure)) profile.failedImages.push({ url: request.url(), failure }); });
     try {
       await page.goto(`${origin}/${option.slug}/desk`);
       await page.waitForFunction(() => document.documentElement.dataset.reduceEffects !== undefined);
@@ -139,7 +156,9 @@ try {
       await search.waitFor();
       await page.waitForFunction(() => document.activeElement === document.querySelector("#finder-search") && document.querySelector(".desktop-window-layer")?.inert === true);
       assert.equal(await dialog.locator("#finder-results [role=option]").count(), applications.length + projects.length, "Find contains its complete unchanged catalogue");
-      assert.equal(await dialog.locator('img[data-system7-icon="finder"]').count(), 2, "Find title and introduction retain their canonical icon");
+      assert.equal(await dialog.locator('header img[data-system7-icon]').count(), 0, "Find title is centered text without competing artwork");
+      assert.equal(await dialog.locator('img[data-system7-icon="finder"]').count(), 1, "Find introduction retains its canonical icon");
+      await visibleActions(dialog, "Complete catalogue", width);
       for (const app of applications) {
         const row = dialog.locator(`#finder-app-${app.id}`);
         await row.scrollIntoViewIfNeeded();
@@ -161,6 +180,7 @@ try {
       }
       await searchApplications(page, dialog, option.locale, projectText(option.locale, desktopCopy, settings.description), "settings");
       profile.descriptionSearches++;
+      await visibleActions(dialog, "Filtered catalogue", width);
       assert.ok((await search.inputValue()).length > 0, "Escape is exercised with a nonempty search input");
       await page.keyboard.press("Escape");
       await page.waitForFunction(() => !document.querySelector("dialog[open]") && document.querySelector(".desktop-window-layer")?.inert === false && document.activeElement === document.querySelector(".apple-menu"));

@@ -92,6 +92,7 @@ function finderApplications(file) {
 }
 
 const { SYSTEM7_ICONS } = load("src/lib/system7Icons.ts");
+const { SYSTEM7_ICON_BOUNDS } = load("src/lib/system7IconBounds.ts");
 const { System7Icon } = load("src/components/System7Icon.tsx");
 const { ProjectArtwork } = load("src/components/projects/ProjectArtwork.tsx");
 const { projects } = load("src/data/projects.ts");
@@ -102,7 +103,7 @@ const hashes = new Set();
 let totalBytes = 0;
 for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   assert.match(kind, /^[a-z][a-z0-9]*$/, `Invalid icon kind ${kind}`);
-  assert.equal(path, `/system7-icons/${kind}.png`, `${kind}: canonical raster path`);
+  assert.equal(path, kind === "coverd" ? "/coverd-logo-black-on-transparent.png" : `/system7-icons/${kind}.png`, `${kind}: canonical source path`);
   assert.ok(!assets.has(path), `${kind}: another kind already owns this asset`);
   assets.add(path);
   const file = resolve(root, "public", `.${path}`);
@@ -115,16 +116,17 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   totalBytes += bytes.length;
   const metadata = await sharp(bytes).metadata();
   assert.equal(metadata.format, "png", `${kind}: decoded format`);
-  assert.equal(metadata.width, 128, `${kind}: width`);
-  assert.equal(metadata.height, 128, `${kind}: height`);
+  const canvas = kind === "coverd" ? 512 : 128;
+  assert.equal(metadata.width, canvas, `${kind}: width`);
+  assert.equal(metadata.height, canvas, `${kind}: height`);
   assert.equal(metadata.hasAlpha, true, `${kind}: real alpha channel is required`);
   assert.equal(metadata.pages ?? 1, 1, `${kind}: animated icon is unexpected`);
   const { data, info } = await sharp(bytes).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   assert.equal(info.channels, 4, `${kind}: RGBA decode`);
   let transparent = 0, visible = 0;
-  const bounds = [128, 128, -1, -1];
-  for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
-    const alpha = data[(y * 128 + x) * 4 + 3];
+  const bounds = [canvas, canvas, -1, -1];
+  for (let y = 0; y < canvas; y++) for (let x = 0; x < canvas; x++) {
+    const alpha = data[(y * canvas + x) * 4 + 3];
     if (alpha === 0) transparent++;
     // Ignore nearly invisible generation dust, while still rejecting clipped
     // visible artwork or a painted checkerboard pretending to be transparency.
@@ -134,23 +136,27 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
       bounds[2] = Math.max(bounds[2], x); bounds[3] = Math.max(bounds[3], y);
     }
   }
-  assert.ok(transparent >= 128 * 128 * 0.2, `${kind}: insufficient truly transparent exterior`);
-  assert.ok(visible >= 128 * 128 * 0.05, `${kind}: blank or almost invisible image`);
-  assert.ok(bounds[0] >= 4 && bounds[1] >= 4 && bounds[2] <= 123 && bounds[3] <= 123, `${kind}: visible artwork touches its canvas edge (${bounds.join(", ")})`);
+  assert.ok(transparent >= canvas * canvas * 0.2, `${kind}: insufficient truly transparent exterior`);
+  assert.ok(visible >= canvas * canvas * 0.05, `${kind}: blank or almost invisible image`);
+  assert.ok(bounds[0] >= 4 && bounds[1] >= 4 && bounds[2] <= canvas - 5 && bounds[3] <= canvas - 5, `${kind}: visible artwork touches its canvas edge (${bounds.join(", ")})`);
+  assert.deepEqual(SYSTEM7_ICON_BOUNDS[kind], [...bounds, canvas], `${kind}: optical framing bounds must match the actual alpha pixels`);
   for (const miniature of [false, true]) {
     const images = imageProps(System7Icon({ kind, miniature }));
     assert.equal(images.length, 1, `${kind}: one image in ${miniature ? "miniature" : "normal"} mode`);
     const image = images[0];
-    assert.equal(image.src, path, `${kind}: normal and miniature must use the same generated asset`);
+    assert.equal(image.src, path, `${kind}: normal and miniature must use the same canonical asset`);
     assert.equal(image.alt, "", `${kind}: named neighboring text owns the accessible label`);
     assert.equal(String(image["aria-hidden"]), "true", `${kind}: decorative image stays hidden from assistive technology`);
     assert.ok(Number.isFinite(image.width) && image.width > 0 && image.width === image.height, `${kind}: square intrinsic dimensions`);
+    assert.equal(image.style.width, image.style.height, `${kind}: optical framing must preserve aspect ratio`);
+    const scale = parseFloat(image.style.width) / 100;
+    assert.ok(Math.abs(scale * Math.max(bounds[2] - bounds[0] + 1, bounds[3] - bounds[1] + 1) / canvas - .9) < 1e-9, `${kind}: visible maximum span fills 90 percent of its slot`);
   }
 }
 
 const familyFiles = readdirSync(resolve(root, "public/system7-icons"), { withFileTypes: true });
 assert.ok(familyFiles.every(entry => entry.isFile()), "Icon family may not contain directories or symlinks");
-assert.deepEqual(familyFiles.map(entry => `/system7-icons/${entry.name}`).sort(), [...assets].sort(), "Icon directory has unowned files or obsolete SVG variants");
+assert.deepEqual(familyFiles.map(entry => `/system7-icons/${entry.name}`).sort(), [...assets].filter(path => path.startsWith("/system7-icons/")).sort(), "Icon directory has unowned files or obsolete variants");
 
 const desktopFile = "src/components/SystemSevenDesktop.tsx";
 exactKeys(applicationIconKinds, literalUnion(desktopFile, "AppId"), "Application icons");
@@ -249,4 +255,4 @@ for (const file of sourceFiles(resolve(root, "src"))) {
     assert.ok(Object.hasOwn(SYSTEM7_ICONS, kind.initializer.text), `${file}: literal ${kind.initializer.text} icon is missing`);
   });
 }
-console.log(`System 7 icons: ${assets.size} transparent 128×128 PNGs, ${totalBytes} bytes; ${assets.size * 2} normal/miniature renders; ${Object.keys(applicationIconKinds).length} applications, ${projects.length} projects (${nativeProjects} shared application identities), ${Object.keys(arcadeIconKinds).length} games, ${serviceCodes.length} lab and ${contactServices.length} contact services; ${projects.length * 2} project artwork renders; ${finderRenders} Find application renders across ${localeOptions.length} locales; ${literalUses} literal references.`);
+console.log(`System 7 identities: ${assets.size} transparent PNG subjects including the original COVERD brand, ${totalBytes} bytes; verified optical bounds and equal scaling at 90% of the frame; ${assets.size * 2} normal/miniature renders; ${Object.keys(applicationIconKinds).length} applications, ${projects.length} projects (${nativeProjects} shared application identities), ${Object.keys(arcadeIconKinds).length} games, ${serviceCodes.length} lab and ${contactServices.length} contact services; ${projects.length * 2} project artwork renders; ${finderRenders} Find application renders across ${localeOptions.length} locales; ${literalUses} literal references.`);

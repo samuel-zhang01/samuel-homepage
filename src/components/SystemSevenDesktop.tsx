@@ -603,7 +603,6 @@ const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
 
 function WindowChrome({
   windowState,
-  iconKind,
   active,
   onFocus,
   onClose,
@@ -615,7 +614,6 @@ function WindowChrome({
   locale,
 }: {
   windowState: WindowState;
-  iconKind: System7IconKind;
   active: boolean;
   onFocus: () => void;
   onClose: () => void;
@@ -647,7 +645,7 @@ function WindowChrome({
         onDoubleClick={(event) => { if (!(event.target as HTMLElement).closest("button")) onZoom(); }}
       >
         <button type="button" className="window-box window-close" onClick={onClose} aria-label={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} title={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} />
-        <h2><PixelIcon kind={iconKind} small /><span className="window-title">{windowState.title}</span></h2>
+        <h2><span className="window-title">{windowState.title}</span></h2>
         <button
           type="button"
           className="window-box window-zoom"
@@ -1118,7 +1116,11 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
     event.preventDefault();
     const nextService = services[nextIndex];
     setActiveService(nextService);
-    window.requestAnimationFrame(() => document.getElementById(`contact-tab-${nextService}`)?.focus());
+    window.requestAnimationFrame(() => {
+      const tab = document.getElementById(`contact-tab-${nextService}`);
+      tab?.scrollIntoView({ block: "nearest", inline: "nearest" });
+      tab?.focus({ preventScroll: true });
+    });
   };
 
   const copyEmail = async () => {
@@ -3034,7 +3036,6 @@ export default function SystemSevenDesktop({
               </div>
             )}
           </div>
-          <strong className="active-application" title={activeTitle}><span>{activeTitle}</span></strong>
           <div className="menu-root">
             <button ref={(element) => { menuButtonRefs.current.file = element; }} type="button" className={openMenu === "file" ? "is-open" : ""} onClick={() => toggleSystemMenu("file")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "file")} aria-haspopup="menu" aria-controls={openMenu === "file" ? SYSTEM_MENU_ELEMENT_IDS.file : undefined} aria-expanded={openMenu === "file"}>File</button>
             {openMenu === "file" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.file} role="menu" aria-label="File" onKeyDown={(event) => handleSystemMenuKeyDown(event, "file")}><button type="button" role="menuitem" onClick={openFinder} aria-keyshortcuts="Meta+k Control+k">Find…</button><button type="button" role="menuitem" onClick={() => openApp("documents")}>Open Documents…</button><hr /><button type="button" role="menuitem" disabled={!openWindows.length} onClick={closeActive}>Close Window</button></div>}
@@ -3102,6 +3103,10 @@ export default function SystemSevenDesktop({
             title="Open Pocket Calendar"
             onClick={() => openApp("calendar")}
           >{clock}</button>
+          <strong className="active-application" title={activeTitle}>
+            <PixelIcon kind={activeWindow ? windowIcon(activeWindow) : "finder"} small />
+            <span className="active-application__title">{activeTitle}</span>
+          </strong>
         </div>
       </nav>
 
@@ -3126,7 +3131,6 @@ export default function SystemSevenDesktop({
         <WindowChrome
           key={windowState.id}
           windowState={windowState.id === "projectActivity" ? { ...windowState, title: windowTitle(windowState) } : windowState}
-          iconKind={windowIcon(windowState)}
           active={activeId === windowState.id}
           onFocus={() => focusWindow(windowState.id)}
           onClose={() => closeApp(windowState.id)}
@@ -3156,7 +3160,7 @@ export default function SystemSevenDesktop({
       <div inert={mobileGuide || finderOpen} className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
           <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, windowTitle(item))}`}>
-            <PixelIcon kind={windowIcon(item)} small />
+            <PixelIcon kind={windowIcon(item)} />
             <span>{windowTitle(item)}</span>
           </button>
         ))}

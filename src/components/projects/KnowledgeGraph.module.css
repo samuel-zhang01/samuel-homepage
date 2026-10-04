@@ -115,7 +115,7 @@
 .stage { position: relative; width: 100%; height: var(--graph-stage-height); overflow: hidden; background: var(--s7-paper); }
 .canvas { font-family: var(--system-font); display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 .canvas:active { cursor: grabbing; }
-.legend { position: absolute; display: flex; flex-wrap: wrap; gap: 10px; top: 10px; left: 12px; max-width: calc(100% - 24px); padding: 4px 6px; background: #ffffffed; color: #555; font-size: var(--s7-small); pointer-events: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; padding: 8px 12px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-paper); color: var(--s7-muted); font-size: var(--s7-small); pointer-events: none; }
 .stageStatus { position: absolute; right: 12px; bottom: 9px; padding: 2px 4px; background: var(--s7-paper); color: var(--s7-ink); font: var(--s7-small)/1.4 var(--s7-font-text); pointer-events: none; }
 .canvasFallback { position: absolute; top: 30%; left: 10%; width: 80%; color: var(--s7-ink); background: var(--s7-paper); }
 .gestureHelp { margin: 0; padding: 8px 13px; border-top: 1px solid var(--s7-shadow); color: var(--s7-muted); background: var(--s7-surface); font-size: var(--s7-small); }

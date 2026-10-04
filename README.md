@@ -102,7 +102,7 @@ clean black-and-white structure, and familiar visual metaphors.
 
 - Chicago-first window/menu chrome, Geneva-first content and Monaco/Courier
   machine readouts, with language-appropriate CJK fallbacks.
-- 48 × 48 desktop launchers, 32 × 32 document/card/header icons and 16 × 16 inline/menu/navigation artwork.
+- 48 × 48 desktop launchers and primary project heading icons, 32 × 32 card/Find/Contact/phone-switcher icons, and 16 × 16 inline/menu/navigation artwork.
 - Slightly rounded push buttons, square pop-up menus, hard one-pixel relief,
   separate default-action and keyboard-focus rings, and restrained project
   colour. The [System 7 benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes
@@ -141,7 +141,7 @@ Project documents and controls share `src/app/system7.css`: white and warm readi
 
 Future experiences are declared once in the shared profile records with stable evidence and project references. The resolver derives project provenance and graph edges, preserving direct work separately from related later projects. Capabilities and documents declare their supporting references in the same data model. [AGENTS.md](AGENTS.md) directs future agents to the [maintenance workflow](docs/KNOWLEDGE_GRAPH_WORKFLOW.md) for source review, translated copy and profile/graph validation.
 
-Desktop, Finder, app menus, project cards, accessories, arcade and Home Lab share 42 generated System 7 PNG icons, with one image per subject at every size. The [artwork guide](docs/PROJECT_ARTWORK.md) links the complete family, exact generation prompts, identity mappings and unchanged scientific-media sources.
+Desktop, Finder, app menus, project cards, accessories, arcade and Home Lab share 42 canonical subjects: 41 generated System 7 PNGs and COVERD's original owned logo. Measured artwork bounds keep their prominence consistent without stretching. The [artwork guide](docs/PROJECT_ARTWORK.md) links the complete family, generation records, identity mappings and unchanged scientific-media sources.
 
 Mathematical expressions across the project studios use the shared `MathEquation` component with KaTeX 0.18.7 and accessible MathML. Equations retain their source meaning and readable labels; code and pseudocode remain code. The renderer loads on demand, with local CSS and fonts and no CDN dependency. Wide equation panels and aligned long expressions preserve readable typesetting within the System 7 framing.
 

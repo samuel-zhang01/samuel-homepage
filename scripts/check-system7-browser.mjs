@@ -62,6 +62,8 @@ const { projects } = load("src/data/projects.ts");
 const { localeOptions, translateText } = load("src/lib/i18n.ts");
 const { getProjectText } = load("src/lib/projectNarrative.ts");
 const { SYSTEM7_ICONS } = load("src/lib/system7Icons.ts");
+const canonicalPaths = new Set(Object.values(SYSTEM7_ICONS));
+const isCanonicalRequest = url => canonicalPaths.has(new URL(url).pathname);
 const { applicationIconKinds, projectIconKinds, arcadeIconKinds, serviceIconKinds } = load("src/lib/iconIdentity.ts");
 const demoLaunchCopy = documentCopyPair("Open interactive demo");
 const desktopIds = arrayIds("src/components/SystemSevenDesktop.tsx", "DESKTOP_ICONS");
@@ -84,7 +86,7 @@ async function snapshot(page, profile, name) {
 }
 async function inspectIcons(page, profile) {
   const images = await page.locator("img[data-system7-icon]").evaluateAll(nodes => nodes.map(image => ({ kind: image.dataset.system7Icon, source: image.getAttribute("src") })));
-  for (const image of images) assert.equal(image.source, SYSTEM7_ICONS[image.kind], `Rendered ${image.kind} does not use its one generated PNG`);
+  for (const image of images) assert.equal(image.source, SYSTEM7_ICONS[image.kind], `Rendered ${image.kind} does not use its canonical PNG`);
   const legacy = await page.locator('img[src*="/system7-icons/"]:not([data-system7-icon])').count();
   assert.equal(legacy, 0, "An icon bypasses the unified renderer");
   const decoded = await page.locator("img[data-system7-icon]").evaluateAll(async nodes => {
@@ -116,9 +118,10 @@ async function inspectIcons(page, profile) {
   });
   assert.ok(decoded.length > 0, "Every inspected UI state must contain visible decoded icons");
   for (const image of decoded) {
-    assert.equal(image.width, 128, `${image.kind}: decoded width`);
-    assert.equal(image.height, 128, `${image.kind}: decoded height`);
-    assert.equal(image.rendering, "pixelated", `${image.kind}: logical pixels stay crisp`);
+    const canvas = image.kind === "coverd" ? 512 : 128;
+    assert.equal(image.width, canvas, `${image.kind}: decoded width`);
+    assert.equal(image.height, canvas, `${image.kind}: decoded height`);
+    assert.equal(image.rendering, image.kind === "coverd" ? "auto" : "pixelated", `${image.kind}: subject-appropriate rendering`);
     profile.decodedKinds.add(image.kind);
   }
   profile.imageObservations += images.length;
@@ -136,7 +139,8 @@ async function geometry(page, id) {
 async function windowIdentity(page, id, kind) {
   const window = page.locator(`[data-app-id="${id}"]`);
   await window.waitFor();
-  assert.equal(await window.locator(".mac-titlebar h2 img").getAttribute("data-system7-icon"), kind, `${id}: titlebar identity`);
+  assert.equal(await window.locator(".mac-titlebar h2 img").count(), 0, `${id}: System7 titlebar contains only its centered title`);
+  assert.equal(await page.locator(".menu-status .active-application img").getAttribute("data-system7-icon"), kind, `${id}: active application menu identity`);
   assert.equal(await page.locator(".window-switcher button.is-active img").getAttribute("data-system7-icon"), kind, `${id}: application switcher identity`);
   return window;
 }
@@ -175,13 +179,13 @@ try {
     const page = await context.newPage(); page.setDefaultTimeout(30000);
     page.on("pageerror", error => profile.pageErrors.push(error.stack));
     page.on("requestfailed", request => {
-      if (!request.url().includes("/system7-icons/")) return;
+      if (!isCanonicalRequest(request.url())) return;
       const failure = request.failure()?.errorText;
       const entry = { url: request.url(), failure };
       if (/ERR_ABORTED|NS_BINDING_ABORTED|cancelled|canceled/i.test(failure ?? "")) profile.canceledImages.push(entry);
       else profile.failedImages.push(entry);
     });
-    page.on("response", response => { if (response.url().includes("/system7-icons/") && response.status() >= 400) profile.failedImages.push({ url: response.url(), status: response.status() }); });
+    page.on("response", response => { if (isCanonicalRequest(response.url()) && response.status() >= 400) profile.failedImages.push({ url: response.url(), status: response.status() }); });
     try {
       await page.goto(`${origin}/${option.slug}/projects?view=files`, { timeout: 60000 });
       await page.waitForFunction(() => document.documentElement.dataset.reduceEffects !== undefined);

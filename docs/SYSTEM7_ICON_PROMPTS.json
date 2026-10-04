@@ -7,12 +7,14 @@
   },
   "delivery": {
     "subjects": 42,
-    "newGenerations": 31,
+    "newGenerations": 30,
     "preferredOriginalsPreserved": 11,
-    "totalBytes": 149954,
-    "format": "128×128 RGBA PNG, one image per kind at every rendered size",
+    "totalBytes": 165038,
+    "format": "41 transparent128px generated subjects and one original512px COVERD brand; one canonical image per subject",
     "newSpritePreparation": "Nearest-neighbour delivery resize on a logical 32px canvas, with a 24px artwork field and transparent 4px margins; genuine generated alpha preserved",
-    "existingSpritePreparation": "Original transparent 128px delivery files preserved byte for byte"
+    "existingSpritePreparation": "Original transparent 128px delivery files preserved byte for byte",
+    "originalBrandMarks": 1,
+    "presentation": "Measured alpha bounds center artwork at 90% of a square CSS slot with equal scaling; the original brand uses a white backing for contrast in selected states"
   },
   "siteIcons": [
     {
@@ -147,13 +149,23 @@
     },
     {
       "kind": "coverd",
-      "origin": "New built-in image_gen generation",
-      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one pale-grey application dossier, white paper with six small square review marks in two columns, muted-periwinkle top header and a small ochre speech bubble at lower-right suggesting interview evidence; no logo or words. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
-      "generatedFile": "exec-a7ad4b2e-8f24-4bad-beed-58eea31316c1.png",
-      "sourceSha256": "5f6f2531183b667ba9f76eeb4b9adaf1d28e92a712ae4f7cf124110c1a53ab6b",
-      "delivered": "public/system7-icons/coverd.png",
-      "deliveredSha256": "346f8488cc843a517023579924330800a5dc5ce19001abc56d56b3ea61c44607",
-      "bytes": 1802
+      "origin": "Original supplied COVERD logo, preserved byte for byte",
+      "prompt": null,
+      "generatedFile": null,
+      "sourceSha256": "61aa3eb4e7d581aa8e0fb5f0e43965f33c7f969f5e355c6761f3d79f65413267",
+      "delivered": "public/coverd-logo-black-on-transparent.png",
+      "deliveredSha256": "61aa3eb4e7d581aa8e0fb5f0e43965f33c7f969f5e355c6761f3d79f65413267",
+      "bytes": 16886,
+      "retiredGeneratedSubstitute": {
+        "kind": "coverd",
+        "origin": "New built-in image_gen generation",
+        "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one pale-grey application dossier, white paper with six small square review marks in two columns, muted-periwinkle top header and a small ochre speech bubble at lower-right suggesting interview evidence; no logo or words. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+        "generatedFile": "exec-a7ad4b2e-8f24-4bad-beed-58eea31316c1.png",
+        "sourceSha256": "5f6f2531183b667ba9f76eeb4b9adaf1d28e92a712ae4f7cf124110c1a53ab6b",
+        "delivered": "public/system7-icons/coverd.png",
+        "deliveredSha256": "346f8488cc843a517023579924330800a5dc5ce19001abc56d56b3ea61c44607",
+        "bytes": 1802
+      }
     },
     {
       "kind": "document",

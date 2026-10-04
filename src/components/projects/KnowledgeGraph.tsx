@@ -321,6 +321,80 @@ function graphConnectionText(locale: Locale, edge: (typeof graph.edges)[number])
   return translateGraph(locale, edge.explanation);
 }
 
+type GraphCaption = { point: ProjectedNode; text: string; font: string; width: number; priority: boolean };
+type PlacedGraphCaption = GraphCaption & { x: number; y: number };
+
+function placeGraphCaptions(captions: GraphCaption[], width: number, height: number, pickable: ProjectedNode[]) {
+  const placed: PlacedGraphCaption[] = [];
+  const required = captions.filter(({ point, priority }) => priority || point.node.kind === "topic");
+  const optional = captions.filter(({ point, priority }) => !priority && point.node.kind !== "topic");
+  const fits = (x: number, y: number, w: number) => !placed.some((box) => x < box.x + box.width + 4 && x + w + 4 > box.x && y < box.y + 27 && y + 27 > box.y);
+  const centerSafe = (caption: GraphCaption, x: number, y: number) => !pickable.some((other) => other.node.id !== caption.point.node.id && Math.hypot(other.x - x - caption.width / 2, other.y - y - 11.5) <= Math.max(other.radius + 7, 14));
+  const coveredMarkers = (caption: GraphCaption, x: number, y: number) => pickable.filter((other) => other.node.id !== caption.point.node.id && Math.hypot(other.x - clamp(other.x, x, x + caption.width), other.y - clamp(other.y, y, y + 23)) < other.radius + 1).length;
+  const locate = (caption: GraphCaption, expand: boolean) => {
+    const { point, width: w } = caption;
+    const constrain = (x: number, y: number) => ({ x: clamp(x, 6, width - w - 6), y: clamp(y, 28, height - 51) });
+    const candidates = [
+      constrain(point.x - w / 2, point.y + point.radius + 6),
+      constrain(point.x - w / 2, point.y - point.radius - 30),
+      constrain(point.x + point.radius + 8, point.y - 12),
+      constrain(point.x - point.radius - w - 8, point.y - 12),
+    ];
+    const near = candidates.find(({ x, y }) => fits(x, y, w) && centerSafe(caption, x, y) && coveredMarkers(caption, x, y) === 0);
+    if (near || !expand) return near;
+
+    // Search beyond the four immediate sides rather than forcing an overlap.
+    // Include existing caption edges so wide translated names can use gaps.
+    const columns = new Set([6, width - w - 6, ...candidates.map(({ x }) => x), ...placed.flatMap((box) => [box.x - w - 4, box.x + box.width + 4])]);
+    const rows = new Set(candidates.map(({ y }) => y));
+    for (let y = 28; y <= height - 51; y += 27) rows.add(y);
+    let best: { x: number; y: number; score: number } | undefined;
+    for (const y of rows) for (const column of columns) {
+      const x = clamp(column, 6, width - w - 6);
+      if (!fits(x, y, w) || !centerSafe(caption, x, y)) continue;
+      const score = Math.hypot(x + w / 2 - point.x, y + 11.5 - point.y) + coveredMarkers(caption, x, y) * 35;
+      if (!best || score < best.score) best = { x, y, score };
+    }
+    return best;
+  };
+
+  for (const caption of required) {
+    const location = locate(caption, true);
+    if (location) placed.push({ ...caption, ...location });
+    else {
+      // A dense rotated view still needs every subject name. A reserved row
+      // for each required caption guarantees separation at the stage sizes.
+      const ordered = [...required].sort((a, b) => a.point.y - b.point.y || a.point.x - b.point.x);
+      const top = Math.max(28, (height - ordered.length * 29 + 6) / 2);
+      const bandTops = new Set([top]);
+      for (let offset = 28; offset <= height - 28 - ordered.length * 29 + 6; offset += 4) bandTops.add(offset);
+      let reserved: PlacedGraphCaption[] | undefined;
+      for (const bandTop of bandTops) {
+        const rows: PlacedGraphCaption[] = [];
+        for (const entry of ordered) {
+          const y = bandTop + rows.length * 29;
+          const columns = [clamp(entry.point.x - entry.width / 2, 6, width - entry.width - 6), width - entry.width - 6];
+          for (let x = 6; x <= width - entry.width - 6; x += 8) columns.push(x);
+          const x = columns.find((column) => centerSafe(entry, column, y));
+          if (x === undefined) break;
+          rows.push({ ...entry, x, y });
+        }
+        if (rows.length === ordered.length) { reserved = rows; break; }
+      }
+      // If markers occupy every feasible center, names remain readable while
+      // the original node-first picker continues to protect those node targets.
+      reserved ??= ordered.map((entry, index) => ({ ...entry, x: clamp(entry.point.x - entry.width / 2, 6, width - entry.width - 6), y: top + index * 29 }));
+      placed.splice(0, placed.length, ...reserved);
+      break;
+    }
+  }
+  for (const caption of optional) {
+    const location = locate(caption, false);
+    if (location) placed.push({ ...caption, ...location });
+  }
+  return placed;
+}
+
 
 type Props = {
   active: boolean; locale: Locale; initialNode?: string;
@@ -540,33 +614,38 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     }
     context.globalAlpha = 1;
     const canvasFont = window.getComputedStyle(canvas).fontFamily;
-    const labelBoxes: { x: number; y: number; w: number; h: number }[] = [];
-    const labelled = [...points].sort((a, b) => Number(b.node.id === selectedId || b.node.id === hoverId) - Number(a.node.id === selectedId || a.node.id === hoverId) || Number(b.node.kind === "topic") - Number(a.node.kind === "topic"));
+    const captions: GraphCaption[] = [];
+    // Hover highlights a subject without moving its caption away from the
+    // pointer. The selected node leads; topic ordering otherwise stays stable.
+    const labelled = [...points].sort((a, b) => Number(b.node.id === selectedId) - Number(a.node.id === selectedId)
+      || Number(b.node.kind === "topic") - Number(a.node.kind === "topic")
+      || (a.node.kind === "topic" && b.node.kind === "topic" ? 0 : Number(b.node.id === hoverId) - Number(a.node.id === hoverId)));
     for (const point of labelled) {
       const visibility = scene.opacity.get(point.node.id) ?? 0;
       if (visibility < .2) continue;
-      context.globalAlpha = visibility;
       const priority = point.node.id === selectedId || point.node.id === hoverId;
       if (!priority && point.node.kind !== "topic" && !(local && neighbourIds.has(point.node.id))) continue;
       const full = t(point.node.shortLabel);
-      const label = full.length > 31 && !priority ? `${full.slice(0, 29)}…` : full;
-      context.font = `${priority || point.node.kind === "topic" ? "600" : "400"} ${point.node.kind === "topic" ? 15 : 13}px ${canvasFont}`;
+      const label = full.length > 31 && !priority && point.node.kind !== "topic" ? `${full.slice(0, 29)}…` : full;
+      const font = `${priority || point.node.kind === "topic" ? "600" : "400"} ${point.node.kind === "topic" ? 15 : 13}px ${canvasFont}`;
+      context.font = font;
       const maxWidth = Math.max(80, size.width - 24);
       const w = Math.min(context.measureText(label).width + 12, maxWidth);
-      const candidates = [
-        { x: point.x - w / 2, y: point.y + point.radius + 8 },
-        { x: point.x - w / 2, y: point.y - point.radius - 28 },
-        { x: point.x + point.radius + 8, y: point.y - 10 },
-        { x: point.x - point.radius - w - 8, y: point.y - 10 },
-      ].map((place) => ({ x: clamp(place.x, 6, size.width - w - 6), y: clamp(place.y, 8, size.height - 25) }));
-      const available = candidates.find(({ x, y }) => !labelBoxes.some((box) => x < box.x + box.w + 4 && x + w + 4 > box.x && y < box.y + box.h + 3 && y + 26 > box.y));
-      if (!priority && !available && point.node.kind !== "topic") continue;
-      const { x, y } = available ?? candidates[0];
-      labelBoxes.push({ x, y, w, h: 23 });
-      point.labelBounds = { x, y: y - 2, width: w, height: 23 };
-      context.fillStyle = priority ? "#dddddd" : "#ffffffed"; context.fillRect(x, y - 2, w, 23);
+      captions.push({ point, text: label, font, width: w, priority });
+    }
+    for (const { point, text, font, width: w, priority, x, y } of placeGraphCaptions(captions, size.width, size.height, projectedRef.current)) {
+      context.globalAlpha = scene.opacity.get(point.node.id) ?? 0;
+      const endX = clamp(point.x, x, x + w), endY = clamp(point.y, y, y + 23);
+      const distance = Math.hypot(endX - point.x, endY - point.y);
+      if (distance > point.radius + 5) {
+        context.strokeStyle = "#777777"; context.lineWidth = 1;
+        context.beginPath(); context.moveTo(point.x + (endX - point.x) * point.radius / distance, point.y + (endY - point.y) * point.radius / distance); context.lineTo(endX, endY); context.stroke();
+      }
+      point.labelBounds = { x, y, width: w, height: 23 };
+      context.fillStyle = priority ? "#dddddd" : "#ffffffed"; context.fillRect(x, y, w, 23);
       context.fillStyle = priority || point.node.kind === "topic" ? "#000000" : "#333333";
-      context.textBaseline = "top"; context.fillText(label, x + 6, y + 2, maxWidth - 12);
+      context.font = font;
+      context.textBaseline = "top"; context.fillText(text, x + 6, y + 4, w - 12);
     }
   }, [active, camera, flat, hoverId, local, neighbourIds, scene, selectedId, shown, size, t]);
 
@@ -600,6 +679,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
           {selected && <button className="mac-button" onClick={() => setLocal((value) => !value)}>{t(local ? "Show all work" : "Focus connections")}</button>}
           <button className="mac-button" onClick={() => { if (timelineRef.current) { timelineRef.current.open = true; timelineRef.current.scrollIntoView({ block: "start" }); } }}>{t("Projects along the timeline")} ↓</button>
         </div>
+        <div className={styles.legend}><span>● {t("Topics")}</span><span>● {t("Projects")}</span><span>◇ {t("Work & education")}</span><span>● {t("Skills")}</span><span>□ {t("Documents")}</span>{selected && <span>· {t("Methods")}</span>}</div>
         <div className={styles.stage} ref={stageRef}>
           <canvas ref={canvasRef} aria-hidden="true" className={styles.canvas}
             onPointerDown={(event) => { stopMotion(); displayScene({ ...sceneRef.current, opacity }); drag.current = { x: event.clientX, y: event.clientY, camera: sceneRef.current.camera, moved: false, pan: event.shiftKey || flat }; event.currentTarget.setPointerCapture(event.pointerId); }}
@@ -618,7 +698,6 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
             }}
             onPointerCancel={() => { drag.current = null; }} onPointerLeave={() => setHoverId(null)} />
           {!canvasReady && <p className={styles.canvasFallback}>{t("Select a node to read about it and follow its connections.")}</p>}
-          <div className={styles.legend}><span>● {t("Topics")}</span><span>● {t("Projects")}</span><span>◇ {t("Work & education")}</span><span>● {t("Skills")}</span><span>□ {t("Documents")}</span>{selected && <span>· {t("Methods")}</span>}</div>
           <div className={styles.stageStatus}>{flat ? "2D" : "3D"} · {shown.size} {t("visible nodes")}</div>
         </div>
         <p className={styles.gestureHelp}>{t(flat ? "Drag to pan. Use + / − to zoom. All connections are also available in the list." : "Drag to rotate. Shift-drag to pan. Use + / − to zoom. All connections are also available in the list.")}</p>

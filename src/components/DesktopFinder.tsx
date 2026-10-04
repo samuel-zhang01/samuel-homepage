@@ -191,7 +191,7 @@ export default function DesktopFinder({
     >
       <header className={styles.titlebar}>
         <button type="button" className={styles.closeBox} aria-label={t("Close Find")} onClick={onClose} />
-        <h2 id="finder-title"><span className={styles.titleIcon} aria-hidden="true"><System7Icon kind="finder" miniature /></span>{t("Find…")}</h2>
+        <h2 id="finder-title">{t("Find…")}</h2>
         <span aria-hidden="true" />
       </header>
       <div className={styles.body}>

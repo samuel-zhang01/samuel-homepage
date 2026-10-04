@@ -1,4 +1,4 @@
-// One generated image per subject, shared by desktop, menu and document views.
+// One image per subject, shared by desktop, menu and document views.
 // Size belongs to the containing control; it never selects alternate artwork.
 export const SYSTEM7_ICONS = {
   profile: "/system7-icons/profile.png",
@@ -40,7 +40,7 @@ export const SYSTEM7_ICONS = {
   book: "/system7-icons/book.png",
   mri: "/system7-icons/mri.png",
   flow: "/system7-icons/flow.png",
-  coverd: "/system7-icons/coverd.png",
+  coverd: "/coverd-logo-black-on-transparent.png",
   videomate: "/system7-icons/videomate.png",
   finder: "/system7-icons/finder.png",
 } as const;

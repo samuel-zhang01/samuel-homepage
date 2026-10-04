@@ -80,12 +80,10 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
     </details>
     {shareFallback && <label className={styles.shareFallback}>{t("Project link")}<input readOnly value={shareFallback} onFocus={event => event.target.select()} /></label>}
     <header className={styles.header}>
-      <ProjectArtwork project={project} />
-      <div><p className={styles.context}>{getProjectText(locale, project.area)} · {project.year === "ONGOING" ? t("Ongoing") : project.year}</p>
-        <h1>{getProjectText(locale, project.title)}</h1>
+      <p className={styles.context}>{getProjectText(locale, project.area)} · {project.year === "ONGOING" ? t("Ongoing") : project.year}</p>
+      <div className={styles.titleRow}><ProjectArtwork project={project} /><h1>{getProjectText(locale, project.title)}</h1></div>
         <p className={styles.summary}>{getProjectText(locale, project.summary)}</p>
         <p className={styles.tools}>{project.tools.map(tool => getProjectText(locale, tool)).join(" · ")}</p>
-      </div>
     </header>
     {(project.websiteUrl || project.artifacts?.some(artifact => artifact !== primaryPdf) || project.sourceUrl || project.systemApp) && <nav className={styles.materials} aria-label={t("Project materials")}>
       {project.systemApp && <button className="s7-button is-primary" onClick={() => onOpenApp(project.systemApp!)}>{t("Open application")} ↗</button>}
