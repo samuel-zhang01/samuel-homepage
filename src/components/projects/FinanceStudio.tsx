@@ -1,6 +1,7 @@
 "use client";
 
 import ClassicSelect from "../ClassicSelect";
+import { System7Icon } from "../System7Icon";
 
 import { useMemo, useState, type ReactNode } from "react";
 
@@ -1003,7 +1004,7 @@ export function FinanceStudio() {
       }
     >
       <div className={styles.privacyBanner} role="note">
-        <span aria-hidden="true">◈</span>
+        <span className={styles.privacyIcon} aria-hidden="true"><System7Icon kind="shield" /></span>
         <div><strong>Example accounts and transactions</strong><p>Explore Ledger’s connected-finance workflow with fictional balances. No live bank connections or private data.</p></div>
         <code>Lunch Flow + SnapTrade + PDF / CSV</code>
       </div>

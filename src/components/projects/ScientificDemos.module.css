@@ -46,6 +46,13 @@
   font-weight: 700;
 }
 
+.noteArtwork {
+  display: block;
+  width: var(--s7-icon-document);
+  height: var(--s7-icon-document);
+  flex: 0 0 var(--s7-icon-document);
+}
+
 .evidenceNote strong {
   display: block;
   margin: 0 0 2px;

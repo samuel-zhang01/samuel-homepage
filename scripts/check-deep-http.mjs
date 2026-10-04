@@ -249,7 +249,7 @@ try {
       assert.equal(response.headers["x-content-type-options"], "nosniff");
     });
   }
-  for (const query of ["url=https%3A%2F%2Fexample.org%2Fphoto.jpg&w=256&q=75", "url=%2Ffavicon.svg&w=256&q=75", "url=%2Fheadshot.jpg&w=3&q=75", "url=%2Fheadshot.jpg&w=256&q=90", "url=%2Fheadshot.jpg&w=256&q=500"]) {
+  for (const query of ["url=https%3A%2F%2Fexample.org%2Fphoto.jpg&w=256&q=75", "url=%2Ffavicon.png&w=256&q=75", "url=%2Fproject-art%2Fmicrorobot.webp&w=256&q=75", "url=%2Fproject-art%2Fneural-cfd.webp&w=256&q=75", "url=%2Fproject-art%2Ffinance.webp&w=256&q=75", "url=%2Fheadshot.jpg&w=3&q=75", "url=%2Fheadshot.jpg&w=256&q=90", "url=%2Fheadshot.jpg&w=256&q=500"]) {
     await runGroup("challenges", `image optimizer rejects unreviewed source/width/quality: ${query}`, async () => {
       const response = await request(`/_next/image?${query}`);
       assert.equal(response.status, 400);

@@ -1,18 +1,46 @@
 import type { Project, ProjectArea } from "./projects";
 import type { ProjectOrigin } from "./projectOrigins";
 
-export type KnowledgeKind = "topic" | "method" | "project" | "experience";
+export type KnowledgeKind = "topic" | "method" | "project" | "experience" | "education" | "skill" | "document";
+export type KnowledgeSource = { id: string; title: string; href: string };
 export type KnowledgeNode = {
   id: string; kind: KnowledgeKind; label: string; shortLabel: string;
   description: string; colour: string; topic: string;
-  slug?: string; section?: "experience" | "education"; anchor?: string; period?: string;
+  slug?: string; section?: "experience" | "education" | "skills" | "documents";
+  anchor?: string; period?: string; artifactHref?: string; projectSlug?: string;
+  /** Source records are public citations, never private file paths. */
+  sources?: KnowledgeSource[];
 };
 export type KnowledgeEdge = {
   id: string; source: string; target: string;
-  relation: "explores" | "uses" | "part-of" | "developed-in" | "related-context";
+  relation: "explores" | "uses" | "part-of" | "developed-in" | "related-context"
+    | "evidenced-by" | "practised-in" | "concerns" | "documents" | "supports-record" | "covers";
   explanation: string;
+  sourceIds?: string[];
 };
-export type KnowledgeGraphData = { version: 1; nodes: KnowledgeNode[]; edges: KnowledgeEdge[] };
+export type KnowledgeGraphData = { version: 2; nodes: KnowledgeNode[]; edges: KnowledgeEdge[] };
+/** Structural inputs keep the builder independent of rendering and localisation.
+ * Stable IDs and explicit references are the extension API for future agents. */
+export type KnowledgeSkillRecord = {
+  id: string; title: string; description: string;
+  projectSlugs: readonly string[]; originIds: readonly string[];
+  relatedProjectSlugs?: readonly string[];
+  conceptIds: readonly string[]; sourceIds: readonly string[];
+};
+export type KnowledgeDocumentRecord = {
+  id: string; title: string; description: string; src: string;
+  projectSlug?: string; originIds?: readonly string[]; sourceIds: readonly string[];
+};
+export type KnowledgeProfileRecord = {
+  id: string; label: string; description: string; section: "experience" | "education";
+  period?: string; sourceIds: readonly string[]; conceptIds?: readonly string[];
+};
+export type KnowledgeProfileData = {
+  skills?: readonly KnowledgeSkillRecord[];
+  documents?: readonly KnowledgeDocumentRecord[];
+  records?: readonly KnowledgeProfileRecord[];
+  sources?: readonly KnowledgeSource[];
+};
 type Topic = { id: string; label: string; shortLabel: string; description: string; colour: string };
 type Method = { id: string; label: string; topic: string; description: string };
 
@@ -98,25 +126,60 @@ export const projectConcepts: Record<string, string[]> = {
 
 const areaFallback: Record<ProjectArea, string> = { Products: "products", "Applied AI": "decisions", "Machine Learning": "data-science", Research: "scientific-ml", Systems: "infrastructure", Education: "products" };
 
-export function buildKnowledgeGraph(catalogue: Project[], origins: ProjectOrigin[]): KnowledgeGraphData {
+export function buildKnowledgeGraph(catalogue: Project[], origins: ProjectOrigin[], profile: KnowledgeProfileData = {}): KnowledgeGraphData {
   const nodes: KnowledgeNode[] = knowledgeTopics.map((topic) => ({ ...topic, id: `topic:${topic.id}`, kind: "topic", topic: topic.id }));
   const edges: KnowledgeEdge[] = [];
   const edgeIds = new Set<string>();
+  const nodeIds = new Set(nodes.map((node) => node.id));
+  const nodeMap = new Map(nodes.map(node => [node.id, node]));
   const topicMap = new Map(knowledgeTopics.map((topic) => [topic.id, topic]));
   const methodMap = new Map(knowledgeMethods.map((method) => [method.id, method]));
-  const addEdge = (source: string, target: string, relation: KnowledgeEdge["relation"], explanation: string) => {
+  const sourceMap = new Map((profile.sources ?? []).map((source) => [source.id, source]));
+  if (sourceMap.size !== (profile.sources ?? []).length) throw new Error("Duplicate knowledge source ID");
+  const sourceRecords = (ids: readonly string[]) => [...new Set(ids)].map((id) => {
+    const source = sourceMap.get(id);
+    if (!source) throw new Error(`Unknown knowledge source ${id}`);
+    if (!/^(?:https:\/\/|\/(?!\/))/.test(source.href)) throw new Error(`Invalid public knowledge source URL: ${id}`);
+    return { id: source.id, title: source.title, href: source.href };
+  });
+  const addNode = (node: KnowledgeNode) => {
+    if (nodeIds.has(node.id)) throw new Error(`Duplicate knowledge node ${node.id}`);
+    nodeIds.add(node.id); nodeMap.set(node.id, node); nodes.push(node);
+  };
+  const addEdge = (source: string, target: string, relation: KnowledgeEdge["relation"], explanation: string, sourceIds?: readonly string[]) => {
+    if (!nodeIds.has(source) || !nodeIds.has(target)) throw new Error(`Unknown knowledge reference ${source} → ${target}`);
     const id = `${source}~${relation}~${target}`;
-    if (!edgeIds.has(id)) { edgeIds.add(id); edges.push({ id, source, target, relation, explanation }); }
+    if (!edgeIds.has(id)) {
+      edgeIds.add(id);
+      edges.push({ id, source, target, relation, explanation, ...(sourceIds?.length ? { sourceIds: sourceRecords(sourceIds).map((record) => record.id) } : {}) });
+    }
+  };
+  const conceptTopic = (concept: string) => {
+    if (topicMap.has(concept)) return concept;
+    const method = methodMap.get(concept);
+    if (!method) throw new Error(`Unknown knowledge concept ${concept}`);
+    return method.topic;
+  };
+  const linkConcepts = (id: string, concepts: readonly string[], explanation: string, sourceIds?: readonly string[]) => {
+    for (const concept of concepts) {
+      const topic = conceptTopic(concept);
+      addEdge(id, `topic:${topic}`, "concerns", explanation, sourceIds);
+      if (methodMap.has(concept)) addEdge(id, `method:${concept}`, "concerns", explanation, sourceIds);
+    }
   };
   for (const method of knowledgeMethods) {
-    nodes.push({ ...method, id: `method:${method.id}`, kind: "method", shortLabel: method.label, colour: topicMap.get(method.topic)!.colour });
+    addNode({ ...method, id: `method:${method.id}`, kind: "method", shortLabel: method.label, colour: topicMap.get(method.topic)!.colour });
     addEdge(`method:${method.id}`, `topic:${method.topic}`, "part-of", method.description);
   }
+  const projectMap = new Map<string, KnowledgeNode>();
+  const conceptsByProject = new Map<string, readonly string[]>();
   for (const project of catalogue) {
-    const concepts = project.concepts ?? projectConcepts[project.slug] ?? [areaFallback[project.area]];
-    const topic = topicMap.has(concepts[0]) ? concepts[0] : methodMap.get(concepts[0])?.topic ?? areaFallback[project.area];
+    const declared = project.concepts ?? projectConcepts[project.slug] ?? [];
+    const concepts = declared.length ? declared : [areaFallback[project.area]];
+    const topic = conceptTopic(concepts[0]);
     const id = `project:${project.slug}`;
-    nodes.push({ id, kind: "project", label: project.title, shortLabel: project.shortTitle ?? project.title, description: project.summary, slug: project.slug, period: project.year, topic, colour: topicMap.get(topic)!.colour });
+    const node: KnowledgeNode = { id, kind: "project", label: project.title, shortLabel: project.shortTitle ?? project.title, description: project.summary, slug: project.slug, period: project.year, topic, colour: topicMap.get(topic)!.colour };
+    addNode(node); projectMap.set(project.slug, node); conceptsByProject.set(project.slug, concepts);
     for (const concept of concepts) {
       if (topicMap.has(concept)) addEdge(id, `topic:${concept}`, "explores", project.summary);
       else if (methodMap.has(concept)) {
@@ -126,18 +189,101 @@ export function buildKnowledgeGraph(catalogue: Project[], origins: ProjectOrigin
       } else throw new Error(`Unknown knowledge concept ${concept} on ${project.slug}`);
     }
   }
-  for (const origin of origins) {
-    const linked = nodes.filter((node) => node.slug && origin.projects.includes(node.slug));
-    if (!linked.length) continue;
-    const topic = linked[0].topic;
-    const id = `experience:${origin.id}`;
-    nodes.push({ id, kind: "experience", label: origin.label, shortLabel: origin.label.split(" · ")[0], description: origin.context, section: origin.section, anchor: origin.id, period: origin.period, topic, colour: "#303030" });
-    for (const project of linked) {
-      const related = !!project.slug && !!origin.relatedProjects?.includes(project.slug);
-      addEdge(project.id, id, related ? "related-context" : "developed-in", origin.context);
-    }
+  const profileRecords = new Map((profile.records ?? []).map((record) => [record.id, record]));
+  if (profileRecords.size !== (profile.records ?? []).length) throw new Error("Duplicate knowledge profile record ID");
+  const originMap = new Map(origins.map((origin) => [origin.id, origin]));
+  if (originMap.size !== origins.length) throw new Error("Duplicate knowledge origin ID");
+  for (const origin of origins) for (const slug of origin.relatedProjects ?? []) {
+    if (!origin.projects.includes(slug)) throw new Error(`Related knowledge project ${slug} missing from ${origin.id}`);
   }
-  return { version: 1, nodes, edges };
+  const recordsBySource = new Map<string, Set<string>>();
+  const skillsBySource = new Map<string, Set<KnowledgeSkillRecord>>();
+  const indexSource = <T,>(index: Map<string, Set<T>>, sourceIds: readonly string[], record: T) => {
+    for (const sourceId of sourceIds) {
+      const entries = index.get(sourceId) ?? new Set<T>();
+      entries.add(record); index.set(sourceId, entries);
+    }
+  };
+  // Retain existing experience: IDs, including education, so shared links survive.
+  for (const recordId of new Set([...originMap.keys(), ...profileRecords.keys()])) {
+    const origin = originMap.get(recordId), record = profileRecords.get(recordId);
+    if (origin && record && origin.section !== record.section) throw new Error(`Conflicting knowledge section ${recordId}`);
+    const section = record?.section ?? origin!.section;
+    const label = record?.label ?? origin!.label;
+    const description = record?.description ?? origin!.context;
+    const sourceIds = record?.sourceIds ?? [];
+    indexSource(recordsBySource, sourceIds, recordId);
+    const firstProject = origin?.projects.map((slug) => projectMap.get(slug)).find(Boolean);
+    const concepts = record?.conceptIds ?? [];
+    const topic = concepts.length ? conceptTopic(concepts[0]) : firstProject?.topic ?? "human-systems";
+    const id = `experience:${recordId}`;
+    addNode({ id, kind: section, label, shortLabel: label.split(" · ")[0], description, section, anchor: recordId, period: record?.period ?? origin?.period, topic, colour: "#303030", sources: sourceRecords(sourceIds) });
+    if (origin) for (const slug of origin.projects) {
+      const project = projectMap.get(slug);
+      if (!project) throw new Error(`Unknown knowledge project ${slug} on ${origin.id}`);
+      const related = !!origin.relatedProjects?.includes(slug);
+      addEdge(project.id, id, related ? "related-context" : "developed-in", origin.context, sourceIds);
+      // Only direct provenance supports subjects practised during a record.
+      if (!related) for (const concept of conceptsByProject.get(slug) ?? []) {
+        addEdge(id, `topic:${conceptTopic(concept)}`, "covers", origin.context, sourceIds);
+      }
+    }
+    linkConcepts(id, concepts, description, sourceIds);
+  }
+  for (const skill of profile.skills ?? []) {
+    indexSource(skillsBySource, skill.sourceIds, skill);
+    if (!skill.projectSlugs.length && !skill.originIds.length && !skill.sourceIds.length) throw new Error(`Knowledge skill lacks evidence: ${skill.id}`);
+    const directProjectSlugs = new Set(skill.projectSlugs);
+    const linkedProjects = skill.projectSlugs.map((slug) => {
+      const node = projectMap.get(slug);
+      if (!node) throw new Error(`Unknown knowledge project ${slug} on skill ${skill.id}`);
+      return node;
+    });
+    const relatedProjects = (skill.relatedProjectSlugs ?? []).map((slug) => {
+      if (directProjectSlugs.has(slug)) throw new Error(`Conflicting skill project evidence ${skill.id}: ${slug}`);
+      const node = projectMap.get(slug);
+      if (!node) throw new Error(`Unknown knowledge project ${slug} on skill ${skill.id}`);
+      return node;
+    });
+    const topic = skill.conceptIds.length ? conceptTopic(skill.conceptIds[0]) : linkedProjects[0]?.topic ?? "human-systems";
+    const id = `skill:${skill.id}`;
+    addNode({ id, kind: "skill", label: skill.title, shortLabel: skill.title, description: skill.description, section: "skills", anchor: skill.id, topic, colour: topicMap.get(topic)!.colour, sources: sourceRecords(skill.sourceIds) });
+    for (const project of linkedProjects) addEdge(id, project.id, "evidenced-by", skill.description, skill.sourceIds);
+    for (const project of relatedProjects) addEdge(id, project.id, "related-context", skill.description, skill.sourceIds);
+    for (const originId of skill.originIds) addEdge(id, `experience:${originId}`, "practised-in", skill.description, skill.sourceIds);
+    linkConcepts(id, skill.conceptIds, skill.description, skill.sourceIds);
+  }
+  // A source identifies the PDF itself only when its public URL does. A shared
+  // case-study citation can describe several attachments and is not sufficient.
+  const sourceIdentity = (href: string) => {
+    const url = new URL(href, "https://portfolio.invalid");
+    url.hash = "";
+    if (href.startsWith("/")) url.searchParams.delete("v"); // Known local PDF cache revision.
+    return url.href;
+  };
+  const sourceIdentities = new Map([...sourceMap].map(([id, source]) => [id, sourceIdentity(source.href)]));
+  for (const document of profile.documents ?? []) {
+    const project = document.projectSlug ? projectMap.get(document.projectSlug) : undefined;
+    if (document.projectSlug && !project) throw new Error(`Unknown knowledge project ${document.projectSlug} on document ${document.id}`);
+    if (!/\.pdf(?:[?#]|$)/i.test(document.src) || !/^(?:https:\/\/|\/(?!\/))/.test(document.src)) throw new Error(`Invalid public knowledge document URL: ${document.id}`);
+    const firstOrigin = document.originIds?.map((originId) => nodeMap.get(`experience:${originId}`)).find(Boolean);
+    const topic = project?.topic ?? firstOrigin?.topic ?? "human-systems";
+    const id = `document:${document.id}`;
+    addNode({ id, kind: "document", label: document.title, shortLabel: document.title, description: document.description, section: "documents", anchor: document.id, topic, colour: topicMap.get(topic)!.colour, artifactHref: document.src, projectSlug: document.projectSlug, sources: sourceRecords(document.sourceIds) });
+    if (project) addEdge(id, project.id, "documents", document.description, document.sourceIds);
+    const documentIdentity = sourceIdentity(document.src);
+    const identityIds = document.sourceIds.filter(sourceId => sourceIdentities.get(sourceId) === documentIdentity);
+    const recordIds = new Set(document.originIds ?? []);
+    for (const sourceId of identityIds) for (const recordId of recordsBySource.get(sourceId) ?? []) recordIds.add(recordId);
+    for (const originId of recordIds) addEdge(id, `experience:${originId}`, "supports-record", document.description, document.sourceIds);
+    const skillEvidence = new Map<KnowledgeSkillRecord, string[]>();
+    for (const sourceId of identityIds) for (const skill of skillsBySource.get(sourceId) ?? []) {
+      const evidenceIds = skillEvidence.get(skill) ?? [];
+      evidenceIds.push(sourceId); skillEvidence.set(skill, evidenceIds);
+    }
+    for (const [skill, evidenceIds] of skillEvidence) addEdge(`skill:${skill.id}`, id, "evidenced-by", skill.description, evidenceIds);
+  }
+  return { version: 2, nodes, edges };
 }
 
 export type KnowledgeConnection = { edge: KnowledgeEdge; node: KnowledgeNode };
@@ -170,7 +316,7 @@ export function graphNeighbours(graph: KnowledgeGraphData, id: string) {
 }
 
 export function graphNodeHref(node: KnowledgeNode, localeSlug: string) {
-  return node.kind === "experience"
+  return node.section && node.anchor
     ? `/${localeSlug}/${node.section}#${node.anchor}`
     : `/${localeSlug}/projects?view=map&node=${encodeURIComponent(node.id)}`;
 }

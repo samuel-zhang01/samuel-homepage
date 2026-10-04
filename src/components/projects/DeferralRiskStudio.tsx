@@ -4,6 +4,7 @@ import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { deferralRiskStudioCopy } from "./copy/deferralRiskStudioCopy";
 
 import { MathEquation } from "./MathEquation";
+import { System7Icon } from "../System7Icon";
 
 import { useMemo, useState, type CSSProperties } from "react";
 
@@ -398,7 +399,7 @@ export function DeferralRiskStudio() {
       )}
     >
       <section className={styles.researchBanner} aria-label="Simulation assumptions">
-        <div className={styles.researchIcon} aria-hidden="true">§</div>
+        <div className={styles.researchIcon} aria-hidden="true"><System7Icon kind="book" /></div>
         <div><strong>A synthetic test of selective prediction</strong><p>The 200-row test bench illustrates the reported aggregate arithmetic. Its fictional records and investigator model do not independently validate real claim decisions.</p></div>
         <a href={SOURCE_URL} target="_blank" rel="noreferrer">Read the research ↗</a>
       </section>
@@ -993,7 +994,7 @@ function ResearchNotes() {
       </section>
 
       <section className={styles.opePanel}>
-        <div className={styles.opeBadge} aria-hidden="true">OPE</div>
+        <div className={styles.opeBadge} aria-hidden="true"><System7Icon kind="chart" /></div>
         <div>
           <span className={styles.kicker}>Off-policy evaluation</span>
           <h3>Methodological illustration, not counterfactual proof</h3>

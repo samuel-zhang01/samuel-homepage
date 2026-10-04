@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { System7Icon, type System7IconKind } from "../System7Icon";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
 import styles from "./ItalianLearningStudio.module.css";
@@ -245,12 +246,12 @@ function labelFor(skill: Skill, bilingual: boolean, locale: Locale) {
 
 function AppMenu({ active, setActive, bilingual }: { active: StudioView; setActive: (view: StudioView) => void; bilingual: boolean }) {
   const locale = useProjectLocale();
-  const views: { id: StudioView; it: string; en: string; icon: string }[] = [
-    { id: "practice", it: "Oggi", en: "Today", icon: "✎" },
-    { id: "recall", it: "Richiamo", en: "Recall", icon: "▱" },
-    { id: "rubric", it: "Rubrica", en: "Rubric", icon: "R" },
-    { id: "evidence", it: "Prove", en: "Evidence", icon: "▥" },
-    { id: "system", it: "Sistema", en: "System", icon: "⌘" },
+  const views: { id: StudioView; it: string; en: string; icon: System7IconKind }[] = [
+    { id: "practice", it: "Oggi", en: "Today", icon: "note" },
+    { id: "recall", it: "Richiamo", en: "Recall", icon: "cards" },
+    { id: "rubric", it: "Rubrica", en: "Rubric", icon: "tasks" },
+    { id: "evidence", it: "Prove", en: "Evidence", icon: "chart" },
+    { id: "system", it: "Sistema", en: "System", icon: "controls" },
   ];
 
   return (
@@ -263,7 +264,7 @@ function AppMenu({ active, setActive, bilingual }: { active: StudioView; setActi
           aria-current={active === view.id ? "page" : undefined}
           onClick={() => setActive(view.id)}
         >
-          <span aria-hidden="true">{view.icon}</span>
+          <span aria-hidden="true"><System7Icon kind={view.icon} miniature /></span>
           <strong>{locale.startsWith("zh-") ? projectText(locale, italianCopy, view.en) : view.it}</strong>
           {bilingual ? <small lang={locale.startsWith("zh-") ? "it" : "en-GB"} translate={locale.startsWith("zh-") ? "no" : undefined}>{locale.startsWith("zh-") ? view.it : view.en}</small> : null}
         </button>
@@ -593,7 +594,7 @@ function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; s
       </div>
 
       <div className={styles.algorithmTrace} aria-live="polite">
-        <div className={styles.traceIcon} aria-hidden="true">ƒ</div>
+        <div className={styles.traceIcon} aria-hidden="true"><System7Icon kind="calendar" /></div>
         {lastCalculation ? (
           <div>
             <span>LAST SCHEDULER TRACE · {lastCalculation.label}</span>
@@ -799,13 +800,13 @@ function SystemLab({ bilingual }: { bilingual: boolean }) {
       </header>
 
       <div role="group" className={styles.architecture} aria-label="Application architecture">
-        <div><span className={styles.archIcon}>▣</span><strong>React 19 client</strong><small>tour · practice · analytics</small></div>
+        <div><span className={styles.archIcon} aria-hidden="true"><System7Icon kind="computer" miniature /></span><strong>React 19 client</strong><small>tour · practice · analytics</small></div>
         <i aria-hidden="true">⇄</i>
-        <div><span className={styles.archIcon}>↯</span><strong>Vinext worker</strong><small>RSC · API routes · assets</small></div>
+        <div><span className={styles.archIcon} aria-hidden="true"><System7Icon kind="network" miniature /></span><strong>Vinext worker</strong><small>RSC · API routes · assets</small></div>
         <i aria-hidden="true">⇄</i>
-        <div><span className={styles.archIcon}>▤</span><strong>Cloudflare D1</strong><small>4 relational tables</small></div>
+        <div><span className={styles.archIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><strong>Cloudflare D1</strong><small>4 relational tables</small></div>
         <i aria-hidden="true">↕</i>
-        <div><span className={styles.archIcon}>⌂</span><strong>Offline cache</strong><small>dirty flag · local snapshot</small></div>
+        <div><span className={styles.archIcon} aria-hidden="true"><System7Icon kind="folder" miniature /></span><strong>Offline cache</strong><small>dirty flag · local snapshot</small></div>
       </div>
 
       <div className={styles.systemMetrics}>

@@ -15,6 +15,7 @@
     "predev:lan": "npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search",
     "dev:lan": "next dev --hostname 0.0.0.0 --port 5174",
     "check:artifacts": "node scripts/check-project-artifacts.mjs",
+    "check:icons": "node scripts/check-system7-icons.mjs && node scripts/check-site-icons.mjs",
     "check:data": "node scripts/check-project-csv-fixtures.mjs",
     "check:desk": "node scripts/check-desk-behavior.mjs && node scripts/check-desk-persistence.mjs",
     "check:controls": "node scripts/check-classic-select.mjs",
@@ -26,7 +27,7 @@
     "check:locales": "node scripts/check-locales.mjs",
     "check:output": "node scripts/check-build-output.mjs",
     "audit:dependencies": "npm audit --audit-level=moderate && npm audit signatures",
-    "prebuild": "node scripts/check-next-lint-dependency.mjs && npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
+    "prebuild": "node scripts/check-next-lint-dependency.mjs && npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:icons && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:profile && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
     "build": "next build",
     "postbuild": "npm run check:output",
     "build:isolated": "npm run prebuild && NEXT_DIST_DIR=.next-build next build && node scripts/check-build-output.mjs .next-build",
@@ -46,7 +47,9 @@
     "audit:repository": "node scripts/audit-repository-inventory.mjs",
     "check:deep:http": "node scripts/check-deep-http.mjs",
     "check:deep:browser": "node scripts/check-deep-browser.mjs",
-    "check:deep:recovery": "node scripts/check-deep-recovery.mjs"
+    "check:resize": "node scripts/check-project-window-resize.mjs",
+    "check:deep:recovery": "node scripts/check-deep-recovery.mjs",
+    "check:profile": "node scripts/check-profile.mjs"
   },
   "dependencies": {
     "katex": "0.18.7",

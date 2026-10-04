@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { scientificMedia } from "./fixtures/scientific-media.mjs";
 import { lstat, readFile, readdir } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
+import ts from "typescript";
 
 const publicRoot = join(process.cwd(), "public");
 const projectRoot = join(publicRoot, "projects");
@@ -51,20 +52,10 @@ const allowlist = new Map([
     sha256: "547619235e20ed7befaa7e868793b46cff7796b0b483e3e065626252f83d244e",
     type: "pdf",
   }],
-  ["project-art/finance.webp", {
-    maximumBytes: 125_000,
-    sha256: "fbdfa6d9ca51e8953b5aaad8863d7a47e6831769b50478479a2454f44bce54c2",
-    type: "webp",
-  }],
-  ["project-art/microrobot.webp", {
-    maximumBytes: 125_000,
-    sha256: "c9fe7dab1a365c786698bd9a69c2ec68a0bc21ab44ec3419f86f1442006358fc",
-    type: "webp",
-  }],
-  ["project-art/neural-cfd.webp", {
-    maximumBytes: 125_000,
-    sha256: "0f8ae49517161017795a031aac792f7521ad9860aecef1da7b64a9fdca093802",
-    type: "webp",
+  ["system7-icons/secret.png", {
+    maximumBytes: 2_000,
+    sha256: "28a16470f13c376564f70897842f23087801db14ac053372dde986d0beed4dec",
+    type: "png",
   }],
   ...scientificMedia,
 ]);
@@ -105,6 +96,22 @@ const files = await collectFiles(projectRoot);
 const publicFiles = await collectFiles(publicRoot);
 const guardedPublicExtension = /\.(?:pdf|docx?|xlsx?|csv|tsv|parquet|db|sqlite[^/]*|ipynb|pt|pth|ckpt|pem|key|zip|7z|tar|gz)$/i;
 const sensitivePublicName = /(?:^|\/)(?:\.env(?:\.|$)|[^/]*(?:private|preshared)[-_]?key[^/]*|credentials?(?:\.|$)|secrets?(?:\.|$)|passwords?(?:\.|$)|keys\.json$)/i;
+// The desktop's Secret application uses this reviewed star drawing. Exempt its
+// exact registered path from the filename rule only; PNG signature, pinned
+// bytes and the complete credential-content scan still apply.
+const reviewedStarPath = "system7-icons/secret.png";
+const iconRegistrySource = ts.createSourceFile("system7Icons.ts", await readFile(new URL("../src/lib/system7Icons.ts", import.meta.url), "utf8"), ts.ScriptTarget.Latest, true);
+let iconRegistry;
+for (const statement of iconRegistrySource.statements) {
+  if (!ts.isVariableStatement(statement)) continue;
+  const declaration = statement.declarationList.declarations.find(item => ts.isIdentifier(item.name) && item.name.text === "SYSTEM7_ICONS");
+  if (declaration) iconRegistry = declaration.initializer;
+}
+while (iconRegistry && (ts.isAsExpression(iconRegistry) || ts.isSatisfiesExpression(iconRegistry) || ts.isParenthesizedExpression(iconRegistry))) iconRegistry = iconRegistry.expression;
+const starRegistration = iconRegistry && ts.isObjectLiteralExpression(iconRegistry) && iconRegistry.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText(iconRegistrySource) === "secret");
+if (!starRegistration || !ts.isStringLiteral(starRegistration.initializer) || starRegistration.initializer.text !== `/${reviewedStarPath}`) {
+  throw new Error("Reviewed Secret drawing must use its canonical icon registry path");
+}
 const credentialMarkers = [
   {
     label: "private-key material",
@@ -131,7 +138,7 @@ for (const path of files) {
 
 for (const path of publicFiles) {
   const publicPath = relative(publicRoot, path).split(sep).join("/");
-  if (sensitivePublicName.test(publicPath)) {
+  if (sensitivePublicName.test(publicPath) && publicPath !== reviewedStarPath) {
     throw new Error(`Sensitive credential-shaped filename is forbidden in public/: ${publicPath}`);
   }
   if (guardedPublicExtension.test(publicPath) && !allowlist.has(publicPath)) {

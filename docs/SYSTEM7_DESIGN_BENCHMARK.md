@@ -4,9 +4,9 @@ The project interface should read as one Macintosh application: white documents,
 
 The 9 September 2026 refinement keeps the smoother typography and accessible navigation while restoring more of the original desktop's depth. Named gray surfaces, crisp bevels, recessed lists and small hard shadows distinguish the layers. This direction follows the user's current preference and supersedes the earlier restriction to a flatter paper/chrome palette.
 
-The subsequent usability polish adds a blue primary-action tier for opening live demos and documents, an indigo sharing tier, and quiet blue and warm-paper content surfaces. These are deliberate modern cues requested by the user; they retain the desktop's existing bevels, typography and neutral window frames.
+The 4 October 2026 first-visitor review establishes the current contract: use the same system font and 22/18/15/13/12px type scale across profile, project documents and demos. Inline and navigation icons are 16px, document/card/header icons 32px, and desktop launchers 48px. Primary and sharing actions use the same neutral beveled control family; bold text identifies a primary destination and the outlined ring identifies a default action. This supersedes the earlier serif project headings and coloured primary/share button skins.
 
-The latest site-wide review restores a middle ground between period chrome and modern content hierarchy. September 5 (`e7fdb43`) and the deployed `me.samuelzhang.co.uk` show that purposeful colour and detailed explanations are part of the portfolio, not decoration to remove. Warm paper, blue information, lavender context, teal outcomes and amber reservations/cautions belong throughout content. Preserve complete problem statements, workflows, technical specifics and results; instructions and contribution sections stay visible.
+Orbital Lab, Desk Arcade and Home Lab are the visual references for calm chrome and clear experiments. Keep warm reading paper, hard window shadows, recessed lists, complete explanations and scientific instrument colours. State colours still distinguish outcomes, uncertainties and errors beside their results; instructions and contribution sections stay visible.
 
 ## Historical reference and visual evidence
 
@@ -32,8 +32,8 @@ Use one named vocabulary. Existing component classes may control placement and s
 |---|---|---|
 | Normal action | `.s7-button`: raised light-gray face, black 1px boundary, 3px radius, highlight/shadow bevel, hard 1px outer shadow, 13px UI font. | Native button; verb label; hover lightens the neutral face; no movement or scale effect. |
 | Default action | `.s7-button.is-default`: white face, retained bevel, white separation and black outer ring. | Visual priority only. The owning form/dialog must define any Return-key behavior; never hijack Enter in an editor. `MacButton primary` is a compatibility alias for this presentation. |
-| Primary destination | `.s7-button.is-primary`: bold white label on blue, matching blue bevel and a 44px minimum target. | Use for live demos, applications and the principal document action. Retain an explicit verb label, hover feedback, keyboard focus and native disabled semantics. This does not imply a Return-key default. |
-| Share action | `.s7-button.is-share`: white label on indigo with a matching bevel. Project toolbar actions share a 44px minimum height. | Colour does not change the button's dimensions. Label sharing explicitly. Announce copy success and present a selectable address when clipboard access is unavailable. |
+| Primary destination | `.s7-button.is-primary`: bold black label on white with the shared raised bevel and control height. | Use for demos, applications and the principal document action. Retain an explicit verb label, hover feedback, keyboard focus and native disabled semantics. This does not imply a Return-key default. |
+| Share action | `.s7-button.is-share`: black label on the same raised light-gray face as ordinary controls. | Label sharing explicitly. Announce copy success and present a selectable address when clipboard access is unavailable. |
 | Pressed action | Native `:active`: black face and white lettering; relief disappears. | Momentary feedback while activating; distinct from persistent selection. |
 | Disabled action | Native `disabled`: muted gray text/edge, neutral face, no hover/press treatment. | Preserve readable label and disabled semantics. Do not use opacity on the entire control subtree. |
 | Toggle | `.s7-button[aria-pressed]`: label-sized content; recessed face when selected, with no generated checkmark or reserved marker slot. | Selection retains its inset treatment on hover; pressing still inverts. Native button toggles one setting. Mutually exclusive form values should retain radio semantics. |
@@ -41,7 +41,7 @@ Use one named vocabulary. Existing component classes may control placement and s
 | View tabs | `.s7-tabs` with `.s7-tab`: recessed gray strip, beveled inactive tabs, selected tab with inset relief, clear border and normal-case label. | ARIA tab pattern only when content is an actual tab panel; use links for navigation. Keyboard arrows, Home/End and focus behavior belong to the component. Tabs are a website adaptation, not a claimed stock 1992 Toolbox control. |
 | Select | `ClassicSelect`: square raised light-gray trigger, current value, downward triangle and 1px hard shadow; same UI font in trigger and list. The white option list sits inside a beveled gray frame with a small hard shadow. | Keep existing combobox/listbox, typeahead, disabled options, native form value, viewport placement and focus restoration. The expanded trigger inverts; selection uses blue plus a checkmark. |
 
-Use the shared gray relief for ordinary controls, the outlined ring for form defaults and solid blue for primary destinations. Keep bevels crisp and shallow; metallic gradients, soft glows and pill toggles do not belong in this control family. Dark navy identifies selected content and links; the brighter action blue highlights a clear next step. Scientific series retain their domain colors and legends.
+Use shared gray relief for controls, a bold white face for primary destinations and the outlined ring for form defaults. Control geometry stays consistent, with 44px targets on coarse pointers and compact touch layouts. Keep bevels crisp and shallow; metallic gradients, soft glows and pill toggles do not belong in this control family. Dark navy identifies selected content and links. Scientific series retain their domain colors and legends.
 
 ## Shared icon vocabulary
 
@@ -54,9 +54,9 @@ Use [`System7Icon`](../src/components/System7Icon.tsx) and the assets in [`publi
 | Project subjects | `microscope`, `finance`, `chart`, `molecule`, `shield`, `book`, `mri`, `flow`, `network`, `orbital` |
 | Activities and collections | `runner`, `game`, `accessories`, `photos`, `controls`, `secret` |
 
-The family uses crisp dark outlines, light upper edges, a small neutral palette and restrained blue, gold or red details. Selected kinds use transparent generated PNGs; every kind has a companion SVG. Pass `miniature` for 16px menu/Finder artwork so fine raster details do not collapse. Existing desktop wrappers display 32px icons; compact project rows use 42px on desktop and 48px on narrow layouts. Let the surrounding control set the size and preserve square proportions.
+The family uses crisp dark outlines, light upper edges, a small neutral palette and restrained blue, gold or red details. Every kind has one canonical asset in [`SYSTEM7_ICONS`](../src/lib/system7Icons.ts); all surfaces render that same image, including callers passing the compatibility `miniature` flag. Use `--s7-icon-inline` (16px) in text, menus and inline navigation, `--s7-icon-document` (32px) for document headers and project/card rows, and `--s7-icon-desktop` (48px) for desktop launchers. Keep these sizes at narrow widths; increase the surrounding target for touch. Preserve square proportions.
 
-Icons are decorative (`alt=""`, `aria-hidden`); translated text names the destination or action. An icon-only control still needs its own accessible label. Keep the artwork recognizable against white, gray and selected navy backgrounds. Full project illustrations remain available in document headers, while compact rows use the shared subject icons. Retain the COVERD brand asset in its existing frame.
+Icons are decorative (`alt=""`, `aria-hidden`); translated text names the destination or action. An icon-only control still needs its own accessible label. Keep the artwork recognizable against white, gray and selected navy backgrounds. Document headers and compact rows use the same subject icon; larger scientific diagrams retain their authored display size.
 
 ## Typography and localization
 
@@ -73,7 +73,7 @@ The hierarchy below is a modern screen specification. Historical points on a low
 | Source code / aligned readings | `--s7-font-mono` | Monaco/Courier family; preserve authored formatting |
 | Equations | Existing `MathEquation` | KaTeX’s own glyph sizing, spacing and MathML; never style its descendant spans through a panel selector |
 
-Chrome uses the existing Chicago/Geneva system stack; prose uses Geneva and readable platform sans-serif fallbacks. This is a local-font strategy, not a new font download. Do not embed proprietary historical fonts merely to obtain a bitmap appearance. Keep antialiasing and browser zoom available.
+Chrome uses the existing Chicago/Geneva system stack; headings and prose use Geneva and readable platform sans-serif fallbacks. Reserve Monaco/Courier for code and aligned measurements. Project-specific serif headings and responsive oversized display type interrupt the shared hierarchy. This is a local-font strategy, not a new font download. Do not embed proprietary historical fonts merely to obtain a bitmap appearance. Keep antialiasing and browser zoom available.
 
 Simplified Chinese uses PingFang SC / Microsoft YaHei / Noto Sans CJK SC fallbacks; Traditional Chinese uses PingFang TC / Microsoft JhengHei / Noto Sans CJK TC. These are explicitly modern substitutes. Preserve `lang` and the locale boundary. Do not convert a Traditional Chinese string merely by changing its font. Leave at least 1.4 line height in chrome, permit labels to wrap, and never shrink CJK text to fit a Latin-width button. Use sentence case for descriptive labels; preserve genuine acronyms, code identifiers and source quotations. Remove decorative uppercase and tracking in migrated chrome.
 
@@ -93,13 +93,10 @@ Simplified Chinese uses PingFang SC / Microsoft YaHei / Noto Sans CJK SC fallbac
 | `--s7-muted` | `#555` | Supporting text on white/gray |
 | `--s7-selection` | `#11177a` | Selected rows/options, links and navigation cues |
 | `--s7-selection-text` | `#fff` | Text on selection |
-| `--s7-action` | `#214ea5` | Primary destination face and sharing edge |
-| `--s7-action-hover` | `#173b84` | Primary destination hover face |
-| `--s7-action-edge` | `#122d66` | Blue action boundary and sharing label |
-| `--s7-action-soft` | `#e8eefb` | Document/demo headers and walkthrough surfaces |
-| `--s7-share` | `#514293` | Sharing face; white text has 8.23:1 declared-colour contrast |
-| `--s7-share-hover` | `#403278` | Sharing hover face |
-| `--s7-share-edge` | `#302660` | Sharing boundary and dark bevel |
+| `--s7-action` | `#11177a` | Navigation accent; buttons use neutral faces |
+| `--s7-action-hover` | `#080d54` | Darker navigation accent |
+| `--s7-action-edge` | `#080d54` | Share-address text and focus indicator |
+| `--s7-action-soft` | `#ecece6` | Quiet row hover and share-address surfaces |
 | `--s7-context-paper` | `#f8f5ec` | Warm reading and contextual surfaces |
 | `--s7-info` / `--s7-info-soft` | `#214ea5` / `#edf3ff` | Instructions, active controls and information panels |
 | `--s7-success` / `--s7-success-soft` | `#17664f` / `#e5f3ec` | Confirmed, valid, available and completed states |
@@ -107,7 +104,7 @@ Simplified Chinese uses PingFang SC / Microsoft YaHei / Noto Sans CJK SC fallbac
 | `--s7-accent` / `--s7-accent-soft` | `#514293` / `#f0ebfa` | Context, selected entities and comparison panels |
 | `--s7-danger` / `--s7-danger-soft` | `#993b40` / `#fbecee` | Errors, failed checks and rejected results |
 
-These tokens give each shade a consistent structural role. Reuse them for new chrome instead of introducing unrelated colors. Use white and warm paper for reading, tinted content groups for hierarchy, and clear saturated accents for selected or primary actions. Grey remains the window furniture. Avoid flattening different states to one neutral background; pair colour with explicit text, checks, borders or patterns. Primary white-on-blue text has 7.78:1 contrast, its hover state 10.53:1, and the sharing label 8.23:1. The selection colors and scientific palettes retain their separate meanings.
+These tokens give each shade a consistent structural role. Reuse them for new chrome instead of introducing unrelated colors. Use white and warm paper for reading and saturated accents for selected content or meaningful experiment states. Grey remains the window furniture. Pair state colour with explicit text, checks, borders or patterns. Primary and sharing labels use black on neutral faces; selection colors and scientific palettes retain their separate meanings.
 
 | Structural token | Contract |
 |---|---|
@@ -131,6 +128,8 @@ Components may add a small outer shadow to lift an action or frame. Selected tog
 The knowledge graph remains the first view. **Selected work** and **All projects** use a left list pane with visible search and discipline filters, alongside the selected project's details in the right pane. Selecting a row updates those details within the same project window. The list and detail content scroll independently, with gray framing and white content wells separating their roles.
 
 Project details offer explicit **Open in new tab** and **Open live demo** actions where applicable, alongside the project's website, files, application and repository links. Embedded demonstrations open on request. **Connections** returns to the graph with the project selected. At narrow widths, the list and detail views take turns using the available width; **Back to list** restores browsing. Keep these controls and their labels available in English and both maintained Mandarin editions.
+
+Selected work uses the catalogue's `featured` metadata as an editorial shortlist. Orbital Lab brings three visual representations and the mathematics behind them; Neural CFD Surrogates connects three model architectures with recorded fields and qualified evaluation results; Home Lab adds dependency tracing, failure simulation and backup planning. These deeper experiences now join the shortlist. CV Keyword Automator remains available in All projects. Feature future entries when their explanation and evidence support a substantial visit, keeping the shortlist smaller than the complete archive.
 
 The graph uses the same recessed backing to separate its white canvas from the pale inspector, with raised controls and disclosure bars around them. Documents use a double header seam, fine section rules and a recessed frame around live experiments. Demo anchor spacing follows the measured sticky toolbar height so wrapped controls remain clear of the destination. The [current audit](DEEP_AUDIT_2026-10-04.md) records compiled browser coverage; the primary sources below define the design reference.
 
@@ -177,17 +176,18 @@ Validation should include one control-state matrix covering normal/default/focus
 
 ## Surgical style integration
 
-Use the deployed site's cream paper, striped window bars, inset controls, serif
-project titles and restrained colour as visual references. Historical CSS is evidence
+Use the deployed site's cream paper, striped window bars, inset controls, detailed
+project narratives and restrained colour as visual references, while following the
+current shared system-font hierarchy for every heading. Historical CSS is evidence
 for individual choices, not a stylesheet to copy over the current application.
 Keep the new document structure, navigation, content, control sizes and responsive
 layouts. Edit named component rules instead of replacing every visual declaration.
 
-The shared project header now uses warm paper with a serif title and monospaced
-metadata. Project narratives retain their open reading layout; only context and
-interactive prompts receive inset framing. Primary actions use the existing deep
-indigo selection colour, while sharing uses neutral chrome. Generic coloured
-header rules and pastel explanation cards are removed.
+Shared project headers use warm paper, system-font titles and readable metadata.
+Project narratives retain their open reading layout; context and interactive
+prompts receive inset framing. Primary and sharing actions use neutral beveled
+faces at the shared control height. Generic coloured header rules are removed;
+domain status colours remain beside the experiment results they explain.
 
 Finance's introductory panels use muted green paper; its analytical instrument
 retains the ocean palette. Molecular Recognition, Bandit and Chemistry Coding use

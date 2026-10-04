@@ -97,7 +97,7 @@
   line-height: 1.4;
   letter-spacing: normal;
   color: #202b28;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--s7-font-text);
 }
 
 .hero p {
@@ -934,7 +934,7 @@
   font-size: var(--s7-title);
   letter-spacing: normal;
   color: #202b28;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--s7-font-text);
 }
 
 .heroInstrument > span,

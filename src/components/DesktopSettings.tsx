@@ -3,6 +3,7 @@
 import { localeOptions, type Locale } from "@/lib/i18n";
 import { projectText } from "@/lib/projectCopy";
 import { DEFAULT_DESKTOP_PREFERENCES, type DesktopPreferences } from "@/lib/desktopPreferences";
+import { getApplicationIcon } from "@/lib/iconIdentity";
 import { System7Icon } from "./System7Icon";
 import styles from "./DesktopSettings.module.css";
 import { settingsCopy } from "./desktopSettingsCopy";
@@ -19,7 +20,7 @@ export default function DesktopSettings({ locale, preferences, onChange, onLocal
 }) {
   const t = (text: string) => projectText(locale, settingsCopy, text);
   return <div className={`system7-project ${styles.settings}`}>
-    <header className={styles.header}><span className={styles.icon}><System7Icon kind="controls" /></span><div><h1>{t("Make this desktop yours.")}</h1><p>{t("Appearance, language and comfort controls for this browser.")}</p></div></header>
+    <header className={styles.header}><span className={styles.icon}><System7Icon kind={getApplicationIcon("settings")} /></span><div><h1>{t("Make this desktop yours.")}</h1><p>{t("Appearance, language and comfort controls for this browser.")}</p></div></header>
     <fieldset><legend>{t("Desktop pattern")}</legend><div className={styles.patterns}>
       {(["classic", "blue", "paper"] as const).map(pattern => <label key={pattern} className={styles.pattern}>
         <span className={`${styles.sample} desktop-pattern--${pattern}`} aria-hidden="true"><span /></span>

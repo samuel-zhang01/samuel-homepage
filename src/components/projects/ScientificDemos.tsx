@@ -5,6 +5,7 @@ import { scientificCopy } from "./copy/scientificCopy";
 import { CoverageShiftExperiment } from "./CoverageShiftExperiment";
 
 import ClassicSelect from "../ClassicSelect";
+import { System7Icon, type System7IconKind } from "../System7Icon";
 
 import { useId, useState } from "react";
 
@@ -52,7 +53,7 @@ function EvidenceNote({
   children,
 }: {
   tone?: "blue" | "amber" | "green";
-  icon: string;
+  icon: System7IconKind | "!" | "✓";
   title: string;
   children: React.ReactNode;
 }) {
@@ -60,7 +61,7 @@ function EvidenceNote({
 
   return (
     <ProjectCopy copy={scientificCopy}><aside className={`${styles.evidenceNote} ${toneClass}`} role="note">
-      <span className={styles.noteIcon} aria-hidden="true">{icon}</span>
+      <span className={icon === "!" || icon === "✓" ? styles.noteIcon : styles.noteArtwork} aria-hidden="true">{icon === "!" || icon === "✓" ? icon : <System7Icon kind={icon} miniature />}</span>
       <div>
         <strong>{title}</strong>
         <p>{children}</p>
@@ -246,7 +247,7 @@ export function CfdSurrogateDemo() {
         </>
       }
     >
-      <EvidenceNote icon="≋" title="Recorded benchmark values">
+      <EvidenceNote icon="chart" title="Recorded benchmark values">
         The field drawing illustrates the view controls. The numerical results below are recorded evaluations; use flow playback to inspect the actual saved fields.
       </EvidenceNote>
 

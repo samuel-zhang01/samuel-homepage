@@ -27,6 +27,9 @@
 }
 
 .titlebar h2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   width: fit-content;
   max-width: 100%;
   margin: 0 auto;
@@ -47,7 +50,8 @@
 
 .body { padding: 16px; }
 .intro { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding: 12px; border: 1px solid var(--s7-shadow); background: var(--s7-context-paper); box-shadow: var(--s7-relief-inset); }
-.intro svg { flex: 0 0 32px; }
+.introIcon { width: var(--s7-icon-document); height: var(--s7-icon-document); flex: 0 0 var(--s7-icon-document); }
+.titleIcon { width: var(--s7-icon-inline); height: var(--s7-icon-inline); flex: 0 0 var(--s7-icon-inline); }
 .intro p { margin: 0; max-width: 39ch; }
 .searchLabel { display: block; margin-bottom: 5px; font-weight: 700; }
 .searchRow { display: flex; gap: 10px; }
@@ -109,7 +113,7 @@
 .results button[aria-selected="true"] { background: #11177a; color: #fff; }
 .results button:hover { outline: 1px dotted currentColor; outline-offset: -4px; }
 .itemIcon { display: grid; place-items: center; flex: 0 0 24px; }
-.itemIcon > img { width: 16px; height: 16px; }
+.itemIcon > img { width: var(--s7-icon-inline); height: var(--s7-icon-inline); }
 .itemCopy { min-width: 0; flex: 1; }
 .itemCopy strong { display: block; font-weight: 600; }
 .itemCopy strong { overflow-wrap: anywhere; }

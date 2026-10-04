@@ -67,7 +67,14 @@ function flatten(value, prefix = "", result = {}) {
 }
 
 const desktopCopyPath = resolve(projectRoot, "src/components/desktopCopy.ts");
-const { desktopCopy } = await compileModule(await readFile(desktopCopyPath, "utf8"), desktopCopyPath);
+const profileCopyPath = resolve(projectRoot, "src/components/profileCopy.ts");
+const homepageCopyPath = resolve(projectRoot, "src/components/homepageCopy.ts");
+const [desktopModule, profileCopyModule, homepageCopyModule] = await Promise.all([
+  readFile(desktopCopyPath, "utf8").then(source => compileModule(source, desktopCopyPath)),
+  readFile(profileCopyPath, "utf8").then(source => compileModule(source, profileCopyPath)),
+  readFile(homepageCopyPath, "utf8").then(source => compileModule(source, homepageCopyPath)),
+]);
+const desktopCopy = { ...desktopModule.desktopCopy, ...profileCopyModule.profileCopy, ...homepageCopyModule.homepageCopy };
 const desktopCopyErrors = [];
 const settingsCopyPath = resolve(projectRoot, "src/components/desktopSettingsCopy.ts");
 const { settingsCopy } = await compileModule(await readFile(settingsCopyPath, "utf8"), settingsCopyPath);
@@ -678,6 +685,25 @@ visitSystem(productivityExtrasFile, productivityExtrasFile, productivityExtrasPa
 const finderFile = ts.createSourceFile(finderPath, finderSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 visitSystem(finderFile, finderFile, finderPath);
 
+// Profile records now live outside the desktop renderer. Check their visible
+// prose and subject/achievement lists so future records cannot skip localisation.
+const profileDataPaths = [resolve(projectRoot, "src/data/profile.ts"), resolve(projectRoot, "src/data/documents.ts")];
+const profileTextFields = new Set([...visibleRecordFields, "detail", "summary", "institution", "result", "level"]);
+const profileTextArrays = new Set(["modules", "achievements"]);
+for (const sourcePath of profileDataPaths) {
+  const sourceFile = ts.createSourceFile(sourcePath, await readFile(sourcePath, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const collectProfileText = node => {
+    if (ts.isPropertyAssignment(node) && ts.isIdentifier(node.name)) {
+      if (profileTextFields.has(node.name.text) && ts.isStringLiteralLike(node.initializer)) addVisible(node.initializer.text, node.initializer, sourceFile, sourcePath);
+      if (profileTextArrays.has(node.name.text) && ts.isArrayLiteralExpression(node.initializer)) {
+        for (const item of node.initializer.elements) if (ts.isStringLiteralLike(item)) addVisible(item.text, item, sourceFile, sourcePath);
+      }
+    }
+    ts.forEachChild(node, collectProfileText);
+  };
+  collectProfileText(sourceFile);
+}
+
 const comprehensiveSimplifiedCharacters = new Set(
   simplifiedToTraditionalCharacters
     .split("|")
@@ -708,12 +734,17 @@ function findTraditionalResidue(value) {
 }
 
 const traditionalResiduals = [...visibleStrings].flatMap(([value, location]) => {
-  const translated = coreModule.translateText("zh-TW", value);
+  const translated = desktopCopy[value]?.[1] ?? coreModule.translateText("zh-TW", value);
   const residual = findTraditionalResidue(translated);
   if (residual) return [`${location.path}:${location.line}: ${residual} remains in ${translated}`];
   if (translated.includes("恢複")) return [`${location.path}:${location.line}: contextually incorrect 恢複 in ${translated}`];
   return [];
 });
+
+for (const [source, translations] of Object.entries(desktopCopy)) {
+  const residual = findTraditionalResidue(translations[1]);
+  if (residual) traditionalResiduals.push(`desktop copy ${source}: ${residual} remains in ${translations[1]}`);
+}
 
 for (const [value, location] of projectTranslationSources) {
   const translated = coreModule.translateText("zh-TW", value);
@@ -752,7 +783,7 @@ for (const [key, value] of Object.entries(archiveCopies["zh-TW"])) {
 }
 
 const missingCoreKeys = [...visibleStrings]
-  .filter(([value, location]) => !zhKeys.has(value) && !(location.path === systemPath && value in desktopCopy))
+  .filter(([value, location]) => !zhKeys.has(value) && !((location.path === systemPath || profileDataPaths.includes(location.path)) && value in desktopCopy))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 for (const [key, value] of Object.entries(orbitalModule.orbitalCopies["zh-TW"])) {
   const residual = findTraditionalResidue(value);

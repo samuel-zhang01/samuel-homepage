@@ -1,6 +1,7 @@
 "use client";
 
 import ClassicSelect from "../ClassicSelect";
+import { System7Icon } from "../System7Icon";
 
 import {
   useMemo,
@@ -1064,11 +1065,11 @@ export function CvKeywordStudio() {
                 <small>{buildReady ? `${includeCoverLetter ? 4 : 2} dated outputs · 1 workspace file` : "Build waiting for a validated snapshot"}</small>
               </div>
               <div className={styles.fileGrid}>
-                <div><span className={styles.fileIcon}>PDF</span><p><strong>CV.pdf</strong><small>role-tailored document</small></p><b>{buildReady ? "READY" : "WAITING"}</b></div>
-                <div><span className={styles.txtIcon}>TXT</span><p><strong>Job Description.txt</strong><small>source snapshot</small></p><b>{buildReady ? "READY" : "WAITING"}</b></div>
-                {includeCoverLetter ? <div><span className={styles.pdfAltIcon}>PDF</span><p><strong>Cover Letter.pdf</strong><small>optional compiled route</small></p><b>{buildReady ? "SIMULATED" : "WAITING"}</b></div> : null}
-                {includeCoverLetter ? <div><span className={styles.texIcon}>TEX</span><p><strong>Cover Letter Main.tex</strong><small>escaped source body</small></p><b>{buildReady ? "SIMULATED" : "WAITING"}</b></div> : null}
-                <div><span className={styles.texIcon}>TEX</span><p><strong>Keywords Placement.tex</strong><small>legacy workspace artifact · no active template include</small></p><b>{buildReady ? "UNEMBEDDED" : "WAITING"}</b></div>
+                <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="pdf" miniature /></span><p><strong>CV.pdf</strong><small>role-tailored document</small></p><b>{buildReady ? "READY" : "WAITING"}</b></div>
+                <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><p><strong>Job Description.txt</strong><small>source snapshot</small></p><b>{buildReady ? "READY" : "WAITING"}</b></div>
+                {includeCoverLetter ? <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="pdf" miniature /></span><p><strong>Cover Letter.pdf</strong><small>optional compiled route</small></p><b>{buildReady ? "SIMULATED" : "WAITING"}</b></div> : null}
+                {includeCoverLetter ? <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><p><strong>Cover Letter Main.tex</strong><small>escaped source body</small></p><b>{buildReady ? "SIMULATED" : "WAITING"}</b></div> : null}
+                <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><p><strong>Keywords Placement.tex</strong><small>legacy workspace artifact · no active template include</small></p><b>{buildReady ? "UNEMBEDDED" : "WAITING"}</b></div>
               </div>
             </article>
           </section>

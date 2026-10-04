@@ -95,8 +95,11 @@
   box-shadow: inset 1px 1px #070707, inset -1px -1px #666;
 }
 
-.viewSwitch button span {
-  font-size: var(--s7-text);
+.viewSwitch button > span {
+  display: block;
+  width: var(--s7-icon-inline);
+  height: var(--s7-icon-inline);
+  flex: 0 0 var(--s7-icon-inline);
 }
 
 .viewPanel {

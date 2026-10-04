@@ -30,18 +30,18 @@ export const metadata: Metadata = {
   creator: "Samuel Zhang",
   publisher: "Samuel Zhang",
   category: "portfolio",
-  manifest: "/manifest.webmanifest?v=4",
+  manifest: "/manifest.webmanifest?v=5",
   icons: {
     icon: [
-      { url: "/favicon.svg?v=4", type: "image/svg+xml" },
-      { url: "/favicon.ico?v=4", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/favicon.png?v=5", sizes: "128x128", type: "image/png" },
+      { url: "/favicon.ico?v=5", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
     ],
-    shortcut: [{ url: "/favicon.ico?v=4", type: "image/x-icon" }],
-    apple: [{ url: "/apple-touch-icon.png?v=4", sizes: "180x180", type: "image/png" }],
+    shortcut: [{ url: "/favicon.ico?v=5", type: "image/x-icon" }],
+    apple: [{ url: "/apple-touch-icon.png?v=5", sizes: "180x180", type: "image/png" }],
     other: [
       {
         rel: "mask-icon",
-        url: "/safari-pinned-tab.svg?v=4",
+        url: "/safari-pinned-tab.svg?v=5",
         color: "#11177a",
       },
     ],

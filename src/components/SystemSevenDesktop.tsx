@@ -5,10 +5,14 @@ import { useDesktopPreferences } from "@/hooks/useDesktopPreferences";
 import { readDesktopPreferences, type DesktopPattern } from "@/lib/desktopPreferences";
 import { WindowErrorBoundary } from "./WindowErrorBoundary";
 import { System7Icon, type System7IconKind } from "./System7Icon";
+import { arcadeIconKinds, contactIconKinds, getApplicationIcon, getProjectIcon, serviceIconKinds } from "@/lib/iconIdentity";
 import { projects } from "@/data/projects";
 import { ProjectWindowContext } from "./projects/ProjectWindowContext";
 import { projectActivitySearch, resolveProjectActivity, type ProjectActivityRequest } from "@/lib/projectActivity";
-import { projectOrigins } from "@/data/projectOrigins";
+import { profileProjectOrigins as projectOrigins } from "@/data/profileProjectOrigins";
+import { profileExperiences, profileEducation, profileSkillGroups, profileSkills, profileAwards, profileLanguages, profileSources } from "@/data/profile";
+import { getDocumentLibrary, getProfileSourceHref } from "@/data/documents";
+import { profileCopy } from "./profileCopy";
 import dynamic from "next/dynamic";
 import {
   Children,
@@ -32,17 +36,30 @@ import {
 } from "@/lib/i18n";
 import { projectText } from "@/lib/projectCopy";
 import { desktopCopy } from "./desktopCopy";
+import { homepageCopy } from "./homepageCopy";
 import { projectMenuCopy } from "./projectMenuCopy";
-import DesktopFinder, { type FinderApplication } from "./DesktopFinder";
+import type { FinderApplication } from "./DesktopFinder";
 
-const desktopText = { ...projectMenuCopy, ...desktopCopy };
+const desktopText = { ...projectMenuCopy, ...desktopCopy, ...profileCopy, ...homepageCopy };
 
 function translateText(locale: Locale, source: string) {
   return projectText(locale, desktopText, source);
 }
 
+function desktopFragmentId(hash: string) {
+  const value = hash.startsWith("#") ? hash.slice(1) : hash;
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    // An unknown or malformed fragment is still a valid page destination.
+    // Preserve its literal value so missing-anchor focus falls back normally.
+    return value;
+  }
+}
+
 const SystemLocaleContext = createContext<Locale>("en-GB");
 const ProjectOpenContext = createContext<((slug: string) => void) | null>(null);
+const FinderDismissContext = createContext<(() => void) | null>(null);
 
 function useSystemLocale() {
   return useContext(SystemLocaleContext);
@@ -53,7 +70,23 @@ function ClassicModuleLoading() {
   return <div className="classic-module-loading" role="status"><strong>{translateText(locale, "Opening application…")}</strong><span aria-hidden="true"><i /></span><div className="classic-module-loading__paper" aria-hidden="true"><b /><b /><b /></div></div>;
 }
 
-const DesktopSettings = dynamic(() => import("./DesktopSettings"), { loading: ClassicModuleLoading });
+function FinderModuleLoading() {
+  const locale = useSystemLocale();
+  const close = useContext(FinderDismissContext);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    dialog?.showModal();
+    return () => dialog?.close();
+  }, []);
+  return <dialog ref={dialogRef} className="classic-module-loading window-load-error" data-finder-state="loading" aria-label={translateText(locale, "Find…")} style={{ width: "min(480px, calc(100vw - 24px))" }} onCancel={event => { event.preventDefault(); close?.(); }}>
+    <strong role="status">{translateText(locale, "Opening application…")}</strong>
+    <button type="button" className="s7-button" onClick={() => close?.()}>{translateText(locale, "Close Find")}</button>
+  </dialog>;
+}
+
+const DesktopSettings = dynamic(() => import("./DesktopTools").then(module => module.DesktopSettings), { loading: ClassicModuleLoading, ssr: false });
+const DesktopFinder = dynamic(() => import("./DesktopTools").then(module => module.DesktopFinder), { loading: FinderModuleLoading, ssr: false });
 
 const PdfPreview = dynamic(() => import("@/components/PdfPreview"), {
   loading: ClassicModuleLoading,
@@ -150,11 +183,8 @@ type WindowState = {
 type DesktopIcon = {
   id: AppId;
   label: string;
-  icon: IconKind;
   description: string;
 };
-
-type IconKind = System7IconKind | "coverd";
 
 type SystemMenuId = "apple" | "file" | "edit" | "view" | "special" | "language";
 
@@ -506,34 +536,20 @@ const INITIAL_WINDOWS: WindowState[] = [
 ];
 
 const DESKTOP_ICONS: DesktopIcon[] = [
-  { id: "about", label: "Start Here", icon: "profile", description: "Biography, current work, a recent field note and clear routes through the portfolio." },
-  { id: "projects", label: "Projects", icon: "folder", description: "Selected products, research and technical builds." },
-  { id: "coverd", label: "COVERD", icon: "coverd", description: "My startup, product thesis and responsible-AI principles." },
-  { id: "experience", label: "Experience", icon: "briefcase", description: "Professional history from emergency operations to applied AI." },
-  { id: "documents", label: "Documents", icon: "pdf", description: "Read the Applied AI CV and learning material in one continuous reader." },
-  { id: "games", label: "Desk Arcade", icon: "game", description: "Seven playful, local games with old-Mac mischief and small pieces of my work." },
-  { id: "desk", label: "Desk Accessories", icon: "accessories", description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser." },
-  { id: "orbitals", label: "Orbital Lab", icon: "orbital", description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory." },
-  { id: "skills", label: "Skills", icon: "controls", description: "Technical, product, research and leadership capabilities." },
-  { id: "education", label: "Education", icon: "university", description: "Imperial, King’s College London and academic awards." },
-  { id: "lab", label: "Home Lab", icon: "network", description: "My self-hosted AI, storage and automation infrastructure." },
-  { id: "scrapbook", label: "Interests", icon: "photos", description: "Photography, hiking, music, teaching and life outside work." },
-  { id: "contact", label: "Contact", icon: "mail", description: "Email, LinkedIn and GitHub without leaving the desktop." },
+  { id: "about", label: "Start Here", description: "Biography, current work, a recent field note and clear routes through the portfolio." },
+  { id: "projects", label: "Projects", description: "Selected products, research and technical builds." },
+  { id: "coverd", label: "COVERD", description: "My startup, product thesis and responsible-AI principles." },
+  { id: "experience", label: "Experience", description: "Professional history from emergency operations to applied AI." },
+  { id: "documents", label: "Documents", description: "Read the Applied AI CV and learning material in one continuous reader." },
+  { id: "games", label: "Desk Arcade", description: "Seven playful, local games with old-Mac mischief and small pieces of my work." },
+  { id: "desk", label: "Desk Accessories", description: "Eight everyday tools and a fast atomic-orbital lab, all in your browser." },
+  { id: "orbitals", label: "Orbital Lab", description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory." },
+  { id: "skills", label: "Skills", description: "Technical, product, research and leadership capabilities." },
+  { id: "education", label: "Education", description: "Imperial, King’s College London and academic awards." },
+  { id: "lab", label: "Home Lab", description: "My self-hosted AI, storage and automation infrastructure." },
+  { id: "scrapbook", label: "Interests", description: "Photography, hiking, music, teaching and life outside work." },
+  { id: "contact", label: "Contact", description: "Email, LinkedIn and GitHub without leaving the desktop." },
 ];
-
-const UTILITY_ICONS: Partial<Record<AppId, IconKind>> = {
-  settings: "controls",
-  desk: "accessories",
-  notepad: "note",
-  sketch: "sketch",
-  tasks: "tasks",
-  focus: "clock",
-  calendar: "calendar",
-  calculator: "calculator",
-  converter: "converter",
-  palette: "palette",
-  orbitals: "orbital",
-};
 
 const APP_ROUTES: Record<AppId, string> = {
   settings: "settings",
@@ -564,184 +580,9 @@ const APP_ROUTES: Record<AppId, string> = {
   secret: "about",
 };
 
-const experience = [
-  {
-    period: "May 2026 — Present",
-    originId: "marsh",
-    role: "Senior Coordinator — Digital Transformation Strategy Internship",
-    company: "Marsh · Strategy & Corporate Development Group",
-    location: "London",
-    copy: "Conducted client-confidential applied-AI research in a regulated insurance setting, with documented evaluation, human oversight and deployment safeguards. Operational data, model design and findings remain private.",
-    tag: "CURRENT",
-  },
-  {
-    period: "Mar 2026 — Present",
-    originId: "coverd",
-    role: "Founder & Product Lead · Part-time",
-    company: "COVERD",
-    location: "London",
-    copy: "Developed early company-aware voice-interview experiments, then evolved that research into COVERD’s current product: an ATS-connected recruitment-intelligence layer that reviews applications across specialist dimensions, enriches evidence with automated voice interviews and returns reasoned shortlists while recruiters keep the decision.",
-    detail: "Led early discovery with four design partners and pivoted from candidate-side CV tooling. By April 2026, tested three voice-interview architectures across 20 candidate interviews; voice enrichment remains optional when application evidence is incomplete.",
-    tag: "FOUNDER",
-  },
-  {
-    period: "Oct 2024 — Apr 2026",
-    originId: "pfizer",
-    role: "Web Application Developer & Product Owner · Part-time",
-    company: "Pfizer Analytical R&D",
-    location: "London",
-    copy: "Owned the roadmap and stakeholder adoption for GROWMAT, an internal enterprise product. Its external showcase documents the architecture and outcomes; live data, source code, credentials and non-public operating context remain private.",
-    tag: "PRODUCT",
-  },
-  {
-    period: "Sep 2023 — Aug 2024",
-    originId: "pfizer-placement",
-    role: "Data Analyst Undergraduate",
-    company: "Pfizer Analytical R&D",
-    location: "Sandwich",
-    copy: "Built and delivered GROWMAT within a regulated R&D environment, improving an internal planning process and supporting wider product adoption. Its external showcase is public; live company data, source code, credentials and non-public operating context remain private. Also explored scientific modelling workflows for pharmaceutical research.",
-    detail: "Worked across product discovery, full-stack delivery, reliability and change management. Pharmaceutical modelling datasets, parameters and results remain confidential.",
-    tag: "DATA",
-  },
-  {
-    period: "Jan 2023 — Apr 2025",
-    originId: "kcl-teaching",
-    role: "Coding Series Tutor & Curriculum Designer",
-    company: "King’s College London",
-    location: "London",
-    copy: "Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students. Organised a cross-industry data-science careers panel for 100+ attendees and mentored learners in using technical skills to widen their options.",
-    tag: "EDUCATION",
-  },
-  {
-    period: "Jun — Jul 2023",
-    originId: "kcl-research-2023",
-    role: "Summer Research Project",
-    company: "King’s College London",
-    location: "London",
-    copy: "Completed a summer research project at King’s College London. The linked computational-chemistry material includes a later workstation setup for GPU-capable containers and GROMACS topology preparation.",
-    tag: "RESEARCH",
-  },
-  {
-    period: "Jun — Jul 2022",
-    originId: "kcl-research-2022",
-    role: "Undergraduate Research Fellow",
-    company: "King’s College London",
-    location: "London",
-    copy: "Built MATLAB, Python and Excel tooling for rotational-spectroscopy analysis; named co-author on the 2025 International Symposium on Molecular Spectroscopy conference record.",
-    tag: "RESEARCH",
-  },
-  {
-    period: "Jul 2019 — Jul 2021",
-    originId: "scdf",
-    role: "Commander’s Personal Assistant / Sergeant",
-    company: "Singapore Civil Defence Force",
-    location: "Singapore",
-    copy: "Built decision-support and workflow automation during COVID-19 emergency operations using public epidemiological data. Personnel records, operational processes, infrastructure and scale remain protected.",
-    detail: "Supported senior leaders in time-critical operations, balancing incomplete information, rapid prioritisation and accountability across large-scale personnel operations.",
-    tag: "SERVICE",
-  },
-];
 
-const skillGroups = [
-  {
-    title: "Applied AI & Recruitment Systems",
-    summary: "Designing AI products that keep application evidence, specialist evaluation, voice enrichment and final human decisions open to review.",
-    evidence: "COVERD — an ATS-connected intelligence layer that reviews applications, retains evidence and returns reasoned shortlists; automated voice interviews add signal when needed.",
-    items: [
-      "Multi-agent orchestration & graph workflows",
-      "Voice pipelines & cascade model design",
-      "RAG, retrieval & knowledge refresh",
-      "LLM, prompt & embedding evaluation",
-      "Evidence-weighted belief updates",
-      "Human-in-the-loop AI safeguards",
-    ],
-  },
-  {
-    title: "Software & Product Engineering",
-    summary: "Building maintainable products end to end: interface, service logic, data model, integration, testing and deployment.",
-    evidence: "COVERD — combines TypeScript/React product surfaces, Python AI services, ATS integrations, structured evidence and evaluation tooling.",
-    items: [
-      "Python services & asynchronous workflows",
-      "TypeScript, React & Next.js",
-      "API design & third-party integrations",
-      "PostgreSQL schemas & data modelling",
-      "Real-time interfaces & WebSockets",
-      "Testing, debugging & code review",
-      "Authentication, privacy & secure defaults",
-      "Product analytics & observability",
-    ],
-  },
-  {
-    title: "Search, Data & Evaluation",
-    summary: "Treating evaluation as an engineering discipline: stated baselines, provenance, failure analysis and clear limits.",
-    evidence: "Client-confidential research uses documented evaluation, qualified recommendations and human oversight in a regulated setting.",
-    items: [
-      "Learning-to-rank & recommendation systems",
-      "Document extraction & intelligence",
-      "SQL, PostgreSQL & analytical pipelines",
-      "Time-aware validation & lagged baselines",
-      "Error analysis, provenance & abstention",
-      "Quantitative and qualitative evaluation",
-    ],
-  },
-  {
-    title: "Infrastructure & Delivery",
-    summary: "Operating the systems behind the product, with an emphasis on repeatability, recovery and sensible security.",
-    evidence: "Home lab — connects Proxmox and Docker services for local AI, storage and automation, with scheduled PostgreSQL backups and recovery tooling.",
-    items: [
-      "Docker, Linux & Proxmox",
-      "CI/CD & self-hosted GitHub Actions",
-      "Cross-architecture builds & runners",
-      "GPU compute & private AI hosting",
-      "Networking, monitoring & hardening",
-      "Backups, rollback & disaster recovery",
-    ],
-  },
-  {
-    title: "Scientific & Quantitative Computing",
-    summary: "A chemistry-trained approach to modelling: design the experiment, test assumptions and let evidence change the implementation.",
-    evidence: "Regulated R&D and academic research — applied scientific computing to modelling and molecular-research problems.",
-    items: [
-      "Statistical modelling & experiment design",
-      "Julia, MATLAB & scientific Python",
-      "Statistical thermodynamics",
-      "Computational chemistry",
-      "GROMACS environment setup & topology preprocessing",
-      "Reproducible research workflows",
-    ],
-  },
-  {
-    title: "Product, Leadership & Adoption",
-    summary: "Building trusted products for ambiguous technical problems through close listening, clear trade-offs and shared ownership.",
-    evidence: "GROWMAT and COVERD — turned ambiguous needs into adopted products through discovery, roadmap ownership and stakeholder communication.",
-    items: [
-      "Customer discovery & problem framing",
-      "Rapid prototyping & product strategy",
-      "Roadmaps, prioritisation & trade-offs",
-      "Stakeholder communication & live demos",
-      "Responsible AI & adoption planning",
-      "Teaching, mentoring & team enablement",
-    ],
-  },
-];
 
-function PixelIcon({ kind, small = false }: { kind: IconKind; small?: boolean }) {
-  if (kind === "coverd") {
-    return (
-      <span className={`pixel-icon pixel-icon--coverd${small ? " pixel-icon--small" : ""}`} aria-hidden="true">
-        <span className="coverd-icon-plate">
-          <Image
-            src="/coverd-logo-black-on-transparent.png"
-            alt=""
-            fill
-            sizes={small ? "16px" : "32px"}
-            loading="eager"
-          />
-        </span>
-      </span>
-    );
-  }
-
+function PixelIcon({ kind, small = false }: { kind: System7IconKind; small?: boolean }) {
   return (
     <span className={`pixel-icon pixel-icon--${kind}${small ? " pixel-icon--small" : ""}`} aria-hidden="true">
       <System7Icon kind={kind} miniature={small} />
@@ -757,12 +598,12 @@ const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
       id: item.id,
       title: item.title,
       description: desktopItem?.description ?? (item.id === "settings" ? "Desktop appearance, language and comfort settings." : item.id === "sidequest" ? "Latest field note · RUN/HACK" : item.id === "orbitals" ? "Explore atomic orbitals in a fast, browser-local ASCII laboratory." : "Desk Accessories"),
-      icon: <PixelIcon kind={UTILITY_ICONS[item.id] ?? desktopItem?.icon ?? "runner"} small />,
     };
   });
 
 function WindowChrome({
   windowState,
+  iconKind,
   active,
   onFocus,
   onClose,
@@ -774,6 +615,7 @@ function WindowChrome({
   locale,
 }: {
   windowState: WindowState;
+  iconKind: System7IconKind;
   active: boolean;
   onFocus: () => void;
   onClose: () => void;
@@ -805,7 +647,7 @@ function WindowChrome({
         onDoubleClick={(event) => { if (!(event.target as HTMLElement).closest("button")) onZoom(); }}
       >
         <button type="button" className="window-box window-close" onClick={onClose} aria-label={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} title={`${translateText(locale, "Close")} ${translateText(locale, windowState.title)}`} />
-        <h2>{windowState.title}</h2>
+        <h2><PixelIcon kind={iconKind} small /><span className="window-title">{windowState.title}</span></h2>
         <button
           type="button"
           className="window-box window-zoom"
@@ -848,22 +690,23 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
       </div>
       <div className="about-main">
         <div className="about-program">
-          <PixelIcon kind="profile" />
+          <PixelIcon kind={getApplicationIcon("about")} />
           <div>
             <h1>Samuel Zhang</h1>
             <p className="hero-role">Applied AI Engineer · Product Builder · Founder</p>
           </div>
         </div>
         <p className="hero-copy">
-          I build software around problems I have met in research and at work: planning laboratory capacity, helping recruiters understand applicants, and using machine learning where the cost of an error matters. My background spans chemistry, emergency operations and product development. Today I work on applied AI and lead COVERD.
+          I’m an applied AI engineer and product builder in London. I build tools for laboratory planning, recruitment and research, drawing on a background in chemistry and emergency operations.
         </p>
-        <fieldset className="about-panel">
-          <legend>Working style</legend>
-          <p>I like getting into the technical details. I also like working with people and helping them do their best work.</p>
-        </fieldset>
+        <nav className="about-start" aria-label="Start exploring">
+          <button className="mac-button is-default" type="button" onClick={openSelectedProjects}>Selected projects</button>
+          <button className="mac-button" type="button" onClick={() => openApp("experience")}>Experience &amp; career</button>
+          <button className="mac-button" type="button" onClick={() => openApp("documents")}>CV &amp; documents</button>
+        </nav>
         <article className="finance-update-card" aria-labelledby="finance-update-title">
           <div className="finance-update-card__art" aria-hidden="true">
-            <svg viewBox="0 0 80 64" fill="none"><path d="M8 52H72M8 12V52" stroke="currentColor" opacity=".35" /><path d="M14 43L28 34L40 38L54 21L68 13" stroke="currentColor" strokeWidth="3" /><circle cx="68" cy="13" r="4" fill="currentColor" /></svg>
+            <PixelIcon kind={getProjectIcon("ocean-depths-finance")} />
           </div>
           <div className="finance-update-card__copy">
             <span>JUST UPDATED · IM I BROKE?</span>
@@ -898,7 +741,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
             <p>If you&apos;re new here, start with Selected projects.</p>
           </div>
           <button className="identity-drawer--projects" onClick={openSelectedProjects}>
-            <PixelIcon kind="folder" small />
+            <PixelIcon kind={getApplicationIcon("projects")} />
             <span className="identity-copy identity-copy--product">
               <b>Selected projects</b>
               <span className="identity-detail">Products, applied AI, scientific research and interactive technical walkthroughs.</span>
@@ -906,29 +749,29 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
             </span>
           </button>
           <button onClick={() => openApp("coverd")}>
-            <PixelIcon kind="coverd" small />
+            <PixelIcon kind={getApplicationIcon("coverd")} />
             <span className="identity-copy"><b>COVERD · Founder&apos;s desk</b><span className="identity-detail">How COVERD reviews applications and gives recruiters reasons they can check.</span></span>
           </button>
           <button onClick={() => openApp("experience")}>
-            <PixelIcon kind="briefcase" small />
+            <PixelIcon kind={getApplicationIcon("experience")} />
             <span className="identity-copy"><b>Experience &amp; career</b><span className="identity-detail">Professional history across applied AI, product, research, teaching and public service.</span></span>
           </button>
           <button onClick={() => openApp("documents")}>
-            <PixelIcon kind="pdf" small />
+            <PixelIcon kind={getApplicationIcon("documents")} />
             <span className="identity-copy"><b>CV &amp; documents</b><span className="identity-detail">Read or download the current CV and supporting public documents.</span></span>
           </button>
           <button onClick={() => openApp("lab")}>
-            <PixelIcon kind="network" small />
+            <PixelIcon kind={getApplicationIcon("lab")} />
             <span className="identity-copy"><b>Home lab &amp; systems</b><span className="identity-detail">What I run at home, how it fits together, and what I learned after losing a database.</span></span>
           </button>
           <button onClick={() => openApp("scrapbook")}>
-            <PixelIcon kind="photos" small />
+            <PixelIcon kind={getApplicationIcon("scrapbook")} />
             <span className="identity-copy"><b>Interests &amp; notes</b><span className="identity-detail">Music, photography, hiking, teaching and the stories behind the technical work.</span></span>
           </button>
         </nav>
         <section className="arcade-invite" aria-labelledby="arcade-invite-title">
           <div className="arcade-invite__mark" aria-hidden="true">
-            <PixelIcon kind="game" />
+            <PixelIcon kind={getApplicationIcon("games")} />
             <span className="arcade-invite__count">7</span>
           </div>
           <div className="arcade-invite__copy">
@@ -937,7 +780,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
             <p>Seven small games with hints of my work and old-Mac mischief. No account, no tracking, no stakes.</p>
             <ul className="arcade-invite__games" aria-label="Games in Desk Arcade">
               {ARCADE_GAMES.map((item) => (
-                <li key={item.id}><b aria-hidden="true"><System7Icon kind={item.icon} /></b><span>{item.label}</span></li>
+                <li key={item.id}><PixelIcon kind={arcadeIconKinds[item.id]} small /><span>{item.label}</span></li>
               ))}
             </ul>
           </div>
@@ -948,8 +791,13 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
           <dl>
             <div><dt><a href={`/${localeSlug(locale)}/projects?project=coverd-ai`}>COVERD</a></dt><dd>Public product covers ATS-connected review, six specialist dimensions, voice enrichment and reasoned shortlists.</dd></div>
             <div><dt><a href={`/${localeSlug(locale)}/projects?project=growmat`}>GROWMAT</a></dt><dd>External showcase covers architecture and outcomes; live data and source remain private.</dd></div>
+            <div><dt><a href={`/${localeSlug(locale)}/projects?project=trustworthy-mri-reconstruction`}>Scientific AI</a></dt><dd>MRI reconstruction, fluid-flow surrogates and microrobot vision, with experiments you can inspect.</dd></div>
             <div><dt><a href={`/${localeSlug(locale)}/experience#kcl-teaching`}>People</a></dt><dd>20+ teaching sessions for 80+ students and a careers panel for more than 100.</dd></div>
           </dl>
+        </fieldset>
+        <fieldset className="about-panel">
+          <legend>Working style</legend>
+          <p>I like getting into the technical details. I also like working with people and helping them do their best work.</p>
         </fieldset>
         <div className="button-row">
           <a className="mac-button" href={localeCvAssets[locale].src} download>Download CV</a>
@@ -1045,18 +893,18 @@ function CoverdApp({ locale }: { locale: Locale }) {
 function CareerProjectLinks({ originId, locale }: { originId: string; locale: Locale }) {
   const openProject = useContext(ProjectOpenContext);
   const openActivity = useContext(ProjectWindowContext);
-  const origin = projectOrigins.find((item) => item.id === originId);
+  const origin = projectOrigins.find(item => item.id === originId);
   if (!origin) return null;
   const t = (text: string) => translateText(locale, text);
   const projectLinks = origin.projects.map((slug) => {
       const project = projects.find((item) => item.slug === slug);
       const pdf = !project?.demo ? project?.artifacts?.find((artifact) => artifact.kind === "PDF") : undefined;
-      return project ? <a key={slug} onClick={event => { if (openProject && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); if (pdf && openActivity) openActivity({ slug, kind: "pdf", artifactHref: pdf.href }); else openProject(slug); } }} href={pdf ? `/${localeSlug(locale)}/projects${projectActivitySearch({ slug, kind: "pdf", artifactHref: pdf.href })}` : `/${localeSlug(locale)}/projects?project=${slug}`} >
-        <span>{t(pdf ? "Open showcase PDF" : "Open project")}</span><strong>{t(project.shortTitle ?? project.title)} →</strong>
+      return project ? <a key={slug} onClick={event => { if (openProject && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); if (pdf && openActivity) openActivity({ slug, kind: "pdf", artifactHref: pdf.href }); else openProject(slug); } }} className="mac-button" href={pdf ? `/${localeSlug(locale)}/projects${projectActivitySearch({ slug, kind: "pdf", artifactHref: pdf.href })}` : `/${localeSlug(locale)}/projects?project=${slug}`} >
+        <span>{t(origin.relatedProjects?.includes(slug) ? "Related subject context" : pdf ? "Open showcase PDF" : "Open project")}</span><strong>{t(project.shortTitle ?? project.title)} →</strong>
       </a> : null;
     });
   return <nav className="career-projects" aria-label={`${t("Explore the work")} · ${t(origin.label)}`} lang={locale}>
-    <a href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`experience:${originId}`)}`}><span>{t("Related ideas and projects")}</span><strong>{t("Explore connections")} →</strong></a>
+    <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`experience:${originId}`)}`}><span>{t("Related ideas and projects")}</span><strong>{t("Explore connections")} →</strong></a>
     {projectLinks.slice(0, 4)}
     {projectLinks.length > 4 ? <details className="career-projects-more">
       <summary>{t("More related projects")} ({projectLinks.length - 4})</summary>
@@ -1073,6 +921,52 @@ function CvNavigation({ locale }: { locale: Locale }) {
   </nav>;
 }
 
+function ProfileSourceLinks({ sourceIds, locale }: { sourceIds: string[]; locale: Locale }) {
+  return <div className="profile-source-links" role="group" aria-label={translateText(locale, "Record sources")}>
+    <span>{translateText(locale, "Sources")}: </span>
+    {sourceIds.map(id => {
+      const source = profileSources.find(item => item.id === id);
+      if (!source) return null;
+      const href = getProfileSourceHref(id, locale);
+      return <a key={id} href={href}>{translateText(locale, source.title)}</a>;
+    })}
+  </div>;
+}
+
+function ProfileSkillEvidence({ skill, locale }: { skill: (typeof profileSkills)[number]; locale: Locale }) {
+  const openProject = useContext(ProjectOpenContext);
+  const t = (source: string) => translateText(locale, source);
+  return <div className="skill-capability__evidence">
+    <div className="button-row" role="group" aria-label={t("Project evidence")}>
+      {skill.projectSlugs.map(slug => {
+        const project = projects.find(item => item.slug === slug);
+        if (!project) return null;
+        return <a className="mac-button" key={slug} href={`/${localeSlug(locale)}/projects?project=${slug}`} onClick={event => {
+          if (openProject && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) { event.preventDefault(); openProject(slug); }
+        }}>{t(project.shortTitle ?? project.title)} →</a>;
+      })}
+      <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`skill:${skill.id}`)}`}>{t("Explore connections")} →</a>
+    </div>
+    {skill.relatedProjectSlugs?.length ? <div className="button-row" role="group" aria-label={t("Related subject context")}>
+      <span>{t("Related subject context")}: </span>
+      {skill.relatedProjectSlugs.map(slug => {
+        const project = projects.find(item => item.slug === slug);
+        return project ? <a className="mac-button" key={slug} href={`/${localeSlug(locale)}/projects?project=${slug}`} onClick={event => {
+          if (openProject && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) { event.preventDefault(); openProject(slug); }
+        }}>{t(project.shortTitle ?? project.title)} →</a> : null;
+      })}
+    </div> : null}
+    <div className="profile-source-links" role="group" aria-label={t("Linked experience and education")}>
+      <span>{t("Experience & education")}: </span>
+      {skill.originIds.map(id => {
+        const origin = projectOrigins.find(item => item.id === id);
+        return origin ? <a key={id} href={`/${localeSlug(locale)}/${origin.section}#${id}`}>{t(origin.label)}</a> : null;
+      })}
+    </div>
+    <ProfileSourceLinks sourceIds={skill.sourceIds} locale={locale} />
+  </div>;
+}
+
 function ExperienceApp({ locale }: { locale: Locale }) {
   return (
     <TranslationBoundary locale={locale}><div className="experience-app">
@@ -1080,12 +974,13 @@ function ExperienceApp({ locale }: { locale: Locale }) {
         <div>
           <span className="eyebrow">PROFESSIONAL HISTORY</span>
           <h3>Building useful intelligence.</h3>
+          <p className="profile-intro">Career records from the CV, connected to public work and original showcases.</p>
         </div>
-        <a className="mac-button" href={`/${localeSlug(locale)}/documents`}>View CV</a>
+        <a className="mac-button" href={`/${localeSlug(locale)}/documents#ai-cv`}>View CV</a>
       </header>
       <div className="career-list">
-        {experience.map((item) => (
-          <article className="career-record" id={item.originId} key={`${item.company}-${item.period}`}>
+        {profileExperiences.map((item) => (
+          <article className="career-record" id={item.id} key={item.id}>
             <div className="career-period">
               <span>{item.period}</span>
               <em>{item.location}</em>
@@ -1097,7 +992,8 @@ function ExperienceApp({ locale }: { locale: Locale }) {
               </div>
               <p>{item.copy}</p>
               {item.detail ? <p>{item.detail}</p> : null}
-              {item.originId ? <CareerProjectLinks originId={item.originId} locale={locale} /> : null}
+              <CareerProjectLinks originId={item.id} locale={locale} />
+              <ProfileSourceLinks sourceIds={item.sourceIds} locale={locale} />
             </div>
           </article>
         ))}
@@ -1113,23 +1009,47 @@ function ExperienceApp({ locale }: { locale: Locale }) {
 
 
 function SkillsApp({ locale }: { locale: Locale }) {
+  useEffect(() => {
+    const openLinkedSkill = () => {
+      const id = desktopFragmentId(window.location.hash);
+      if (!profileSkills.some(skill => skill.id === id)) return;
+      const target = document.getElementById(id);
+      if (target instanceof HTMLDetailsElement) {
+        target.open = true;
+        target.scrollIntoView({ block: "start", behavior: "instant" });
+      }
+    };
+    openLinkedSkill();
+    window.addEventListener("hashchange", openLinkedSkill);
+    window.addEventListener("popstate", openLinkedSkill);
+    return () => {
+      window.removeEventListener("hashchange", openLinkedSkill);
+      window.removeEventListener("popstate", openLinkedSkill);
+    };
+  }, []);
+
   return (
     <TranslationBoundary locale={locale}><div className="skills-app">
       <div className="control-panel-intro">
-        <PixelIcon kind="controls" />
-        <div><h3>Skills in practice.</h3><p>My broader engineering toolkit, connected to the products and systems where I have used it.</p></div>
+        <PixelIcon kind={getApplicationIcon("skills")} />
+        <div><h3>Skills in practice.</h3><p>Open a capability to see the work, experience and sources behind it.</p></div>
       </div>
       <div className="control-groups">
-        {skillGroups.map((group) => (
-          <fieldset className="control-group" key={group.title}>
+        {profileSkillGroups.map((group) => (
+          <fieldset className="control-group" key={group.id}>
             <legend>{group.title}</legend>
             <p className="skill-summary">{group.summary}</p>
-            <ul className="skill-items">
-              {group.items.map((item) => (
-                <li key={item}>{item}</li>
+            <div className="skill-capabilities">
+              {profileSkills.filter(skill => skill.group === group.id).map(skill => (
+                <details className="skill-capability" id={skill.id} key={skill.id} onFocus={event => {
+                  if (event.target === event.currentTarget) event.currentTarget.open = true;
+                }}>
+                  <summary>{skill.title}</summary>
+                  <p>{skill.description}</p>
+                  <ProfileSkillEvidence skill={skill} locale={locale} />
+                </details>
               ))}
-            </ul>
-            <p className="skill-evidence"><strong>USED IN PRACTICE</strong>{group.evidence}</p>
+            </div>
           </fieldset>
         ))}
       </div>
@@ -1142,37 +1062,35 @@ function EducationApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="education-app">
       <header className="document-header">
         <div><span className="eyebrow">EDUCATION</span><h3>Science, computation &amp; enterprise.</h3></div>
-        <a className="mac-button" href={`/${localeSlug(locale)}/documents`}>View CV</a>
+        <a className="mac-button" href={`/${localeSlug(locale)}/documents#ai-cv`}>View CV</a>
       </header>
-      <section className="degree-card degree-card--imperial" id="imperial">
-        <div className="degree-mark">ICL</div>
-        <div><span>Sep 2025—Sep 2026</span><h4>MSc AI Applications &amp; Innovation</h4><p>Imperial College London · Predicted Distinction</p><small>Deep Learning · AI Safety · Innovation Management · ML in Medical Imaging · ML in Climate Change</small></div>
-      </section>
-      <CareerProjectLinks originId="imperial" locale={locale} />
-      <section className="degree-card" id="kcl">
-        <div className="degree-mark">KCL</div>
-        <div><span>Sep 2021—May 2025</span><h4>BSc Chemistry with Biomedicine</h4><p>King&apos;s College London · First-Class Honours</p><small>Professional placement · Computational Chemistry · Molecular Biology · Chemical Biology · Organic Chemistry · Associate of King&apos;s College London</small></div>
-      </section>
-      <CareerProjectLinks originId="kcl" locale={locale} />
+      {profileEducation.map(degree => (
+        <section className="education-record" key={degree.id}>
+          <div className={`degree-card${degree.id === "imperial" ? " degree-card--imperial" : ""}`} id={degree.id}>
+            <div className="degree-mark">{degree.mark}</div>
+            <div><span>{degree.period}</span><h4>{degree.title}</h4><p>{degree.institution} · {degree.result}</p></div>
+          </div>
+          <div className="education-detail">
+            <p>{degree.description}</p>
+            <h4>Degree subjects</h4>
+            <ul className="education-modules">{degree.modules.map(module => <li key={module}>{module}</li>)}</ul>
+            <h4>Alongside the degree</h4>
+            <ul>{degree.achievements.map(achievement => <li key={achievement}>{achievement}</li>)}</ul>
+            <CareerProjectLinks originId={degree.id} locale={locale} />
+            <ProfileSourceLinks sourceIds={degree.sourceIds} locale={locale} />
+          </div>
+        </section>
+      ))}
       <div className="education-columns">
         <section>
           <h4>Honours &amp; awards</h4>
-          <ul>
-            <li>RUN/HACK 2026 — Second place</li>
-            <li>King&apos;s Research Experience Award</li>
-            <li>Associate of King&apos;s College London (AKC)</li>
-            <li>SCDF Service Excellence Award</li>
-            <li>SCDF 1st Division HQ Wall of Fame</li>
-            <li>EARCOS Global Citizenship Award</li>
-          </ul>
+          <ul className="education-awards">{profileAwards.map(award => <li key={award.title}>{award.title}<ProfileSourceLinks sourceIds={award.sourceIds} locale={locale} /></li>)}</ul>
         </section>
         <section>
           <h4>Languages</h4>
-          <dl className="language-list">
-            <div><dt>English</dt><dd>Native / bilingual</dd></div>
-            <div><dt>Mandarin</dt><dd>Native / bilingual</dd></div>
-            <div><dt>Italian</dt><dd>Elementary</dd></div>
-          </dl>
+          <dl className="language-list">{profileLanguages.map(language => <div key={language.title}><dt>{language.title}</dt><dd>{language.level}</dd></div>)}</dl>
+          <ProfileSourceLinks sourceIds={["cv"]} locale={locale} />
+          <a className="mac-button" href={`/${localeSlug(locale)}/projects?project=parliamo-italian-learning`}>Explore language-learning work →</a>
         </section>
       </div>
     </div></TranslationBoundary>
@@ -1251,12 +1169,12 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
     <TranslationBoundary locale={locale}><div className="chooser-app">
       <div className="chooser-columns">
         <div className="chooser-list" role="tablist" aria-label="Contact services" onKeyDown={handleServiceTabsKeyDown}>
-          <button id="contact-tab-internet" type="button" role="tab" tabIndex={activeService === "internet" ? 0 : -1} aria-selected={activeService === "internet"} aria-controls="contact-service-panel" className={activeService === "internet" ? "is-selected" : ""} onClick={() => setActiveService("internet")}><PixelIcon kind="network" small />Internet</button>
-          <button id="contact-tab-email" type="button" role="tab" tabIndex={activeService === "email" ? 0 : -1} aria-selected={activeService === "email"} aria-controls="contact-service-panel" className={activeService === "email" ? "is-selected" : ""} onClick={() => setActiveService("email")}><PixelIcon kind="document" small />Electronic Mail</button>
-          <button id="contact-tab-linkedin" type="button" role="tab" tabIndex={activeService === "linkedin" ? 0 : -1} aria-selected={activeService === "linkedin"} aria-controls="contact-service-panel" className={activeService === "linkedin" ? "is-selected" : ""} onClick={() => setActiveService("linkedin")}><PixelIcon kind="computer" small />LinkedIn</button>
+          <button id="contact-tab-internet" type="button" role="tab" tabIndex={activeService === "internet" ? 0 : -1} aria-selected={activeService === "internet"} aria-controls="contact-service-panel" className={activeService === "internet" ? "is-selected" : ""} onClick={() => setActiveService("internet")}><PixelIcon kind={contactIconKinds.internet} small />Internet</button>
+          <button id="contact-tab-email" type="button" role="tab" tabIndex={activeService === "email" ? 0 : -1} aria-selected={activeService === "email"} aria-controls="contact-service-panel" className={activeService === "email" ? "is-selected" : ""} onClick={() => setActiveService("email")}><PixelIcon kind={contactIconKinds.email} small />Electronic Mail</button>
+          <button id="contact-tab-linkedin" type="button" role="tab" tabIndex={activeService === "linkedin" ? 0 : -1} aria-selected={activeService === "linkedin"} aria-controls="contact-service-panel" className={activeService === "linkedin" ? "is-selected" : ""} onClick={() => setActiveService("linkedin")}><PixelIcon kind={contactIconKinds.linkedin} small />LinkedIn</button>
         </div>
         <div id="contact-service-panel" className="chooser-detail" role="tabpanel" aria-labelledby={`contact-tab-${activeService}`}>
-          <div className="contact-machine"><PixelIcon kind="computer" /><span className="machine-light" /></div>
+          <div className="contact-machine"><PixelIcon kind={contactIconKinds[activeService]} /><span className="machine-light" /></div>
           <h3>{activeService === "internet" ? "Samuel Zhang" : activeService === "email" ? "Electronic Mail" : "LinkedIn"}</h3>
           <p>{activeService === "email"
             ? "Email is the most direct way to start a useful conversation."
@@ -1290,35 +1208,50 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
   );
 }
 
-const supportingDocuments = [
-  {
-    id: "study-rl",
-    title: "Reinforcement Learning Study Syllabus",
-    meta: "Learning atlas · English PDF",
-    src: "/projects/study-rl/syllabus.pdf",
-  },
-];
-
 function DocumentsApp({ locale }: { locale: Locale }) {
   const [activeDocumentId, setActiveDocumentId] = useState("ai-cv");
-  const documentLibrary = useMemo(() => [
-    { id: "ai-cv", ...localeCvAssets[locale] },
-    ...supportingDocuments,
-  ], [locale]);
+  const documentLibrary = useMemo(() => getDocumentLibrary(locale), [locale]);
   const activeDocument = documentLibrary.find((document) => document.id === activeDocumentId) ?? documentLibrary[0];
+
+  useEffect(() => {
+    const selectFromAddress = () => {
+      const id = desktopFragmentId(window.location.hash);
+      if (documentLibrary.some(document => document.id === id)) setActiveDocumentId(id);
+    };
+    selectFromAddress();
+    window.addEventListener("hashchange", selectFromAddress);
+    window.addEventListener("popstate", selectFromAddress);
+    return () => {
+      window.removeEventListener("hashchange", selectFromAddress);
+      window.removeEventListener("popstate", selectFromAddress);
+    };
+  }, [documentLibrary]);
 
   return (
     <TranslationBoundary locale={locale}><div className="documents-app">
-      <aside className="documents-library">
+      <aside className="documents-library" aria-label={translateText(locale, "Document library")}>
         <div className="documents-library__title">
-          <PixelIcon kind="pdf" />
+          <PixelIcon kind={getApplicationIcon("documents")} />
           <div><span>LIBRARY</span><strong>{documentLibrary.length} documents</strong></div>
         </div>
         {documentLibrary.map((document) => (
           <button
+            type="button"
+            id={document.id}
             key={document.id}
             className={activeDocument.id === document.id ? "is-active" : ""}
-            onClick={() => setActiveDocumentId(document.id)}
+            aria-pressed={activeDocument.id === document.id}
+            onFocus={() => {
+              // Desktop links focus their requested anchor after updating the
+              // address. Ordinary Tab traversal must leave the chosen PDF alone.
+              if (/\/documents\/?$/.test(window.location.pathname) && desktopFragmentId(window.location.hash) === document.id) setActiveDocumentId(document.id);
+            }}
+            onClick={() => {
+              setActiveDocumentId(document.id);
+              const url = new URL(window.location.href);
+              url.hash = document.id;
+              window.history.replaceState(window.history.state, "", url);
+            }}
           >
             <PixelIcon kind="document" small />
             <span><strong>{document.title}</strong><small>{document.meta}</small></span>
@@ -1326,18 +1259,17 @@ function DocumentsApp({ locale }: { locale: Locale }) {
         ))}
       </aside>
       <section className="documents-preview">
-        {activeDocument.id === "ai-cv" ? <CvNavigation locale={locale} /> : <nav className="button-row" aria-label={translateText(locale, "Explore the work")}><a className="mac-button" href={`/${localeSlug(locale)}/projects?project=study-rl&view=demo`}>{translateText(locale, "Explore learning experiments")} →</a></nav>}
+        {activeDocument.id === "ai-cv" ? <CvNavigation locale={locale} /> : <nav className="button-row" aria-label={translateText(locale, "Explore the work")}>
+          {activeDocument.projectSlug ? <a className="mac-button" href={`/${localeSlug(locale)}/projects?project=${activeDocument.projectSlug}`}>{translateText(locale, "Open related project")} →</a> : null}
+          <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`document:${activeDocument.id}`)}`}>{translateText(locale, "Explore connections")} →</a>
+        </nav>}
+        <p className="document-description">{activeDocument.description}</p>
         <div className="documents-toolbar">
           <span>{activeDocument.title}</span>
           <span className="documents-toolbar__hint">Scroll continuously to read every page; zoom when needed.</span>
-          <a href={activeDocument.src} download>{activeDocument.id === "ai-cv" ? "Download CV" : "Save a copy"}</a>
+          <a className="mac-button" href={activeDocument.src} download>{activeDocument.id === "ai-cv" ? "Download CV" : "Save a copy"}</a>
         </div>
-        <PdfPreview
-          key={activeDocument.id}
-          src={activeDocument.src}
-          title={translateText(locale, activeDocument.title)}
-          locale={locale}
-        />
+        <PdfPreview key={activeDocument.id} src={activeDocument.src} title={translateText(locale, activeDocument.title)} locale={locale} />
         <p className="documents-fallback">
           Prefer your browser&apos;s full PDF tools? <a href={activeDocument.src}>Open this document in the current tab</a>.
         </p>
@@ -1464,14 +1396,14 @@ validateSamWords();
 
 type ArcadeGameId = "minefield" | "snake" | "brickbreaker" | "puzzle" | "samword" | "memory" | "spectrum";
 
-const ARCADE_GAMES: readonly { id: ArcadeGameId; icon: System7IconKind; label: string; description: string }[] = [
-  { id: "minefield", icon: "minefield", label: "Minefield", description: "Clear the desk. Mind the paperwork." },
-  { id: "snake", icon: "snake", label: "Snake", description: "Eat pixels, dodge the walls, become inconveniently long." },
-  { id: "brickbreaker", icon: "brickbreaker", label: "Brick Breaker", description: "One paddle, one ball and a very breakable filing cabinet." },
-  { id: "puzzle", icon: "puzzle", label: "Sliding Puzzle", description: "Put every number back where it belongs." },
-  { id: "samword", icon: "word", label: "SamWord", description: "Six letters, profile clues and one suspicious password." },
-  { id: "memory", icon: "cards", label: "Profile Pairs", description: "Match the work to the story behind it." },
-  { id: "spectrum", icon: "spectrum", label: "Peak Dock", description: "Fit randomised HPLC–UV peaks across three difficulty levels." },
+const ARCADE_GAMES: readonly { id: ArcadeGameId; label: string; description: string }[] = [
+  { id: "minefield", label: "Minefield", description: "Clear the desk. Mind the paperwork." },
+  { id: "snake", label: "Snake", description: "Eat pixels, dodge the walls, become inconveniently long." },
+  { id: "brickbreaker", label: "Brick Breaker", description: "One paddle, one ball and a very breakable filing cabinet." },
+  { id: "puzzle", label: "Sliding Puzzle", description: "Put every number back where it belongs." },
+  { id: "samword", label: "SamWord", description: "Six letters, profile clues and one suspicious password." },
+  { id: "memory", label: "Profile Pairs", description: "Match the work to the story behind it." },
+  { id: "spectrum", label: "Peak Dock", description: "Fit randomised HPLC–UV peaks across three difficulty levels." },
 ] as const;
 
 const MEMORY_PAIRS = [
@@ -1782,7 +1714,7 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
   return (
     <TranslationBoundary locale={locale}><div className="games-app" data-game={game}>
       <div className="games-sidebar">
-        <div className="games-logo"><PixelIcon kind="game" /><span>Desk<br />Arcade</span></div>
+        <div className="games-logo"><PixelIcon kind={getApplicationIcon("games")} /><span>Desk<br />Arcade</span></div>
         <nav ref={gamesMenuRef} className="games-menu" aria-label="Choose an arcade game">
           {ARCADE_GAMES.map((item) => (
             <button
@@ -1793,7 +1725,7 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
               onClick={() => setGame(item.id)}
               aria-pressed={game === item.id}
             >
-              <span className="game-mini-icon" aria-hidden="true"><System7Icon kind={item.icon} /></span>
+              <span className="game-mini-icon" aria-hidden="true"><System7Icon kind={arcadeIconKinds[item.id]} /></span>
               {item.label}
             </button>
           ))}
@@ -1810,7 +1742,7 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
           <span><i aria-hidden="true" /> NOW PLAYING</span>
           <strong>{activeArcadeGame.label}</strong>
           <p>{activeArcadeGame.description}</p>
-          <b aria-hidden="true"><System7Icon kind={activeArcadeGame.icon} /></b>
+          <b aria-hidden="true"><System7Icon kind={arcadeIconKinds[activeArcadeGame.id]} /></b>
         </div>
         {game === "minefield" && (
           <>
@@ -1976,7 +1908,7 @@ function SecretApp({ locale }: { locale: Locale }) {
     <TranslationBoundary locale={locale}><div className="secret-app">
       <div className="secret-stars" aria-hidden="true"><i /><i /><i /><i /><i /></div>
       <div className="flying-toaster" aria-hidden="true"><span /><i /><b /></div>
-      <PixelIcon kind="secret" />
+      <PixelIcon kind={getApplicationIcon("secret")} />
       <span className="eyebrow">UNREASONABLE CORNER DETECTED</span>
       <h3>Welcome, power user.</h3>
       <p>You found the part of the portfolio that contributes nothing to conversion metrics.</p>
@@ -1986,16 +1918,9 @@ function SecretApp({ locale }: { locale: Locale }) {
   );
 }
 
-// Generic service pictograms describe the function; product names keep their own identity.
-const SERVICE_ICONS: Record<string, System7IconKind> = {
-  PX: "network", AI: "computer", DEV: "document", KVM: "computer",
-  NPM: "network", WG: "shield", DNS: "shield", F2B: "shield", RDP: "computer",
-  CT: "controls", CI: "tasks", HP: "folder", JOB: "calendar", SQL: "network",
-  CO2: "chart", HA: "network", RAID: "network", NAS: "folder", NC: "folder",
-  JF: "photos", KX: "book", ERP: "briefcase", ODO: "controls",
-};
-function ServiceIcon({ code }: { code: string }) {
-  return <span className="service-pixel-icon" aria-hidden="true"><System7Icon kind={SERVICE_ICONS[code] ?? "computer"} /></span>;
+// Service names retain their text identity; pictograms describe their function.
+function ServiceIcon({ code }: { code: keyof typeof serviceIconKinds }) {
+  return <span className="service-pixel-icon" aria-hidden="true"><System7Icon kind={serviceIconKinds[code]} /></span>;
 }
 
 function LabApp({ locale }: { locale: Locale }) {
@@ -2025,7 +1950,7 @@ function LabApp({ locale }: { locale: Locale }) {
     { group: "Media", code: "KX", name: "Kiwix", host: "Offline knowledge", description: "Serves offline Wikipedia and reference libraries without an internet connection." },
     { group: "Apps", code: "ERP", name: "Frappe / ERPNext", host: "Business systems lab", description: "A containerised environment for exploring open-source ERP and workflow software." },
     { group: "Apps", code: "ODO", name: "Odoo Lab", host: "Application sandbox", description: "A separate test stack for business application and database experiments." },
-  ];
+  ] as const;
   const groups = ["All", "Compute", "Network", "Operations", "Data", "Storage", "Media", "Apps"];
   const visibleServices = filter === "All" ? services : services.filter((service) => service.group === filter);
 
@@ -2119,7 +2044,7 @@ function ScrapbookApp({ locale }: { locale: Locale }) {
 
   return (
     <TranslationBoundary locale={locale}><div className="scrapbook-app">
-      <header className="document-header"><div><span className="eyebrow">INTERESTS &amp; NOTES</span><h3>The creative life behind the technical work.</h3></div><PixelIcon kind="photos" /></header>
+      <header className="document-header"><div><span className="eyebrow">INTERESTS &amp; NOTES</span><h3>The creative life behind the technical work.</h3></div><PixelIcon kind={getApplicationIcon("scrapbook")} /></header>
       <p className="scrapbook-intro">Open a clipping to read the story behind it.</p>
       <div className="scrap-grid">
         {interests.map((interest, index) => {
@@ -2280,6 +2205,7 @@ export default function SystemSevenDesktop({
     projectActivity: { search: initialActivity ? projectActivitySearch(initialActivity) : "", hash: "" },
   });
   const finderReturnFocus = useRef<HTMLElement | null>(null);
+  const finderRestorePending = useRef(false);
 
   useEffect(() => () => {
     if (toastTimer.current !== null) window.clearTimeout(toastTimer.current);
@@ -2478,6 +2404,11 @@ export default function SystemSevenDesktop({
     };
   }, []);
 
+  const windowIcon = (item: WindowState): System7IconKind => {
+    const slug = item.id === "projectActivity" ? activity?.slug : item.id === "project" ? requestedProjectSlug : null;
+    const project = slug ? projects.find(candidate => candidate.slug === slug) : null;
+    return project ? getProjectIcon(project.slug) : getApplicationIcon(item.id);
+  };
   const windowTitle = (item: WindowState) => item.id === "projectActivity" && activity
     ? `${translateText(locale, item.title)} · ${activity.kind === "pdf" ? "PDF" : translateText(locale, "Interactive demo")}`
     : item.title;
@@ -2517,7 +2448,7 @@ export default function SystemSevenDesktop({
     const nextPath = appRoute ? `${localePrefix}/${appRoute}` : localePrefix || "/";
     const savedRouteState = id === activeId ? currentRouteState : routeStateByApp.current[id];
     const nextSearch = id === "projectActivity" ? routeStateByApp.current.projectActivity?.search ?? "" : id === "project" ? routeStateByApp.current.project?.search ?? "" : id === "projects" ? savedRouteState?.search ?? "" : "";
-    const nextHash = id === "sidequest" ? savedRouteState?.hash ?? "" : (id === "experience" || id === "education") ? savedRouteState?.hash ?? "" : "";
+    const nextHash = ["sidequest", "experience", "education", "skills", "documents"].includes(id) ? savedRouteState?.hash ?? "" : "";
     const nextAddress = `${nextPath}${nextSearch}${nextHash}`;
 
     if (`${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}` !== nextAddress) {
@@ -2705,9 +2636,9 @@ export default function SystemSevenDesktop({
     requestAnimationFrame(() => {
       if (id === "projects") window.dispatchEvent(new Event("samuel-project-graph"));
       if (url.hash) {
-        const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+        const target = document.getElementById(desktopFragmentId(url.hash));
         target?.scrollIntoView({ block: "start", behavior: "instant" });
-        if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
+        if (target) { if (target.tabIndex < 0) target.tabIndex = -1; target.focus({ preventScroll: true }); }
       }
     });
   };
@@ -2747,8 +2678,8 @@ export default function SystemSevenDesktop({
         ? { ...item, open: true, z, title: project ? project.title : item.title }
         : (item.id === "projectActivity" && !nextActivity) || (item.id === "project" && routeApp === "projects" && !project) ? { ...item, open: false } : item));
       requestAnimationFrame(() => {
-        const target = url.hash ? document.getElementById(decodeURIComponent(url.hash.slice(1))) : null;
-        if (target) { target.scrollIntoView({ block: "start", behavior: "instant" }); target.tabIndex = -1; target.focus({ preventScroll: true }); }
+        const target = url.hash ? document.getElementById(desktopFragmentId(url.hash)) : null;
+        if (target) { target.scrollIntoView({ block: "start", behavior: "instant" }); if (target.tabIndex < 0) target.tabIndex = -1; target.focus({ preventScroll: true }); }
         else document.querySelector<HTMLButtonElement>(`[data-app-id="${id}"] .window-close`)?.focus();
       });
     };
@@ -2765,13 +2696,36 @@ export default function SystemSevenDesktop({
     setFinderOpen(true);
   }, [booting, finderOpen, mobileGuide, openMenu]);
 
-  const closeFinder = () => {
+  const closeFinder = useCallback(() => {
+    finderRestorePending.current = true;
     setFinderOpen(false);
-    window.requestAnimationFrame(() => {
+  }, []);
+
+  useEffect(() => {
+    if (finderOpen || !finderRestorePending.current) return;
+    finderRestorePending.current = false;
+    // Restore only after inert is removed and the native dialog's unmount
+    // cleanup finishes; its own focus restoration can otherwise win the race.
+    const frame = window.requestAnimationFrame(() => {
       if (finderReturnFocus.current?.isConnected) finderReturnFocus.current.focus();
       else menuButtonRefs.current.file?.focus();
     });
-  };
+    return () => window.cancelAnimationFrame(frame);
+  }, [finderOpen]);
+
+  useEffect(() => {
+    if (!finderOpen) return;
+    const closePendingFinder = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.isComposing || event.defaultPrevented) return;
+      // Once mounted, Find handles Escape through its native dialog and search
+      // input. While its chunk loads, the inert desktop still needs an exit.
+      if (document.querySelector('dialog[open][aria-labelledby="finder-title"]')) return;
+      event.preventDefault();
+      closeFinder();
+    };
+    window.addEventListener("keydown", closePendingFinder);
+    return () => window.removeEventListener("keydown", closePendingFinder);
+  }, [finderOpen, closeFinder]);
 
   const openFoundApplication = (id: AppId) => {
     setFinderOpen(false);
@@ -3007,7 +2961,7 @@ export default function SystemSevenDesktop({
   if (booting) {
     return (
       <TranslationBoundary locale={locale}><main className="boot-screen" data-locale={locale} onClick={completeBoot}>
-        <div className="boot-computer"><div className="boot-face">:)</div><span /></div>
+        <div className="boot-computer" aria-hidden="true"><System7Icon kind="computer" /></div>
         <h1>Welcome to Samuel System 7</h1>
         <p className="boot-status" key={bootMessageIndex} aria-live="polite">{BOOT_MESSAGES[bootMessageIndex]}</p>
         <div
@@ -3052,32 +3006,29 @@ export default function SystemSevenDesktop({
               aria-controls={openMenu === "apple" ? SYSTEM_MENU_ELEMENT_IDS.apple : undefined}
               aria-expanded={openMenu === "apple"}
             >
-              <svg className="human-mark" viewBox="0 0 18 18" aria-hidden="true" shapeRendering="crispEdges">
-                <circle cx="9" cy="5" r="3" />
-                <path d="M3 17v-3c0-3.2 2.4-5 6-5s6 1.8 6 5v3z" />
-              </svg>
+              <PixelIcon kind={getApplicationIcon("about")} small />
               <span className="menu-label">Menu</span>
             </button>
             {openMenu === "apple" && (
               <div className="menu-dropdown apple-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.apple} role="menu" aria-label="Samuel menu" onKeyDown={(event) => handleSystemMenuKeyDown(event, "apple")}>
-                <button type="button" role="menuitem" onClick={() => openApp("about")}><PixelIcon kind="computer" small />About Samuel Zhang…</button>
-                <button type="button" role="menuitem" onClick={() => openApp("projects")}><PixelIcon kind="folder" small />Projects</button>
-                <button type="button" role="menuitem" onClick={() => openApp("coverd")}><PixelIcon kind="coverd" small />COVERD — Founder’s Desk</button>
-                <button type="button" role="menuitem" onClick={() => openApp("experience")}><PixelIcon kind="briefcase" small />Career</button>
-                <button type="button" role="menuitem" onClick={() => openApp("documents")}><PixelIcon kind="pdf" small />Documents</button>
-                <button type="button" role="menuitem" onClick={() => openApp("desk")}><PixelIcon kind="accessories" small />Desk Accessories</button>
-                <button type="button" role="menuitem" onClick={() => openApp("orbitals")}><PixelIcon kind="orbital" small />Orbital Lab</button>
-                <button type="button" role="menuitem" onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
+                <button type="button" role="menuitem" onClick={() => openApp("about")}><PixelIcon kind={getApplicationIcon("about")} small />About Samuel Zhang…</button>
+                <button type="button" role="menuitem" onClick={() => openApp("projects")}><PixelIcon kind={getApplicationIcon("projects")} small />Projects</button>
+                <button type="button" role="menuitem" onClick={() => openApp("coverd")}><PixelIcon kind={getApplicationIcon("coverd")} small />COVERD — Founder’s Desk</button>
+                <button type="button" role="menuitem" onClick={() => openApp("experience")}><PixelIcon kind={getApplicationIcon("experience")} small />Career</button>
+                <button type="button" role="menuitem" onClick={() => openApp("documents")}><PixelIcon kind={getApplicationIcon("documents")} small />Documents</button>
+                <button type="button" role="menuitem" onClick={() => openApp("desk")}><PixelIcon kind={getApplicationIcon("desk")} small />Desk Accessories</button>
+                <button type="button" role="menuitem" onClick={() => openApp("orbitals")}><PixelIcon kind={getApplicationIcon("orbitals")} small />Orbital Lab</button>
+                <button type="button" role="menuitem" onClick={() => openApp("contact")}><PixelIcon kind={getApplicationIcon("contact")} small />Contact Samuel</button>
                 <hr />
-                <button type="button" role="menuitem" onClick={() => openApp("settings")}><PixelIcon kind="controls" small />Settings</button>
-                <button type="button" role="menuitem" onClick={openFinder}><PixelIcon kind="folder" small />Find…</button>
+                <button type="button" role="menuitem" onClick={() => openApp("settings")}><PixelIcon kind={getApplicationIcon("settings")} small />Settings</button>
+                <button type="button" role="menuitem" onClick={openFinder}><PixelIcon kind="finder" small />Find…</button>
                 <hr />
-                <button type="button" role="menuitem" onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />Latest field note · RUN/HACK</button>
-                <button type="button" role="menuitem" onClick={() => openApp("skills")}><PixelIcon kind="controls" small />Skills &amp; Capabilities</button>
-                <button type="button" role="menuitem" onClick={() => openApp("education")}><PixelIcon kind="university" small />Education &amp; Awards</button>
-                <button type="button" role="menuitem" onClick={() => openApp("lab")}><PixelIcon kind="network" small />Home Lab Network</button>
-                <button type="button" role="menuitem" onClick={() => openApp("scrapbook")}><PixelIcon kind="photos" small />Interests &amp; Notes</button>
-                <button type="button" role="menuitem" onClick={() => openApp("games")}><PixelIcon kind="game" small />Desk Arcade</button>
+                <button type="button" role="menuitem" onClick={() => openApp("sidequest")}><PixelIcon kind={getApplicationIcon("sidequest")} small />Latest field note · RUN/HACK</button>
+                <button type="button" role="menuitem" onClick={() => openApp("skills")}><PixelIcon kind={getApplicationIcon("skills")} small />Skills &amp; Capabilities</button>
+                <button type="button" role="menuitem" onClick={() => openApp("education")}><PixelIcon kind={getApplicationIcon("education")} small />Education &amp; Awards</button>
+                <button type="button" role="menuitem" onClick={() => openApp("lab")}><PixelIcon kind={getApplicationIcon("lab")} small />Home Lab Network</button>
+                <button type="button" role="menuitem" onClick={() => openApp("scrapbook")}><PixelIcon kind={getApplicationIcon("scrapbook")} small />Interests &amp; Notes</button>
+                <button type="button" role="menuitem" onClick={() => openApp("games")}><PixelIcon kind={getApplicationIcon("games")} small />Desk Arcade</button>
                 <hr />
                 <button type="button" role="menuitem" onClick={restart}>Restart…</button>
               </div>
@@ -3164,7 +3115,7 @@ export default function SystemSevenDesktop({
             aria-pressed={selectedIcon === item.id}
             onClick={() => { setSelectedIcon(item.id); openApp(item.id); }}
           >
-            <span className="desktop-icon__graphic"><PixelIcon kind={item.icon} /></span>
+            <span className="desktop-icon__graphic"><PixelIcon kind={getApplicationIcon(item.id)} /></span>
             <span className="desktop-icon__label">{item.label}</span>
           </button>
         ))}
@@ -3175,6 +3126,7 @@ export default function SystemSevenDesktop({
         <WindowChrome
           key={windowState.id}
           windowState={windowState.id === "projectActivity" ? { ...windowState, title: windowTitle(windowState) } : windowState}
+          iconKind={windowIcon(windowState)}
           active={activeId === windowState.id}
           onFocus={() => focusWindow(windowState.id)}
           onClose={() => closeApp(windowState.id)}
@@ -3204,7 +3156,7 @@ export default function SystemSevenDesktop({
       <div inert={mobileGuide || finderOpen} className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
           <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, windowTitle(item))}`}>
-            <PixelIcon kind={UTILITY_ICONS[item.id] ?? DESKTOP_ICONS.find((icon) => icon.id === item.id)?.icon ?? "document"} small />
+            <PixelIcon kind={windowIcon(item)} small />
             <span>{windowTitle(item)}</span>
           </button>
         ))}
@@ -3226,7 +3178,7 @@ export default function SystemSevenDesktop({
           </aside>
         </>
       )}
-      {finderOpen && <DesktopFinder applications={FINDER_APPLICATIONS} locale={locale} onClose={closeFinder} onOpenApplication={openFoundApplication} onOpenProject={openFoundProject} />}
+      {finderOpen && <FinderDismissContext.Provider value={closeFinder}><WindowErrorBoundary locale={locale} dismissAction={{ onDismiss: closeFinder, label: translateText(locale, "Close Find") }}><DesktopFinder applications={FINDER_APPLICATIONS} locale={locale} onClose={closeFinder} onOpenApplication={openFoundApplication} onOpenProject={openFoundProject} /></WindowErrorBoundary></FinderDismissContext.Provider>}
       {toast && <div className="system-toast" role="status"><PixelIcon kind="computer" small /><span>{toast}</span></div>}
     </main></TranslationBoundary>
   );

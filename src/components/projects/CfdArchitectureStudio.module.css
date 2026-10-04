@@ -51,16 +51,11 @@
   white-space: nowrap;
 }
 
-.boundaryBanner > div > span {
-  display: grid;
-  width: 25px;
-  height: 25px;
-  place-items: center;
-  border: 1px solid var(--amber);
-  color: var(--amber);
-  background: #fff;
-  font-size: var(--s7-text);
-  font-weight: 700;
+.questionIcon {
+  display: block;
+  width: var(--s7-icon-inline);
+  height: var(--s7-icon-inline);
+  flex: 0 0 var(--s7-icon-inline);
 }
 
 .boundaryBanner strong,

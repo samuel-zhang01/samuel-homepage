@@ -5,6 +5,7 @@
 | Document | Purpose |
 | --- | --- |
 | [Current audit](DEEP_AUDIT_2026-10-04.md) | Repairs, dependency scope, recorded checks, cleanup and reproduction |
+| [Profile knowledge graph workflow](KNOWLEDGE_GRAPH_WORKFLOW.md) | Source-backed records, automatic evidence links and future-agent maintenance |
 | [Translation workflow](PROJECT_COPY_WORKFLOW.md) | Four locales, dynamic labels, source-language exceptions and checks |
 | [System 7 design benchmark](SYSTEM7_DESIGN_BENCHMARK.md) | Maintained design contracts and primary historical sources |
 | [Artwork guide](PROJECT_ARTWORK.md) | Delivered illustrations/icons, original prompts and MRI provenance |

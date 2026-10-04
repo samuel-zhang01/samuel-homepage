@@ -102,15 +102,10 @@
   white-space: nowrap;
 }
 .mark {
-  display: grid !important;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  place-items: center;
-  border: 2px solid #111;
-  background: #e5e5e1;
-  box-shadow: inset 1px 1px #fff, inset -1px -1px #777, 2px 2px 0 #111;
-  font-weight: 700;
+  display: block;
+  width: var(--s7-icon-document);
+  height: var(--s7-icon-document);
+  flex: 0 0 var(--s7-icon-document);
 }
 .releaseStamp {
   flex: none;
@@ -492,7 +487,6 @@
   .masthead { min-height: 58px; padding: 9px 12px; background: var(--s7-accent-soft); }
   .identity > div > span { font-size: var(--s7-small); }
   .identity > div > strong { font-size: 15px; }
-  .mark { width: 35px; height: 35px; flex-basis: 35px; box-shadow: 1px 1px var(--s7-shadow); }
   .releaseStamp { display: none; }
   .hero { padding: 18px 14px; }
   .heroPhoto { transform: none; box-shadow: 1px 1px var(--s7-shadow); }

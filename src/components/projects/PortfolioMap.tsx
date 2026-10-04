@@ -1,6 +1,6 @@
 "use client";
 
-import { getProjectOrigins } from "@/data/projectOrigins";
+import { getProfileProjectOrigins as getProjectOrigins } from "@/data/profileProjectOrigins";
 import ClassicSelect from "../ClassicSelect";
 
 import {
@@ -27,9 +27,10 @@ import { projectText } from "@/lib/projectCopy";
 import { ProjectCopy, ProjectLocaleProvider, useProjectLocale } from "./ProjectTranslationBoundary";
 import { portfolioCopy } from "./copy/portfolioCopy";
 import { projectNarrativeCopy } from "./copy/projectNarrativeCopy";
+import { profileCopy } from "../profileCopy";
 
 // This optional comparison view is lazy-loaded; narrative copy stays with its project UI.
-const portfolioViewCopy = { ...projectNarrativeCopy, ...portfolioCopy };
+const portfolioViewCopy = { ...projectNarrativeCopy, ...profileCopy, ...portfolioCopy };
 import { ModelLineageMap } from "./ModelLineageMap";
 import styles from "./PortfolioMap.module.css";
 
@@ -110,7 +111,11 @@ function relationship(left: Project, right: Project): Relationship {
   const sharedArtifactKinds = artifactKinds(left).filter((kind) => rightArtifactKinds.has(kind));
   const sharedOrigins = getProjectOrigins(left.slug).filter((origin) => origin.projects.includes(right.slug));
   const signals = [
-    ...sharedOrigins.map((origin) => `Work context · ${origin.label}`),
+    ...sharedOrigins.map((origin) => {
+      const related = origin.relatedProjects?.some(slug => slug === left.slug || slug === right.slug);
+      const label = related ? "Related research context" : origin.section === "education" ? "Education context" : "Work context";
+      return `${label} · ${origin.label}`;
+    }),
     ...sharedTools.map((tool) => `Exact tool · ${tool}`),
     ...(left.area === right.area ? [`Area · ${left.area}`] : []),
     ...(left.access === right.access ? [`Access · ${accessMeta[left.access].label}`] : []),

@@ -158,6 +158,9 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
       if (name === "./MathEquation") return { MathEquation: (props) => React.createElement("span", { "data-equation": props.tex }, props.label ?? props.tex) };
       if (name === "react") return statefulReact;
       if (name === "next/image") return { __esModule: true, default: "img" };
+      // Decorative app artwork is validated by check-system7-icons. Keep it
+      // separate from the scientific image counts and saved-frame assertions.
+      if (name.endsWith("System7Icon")) return { System7Icon: props => React.createElement("span", { "data-system7-icon": props.kind, "aria-hidden": true }) };
       if (name.endsWith("ProjectTranslationBoundary")) return { useProjectLocale: () => locale, ProjectCopy, ProjectTranslationBoundary: ({ children }) => children };
       if (name.endsWith("ProjectDemoActivityContext")) return { useProjectDemoActive: () => active };
       if (name === "./copy/scientificCopy") return { scientificCopy };

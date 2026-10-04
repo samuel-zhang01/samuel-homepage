@@ -1,27 +1,434 @@
 {
   "mode": "Built-in image_gen tool; no API/CLI fallback.",
-  "delivery": "32 editable SVG symbols plus four transparent, downscaled 128px PNGs in public/system7-icons. The open book draft did not pass alpha QA; the editable SVG is delivered instead.",
-  "folder": {
-    "prompt": "Use case: stylized-concept. Asset type: a single production desktop icon PNG for a 1990s Macintosh System 7 inspired personal portfolio. Subject: one open project folder with three slightly offset paper sheets inside, no text or other symbols. Create one centered isolated icon only. Style: expertly hand-pixelled classic 32-by-32-pixel color Macintosh icon, enlarged perfectly with nearest-neighbor square pixels; hard one-pixel dark charcoal outline, restrained light-grey folder with a muted periwinkle blue front face, white top-left highlights, medium-gray lower-right edge, a tiny stepped hard drop shadow. Strong readable silhouette, simple early 1990s GUI pictogram, only 8 flat colors, selective checkerboard dithering on one shadow edge. No antialiasing or blur, no gradient, no modern glossy 3D, no rounded app tile, no surrounding frame, no emoji style. Composition: icon centered occupying about 80 percent of square canvas, equal margins; all pixels aligned to a consistent logical 32px grid. Background: genuinely transparent alpha, no checkerboard drawn into the image, no backdrop, no labels, no watermark. Output: a PNG icon.",
-    "delivered": "public/system7-icons/folder.png"
+  "updated": "2026-10-04",
+  "styleReference": {
+    "asset": "public/system7-icons/folder.png",
+    "sha256": "f5865b1629702d03305001a62c703395da80a8dfa693549da4a5feacf0d863aa"
   },
-  "microscope": {
-    "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single classic laboratory microscope with a broad grey foot, tilted dark eyepiece and simple stage; one tiny muted periwinkle blue sample slide, readable at 32 pixels. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
-    "delivered": "public/system7-icons/microscope.png"
+  "delivery": {
+    "subjects": 42,
+    "newGenerations": 31,
+    "preferredOriginalsPreserved": 11,
+    "totalBytes": 149954,
+    "format": "128×128 RGBA PNG, one image per kind at every rendered size",
+    "newSpritePreparation": "Nearest-neighbour delivery resize on a logical 32px canvas, with a 24px artwork field and transparent 4px margins; genuine generated alpha preserved",
+    "existingSpritePreparation": "Original transparent 128px delivery files preserved byte for byte"
   },
-  "computer": {
-    "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single compact early-1990s Macintosh-style all-in-one computer, pale grey rectangular case, small recessed dark screen containing one tiny periwinkle blue window, narrow floppy slot; three-quarter shallow depth, no brand logo. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
-    "refinement": "Use case: background-extraction. Edit target is the provided icon. Remove ALL the grey-and-white checkerboard surrounding the icon. Output a transparent PNG with actual RGBA alpha=0 outside the icon, not a photograph of a transparency grid. Keep the icon silhouette, black stepped outline, solid white interior areas, periwinkle blue accent, original composition, dimensions, and tiny grey shadow unchanged. Do not replace the background with a solid color or with another checkerboard. The file must have true transparent pixels surrounding this single isolated pixel-art icon. No new objects, no text.",
-    "delivered": "public/system7-icons/computer.png"
-  },
-  "finance": {
-    "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single small paper ledger with a stepped folded corner, 3 dark horizontal accounting marks, and two stacked muted ochre coins at its lower right; a restrained periwinkle blue accent on the ledger header, no currency signs. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
-    "refinement": "Use case: background-extraction. Edit target: the provided finance ledger icon. Remove the entire grey-and-white checkerboard background. Keep only the icon, preserving the black stepped outline, white paper, blue header, two gold coins and tiny dark-grey lower-right shadow exactly. Preserve its scale and position. Deliver a PNG cutout with a TRUE TRANSPARENT BACKGROUND: alpha channel zero outside the icon. The checkerboard is unwanted painted artwork and must be removed, not redrawn. Do not alter white regions inside the paper. Do not add texture, other objects, framing, text or a solid backdrop.",
-    "delivered": "public/system7-icons/finance.png"
-  },
-  "book": {
-    "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single open study book, two white pages with a few short grey ink strokes (no legible text), thick grey page edges and muted periwinkle blue cover visible at the bottom, very shallow perspective. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
-    "refinement": "Use case: background-extraction. Edit target is the provided icon. Remove ALL the grey-and-white checkerboard surrounding the icon. Output a transparent PNG with actual RGBA alpha=0 outside the icon, not a photograph of a transparency grid. Keep the icon silhouette, black stepped outline, solid white interior areas, periwinkle blue accent, original composition, dimensions, and tiny grey shadow unchanged. Do not replace the background with a solid color or with another checkerboard. The file must have true transparent pixels surrounding this single isolated pixel-art icon. No new objects, no text.",
-    "delivered": "public/system7-icons/book.svg"
-  }
+  "icons": [
+    {
+      "kind": "accessories",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: style-transfer. Image 1 is the existing accessories icon EDIT TARGET. Image 2 is a STYLE REFERENCE ONLY (generated System 7 folder); do not draw a folder. Repair the target's faint broken edges by rebuilding this ONE subject: a simple SMALL GREY DESK TRAY holding a WHITE NOTE SHEET on the LEFT and a compact GREY OCTAGONAL CLOCK on the RIGHT. At most these three objects. Clock has two black straight hands and one ochre accent. Tray has a muted periwinkle front edge. The COMPLETE tray contour, paper contour and clock rim must be enclosed in continuous solid charcoal outlines. Avoid many tiny spiral loops or paper lines. Recognisable on a white background. Match the reference family precisely: old Macintosh System 7 bitmap, clear 24-by-24 pixel subject inside a 32-by-32 logical canvas; every visible square is aligned to this pixel grid. ONE LOGICAL PIXEL THICK continuous DARK CHARCOAL outlines on ALL outer edges, fully opaque white/light grey interiors, small muted periwinkle and ochre accents, simple top-left highlight, a tiny dark grey hard lower-right edge. Centered one icon, fills 75 percent of square canvas with equal margins. Keep shapes extremely simple so downsampling to16pixels leaves a strong silhouette. Remove all translucent white fringes and tiny decorative texture. True RGBA transparent alpha outside artwork, no painted checkerboard, no backdrop or enclosing app tile, no labels, no text, no letters, no watermark, no blur or gradients, no glossy shading. Exactly one subject.",
+      "generatedFile": "exec-3ba65838-1488-4eff-8ea7-573e66640445.png",
+      "sourceSha256": "e19a68187f3a8dfc3a859f44b45cce9391a439c2b182d95e78f6b92b7fc33015",
+      "delivered": "public/system7-icons/accessories.png",
+      "deliveredSha256": "560f01be7abe40e419f9e9437503a018e7c2ee2d4b10a332062265af77338409",
+      "bytes": 1143,
+      "initialPrompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small grey desktop accessory tray holding a white notepad on the left and a compact grey stopwatch on the right, tiny periwinkle edge and ochre clock hand; no enclosing tile. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "initialDraftSha256": "4c65ce9e5e96685bf24e72bd70c51f7b17fd235400c2249480f27e4530bf8770"
+    },
+    {
+      "kind": "book",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: style-transfer. Image 1 is the existing book icon EDIT TARGET. Image 2 is a STYLE REFERENCE ONLY (generated System 7 folder); do not draw a folder. Repair the target's faint broken edges by rebuilding this ONE subject: an open study book with TWO white pages, a VERY CLEAR DARK CENTRAL CREASE and a muted periwinkle hardcover visible along both lower outside edges. Each page has just two short dark grey ink strokes; no words. The COMPLETE outer edges of both paper pages AND blue binding must be enclosed in uninterrupted solid charcoal pixels, including top page curves, page sides and bottom. Keep the paper opaque white and outline opaque dark charcoal so the book is legible on a white background. Match the reference family precisely: old Macintosh System 7 bitmap, clear 24-by-24 pixel subject inside a 32-by-32 logical canvas; every visible square is aligned to this pixel grid. ONE LOGICAL PIXEL THICK continuous DARK CHARCOAL outlines on ALL outer edges, fully opaque white/light grey interiors, small muted periwinkle and ochre accents, simple top-left highlight, a tiny dark grey hard lower-right edge. Centered one icon, fills 75 percent of square canvas with equal margins. Keep shapes extremely simple so downsampling to16pixels leaves a strong silhouette. Remove all translucent white fringes and tiny decorative texture. True RGBA transparent alpha outside artwork, no painted checkerboard, no backdrop or enclosing app tile, no labels, no text, no letters, no watermark, no blur or gradients, no glossy shading. Exactly one subject.",
+      "generatedFile": "exec-617e6a17-64a2-4efc-9ea0-12a9af40bb3d.png",
+      "sourceSha256": "b4154c299a5771a4c6e7339e45354db47a6f78045963a905e1fbd4c06ee6a56f",
+      "delivered": "public/system7-icons/book.png",
+      "deliveredSha256": "8186775e134a89e64bef1af1e3e67d7f9111d2a363085d4f0a0f7acdaf0bc333",
+      "bytes": 1204,
+      "initialPrompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one open study book, two white pages with three short grey ink strokes each, thick pale-grey page edges and muted-periwinkle blue cover visible at bottom; shallow perspective, no readable text. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "initialDraftSha256": "e77f3f9a9186d2f63978d5745eba438eda20a7e1dee1b1aeeb84f2cc5bec5750"
+    },
+    {
+      "kind": "brickbreaker",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a small classic breakout scene isolated as an icon: two rows of three pale-grey and periwinkle bricks, a tiny ochre ball, and one grey horizontal paddle beneath, no surrounding screen or frame. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "sourceSha256": "b83c1158c3ec026ba0a57b57c182180f6a4b8466fcb89fb20e301d1187a3412d",
+      "delivered": "public/system7-icons/brickbreaker.png",
+      "deliveredSha256": "b83c1158c3ec026ba0a57b57c182180f6a4b8466fcb89fb20e301d1187a3412d",
+      "bytes": 7058
+    },
+    {
+      "kind": "briefcase",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one classic office briefcase, pale grey rectangular case, short dark handle on top and a small ochre square central latch, blue-grey lid edge; simple shallow three-quarter depth. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-3f6efbc6-0a88-45a4-a2ad-35523ec0595d.png",
+      "sourceSha256": "6d9336753eef82ecf376b83665adcafec602b631541ac203ecaa12f103e20623",
+      "delivered": "public/system7-icons/briefcase.png",
+      "deliveredSha256": "fe1cb119a15ae0392d663db8ccbf34a96722e76cafa742f886e69d261dab4327",
+      "bytes": 1362
+    },
+    {
+      "kind": "calculator",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one pocket calculator, pale-grey rectangular case with recessed muted-periwinkle display and a simple three-by-three grid of square grey keys, one ochre key; no numerals or labels. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-ec0df2ed-0702-43a0-acc1-93d1d14ac620.png",
+      "sourceSha256": "5bb30a23b9ccaaba8492211511e2da450f74eeaeb450c967a68826fbe97d13a6",
+      "delivered": "public/system7-icons/calculator.png",
+      "deliveredSha256": "7f35a4f6da6ccd7367b7ffeca8912d730254c864bf77a9b89ee55c5f797ac486",
+      "bytes": 1719
+    },
+    {
+      "kind": "calendar",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one white pocket calendar page with two dark square binding loops, a muted-periwinkle header strip, a three-by-three grid of small pale-grey date squares and one ochre selected square; no numerals. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-3e5cb014-4d2b-4f92-af85-bc7fb12c7097.png",
+      "sourceSha256": "383498d99388bde9c5f8086ff2a6cc694339528f30ab46ef05cee7e6856cb2fe",
+      "delivered": "public/system7-icons/calendar.png",
+      "deliveredSha256": "f1967a69f8ca53a8e899a875088fcb5426d9cbb8b128c7e561f3475335ca5ceb",
+      "bytes": 1672
+    },
+    {
+      "kind": "cards",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create two offset pale-grey playing cards with dark outlines, front card showing a single muted-periwinkle diamond and rear card a small ochre diamond, no numbers or letters. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "sourceSha256": "55afc3af8946e1e9636793039e8cccdde373f27f50df20c247516c45818d30a3",
+      "delivered": "public/system7-icons/cards.png",
+      "deliveredSha256": "55afc3af8946e1e9636793039e8cccdde373f27f50df20c247516c45818d30a3",
+      "bytes": 9219
+    },
+    {
+      "kind": "chart",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small pale-grey graph sheet with a dark L-shaped axis and a stepped periwinkle rising line graph, one tiny ochre data square, no labels or numerals. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-a69cb166-ff4c-4ecb-88ae-532920d09ff0.png",
+      "sourceSha256": "a0d67ec342e9e48dc7c3a53d1804e39307884d69b5bef5ba5a0f7306b016c843",
+      "delivered": "public/system7-icons/chart.png",
+      "deliveredSha256": "eda608e4b57cc057c75592199c96289a189c093c0bda08a9c4bca3024284f510",
+      "bytes": 1530
+    },
+    {
+      "kind": "clock",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one compact classic stopwatch with a stepped octagonal pale-grey face, dark straight clock hands, small grey top winding button and tiny periwinkle accent, no numerals. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-724218f1-3cf1-44e5-8b36-550fead7ad9c.png",
+      "sourceSha256": "ab8ebe7a44150954ff7f9d0f913015f4c77c00a5935a355babe337c84db33327",
+      "delivered": "public/system7-icons/clock.png",
+      "deliveredSha256": "c628f943af57cdd48558bcadb665be39481071b0a7e3f0ead3ee1b64bc9640fe",
+      "bytes": 1489
+    },
+    {
+      "kind": "computer",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single compact early-1990s Macintosh-style all-in-one computer, pale grey rectangular case, small recessed dark screen containing one tiny periwinkle blue window, narrow floppy slot; three-quarter shallow depth, no brand logo. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
+      "refinement": "Use case: background-extraction. Edit target is the provided icon. Remove ALL the grey-and-white checkerboard surrounding the icon. Output a transparent PNG with actual RGBA alpha=0 outside the icon, not a photograph of a transparency grid. Keep the icon silhouette, black stepped outline, solid white interior areas, periwinkle blue accent, original composition, dimensions, and tiny grey shadow unchanged. Do not replace the background with a solid color or with another checkerboard. The file must have true transparent pixels surrounding this single isolated pixel-art icon. No new objects, no text.",
+      "sourceSha256": "419954bcec712d896d2b965137f0a5b68fda083bccd8c405f28a3c05fab57637",
+      "delivered": "public/system7-icons/computer.png",
+      "deliveredSha256": "419954bcec712d896d2b965137f0a5b68fda083bccd8c405f28a3c05fab57637",
+      "bytes": 11377
+    },
+    {
+      "kind": "controls",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small pale-grey control panel with three vertical straight sliders, dark square slider handles at different heights, tiny periwinkle accent, shallow lower-right bevel. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-623e3eca-2aaa-4592-8d7e-dc1e87143263.png",
+      "sourceSha256": "48102dedad6712d100003f9161afb63aa6a1693a84a15a8c94ed996b7b266991",
+      "delivered": "public/system7-icons/controls.png",
+      "deliveredSha256": "dc157723a23c93598ea341b35974511612a6be1701e8225fea11aa5ab44547c4",
+      "bytes": 1758
+    },
+    {
+      "kind": "converter",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: two small square measurement blocks joined by two bold straight opposing arrows: periwinkle arrow pointing right above and ochre arrow pointing left below, pale-grey blocks and dark stepped outlines. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-6f838b0d-1611-499c-b5e6-ddeeada3916e.png",
+      "sourceSha256": "aab77a5513ddb3dd4bcf4764740583b96042fb58beb95d9184b794a7816aa67f",
+      "delivered": "public/system7-icons/converter.png",
+      "deliveredSha256": "a855d0684505b18950a96ceb191e0b72e52d58732ba1b3c723f1a46998ab7eda",
+      "bytes": 989
+    },
+    {
+      "kind": "coverd",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one pale-grey application dossier, white paper with six small square review marks in two columns, muted-periwinkle top header and a small ochre speech bubble at lower-right suggesting interview evidence; no logo or words. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-a7ad4b2e-8f24-4bad-beed-58eea31316c1.png",
+      "sourceSha256": "5f6f2531183b667ba9f76eeb4b9adaf1d28e92a712ae4f7cf124110c1a53ab6b",
+      "delivered": "public/system7-icons/coverd.png",
+      "deliveredSha256": "346f8488cc843a517023579924330800a5dc5ce19001abc56d56b3ea61c44607",
+      "bytes": 1802
+    },
+    {
+      "kind": "document",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one white document sheet with a stepped folded top-right corner, 3 short dark horizontal ink strokes and a tiny periwinkle blue top margin, no text or letters. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-baabc3ba-9f84-4793-a846-55da509064c9.png",
+      "sourceSha256": "2ce76f3eb7b4d3d320cf19719a92a38465b721cf2bc2a25caeb7852de8f02ea4",
+      "delivered": "public/system7-icons/document.png",
+      "deliveredSha256": "766c2bcd0680c4ec9688bce48c838ed2f565842f5254582762f5bc998b097236",
+      "bytes": 1285
+    },
+    {
+      "kind": "finance",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single small paper ledger with a stepped folded corner, 3 dark horizontal accounting marks, and two stacked muted ochre coins at its lower right; a restrained periwinkle blue accent on the ledger header, no currency signs. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
+      "refinement": "Use case: background-extraction. Edit target: the provided finance ledger icon. Remove the entire grey-and-white checkerboard background. Keep only the icon, preserving the black stepped outline, white paper, blue header, two gold coins and tiny dark-grey lower-right shadow exactly. Preserve its scale and position. Deliver a PNG cutout with a TRUE TRANSPARENT BACKGROUND: alpha channel zero outside the icon. The checkerboard is unwanted painted artwork and must be removed, not redrawn. Do not alter white regions inside the paper. Do not add texture, other objects, framing, text or a solid backdrop.",
+      "sourceSha256": "e7b320843a9fb8014da6f41f47b0c3914871ecf1da43401cf28592a2cb85f802",
+      "delivered": "public/system7-icons/finance.png",
+      "deliveredSha256": "e7b320843a9fb8014da6f41f47b0c3914871ecf1da43401cf28592a2cb85f802",
+      "bytes": 7708
+    },
+    {
+      "kind": "finder",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one grey magnifying glass held diagonally over one white document sheet with two short grey ink strokes and a tiny periwinkle margin; dark stepped rim and an ochre handle, no letters. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-ec178c14-3fa8-45e6-88e7-9cf8f81a293c.png",
+      "sourceSha256": "f7f8b24774aaefd3f152fe7534873ac415edcbe4351bddf28a1e995f7d536cf5",
+      "delivered": "public/system7-icons/finder.png",
+      "deliveredSha256": "36ba8f4e4a871aa05c5b232b3a4e1a40e905ec1b5328ad38aef6e46ffc6602ef",
+      "bytes": 1707
+    },
+    {
+      "kind": "flow",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one compact pale-grey scientific flow display, white field with two crisp stepped wavy horizontal periwinkle and grey stream lines curving around a single tiny ochre square obstacle, no labels. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-d39a6b33-6f4c-4d48-927f-42446cd4f208.png",
+      "sourceSha256": "9403069e8bdc8443419e3e57b1d22388f945880ef62d554af72a885e8aa1051b",
+      "delivered": "public/system7-icons/flow.png",
+      "deliveredSha256": "3c5e92062afcfe30832791af43a1eafc4915ea05641e990bf9fa2410b7e2dc6b",
+      "bytes": 1506
+    },
+    {
+      "kind": "folder",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: a single production desktop icon PNG for a 1990s Macintosh System 7 inspired personal portfolio. Subject: one open project folder with three slightly offset paper sheets inside, no text or other symbols. Create one centered isolated icon only. Style: expertly hand-pixelled classic 32-by-32-pixel color Macintosh icon, enlarged perfectly with nearest-neighbor square pixels; hard one-pixel dark charcoal outline, restrained light-grey folder with a muted periwinkle blue front face, white top-left highlights, medium-gray lower-right edge, a tiny stepped hard drop shadow. Strong readable silhouette, simple early 1990s GUI pictogram, only 8 flat colors, selective checkerboard dithering on one shadow edge. No antialiasing or blur, no gradient, no modern glossy 3D, no rounded app tile, no surrounding frame, no emoji style. Composition: icon centered occupying about 80 percent of square canvas, equal margins; all pixels aligned to a consistent logical 32px grid. Background: genuinely transparent alpha, no checkerboard drawn into the image, no backdrop, no labels, no watermark. Output: a PNG icon.",
+      "sourceSha256": "f5865b1629702d03305001a62c703395da80a8dfa693549da4a5feacf0d863aa",
+      "delivered": "public/system7-icons/folder.png",
+      "deliveredSha256": "f5865b1629702d03305001a62c703395da80a8dfa693549da4a5feacf0d863aa",
+      "bytes": 11904
+    },
+    {
+      "kind": "game",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one early-1990s grey game controller, angular stepped silhouette, dark plus-shaped directional pad on left and two muted-periwinkle and ochre square buttons on right; short straight cord. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-103521c8-ad18-4b26-a49e-ebf10b8661fa.png",
+      "sourceSha256": "1e397a4563a45159751f7cbdf35a92fd148fc97ad9444cc71409dc34cb8d438a",
+      "delivered": "public/system7-icons/game.png",
+      "deliveredSha256": "d04ea0e5b71c7c857c7f2cdc92eb258e8f735caa3841a918a47544d0986cdec7",
+      "bytes": 1120
+    },
+    {
+      "kind": "mail",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one classic white sealed envelope with a dark straight diagonal flap fold, small muted-periwinkle rectangular postage stamp in top-right corner and grey lower-right paper edge, no words. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-b8a4e965-fc55-4c95-a1d2-5145794b0e3c.png",
+      "sourceSha256": "8f3bc103f54559304b4fc9034b2c86c069ac7b6bcc07b30209f818ec1b1f2fc1",
+      "delivered": "public/system7-icons/mail.png",
+      "deliveredSha256": "a90f634dd75134740b7e577773331e3372d26c7976e89084f46d56527d9cf155",
+      "bytes": 1177
+    },
+    {
+      "kind": "microscope",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single classic laboratory microscope with a broad grey foot, tilted dark eyepiece and simple stage; one tiny muted periwinkle blue sample slide, readable at 32 pixels. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
+      "sourceSha256": "fe657a5e6a5929e9bb7b8af09a47aa9bc5cff9fc96e5333f4b978e9d73eb1f3d",
+      "delivered": "public/system7-icons/microscope.png",
+      "deliveredSha256": "fe657a5e6a5929e9bb7b8af09a47aa9bc5cff9fc96e5333f4b978e9d73eb1f3d",
+      "bytes": 8019
+    },
+    {
+      "kind": "minefield",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a tiny square minesweeper board: four raised grey tiles and one small ochre flag planted in an open tile, stepped dark outlines, no letters or numerals. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "sourceSha256": "b822978569f5190b611c60536fc7224f3a54104d6c29e32d02212b8310258483",
+      "delivered": "public/system7-icons/minefield.png",
+      "deliveredSha256": "b822978569f5190b611c60536fc7224f3a54104d6c29e32d02212b8310258483",
+      "bytes": 8639
+    },
+    {
+      "kind": "molecule",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create a simple molecular ball-and-stick model: five square-edged octagonal atoms joined by dark straight rods, grey and muted periwinkle atoms and one ochre atom, legible asymmetrical silhouette. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "sourceSha256": "23273caf24f2f376ba2972ccfd881a5369894caf5bfb13ec6c40c3b3301b306e",
+      "delivered": "public/system7-icons/molecule.png",
+      "deliveredSha256": "23273caf24f2f376ba2972ccfd881a5369894caf5bfb13ec6c40c3b3301b306e",
+      "bytes": 8512
+    },
+    {
+      "kind": "mri",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create a compact MRI scanner: pale grey square scanner body with a large black circular bore and short patient-free table extending toward the viewer; tiny periwinkle control panel. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "sourceSha256": "f3b1703ab859359a39079bcc1b88e7daf9eaa6a5e43c1fb56bbca77f717ad7e1",
+      "delivered": "public/system7-icons/mri.png",
+      "deliveredSha256": "f3b1703ab859359a39079bcc1b88e7daf9eaa6a5e43c1fb56bbca77f717ad7e1",
+      "bytes": 12283
+    },
+    {
+      "kind": "network",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create three pale grey server boxes connected by an angular cable, one taller central server with two dark drive slots and tiny periwinkle indicator squares. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "sourceSha256": "9a1dc7be99315b60aaaa6941031dcc663a56eaf29c0e8b4df34221cf759b3eb3",
+      "delivered": "public/system7-icons/network.png",
+      "deliveredSha256": "9a1dc7be99315b60aaaa6941031dcc663a56eaf29c0e8b4df34221cf759b3eb3",
+      "bytes": 11514
+    },
+    {
+      "kind": "note",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one white spiral-bound notepad, three small square grey top binding loops, three dark horizontal ink strokes, tiny periwinkle header and short ochre lower-right pencil tab, no letters. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-5b68b8b4-0b15-4b94-98c8-b13a0871a490.png",
+      "sourceSha256": "fbcd0949ce03e389cf300ff7146784b986ee8dfd68caeea3258fd7a48afb3206",
+      "delivered": "public/system7-icons/note.png",
+      "deliveredSha256": "0063735c61df9dec9356da51f3b8b1c8e4db2d48ae00b43f255a06a725a7c442",
+      "bytes": 1805
+    },
+    {
+      "kind": "orbital",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, use its pixel density, outline weight, palette, shallow depth and square canvas placement, NOT the folder subject. Subject: a simple four-lobed atomic orbital, two muted periwinkle blue lobes and two muted ochre lobes arranged around one tiny dark centre; no orbit rings, no atom emoji, no panel/frame. Hand-pixelled logical 32-by-32 pixel icon enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, light neutral highlights at top left, medium grey lower-right edges and tiny hard stepped shadow. Restrained white, light grey, dark grey, muted periwinkle #8799dc and ochre #c6ae76; only 8 flat colors. Extremely simple, strong recognisable silhouette at 16px and 32px. Single centred subject occupies about 76 percent of square canvas, equal generous transparent margins, fits complete with no clipping. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradient, blur, antialiasing, glossy emoji shading, 3D render, rounded app tile, border, label, text, logo or watermark. Reference folder must not appear.",
+      "generatedFile": "exec-4f8af3c1-eb04-4cc8-8149-e100bba1e71d.png",
+      "sourceSha256": "746dbabbb4d6db0f0bfaf13ce5bd16c32a0f3b7d0c3e9c1ccf9a7d0fa72af4b3",
+      "delivered": "public/system7-icons/orbital.png",
+      "deliveredSha256": "a4836a9a47f7bfb6a109a0ef1c0a2fe48f2148043a05548c7ffa9300e9560af0",
+      "bytes": 1882
+    },
+    {
+      "kind": "palette",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small artist palette with a stepped irregular pale-grey silhouette and a square thumb hole, three tiny square periwinkle/ochre/grey paint swatches, one short dark brush beside the lower edge. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-f863023e-0b72-4da6-9551-fe2431856339.png",
+      "sourceSha256": "4baa9b6dd5cb39ac92e0cb18713707290b34c6b7ba1c3f42002eb7b76c01227b",
+      "delivered": "public/system7-icons/palette.png",
+      "deliveredSha256": "5bf1499d6906e0c46776ce3d0729681d2b40ed8989558c2d0848db7ff2bd56c2",
+      "bytes": 1618
+    },
+    {
+      "kind": "pdf",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one white document with stepped folded corner and a small dark-outlined muted-periwinkle page strip near the bottom containing three vertical dark page marks; no letters or readable text. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-ef6e990c-b441-4d87-abae-fd013775f56a.png",
+      "sourceSha256": "c4bf8bfa04a8a5201dda735544b9dbfb85c3c6d2769315c157f1108f9124819f",
+      "delivered": "public/system7-icons/pdf.png",
+      "deliveredSha256": "7f32fe9f37c1734ac0d73eff58d8a0a458ebb0713fe3d3849ec54623f6c6fe86",
+      "bytes": 1413
+    },
+    {
+      "kind": "photos",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: two slightly offset pale-grey photograph prints, front image showing a tiny geometric muted-periwinkle mountain and one square ochre sun, no words; dark outlines and grey paper edges. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-edce8baf-41b3-4666-a6f5-1d6b5d2459d7.png",
+      "sourceSha256": "9a8ad44e725eeedeb412a6791cf231a2604993d64629b702f9145fdc6317a382",
+      "delivered": "public/system7-icons/photos.png",
+      "deliveredSha256": "68d7c9d80d72fce7fecde0ec75e70c8aeb27641577de2656584e22689decdc23",
+      "bytes": 1677
+    },
+    {
+      "kind": "profile",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small personal profile record card, pale-grey paper with a blue top header strip and a simple neutral head-and-shoulders silhouette; two short grey record lines below, no text. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-e32ba71d-2c82-439d-8e3a-131000fe7b26.png",
+      "sourceSha256": "6e495d0d9d64ed9c1086e133b5d7bbd1d6a5bfe34e8ed2629777a04decd1a71c",
+      "delivered": "public/system7-icons/profile.png",
+      "deliveredSha256": "1605923d40f196cb83c0df28b40757dd5fd89b72abce5ffa33c4097a09205540",
+      "bytes": 1410
+    },
+    {
+      "kind": "puzzle",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one tiny grey sliding tile board containing a two-by-two arrangement of three raised pale-grey square tiles and one recessed empty muted-periwinkle square, no numbers or enclosing app tile. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-f040400f-1471-445e-b059-0a9a5d69bc6a.png",
+      "sourceSha256": "14a6b3eb6cdbf77473025c0557f1167829708c2862012b0db3ab9cd24268a77a",
+      "delivered": "public/system7-icons/puzzle.png",
+      "deliveredSha256": "da1f4bc3b9f71e001c217d9b7468e34b685113e56e60167c76e31a728ec0ea7e",
+      "bytes": 1883
+    },
+    {
+      "kind": "runner",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one simple pixel figure mid-run, neutral square head, periwinkle shirt, pale-grey bent limbs and one tiny ochre running shoe; no face details and no oval ground/shadow plate. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-3e9d876c-7568-4124-b446-2bc81fe9509f.png",
+      "sourceSha256": "4782ca4045baf6b6be145833a593ab72e0b289b25d13869066d679a55064151f",
+      "delivered": "public/system7-icons/runner.png",
+      "deliveredSha256": "1421aa8b3f942e30fbe7425a0146f46d50bb003bbb05d67608ff8674453abe01",
+      "bytes": 1181
+    },
+    {
+      "kind": "secret",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small five-point ochre pixel star with a stepped charcoal outline, tiny white top-left highlight and short grey lower-right edge, no face, eyes or text; quiet special-find symbol. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-2c3b1de7-7fbc-4985-9b16-06b8b6afa062.png",
+      "sourceSha256": "ec9557050830ecbf142c325f1cde8808944bcc806806a3ea1bc4ccb7199d71c2",
+      "delivered": "public/system7-icons/secret.png",
+      "deliveredSha256": "28a16470f13c376564f70897842f23087801db14ac053372dde986d0beed4dec",
+      "bytes": 1236
+    },
+    {
+      "kind": "shield",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one simple pale-grey protective shield with stepped angular outline, white upper-left face, tiny periwinkle inset edge and one dark check mark at its centre, no crest or text. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-2814f03a-e727-4824-8931-c9cd7d8e92fa.png",
+      "sourceSha256": "1051f17146424ac55024607191ec3f5ffb8e97df13d518900fcd59a33b091871",
+      "delivered": "public/system7-icons/shield.png",
+      "deliveredSha256": "d599d5de9b78698dd0336353f011aa0fbb53164b181e2cb93b9446aefbe39cd3",
+      "bytes": 1312
+    },
+    {
+      "kind": "sketch",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one white sketch sheet with a stepped folded corner and a single ochre wooden pencil diagonally across it, small dark zigzag pencil stroke on the paper and tiny periwinkle highlight. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-a0142356-c872-450c-b72d-5114941483be.png",
+      "sourceSha256": "3aa0f7128f1073165b0bcc6fbeecbf2a438ace54f8e0a6e79dc754f62cf913b2",
+      "delivered": "public/system7-icons/sketch.png",
+      "deliveredSha256": "db6e30c70da09d18e69cfa451062758b093ce7e6eeabfa8a7a1028d34adb8cfd",
+      "bytes": 1510
+    },
+    {
+      "kind": "snake",
+      "origin": "Preferred existing generated artwork, preserved byte for byte",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a friendly short blocky periwinkle-blue snake bending in a right-angle S shape toward one small ochre pixel apple; dark square eyes and a simple stepped silhouette. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
+      "sourceSha256": "365b67211431d331382bbd259ef966cdea3b63319edf403d2630d8a3ee80659b",
+      "delivered": "public/system7-icons/snake.png",
+      "deliveredSha256": "365b67211431d331382bbd259ef966cdea3b63319edf403d2630d8a3ee80659b",
+      "bytes": 6931
+    },
+    {
+      "kind": "spectrum",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small grey scientific graph display containing a white plot with three crisp stepped periwinkle chromatogram peaks of unequal height and dark baseline, no axes labels or numerals. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-a7d7a3a4-55c4-4c90-b801-7125671a20a1.png",
+      "sourceSha256": "579aed2820a04c1d91987083c935db289e4ae00ac86e5028228580c5ccb35112",
+      "delivered": "public/system7-icons/spectrum.png",
+      "deliveredSha256": "6fdcde8e2fb2dc27c193754070bea4c3b81acc2b1246f0b6b0cd68a96fd6b163",
+      "bytes": 1834
+    },
+    {
+      "kind": "tasks",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one pale-grey clipboard with an ochre top clip, white paper showing two square checkboxes with dark check marks and two short grey lines, tiny periwinkle edge, no text. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-76e59c19-c4d6-4462-8a10-1dda65fdabf2.png",
+      "sourceSha256": "d2a38196f582945f7c3ded433bede80ce75c36de5c71f0e65d7f14baebb8a873",
+      "delivered": "public/system7-icons/tasks.png",
+      "deliveredSha256": "c8399fb015a23ad25ae6456a08e01f3c25a6a0be4b9919a52832bd78fa46a2f9",
+      "bytes": 1673
+    },
+    {
+      "kind": "university",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small classical university building, triangular pale-grey pediment over four straight square stone columns, simple grey plinth and tiny ochre detail, crisp stepped roof silhouette. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-cbfdc0cf-e94d-474a-b5c7-f5186c792878.png",
+      "sourceSha256": "cae95927abd856d99b2cd0c91d822e7184f52ba7be7c6a8d8c5819f7479026c0",
+      "delivered": "public/system7-icons/university.png",
+      "deliveredSha256": "455f01143a96cd809b4fee7e1c30a8bf14c809bbd0ade583dd20bf7972f3725b",
+      "bytes": 1740
+    },
+    {
+      "kind": "videomate",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small muted-periwinkle film-strip frame with dark square sprocket holes on left and right, a white triangular play marker in the centre and two tiny ochre caption strokes below; no enclosing app tile or text. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-f038d098-06a4-49e0-b138-02eacd1eb5e7.png",
+      "sourceSha256": "4dad02e4fca14771b5336dbe3fe824d79d975899720506d5a2ad257b957aa2ef",
+      "delivered": "public/system7-icons/videomate.png",
+      "deliveredSha256": "ced5e61fa4bfd689ce5996d90f1c8b098ad931113805c50f71adeca1f8bc1bc0",
+      "bytes": 1720
+    },
+    {
+      "kind": "word",
+      "origin": "New built-in image_gen generation",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small white word-game grid of two rows of three raised square letter tiles, two periwinkle tiles and one ochre tile, no letters or numerals; dark grid lines and shallow grey edge. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
+      "generatedFile": "exec-577c01f4-322b-424b-ab56-9d902870c03a.png",
+      "sourceSha256": "c2ded7508f8cadf6825edb85d5b37b07425a6faf8dce9193bcdaec1b46c92873",
+      "delivered": "public/system7-icons/word.png",
+      "deliveredSha256": "2afc734b264863d846ac2610cdc07cd6143acaf467a36ff6d0ec42de32ffed53",
+      "bytes": 1433
+    }
+  ]
 }

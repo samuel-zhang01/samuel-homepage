@@ -221,7 +221,7 @@
   display: grid;
   min-width: 0;
   min-height: 56px;
-  grid-template-columns: 25px minmax(0, 1fr);
+  grid-template-columns: var(--s7-icon-inline) minmax(0, 1fr);
   grid-template-rows: 1fr 1fr;
   align-items: center;
   column-gap: 7px;
@@ -270,17 +270,10 @@
 }
 
 .appMenu button > span {
-  display: grid;
-  width: 25px;
-  height: 25px;
+  display: block;
+  width: var(--s7-icon-inline);
+  height: var(--s7-icon-inline);
   grid-row: 1 / 3;
-  place-content: center;
-  border: 1px solid #777871;
-  background: #f8f8f4;
-  color: var(--studio-blue);
-  font-family: var(--s7-font-text);
-  font-size: var(--s7-text);
-  font-weight: 700;
 }
 
 .appMenu button strong {
@@ -345,12 +338,6 @@
   height: 4px;
   background: var(--studio-blue);
   content: none;
-}
-
-.appMenu button.activeMenu > span {
-  border-color: var(--studio-blue);
-  background: var(--studio-blue);
-  color: #fff;
 }
 
 .viewPanel {
@@ -1254,7 +1241,7 @@
 
 .algorithmTrace {
   display: grid;
-  grid-template-columns: 36px 1fr auto;
+  grid-template-columns: var(--s7-icon-document) 1fr auto;
   align-items: center;
   gap: 11px;
   margin-top: 16px;
@@ -1266,14 +1253,9 @@
 }
 
 .traceIcon {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-content: center;
-  border: 1px solid #b8c1dd;
-  color: #d6def8;
-  font-family: var(--s7-font-text);
-  font-size: var(--s7-title);
+  display: block;
+  width: var(--s7-icon-document);
+  height: var(--s7-icon-document);
 }
 
 .algorithmTrace > div:nth-child(2) {
@@ -1915,14 +1897,9 @@
 }
 
 .archIcon {
-  display: grid;
-  width: 28px;
-  height: 28px;
-  place-content: center;
-  border: 1px solid var(--studio-blue);
-  background: var(--studio-blue-soft);
-  color: var(--studio-blue);
-  font-size: var(--s7-text);
+  display: block;
+  width: var(--s7-icon-document);
+  height: var(--s7-icon-document);
 }
 
 .architecture strong { font-size: var(--s7-small); }
@@ -2067,12 +2044,11 @@
 
   .appMenu button {
     min-height: 52px;
-    grid-template-columns: 21px 1fr;
+    grid-template-columns: var(--s7-icon-inline) 1fr;
     column-gap: 5px;
     padding: 6px;
   }
 
-  .appMenu button > span { width: 21px; height: 21px; font-size: var(--s7-small); }
   .appMenu button strong { font-size: var(--s7-small); }
 
   .rubricGrid,
@@ -2127,7 +2103,7 @@
     text-align: center;
   }
 
-  .appMenu button > span { width: 20px; height: 20px; grid-row: auto; }
+  .appMenu button > span { grid-row: auto; }
   .appMenu button small { display: none; }
 
   .sectionIntro { gap: 10px; }
@@ -2174,8 +2150,7 @@
   .deckStats > small { display: none; }
   .flashcard { min-height: 225px; }
   .ratings { grid-template-columns: repeat(2, 1fr); }
-  .algorithmTrace { grid-template-columns: 30px 1fr; }
-  .traceIcon { width: 30px; height: 30px; }
+  .algorithmTrace { grid-template-columns: var(--s7-icon-document) 1fr; }
   .traceXp { display: none; }
 
   .rubricReport { grid-template-columns: 84px 1fr; padding: 11px; }

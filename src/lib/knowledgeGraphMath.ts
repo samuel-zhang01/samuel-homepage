@@ -52,16 +52,24 @@ export function layoutKnowledgeGraph(graph: KnowledgeGraphData): Map<string, Poi
     const centre = { x: Math.cos(angle) * 270, y: Math.sin(angle) * 215, z: Math.sin(angle * 2) * 70 };
     centres.set(topic.topic, centre); points.set(topic.id, centre);
   });
+  const membersByTopic = new Map<string, KnowledgeNode[]>();
+  const experiences: KnowledgeNode[] = [];
+  for (const node of graph.nodes) {
+    if (node.kind === "experience" || node.kind === "education") experiences.push(node);
+    else if (node.kind !== "topic") {
+      const members = membersByTopic.get(node.topic) ?? [];
+      members.push(node); membersByTopic.set(node.topic, members);
+    }
+  }
   for (const topic of topics) {
     const centre = centres.get(topic.topic)!;
-    const members = graph.nodes.filter((node) => node.topic === topic.topic && node.kind !== "topic" && node.kind !== "experience");
+    const members = membersByTopic.get(topic.topic) ?? [];
     members.forEach((node, index) => {
       const angle = index * 2.399963229728653 + hash(topic.id) % 10;
       const radius = 54 + Math.sqrt(index + 1) * 21;
       points.set(node.id, { x: centre.x + Math.cos(angle) * radius, y: centre.y + Math.sin(angle) * radius * .82, z: centre.z + (hash(node.id) % 130) - 65 });
     });
   }
-  const experiences = graph.nodes.filter((node) => node.kind === "experience");
   experiences.forEach((node, index) => {
     const angle = index / experiences.length * Math.PI * 2;
     points.set(node.id, { x: Math.cos(angle) * 108, y: Math.sin(angle) * 92, z: 90 + Math.sin(angle) * 25 });
@@ -134,6 +142,11 @@ export function visibleKnowledgeNodes(graph: KnowledgeGraphData, selectedId: str
       if (edge.target === selectedId) ids.add(edge.source);
     }
   }
-  const priority = candidates.filter((node) => ids.has(node.id)).sort((a, b) => Number(b.id === selectedId) - Number(a.id === selectedId) || Number(b.kind === "topic") - Number(a.kind === "topic"));
-  return new Set(priority.slice(0, limit).map((node) => node.id));
+  const selected: string[] = [], topics: string[] = [], others: string[] = [];
+  for (const node of candidates) if (ids.has(node.id)) {
+    if (node.id === selectedId) selected.push(node.id);
+    else if (node.kind === "topic") topics.push(node.id);
+    else others.push(node.id);
+  }
+  return new Set([...selected, ...topics, ...others].slice(0, limit));
 }

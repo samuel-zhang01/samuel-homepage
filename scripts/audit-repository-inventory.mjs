@@ -30,7 +30,7 @@ function totals(files) {
 const config = ts.readConfigFile("tsconfig.json", ts.sys.readFile);
 if (config.error) throw new Error(ts.flattenDiagnosticMessageText(config.error.messageText, "\n"));
 const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, root);
-const sources = managed.filter((filename) => filename.startsWith("src/") && /\.(?:tsx?|css|json|csv|svg)$/.test(filename));
+const sources = managed.filter((filename) => filename.startsWith("src/") && /\.(?:tsx?|css|json|csv|svg|png)$/.test(filename));
 const edges = new Map();
 const unresolved = [];
 for (const filename of sources) {
@@ -64,7 +64,7 @@ for (const filename of sources) {
 }
 const entries = sources.filter((filename) =>
   (filename.startsWith("src/app/") && /(?:^|\/)(?:page|layout|template|loading|error|global-error|not-found|route|manifest|robots|sitemap)\.[jt]sx?$/.test(filename)) ||
-  filename === "src/app/icon.svg" || filename === "src/middleware.ts" || filename.endsWith(".d.ts"));
+  filename === "src/app/icon.png" || filename === "src/middleware.ts" || filename.endsWith(".d.ts"));
 const reached = new Set();
 function walk(filename) {
   if (reached.has(filename)) return;
@@ -80,17 +80,20 @@ const unresolvedOwnership = nonRuntime.filter((filename) => !translationReceipts
 
 const publicFiles = managed.filter((filename) => filename.startsWith("public/"));
 const texts = new Map(managed.filter((filename) => /\.(?:tsx?|mjs|css|json|md)$/.test(filename) && !filename.startsWith("docs/reviews/")).map((filename) => [filename, readFileSync(filename, "utf8")]));
-const iconSource = ts.createSourceFile("System7Icon.tsx", readFileSync("src/components/System7Icon.tsx", "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const iconSource = ts.createSourceFile("system7Icons.ts", readFileSync("src/lib/system7Icons.ts", "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
 const iconKinds = new Set();
-for (const node of iconSource.statements) {
-  if (ts.isTypeAliasDeclaration(node) && node.name.text === "System7IconKind" && ts.isUnionTypeNode(node.type)) {
-    for (const member of node.type.types) if (ts.isLiteralTypeNode(member) && ts.isStringLiteral(member.literal)) iconKinds.add(member.literal.text === "secret" ? "star" : member.literal.text);
+function findIconPaths(node) {
+  if (ts.isStringLiteral(node)) {
+    const match = node.text.match(/^\/system7-icons\/([a-z][a-z0-9]*)\.png$/);
+    if (match) iconKinds.add(match[1]);
   }
+  ts.forEachChild(node, findIconPaths);
 }
+findIconPaths(iconSource);
 const computedIcons = [];
 const assetCandidates = [];
 for (const filename of publicFiles) {
-  const icon = filename.match(/^public\/system7-icons\/([^/]+)\.(?:svg|png)$/);
+  const icon = filename.match(/^public\/system7-icons\/([^/]+)\.png$/);
   if (icon && iconKinds.has(icon[1])) { computedIcons.push(filename); continue; }
   const publicPath = `/${filename.slice(7)}`;
   const basename = path.basename(filename);

@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { projects } from "@/data/projects";
 import { translateText, type Locale } from "@/lib/i18n";
+import { projectText } from "@/lib/projectCopy";
 import { foldSearch, parseProjectSearchIndex, searchExcerpt, type ProjectSearchIndex } from "@/lib/projectSearch";
 import type { AppId } from "./SystemSevenDesktop";
-import { System7Icon } from "./System7Icon";
+import { System7Icon, type System7IconKind } from "./System7Icon";
+import { getApplicationIcon, getProjectIcon } from "@/lib/iconIdentity";
+import { desktopCopy } from "./desktopCopy";
 import styles from "./DesktopFinder.module.css";
 
 export type FinderApplication = {
   id: AppId;
   title: string;
   description: string;
-  icon: ReactNode;
 };
 
 type FinderResult = {
@@ -23,7 +25,7 @@ type FinderResult = {
   search: string;
   appId?: AppId;
   projectSlug?: string;
-  icon?: ReactNode;
+  icon: System7IconKind;
   excerpt?: string;
 };
 
@@ -90,17 +92,17 @@ export default function DesktopFinder({
 
   const allResults = useMemo<FinderResult[]>(() => [
     ...applications.map((app) => {
-      const title = translateText(locale, app.title);
-      const description = translateText(locale, app.description);
+      const title = projectText(locale, desktopCopy, app.title);
+      const description = projectText(locale, desktopCopy, app.description);
       return {
         key: `app-${app.id}`, kind: "application" as const,
-        appId: app.id, title, description, icon: app.icon,
+        appId: app.id, title, description, icon: getApplicationIcon(app.id),
         search: foldSearch(`${app.title} ${title} ${app.description} ${description}`),
       };
     }),
     ...projects.map((project) => ({
       key: `project-${project.slug}`, kind: "project" as const,
-      projectSlug: project.slug,
+      projectSlug: project.slug, icon: getProjectIcon(project.slug),
       title: translateText(locale, project.shortTitle ?? project.title),
       description: translateText(locale, project.summary),
       search: foldSearch([
@@ -189,17 +191,12 @@ export default function DesktopFinder({
     >
       <header className={styles.titlebar}>
         <button type="button" className={styles.closeBox} aria-label={t("Close Find")} onClick={onClose} />
-        <h2 id="finder-title">{t("Find…")}</h2>
+        <h2 id="finder-title"><span className={styles.titleIcon} aria-hidden="true"><System7Icon kind="finder" miniature /></span>{t("Find…")}</h2>
         <span aria-hidden="true" />
       </header>
       <div className={styles.body}>
         <div className={styles.intro}>
-          <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" shapeRendering="crispEdges">
-            <path d="M3 4h18v23H3z" fill="#fff" stroke="#111" strokeWidth="2" />
-            <path d="M6 8h11M6 12h5M6 16h5" fill="none" stroke="#111" strokeWidth="2" />
-            <path d="M16 12h9v2h2v9h-2v2h-9v-2h-2v-9h2z" fill="#d7d8ee" stroke="#111" strokeWidth="2" />
-            <path d="m25 25 5 5" stroke="#111" strokeWidth="4" />
-          </svg>
+          <span className={styles.introIcon} aria-hidden="true"><System7Icon kind="finder" /></span>
           <p id="finder-description">{t("Find an app, a project, or a useful little distraction.")}</p>
         </div>
         <label className={styles.searchLabel} htmlFor="finder-search">{t("Name or keyword")}</label>
@@ -249,7 +246,7 @@ export default function DesktopFinder({
               onClick={() => openResult(result)}
             >
               <span className={styles.itemIcon} aria-hidden="true">
-                {result.icon ?? <System7Icon kind="folder" miniature />}
+                <System7Icon kind={result.icon} miniature />
               </span>
               <span className={styles.itemCopy}>
                 <strong>{result.title}</strong>

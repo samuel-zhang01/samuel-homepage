@@ -209,6 +209,26 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
   useEffect(() => {
     let cancelled = false;
     let loadingTask: PDFDocumentLoadingTask | null = null;
+    let nativeWorker: Worker | null = null;
+    let pdfWorker: import("pdfjs-dist").PDFWorker | null = null;
+    let workerUrl: string | null = null;
+    let fetchController: AbortController | null = null;
+    let disposal: Promise<void> | null = null;
+    const dispose = () => {
+      if (disposal) return disposal;
+      const terminate = () => {
+        pdfWorker?.destroy(); nativeWorker?.terminate();
+        if (workerUrl) { URL.revokeObjectURL(workerUrl); workerUrl = null; }
+      };
+      nativeWorker?.postMessage({ type: "samuel-pdf-reader-dispose" });
+      fetchController?.abort();
+      // A stalled worker must not keep an abandoned reader alive indefinitely.
+      const timeout = window.setTimeout(terminate, 1000);
+      disposal = (loadingTask?.destroy() ?? Promise.resolve())
+        .catch(cleanupError => { console.error("PDF preview failed to release its worker", cleanupError); })
+        .finally(() => { window.clearTimeout(timeout); terminate(); });
+      return disposal;
+    };
     setDocumentProxy(null);
     setPageRatios([]);
     pendingAnchor.current = null;
@@ -231,18 +251,55 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
         const retryQuery = loadAttempt ? `?retry=${loadAttempt}` : "";
         const pdfJsUrl = `/_vendor/pdfjs/pdf.min.mjs${retryQuery}`;
         const pdfjs = await import(/* webpackIgnore: true */ pdfJsUrl) as typeof import("pdfjs-dist");
-        if (cancelled) return;
+        if (cancelled || disposal) return;
+        fetchController = new AbortController();
         if (!pdfjs.GlobalWorkerOptions.workerSrc) {
           pdfjs.GlobalWorkerOptions.workerSrc = `/_vendor/pdfjs/pdf.worker.min.mjs${retryQuery}`;
         }
+        const libraryUrl = new URL(pdfjs.GlobalWorkerOptions.workerSrc, window.location.href).href;
+        // Static import installs the real worker before queued PDF.js messages
+        // run. The wrapper handles cancellation within that worker's own realm;
+        // a listener on the parent Worker cannot catch unhandled rejections.
+        workerUrl = URL.createObjectURL(new Blob([`
+          import ${JSON.stringify(libraryUrl)};
+          let disposed = false;
+          self.addEventListener("message", event => {
+            if (event.data?.type === "samuel-pdf-reader-dispose") disposed = true;
+          });
+          self.addEventListener("unhandledrejection", event => {
+            if (disposed && event.reason?.message === "Worker was terminated") event.preventDefault();
+          });
+          self.addEventListener("error", event => {
+            if (disposed && event.error?.message === "Worker was terminated") event.preventDefault();
+          });
+        `], { type: "text/javascript" }));
+        nativeWorker = new Worker(workerUrl, { type: "module" });
+        nativeWorker.addEventListener("error", (workerError) => {
+          if (!cancelled) {
+            console.error("PDF preview worker failed", workerError.error ?? workerError.message);
+            setError(true);
+            void dispose();
+          }
+        });
+        pdfWorker = pdfjs.PDFWorker.create({ port: nativeWorker });
+        // Own the fetch so every cancellation rejection is awaited here.
+        // PDF.js 5.4 discards network-reader cancel() promises. Supplying data
+        // avoids that teardown path; preview startup waits for the local file.
+        const response = await fetch(src, { signal: fetchController.signal });
+        if (cancelled || disposal) return;
+        if (!response.ok) throw new Error(`PDF request failed (${response.status})`);
+        const data = new Uint8Array(await response.arrayBuffer());
+        if (cancelled || disposal) return;
         loadingTask = pdfjs.getDocument({
-          url: src,
+          data,
+          docBaseUrl: new URL(src, window.location.href).href,
+          worker: pdfWorker,
           isEvalSupported: false,
           enableXfa: false,
         });
         const loadedDocument = await loadingTask.promise;
-        if (cancelled) {
-          await loadedDocument.destroy();
+        if (cancelled || disposal) {
+          await dispose();
           return;
         }
         // Resolve lightweight page geometry before mounting placeholders. Canvas
@@ -250,7 +307,7 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
         const ratios: number[] = [];
         for (let pageNumber = 1; pageNumber <= loadedDocument.numPages; pageNumber++) {
           const page = await loadedDocument.getPage(pageNumber);
-          if (cancelled) return;
+          if (cancelled || disposal) return;
           const viewport = page.getViewport({ scale: 1 });
           ratios.push(viewport.height / viewport.width);
         }
@@ -258,15 +315,16 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
         setDocumentProxy(loadedDocument);
         setPageCount(loadedDocument.numPages);
       } catch (loadError) {
-        if (cancelled) return;
+        if (cancelled || disposal) return;
         console.error("PDF preview failed to load", loadError);
         setError(true);
+        void dispose();
       }
     })();
 
     return () => {
       cancelled = true;
-      if (loadingTask) void loadingTask.destroy();
+      void dispose();
     };
   }, [src, loadAttempt]);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import ClassicSelect from "./ClassicSelect";
+import { System7Icon } from "./System7Icon";
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
@@ -446,7 +447,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
   return <>{localizeSideQuestTree(locale, (
     <div className={`system7-project ${styles.app}`} data-locale={locale} lang={locale}>
       <header className={styles.masthead}>
-        <div className={styles.identity}><span className={styles.mark} aria-hidden="true">RH</span><div><span>Sam&apos;s Cabinet of Curiosities · Latest field note</span><strong>RUN/HACK FIELD JOURNAL</strong></div></div>
+        <div className={styles.identity}><span className={styles.mark} aria-hidden="true"><System7Icon kind="runner" /></span><div><span>Sam&apos;s Cabinet of Curiosities · Latest field note</span><strong>RUN/HACK FIELD JOURNAL</strong></div></div>
         <div className={styles.releaseStamp}><span>29 AUG 2026</span><strong>2ND PLACE</strong></div>
       </header>
 

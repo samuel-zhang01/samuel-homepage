@@ -601,6 +601,14 @@ export const portfolioCopy = {
     "工作背景 · {0}",
     "工作背景 · {0}"
   ],
+  "Education context · {0}": [
+    "教育背景 · {0}",
+    "教育背景 · {0}"
+  ],
+  "Related research context · {0}": [
+    "相关研究背景 · {0}",
+    "相關研究背景 · {0}"
+  ],
   "Exact tool · {0}": [
     "共同工具 · {0}",
     "共同工具 · {0}"

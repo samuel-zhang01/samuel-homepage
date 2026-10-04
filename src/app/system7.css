@@ -19,7 +19,7 @@
   --s7-muted: #555;
   --s7-selection: #11177a;
   --s7-selection-text: #fff;
-  /* Deep indigo identifies primary actions; sharing uses neutral utility chrome. */
+  /* Warm paper supports reading; controls share the neutral desktop chrome. */
   --s7-context-paper: #f8f5ec;
   /* Content colours restore useful hierarchy inside the neutral desktop frame.
      Pair state colour with a label, check, border or pattern. */
@@ -40,6 +40,9 @@
   --s7-title: 22px;
   --s7-control-height: 32px;
   --s7-control-radius: 3px;
+  --s7-icon-inline: 16px;
+  --s7-icon-document: 32px;
+  --s7-icon-desktop: 48px;
   --s7-space: 8px;
   --s7-font-ui: Chicago, Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
   --s7-font-text: Geneva, "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -98,24 +101,17 @@
   background: var(--s7-paper);
 }
 
-/* Main destinations and sharing keep the same beveled control family. */
+/* Destinations and sharing retain the same classic geometry and relief.
+   A bold white face identifies the next action; only defaults get the ring. */
 :is(.s7-button, .mac-button).is-primary {
-  --s7-button-face: var(--s7-action);
-  --s7-button-hover: var(--s7-action-hover);
-  --s7-button-text: #fff;
-  --s7-button-edge: var(--s7-action-edge);
-  --s7-button-relief: inset 1px 1px 0 #7595d1, inset -1px -1px 0 var(--s7-action-edge), 1px 1px 0 var(--s7-edge);
-  min-height: 44px;
-  padding: 8px 16px;
+  --s7-button-face: var(--s7-paper);
+  --s7-button-hover: var(--s7-surface);
   font-weight: 700;
 }
 
 :is(.s7-button, .mac-button).is-share {
-  --s7-button-face: var(--s7-share);
-  --s7-button-hover: var(--s7-share-hover);
-  --s7-button-text: #fff;
-  --s7-button-edge: var(--s7-share-edge);
-  --s7-button-relief: inset 1px 1px 0 #998ac9, inset -1px -1px 0 var(--s7-share-edge), 1px 1px 0 var(--s7-edge);
+  --s7-button-face: var(--s7-raised);
+  --s7-button-hover: var(--s7-surface);
 }
 
 :is(.s7-button, .mac-button):hover:not(:disabled):not([aria-disabled="true"]):where(:not([aria-pressed="true"])) {

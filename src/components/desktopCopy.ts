@@ -13,7 +13,6 @@ export const desktopCopy = {
   "Explore service map ↗": ["探索服务图 ↗", "探索服務圖 ↗"],
   "Open project": ["打开项目", "開啟專案"],
   "Project": ["项目", "專案"],
-  "I build software around problems I have met in research and at work: planning laboratory capacity, helping recruiters understand applicants, and using machine learning where the cost of an error matters. My background spans chemistry, emergency operations and product development. Today I work on applied AI and lead COVERD.": ["我围绕科研与工作中遇到的问题开发软件：规划实验室产能、帮助招聘人员了解申请者，以及在错误代价较高的场景中应用机器学习。我的经历涵盖化学、应急行动与产品开发。目前，我从事应用 AI 工作，并带领 COVERD。", "我圍繞科研與工作中遇到的問題開發軟體：規劃實驗室產能、協助招募人員了解申請者，以及在錯誤代價較高的情境中應用機器學習。我的經歷涵蓋化學、緊急應變與產品開發。目前，我從事應用 AI 工作，並帶領 COVERD。"],
   "Skills in practice.": [
     "实践中的技能。",
     "實務中的技能。"
@@ -29,10 +28,6 @@ export const desktopCopy = {
   "Learning atlas · PDF": [
     "学习图谱 · PDF",
     "學習圖譜 · PDF"
-  ],
-  "Completed a summer research project at King’s College London. The linked computational-chemistry material includes a later workstation setup for GPU-capable containers and GROMACS topology preparation.": [
-    "在伦敦国王学院完成暑期研究项目。关联的计算化学资料还包括后来整理的 GPU 容器工作站配置与 GROMACS 拓扑准备。",
-    "在倫敦國王學院完成暑期研究專案。相關計算化學資料另收錄後來整理的 GPU 容器工作站設定與 GROMACS 拓樸準備。"
   ],
   "Home lab — connects Proxmox and Docker services for local AI, storage and automation, with scheduled PostgreSQL backups and recovery tooling.": [
     "家庭实验室——通过 Proxmox 与 Docker 连接本地 AI、存储和自动化服务，并设置 PostgreSQL 定时备份与恢复工具。",

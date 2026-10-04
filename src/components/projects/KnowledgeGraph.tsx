@@ -3,17 +3,21 @@
 import dynamic from "next/dynamic";
 import { useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from "react";
 import { projects, isInteractiveProject } from "@/data/projects";
-import { projectOrigins } from "@/data/projectOrigins";
-import { buildKnowledgeGraph, KnowledgeGraphIndex, graphNodeHref, knowledgeTopics, type KnowledgeNode } from "@/data/knowledgeGraph";
+import { portfolioKnowledgeGraph } from "@/data/profileKnowledgeGraph";
+import { getDocumentLibrary, getProfileSourceHref } from "@/data/documents";
+import { KnowledgeGraphIndex, graphNodeHref, knowledgeTopics, type KnowledgeNode } from "@/data/knowledgeGraph";
 import { clamp, initialGraphCamera, layoutKnowledgeGraph, layoutKnowledgeFocus, fitKnowledgeCamera, dragKnowledgeCamera, interpolateKnowledgeScene, pickKnowledgeNode, projectKnowledgePoint, visibleKnowledgeNodes, type KnowledgeScene, type GraphCamera, type ProjectedNode } from "@/lib/knowledgeGraphMath";
 import { type Locale } from "@/lib/i18n";
 import { getProjectText } from "@/lib/projectNarrative";
+import { getProfileText } from "@/lib/profileCopy";
+import { knowledgeRelationLabel, knowledgeGraphExtensionCopy } from "@/lib/knowledgeGraphRelations";
+import { resolveProjectActivity } from "@/lib/projectActivity";
 import styles from "./KnowledgeGraph.module.css";
 import { ProjectWindowContext } from "./ProjectWindowContext";
 
 const CatalogueAnalysis = dynamic(() => import("./PortfolioMap"), { loading: () => <p style={{ padding: 18 }}>…</p> });
 
-const graph = buildKnowledgeGraph(projects, projectOrigins);
+const graph = portfolioKnowledgeGraph;
 const positions = layoutKnowledgeGraph(graph);
 const graphIndex = new KnowledgeGraphIndex(graph);
 const nodeById = graphIndex.nodes;
@@ -22,9 +26,9 @@ const canvasColours: Record<string, string> = {
   "reinforcement-learning": "#6f8c9b", "scientific-ml": "#91849f", chemistry: "#aa916d", decisions: "#7c998c",
   products: "#ab8994", infrastructure: "#929baa", "data-science": "#a39e70", "human-systems": "#ad907c",
 };
-const canvasColour = (node: KnowledgeNode) => node.kind === "experience" ? "#ffffff" : canvasColours[node.topic] ?? "#aaaaaa";
-const kindLabels = { topic: "Subject", method: "Method", project: "Project", experience: "Work & education" };
-const searchAliases: Record<string, string> = { "topic:reinforcement-learning": "RL agent reinforcement 强化学习 強化學習", "method:fourier-operators": "FNO Fourier neural operator spectral 傅里叶 神经算子 傅立葉 神經算子", "method:graph-networks": "GNN graph neural network 图神经网络 圖神經網路", "method:language-models": "LLM SFT DPO LoRA post-training 大语言模型 大語言模型", "method:inverse-problems": "MRI image reconstruction 磁共振 图像重建 磁振 影像重建", "experience:imperial": "IX I-X Imperial College London MSc 帝国理工 帝國理工", "experience:pfizer": "Pfizer 辉瑞 輝瑞" };
+const canvasColour = (node: KnowledgeNode) => node.kind === "experience" || node.kind === "education" ? "#ffffff" : canvasColours[node.topic] ?? "#aaaaaa";
+const kindLabels = { topic: "Subject", method: "Method", project: "Project", experience: "Work experience", education: "Education", skill: "Skill", document: "Document" };
+const searchAliases: Record<string, string> = { "topic:reinforcement-learning": "RL agent reinforcement 强化学习 強化學習", "method:fourier-operators": "FNO Fourier neural operator spectral 傅里叶 神经算子 傅立葉 神經算子", "method:graph-networks": "GNN graph neural network 图神经网络 圖神經網路", "method:language-models": "LLM SFT DPO LoRA post-training 大语言模型 大語言模型", "method:inverse-problems": "MRI image reconstruction 磁共振 图像重建 磁振 影像重建", "experience:imperial": "IX I-X Imperial College London MSc 帝国理工 帝國理工", "experience:pfizer": "Pfizer 辉瑞 輝瑞", "document:growmat-showcase": "GROWMAT showcase capacity workload PDF 辉瑞 輝瑞" };
 const graphTranslations: Record<string, string> = {
   "Open project": "打开项目",
   "Compare projects": "比较项目", "Explore dates, tools and model families": "探索日期、工具与模型系列", "3D view": "三维视图", "2D view": "二维视图", "Projection": "投影视图", "Drag to rotate. Shift-drag to pan. Use + / − to zoom. All connections are also available in the list.": "拖动旋转，按住 Shift 拖动平移。使用 + / − 缩放，也可以通过列表探索全部关联。", "Open GROWMAT showcase PDF": "打开 GROWMAT 展示 PDF", "Project graph": "项目关系图", "PROJECTS · IDEAS · EXPERIENCE": "项目 · 知识 · 经历", "Follow the connections.": "沿着关联探索。",
@@ -300,25 +304,23 @@ const graphMetadataTranslations: Record<string, readonly [string, string]> = {
 };
 
 function translateGraph(locale: Locale, source: string) {
+  if (source === "Samuel Zhang — Applied AI CV") return getDocumentLibrary(locale).find(document => document.id === "ai-cv")!.title;
+  if (locale.startsWith("zh-") && knowledgeGraphExtensionCopy[source]) return knowledgeGraphExtensionCopy[source][locale === "zh-CN" ? 0 : 1];
   if (locale === "zh-CN" && graphMetadataTranslations[source]) return graphMetadataTranslations[source][0];
   if (locale === "zh-TW" && graphMetadataTranslations[source]) return graphMetadataTranslations[source][1];
   const translated = graphTranslations[source];
   if (locale === "zh-CN" && translated) return translated;
   if (locale === "zh-TW" && traditionalGraphTranslations[source]) return traditionalGraphTranslations[source];
-  return getProjectText(locale, source);
+  const profileText = getProfileText(locale, source);
+  if (profileText !== source) return profileText;
+  const projectText = getProjectText(locale, source);
+  return projectText !== source ? projectText : source.split(" · ").map(part => getProfileText(locale, part)).join(" · ");
 }
 
 function graphConnectionText(locale: Locale, edge: (typeof graph.edges)[number]) {
   return translateGraph(locale, edge.explanation);
 }
 
-function relationLabel(selected: KnowledgeNode, node: KnowledgeNode, relation: string) {
-  if (relation === "related-context") return "Related research context";
-  if (node.kind === "project") return selected.kind === "experience" ? "Project from this experience" : selected.kind === "method" ? "Project using this method" : "Project in this subject";
-  if (node.kind === "experience") return "Developed in this context";
-  if (node.kind === "method") return selected.kind === "topic" ? "Method in this subject" : "Uses this method";
-  return selected.kind === "method" ? "Part of this subject" : "Explores this subject";
-}
 
 type Props = {
   active: boolean; locale: Locale; initialNode?: string;
@@ -355,6 +357,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
   const projectedRef = useRef<ProjectedNode[]>([]);
   const selected = selectedId ? nodeById.get(selectedId) : undefined;
   const selectedProject = selected?.slug ? projectBySlug.get(selected.slug) : undefined;
+  const documentActivity = selected?.kind === "document" ? resolveProjectActivity(selected.projectSlug, "pdf", selected.artifactHref) : null;
   const showcasePdf = selectedProject?.slug === "growmat" && !isInteractiveProject(selectedProject) ? selectedProject.artifacts?.find((artifact) => artifact.kind === "PDF") : undefined;
   const neighbours = useMemo(() => selectedId ? graphIndex.neighbours(selectedId) : [], [selectedId]);
   useEffect(() => { if (inspectorRef.current) inspectorRef.current.scrollTop = 0; }, [selectedId]);
@@ -402,11 +405,11 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     displayScene({ ...current, opacity, camera: typeof next === "function" ? next(current.camera) : next });
   }, [displayScene, opacity, stopMotion]);
   const localeSlug = locale.toLowerCase();
-  const timeline = useMemo(() => graph.nodes.filter((node) => node.kind === "experience").sort((a, b) => Number(b.period?.match(/\d{4}/)?.[0] ?? 9999) - Number(a.period?.match(/\d{4}/)?.[0] ?? 9999)), []);
+  const timeline = useMemo(() => graph.nodes.filter((node) => (node.kind === "experience" || node.kind === "education")).sort((a, b) => Number(b.period?.match(/\d{4}/)?.[0] ?? 9999) - Number(a.period?.match(/\d{4}/)?.[0] ?? 9999)), []);
   const searchResults = useMemo(() => {
     const needle = query.normalize("NFKD").toLowerCase().trim();
     if (!needle) return [];
-    return graph.nodes.filter((node) => `${node.label} ${t(node.label)} ${t(node.shortLabel)} ${node.description} ${node.period ?? ""} ${node.slug ?? ""} ${searchAliases[node.id] ?? ""} ${node.slug ? projectBySlug.get(node.slug)?.tools.join(" ") ?? "" : ""}`.normalize("NFKD").toLowerCase().includes(needle))
+    return graph.nodes.filter((node) => `${node.label} ${t(node.label)} ${t(node.shortLabel)} ${node.description} ${t(node.description)} ${t(kindLabels[node.kind])} ${node.sources?.map(source => `${source.title} ${t(source.title)}`).join(" ") ?? ""} ${node.period ?? ""} ${node.slug ?? ""} ${searchAliases[node.id] ?? ""} ${node.slug ? projectBySlug.get(node.slug)?.tools.join(" ") ?? "" : ""}`.normalize("NFKD").toLowerCase().includes(needle))
       .sort((a, b) => Number(b.label.toLowerCase().includes(needle)) - Number(a.label.toLowerCase().includes(needle)));
   }, [query, t]);
 
@@ -436,7 +439,10 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     const url = new URL(window.location.href);
     url.searchParams.set("view", "map"); url.searchParams.delete("project"); url.searchParams.delete("from");
     if (id) url.searchParams.set("node", id); else url.searchParams.delete("node");
-    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}`);
+    const address = `${url.pathname}${url.search}`;
+    if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== address) {
+      window.history.replaceState(window.history.state, "", address);
+    }
   }
 
   function select(id: string, append = true, reveal = false) {
@@ -497,7 +503,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     const points: ProjectedNode[] = graph.nodes.filter((node) => (scene.opacity.get(node.id) ?? 0) > .01).map((node) => {
       const point = projectKnowledgePoint(scene.positions.get(node.id)!, camera, size.width, size.height, flat);
       const depthScale = flat ? 1 : clamp(1000 / Math.max(350, 1000 + point.z), .7, 1.45);
-      return { ...point, node, radius: (node.kind === "topic" ? 13 : node.kind === "experience" ? 8 : node.kind === "method" ? 5 : 5.5) * depthScale * Math.sqrt(camera.zoom) };
+      return { ...point, node, radius: (node.kind === "topic" ? 13 : node.kind === "experience" || node.kind === "education" ? 8 : node.kind === "method" ? 5 : 5.5) * depthScale * Math.sqrt(camera.zoom) };
     }).sort((a, b) => b.z - a.z);
     projectedRef.current = points.filter((point) => (scene.opacity.get(point.node.id) ?? 0) > .5 && shown.has(point.node.id));
     const projectedById = new Map(points.map((point) => [point.node.id, point]));
@@ -523,9 +529,10 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
         context.beginPath(); context.arc(point.x, point.y, point.radius + 6, 0, Math.PI * 2); context.stroke();
       }
       context.beginPath();
-      if (point.node.kind === "experience") {
+      if (point.node.kind === "experience" || point.node.kind === "education") {
         context.moveTo(point.x, point.y - point.radius); context.lineTo(point.x + point.radius, point.y); context.lineTo(point.x, point.y + point.radius); context.lineTo(point.x - point.radius, point.y); context.closePath();
-      } else context.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
+      } else if (point.node.kind === "document") context.rect(point.x - point.radius, point.y - point.radius, point.radius * 2, point.radius * 2);
+      else context.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
       context.fill();
       context.strokeStyle = chosen ? "#000000" : "#555555";
       context.lineWidth = chosen ? 1.2 : .6;
@@ -564,19 +571,19 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
   }, [active, camera, flat, hoverId, local, neighbourIds, scene, selectedId, shown, size, t]);
 
   const candidateNodes = query.trim() ? searchResults : selected ? neighbours.map((entry) => entry.node) : graph.nodes.filter((node) => node.kind === "topic");
-  const listNodes = [...candidateNodes].sort((a, b) => Number(b.kind === "project") - Number(a.kind === "project"));
+  const listNodes = [...new Map(candidateNodes.map(node => [node.id, node])).values()].sort((a, b) => Number(b.kind === "project") - Number(a.kind === "project"));
   function browseConnections() { setResultLimit(graph.nodes.length); requestAnimationFrame(() => navigatorRef.current?.scrollIntoView({ block: "nearest" })); }
   async function share() { try { await navigator.clipboard.writeText(window.location.href); setCopied(true); } catch { setCopied(false); } }
   function exportGraph() {
     const url = URL.createObjectURL(new Blob([JSON.stringify(graph, null, 2)], { type: "application/json" }));
-    const link = document.createElement("a"); link.href = url; link.download = "samuel-project-graph.json"; link.click();
+    const link = document.createElement("a"); link.href = url; link.download = "samuel-knowledge-graph.json"; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  return <section ref={graphRef} className={`system7-project ${styles.graph}`} aria-label={t("Project graph")} lang={locale}>
+  return <section ref={graphRef} className={`system7-project ${styles.graph}`} aria-label={t("Knowledge graph")} lang={locale}>
     <header className={styles.header}>
-      <div><p>{t("Pick a subject or date, then click through to a project. Each one has a write-up or demo.")}</p></div>
-      <div className={styles.searchContainer}><label className={styles.search}><span>{t("Find a subject, project or experience")}</span><input type="search" value={query} placeholder={t("Try Fourier, chemistry, Pfizer…")} onChange={(event) => { setQuery(event.target.value); setResultLimit(12); }} onKeyDown={(event) => { if (event.key === "Escape") setQuery(""); if (event.key === "Enter" && searchResults[0]) { event.preventDefault(); select(searchResults[0].id, true, true); } }} /></label>
+      <div><p>{t("Start with a subject, experience, skill or document. Follow its evidence to the work.")}</p></div>
+      <div className={styles.searchContainer}><label className={styles.search}><span>{t("Find a subject, project, experience, skill or document")}</span><input type="search" value={query} placeholder={t("Try Fourier, chemistry, Pfizer…")} onChange={(event) => { setQuery(event.target.value); setResultLimit(12); }} onKeyDown={(event) => { if (event.key === "Escape") setQuery(""); if (event.key === "Enter" && searchResults[0]) { event.preventDefault(); select(searchResults[0].id, true, true); } }} /></label>
         {query.trim() && <div role="group" className={styles.searchResults} aria-label={t("Search results")}><span aria-live="polite">{searchResults.length} {t("matches")}</span>{searchResults.slice(0, 8).map((result) => <button key={result.id} onClick={() => select(result.id, true, true)}><strong>{t(result.label)}</strong><small>{t(kindLabels[result.kind])}</small></button>)}{searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}{searchResults.length > 8 && <button onClick={browseConnections}>{t("Browse all connections")} ↓</button>}</div>}
       </div>
     </header>
@@ -610,15 +617,15 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
               drag.current = null; if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
             }}
             onPointerCancel={() => { drag.current = null; }} onPointerLeave={() => setHoverId(null)} />
-          {!canvasReady && <p className={styles.canvasFallback}>{t("Select a node to read about it and see related projects.")}</p>}
-          <div className={styles.legend}><span>● {t("Topics")}</span><span>● {t("Projects")}</span><span>◇ {t("Work & education")}</span>{selected && <span>· {t("Methods")}</span>}</div>
+          {!canvasReady && <p className={styles.canvasFallback}>{t("Select a node to read about it and follow its connections.")}</p>}
+          <div className={styles.legend}><span>● {t("Topics")}</span><span>● {t("Projects")}</span><span>◇ {t("Work & education")}</span><span>● {t("Skills")}</span><span>□ {t("Documents")}</span>{selected && <span>· {t("Methods")}</span>}</div>
           <div className={styles.stageStatus}>{flat ? "2D" : "3D"} · {shown.size} {t("visible nodes")}</div>
         </div>
         <p className={styles.gestureHelp}>{t(flat ? "Drag to pan. Use + / − to zoom. All connections are also available in the list." : "Drag to rotate. Shift-drag to pan. Use + / − to zoom. All connections are also available in the list.")}</p>
       </div>
       <aside ref={inspectorRef} className={styles.inspector} aria-labelledby={inspectorTitleId} tabIndex={-1}>
         {selected ? <>
-          <div className={styles.nodeType}><i style={{ background: canvasColour(selected) }} />{t(selected.kind === "experience" && selected.section === "education" ? "Education" : kindLabels[selected.kind])}</div>
+          <div className={styles.nodeType}><i style={{ background: canvasColour(selected) }} />{t(kindLabels[selected.kind])}</div>
           <h2 id={inspectorTitleId}>{t(selected.label)}</h2>{selected.period && <p className={styles.projectYear}>{t(selected.period)}</p>}<p>{t(selected.description)}</p>
           {selectedProject && <>
             <p className={styles.projectYear}>{selectedProject.tools.map(t).join(" · ")}</p>
@@ -627,13 +634,23 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
               : <button className={`s7-button is-primary ${styles.primaryAction}`} onClick={() => onOpenProject(selectedProject.slug, false, selectedId)}>{t("Open project")} <span aria-hidden="true">↗</span></button>}
             {showcasePdf && <button className={styles.textAction} onClick={() => onOpenProject(selectedProject.slug, false, selectedId)}>{t("Open project")} →</button>}
           </>}
-          {selected.kind === "experience" && <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t(selected.section === "education" ? "Open education record" : "Open experience record")} <span aria-hidden="true">↗</span></a>}
+          {(selected.kind === "experience" || selected.kind === "education") && <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t(selected.section === "education" ? "Open education record" : "Open experience record")} <span aria-hidden="true">↗</span></a>}
+          {selected.kind === "skill" && <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t("Open skill evidence")} <span aria-hidden="true">↗</span></a>}
+          {selected.kind === "document" && <>
+            {documentActivity && openActivity
+              ? <button className={`s7-button is-primary ${styles.primaryAction}`} onClick={() => openActivity(documentActivity)}>{t("Open PDF")} <span aria-hidden="true">↗</span></button>
+              : <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t("Open document record")} <span aria-hidden="true">↗</span></a>}
+          </>}
+          {!!selected.sources?.length && <section className={styles.sourceNotes}><h3>{t("Evidence sources")}</h3>{selected.sources.map(source => {
+            const href = getProfileSourceHref(source.id, locale) ?? source.href;
+            return <a key={source.id} href={href} {...(href.startsWith("https://") ? { target: "_blank", rel: "noreferrer" } : {})}>{t(source.title)} <span aria-hidden="true">↗</span></a>;
+          })}</section>}
           <div className={styles.connections}>
-            {(["experience", "project", "topic", "method"] as const).map((kind) => {
+            {(["experience", "education", "project", "skill", "document", "topic", "method"] as const).map((kind) => {
               const entries = neighbours.filter((entry) => entry.node.kind === kind);
               if (!entries.length) return null;
-              return <section key={kind}><h3>{t(kind === "experience" ? "Work & education" : kind === "project" ? "Projects to explore" : kind === "topic" ? "Related subjects" : "Methods in this work")} <span>{entries.length}</span></h3>
-                {entries.slice(0, 6).map(({ node, edge }) => <button key={edge.id} onClick={() => select(node.id, true, true)} title={graphConnectionText(locale, edge)}><strong>{t(node.label)}</strong><span>{node.period ? `${t(node.period)} · ` : ""}{t(relationLabel(selected, node, edge.relation))} →</span></button>)}
+              return <section key={kind}><h3>{t(kind === "experience" ? "Work experience" : kind === "education" ? "Education" : kind === "skill" ? "Skills shown here" : kind === "document" ? "Documents to read" : kind === "project" ? "Projects to explore" : kind === "topic" ? "Related subjects" : "Methods in this work")} <span>{entries.length}</span></h3>
+                {entries.slice(0, 6).map(({ node, edge }) => <button key={edge.id} onClick={() => select(node.id, true, true)} title={graphConnectionText(locale, edge)}><strong>{t(node.label)}</strong><span>{node.period ? `${t(node.period)} · ` : ""}{t(knowledgeRelationLabel(selected, node, edge.relation))} →</span></button>)}
                 {entries.length > 6 && <button className={styles.textAction} onClick={browseConnections}>{t("Browse all connections")} ↓</button>}
               </section>;
             })}
@@ -641,12 +658,14 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
           <details className={styles.edgeNotes}><summary>{t("Why these connections?")}</summary>{neighbours.map(({ node, edge }) => <p key={edge.id}><strong>{t(node.label)}</strong><br />{graphConnectionText(locale, edge)}</p>)}</details>
           <button className={`s7-button is-share ${styles.shareAction}`} onClick={share}>{t(copied ? "Link copied" : "Copy a link to this node")}</button>
         </> : <>
-          <div className={styles.nodeType}>{t("Project graph")}</div><h2 id={inspectorTitleId}>{t("A few starting points")}</h2><p>{t("Select a node to read about it and see related projects.")}</p>
+          <div className={styles.nodeType}>{t("Knowledge graph")}</div><h2 id={inspectorTitleId}>{t("A few starting points")}</h2><p>{t("Select a node to read about it and follow its connections.")}</p>
           <div className={styles.startRoutes}>
             <button onClick={() => select("topic:scientific-ml", true, true)}><strong>{t("Explore scientific ML")}</strong><span>{t("Fourier operators, imaging and microrobots")} →</span></button>
             <button onClick={() => select("experience:imperial", true, true)}><strong>{t("Follow the Imperial work")}</strong><span>{t("Coursework, research and experiments")} →</span></button>
             <button onClick={() => select("experience:pfizer", true, true)}><strong>{t("Start from experience")}</strong><span>{t("Pfizer → GROWMAT → workload planning")} →</span></button>
           </div>
+          {!!graph.nodes.find(node => node.kind === "skill") && <div className={styles.startRoutes}><button onClick={() => select(graph.nodes.find(node => node.kind === "skill")!.id, true, true)}><strong>{t("Trace a skill to its evidence")}</strong><span>{t("Projects, professional records and source documents")} →</span></button></div>}
+          <p className={styles.smallNote}>{graph.nodes.filter(node => node.kind === "skill").length} {t("skills")} · {graph.nodes.filter(node => node.kind === "document").length} {t("documents")}</p>
           <p className={styles.smallNote}>{projects.length} {t("projects")} · {knowledgeTopics.length} {t("subjects")} · {timeline.length} {t("contexts")}</p>
         </>}
       </aside>
@@ -671,6 +690,6 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
       <summary><strong>{t("Compare projects")}</strong><span>{t("Explore dates, tools and model families")}</span></summary>
       {analysisOpen && <CatalogueAnalysis onSelectProject={(slug) => onOpenProject(slug, false, selectedId)} initialSlug={selectedProject?.slug} locale={locale} />}
     </details>
-    <footer className={styles.footer}><span>{t("Topic links describe shared ideas. Timeline links explain where the work belongs.")}</span><button className="mac-button" onClick={exportGraph}>{t("Export graph data")} ↓</button></footer>
+    <footer className={styles.footer}><span>{t("Shared subjects connect ideas. Skills and documents link to named evidence.")}</span><button className="mac-button" onClick={exportGraph}>{t("Export graph data")} ↓</button></footer>
   </section>;
 }

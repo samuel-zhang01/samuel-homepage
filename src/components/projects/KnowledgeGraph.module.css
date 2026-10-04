@@ -196,6 +196,9 @@
 .textAction:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .textAction:active:not(:disabled):not([aria-disabled="true"]) > strong, .textAction:active:not(:disabled):not([aria-disabled="true"]) > small {
   color: var(--s7-paper);
 }
+.sourceNotes { margin-top: 18px; }
+.sourceNotes h3 { margin: 0 0 5px; color: var(--s7-ink); font-size: var(--s7-small); }
+.sourceNotes a { display: block; padding: 5px 0; color: var(--s7-selection); overflow-wrap: anywhere; text-underline-offset: 3px; font-size: var(--s7-small); }
 .connections > section { margin-top: 19px; }
 .connections h3 { display: flex; justify-content: space-between; gap: 10px; margin: 0 0 6px; padding: 6px 7px; border: 1px solid var(--s7-edge); color: var(--s7-ink); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); font-size: var(--s7-small); text-transform: none; letter-spacing: normal; }
 .connections button, .startRoutes button { display: flex; flex-direction: column; gap: 3px; width: 100%; min-height: 48px; margin-top: 5px; padding: 8px 9px; border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); background: var(--s7-paper); box-shadow: 1px 1px 0 var(--s7-shadow); text-align: left; color: var(--s7-ink); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; }
@@ -244,7 +247,7 @@
   display: inline-flex; align-items: baseline; gap: 6px; max-width: 100%; min-height: var(--s7-control-height);
   padding: 4px 0; border: 0; border-radius: 0; box-shadow: none;
   background: transparent; color: var(--s7-ink); text-align: left;
-  font: 700 var(--s7-heading)/1.4 Georgia, "Times New Roman", serif;
+  font: 700 var(--s7-heading)/1.3 var(--s7-font-text);
   overflow-wrap: anywhere; text-underline-offset: 4px;
 }
 .timelineTitle > span:first-child { min-width: 0; }

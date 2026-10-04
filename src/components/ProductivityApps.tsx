@@ -13,6 +13,8 @@ import ProductivityExtras, { normaliseProductivityExtraBackup } from "./Producti
 import { useDeskPersistence, type DeskFlushDetail } from "@/hooks/useDeskPersistence";
 import { commitDeskDrafts, withDeskLock, pendingPrefix, conflictPrefix, readDeskDraft, storageKeys } from "@/lib/deskPersistence";
 import { DeskConflicts } from "./DeskConflicts";
+import { getApplicationIcon } from "@/lib/iconIdentity";
+import { System7Icon } from "./System7Icon";
 import styles from "./ProductivityApps.module.css";
 
 export type ProductivityAppId =
@@ -170,111 +172,10 @@ function downloadDeskFile(value: unknown, filename: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
 }
 
-function AccessoryIcon({ kind, compact = false }: { kind: AccessoryKind; compact?: boolean }) {
-  const common = {
-    fill: "none",
-    stroke: "#111",
-    strokeWidth: 3,
-    strokeLinecap: "square" as const,
-    strokeLinejoin: "miter" as const,
-  };
-
-  const artwork: Record<AccessoryKind, React.ReactNode> = {
-    orbitals: (
-      <g {...common}>
-        <path d="M5 5h38v38H5z" fill="#fffdf0" />
-        <path d="M23 23C3 22 6 4 17 10c5 3 7 8 6 13ZM25 25c20 1 17 19 6 13-5-3-7-8-6-13Z" fill="#11177a" strokeWidth="2" />
-        <path d="M25 23c1-20 19-17 13-6-3 5-8 7-13 6ZM23 25C22 45 4 42 10 31c3-5 8-7 13-6Z" fill="#bd674b" strokeWidth="2" />
-        <circle cx="24" cy="24" r="2" fill="#111" />
-      </g>
-    ),
-    desk: (
-      <g {...common}>
-        <path d="M4 14h15l4-6h10l4 6h7v29H4z" fill="#f2ca59" />
-        <path d="M9 20h12v16H9z" fill="#fff" strokeWidth="2" />
-        <circle cx="33" cy="28" r="8" fill="#d8d8d2" strokeWidth="2" />
-        <path d="M33 23v6l4 2" strokeWidth="2" />
-      </g>
-    ),
-    notepad: (
-      <g {...common}>
-        <path d="M8 4h31v40H8z" fill="#fffdf0" />
-        <path d="M14 13h19M14 20h19M14 27h19M14 34h13" stroke="#6b78a8" strokeWidth="2" />
-        <path d="M31 44v-9h8" fill="#f2ca59" />
-        <path d="M13 4v6M21 4v6M29 4v6" strokeWidth="2" />
-      </g>
-    ),
-    focus: (
-      <g {...common}>
-        <circle cx="24" cy="26" r="17" fill="#fff" />
-        <path d="M18 4h12M24 4v5M37 12l4 4M11 12l-4 4" />
-        <path d="M24 15v12l8 5" stroke="#11177a" />
-        <circle cx="24" cy="26" r="2" fill="#111" />
-      </g>
-    ),
-    calculator: (
-      <g {...common}>
-        <rect x="7" y="3" width="34" height="42" fill="#d8d8d2" />
-        <rect x="12" y="8" width="24" height="8" fill="#cfe0b8" strokeWidth="2" />
-        {[0, 1, 2].map((row) => [0, 1, 2].map((column) => (
-          <rect
-            key={`${row}-${column}`}
-            x={12 + column * 9}
-            y={21 + row * 8}
-            width="6"
-            height="5"
-            fill={column === 2 ? "#f2ca59" : "#fff"}
-            strokeWidth="2"
-          />
-        )))}
-      </g>
-    ),
-    sketch: (
-      <g {...common}>
-        <path d="M5 7h31l7 7v28H5z" fill="#fff" />
-        <path d="M36 7v8h7" fill="#d8d8d2" />
-        <path d="m12 34 4-9 17-17 6 6-17 17z" fill="#f2ca59" />
-        <path d="m16 25 6 6" strokeWidth="2" />
-        <path d="M11 36c7-2 14-1 21 2" stroke="#11177a" strokeWidth="2" />
-      </g>
-    ),
-    tasks: (
-      <g {...common}>
-        <path d="M7 5h34v39H7z" fill="#fffdf0" />
-        <path d="m12 15 3 3 6-7M12 27l3 3 6-7" stroke="#237747" />
-        <path d="M24 15h11M24 27h11M12 38h23" stroke="#6b78a8" strokeWidth="2" />
-      </g>
-    ),
-    calendar: (
-      <g {...common}>
-        <path d="M5 9h38v34H5z" fill="#fff" />
-        <path d="M5 9h38v10H5z" fill="#b83b3b" />
-        <path d="M14 4v10M34 4v10" />
-        <path d="M12 25h6v6h-6zm9 0h6v6h-6zm9 0h6v6h-6zM12 34h6v5h-6zm9 0h6v5h-6z" fill="#d8d8d2" strokeWidth="2" />
-      </g>
-    ),
-    converter: (
-      <g {...common}>
-        <path d="M7 13h29M30 7l6 6-6 6" stroke="#11177a" />
-        <path d="M41 35H12M18 29l-6 6 6 6" stroke="#b83b3b" />
-        <rect x="5" y="6" width="8" height="14" fill="#f2ca59" strokeWidth="2" />
-        <rect x="35" y="28" width="8" height="14" fill="#d3e5c2" strokeWidth="2" />
-      </g>
-    ),
-    palette: (
-      <g {...common}>
-        <path d="M24 5c-12 0-20 8-20 18 0 8 7 16 15 16h4c3 0 4-3 2-5-2-3 0-7 4-7h7c5 0 8-4 8-8C44 11 35 5 24 5z" fill="#fff" />
-        <circle cx="13" cy="19" r="3" fill="#ef5647" strokeWidth="2" />
-        <circle cx="22" cy="13" r="3" fill="#f2ca59" strokeWidth="2" />
-        <circle cx="32" cy="16" r="3" fill="#4e9a61" strokeWidth="2" />
-        <circle cx="16" cy="29" r="3" fill="#4568b2" strokeWidth="2" />
-      </g>
-    ),
-  };
-
+function AccessoryIcon({ kind }: { kind: AccessoryKind }) {
   return (
-    <span className={`${styles.accessoryIcon}${compact ? ` ${styles.accessoryIconCompact}` : ""}`} aria-hidden="true">
-      <svg viewBox="0 0 48 48" shapeRendering="crispEdges">{artwork[kind]}</svg>
+    <span className={styles.accessoryIcon} aria-hidden="true">
+      <System7Icon kind={getApplicationIcon(kind)} />
     </span>
   );
 }

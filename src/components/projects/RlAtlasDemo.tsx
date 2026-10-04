@@ -5,6 +5,7 @@ import { rlAtlasDemoCopy } from "./copy/rlAtlasDemoCopy";
 import { projectText } from "@/lib/projectCopy";
 
 import ClassicSelect from "../ClassicSelect";
+import { System7Icon } from "../System7Icon";
 
 import { useMemo, useState } from "react";
 
@@ -627,8 +628,7 @@ export function RlAtlasDemo() {
       {workspace === "control" ? <CliffLearningLab /> : workspace === "lab" ? <LlmPostTrainingLab /> : <>
       <div className={styles.atlasIntro}>
         <div className={styles.atlasMark} aria-hidden="true">
-          <span>π</span>
-          <i />
+          <System7Icon kind="book" />
         </div>
         <div>
           <span className={styles.kicker}>Browser-native curriculum map</span>
@@ -643,7 +643,7 @@ export function RlAtlasDemo() {
           target="_blank"
           rel="noreferrer"
         >
-          <span aria-hidden="true">▤</span>
+          <span className={styles.syllabusIcon} aria-hidden="true"><System7Icon kind="pdf" miniature /></span>
           Open syllabus PDF
           <small>Complete curriculum map ↗</small>
         </a>

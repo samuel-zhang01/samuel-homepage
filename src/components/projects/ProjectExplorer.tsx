@@ -2,11 +2,13 @@
 
 import { parseProjectSearchIndex } from "@/lib/projectSearch";
 import { getProjectText } from "@/lib/projectNarrative";
+import { getProfileText } from "@/lib/profileCopy";
 import dynamic from "next/dynamic";
 import { memo, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import ClassicSelect from "../ClassicSelect";
+import { System7Icon } from "../System7Icon";
 import { projectAreas, projects, type Project } from "@/data/projects";
-import { getProjectOrigins } from "@/data/projectOrigins";
+import { getProfileProjectOrigins as getProjectOrigins } from "@/data/profileProjectOrigins";
 import type { Locale } from "@/lib/i18n";
 import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
 import { ProjectLocaleProvider } from "./ProjectTranslationBoundary";
@@ -22,6 +24,7 @@ const copy = {
   "Projects": ["项目", "專案"],
   "Work in software, science and product design.": ["软件、科学与产品设计作品。", "軟體、科學與產品設計作品。"],
   "Browse the files. Take a closer look.": ["浏览项目，深入了解。", "瀏覽專案，深入瞭解。"],
+  "Built systems, research and interactive experiments worth a closer look.": ["值得深入了解的系统、研究与交互实验。", "值得深入瞭解的系統、研究與互動實驗。"],
   "Knowledge graph": ["知识图谱", "知識圖譜"], "Selected work": ["精选作品", "精選作品"], "All projects": ["全部项目", "全部專案"],
   "Project views": ["项目视图", "專案檢視"], "Search projects": ["搜索项目", "搜尋專案"],
   "Search titles, methods or experience…": ["搜索名称、方法或经历…", "搜尋名稱、方法或經歷…"],
@@ -147,7 +150,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
     const words = fold(query).split(/\s+/).filter(Boolean);
     return projects.filter(project => (view !== "guided" || project.featured) && (area === "all" || project.area === area) && words.every(word => fold([
       project.title, project.shortTitle, project.summary, getProjectText(locale, project.title), getProjectText(locale, project.summary),
-      searchIndexes[locale]?.[project.slug] ?? "", project.detail, getProjectText(locale, project.detail), project.year, ...project.tools, ...project.tools.map(tool => getProjectText(locale, tool)), ...getProjectOrigins(project.slug).flatMap(origin => [origin.label, origin.context, getProjectText(locale, origin.label), getProjectText(locale, origin.context)]),
+      searchIndexes[locale]?.[project.slug] ?? "", project.detail, getProjectText(locale, project.detail), project.year, ...project.tools, ...project.tools.map(tool => getProjectText(locale, tool)), ...getProjectOrigins(project.slug).flatMap(origin => [origin.label, origin.context, getProjectText(locale, origin.label), getProjectText(locale, origin.context), getProfileText(locale, origin.label), getProfileText(locale, origin.context)]),
     ].join(" ")).includes(word)));
   }, [query, area, locale, searchIndexes, view]);
   const orderedProjects = view === "guided" ? filtered : projectAreas.flatMap(value => filtered.filter(project => project.area === value));
@@ -205,7 +208,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
     <span className={styles.openArrow} aria-hidden="true">›</span>
   </button></li>;
   return <ProjectLocaleProvider locale={locale}><div ref={rootRef} className={`system7-project ${styles.library}`} lang={locale}>
-    <header className={styles.header}><h1>{t("Projects")}</h1><p>{t(view === "map" ? "Work in software, science and product design." : "Browse the files. Take a closer look.")}</p></header>
+    <header className={styles.header}><h1>{t("Projects")}</h1><p>{t(view === "map" ? "Work in software, science and product design." : view === "guided" ? "Built systems, research and interactive experiments worth a closer look." : "Browse the files. Take a closer look.")}</p></header>
     <div className={`s7-tabs ${styles.tabs}`} role="tablist" aria-label={t("Project views")}>
       {tabs.map((tab, index) => <button key={tab} ref={el => { tabsRef.current[index] = el; }} className="s7-tab" role="tab" id={`${id}-${tab}-tab`} aria-controls={`${id}-${tab}`} aria-selected={view === tab} tabIndex={view === tab ? 0 : -1} onKeyDown={event => tabKey(event, index)} onClick={() => chooseView(tab)}>{t(labels[tab])}</button>)}
     </div>
@@ -214,12 +217,15 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
         setNode(next);
         if (view !== "map" || !rootRef.current?.closest(".mac-window")?.classList.contains("is-active")) return;
         const url = new URL(window.location.href); if (next) url.searchParams.set("node", next); else url.searchParams.delete("node");
-        window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}`);
+        const address = `${url.pathname}${url.search}`;
+        if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== address) {
+          window.history.replaceState(window.history.state, "", address);
+        }
       }} onOpenProject={slug => selectProject(slug, true)} />
     </section>}
     {view !== "map" && <section role="tabpanel" id={`${id}-${view}`} aria-labelledby={`${id}-${view}-tab`} className={styles.workspace} data-detail-open={showDetail}>
       <aside className={styles.listPane} aria-label={t("Project list")}>
-        <div className={styles.listTitle}><span aria-hidden="true">▰</span><strong>{t(labels[view])}</strong><span>{filtered.length}</span></div>
+        <div className={styles.listTitle}><span className={styles.folderIcon} aria-hidden="true"><System7Icon kind="folder" miniature /></span><strong>{t(labels[view])}</strong><span>{filtered.length}</span></div>
         <div className={styles.filters}>
           <label>{t("Search projects")}<input ref={searchRef} type="search" value={query} onChange={event => changeFilters(event.target.value, area)} onKeyDown={event => { if (event.key === "ArrowDown" || event.key === "Enter") { const first = listRef.current?.querySelector<HTMLButtonElement>("details[open] button[data-project-slug], ul[data-featured] button[data-project-slug]"); if (first) { event.preventDefault(); first.focus(); } } }} placeholder={t("Search titles, methods or experience…")} /></label>
           <label>{t("Discipline")}<ClassicSelect value={area} onChange={event => changeFilters(query, event.target.value)}><option value="all">{t("All disciplines")}</option>{projectAreas.map(value => <option key={value} value={value}>{archiveCopy.areas[value]}</option>)}</ClassicSelect></label>
@@ -227,12 +233,12 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
           {indexError && query.trim() && <p className={styles.searchError} role="status">{t("Detailed search is unavailable. Showing matches in project descriptions.")}</p>}
         </div>
         <div ref={listRef} className={styles.catalogue}>
-          {filtered.length ? view === "guided" ? <ul data-featured>{filtered.map(projectRow)}</ul> : projectAreas.filter(value => filtered.some(project => project.area === value)).map(value => <details className={styles.folder} key={value} open><summary><span aria-hidden="true">▰</span> {archiveCopy.areas[value]} <small>{filtered.filter(project => project.area === value).length}</small></summary><ul>{filtered.filter(project => project.area === value).map(projectRow)}</ul></details>) : <div className={styles.empty}><p>{t("No projects match.")}</p><button className="s7-button" onClick={() => changeFilters("", "all")}>{t("Clear filters")}</button></div>}
+          {filtered.length ? view === "guided" ? <ul data-featured>{filtered.map(projectRow)}</ul> : projectAreas.filter(value => filtered.some(project => project.area === value)).map(value => <details className={styles.folder} key={value} open><summary><span className={styles.folderIcon} aria-hidden="true"><System7Icon kind="folder" miniature /></span> {archiveCopy.areas[value]} <small>{filtered.filter(project => project.area === value).length}</small></summary><ul>{filtered.filter(project => project.area === value).map(projectRow)}</ul></details>) : <div className={styles.empty}><p>{t("No projects match.")}</p><button className="s7-button" onClick={() => changeFilters("", "all")}>{t("Clear filters")}</button></div>}
           {view === "guided" && !query && area === "all" && <article className={styles.latest}><h2>{t("Building on the run")}</h2><p>{t("A 44 km relay, a voice-built running app and a second-place finish.")}</p><button className="s7-button" onClick={() => onOpenApp("sidequest")}>{t("Read the RUN/HACK story")} ↗</button></article>}
         </div>
       </aside>
       <section ref={detailRef} id={`${id}-detail`} tabIndex={-1} className={styles.detailPane} aria-label={t("Project details")}>
-        {selectedProject ? <ProjectDocument key={selectedProject.slug} slug={selectedProject.slug} locale={locale} onOpenApp={onOpenApp} onBack={backToList} onGraph={showConnections} embedded /> : <div className={styles.emptyDetail}><span aria-hidden="true">▤</span><h2>{t("No projects match.")}</h2><p>{t("Try another search or clear the filters.")}</p></div>}
+        {selectedProject ? <ProjectDocument key={selectedProject.slug} slug={selectedProject.slug} locale={locale} onOpenApp={onOpenApp} onBack={backToList} onGraph={showConnections} embedded /> : <div className={styles.emptyDetail}><span aria-hidden="true"><System7Icon kind="document" /></span><h2>{t("No projects match.")}</h2><p>{t("Try another search or clear the filters.")}</p></div>}
       </section>
     </section>}
   </div></ProjectLocaleProvider>;

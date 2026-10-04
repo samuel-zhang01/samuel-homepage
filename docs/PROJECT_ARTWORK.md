@@ -1,45 +1,28 @@
 # Artwork and source media
 
-Three generated illustrations replace generic graph-like thumbnails for microscopy, fluid simulation and personal finance. Only the 512px WebP delivery copies are kept in the repository. Original PNGs are preserved outside the repository; these are conceptual illustrations, not experimental results.
+Interface icons use one generated System 7 family. Scientific figures, project screenshots and personal photographs remain content, with their original meaning and source records intact.
 
 ## Shared desktop and app icons
 
-The current family contains **39 editable SVG symbols and 11 transparent 128px PNG variants** in [`public/system7-icons`](../public/system7-icons/). [View the family](assets/system7-icon-family.png). The desktop, Finder, app menus, project rows, arcade and Home Lab share the same dark outlines, grey/white faces, muted periwinkle and ochre accents. Menu miniatures use SVG; selected larger subjects use the generated PNG variants. Existing COVERD branding is preserved.
+The current family contains **42 transparent 128px PNG icons**, totalling **149,954 bytes**, in [`public/system7-icons`](../public/system7-icons/). [View every subject at 64, 32 and 16 pixels](assets/system7-icon-family.png). The built-in image-generation tool produced 31 new subjects using the existing generated folder as the style reference; the 11 preferred original PNGs are preserved byte for byte. Book and Desk Accessories received a second generation pass after their 16px review. Dark stepped outlines, grey/white faces and muted periwinkle/ochre details establish the family.
 
-The built-in image-generation tool produced the raster icons. Exact prompts and delivery paths: [initial four variants](SYSTEM7_ICON_PROMPTS.json) and [seven wider-sweep variants](SYSTEM7_WIDE_ICON_PROMPTS.json). SVG companions were authored separately as editable native graphics. All delivered raster icons have genuine alpha transparency, with no painted transparency grid. Together the 50 icon assets occupy **122,039 bytes**.
+[`SYSTEM7_ICONS`](../src/lib/system7Icons.ts) owns each image path. [`iconIdentity`](../src/lib/iconIdentity.ts) explicitly maps 26 applications, 41 projects, seven games, 23 Home Lab services and three contact services. Desktop shortcuts, menus, title bars, the window switcher, Finder, accessory launchers, project artwork and interior navigation use the same image at every size. Orbital Lab has one orbital icon throughout. Shared slots are 16px for inline/navigation icons, 32px for document/card/header icons and 48px for desktop launchers; large boot and empty-state illustrations retain their deliberate sizes. A new app/project needs an explicit entry; missing identities fail validation rather than silently acquiring a generic folder.
+
+The old SVG miniatures, bespoke accessory drawings, project cover thumbnails and VideoMate mark have been removed from identity surfaces and delivery assets. COVERD's actual wordmark remains in its product content. Browser, Apple and PWA icons derive from the shared profile image; Safari's required monochrome mask is a pixel projection of the same artwork.
+
+[Exact prompts, source hashes and delivery hashes](SYSTEM7_ICON_PROMPTS.json) record all 42 icons in one manifest. New artwork is resized with nearest-neighbour sampling onto a logical 32px canvas, with a 24px artwork field and transparent margins, then delivered at 128px. Generated alpha is preserved. Existing sprites retain their original delivery bytes. Temporary drafts and generation receipts stay outside the tracked documentation.
+
+Run `npm run check:icons` to verify real PNG decoding, alpha, dimensions, complete identity coverage, shared normal/miniature paths, project artwork, favicon frames and maskable safety. The compiled browser audit is `scripts/check-system7-browser.mjs`; it checks actual images and app/project identities across the supported locales and desktop/phone layouts.
+
+With an isolated production build and preview running, set `PLAYWRIGHT_CORE_PATH` to an external Playwright installation and `REVIEW_ORIGIN` to that preview. Run `BROWSER_ENGINE=chromium node scripts/check-system7-browser.mjs`, then repeat for Firefox and WebKit. `BROWSER_ENGINE=chromium node scripts/check-finder-labels.mjs` checks the actual application titles, descriptions, localized and English search aliases, visible icon decoding and dismissal focus; repeat it for Firefox and WebKit. `node scripts/check-finder-loading.mjs` exercises delayed and failed optional chunks, visible dismissal, Escape, focus restoration and late delivery; it also audits the dialogs when `axe-core` is installed alongside Playwright. All runners save raw results under ignored `.codex/reports/`. The full icon inventory uses a recorded 250ms navigation delay; unpaced history-write stress is a separate check with the limitation documented in the current audit.
 
 ## Saved scientific images
 
-Conceptual covers and app icons are illustration. Scientific image viewers use separately reviewed saved source outputs. The current inventory includes 150 GNN flow frames, FNO/U-Net stills, microscopy inputs and Grad-CAM views, plus the MRI reconstruction comparison: **172 scientific images** in total. `scripts/fixtures/scientific-media.mjs` pins their bytes and dimensions.
+App icons are illustration. Scientific image viewers use separately reviewed saved source outputs. The current inventory includes 150 GNN flow frames, FNO/U-Net stills, microscopy inputs and Grad-CAM views, plus the MRI reconstruction comparison: **172 scientific images** in total. `scripts/fixtures/scientific-media.mjs` pins their bytes and dimensions.
 
 The [MRI figure record](MRI_RECORDED_FIGURE.json) identifies the exact IX repository revision, source file, hashes and delivery conversion. The saved figure's example metrics remain distinct from the reconstruction study's aggregate results. English labels embedded in source images remain intact; surrounding captions and controls are translated. Do not generate, retouch or relabel illustrative images as experimental evidence. The original scientific figure is resized/re-encoded only, with its panels and labels intact.
 
-## Original cover prompts
 
-These are the original prompts and output identifiers. Generated PNG originals remain archived outside this repository; public delivery uses the WebP copies below.
+## Retired artwork
 
-### microrobot
-
-Use case: stylized-concept. Asset type: square project cover illustration for a Macintosh System 7 inspired portfolio, readable as a 96px thumbnail and a 320px cover. Primary request: abstract editorial art representing a neural network locating a microscopic robot in three dimensions from a microscope image. Subject: one tiny asymmetric capsule-shaped microrobot, shown at an oblique angle within a microscope's circular field, with three separated focal planes that suggest depth and a second faint rotated silhouette suggesting orientation. This is an artistic metaphor, not a scientific measurement or a real experiment image. Style: sophisticated 1993 Macintosh scientific-software box artwork, deliberate pixel clusters, crisp stepped edges and ordered dithering, limited 16-colour palette, striking geometric silhouette, flat screen-printed planes, carefully composed. Palette: muted petrol blue background, ivory and black structure, restrained warm orange focal element. Composition: large memorable central object with open margins; fill the square, no border or surrounding UI. No typography, letters, numbers, logos, watermarks, graph nodes, connecting-network dots, glossy 3D, gradients or modern corporate vector people. Produce one finished square image.
-
-Original output: `exec-7e9a9b8a-9e77-4294-a513-8f3618f17526.png`.
-
-
-### cfd
-
-Use case: stylized-concept. Asset type: square cover illustration for a Macintosh System 7 portfolio project about neural fluid simulation; readable as a 96px thumbnail. One finished image. A powerful abstract 1993 scientific-software box illustration: ivory streamlines flow around a single orange circular obstacle, spreading into a distinct alternating vortex wake; behind the flow, three broad interlocking planes subtly suggest a Fourier-frequency grid, triangular mesh, and coarse raster. The obstacle and wake dominate, with clear large shapes and open margins. Artistic metaphor for predicting fluid motion, not a plotted research result. Sophisticated pixel clusters and ordered dithering, crisp stepped edges, 16-colour screen-print palette: petrol blue, deep navy, ivory, pale cyan, restrained orange. Flat colour planes, tactile bitmap appearance. No text, numbers, legends, logos, watermark, UI border, generic graph nodes, glass, glossy 3D or modern corporate illustration.
-
-Original output: `exec-fc98bdad-1027-4adc-a3e3-29a1215b261b.png`.
-
-
-### finance
-
-Create one square project-cover illustration for a personal finance ledger application. Intended use: a 160-pixel portfolio cover, also shown at 80px, for a personal System 7 Macintosh website. Style: authentic 1993 scientific/productivity software box art, sophisticated limited-palette pixel painting with visible fine ordered dithering and crisp geometric shapes; petrol blue, muted aubergine, deep navy, ivory and restrained gold. Composition: a single large folded ivory ledger sheet viewed in shallow isometric perspective, carrying neat ruled rows without any writing, a gold circular coin partially eclipsing its lower corner, and three simple rising rectangular histogram blocks casting precise hard pixel shadows. Make the paper and coin silhouette dominant and readable small. Abstract but unmistakably about organizing money and understanding cash flow. Dense beautiful texture inside the forms, quiet solid aubergine background, balanced composition with generous perimeter. No text, no letters, no numbers, no logos, no border, no gradients, no neon, no floating line-and-dot network, no corporate vector stock aesthetic, no realistic banknote. Flat printed colors and pixel shading only. Output a square standalone art asset.
-
-Original output: `exec-ed985fa6-60a5-4943-bd0a-d4d8bf4723f3.png`.
-
-
-
-Delivery assets: `public/project-art/{microrobot,neural-cfd,finance}.webp`. WebP conversion uses Sharp, 512×512 pixels, quality 90; only the delivery encoding and dimensions change.
-
-The 9 September cleanup removed three unused PNG copies under `design-source/project-art/`. Byte-identical originals remain in the owner's external recovery archive. The delivered artwork is unchanged.
+The conceptual Microrobot, CFD and Finance covers and their original prompts remain in Git history. Their former delivery files were `public/project-art/{microrobot,neural-cfd,finance}.webp`; VideoMate's former mark was `public/project-art/videomate-mark.svg`. The shared icon family replaces these identity assets. Those illustrations were never experimental evidence; the separate scientific originals and source records remain intact.

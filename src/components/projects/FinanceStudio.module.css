@@ -32,15 +32,10 @@
   box-shadow: inset 1px 1px 0 rgba(228, 242, 247, 0.12);
 }
 
-.privacyBanner > span {
-  display: grid;
-  width: 32px;
-  height: 32px;
-  place-items: center;
-  font-size: var(--s7-heading);
-  border: 1px solid var(--ocean-teal);
-  color: var(--ocean-teal);
-  background: rgba(46, 196, 182, 0.08);
+.privacyIcon {
+  display: block;
+  width: var(--s7-icon-document);
+  height: var(--s7-icon-document);
 }
 
 .privacyBanner strong {
@@ -1737,7 +1732,7 @@
 .wealthAccounts strong { margin-left: auto; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .connectionGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
 .connectionBody { padding: 16px; }
-.connectionBody > strong { font-size: 26px; color: var(--ocean-foam); }
+.connectionBody > strong { font-size: var(--s7-title); color: var(--ocean-foam); }
 .connectionBody p, .connectionBody small { color: var(--ocean-mist); }
 .brokerPicker { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 @container (max-width: 600px) {

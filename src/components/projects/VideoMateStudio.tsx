@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { System7Icon } from "../System7Icon";
 import { useEffect, useMemo, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { projectText } from "@/lib/projectCopy";
@@ -135,7 +135,7 @@ export function VideoMateStudio({ locale = "en-GB" }: { locale?: Locale }) {
   >
     <div className={styles.workspace}>
       <div className={styles.hero}>
-        <div className={styles.brand}><Image src="/project-art/videomate-mark.svg" alt="" width={92} height={92} /><div><span className={styles.kicker}>OFFLINE VIDEO REPAIR</span><h3>What happens to a damaged file?</h3><p>Pick one of five invented files. See what VideoMate would copy, repair, re-encode or hold back.</p></div></div>
+        <div className={styles.brand}><span className={styles.brandIcon} aria-hidden="true"><System7Icon kind="videomate" /></span><div><span className={styles.kicker}>OFFLINE VIDEO REPAIR</span><h3>What happens to a damaged file?</h3><p>Pick one of five invented files. See what VideoMate would copy, repair, re-encode or hold back.</p></div></div>
         <div className={styles.heroStat}><span>DEMO MODE</span><strong>100% synthetic</strong><small>No files leave or enter this page.</small></div>
       </div>
 
@@ -151,7 +151,7 @@ export function VideoMateStudio({ locale = "en-GB" }: { locale?: Locale }) {
           <p className={styles.subtle}>Choose a sample to inspect its technical evidence. The names and findings are invented.</p>
           <div className={styles.itemList}>
             {samples.map((sample) => <button type="button" key={sample.id} className={styles.item} aria-pressed={selected.id === sample.id} onClick={() => setSelectedId(sample.id)}>
-              <span className={styles.itemGlyph} aria-hidden="true">{sample.kind === "video" ? "▣" : "▤"}</span>
+              <span className={styles.itemGlyph} aria-hidden="true"><System7Icon kind={sample.kind === "video" ? "videomate" : "document"} miniature /></span>
               <span className={styles.itemText}><strong>{displayName(sample)}</strong><small>{t(sample.format)} · {sample.size}{sample.kind === "video" ? ` · ${sample.duration}` : ""}</small></span>
               <span className={styles.itemIndicator} data-tone={sample.id === "01" || sample.id === "05" ? "good" : sample.id === "04" ? "withheld" : "review"} aria-hidden="true" />
             </button>)}
