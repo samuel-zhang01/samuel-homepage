@@ -38,7 +38,7 @@ function load(file) {
 }
 const identity = new Set(["spectrum", "png", "jpg", "tif", "pdf", "eps", "mol m⁻³", "g mol⁻¹", "kJ mol⁻¹"]);
 for (const name of ['spectroscopy', 'thermodynamics', 'solubility', 'chemistry', 'molecular']) {
- const manifest = JSON.parse(readFileSync(resolve(root, 'src/components/projects/copy/' + name + 'Copy.audit.json'), 'utf8'));
+ const manifest = JSON.parse(readFileSync(resolve(root, 'scripts/fixtures/project-copy-audits/' + name + 'Copy.audit.json'), 'utf8'));
  for(const key of Object.keys(manifest.identities)) identity.add(key);
 }
 let strings = [];

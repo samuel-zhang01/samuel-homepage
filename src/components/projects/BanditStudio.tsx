@@ -731,7 +731,7 @@ export function BanditStudio() {
               </aside>
 
               <div className={styles.liveDesk}>
-                <div className={styles.metricRail} aria-label="Current bandit metrics">
+                <div role="group" className={styles.metricRail} aria-label="Current bandit metrics">
                   <div><span>ROUND</span><strong>{String(rounds).padStart(3, "0")}</strong></div>
                   <div><span>Policy reward</span><strong>{formatReward(current.policyReward, scenario.kind)}</strong></div>
                   <div><span>Estimate leader</span><strong>{bestEstimatedIndex === null ? "—" : scenario.arms[bestEstimatedIndex].id}</strong></div>
@@ -745,7 +745,7 @@ export function BanditStudio() {
                     <strong>{simulation.modeCounts.initialise} FORCED</strong>
                   </div>
                 </div>
-                <div className={styles.transport} aria-label="Simulation transport controls">
+                <div role="group" className={styles.transport} aria-label="Simulation transport controls">
                   <button type="button" disabled={rounds === 0} onClick={() => moveRounds(-1)} aria-label="Move back one round">← Back 1</button>
                   <button type="button" className={styles.stepButton} disabled={rounds === MAX_STEPS} onClick={() => moveRounds(1)}><span aria-hidden="true">▶</span> Step once</button>
                   <button type="button" disabled={rounds === MAX_STEPS} onClick={() => moveRounds(25)}>+25 rounds</button>
@@ -797,7 +797,7 @@ export function BanditStudio() {
 
             <section className={styles.dataLedger} aria-labelledby="bandit-ledger-title">
               <div className={styles.boardHeading}><div><span>Accessible run state</span><h4 id="bandit-ledger-title">Arm-by-arm data ledger</h4></div><p>The visual cards and this table expose the same deterministic state.</p></div>
-              <div className={styles.tableWrap} tabIndex={0} aria-label="Scrollable arm statistics table">
+              <div role="group" className={styles.tableWrap} tabIndex={0} aria-label="Scrollable arm statistics table">
                 <table>
                   <caption>Arm statistics after {rounds} seeded rounds</caption>
                   <thead><tr><th scope="col">Arm</th><th scope="col">True mean</th><th scope="col">Pulls</th><th scope="col">Reward sum</th><th scope="col">Empirical <MathEquation tex={String.raw`\widehat Q`} display={false} /></th><th scope="col">Estimate error</th><th scope="col">Pseudo-regret contribution</th></tr></thead>
@@ -902,7 +902,7 @@ export function BanditStudio() {
 
             <section className={styles.checkpointLedger} aria-labelledby="checkpoint-title">
               <div className={styles.boardHeading}><div><span>Trace reconciliation</span><h4 id="checkpoint-title">Selected checkpoints</h4></div><p>Expected difference equals pseudo-regret at every row by construction.</p></div>
-              <div className={styles.tableWrap} tabIndex={0} aria-label="Scrollable regret checkpoint table">
+              <div role="group" className={styles.tableWrap} tabIndex={0} aria-label="Scrollable regret checkpoint table">
                 <table>
                   <caption>Expected and realised regret checkpoints</caption>
                   <thead><tr><th scope="col">Round</th><th scope="col">Oracle expected</th><th scope="col">Policy expected</th><th scope="col">Pseudo-regret</th><th scope="col">Oracle realised</th><th scope="col">Policy realised</th><th scope="col">Realised regret</th></tr></thead>
@@ -926,7 +926,7 @@ export function BanditStudio() {
               <div><span>Method</span><h3>From a policy choice to cumulative regret</h3><p>Each round selects an arm, observes a seeded reward and updates the estimate. The oracle makes the cost of exploration visible.</p></div>
             </div>
 
-            <div className={styles.algorithmFlow} aria-label="Epsilon-greedy browser algorithm">
+            <div role="group" className={styles.algorithmFlow} aria-label="Epsilon-greedy browser algorithm">
               <div><span>01</span><strong>Force K pulls</strong><small>A, B, … exactly once</small></div>
               <i aria-hidden="true">→</i>
               <div><span>02</span><strong>Draw policy coin</strong><small>u &lt; ε means explore</small></div>

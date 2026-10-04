@@ -18,7 +18,6 @@
 .fieldStack figcaption { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; color: var(--s7-ink); font-size: var(--s7-ui); }
 .fieldStack figcaption > span { font: var(--s7-small)/1.4 var(--s7-font-text); color: var(--s7-ink); }
 .fieldStack img { display: block; width: 100%; height: auto; max-height: 190px; aspect-ratio: 4.5; object-fit: fill; border: 1px solid var(--s7-shadow); image-rendering: auto; }
-.axis { display: flex; justify-content: space-between; color: var(--s7-ink); font: var(--s7-small)/1.4 var(--s7-font-text); margin-top: 4px; }
 .playback { display: flex; align-items: center; gap: 10px; padding: 17px 26px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-paper); }
 .playback .playButton { display: flex; justify-content: space-between; gap: 16px; min-width: 130px; background: var(--s7-paper); color: var(--s7-ink); border-color: var(--s7-ink); }
 .scrubber { display: flex; flex-direction: column; flex: 1; min-width: 90px; gap: 5px; font: var(--s7-small)/1.4 var(--s7-font-text); color: var(--s7-ink); }
@@ -26,7 +25,7 @@
 .speed { display: flex; flex-direction: column; gap: 3px; font-size: var(--s7-small); color: var(--s7-ink); }
 .speed select { min-height: 34px; padding: 3px 6px; border: 1px solid var(--s7-ink); color: var(--s7-ink); background: var(--s7-paper); }
 .explanation { display: grid; grid-template-columns: 1.4fr 1fr; gap: 34px; padding: 24px 28px; }
-.explanation h3, .microrobotGrid h3 { margin: 0 0 10px; font-size: var(--s7-text); font-weight: 600; line-height: 1.4; }
+.explanation h3 { margin: 0 0 10px; font-size: var(--s7-text); font-weight: 600; line-height: 1.4; }
 .explanation p { margin: 0; }
 .note { border: 1px solid var(--s7-shadow); padding-left: 14px; font-size: var(--s7-ui); color: var(--s7-ink); line-height: 1.65; }
 .forecasts { padding: 23px 28px; }
@@ -38,15 +37,6 @@
 .modelCards span { color: var(--s7-ink); font: var(--s7-small)/1.4 var(--s7-font-text); }
 .modelCards h3 { margin: 5px 0 10px; font-size: var(--s7-heading); }
 .modelCards p { color: var(--s7-ink); font-size: var(--s7-text); margin: 0; }
-.microscopyStrip { margin: 0; padding: 23px 26px; background: var(--s7-paper); }
-.microscopyStrip img { display: block; width: 100%; height: auto; }
-.microscopyStrip figcaption { color: var(--s7-ink); margin-top: 12px; font-size: var(--s7-small); }
-.microrobotGrid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(250px, .7fr); gap: 32px; padding: 28px; }
-.microrobotGrid figure { margin: 0; padding: 14px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); }
-.microrobotGrid img { display: block; width: 100%; height: auto; }
-.microrobotGrid figcaption { color: var(--s7-ink); text-align: center; margin-top: 10px; font-size: var(--s7-ui); }
-.microrobotGrid h4 { margin: 27px 0 7px; font-size: var(--s7-heading); }
-.microrobotGrid p { color: var(--s7-ink); }
 @container scientific-playback (max-width: 700px) {
   .header { padding: 20px 16px; }
   .header h2 { font-size: var(--s7-title); }
@@ -58,12 +48,10 @@
   .playback { flex-wrap: wrap; padding: 13px; }
   .scrubber { flex-basis: 55%; order: 4; }
   .speed { margin-left: auto; }
-  .explanation, .modelCards, .microrobotGrid { grid-template-columns: 1fr; gap: 22px; padding: 20px 15px; }
+  .explanation, .modelCards { grid-template-columns: 1fr; gap: 22px; padding: 20px 15px; }
   .forecasts { padding: 16px 12px; }
   .forecastFigure { padding: 10px; }
   .forecastFigure img { height: 280px; }
-  .microscopyStrip { padding: 16px 10px; overflow-x: auto; }
-  .microscopyStrip img { min-width: 740px; }
 }
 
 /* Use the same raised controls and readable type as the desktop. */

@@ -1305,7 +1305,7 @@ export function ChemistryCodingStudio() {
             <h2>Explore the rules, then see what they produce.</h2>
             <p>I completed and extended computational-chemistry exercises, then built Julia and React experiments. These four labs connect the equations with configurations, trajectories and energy comparisons.</p>
           </div>
-          <div className={styles.heroSeal} aria-label="Four interactive chemistry labs">
+          <div role="group" className={styles.heroSeal} aria-label="Four interactive chemistry labs">
             <span>Explore</span>
             <strong>04</strong>
             <small>interactive labs</small>

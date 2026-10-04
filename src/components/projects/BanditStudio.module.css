@@ -343,12 +343,6 @@
 .bakeoffUnavailable strong { font-family: var(--s7-font-text); font-size: var(--s7-text); font-weight: 500; }
 .bakeoffUnavailable span { font-size: var(--s7-small); line-height: 1.45; color: #6c6250; }
 .bakeoff footer { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 12px; padding-top: 9px; font: 700 var(--s7-small)/1.4 var(--s7-font-text); letter-spacing: normal; border-top: 1px solid #9ba7a9; color: #4f656d; }
-
-.sourceSeal { flex: 0 0 auto; padding: 10px 14px; font: var(--s7-small)/1.4 var(--s7-font-text); letter-spacing: normal; text-align: center; transform: rotate(-2deg); border: 2px solid #a74c55; color: #9a3e48; }
-.sourceSeal span,
-.sourceSeal strong,
-.sourceSeal small { display: block; }
-.sourceSeal strong { margin: 2px 0; font-size: var(--s7-small); }
 .algorithmFlow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; border: 1px solid #3e4d55; background: #fff; box-shadow: 5px 5px 0 #d9dedb; }
 .algorithmFlow > div { min-width: 0; padding: 12px; }
 .algorithmFlow > div > span,
@@ -375,11 +369,9 @@
 .sourceLedger li { display: grid; grid-template-columns: 78px minmax(0, 1fr); align-items: start; gap: 8px; padding: 9px 0; border-top: 1px solid #d4d9d9; }
 .sourceLedger li p { margin: 0; font-size: var(--s7-text); line-height: 1.5; color: #56656b; }
 .groundedTag,
-.adaptedTag,
-.excludedTag { display: inline-block; padding: 3px 5px; font: 700 var(--s7-small)/1.4 var(--s7-font-text); letter-spacing: normal; text-align: center; border: 1px solid; }
+.adaptedTag { display: inline-block; padding: 3px 5px; font: 700 var(--s7-small)/1.4 var(--s7-font-text); letter-spacing: normal; text-align: center; border: 1px solid; }
 .groundedTag { border-color: #277563; color: #165f50; background: #e3f1eb; }
 .adaptedTag { border-color: #9a6c1c; color: #80560e; background: #f6eed8; }
-.excludedTag { border-color: #9f4650; color: #8d313a; background: #f7e6e8; }
 
 .initialisationAudit { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 22px; margin-top: 20px; padding: 16px; border: 1px solid #637178; background: #eef2ee; }
 .initialisationAudit > div:first-child { max-width: 720px; }
@@ -399,7 +391,6 @@
 .boundaryGrid strong { display: block; margin: 5px 0 7px; font-family: var(--s7-font-text); font-size: var(--s7-text); font-weight: 500; }
 .boundaryGrid ul { margin: 0; padding-left: 16px; font-size: var(--s7-small); line-height: 1.55; color: #57666c; }
 .boundaryGrid p { margin: 0; font-size: var(--s7-text); line-height: 1.55; color: #57666c; }
-.auditReceipt { min-width: 0; margin: 20px 0 0; padding: 15px; overflow-x: auto; font: var(--s7-small)/1.4 var(--s7-font-text); border: 1px solid #314752; color: #bce8e5; background: #0b1b26; }
 
 .heroCopy > span {
   color: #356b68;
@@ -438,8 +429,7 @@
   .methodPanel { padding: 17px; }
   .sectionHeading { flex-direction: column; gap: 12px; }
   .phaseBadge,
-  .oracleBadge,
-  .sourceSeal { align-self: stretch; }
+  .oracleBadge { align-self: stretch; }
   .consoleGrid { grid-template-columns: minmax(0, 1fr); }
   .controlDesk { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; border-right: 0; border-bottom: 1px solid #55656d; }
   .panelCap,
@@ -600,8 +590,4 @@
 
 .transport .stepButton:disabled, .transport .stepButton[aria-disabled="true"] {
   cursor: default;
-}
-
-.auditReceipt {
-  font-family: var(--s7-font-text);
 }

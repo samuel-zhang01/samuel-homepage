@@ -3,7 +3,7 @@ import type { ProjectCopyTable } from "../../../lib/projectCopy";
 export const coverageShiftCopy = {
   "Coverage under distribution shift": [
     "分布偏移下的覆盖率",
-    "分佈偏移下的覆蓋率"
+    "分布偏移下的覆蓋率"
   ],
   "SYNTHETIC EXPERIMENT / LIVE CALCULATION": [
     "合成实验／实时计算",

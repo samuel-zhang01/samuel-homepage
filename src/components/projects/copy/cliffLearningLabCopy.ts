@@ -95,7 +95,7 @@ export const cliffLearningLabCopy = {
   ],
   "Row {0}, column {1}{2}": [
     "第 {0} 行，第 {1} 列{2}",
-    "第 {0} 行，第 {1} 列{2}"
+    "第 {0} 列，第 {1} 欄{2}"
   ],
   "S: start · G: goal · ×: cliff. Dark square: live agent. Shaded route: greedy evaluation. Select a safe cell to inspect its four learned values.": [
     "S：起点 · G：终点 · ×：悬崖。深色方格表示当前智能体，阴影路线表示贪心策略评估。选择安全格，查看四个动作的已学价值。",

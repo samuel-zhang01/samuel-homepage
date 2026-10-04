@@ -99,7 +99,7 @@ export const banditStudioCopy = {
   ],
   "A synthetic Gaussian reward experiment with fixed means and reward noise σ = 0.65.": [
     "一个合成高斯奖励实验，采用固定均值和 σ = 0.65 的奖励噪声。",
-    "一個合成高斯獎勵實驗，採用固定均值和 σ = 0.65 的獎勵噪聲。"
+    "一個合成高斯獎勵實驗，採用固定均值和 σ = 0.65 的獎勵雜訊。"
   ],
   "negative mean": [
     "负均值",
@@ -135,7 +135,7 @@ export const banditStudioCopy = {
   ],
   "Use “Step once” to force-initialise Arm A.": [
     "使用“执行一步”为 A 臂完成首次采样。",
-    "使用“執行一步”為 A 臂完成首次採樣。"
+    "使用“執行一步”為 A 臂完成首次取樣。"
   ],
   "ROUND {0}": [
     "第 {0} 轮",
@@ -147,7 +147,7 @@ export const banditStudioCopy = {
   ],
   "forced": [
     "强制采样",
-    "強制採樣"
+    "強制取樣"
   ],
   "explore": [
     "探索",
@@ -343,7 +343,7 @@ export const banditStudioCopy = {
   ],
   "A synthetic Gaussian reward experiment with fixed means and reward noise": [
     "一个合成高斯奖励实验，采用固定均值和奖励噪声",
-    "一個合成高斯獎勵實驗，採用固定均值和獎勵噪聲"
+    "一個合成高斯獎勵實驗，採用固定均值和獎勵雜訊"
   ],
   "Reward": [
     "奖励",
@@ -547,7 +547,7 @@ export const banditStudioCopy = {
   ],
   "Mean gap ≠ sampled outcome": [
     "均值差 ≠ 采样结果",
-    "均值差 ≠ 採樣結果"
+    "均值差 ≠ 取樣結果"
   ],
   "Regret and oracle comparison": [
     "遗憾与最优基准比较",
@@ -555,7 +555,7 @@ export const banditStudioCopy = {
   ],
   "One trace accounts for chosen means; the other compares rewards drawn from a fixed counterfactual table.": [
     "一条轨迹核算所选臂的均值，另一条比较固定反事实表中采样得到的奖励。",
-    "一條軌跡核算所選臂的均值，另一條比較固定反事實表中採樣得到的獎勵。"
+    "一條軌跡核算所選臂的均值，另一條比較固定反事實表中取樣得到的獎勵。"
   ],
   "Toy oracle": [
     "教学最优基准",
@@ -619,7 +619,7 @@ export const banditStudioCopy = {
   ],
   "Every round pre-generates one independent reward per arm. The toy oracle reads the best-mean arm’s draw; a live system could not observe all alternatives.": [
     "每轮为每个臂预先生成独立奖励。教学最优基准读取均值最高臂的采样结果；真实系统无法同时观察所有备选结果。",
-    "每輪為每個臂預先生成獨立獎勵。教學最優基準讀取均值最高臂的採樣結果；真實系統無法同時觀察所有備選結果。"
+    "每輪為每個臂預先生成獨立獎勵。教學最優基準讀取均值最高臂的取樣結果；真實系統無法同時觀察所有備選結果。"
   ],
   "MONOTONE": [
     "单调",
@@ -643,7 +643,7 @@ export const banditStudioCopy = {
   ],
   "Uses seeded outcomes. A lucky policy draw can make an increment negative.": [
     "使用固定种子的采样结果。策略偶然获得较高奖励时，增量可能为负。",
-    "使用固定種子的採樣結果。策略偶然獲得較高獎勵時，增量可能為負。"
+    "使用固定種子的取樣結果。策略偶然獲得較高獎勵時，增量可能為負。"
   ],
   "Oracle limit": [
     "最优基准的限制",
@@ -671,7 +671,7 @@ export const banditStudioCopy = {
   ],
   "Each policy replays the same deterministic reward table. Compare the pseudo-regret of its chosen actions; realised rewards also contain sampling noise.": [
     "每种策略回放相同的确定性奖励表。比较所选动作的伪遗憾；实际奖励还会受到采样噪声影响。",
-    "每種策略回放相同的確定性獎勵表。比較所選動作的偽遺憾；實際獎勵還會受到採樣噪聲影響。"
+    "每種策略回放相同的確定性獎勵表。比較所選動作的偽遺憾；實際獎勵還會受到取樣雜訊影響。"
   ],
   "UCB1 ·": [
     "UCB1 ·",
@@ -687,7 +687,7 @@ export const banditStudioCopy = {
   ],
   "Sample": [
     "采样",
-    "採樣"
+    "取樣"
   ],
   ", then act greedily.": [
     "，再作贪心选择。",
@@ -743,7 +743,7 @@ export const banditStudioCopy = {
   ],
   "Expected difference equals pseudo-regret at every row by construction.": [
     "按定义，每行的期望差都等于伪遗憾。",
-    "按定義，每行的期望差都等於偽遺憾。"
+    "按定義，每筆記錄的期望差都等於偽遺憾。"
   ],
   "Scrollable regret checkpoint table": [
     "可滚动的遗憾检查点表",
@@ -911,7 +911,7 @@ export const banditStudioCopy = {
   ],
   "ADAPTED": [
     "交互扩展",
-    "交互擴展"
+    "互動擴展"
   ],
   "One forced pull per arm gives every estimate an observed reward before exploitation begins.": [
     "每个臂先强制选择一次，让所有估计在利用阶段开始前都有奖励观测。",
@@ -947,7 +947,7 @@ export const banditStudioCopy = {
   ],
   "Known arm means and complete synthetic counterfactuals simplify this comparison. Delayed feedback, changing rewards, interference and uncertain logging policies require additional methods.": [
     "已知臂均值和完整的合成反事实简化了比较。延迟反馈、奖励变化、相互干扰，以及不确定的日志策略需要其他方法。",
-    "已知臂均值和完整的合成反事實簡化了比較。延遲反饋、獎勵變化、相互干擾，以及不確定的日誌策略需要其他方法。"
+    "已知臂均值和完整的合成反事實簡化了比較。延遲回饋、獎勵變化、相互干擾，以及不確定的日誌策略需要其他方法。"
   ],
   "Seed 23 is ready. The first three steps are forced initialization, one arm at a time.": [
     "种子 23 已就绪。前三步为强制初始化，每次选择一个臂。",
@@ -975,7 +975,7 @@ export const banditStudioCopy = {
   ],
   "Fixed random exploration plus greedy empirical means.": [
     "固定概率随机探索，其余时间贪心选择经验均值最大的臂。",
-    "固定概率隨機探索，其餘時間貪心選擇經驗均值最大的臂。"
+    "固定機率隨機探索，其餘時間貪心選擇經驗均值最大的臂。"
   ],
   "ε-greedy · {0}": [
     "ε-greedy 策略 · {0}",
@@ -983,6 +983,6 @@ export const banditStudioCopy = {
   ],
   "Thompson · Beta": [
     "汤普森采样 · Beta 分布",
-    "湯普森採樣 · Beta 分佈"
+    "湯普森取樣 · Beta 分布"
   ]
 } satisfies ProjectCopyTable;

@@ -346,11 +346,6 @@
   background: var(--arch-blue-soft);
 }
 
-.present {
-  color: var(--arch-green);
-  background: #e2f1e9;
-}
-
 .outputOnly {
   color: var(--arch-amber);
   background: #fff2ca;
@@ -924,60 +919,6 @@
   font-weight: 700;
 }
 
-.checkpointNotice {
-  display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  align-items: center;
-  gap: 9px;
-  margin-top: 12px;
-  padding: 9px 10px;
-  border: 1px solid #777870;
-  background: #f7f7f2;
-  box-shadow: inset 1px 1px #fff, 2px 2px #c7c7c0;
-}
-
-.checkpointNotice > span {
-  display: grid;
-  width: 30px;
-  height: 30px;
-  place-items: center;
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  font-size: var(--s7-text);
-  font-weight: 700;
-}
-
-.checkpointNotice[data-state="present"] {
-  color: var(--arch-green);
-  border: 1px solid var(--s7-shadow);
-  border-left: 0;
-}
-
-.checkpointNotice[data-state="output-only"] {
-  color: var(--arch-amber);
-  border: 1px solid var(--s7-shadow);
-  border-left: 0;
-}
-
-.checkpointNotice[data-state="drift"] {
-  color: var(--arch-red);
-  border: 1px solid var(--s7-shadow);
-  border-left: 0;
-}
-
-.checkpointNotice strong {
-  display: block;
-  font-size: var(--s7-small);
-  letter-spacing: normal;
-}
-
-.checkpointNotice p {
-  margin: 3px 0 0;
-  color: #4f504a;
-  font-size: var(--s7-text);
-  line-height: 1.4;
-}
-
 .comparisonSection,
 .timelineSection,
 .evidenceLedger {
@@ -1263,42 +1204,6 @@
   line-height: 1.4;
 }
 
-.sourcePaths {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px dotted #999a92;
-}
-
-.sourcePaths span {
-  min-width: 0;
-  padding: 6px;
-  border: 1px solid #c5c6be;
-  background: #f0f0eb;
-}
-
-.sourcePaths b,
-.sourcePaths code {
-  display: block;
-  overflow: hidden;
-  font-size: var(--s7-small);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.sourcePaths b {
-  margin-bottom: 3px;
-  color: #65665f;
-  text-transform: none;
-}
-
-.sourcePaths code {
-  color: var(--arch-blue);
-  font-family: var(--s7-font-mono);
-}
-
 .modelStrip button:focus-visible,
 .taskSwitch button:focus-visible,
 .rotationControls button:focus-visible,
@@ -1368,8 +1273,7 @@
     justify-content: flex-start;
   }
 
-  .comparisonGrid,
-  .sourcePaths {
+  .comparisonGrid {
     grid-template-columns: 1fr;
   }
 

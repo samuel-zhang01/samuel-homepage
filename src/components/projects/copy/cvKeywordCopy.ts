@@ -310,8 +310,8 @@ export const cvKeywordCopy = {
     "將已有評估結果前置，不新增新的指標或方法。"
   ],
   "Connect delivery work to impact": [
-    "将交付工作与影响联系起来",
-    "將交付工作與影響聯絡起來"
+    "说明交付工作带来的成果",
+    "說明交付工作帶來的成果"
   ],
   "Keeps the exact deployment evidence and makes its operational result easier to scan.": [
     "保留完全相同的部署证据，让运营成果更容易阅读。",
@@ -394,8 +394,8 @@ export const cvKeywordCopy = {
     "分析已更新"
   ],
   "Connect job requirements to the sentences that support them, then compare factual edits and document templates.": [
-    "将岗位要求与支持它们的句子联系起来，再比较基于事实的修改和文档模板。",
-    "將崗位要求與支援它們的句子聯絡起來，再比較基於事實的修改和文件模板。"
+    "将岗位要求对应到佐证句子，再比较事实修改和文档模板。",
+    "將職缺要求對應到佐證句子，再比較事實修改和文件模板。"
   ],
   "Edit a sentence, run the analysis and stage a factual rewrite; inspect missing signals separately.": [
     "编辑一句话，运行分析，再暂存基于事实的改写；单独检查缺失信号。",
@@ -563,7 +563,7 @@ export const cvKeywordCopy = {
   ],
   "60% weighted coverage + 30% evidence quality + 10% section structure.": [
     "60% 加权覆盖率 + 30% 证据质量 + 10% 章节结构。",
-    "60% 加權覆蓋率 + 30% 證據質量 + 10% 章節結構。"
+    "60% 加權覆蓋率 + 30% 證據品質 + 10% 章節結構。"
   ],
   "WEIGHTED COVERAGE": [
     "加权覆盖率",
@@ -579,7 +579,7 @@ export const cvKeywordCopy = {
   ],
   "EVIDENCE QUALITY": [
     "证据质量",
-    "證據質量"
+    "證據品質"
   ],
   "action + metric + outcome checks": [
     "检查行动、指标与结果",
@@ -595,7 +595,7 @@ export const cvKeywordCopy = {
   ],
   "WEIGHT MAP": [
     "权重分布",
-    "權重分佈"
+    "權重分布"
   ],
   "Coverage by signal family": [
     "各信号类别的覆盖率",
@@ -627,7 +627,7 @@ export const cvKeywordCopy = {
   ],
   "No detected gaps. Review proof quality next.": [
     "未检测到缺口。接下来检查证据质量。",
-    "未檢測到缺口。接下來檢查證據質量。"
+    "未檢測到缺口。接下來檢查證據品質。"
   ],
   "EXTRACTED SIGNALS": [
     "已提取信号",
@@ -719,7 +719,7 @@ export const cvKeywordCopy = {
   ],
   "% proof quality": [
     "% 证据质量",
-    "% 證據質量"
+    "% 證據品質"
   ],
   "ROLE EVIDENCE": [
     "岗位证据",
@@ -1043,7 +1043,7 @@ export const cvKeywordCopy = {
   ],
   "source snapshot": [
     "源文档快照",
-    "源文件快照"
+    "原始文件快照"
   ],
   "Cover Letter.pdf": [
     "Cover Letter.pdf",
@@ -1103,7 +1103,7 @@ export const cvKeywordCopy = {
   ],
   "Repetition adds up to 2 points; essential wording adds 2 points. Proof quality separately checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.": [
     "重复最多加 2 分，必需项措辞加 2 分。证据质量分别检查相关句子、行动动词、带单位或百分比的测量或方向性结果，以及明确的结果用语；单纯的版本号不算成果。编辑准备度仅反馈文档情况，不模拟招聘系统、不评估就业能力，也不作自动招聘决定。",
-    "重複最多加 2 分，必需項措辭加 2 分。證據質量分別檢查相關句子、行動動詞、帶單位或百分比的測量或方向性結果，以及明確的結果用語；單純的版本號不算成果。編輯準備度僅反饋文件情況，不模擬招聘系統、不評估就業能力，也不作自動招聘決定。"
+    "重複最多加 2 分，必需項措辭加 2 分。證據品質分別檢查相關句子、行動動詞、帶單位或百分比的測量或方向性結果，以及明確的結果用語；單純的版本號不算成果。編輯準備度僅回饋文件情況，不模擬招聘系統、不評估就業能力，也不作自動招聘決定。"
   ],
   "Review before editing:": [
     "编辑前先审核：",

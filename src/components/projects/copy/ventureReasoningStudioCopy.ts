@@ -47,7 +47,7 @@ export const ventureReasoningStudioCopy = {
   ],
   "Traction signal": [
     "进展信号",
-    "進展信號"
+    "進展訊號"
   ],
   "Delivery reality": [
     "交付现实",
@@ -71,11 +71,11 @@ export const ventureReasoningStudioCopy = {
   ],
   "SIGNAL": [
     "信号",
-    "信號"
+    "訊號"
   ],
   "Directional signal": [
     "方向性信号",
-    "方向性信號"
+    "方向性訊號"
   ],
   "Qualitative or early evidence points in a direction without a stable denominator.": [
     "定性或早期证据指向某个方向，但缺乏稳定的统计基数。",
@@ -275,7 +275,7 @@ export const ventureReasoningStudioCopy = {
   ],
   "The exhibit shows every assumed weight and factor. It measures evidence coverage, not investment quality.": [
     "所有假定权重和系数均可查看。该分数衡量证据覆盖度，不衡量投资质量。",
-    "所有假定權重和係數均可查看。該分數衡量證據覆蓋度，不衡量投資質量。"
+    "所有假定權重和係數均可查看。該分數衡量證據覆蓋度，不衡量投資品質。"
   ],
   "Reachable accounts": [
     "可触达客户",
@@ -591,7 +591,7 @@ export const ventureReasoningStudioCopy = {
   ],
   "The ventures, evidence levels and financial inputs are fictional. These calculations expose assumptions and inconsistencies; they do not measure investment quality or predict business performance.": [
     "创业项目、证据等级和财务输入均为虚构。这些计算用于揭示假设与矛盾，不衡量投资质量，也不预测企业表现。",
-    "創業項目、證據等級和財務輸入均為虛構。這些計算用於揭示假設與矛盾，不衡量投資質量，也不預測企業表現。"
+    "創業項目、證據等級和財務輸入均為虛構。這些計算用於揭示假設與矛盾，不衡量投資品質，也不預測企業表現。"
   ],
   "Venture Reasoning Desk": [
     "创业推理工作台",
@@ -715,7 +715,7 @@ export const ventureReasoningStudioCopy = {
   ],
   "Every suggested diagnostic path is linked to an approved local note or marked unknown.": [
     "每条建议的诊断路径都链接到获批的本地记录，或标记为未知。",
-    "每條建議的診斷路徑都鏈接到獲批的本地記錄，或標記為未知。"
+    "每條建議的診斷路徑都連結到獲批的本地記錄，或標記為未知。"
   ],
   "The reachable segment is defined as accounts × sites × annual subscription.": [
     "可触达市场按客户数 × 地点数 × 年订阅费定义。",
@@ -859,7 +859,7 @@ export const ventureReasoningStudioCopy = {
   ],
   "{0} Traction signal": [
     "{0} 进展信号",
-    "{0} 進展信號"
+    "{0} 進展訊號"
   ],
   "{0} Delivery reality": [
     "{0} 交付现实",

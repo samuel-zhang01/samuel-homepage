@@ -41,7 +41,7 @@ function load(file) {
 }
 const names = ["BanditStudio", "RlAtlasDemo", "DecisionDemos", "DeferralRiskStudio", "InsuranceMatchingDemo", "InnovationModelsStudio", "VentureReasoningStudio", "CliffLearningLab", "LlmPostTrainingLab"];
 const modules = Object.fromEntries(names.map((name) => [name, load(`src/components/projects/${name}.tsx`)]));
-const identity = new Set(names.flatMap((stem) => Object.keys(JSON.parse(readFileSync(resolve(root, `src/components/projects/copy/${stem[0].toLowerCase()}${stem.slice(1)}Copy.audit.json`), "utf8")).identities)));
+const identity = new Set(names.flatMap((stem) => Object.keys(JSON.parse(readFileSync(resolve(root, `scripts/fixtures/project-copy-audits/${stem[0].toLowerCase()}${stem.slice(1)}Copy.audit.json`), "utf8")).identities)));
 let strings = [];
 function inspect(node) {
   if (Array.isArray(node)) { node.forEach(inspect); return; }

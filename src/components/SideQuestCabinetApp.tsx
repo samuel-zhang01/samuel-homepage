@@ -108,7 +108,7 @@ function DayPanel({ locale }: { locale: Locale }) {
     <div className={styles.dayGrid}>
       <article className={styles.timelineCard}>
         <div className={styles.cardLabel}><span>FIELD LOG</span><strong>{moment[0]}</strong></div>
-        <div className={styles.timeline} aria-label="Running Hackathon timeline">
+        <div role="group" className={styles.timeline} aria-label="Running Hackathon timeline">
           {dayMoments.map((item, index) => <button key={`${item[0]}-${item[1]}`} type="button" className={dayMoment === index ? styles.isActive : ""} aria-pressed={dayMoment === index} aria-label={`${item[0]}: ${item[1]}`} onClick={() => setDayMoment(index)}><i aria-hidden="true" /><span>{item[0]}</span></button>)}
         </div>
         <div className={styles.momentDetail} aria-live="polite">
@@ -175,13 +175,13 @@ function RulesPanel({ locale }: { locale: Locale }) {
         <p>The event pack illustrates the formula with BUILD 30 + 50 km ÷ 2 = 55. SideQuest&apos;s exact judge score is not documented. If the reported 44 km matched the verified score distance, it would have contributed 22 points.</p>
       </div>
       <div className={styles.criteriaPanel}>
-        <div className={styles.criteriaGrid} aria-label="Published BUILD criteria">
+        <div role="group" className={styles.criteriaGrid} aria-label="Published BUILD criteria">
           {judgingCriteria.map((item) => <button key={item[0]} type="button" className={`s7-button ${criterionId === item[0] ? styles.isActive : ""}`} aria-pressed={criterionId === item[0]} onClick={() => setCriterionId(item[0])}><span>{item[1]}</span><strong>{item[3]}</strong><small>points</small></button>)}
         </div>
         <article className={styles.criterionDetail} aria-live="polite"><span>{criterion[3] === 10 ? "DOUBLE WEIGHT" : "BUILD CRITERION"}</span><h3>{criterion[2]}</h3><p>{criterion[4]}</p><small>Organiser copy says “seven criteria”, while the published table names these six and weights originality twice. Sponsor challenges were scored separately.</small></article>
       </div>
     </div>
-    <div className={styles.scheduleStrip} aria-label="Event schedule">{schedule.map(([time, label]) => <div key={time}><strong>{time}</strong><span>{label}</span></div>)}</div>
+    <div role="group" className={styles.scheduleStrip} aria-label="Event schedule">{schedule.map(([time, label]) => <div key={time}><strong>{time}</strong><span>{label}</span></div>)}</div>
   </>)}</>;
 }
 
@@ -197,7 +197,7 @@ function PeoplePanel({ locale }: { locale: Locale }) {
     </figure>
     <div className={styles.peopleGrid}>
       <article className={styles.creditBrowser}>
-        <div className={styles.creditTabs} aria-label="Event credits">
+        <div role="group" className={styles.creditTabs} aria-label="Event credits">
           {(Object.keys(creditGroups) as Array<keyof typeof creditGroups>).map((key) => <button key={key} type="button" className={creditGroup === key ? styles.isActive : ""} aria-pressed={creditGroup === key} onClick={() => setCreditGroup(key)}>{creditGroups[key][0]}</button>)}
         </div>
         <div className={styles.creditDetail} aria-live="polite"><span>{activeCredits[0]}</span><h3>{activeCredits[1]}</h3><p>{activeCredits[2]}</p><div>{activeCredits[3].map((name) => <small key={name}>{name}</small>)}</div></div>
@@ -322,7 +322,7 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
       <article><span>02</span><div><strong>Ask a better question</strong><p>Turn missing context into one bounded subsequent run—not a diagnosis.</p></div></article>
       <article><span>03</span><div><strong>Bring a friend live</strong><p>Ephemeral camera, coarsened route, cheers and an accept-or-decline challenge.</p></div></article>
     </div>
-    <div className={styles.buildTabs} aria-label="SideQuest feature demos">
+    <div role="group" className={styles.buildTabs} aria-label="SideQuest feature demos">
       <button type="button" className={`s7-button ${view === "evidence" ? styles.isActive : ""}`} aria-pressed={view === "evidence"} onClick={() => setView("evidence")}>Strava evidence</button>
       <button type="button" className={`s7-button ${view === "question" ? styles.isActive : ""}`} aria-pressed={view === "question"} onClick={() => setView("question")}>Subsequent run</button>
       <button type="button" className={`s7-button ${view === "live" ? styles.isActive : ""}`} aria-pressed={view === "live"} onClick={() => setView("live")}>Live relay</button>

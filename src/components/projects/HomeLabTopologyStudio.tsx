@@ -574,7 +574,7 @@ function CapacityView() {
               <input type="range" min="0" max="50" step="5" value={headroom} aria-valuetext={`${headroom}%`} onChange={(event) => setHeadroom(Number(event.target.value))} />
             </label>
           </div>
-          <div className={styles.capacityEquation} aria-label="Backup capacity calculation">
+          <div role="group" className={styles.capacityEquation} aria-label="Backup capacity calculation">
             <span>required GiB</span>
             <MathEquation tex={String.raw`${dumpSize}\,\mathrm{GiB}\times\frac{1}{\mathrm{day}}\times ${retention}\,\mathrm{days}\times ${(1 + headroom / 100).toFixed(2)}=${provisioned.toFixed(1)}\,\mathrm{GiB}`} label="Dump size times daily frequency, retention and capacity headroom" />
           </div>

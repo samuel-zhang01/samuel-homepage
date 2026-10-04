@@ -369,7 +369,7 @@ function SketchPad({ locale }: { locale: Locale }) {
           <button type="button" className={tool === "pen" ? styles.isSelected : undefined} onClick={() => setTool("pen")} aria-pressed={tool === "pen"}>{t("Pen")}</button>
           <button type="button" className={tool === "eraser" ? styles.isSelected : undefined} onClick={() => setTool("eraser")} aria-pressed={tool === "eraser"}>{t("Eraser")}</button>
         </div>
-        <div className={styles.paintColours} aria-label={t("Ink colour")}>
+        <div role="group" className={styles.paintColours} aria-label={t("Ink colour")}>
           {PAINT_COLOURS.map((paint) => (
             <button
               key={paint.value}
@@ -538,7 +538,7 @@ function QuickList({ locale }: { locale: Locale }) {
       </form>
       <span className={styles.inlineStatus} role="status">{limitMessage ? t(limitMessage) : ""}</span>
       <div className={styles.listToolbar}>
-        <div className={styles.segmentedControl} aria-label={t("Task filters")}>
+        <div role="group" className={styles.segmentedControl} aria-label={t("Task filters")}>
           {(["all", "open", "done"] as const).map((value) => (
             <button key={value} type="button" className={filter === value ? styles.isSelected : undefined} onClick={() => setFilter(value)} aria-pressed={filter === value}>
               {value === "all" ? t("All") : value === "open" ? t("To do") : t("Completed")}

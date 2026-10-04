@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { normaliseLocale } from "@/lib/i18n";
+import { routeAlternates } from "@/lib/routeMetadata";
+import { metadata as notFoundMetadata } from "../not-found";
 
 const descriptions = {
   "en-GB": "I'm Samuel Zhang, an applied AI engineer and founder of COVERD. Here are the products, research projects and small tools I've built, with working demos where I can show them.",
@@ -14,7 +16,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale: localeSlug } = await params;
-  const locale = normaliseLocale(localeSlug) ?? "en-GB";
+  const locale = normaliseLocale(localeSlug);
+  if (!locale) return notFoundMetadata;
   const canonicalLocale = locale === "en-GB"
     ? "en-gb"
     : locale === "en-US"
@@ -30,17 +33,8 @@ export async function generateMetadata({
   return {
     title: { absolute: title },
     description: descriptions[locale],
-    alternates: {
-      canonical: `/${canonicalLocale}`,
-      languages: {
-        "x-default": "/",
-        "en-GB": "/en-gb",
-        "en-US": "/en-us",
-        "zh-Hans": "/zh-cn",
-        "zh-Hant": "/zh-tw",
-      },
-    },
-    openGraph: { title, description: descriptions[locale], locale: locale.replace("-", "_") },
+    alternates: routeAlternates(`/${canonicalLocale}`),
+    openGraph: { title, description: descriptions[locale], type: "website", url: `/${canonicalLocale}`, locale: locale.replace("-", "_") },
     twitter: { card: "summary", title, description: descriptions[locale] },
   };
 }

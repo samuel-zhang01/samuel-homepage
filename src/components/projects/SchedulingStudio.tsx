@@ -550,7 +550,7 @@ export function SchedulingStudio() {
         </ol>
       </section>
 
-      <div className={styles.modeTabs} aria-label="Scheduling mode">
+      <div role="group" className={styles.modeTabs} aria-label="Scheduling mode">
         {(Object.keys(MODE_COPY) as Mode[]).map((item) => (
           <button
             key={item}
@@ -607,7 +607,7 @@ export function SchedulingStudio() {
         </section>
       </div>
 
-      <div className={styles.metrics} aria-label="Availability calculation summary">
+      <div role="group" className={styles.metrics} aria-label="Availability calculation summary">
         <div data-tone="info"><strong>{candidateSlots}</strong><span>candidate slots</span></div>
         <div data-tone="warning"><strong>{constraintsRemoved}</strong><span>constraints removed</span></div>
         <div data-tone="success"><strong>{availabilityCount}</strong><span>published slots</span></div>

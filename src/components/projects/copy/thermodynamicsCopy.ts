@@ -84,7 +84,7 @@ export const thermodynamicsCopy = {
   ],
   "Interactive PC-SAFT parameter sensitivity workbench": [
     "PC-SAFT 参数敏感性交互工作台",
-    "PC-SAFT 參數敏感性交互工作臺"
+    "PC-SAFT 參數敏感性互動工作臺"
   ],
   "State vector": [
     "状态变量",
@@ -320,7 +320,7 @@ export const thermodynamicsCopy = {
   ],
   "I used Julia and Clapeyron to explore equations of state, saturation, phase boundaries and critical behaviour. This interactive model isolates the PC-SAFT pressure calculation so the effect of each molecular parameter is visible.": [
     "我使用 Julia 和 Clapeyron 探索状态方程、饱和状态、相边界和临界行为。这个交互模型专门展示 PC-SAFT 的压力计算，便于看清每个分子参数的影响。",
-    "我使用 Julia 和 Clapeyron 探索狀態方程、飽和狀態、相邊界和臨界行為。這個交互模型專門展示 PC-SAFT 的壓力計算，便於看清每個分子參數的影響。"
+    "我使用 Julia 和 Clapeyron 探索狀態方程、飽和狀態、相邊界和臨界行為。這個互動模型專門展示 PC-SAFT 的壓力計算，便於看清每個分子參數的影響。"
   ],
   "Try a controlled comparison": [
     "试做受控比较",

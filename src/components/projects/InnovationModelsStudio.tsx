@@ -283,7 +283,7 @@ function PortfolioView() {
       <div className={styles.portfolioWorkspace}>
         <section className={styles.allocationPanel}>
           <div className={styles.panelHeading}><span>100</span><strong>Experiment-token allocation</strong><em>Normalised from input weights</em></div>
-          <div className={styles.allocationBar} aria-label="Normalised allocation across four innovation models">
+          <div role="group" className={styles.allocationBar} aria-label="Normalised allocation across four innovation models">
             {MODEL_IDS.map((id) => <i key={id} style={{ width: `${shares[id]}%`, background: MODELS[id].colour }} title={`${MODELS[id].name}: ${shares[id].toFixed(1)} tokens`} />)}
           </div>
           <div className={styles.allocationLegend}>
@@ -320,7 +320,7 @@ function PortfolioView() {
           <section className={styles.dominantCard}>
             <span>Largest structural pathway</span><strong>{dominantLabel}</strong><p>{total ? `${dominantShare.toFixed(1)} of 100 normalised experiment tokens.` : "All input weights are zero; no allocation is calculated."}</p>
           </section>
-          <div className={styles.formulaTape} aria-label="Portfolio calculation formulas">
+          <div role="group" className={styles.formulaTape} aria-label="Portfolio calculation formulas">
             <p><span>01</span><MathEquation tex={String.raw`\mathrm{share}_i=100\,\frac{w_i}{\sum_j w_j}`} /></p>
             <p><span>02</span><MathEquation tex={String.raw`\mathrm{dedicated}=\mathrm{Enabler}+\mathrm{Producer}`} /></p>
             <p><span>03</span><MathEquation tex={String.raw`\mathrm{focused}=\mathrm{Advocate}+\mathrm{Producer}`} /></p>

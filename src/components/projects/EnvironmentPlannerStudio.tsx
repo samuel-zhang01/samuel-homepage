@@ -468,7 +468,7 @@ function setOperatingSystem(profile: Profile, os: OsId): Profile {
 
 function ModeSwitch({ mode, setMode }: { mode: PlannerMode; setMode: (mode: PlannerMode) => void }) {
   return (
-    <ProjectCopy copy={environmentCopy}><div className={styles.modeSwitch} aria-label="Planner interpretation">
+    <ProjectCopy copy={environmentCopy}><div role="group" className={styles.modeSwitch} aria-label="Planner interpretation">
       <div>
         <span>INTERPRETATION</span>
         <p>Compare the implemented shell route with a non-executing, safety-improved planning layer.</p>
@@ -862,7 +862,7 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
           <strong>CORE PACKAGE LEDGER</strong>
           <em>{visiblePackages.length} OF 19 SHOWN</em>
         </div>
-        <div className={styles.filterBar} aria-label="Filter package groups">
+        <div role="group" className={styles.filterBar} aria-label="Filter package groups">
           {MANIFEST_FILTERS.map((item) => (
             <button key={item} type="button" aria-pressed={filter === item} onClick={() => setFilter(item)}>{item}</button>
           ))}
@@ -891,7 +891,7 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
             <strong>SELECTED ROUTE MANIFEST</strong>
             <em>READ ONLY</em>
           </div>
-          <div className={styles.commandLines} aria-label="Resolved dry-run manifest">
+          <div role="group" className={styles.commandLines} aria-label="Resolved dry-run manifest">
             <p><span>01</span><span className={styles.manifestLabel}>Platform</span><strong>{plan.platformLabel}</strong></p>
             <p><span>02</span><span className={styles.manifestLabel}>Artifact</span><strong>{plan.installer}</strong></p>
             <p><span>03</span><span className={styles.manifestLabel}>Environment</span><strong>{plan.environmentAction}</strong></p>

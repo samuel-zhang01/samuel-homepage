@@ -756,7 +756,7 @@ export function RlAtlasDemo() {
             </div>
             <span>{filteredWeeks.length} shown</span>
           </header>
-          <div className={styles.legend} aria-label="Map legend">
+          <div role="group" className={styles.legend} aria-label="Map legend">
             <span><i className={styles.legendRecorded} /> QA recorded</span>
             <span><i className={styles.legendAttention} /> review evidence</span>
             <span><i className={styles.legendRestricted} /> restricted boundary</span>
@@ -844,7 +844,7 @@ export function RlAtlasDemo() {
 
               <div className={styles.weekCopy}>
                 <p>{selectedWeek.focus}</p>
-                <div className={styles.methodList} aria-label="Methods covered">
+                <div role="group" className={styles.methodList} aria-label="Methods covered">
                   {selectedWeek.methods.map((method) => <span key={method}>{method}</span>)}
                 </div>
                 <dl className={styles.projectLine}>

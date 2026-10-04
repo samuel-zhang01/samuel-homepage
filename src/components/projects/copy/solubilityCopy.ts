@@ -112,8 +112,8 @@ export const solubilityCopy = {
     "合成資料驗證練習"
   ],
   "Four invented calibration points and two invented holdout points compared with a symmetric Margules solid-liquid equilibrium calculation.": [
-    "四个虚构拟合点和两个虚构留出点，与对称 Margules 固–液平衡计算结果进行比较。",
-    "四個虛構擬合點和兩個虛構留出點，與對稱 Margules 固–液平衡計算結果進行比較。"
+    "四个虚构拟合点和两个虚构留出点，与对称 Margules 固–液平衡计算结果比较。",
+    "四個虛構擬合點和兩個虛構留出點，與對稱 Margules 固–液平衡計算結果比較。"
   ],
   "log mole fraction": [
     "摩尔分数的对数",

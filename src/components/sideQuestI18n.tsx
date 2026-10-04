@@ -265,7 +265,7 @@ const zhCN: Record<string, string> = {
   "Rewind": "回到起点",
   "Next point": "下一个节点",
   "Reduced motion: use Next point, or Resume replay to play.": "已减少动态效果：请选择“下一个节点”逐步查看，或“继续回放”自动播放。",
-  "Send a cheer": "发送喝彩",
+  "Send a cheer": "发送加油消息",
   "Send challenge": "发送挑战",
   "Technical field notes & prototype boundaries": "技术现场笔记与原型边界",
   "DATA": "数据",
@@ -339,6 +339,8 @@ const traditionalPhrases: Array<[string, string]> = [
   ["公里赛", "公里賽"],
   ["访问", "存取"],
   ["消息服务", "訊息服務"],
+  ["发送", "傳送"],
+  ["消息", "訊息"],
   ["增长", "成長"],
   ["汇总", "彙總"],
   ["导出", "匯出"],
@@ -371,7 +373,7 @@ export function translateSideQuestText(locale: Locale, text: string) {
       const points = source.match(/\d+/)?.[0] ?? "0";
       translated = `包含 ${points} 个节点的抽象回放路线`;
     } else if (/^Send .+ cheer$/.test(source)) {
-      translated = `发送${source.slice(5, -6)}喝彩`;
+      translated = `发送加油消息：${source.slice(5, -6)}`;
     }
   }
 

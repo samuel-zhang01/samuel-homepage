@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { localeCvAssets, localeOptions, type Locale } from "@/lib/i18n";
+import { routeAlternates } from "@/lib/routeMetadata";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://me.samuelzhang.co.uk"),
   applicationName: "Samuel System 7",
+  alternates: routeAlternates("/"),
   title: {
     default: "Samuel System 7 — Samuel Zhang",
     template: "%s · Samuel Zhang",
@@ -54,7 +56,7 @@ export const metadata: Metadata = {
     description:
       "Samuel Zhang's products, research projects and small tools, laid out as a System 7 desktop.",
     type: "website",
-    url: "https://me.samuelzhang.co.uk",
+    url: "/",
   },
   twitter: {
     card: "summary",
@@ -70,7 +72,7 @@ export const viewport: Viewport = {
   themeColor: "#8587a8",
 };
 
-const localeBootstrap = `(()=>{try{const p=location.pathname.split('/')[1]?.toLowerCase();const q=new URLSearchParams(location.search).get('lang')?.toLowerCase();const s=localStorage.getItem('samuel-system7-locale')?.toLowerCase();const m={'en-gb':'en-GB','en-us':'en-US','zh-cn':'zh-CN','zh-hans':'zh-CN','zh-tw':'zh-TW','zh-hant':'zh-TW'};const l=m[p]||m[q]||m[s]||'en-GB';document.documentElement.lang=l;document.documentElement.dataset.locale=l}catch{}})()`;
+const localeBootstrap = `(()=>{try{const p=location.pathname.split('/')[1]?.toLowerCase();const q=new URLSearchParams(location.search).get('lang')?.toLowerCase();const s=localStorage.getItem('samuel-system7-locale')?.toLowerCase();const m={'en-gb':'en-GB','en-us':'en-US','zh-cn':'zh-CN','zh-hans':'zh-CN','zh-tw':'zh-TW','zh-hant':'zh-TW'};const get=k=>Object.hasOwn(m,k)?m[k]:null;const l=get(p)||get(q)||get(s)||'en-GB';document.documentElement.lang=l;document.documentElement.dataset.locale=l}catch{}})()`;
 
 const legacyBrowserCopy: Record<Locale, {
   notice: string;
@@ -144,7 +146,8 @@ const noScriptCopy: Record<Locale, { notice: string; essentials: string; languag
 
 const noScriptStyles = `
   html, body { overflow: auto !important; }
-  body > :not(noscript) { display: none !important; }
+  body > :not(noscript):not([data-recovery-page]) { display: none !important; }
+  body:has(> [data-recovery-page]) > noscript { display: none; }
   .no-js-notice { width: calc(100% - 32px); max-width: 680px; margin: 32px auto; padding: 24px; border: 3px double #111; color: #111; background: #fff; font: 16px/1.6 Geneva, Arial, sans-serif; }
   .no-js-notice h1 { margin-top: 0; }
   .no-js-notice a { color: #11177a; text-decoration: underline; }

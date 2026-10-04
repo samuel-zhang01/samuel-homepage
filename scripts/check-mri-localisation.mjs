@@ -40,7 +40,7 @@ function load(file) {
 const { MriTrustStudio } = load("src/components/projects/MriTrustStudio.tsx");
 const { SchedulingDstExperiment, BackupFailureExperiment } = load("src/components/projects/SourceExperiments.tsx");
 const identity = new Set([
-  ...Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/mriCopy.audit.json"), "utf8")).identities),
+  ...Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/mriCopy.audit.json"), "utf8")).identities),
   "MSE", "MAE", "dB", "Alex", "Morgan", "Riley", "dB，ε=", "PSNR（dB）", "PGD-7 PSNR", "FGSM PSNR",
 ]);
 let strings = [];
@@ -126,7 +126,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
 console.log(`Scheduling/import localization: ${productCases} rendered mode/timezone/statement/locale cases passed.`);
 
 const { FinanceStudio } = load("src/components/projects/FinanceStudio.tsx");
-for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/financeCopy.audit.json"), "utf8")).identities)) identity.add(name);
+for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/financeCopy.audit.json"), "utf8")).identities)) identity.add(name);
 let financeCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
   for (const view of ["wealth", "connections", "investments", "overview", "ledger", "recurring", "transfers", "import"]) {
@@ -146,7 +146,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
 console.log(`Finance localization: ${financeCases} rendered view/filter/range/locale cases passed.`);
 
 const { HomeLabTopologyStudio } = load("src/components/projects/HomeLabTopologyStudio.tsx");
-for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/homeLabCopy.audit.json"), "utf8")).identities)) identity.add(name);
+for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/homeLabCopy.audit.json"), "utf8")).identities)) identity.add(name);
 for (const alias of ["edge-a", "ops-a", "guard-a", "net-app", "access-a", "data-a", "schedule-a", "job-backup", "job-restore", "Guacamole → PostgreSQL"]) identity.add(alias);
 let homeCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
@@ -187,7 +187,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
 console.log(`Course localization: ${courseCases} rendered scoring/baseline/empty-filter/counterfactual/locale cases passed.`);
 
 const { ItalianLearningStudio } = load("src/components/projects/ItalianLearningStudio.tsx");
-for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/italianCopy.audit.json"), "utf8")).identities)) identity.add(name);
+for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/italianCopy.audit.json"), "utf8")).identities)) identity.add(name);
 let italianCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
   for (const view of ["practice", "recall", "rubric", "evidence", "system"]) {
@@ -201,7 +201,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
 console.log(`Italian localization: ${italianCases} rendered practice/recall/rubric/evidence/sync/locale cases passed; Italian exercise material remains explicitly source-marked.`);
 
 const { EnvironmentPlannerStudio } = load("src/components/projects/EnvironmentPlannerStudio.tsx");
-for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/environmentCopy.audit.json"), "utf8")).identities)) identity.add(name);
+for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/environmentCopy.audit.json"), "utf8")).identities)) identity.add(name);
 for (const name of ["x86_64", "arm64", "CPU · CPU", "NVIDIA · CUDA 12.3", "Linux · x86_64; NVIDIA · CUDA 12.3", "Linux · x86_64; NVIDIA · CUDA 12.4"]) identity.add(name);
 let environmentCases = 0;
 const environmentProfiles = [
@@ -228,7 +228,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
 console.log(`Environment localization: ${environmentCases} rendered platform/architecture/CUDA/failure/locale cases passed.`);
 
 const { CvKeywordStudio } = load("src/components/projects/CvKeywordStudio.tsx");
-for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/cvKeywordCopy.audit.json"), "utf8")).identities)) identity.add(name);
+for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/cvKeywordCopy.audit.json"), "utf8")).identities)) identity.add(name);
 identity.add("API");
 let cvCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
@@ -255,7 +255,7 @@ for (locale of ["zh-CN", "zh-TW"]) for (const shift of [0, .5, 2]) for (const ta
 console.log(`Coverage localization: ${coverageCases} rendered target/shift/locale cases passed.`);
 
 const { PortfolioMap } = load("src/components/projects/PortfolioMap.tsx");
-for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/projectNarrativeCopy.audit.json"), "utf8")).identities)) identity.add(name);
+for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/projectNarrativeCopy.audit.json"), "utf8")).identities)) identity.add(name);
 identity.add("MRI");
 let portfolioCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) for (const view of ["compare", "timeline", "matrix", "tools", "models", "ledger"]) for (const variant of [0, 1]) {

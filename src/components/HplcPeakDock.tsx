@@ -490,7 +490,7 @@ export default function HplcPeakDock({ locale }: { locale: Locale }) {
           <h3 id="hplc-peak-dock-title">{t("Peak Dock")}</h3>
           <p>{t("Synthetic HPLC–UV peak fitting")}</p>
         </div>
-        <div className="hplc-detector" aria-label={t("UV detector wavelength: 254 nanometres")}>
+        <div role="group" className="hplc-detector" aria-label={t("UV detector wavelength: 254 nanometres")}>
           <span>{t("UV–VIS")}</span>
           <strong>{t("254 nm")}</strong>
         </div>
@@ -527,7 +527,7 @@ export default function HplcPeakDock({ locale }: { locale: Locale }) {
         </div>
       </fieldset>
 
-      <div className="hplc-context" aria-label={t("How to use Peak Dock")}>
+      <div role="group" className="hplc-context" aria-label={t("How to use Peak Dock")}>
         <section>
           <span>{t("WHY THIS EXISTS")}</span>
           <p>{t("Peak Dock teaches the first step of chromatogram interpretation: separate an observed signal into plausible component peaks without treating retention time as chemical identification.")}</p>
@@ -543,7 +543,7 @@ export default function HplcPeakDock({ locale }: { locale: Locale }) {
       </div>
 
       <div className="hplc-chart-frame">
-        <div className="hplc-chart-legend" aria-label={t("Chromatogram legend")}>
+        <div role="group" className="hplc-chart-legend" aria-label={t("Chromatogram legend")}>
           <span className="hplc-legend-sample"><i aria-hidden="true" />{t("SAMPLE TRACE")}</span>
           <span className="hplc-legend-fit"><i aria-hidden="true" />{t("FITTED SUM")}</span>
           <span className="hplc-legend-components"><i aria-hidden="true" />{t("COMPONENTS")}</span>

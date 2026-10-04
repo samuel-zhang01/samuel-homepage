@@ -36,7 +36,7 @@ export const spectroscopyCopy = {
   ],
   "Synthetic two-column spectrum from {0} to {1} megahertz. {2} total samples are loaded.": [
     "合成双列光谱，频率范围为 {0} 至 {1} 兆赫。共载入 {2} 个采样点。",
-    "合成雙列光譜，頻率範圍為 {0} 至 {1} 兆赫。共載入 {2} 個採樣點。"
+    "合成雙欄光譜，頻率範圍為 {0} 至 {1} 兆赫。共載入 {2} 個取樣點。"
   ],
   "Empty plotting axes. Load the synthetic trace to begin.": [
     "绘图区为空。请先载入合成曲线。",
@@ -64,7 +64,7 @@ export const spectroscopyCopy = {
   ],
   "Loaded 1,201 illustrative samples. The plot is centred on the 5,175 MHz feature.": [
     "已载入 1,201 个示意采样点。视图以 5,175 MHz 附近的谱线为中心。",
-    "已載入 1,201 個示意採樣點。視圖以 5,175 MHz 附近的譜線為中心。"
+    "已載入 1,201 個示意取樣點。視圖以 5,175 MHz 附近的譜線為中心。"
   ],
   "Centre rejected: enter a finite numeric frequency.": [
     "中心频率无效：请输入有限数值。",
@@ -72,7 +72,7 @@ export const spectroscopyCopy = {
   ],
   "New centre applied with a ±1 MHz window. The intensity scale now fits the visible samples.": [
     "已采用新的中心频率和 ±1 MHz 范围。强度轴随当前可见采样点调整。",
-    "已採用新的中心頻率和 ±1 MHz 範圍。強度軸隨當前可見採樣點調整。"
+    "已採用新的中心頻率和 ±1 MHz 範圍。強度軸隨當前可見取樣點調整。"
   ],
   "{0} half-range set to {1} MHz around {2} MHz.": [
     "{0}半幅设为 {1} MHz，中心为 {2} MHz。",
@@ -132,19 +132,19 @@ export const spectroscopyCopy = {
   ],
   "I built this plotting tool to navigate spectroscopy traces and prepare consistent figures. Try it with an illustrative spectrum: adjust the view, labels and export settings. The utility changes presentation; it does not process or identify spectral peaks.": [
     "我制作这款绘图工具，用于浏览光谱数据并生成格式一致的图表。可用示意光谱试调视窗、标签和导出设置。这些操作改变图表呈现方式，不会处理数据或识别谱峰。",
-    "我製作這款繪圖工具，用於瀏覽光譜資料並生成格式一致的圖表。可用示意光譜試調視窗、標籤和匯出設置。這些操作改變圖表呈現方式，不會處理資料或識別譜峰。"
+    "我製作這款繪圖工具，用於瀏覽光譜資料並生成格式一致的圖表。可用示意光譜試調視窗、標籤和匯出設定。這些操作改變圖表呈現方式，不會處理資料或識別譜峰。"
   ],
   "Interactive spectroscopy plotting workbench": [
     "交互式光谱绘图工作台",
-    "交互式光譜繪圖工作臺"
+    "互動式光譜繪圖工作臺"
   ],
   "Plot presentation controls": [
     "图表显示设置",
-    "圖表顯示設置"
+    "圖表顯示設定"
   ],
   "Plot setup": [
     "图表设置",
-    "圖表設置"
+    "圖表設定"
   ],
   "Plot title": [
     "图表标题",
@@ -196,11 +196,11 @@ export const spectroscopyCopy = {
   ],
   "Rows": [
     "行数",
-    "行數"
+    "列數"
   ],
   "Columns": [
     "列数",
-    "列數"
+    "欄數"
   ],
   "none": [
     "无",
@@ -300,7 +300,7 @@ export const spectroscopyCopy = {
   ],
   "visible rows": [
     "可见数据行",
-    "可見資料行"
+    "可見資料列"
   ],
   "Trace values and plotting methods": [
     "曲线数值与绘图方法",
@@ -312,7 +312,7 @@ export const spectroscopyCopy = {
   ],
   "Samples in the current view": [
     "当前视图中的采样点",
-    "當前視圖中的採樣點"
+    "當前視圖中的取樣點"
   ],
   "MHz window": [
     "MHz 视窗",
@@ -328,15 +328,15 @@ export const spectroscopyCopy = {
   ],
   "Samples shown": [
     "显示的采样点",
-    "顯示的採樣點"
+    "顯示的取樣點"
   ],
   "Max sample": [
     "最大采样值",
-    "最大採樣值"
+    "最大取樣值"
   ],
   "The first, strongest and last samples currently visible": [
     "当前可见的首个、最强及末个采样点",
-    "當前可見的首個、最強及末個採樣點"
+    "當前可見的首個、最強及末個取樣點"
   ],
   "Position": [
     "位置",
@@ -352,19 +352,19 @@ export const spectroscopyCopy = {
   ],
   "First visible": [
     "首个可见采样点",
-    "首個可見採樣點"
+    "首個可見取樣點"
   ],
   "Maximum sample": [
     "最大采样值",
-    "最大採樣值"
+    "最大取樣值"
   ],
   "Last visible": [
     "末个可见采样点",
-    "末個可見採樣點"
+    "末個可見取樣點"
   ],
   "The table makes the plotted values available without relying on the chart. Changing the viewport changes these summaries; the underlying samples remain the same.": [
     "表格提供图中的数值，方便不依赖图形的阅读。改变视窗会更新这些摘要，原始采样数据保持不变。",
-    "表格提供圖中的數值，方便不依賴圖形的閱讀。改變視窗會更新這些摘要，原始採樣資料保持不變。"
+    "表格提供圖中的數值，方便不依賴圖形的閱讀。改變視窗會更新這些摘要，原始取樣資料保持不變。"
   ],
   "Why these controls?": [
     "为何设计这些控制？",
@@ -384,7 +384,7 @@ export const spectroscopyCopy = {
   ],
   "Independent intensity bounds help inspect weak signals without changing the measured values.": [
     "单独调整强度边界，可以查看弱信号而不改变测量值。",
-    "單獨調整強度邊界，可以查看弱信號而不改變測量值。"
+    "單獨調整強度邊界，可以查看弱訊號而不改變測量值。"
   ],
   "Consistent labels, legends and export resolution make figures easier to compare and use in a report.": [
     "统一标签、图例和导出分辨率，便于比较图表及在报告中使用。",

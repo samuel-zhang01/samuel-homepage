@@ -35,7 +35,7 @@ node scripts/project-copy-inventory.mjs src/components/projects/ExampleStudio.ts
 
 The AST inventory includes JSX, common label/description data fields, attributes and templates, with stable SHA-256-derived IDs and source locations. It omits source-code blocks and TeX. Review the output: technical identifiers and URLs are not prose. Add new visitor-facing data field names to the scanner when a data structure introduces a new copy field.
 
-Each dictionary adds its own `exampleCopy.audit.json` to avoid shared registry conflicts:
+Each dictionary adds its own `scripts/fixtures/project-copy-audits/exampleCopy.audit.json` to avoid shared registry conflicts. These check-only receipts stay separate from runtime dictionaries; `dictionary` names the file under `src/components/projects/copy/`:
 
 ```json
 {
@@ -56,4 +56,4 @@ The maintained routes are en-GB, en-US, zh-CN and zh-TW. Both Mandarin editions 
 
 Saved figures may contain original English labels. Retain scientific source pixels, identify that language in a translated caption, and supply a translated description and interpretation. Do not suppress the surrounding prose with `translate="no"`, and do not use image generation to translate or alter experimental evidence. Original PDFs, code, equations, proper names and source-language learning exercises retain their necessary text.
 
-The [current review](WIDE_SWEEP_2026-09-09.md) records the latest changed-state and browser checks. The complete preceding four-language crawl is retained in [the project-language review](archive/LOCALE_PROJECT_REVIEW_2026-09-09.md) and [shell-language review](archive/LOCALE_SHELL_REVIEW_2026-09-09.md). Coverage is a recorded scope, not a claim about every possible interaction.
+The [current audit](DEEP_AUDIT_2026-10-04.md) records the four-language browser scope and changed-state checks. Keep generated review reports and screenshots under the ignored `.codex/reports/` directory. Coverage is a recorded scope, not a claim about every possible interaction.

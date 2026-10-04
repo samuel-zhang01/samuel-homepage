@@ -434,7 +434,7 @@ export function SpectroscopyStudio() {
               legendText={legendText}
             />
 
-            <div className={styles.yNudges} aria-label="Upper Y axis limit controls">
+            <div role="group" className={styles.yNudges} aria-label="Upper Y axis limit controls">
               <button type="button" onClick={() => nudgeY(0.01)} aria-label="Raise upper Y limit by 0.01" title="Upper Y +0.01">∧∧</button>
               <button type="button" onClick={() => nudgeY(0.001)} aria-label="Raise upper Y limit by 0.001" title="Upper Y +0.001">∧</button>
               <button type="button" onClick={() => nudgeY(-0.001)} aria-label="Lower upper Y limit by 0.001" title="Upper Y −0.001">∨</button>
@@ -442,7 +442,7 @@ export function SpectroscopyStudio() {
             </div>
           </div>
 
-          <div className={styles.panRow} aria-label="Frequency pan controls">
+          <div role="group" className={styles.panRow} aria-label="Frequency pan controls">
             {[
               [-100, "<<<"],
               [-10, "<<"],

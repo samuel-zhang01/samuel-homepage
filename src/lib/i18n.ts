@@ -255,6 +255,11 @@ const zhCN: Record<string, string> = {
 
   "Export one backup file whenever you want to move your desk.": "需要迁移桌面数据时，可随时导出一个备份文件。",
   "Export backup": "导出备份",
+  "Download recovery records": "下载恢复记录",
+  "Readable desk data downloaded. Recovery records remain in this browser.": "可读取的桌面资料已下载。恢复记录仍保留在此浏览器中。",
+  "Recovery files preserve raw browser records for inspection. They cannot be restored here.": "恢复文件保留浏览器中的原始记录以供检查，无法在此直接还原。",
+  "Recovery records downloaded. Keep this file for inspection; it cannot be restored here.": "恢复记录已下载。请保留此文件以供检查，无法在此直接还原。",
+  "Recovery download unavailable in this browser.": "此浏览器无法下载恢复记录。",
   "Restore backup…": "恢复备份…",
   "Choose a Desk Accessories backup": "选择桌面附件备份",
   "Desk backup downloaded.": "桌面备份已下载。",
@@ -262,6 +267,7 @@ const zhCN: Record<string, string> = {
   "Backup restored. Reopen an accessory to refresh it.": "备份已恢复。重新打开工具即可刷新数据。",
   "Backup restored. Open accessories are refreshed.": "备份已恢复，已打开的工具也已刷新。",
   "That file is not a valid Desk Accessories backup.": "该文件不是有效的桌面附件备份。",
+  "Restore unavailable in this browser. Current data and recovery records may still be available; export them before retrying.": "此浏览器暂时无法恢复备份。现有数据与恢复记录可能仍可导出；请先导出，再重试。",
   "Browser storage unavailable": "浏览器存储不可用",
   "Unreadable drafts kept in this browser": "无法读取的草稿已保留在此浏览器中",
   "Loading saved data…": "正在载入已保存的数据…",
@@ -1628,12 +1634,12 @@ const zhCN: Record<string, string> = {
   "Eight ruled pages save notes in this browser. Insert the date, export a text copy, or include the notebook in a Desk Accessories backup.": "八页横线纸将笔记保存在此浏览器中。可插入日期、导出文本副本，或将笔记本纳入桌面小工具备份。",
   "Review how a CV supports a job’s requirements before preparing an application.": "准备求职申请前，检查简历中的经历如何支持岗位要求。",
   "Conflicting drafts": "冲突草稿",
-  "Another tab edited the same data. Both drafts are kept here until you dismiss them.": "另一个标签页编辑了相同资料。两份草稿会保留在这里，直到您将其关闭。",
+  "Another tab edited the same data. Both drafts are kept here until you dismiss them.": "另一个标签页编辑了相同数据。两份草稿会保留，直到你将其移除。",
   "Review saved drafts": "查看保存的草稿",
   "Previously saved draft": "先前保存的草稿",
   "Incoming draft": "传入的草稿",
   "Download both drafts": "下载两份草稿",
-  "Keep current data and dismiss drafts": "保留当前资料并关闭草稿",
+  "Keep current data and dismiss drafts": "保留当前数据并移除草稿",
 
   "APPLICATION REVIEW": "求职申请审查",
   "Read applications from the team’s existing applicant tracking system (ATS).": "读取团队现有申请人追踪系统（ATS）中的申请。",
@@ -1641,7 +1647,12 @@ const zhCN: Record<string, string> = {
 };
 
 const zhTWOverrides: Record<string, string> = {
-  "The finance app I've been building.": "我正在做的理財 App。",
+  "Download recovery records": "下載復原記錄",
+  "Readable desk data downloaded. Recovery records remain in this browser.": "可讀取的桌面資料已下載。復原記錄仍保留在此瀏覽器中。",
+  "Recovery files preserve raw browser records for inspection. They cannot be restored here.": "復原檔案保留瀏覽器中的原始記錄以供檢查，無法在此直接還原。",
+  "Recovery records downloaded. Keep this file for inspection; it cannot be restored here.": "復原記錄已下載。請保留此檔案以供檢查，無法在此直接還原。",
+  "Recovery download unavailable in this browser.": "此瀏覽器無法下載復原記錄。",
+  "The finance app I've been building.": "我正在做的理財應用程式。",
   "I like getting into the technical details. I also like working with people and helping them do their best work.": "我喜歡鑽研技術細節，也喜歡與人合作，幫助他們把工作做好。",
   "How COVERD reviews applications and gives recruiters reasons they can check.": "COVERD 如何審閱求職申請，並讓招募人員核對每項判斷的理由。",
   "What I run at home, how it fits together, and what I learned after losing a database.": "看看我在家執行哪些服務、它們如何協作，以及遺失資料庫後學到的經驗。",
@@ -1719,7 +1730,7 @@ const zhTWOverrides: Record<string, string> = {
   "Designed and delivered 20+ programming and data-analysis sessions for 80+ chemistry students. The linked computational-chemistry study archive supplies related subject context; its credited coursework is distinct from the tutor’s teaching curriculum.": "為 80 多名化學學生設計並講授 20 多場程式設計與資料分析課程。關聯的計算化學學習檔案提供學科背景；其中註明來源的課程作業與導師設計的教學課程分別呈現。",
   "I built MATLAB, Python and Excel tools for rotational spectroscopy. The related molecular-recognition work names me as a co-author in the 2025 ISMS conference record.": "我為轉動光譜研究建置 MATLAB、Python 與 Excel 工具。相關分子辨識研究在 2025 年 ISMS 會議記錄中將我列為共同作者。",
   "First-Class Honours, a professional placement and study in computational chemistry, molecular biology, chemical biology and organic chemistry; also completed the Associate of King’s College London programme.": "取得一等榮譽學位，完成專業實習，學習計算化學、分子生物學、化學生物學與有機化學；同時完成倫敦國王學院 AKC 課程。",
-  "Public-data decision support and workflow automation during pandemic-era emergency operations, alongside time-critical support for senior leaders.": "在疫情應急行動中，使用公開資料建置決策支援與工作流程自動化，並為高階主管提供時效要求嚴格的工作支援。",
+  "Public-data decision support and workflow automation during pandemic-era emergency operations, alongside time-critical support for senior leaders.": "在疫情緊急應變行動中，使用公開資料建置決策支援與工作流程自動化，並為高階主管提供時效要求嚴格的工作支援。",
   "The CV’s home-lab and Julia market-simulation projects connect to a wider independent practice in local applications, learning tools and infrastructure.": "履歷中的家庭實驗室與 Julia 市場模擬專案，關聯到更廣泛的本機應用程式、學習工具和基礎設施獨立實踐。",
   "Explore atomic orbitals in ASCII, a probability point cloud or a smooth 3D surface.": "用 ASCII 字元、機率點雲或平滑三維曲面探索原子軌域。",
   "Browse all 118 elements, inspect subshell occupancy and rotate real angular orbital components. The visual model is hydrogen-like, not a many-electron calculation: phase colours mark wavefunction sign, while the point cloud samples probability density. Radial plots, a central slice and export controls make the assumptions inspectable.": "瀏覽全部 118 種元素，查看副殼層電子佔據情況，並旋轉實值角向軌域分量。視覺化採用類氫模型，而非多電子計算：相位顏色表示波函數的正負，點雲則對機率密度進行取樣。徑向圖、中心切片與匯出功能讓模型假設清晰可查。",
@@ -1792,6 +1803,7 @@ const zhTWOverrides: Record<string, string> = {
   "15 min reset": "重設 15 分鐘",
   "Restore backup…": "還原備份…",
   "That file is not a valid Desk Accessories backup.": "該備份檔案不是有效的桌面工具備份。",
+  "Restore unavailable in this browser. Current data and recovery records may still be available; export them before retrying.": "此瀏覽器暫時無法還原備份。現有資料與復原記錄可能仍可匯出；請先匯出，再重試。",
   "Add task": "新增任務",
   "Add one useful next action above.": "請在上方新增一個實用的下一步。",
   "Reopen": "重新標為待辦",
@@ -1805,6 +1817,7 @@ const zhTWOverrides: Record<string, string> = {
   "Note for": "備註：",
   "Source unit": "來源單位",
   "Mass": "質量",
+  "Length, mass, temperature and data": "長度、質量、溫度與資料",
   "Convert everyday length, mass, temperature and data units.": "換算常用的長度、質量、溫度與資料單位。",
   "Memory clear": "清除記憶值",
   "Memory recall": "讀取記憶值",
@@ -1846,12 +1859,12 @@ const zhTWOverrides: Record<string, string> = {
   "Eight ruled pages save notes in this browser. Insert the date, export a text copy, or include the notebook in a Desk Accessories backup.": "八頁橫線紙將筆記儲存在此瀏覽器中。可插入日期、匯出文字副本，或將筆記本納入桌面小工具備份。",
   "Review how a CV supports a job’s requirements before preparing an application.": "準備求職申請前，檢查履歷中的經歷如何支持職位要求。",
   "Conflicting drafts": "衝突草稿",
-  "Another tab edited the same data. Both drafts are kept here until you dismiss them.": "另一個分頁編輯了相同資料。兩份草稿會保留在這裡，直到您將其關閉。",
+  "Another tab edited the same data. Both drafts are kept here until you dismiss them.": "另一個分頁編輯了相同資料。兩份草稿會保留，直到你將其移除。",
   "Review saved drafts": "查看已儲存的草稿",
   "Previously saved draft": "先前儲存的草稿",
   "Incoming draft": "傳入的草稿",
   "Download both drafts": "下載兩份草稿",
-  "Keep current data and dismiss drafts": "保留目前資料並關閉草稿",
+  "Keep current data and dismiss drafts": "保留目前資料並移除草稿",
 
   "APPLICATION REVIEW": "求職申請審查",
   "Read applications from the team’s existing applicant tracking system (ATS).": "讀取團隊現有應徵者追蹤系統（ATS）中的申請。",
@@ -1890,7 +1903,6 @@ const traditionalPhrases: Array<[string, string]> = [
   ["取舍", "取捨"],
   ["标注", "標註"],
   ["标签", "標籤"],
-  ["分布", "分佈"],
   ["修复", "修復"],
   ["精致", "精緻"],
   ["制造", "製造"],
@@ -1898,7 +1910,6 @@ const traditionalPhrases: Array<[string, string]> = [
   ["合并", "合併"],
   ["汇总", "彙總"],
   ["集群", "叢集"],
-  ["平台", "平臺"],
   ["舞台", "舞臺"],
   ["一周", "一週"],
   ["泄漏", "洩漏"],
@@ -1957,6 +1968,7 @@ const traditionalPhrases: Array<[string, string]> = [
   ["复现", "重現"],
   ["对数组成", "對數組成"],
   ["质量报告基准", "質量報告基準"],
+  ["置信度", "信心度"],
   ["转账", "轉帳"],
   ["账单", "帳單"],
   ["账本", "帳本"],
@@ -2306,15 +2318,15 @@ export function translateText(locale: Locale, source: string): string {
   const compact = source.replace(/\s+/g, " ").trim();
   if (!compact || locale === "en-GB") return source;
   if (locale === "en-US") {
-    return preserveWhitespace(source, usOverrides[compact] ?? toAmericanEnglish(compact));
+    return preserveWhitespace(source, Object.hasOwn(usOverrides, compact) ? usOverrides[compact] : toAmericanEnglish(compact));
   }
-  const simplified = zhCN[compact];
+  const simplified = Object.hasOwn(zhCN, compact) ? zhCN[compact] : undefined;
   // Translation boundaries can nest, and several accessibility labels are
   // assembled from already-localised pieces. Treat non-source strings as final
   // copy so a second pass cannot reinterpret valid Taiwan terminology.
   if (simplified === undefined) return source;
   const translated = locale === "zh-TW"
-    ? zhTWOverrides[compact] ?? toTraditionalMandarin(simplified)
+    ? Object.hasOwn(zhTWOverrides, compact) ? zhTWOverrides[compact] : toTraditionalMandarin(simplified)
     : simplified;
   return preserveWhitespace(source, translated);
 }

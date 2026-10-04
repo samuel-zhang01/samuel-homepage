@@ -225,11 +225,15 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
         // current Next development-module wrapper corrupts its ESM namespace
         // before getDocument() runs. `prepare:pdfjs` copies this exact package
         // asset to same-origin public storage for both dev and production.
-        const pdfJsUrl = "/_vendor/pdfjs/pdf.min.mjs";
+        // Browsers cache a failed dynamic import for the document's lifetime.
+        // Give an explicit retry a fresh module URL so restored connectivity
+        // can recover without discarding the surrounding desktop state.
+        const retryQuery = loadAttempt ? `?retry=${loadAttempt}` : "";
+        const pdfJsUrl = `/_vendor/pdfjs/pdf.min.mjs${retryQuery}`;
         const pdfjs = await import(/* webpackIgnore: true */ pdfJsUrl) as typeof import("pdfjs-dist");
         if (cancelled) return;
         if (!pdfjs.GlobalWorkerOptions.workerSrc) {
-          pdfjs.GlobalWorkerOptions.workerSrc = "/_vendor/pdfjs/pdf.worker.min.mjs";
+          pdfjs.GlobalWorkerOptions.workerSrc = `/_vendor/pdfjs/pdf.worker.min.mjs${retryQuery}`;
         }
         loadingTask = pdfjs.getDocument({
           url: src,
@@ -306,7 +310,7 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
 
   return (
     <div className="pdf-reader" data-status={status} data-zoomed={zoom > 1 || undefined}>
-      <div className="pdf-reader__controls" aria-label={translateText(locale, "Document reader controls")}>
+      <div role="group" className="pdf-reader__controls" aria-label={translateText(locale, "Document reader controls")}>
         <div className={styles.status}>
           <output aria-live="polite">{statusText}</output>
           <a data-native-navigation="" className={styles.sourceLink} href={src} aria-label={`${title}: ${translateText(locale, "Open this document in the current tab")}`} title={translateText(locale, "Open this document in the current tab")}>PDF</a>
@@ -316,7 +320,7 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
         <button className="pdf-reader__fit" type="button" title={fitLabel} aria-label={`${fitLabel} (${Math.round(zoom * 100)}%)`} onClick={() => changeZoom(1)} disabled={!documentProxy || error}><span>{Math.round(zoom * 100)}%</span><small>{fitLabel}</small></button>
         <button type="button" aria-label={translateText(locale, "Zoom in")} onClick={() => changeZoom(zoom + .2)} disabled={zoom >= 2 || !documentProxy || error}>+</button>
       </div>
-      <div ref={stageRef} className="pdf-reader__stage" tabIndex={0} aria-label={`${title} ${translateText(locale, "document preview")}`} aria-description={zoom > 1 ? panHint : undefined}>
+      <div role="group" ref={stageRef} className="pdf-reader__stage" tabIndex={0} aria-label={`${title} ${translateText(locale, "document preview")}`} aria-description={zoom > 1 ? panHint : undefined}>
         <div className="pdf-reader__pages" style={{ minWidth: pageWidth || undefined }}>
         {documentProxy && pageWidth > 0 && !error && Array.from({ length: pageCount }, (_, index) => (
           <PdfPage

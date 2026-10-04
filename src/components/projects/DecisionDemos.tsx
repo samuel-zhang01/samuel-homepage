@@ -292,7 +292,7 @@ export function AirQualityBudgetDemo() {
                 <dd>{pounds.format(budget - selected.cost)}</dd>
               </div>
             </dl>
-            <div className={styles.sensorList} aria-label="Included signals">
+            <div role="group" className={styles.sensorList} aria-label="Included signals">
               {selected.sensors.map((sensor) => (
                 <span key={sensor}>✓ {sensor}</span>
               ))}
@@ -1221,7 +1221,7 @@ export function CausalOpeDemo() {
             </div>
           </div>
 
-          <div className={styles.weightPlot} aria-label="Applied inverse-propensity weights for 12 synthetic units">
+          <div role="group" className={styles.weightPlot} aria-label="Applied inverse-propensity weights for 12 synthetic units">
             <div className={styles.weightLegend}>
               <span><i className={styles.treatedKey} /> Treated</span>
               <span><i className={styles.controlKey} /> Control</span>

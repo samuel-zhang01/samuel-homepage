@@ -425,7 +425,7 @@ function PracticeLab({
         <span>{mode === "weak" ? `${labelFor(weakest, bilingual, locale)} first` : "7 skills balanced"}</span>
       </div>
 
-      <div className={styles.sessionProgress} aria-label={`Question ${index + 1} of ${session.length}`}>
+      <div role="group" className={styles.sessionProgress} aria-label={`Question ${index + 1} of ${session.length}`}>
         <strong>{String(index + 1).padStart(2, "0")} / {String(session.length).padStart(2, "0")}</strong>
         <span><i style={{ width: `${(index / session.length) * 100}%` }} /></span>
         <em>{score} {bilingual ? "correct" : "corrette"}</em>
@@ -488,7 +488,7 @@ function PracticeLab({
 
         {item.type === "reorder" ? (
           <div className={styles.reorderBoard}>
-            <div className={styles.builtSentence} aria-label="Constructed sentence">
+            <div role="group" className={styles.builtSentence} aria-label="Constructed sentence">
               {tiles.length ? tiles.map((tile, tileIndex) => (
                 <button type="button" key={`${tile}-${tileIndex}`} lang="it" translate="no" disabled={result !== null} onClick={() => setTiles(tiles.filter((_, indexToKeep) => indexToKeep !== tileIndex))}>{tile}</button>
               )) : <span>{bilingual ? "Tap the tiles to build the sentence." : "Tocca le tessere per costruire la frase."}</span>}
@@ -724,7 +724,7 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
             </label>
           </div>
 
-          <div className={styles.evidenceTimeline} aria-label={`${artifacts} evidence artifacts spaced ${gap} days apart`}>
+          <div role="group" className={styles.evidenceTimeline} aria-label={`${artifacts} evidence artifacts spaced ${gap} days apart`}>
             <span className={artifacts >= 1 ? styles.timelineActive : ""}><b>01</b><i /><small>Unscripted sample</small></span>
             <div><i style={{ width: `${artifacts >= 2 ? Math.min(100, (gap / 7) * 100) : 0}%` }} /><strong>{artifacts < 2 ? "add second artifact" : `${gap} day gap`}</strong></div>
             <span className={artifacts >= 2 ? styles.timelineActive : ""}><b>02</b><i /><small>Delayed evidence</small></span>
@@ -798,7 +798,7 @@ function SystemLab({ bilingual }: { bilingual: boolean }) {
         <span className={styles.localBadge}>753 SEEDED ROWS</span>
       </header>
 
-      <div className={styles.architecture} aria-label="Application architecture">
+      <div role="group" className={styles.architecture} aria-label="Application architecture">
         <div><span className={styles.archIcon}>▣</span><strong>React 19 client</strong><small>tour · practice · analytics</small></div>
         <i aria-hidden="true">⇄</i>
         <div><span className={styles.archIcon}>↯</span><strong>Vinext worker</strong><small>RSC · API routes · assets</small></div>

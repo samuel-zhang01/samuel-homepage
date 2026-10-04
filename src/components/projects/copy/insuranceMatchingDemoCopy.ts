@@ -11,7 +11,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "A risk-to-market ranking signal derived from lagged placement patterns.": [
     "由滞后承保安排模式得到的风险—市场排序信号。",
-    "由滯後承保安排模式得到的風險—市場排序信號。"
+    "由滯後承保安排模式得到的風險—市場排序訊號。"
   ],
   "Lead share": [
     "领保份额",
@@ -27,11 +27,11 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Quality": [
     "质量",
-    "質量"
+    "品質"
   ],
   "Wording / quality": [
     "条款与质量",
-    "條款與質量"
+    "條款與品質"
   ],
   "Included only when evidence is market-conditional; otherwise it stays unassessed.": [
     "只有证据与具体市场相关时才纳入，否则保留为未评估。",
@@ -107,7 +107,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Deterministic browser calculation · no API calls": [
     "确定性浏览器计算 · 不调用 API",
-    "確定性瀏覽器計算 · 不調用 API"
+    "確定性瀏覽器計算 · 不呼叫 API"
   ],
   "evidence-ready ·": [
     "个证据就绪 ·",
@@ -151,7 +151,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "148,140 rows · 37,844 UMRs · 46 features": [
     "148,140 行 · 37,844 个 UMR · 46 项特征",
-    "148,140 行 · 37,844 個 UMR · 46 項特徵"
+    "148,140 筆記錄 · 37,844 個 UMR · 46 項特徵"
   ],
   "Temporal Hit@1": [
     "时间切分 Hit@1",
@@ -239,7 +239,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "LambdaRank · Bayes · wording": [
     "LambdaRank · 贝叶斯 · 条款",
-    "LambdaRank · 貝葉斯 · 條款"
+    "LambdaRank · 貝氏 · 條款"
   ],
   "Evidence packets": [
     "证据包",
@@ -323,7 +323,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "These controls do not reproduce the current application's ordering policy.": [
     "这些控件不重现当前应用的排序策略。",
-    "這些控件不重現當前應用的排序策略。"
+    "這些控制項不重現當前應用的排序策略。"
   ],
   "Weight preset": [
     "权重预设",
@@ -355,7 +355,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Three agents return evidence, confidence, provenance and null states.": [
     "三个智能体分别返回证据、置信度、来源和空值状态。",
-    "三個智慧代理分別返回證據、置信度、來源和空值狀態。"
+    "三個智慧代理分別返回證據、信心度、來源和空值狀態。"
   ],
   "The candidate list stays in the broker-supplied order while the shared decision objective remains unvalidated. Missing evidence is shown—not silently filled.": [
     "共同决策目标尚未验证，因此候选列表保留经纪人给定的顺序。缺失证据会明确显示，不自动补填。",
@@ -375,7 +375,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Minimum assessed signals": [
     "最低已评估信号数",
-    "最低已評估信號數"
+    "最低已評估訊號數"
   ],
   "Fail closed when evidence is too thin.": [
     "证据过少时暂停判断。",
@@ -479,7 +479,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Separate evidence signals": [
     "独立证据信号",
-    "獨立證據信號"
+    "獨立證據訊號"
   ],
   "independent values · not combined": [
     "独立数值 · 不汇总",
@@ -543,7 +543,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "SIGNAL": [
     "信号",
-    "信號"
+    "訊號"
   ],
   "STATUS": [
     "状态",
@@ -691,15 +691,15 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Historical trading performance as a LightGBM/LambdaRank risk-to-market signal with temporal evidence discipline.": [
     "以 LightGBM/LambdaRank 建立历史交易表现的风险—市场信号，并遵守时间切分的证据要求。",
-    "以 LightGBM/LambdaRank 建立歷史交易表現的風險—市場信號，並遵守時間切分的證據要求。"
+    "以 LightGBM/LambdaRank 建立歷史交易表現的風險—市場訊號，並遵守時間切分的證據要求。"
   ],
   "Availability-attested, recency-aware lead-share evidence and explicit confidence.": [
     "经可用性确认、考虑时效的领保份额证据，以及明确的置信度。",
-    "經可用性確認、考慮時效的領保份額證據，以及明確的置信度。"
+    "經可用性確認、考慮時效的領保份額證據，以及明確的信心度。"
   ],
   "Wording remains visible inside Quality; it is not counted again as a fourth vote.": [
     "条款保留在质量维度中，不再重复算作第四项投票。",
-    "條款保留在質量維度中，不再重複算作第四項投票。"
+    "條款保留在品質維度中，不再重複算作第四項投票。"
   ],
   "Cold-start fallbacks, market identity checks, null handling and broker review boundaries.": [
     "冷启动回退、市场身份核查、空值处理和经纪人复核边界。",
@@ -715,7 +715,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Every risk, market identity, explanation, signal value and confidence level.": [
     "所有风险、市场身份、说明、信号数值和置信度。",
-    "所有風險、市場身份、說明、信號數值和置信度。"
+    "所有風險、市場身份、說明、訊號數值和信心度。"
   ],
   "The retired-sandbox adjustable weights, panel min–max transform and displayed composite equation.": [
     "停用沙盒中的可调权重、候选市场最小—最大变换和所示综合分公式。",
@@ -731,7 +731,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "This is an interaction model for explaining the research architecture. It is not underwriting advice, current appetite, available capacity, a quote, or an insurer recommendation.": [
     "这是用于解释研究架构的交互模型，不提供核保建议、当前承保意愿、可用承保能力、报价或保险公司推荐。",
-    "這是用於解釋研究架構的交互模型，不提供核保建議、當前承保意願、可用承保能力、報價或保險公司推薦。"
+    "這是用於解釋研究架構的互動模型，不提供核保建議、當前承保意願、可用承保能力、報價或保險公司推薦。"
   ],
   "Commercial property": [
     "商业财产险",
@@ -911,7 +911,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Strong synthetic wording signal, but history remains shallow.": [
     "合成条款信号较强，但历史证据仍少。",
-    "合成條款信號較強，但歷史證據仍少。"
+    "合成條款訊號較強，但歷史證據仍少。"
   ],
   "A synthetic trading descriptor exists without corroborating evidence.": [
     "存在合成交易描述，尚无佐证。",
@@ -939,7 +939,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Fast-growing software risk with contractual liability and cyber-adjacent wording needs.": [
     "快速增长的软件业务风险，涉及合同责任及与网络风险相邻的条款需求。",
-    "快速增長的軟體業務風險，涉及合同責任及與網絡風險相鄰的條款需求。"
+    "快速增長的軟體業務風險，涉及契約責任及與網路風險相鄰的條款需求。"
   ],
   "Synthetic risk-to-market rank is below the panel centre for this class.": [
     "该险种的合成风险—市场排名低于候选市场中心水平。",
@@ -963,7 +963,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "Strong synthetic ranking across class, territory, and risk-shape signals.": [
     "险种、地区和风险结构信号上的合成排名较强。",
-    "險種、地區和風險結構信號上的合成排名較強。"
+    "險種、地區和風險結構訊號上的合成排名較強。"
   ],
   "Positive synthetic lead-share evidence with usable recency support.": [
     "合成领保份额证据为正，且有可用的时效支持。",
@@ -1003,7 +1003,7 @@ export const insuranceMatchingDemoCopy = {
   ],
   "only {0} of 3 signals assessed": [
     "三项信号中仅评估 {0} 项",
-    "三項信號中僅評估 {0} 項"
+    "三項訊號中僅評估 {0} 項"
   ],
   "{0} markets evidence-ready; {1} gated. Broker order preserved.": [
     "{0} 个市场证据就绪，{1} 个受门控限制。保留经纪人顺序。",
@@ -1043,10 +1043,10 @@ export const insuranceMatchingDemoCopy = {
   ],
   "authority / capacity check · only {0} of 3 signals assessed": [
     "权限／承保能力核查 · 三项信号中仅评估 {0} 项",
-    "權限／承保能力核查 · 三項信號中僅評估 {0} 項"
+    "權限／承保能力核查 · 三項訊號中僅評估 {0} 項"
   ],
   "authority / capacity check; only {0} of 3 signals assessed": [
     "权限／承保能力核查；三项信号中仅评估 {0} 项",
-    "權限／承保能力核查；三項信號中僅評估 {0} 項"
+    "權限／承保能力核查；三項訊號中僅評估 {0} 項"
   ]
 } satisfies ProjectCopyTable;

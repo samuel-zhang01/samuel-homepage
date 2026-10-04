@@ -147,7 +147,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Bayesian entropy τ": [
     "贝叶斯熵 τ",
-    "貝葉斯熵 τ"
+    "貝氏熵 τ"
   ],
   "bits": [
     "比特",
@@ -159,11 +159,11 @@ export const deferralRiskStudioCopy = {
   ],
   "Calibrated confidence κ": [
     "校准置信度 κ",
-    "校準置信度 κ"
+    "校準信心度 κ"
   ],
   "Defer when max calibrated p < κ": [
     "最大校准概率 < κ 时转交",
-    "最大校準概率 < κ 時轉交"
+    "最大校準機率 < κ 時轉交"
   ],
   "CVaR penalty λ": [
     "CVaR 惩罚 λ",
@@ -175,7 +175,7 @@ export const deferralRiskStudioCopy = {
   ],
   "This control does not optimise a threshold.": [
     "此控件不会优化阈值。",
-    "此控件不會最佳化閾值。"
+    "此控制項不會最佳化閾值。"
   ],
   "Worst-tail share δ": [
     "最差尾部比例 δ",
@@ -191,7 +191,7 @@ export const deferralRiskStudioCopy = {
   ],
   "confidence hits ·": [
     "次置信度触发 ·",
-    "次置信度觸發 ·"
+    "次信心度觸發 ·"
   ],
   "overlap": [
     "次重叠",
@@ -263,7 +263,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Bayesian entropy + isotonic confidence": [
     "贝叶斯熵与保序校准置信度",
-    "貝葉斯熵與保序校準置信度"
+    "貝氏熵與保序校準信心度"
   ],
   "OR rejector": [
     "OR 拒绝器",
@@ -271,7 +271,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Either unsafe signal can defer": [
     "任一风险信号均可触发转交",
-    "任一風險信號均可觸發轉交"
+    "任一風險訊號均可觸發轉交"
   ],
   "Route": [
     "处理路径",
@@ -299,7 +299,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Entropy is computed from a sequential Bayesian posterior. Confidence is a monotone isotonic-style stand-in, not a fitted production calibrator.": [
     "熵来自序贯贝叶斯后验。置信度采用类似保序校准的单调替代模型，并非拟合的生产校准器。",
-    "熵來自序貫貝葉斯後驗。置信度採用類似保序校準的單調替代模型，並非擬合的生產校準器。"
+    "熵來自序貫貝氏後驗。信心度採用類似保序校準的單調替代模型，並非擬合的生產校準器。"
   ],
   "Selected synthetic claim": [
     "选定的虚构索赔",
@@ -347,7 +347,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Sequential Bayes trace": [
     "序贯贝叶斯轨迹",
-    "序貫貝葉斯軌跡"
+    "序貫貝氏軌跡"
   ],
   "prior": [
     "先验",
@@ -367,7 +367,7 @@ export const deferralRiskStudioCopy = {
   ],
   "cal. confidence": [
     "校准置信度",
-    "校準置信度"
+    "校準信心度"
   ],
   "raw": [
     "原始",
@@ -415,7 +415,7 @@ export const deferralRiskStudioCopy = {
   ],
   "confidence": [
     "置信度",
-    "置信度"
+    "信心度"
   ],
   "review": [
     "复核",
@@ -427,15 +427,15 @@ export const deferralRiskStudioCopy = {
   ],
   "Entropy versus calibrated confidence for 200 fictional test claims. {0} are deferred by the current {1} policy.": [
     "200 条虚构测试索赔的熵与校准置信度。当前{1}策略转交 {0} 条。",
-    "200 條虛構測試索賠的熵與校準置信度。當前{1}策略轉交 {0} 條。"
+    "200 條虛構測試索賠的熵與校準信心度。當前{1}策略轉交 {0} 條。"
   ],
   "Bayesian posterior entropy H(π), bits": [
     "贝叶斯后验熵 H(π)，比特",
-    "貝葉斯後驗熵 H(π)，比特"
+    "貝氏後驗熵 H(π)，比特"
   ],
   "Calibrated classifier confidence": [
     "校准后的分类器置信度",
-    "校準後的分類器置信度"
+    "校準後的分類器信心度"
   ],
   "Threshold sweep · fictional test bench": [
     "阈值扫描 · 虚构测试集",
@@ -455,7 +455,7 @@ export const deferralRiskStudioCopy = {
   ],
   "confidence report": [
     "置信度基线报告值",
-    "置信度基線報告值"
+    "信心度基線報告值"
   ],
   "XGB report": [
     "XGB 报告值",
@@ -499,7 +499,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Confidence baseline": [
     "置信度基线",
-    "置信度基線"
+    "信心度基線"
   ],
   "23% deferred · CVaR 0.938": [
     "转交 23% · CVaR 0.938",
@@ -515,11 +515,11 @@ export const deferralRiskStudioCopy = {
   ],
   "No demonstrated win over confidence-only.": [
     "尚未证明优于仅用置信度的策略。",
-    "尚未證明優於僅用置信度的策略。"
+    "尚未證明優於僅用信心度的策略。"
   ],
   "The bootstrap intervals overlap. The 0.923 vs 0.938 CVaR direction is not statistically significant; confidence-only is slightly more accurate while reviewing fewer claims.": [
     "自举置信区间重叠。CVaR 0.923 与 0.938 的差异没有统计显著性；仅用置信度的策略准确率略高，且复核案件更少。",
-    "自舉置信區間重疊。CVaR 0.923 與 0.938 的差異沒有統計顯著性；僅用置信度的策略準確率略高，且複核案件更少。"
+    "自舉信賴區間重疊。CVaR 0.923 與 0.938 的差異沒有統計顯著性；僅用信心度的策略準確率略高，且複核案件更少。"
   ],
   "Same 200 fictional outcomes": [
     "相同的 200 条虚构结果",
@@ -535,11 +535,11 @@ export const deferralRiskStudioCopy = {
   ],
   "H(π) > .90 OR confidence < .65": [
     "H(π) > .90 或置信度 < .65",
-    "H(π) > .90 或置信度 < .65"
+    "H(π) > .90 或信心度 < .65"
   ],
   "confidence < .65": [
     "置信度 < .65",
-    "置信度 < .65"
+    "信心度 < .65"
   ],
   "coverage ·": [
     "覆盖率 ·",
@@ -567,7 +567,7 @@ export const deferralRiskStudioCopy = {
   ],
   "rows": [
     "行",
-    "行"
+    "筆記錄"
   ],
   "Sort retained losses": [
     "对保留样本损失排序",
@@ -595,7 +595,7 @@ export const deferralRiskStudioCopy = {
   ],
   "CVaR is calculated only on classifier-handled claims, matching the paper. With binary loss it is the error share in the worst k rows—not a monetary-loss estimate.": [
     "CVaR 仅针对分类器处理的索赔计算，与论文一致。二元损失下，它是最差 k 行的错误比例，并非金额损失估计。",
-    "CVaR 僅針對分類器處理的索賠計算，與論文一致。二元損失下，它是最差 k 行的錯誤比例，並非金額損失估計。"
+    "CVaR 僅針對分類器處理的索賠計算，與論文一致。二元損失下，它是最差 k 筆記錄的錯誤比例，並非金額損失估計。"
   ],
   "Risk-sensitive score": [
     "风险敏感得分",
@@ -631,7 +631,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Click a claim to inspect its Bayes trace": [
     "选择索赔以查看贝叶斯轨迹",
-    "選擇索賠以查看貝葉斯軌跡"
+    "選擇索賠以查看貝氏軌跡"
   ],
   "Scrollable CVaR tail ledger": [
     "可滚动的 CVaR 尾部明细",
@@ -723,7 +723,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Bayesian path": [
     "贝叶斯路径",
-    "貝葉斯路徑"
+    "貝氏路徑"
   ],
   "KDE likelihood ratios → H(π)": [
     "KDE 似然比 → H(π)",
@@ -747,7 +747,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Fit XGBoost, then calibrate class probabilities with 3-fold isotonic regression.": [
     "拟合 XGBoost，再用三折保序回归校准类别概率。",
-    "擬合 XGBoost，再用三折保序迴歸校準類別概率。"
+    "擬合 XGBoost，再用三折保序迴歸校準類別機率。"
   ],
   "Update.": [
     "更新。",
@@ -771,7 +771,7 @@ export const deferralRiskStudioCopy = {
   ],
   "classifier confidence falls below κ.": [
     "分类器置信度低于 κ。",
-    "分類器置信度低於 κ。"
+    "分類器信心度低於 κ。"
   ],
   "Score.": [
     "评分。",
@@ -779,7 +779,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Inspect a selected τ and subtract λ times empirical CVaR on non-deferred 0–1 losses; this browser control does not choose an optimum.": [
     "查看选定 τ 下的结果，并从系统准确率中减去 λ 倍未转交样本 0–1 损失的经验 CVaR；此控件不选择最优值。",
-    "查看選定 τ 下的結果，並從系統準確率中減去 λ 倍未轉交樣本 0–1 損失的經驗 CVaR；此控件不選擇最優值。"
+    "查看選定 τ 下的結果，並從系統準確率中減去 λ 倍未轉交樣本 0–1 損失的經驗 CVaR；此控制項不選擇最優值。"
   ],
   "Interpretation guardrails": [
     "解读约束",
@@ -791,11 +791,11 @@ export const deferralRiskStudioCopy = {
   ],
   "The 200-claim test set has only about 49 fraud cases; confidence intervals are wide and overlap.": [
     "200 条测试索赔中仅约 49 条欺诈；置信区间宽且互相重叠。",
-    "200 條測試索賠中僅約 49 條欺詐；置信區間寬且互相重疊。"
+    "200 條測試索賠中僅約 49 條欺詐；信賴區間寬且互相重疊。"
   ],
   "The naive-Bayes conditional-independence assumption can understate uncertainty for correlated features.": [
     "特征相关时，朴素贝叶斯的条件独立假设可能低估不确定性。",
-    "特徵相關時，樸素貝葉斯的條件獨立假設可能低估不確定性。"
+    "特徵相關時，樸素貝氏的條件獨立假設可能低估不確定性。"
   ],
   "The practitioner DAG is hypothesised, not identified causally or stress-tested for misspecification.": [
     "专家提出的 DAG 是假设图，尚未进行因果识别或模型错设压力测试。",
@@ -803,7 +803,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Distribution, prior and calibration drift were discussed but not empirically evaluated.": [
     "研究讨论了分布、先验和校准漂移，但没有实证评估。",
-    "研究討論了分佈、先驗和校準漂移，但沒有實證評估。"
+    "研究討論了分布、先驗和校準漂移，但沒有實證評估。"
   ],
   "The CVaR objective uses symmetric 0–1 loss, not the 5–10× false-negative costs relevant to fraud operations.": [
     "CVaR 目标采用对称的 0–1 损失，而欺诈业务中的漏报成本可能高出 5–10 倍。",
@@ -843,7 +843,7 @@ export const deferralRiskStudioCopy = {
   ],
   "Confidence only": [
     "仅置信度",
-    "僅置信度"
+    "僅信心度"
   ],
   "Entropy only": [
     "仅熵",

@@ -25,7 +25,7 @@ export function CfdShowcase() {
         <div><span>Explore</span><strong>{views.find((item) => item.id === view)?.detail}</strong></div>
         {views.map((item) => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)}><span aria-hidden="true">{item.icon}</span>{item.label}</button>)}
       </div>
-      <div className={styles.viewPanel} aria-label={views.find((item) => item.id === view)?.detail}>
+      <div role="group" className={styles.viewPanel} aria-label={views.find((item) => item.id === view)?.detail}>
         {view === "architecture" ? <CfdArchitectureStudio /> : view === "motion" ? <CfdFlowPlayer /> : view === "results" ? <CfdSurrogateDemo /> : <RolloutExperiment />}
       </div>
     </div></ProjectCopy>

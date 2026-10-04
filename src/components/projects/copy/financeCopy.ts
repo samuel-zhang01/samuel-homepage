@@ -3,21 +3,21 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 export const financeCopy = {
   "±{0} day": ["±{0} 天", "±{0} 天"],
   "±{0} days": ["±{0} 天", "±{0} 天"],
-  "HSBC Current •01": ["汇丰活期账户 •01","滙豐活期賬戶 •01"],
-  "Revolut Joint •12": ["Revolut 联名账户 •12","Revolut 聯名賬戶 •12"],
+  "HSBC Current •01": ["汇丰活期账户 •01","滙豐活期帳戶 •01"],
+  "Revolut Joint •12": ["Revolut 联名账户 •12","Revolut 聯名帳戶 •12"],
   "HSBC Credit •07": ["汇丰信用卡 •07","滙豐信用卡 •07"],
-  "Lloyds Current •34": ["劳埃德活期账户 •34","勞埃德活期賬戶 •34"],
-  "Trading 212 •21": ["Trading 212 投资账户 •21","Trading 212 投資賬戶 •21"],
+  "Lloyds Current •34": ["劳埃德活期账户 •34","勞埃德活期帳戶 •34"],
+  "Trading 212 •21": ["Trading 212 投资账户 •21","Trading 212 投資帳戶 •21"],
   "American Express •08": ["美国运通信用卡 •08","美國運通信用卡 •08"],
   "Amex": ["美国运通","美國運通"],
   "American Express PDF": ["美国运通 PDF","美國運通 PDF"],
-  "Moomoo •32": ["Moomoo 投资账户 •32","Moomoo 投資賬戶 •32"],
+  "Moomoo •32": ["Moomoo 投资账户 •32","Moomoo 投資帳戶 •32"],
   "Moomoo": ["Moomoo 证券","Moomoo 證券"],
   "Moomoo PDF": ["Moomoo 月结单 PDF","Moomoo 月結單 PDF"],
   "Net worth": ["净资产","淨資產"],
   "Your whole financial picture": ["完整财务概览","完整財務概覽"],
-  "Connected accounts": ["已连接账户","已連接賬戶"],
-  "5 bank accounts · 2 brokers": ["5 个银行账户 · 2 家券商","5 個銀行賬戶 · 2 家券商"],
+  "Connected accounts": ["已连接账户","已連接帳戶"],
+  "5 bank accounts · 2 brokers": ["5 个银行账户 · 2 家券商","5 個銀行帳戶 · 2 家券商"],
   "Holdings + broker cash": ["持仓 + 券商现金","持倉 + 券商現金"],
   "Spending": ["支出","支出"],
   "Recurring payments": ["定期付款","定期付款"],
@@ -25,32 +25,32 @@ export const financeCopy = {
   "Bank balances + investments − credit debt": ["银行余额 + 投资 − 信用卡债务","銀行餘額 + 投資 − 信用卡債務"],
   "Example snapshot · 18 Aug 2026 · GBP": ["示例快照 · 2026 年 8 月 18 日 · 英镑","示例快照 · 2026 年 8 月 18 日 · 英鎊"],
   "BANK BALANCES": ["银行余额","銀行餘額"],
-  "Positive bank balances": ["银行账户正余额","銀行賬戶正餘額"],
+  "Positive bank balances": ["银行账户正余额","銀行帳戶正餘額"],
   "INVESTMENTS": ["投资","投資"],
   "CREDIT DEBT": ["信用卡债务","信用卡債務"],
   "Deducted from net worth": ["从净资产中扣除","從淨資產中扣除"],
-  "CHOOSE YOUR ACCOUNTS": ["选择账户","選擇賬戶"],
-  "What counts towards net worth?": ["哪些账户计入净资产？","哪些賬戶計入淨資產？"],
-  "Balances are counted once. Imported history and a connected account must not become two separate assets.": ["每笔余额只计算一次。导入历史和已连接账户不得作为两项资产重复计算。","每筆餘額只計算一次。導入歷史和已連接賬戶不得作為兩項資產重複計算。"],
+  "CHOOSE YOUR ACCOUNTS": ["选择账户","選擇帳戶"],
+  "What counts towards net worth?": ["哪些账户计入净资产？","哪些帳戶計入淨資產？"],
+  "Balances are counted once. Imported history and a connected account must not become two separate assets.": ["每笔余额只计算一次。导入历史和已连接账户不得作为两项资产重复计算。","每筆餘額只計算一次。匯入歷史和已連接帳戶不得作為兩項資產重複計算。"],
   "ONE PLACE FOR YOUR MONEY": ["集中管理资金","集中管理資金"],
   "From balances to better decisions": ["从余额到财务决策","從餘額到財務決策"],
-  "Bank and credit accounts": ["银行及信用卡账户","銀行及信用卡賬戶"],
-  "Lunch Flow feeds, pending payments and retained statement history.": ["Lunch Flow 数据、待处理付款和保留的历史账单。","Lunch Flow 數據、待處理付款和保留的歷史賬單。"],
-  "Trading platforms": ["交易平台","交易平臺"],
-  "Trading 212 and Moomoo: read-only investment connections, holdings and account values.": ["Trading 212 和 Moomoo：只读投资连接、持仓与账户价值。","Trading 212 和 Moomoo：只讀投資連接、持倉與賬戶價值。"],
+  "Bank and credit accounts": ["银行及信用卡账户","銀行及信用卡帳戶"],
+  "Lunch Flow feeds, pending payments and retained statement history.": ["Lunch Flow 数据、待处理付款和保留的历史账单。","Lunch Flow 資料、待處理付款和保留的歷史帳單。"],
+  "Trading platforms": ["交易平台","交易平台"],
+  "Trading 212 and Moomoo: read-only investment connections, holdings and account values.": ["Trading 212 和 Moomoo：只读投资连接、持仓与账户价值。","Trading 212 和 Moomoo：只讀投資連接、持倉與帳戶價值。"],
   "Recurring payment checker": ["定期付款检查","定期付款檢查"],
-  "Find regular bills, estimate monthly commitments and flag changing prices.": ["发现定期账单、估算每月付款并标记价格变化。","發現定期賬單、估算每月付款並標記價格變化。"],
+  "Find regular bills, estimate monthly commitments and flag changing prices.": ["发现定期账单、估算每月付款并标记价格变化。","發現定期帳單、估算每月付款並標記價格變化。"],
   "EXAMPLE CONNECTIONS": ["示例连接","示例連接"],
-  "5 bank accounts · 2 trading platforms": ["5 个银行账户 · 2 个交易平台","5 個銀行賬戶 · 2 個交易平臺"],
-  "All accounts": ["全部账户","全部賬戶"],
-  "Bank accounts": ["银行账户","銀行賬戶"],
+  "5 bank accounts · 2 trading platforms": ["5 个银行账户 · 2 个交易平台","5 個銀行帳戶 · 2 個交易平台"],
+  "All accounts": ["全部账户","全部帳戶"],
+  "Bank accounts": ["银行账户","銀行帳戶"],
   "SnapTrade · read-only": ["SnapTrade · 只读","SnapTrade · 只讀"],
-  "Lunch Flow · bank feed": ["Lunch Flow · 银行数据","Lunch Flow · 銀行數據"],
-  "Sample connection states only. The real app caches account activity, tracks connection health and preserves imported statement history.": ["仅展示示例连接状态。实际应用缓存账户活动、跟踪连接状态并保留导入的账单历史。","僅展示示例連接狀態。實際應用緩存賬戶活動、跟蹤連接狀態並保留導入的賬單歷史。"],
-  "Both platforms": ["两个平台","兩個平臺"],
-  "ACCOUNT VALUE": ["账户价值","賬戶價值"],
+  "Lunch Flow · bank feed": ["Lunch Flow · 银行数据","Lunch Flow · 銀行資料"],
+  "Sample connection states only. The real app caches account activity, tracks connection health and preserves imported statement history.": ["仅展示示例连接状态。实际应用缓存账户活动、跟踪连接状态并保留导入的账单历史。","僅展示示例連接狀態。實際應用快取帳戶活動、跟蹤連接狀態並保留匯入的帳單歷史。"],
+  "Both platforms": ["两个平台","兩個平台"],
+  "ACCOUNT VALUE": ["账户价值","帳戶價值"],
   "BROKER CASH": ["券商现金","券商現金"],
-  "Included in account value": ["已计入账户价值","已計入賬戶價值"],
+  "Included in account value": ["已计入账户价值","已計入帳戶價值"],
   "OPEN POSITION GAIN": ["未平仓盈亏","未平倉盈虧"],
   "Sample prices, before fees": ["示例价格，未扣费用","示例價格，未扣費用"],
   "READ-ONLY PORTFOLIO": ["只读投资组合","只讀投資組合"],
@@ -59,23 +59,23 @@ export const financeCopy = {
   "Shares": ["股数","股數"],
   "Cost": ["成本","成本"],
   "Market value": ["市值","市值"],
-  "No holdings in this example account; its cash still contributes to net worth.": ["此示例账户没有持仓；其现金仍计入净资产。","此示例賬戶沒有持倉；其現金仍計入淨資產。"],
-  "The real investment workspace also includes saved activity, orders, allocation and dated snapshots. Example securities and prices here are fictional.": ["实际投资界面还提供已保存的活动、订单、资产配置和历史快照。此处证券与价格均为虚构。","實際投資界面還提供已保存的活動、訂單、資產配置和歷史快照。此處證券與價格均為虛構。"],
-  "All seven accounts": ["全部七个账户","全部七個賬戶"],
+  "No holdings in this example account; its cash still contributes to net worth.": ["此示例账户没有持仓；其现金仍计入净资产。","此示例帳戶沒有持倉；其現金仍計入淨資產。"],
+  "The real investment workspace also includes saved activity, orders, allocation and dated snapshots. Example securities and prices here are fictional.": ["实际投资界面还提供已保存的活动、订单、资产配置和历史快照。此处证券与价格均为虚构。","實際投資介面還提供已保存的活動、訂單、資產配置和歷史快照。此處證券與價格均為虛構。"],
+  "All seven accounts": ["全部七个账户","全部七個帳戶"],
   "Bank balances reconcile": ["银行余额核对一致","銀行餘額核對一致"],
-  "Example ledger: balance checks": ["示例账本：余额检查","示例賬本：餘額檢查"],
+  "Example ledger: balance checks": ["示例账本：余额检查","示例帳本：餘額檢查"],
   "Your money, connected": ["连接你的财务","連接你的財務"],
   "Bring bank balances, investments, debt and recurring payments into one financial picture.": ["将银行余额、投资、债务和定期付款汇集为完整财务概览。","將銀行餘額、投資、債務和定期付款彙集為完整財務概覽。"],
-  "Toggle accounts in Net worth, inspect both trading platforms, then check recurring payments for price changes.": ["在净资产中切换账户，查看两个交易平台，再检查定期付款中的价格变化。","在淨資產中切換賬戶，查看兩個交易平臺，再檢查定期付款中的價格變化。"],
+  "Toggle accounts in Net worth, inspect both trading platforms, then check recurring payments for price changes.": ["在净资产中切换账户，查看两个交易平台，再检查定期付款中的价格变化。","在淨資產中切換帳戶，查看兩個交易平台，再檢查定期付款中的價格變化。"],
   "Debt reduces net worth; broker cash and holdings count once. Every amount here is fictional.": ["债务会减少净资产；券商现金和持仓只计算一次。此处所有金额均为虚构。","債務會減少淨資產；券商現金和持倉只計算一次。此處所有金額均為虛構。"],
-  "Explore Ledger’s connected-finance workflow with fictional balances. No live bank connections or private data.": ["通过虚构余额体验 Ledger 的账户连接流程。不连接真实银行，也不使用私人数据。","通過虛構餘額體驗 Ledger 的賬戶連接流程。不連接真實銀行，也不使用私人數據。"],
+  "Explore Ledger’s connected-finance workflow with fictional balances. No live bank connections or private data.": ["通过虚构余额体验 Ledger 的账户连接流程。不连接真实银行，也不使用私人数据。","通過虛構餘額體驗 Ledger 的帳戶連接流程。不連接真實銀行，也不使用私人資料。"],
   "Flagged records: {0}, including duplicate evidence": [
     "已标记记录：{0} 条，包含疑似重复的依据",
     "已標記紀錄：{0} 筆，包含疑似重複的依據"
   ],
   "Harbour Current •01": [
     "Harbour 活期账户 •01",
-    "Harbour 活期賬戶 •01"
+    "Harbour 活期帳戶 •01"
   ],
   "Harbour": [
     "Harbour",
@@ -83,7 +83,7 @@ export const financeCopy = {
   ],
   "Tide Joint •12": [
     "Tide 联名账户 •12",
-    "Tide 聯名賬戶 •12"
+    "Tide 聯名帳戶 •12"
   ],
   "Tide": [
     "Tide",
@@ -99,7 +99,7 @@ export const financeCopy = {
   ],
   "Quay Current •34": [
     "Quay 活期账户 •34",
-    "Quay 活期賬戶 •34"
+    "Quay 活期帳戶 •34"
   ],
   "Quay": [
     "Quay",
@@ -107,7 +107,7 @@ export const financeCopy = {
   ],
   "Atlas Invest •21": [
     "Atlas 投资账户 •21",
-    "Atlas 投資賬戶 •21"
+    "Atlas 投資帳戶 •21"
   ],
   "Atlas": [
     "Atlas",
@@ -159,7 +159,7 @@ export const financeCopy = {
   ],
   "PORTFOLIO FUNDING TO ATLAS": [
     "向 ATLAS 投资账户入金",
-    "向 ATLAS 投資賬戶入金"
+    "向 ATLAS 投資帳戶入金"
   ],
   "PORTFOLIO FUNDING FROM HARBOUR": [
     "来自 HARBOUR 的投资入金",
@@ -199,11 +199,11 @@ export const financeCopy = {
   ],
   "ONLINE BANK PAYMENT": [
     "网银转账付款",
-    "網銀轉賬付款"
+    "網銀轉帳付款"
   ],
   "BANK CREDIT RECEIVED": [
     "收到银行入账",
-    "收到銀行入賬"
+    "收到銀行入帳"
   ],
   "CANAL KITCHEN": [
     "CANAL KITCHEN",
@@ -231,11 +231,11 @@ export const financeCopy = {
   ],
   "Reconciled cash flow": [
     "已对账的现金流",
-    "已對賬的現金流"
+    "已對帳的現金流"
   ],
   "Ledger": [
     "账本",
-    "賬本"
+    "帳本"
   ],
   "Why each category": [
     "分类依据",
@@ -251,11 +251,11 @@ export const financeCopy = {
   ],
   "Transfers": [
     "转账",
-    "轉賬"
+    "轉帳"
   ],
   "Cross-account matching": [
     "跨账户匹配",
-    "跨賬戶匹配"
+    "跨帳戶匹配"
   ],
   "Import checks": [
     "导入检查",
@@ -291,7 +291,7 @@ export const financeCopy = {
   ],
   "Bills & utilities": [
     "账单与公共服务",
-    "賬單與公共服務"
+    "帳單與公共服務"
   ],
   "Subscriptions": [
     "订阅",
@@ -303,7 +303,7 @@ export const financeCopy = {
   ],
   "Transfers & payments": [
     "转账与还款",
-    "轉賬與還款"
+    "轉帳與還款"
   ],
   "Investments": [
     "投资",
@@ -315,11 +315,11 @@ export const financeCopy = {
   ],
   "ACCOUNT MOVE": [
     "账户间转移",
-    "賬戶間轉移"
+    "帳戶間轉移"
   ],
   "PORTFOLIO FUNDING": [
     "投资账户入金",
-    "投資賬戶入金"
+    "投資帳戶入金"
   ],
   "CARD SETTLEMENT": [
     "信用卡还款",
@@ -327,7 +327,7 @@ export const financeCopy = {
   ],
   "SELF TRANSFER": [
     "本人账户转账",
-    "本人賬戶轉賬"
+    "本人帳戶轉帳"
   ],
   "Unusually large for {0}": [
     "相较于{0}类别，金额异常偏高",
@@ -387,11 +387,11 @@ export const financeCopy = {
   ],
   "Account scope": [
     "账户范围",
-    "賬戶範圍"
+    "帳戶範圍"
   ],
   "All five accounts": [
     "全部五个账户",
-    "全部五個賬戶"
+    "全部五個帳戶"
   ],
   "Anchor": [
     "基准日期",
@@ -403,7 +403,7 @@ export const financeCopy = {
   ],
   "SCOPE POSITION": [
     "所选账户净值",
-    "所選賬戶淨值"
+    "所選帳戶淨值"
   ],
   "At anchor; cash + holdings, debt negative": [
     "截至基准日期；现金加持仓，债务计为负数",
@@ -415,7 +415,7 @@ export const financeCopy = {
   ],
   "{0}-day eligible ledger": [
     "{0} 天内符合条件的账本记录",
-    "{0} 天內符合條件的賬本記錄"
+    "{0} 天內符合條件的帳本記錄"
   ],
   "HOUSEHOLD OUTFLOWS": [
     "家庭现金流出",
@@ -439,7 +439,7 @@ export const financeCopy = {
   ],
   "ONE LEDGER · ONE RESULT": [
     "同一账本 · 一致结果",
-    "同一賬本 · 一致結果"
+    "同一帳本 · 一致結果"
   ],
   "Income versus spending": [
     "收入与支出",
@@ -487,11 +487,11 @@ export const financeCopy = {
   ],
   "transfer groups neutralised": [
     "组转账已抵销",
-    "組轉賬已抵銷"
+    "組轉帳已抵銷"
   ],
   "moved once between accounts; both legs stay outside income and spending.": [
     "在账户间转移一次；两端记录均不计入收入与支出。",
-    "在賬戶間轉移一次；兩端記錄均不計入收入與支出。"
+    "在帳戶間轉移一次；兩端記錄均不計入收入與支出。"
   ],
   "Review queue has evidence": [
     "待检查记录有具体依据",
@@ -507,11 +507,11 @@ export const financeCopy = {
   ],
   "Four bank adapters reconcile": [
     "四种银行适配器均已对账",
-    "四種銀行解析器均已對賬"
+    "四種銀行解析器均已對帳"
   ],
   "Opening + normalised movements = closing. The investment CSV is treated as a cash ledger.": [
     "期初余额 + 标准化资金变动 = 期末余额。投资 CSV 按现金账本处理。",
-    "期初餘額 + 標準化資金變動 = 期末餘額。投資 CSV 按現金賬本處理。"
+    "期初餘額 + 標準化資金變動 = 期末餘額。投資 CSV 按現金帳本處理。"
   ],
   "LIABILITY-AWARE": [
     "考虑负债",
@@ -519,7 +519,7 @@ export const financeCopy = {
   ],
   "Account reconciliation": [
     "账户对账",
-    "賬戶對賬"
+    "帳戶對帳"
   ],
   "debt normalised negative": [
     "债务统一显示为负数",
@@ -539,7 +539,7 @@ export const financeCopy = {
   ],
   "Synthetic ledger": [
     "合成示例账本",
-    "合成示例賬本"
+    "合成示例帳本"
   ],
   "rows": [
     "条记录",
@@ -551,7 +551,7 @@ export const financeCopy = {
   ],
   "Merchant, category, account…": [
     "商户、类别、账户…",
-    "商戶、類別、賬戶…"
+    "商戶、類別、帳戶…"
   ],
   "Category": [
     "类别",
@@ -575,7 +575,7 @@ export const financeCopy = {
   ],
   "Transfers + investment churn": [
     "转账与投资资金流转",
-    "轉賬與投資資金流轉"
+    "轉帳與投資資金流轉"
   ],
   "Date": [
     "日期",
@@ -583,7 +583,7 @@ export const financeCopy = {
   ],
   "Account": [
     "账户",
-    "賬戶"
+    "帳戶"
   ],
   "Description": [
     "描述",
@@ -635,7 +635,7 @@ export const financeCopy = {
   ],
   "Transfer group": [
     "转账分组",
-    "轉賬分組"
+    "轉帳分組"
   ],
   "Not matched": [
     "未匹配",
@@ -655,7 +655,7 @@ export const financeCopy = {
   ],
   "A provider transaction ID identifies a row when available. Otherwise its date, amount, description and occurrence within the statement form the duplicate check.": [
     "有提供方交易标识时，用它识别记录。否则，使用日期、金额、描述及其在账单中出现的次数进行重复检查。",
-    "有提供方交易標識時，用它識別記錄。否則，使用日期、金額、描述及其在賬單中出現的次數進行重複檢查。"
+    "有提供方交易標識時，用它識別記錄。否則，使用日期、金額、描述及其在帳單中出現的次數進行重複檢查。"
   ],
   "Select a transaction.": [
     "选择一笔交易。",
@@ -663,7 +663,7 @@ export const financeCopy = {
   ],
   "LIVE PARAMETERS": [
     "可调参数",
-    "可調引數"
+    "可調參數"
   ],
   "Reset": [
     "重置",
@@ -775,7 +775,7 @@ export const financeCopy = {
   ],
   "Cross-account matcher": [
     "跨账户匹配器",
-    "跨賬戶匹配器"
+    "跨帳戶匹配器"
   ],
   "Date window": [
     "日期窗口",
@@ -791,7 +791,7 @@ export const financeCopy = {
   ],
   "Generic “account move”, “funding” or “settlement” tokens. Amount equality remains mandatory.": [
     "检查“账户转移”“入金”或“结算”等通用描述。金额相等仍是必要条件。",
-    "檢查“賬戶轉移”“入金”或“結算”等通用描述。金額相等仍是必要條件。"
+    "檢查“帳戶轉移”“入金”或“結算”等通用描述。金額相等仍是必要條件。"
   ],
   "SCORE": [
     "评分",
@@ -799,11 +799,11 @@ export const financeCopy = {
   ],
   "Transfer matching score": [
     "转账匹配评分",
-    "轉賬匹配評分"
+    "轉帳匹配評分"
   ],
   "Greedy one-to-one matching prevents an incoming row from being reused. Same-account pairs are rejected.": [
     "贪心一对一匹配防止重复使用同一条入账记录，并排除同一账户内部的配对。",
-    "貪心一對一匹配防止重複使用同一條入賬記錄，並排除同一賬戶內部的配對。"
+    "貪心一對一匹配防止重複使用同一條入帳記錄，並排除同一帳戶內部的配對。"
   ],
   "MATCHES": [
     "匹配数",
@@ -815,11 +815,11 @@ export const financeCopy = {
   ],
   "LEDGER LEGS": [
     "账本两端记录",
-    "賬本兩端記錄"
+    "帳本兩端記錄"
   ],
   "ROUTE EVIDENCE": [
     "转账路径依据",
-    "轉賬路徑依據"
+    "轉帳路徑依據"
   ],
   "Matched money flows": [
     "已匹配的资金流",
@@ -847,7 +847,7 @@ export const financeCopy = {
   ],
   "Each card represents two ledger rows but counts the moved amount once. The accounting exclusion removes both legs, preventing artificial income and spending.": [
     "每张卡片对应两条账本记录，但转移金额只计算一次。会计处理时排除两端记录，避免虚增收入与支出。",
-    "每張卡片對應兩條賬本記錄，但轉移金額只計算一次。會計處理時排除兩端記錄，避免虛增收入與支出。"
+    "每張卡片對應兩條帳本記錄，但轉移金額只計算一次。會計處理時排除兩端記錄，避免虛增收入與支出。"
   ],
   "PENNY-CLOSE CONTROL": [
     "便士级余额检查",
@@ -855,7 +855,7 @@ export const financeCopy = {
   ],
   "Separate 51-row ledger: balance checks": [
     "独立的 51 条记录账本：余额检查",
-    "獨立的 51 條記錄賬本：餘額檢查"
+    "獨立的 51 條記錄帳本：餘額檢查"
   ],
   "Adapter": [
     "适配器",
@@ -887,11 +887,11 @@ export const financeCopy = {
   ],
   "CASH LEDGER": [
     "现金账本",
-    "現金賬本"
+    "現金帳本"
   ],
   "✓ RECONCILED": [
     "✓ 已对账",
-    "✓ 已對賬"
+    "✓ 已對帳"
   ],
   "CHECK": [
     "检查",
@@ -899,7 +899,7 @@ export const financeCopy = {
   ],
   "Debit / current / joint": [
     "借记 / 活期 / 联名账户",
-    "借記 / 活期 / 聯名賬戶"
+    "借記 / 活期 / 聯名帳戶"
   ],
   "use opening + signed row amounts = closing.": [
     "使用期初余额 + 带正负号的交易金额 = 期末余额。",
@@ -911,7 +911,7 @@ export const financeCopy = {
   ],
   "is normalised for the portfolio so debt is negative; statement debits and credits are verified before that presentation transform.": [
     "在账户组合中统一将债务显示为负数；账单借方与贷方先经过验证，再进行这一显示转换。",
-    "在賬戶組合中統一將債務顯示為負數；賬單借方與貸方先經過驗證，再進行這一顯示轉換。"
+    "在帳戶組合中統一將債務顯示為負數；帳單借方與貸方先經過驗證，再進行這一顯示轉換。"
   ],
   "Investment CSV": [
     "投资 CSV",
@@ -919,19 +919,19 @@ export const financeCopy = {
   ],
   "has no carried statement balance. Its closing cash is opening zero or staged cash + signed actions; market holdings are valued separately.": [
     "不含结转的账单余额。其期末现金为零起始现金或预设现金，加上带正负号的交易变动；市场持仓另行估值。",
-    "不含結轉的賬單餘額。其期末現金為零起始現金或預設現金，加上帶正負號的交易變動；市場持倉另行估值。"
+    "不含結轉的帳單餘額。其期末現金為零起始現金或預設現金，加上帶正負號的交易變動；市場持倉另行估值。"
   ],
   "Bank Statement Intelligence Control Room": [
     "银行账单分析控制室",
-    "銀行賬單分析控制室"
+    "銀行帳單分析控制室"
   ],
   "SYNTHETIC · LOCAL-FIRST": [
     "合成数据 · 本地运行",
-    "合成數據 · 本地執行"
+    "合成資料 · 本地執行"
   ],
   "Trace statement identity, reconciliation status and the calculations behind a household ledger.": [
     "追踪账单标识、对账状态与家庭账本背后的计算。",
-    "追蹤賬單標識、對賬狀態與家庭賬本背後的計算。"
+    "追蹤帳單標識、對帳狀態與家庭帳本背後的計算。"
   ],
   "Import two repeated charges, replay the export, then inspect a corrected amount under the same provider ID.": [
     "导入两笔重复扣款，重新导入同一文件，再查看提供方标识相同但金额修正后的情况。",
@@ -939,15 +939,15 @@ export const financeCopy = {
   ],
   "Import receipts expose stored and skipped rows; separate controls explore recurring and transfer rules over the fictional ledger.": [
     "导入结果展示保留与跳过的记录；其他控制项在虚构账本上探索周期识别和转账规则。",
-    "匯入結果展示保留與跳過的記錄；其他控制項在虛構賬本上探索週期識別和轉賬規則。"
+    "匯入結果展示保留與跳過的記錄；其他控制項在虛構帳本上探索週期識別和轉帳規則。"
   ],
   "invented ledger rows ·": [
     "条虚构账本记录 ·",
-    "條虛構賬本記錄 ·"
+    "條虛構帳本記錄 ·"
   ],
   "fictional accounts · no file access": [
     "个虚构账户 · 不访问文件",
-    "個虛構賬戶 · 不訪問檔案"
+    "個虛構帳戶 · 不訪問檔案"
   ],
   "Holdings: cost": [
     "持仓：成本",
@@ -959,23 +959,23 @@ export const financeCopy = {
   ],
   "Example accounts and transactions": [
     "示例账户与交易",
-    "示例賬戶與交易"
+    "示例帳戶與交易"
   ],
   "Import, reconcile and categorise a fictional household ledger.": [
     "导入、对账并分类一份虚构家庭账本。",
-    "匯入、對賬並分類一份虛構家庭賬本。"
+    "匯入、對帳並分類一份虛構家庭帳本。"
   ],
   "STATEMENT IMPORT RULES": [
     "账单导入规则",
-    "賬單匯入規則"
+    "帳單匯入規則"
   ],
   "The rules behind the ledger": [
     "账本背后的规则",
-    "賬本背後的規則"
+    "帳本背後的規則"
   ],
   "Import statements into an empty ledger, or explore spending patterns across 51 example transactions.": [
     "向空账本导入账单，或探索 51 笔示例交易中的支出规律。",
-    "向空賬本匯入賬單，或探索 51 筆示例交易中的支出規律。"
+    "向空帳本匯入帳單，或探索 51 筆示例交易中的支出規律。"
   ],
   "Provider adapters": [
     "提供方适配器",
@@ -999,7 +999,7 @@ export const financeCopy = {
   ],
   "Transfer window": [
     "转账窗口",
-    "轉賬視窗"
+    "轉帳視窗"
   ],
   "3 days": [
     "3 天",
@@ -1035,7 +1035,7 @@ export const financeCopy = {
   ],
   "Internal move": [
     "内部转账",
-    "內部轉賬"
+    "內部轉帳"
   ],
   "Portfolio churn": [
     "投资资金流转",
@@ -1067,19 +1067,19 @@ export const financeCopy = {
   ],
   "HSBC Debit PDF": [
     "HSBC 借记账单 PDF",
-    "HSBC 借記賬單 PDF"
+    "HSBC 借記帳單 PDF"
   ],
   "HSBC Credit PDF": [
     "HSBC 信用卡账单 PDF",
-    "HSBC 信用卡賬單 PDF"
+    "HSBC 信用卡帳單 PDF"
   ],
   "Lloyds PDF": [
     "Lloyds 账单 PDF",
-    "Lloyds 賬單 PDF"
+    "Lloyds 帳單 PDF"
   ],
   "Revolut PDF": [
     "Revolut 账单 PDF",
-    "Revolut 賬單 PDF"
+    "Revolut 帳單 PDF"
   ],
   "Trading 212 CSV": [
     "Trading 212 交易 CSV",
@@ -1207,11 +1207,11 @@ export const financeCopy = {
   ],
   "Explore the household ledger": [
     "探索家庭账本",
-    "探索家庭賬本"
+    "探索家庭帳本"
   ],
   "Fictional ledger · local": [
     "虚构账本 · 本地运行",
-    "虛構賬本 · 本地執行"
+    "虛構帳本 · 本地執行"
   ],
   "Recorded application scale": ["应用历史规模", "應用歷史規模"],
   "What the application reconciled": ["应用完成了哪些对账工作", "應用完成了哪些對帳工作"],

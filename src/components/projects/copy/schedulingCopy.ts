@@ -403,7 +403,7 @@ export const schedulingCopy = {
   ],
   "across a time row,": [
     "在同一时间行中左右移动，使用",
-    "在同一時間行中左右移動，使用"
+    "在同一時間列中左右移動，使用"
   ],
   "within a day, and": [
     "在同一天内上下移动，使用",
@@ -411,7 +411,7 @@ export const schedulingCopy = {
   ],
   "for row edges.": [
     "跳至行首或行尾。",
-    "跳至行首或行尾。"
+    "跳至列首或列尾。"
   ],
   "moves to the first or last generated slot. Busy and outside cells remain readable; only bookable cells activate.": [
     "跳至首个或末个生成的时段。忙碌和范围外的单元格仍可读取，但只有可预约的单元格可以激活。",
@@ -462,8 +462,8 @@ export const schedulingCopy = {
     "主持人"
   ],
   "Blocked": [
-    "缓冲",
-    "緩衝"
+    "预留缓冲",
+    "預留緩衝"
   ],
   "m before +": [
     "分钟前 +",

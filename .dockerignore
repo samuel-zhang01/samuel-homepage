@@ -11,6 +11,12 @@ yarn-error.log*
 out/
 *.tsbuildinfo
 
+# Mandatory prebuild recreates these from the lockfile and public source copy.
+# Never ship stale generated assets into a clean builder context.
+/public/_vendor/
+/public/search/project-text-*.json
+/src/components/projects/katex.generated.css
+
 # Production build
 build/
 
@@ -81,6 +87,9 @@ others/localised-cv/*
 
 # Local hackathon source is evidence for authoring, not production input
 /hackathon/
+
+# The separate native application is local reference material, not site input
+/videomate/VideoMate
 
 # Test files
 __tests__/

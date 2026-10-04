@@ -7,7 +7,7 @@ export const environmentCopy = {
   ],
   "platform route": [
     "平台路径",
-    "平臺路徑"
+    "平台路徑"
   ],
   "Failure lab": [
     "故障实验",
@@ -167,7 +167,7 @@ export const environmentCopy = {
   ],
   "Resolve the platform artifact first.": [
     "请先解决平台安装包的问题。",
-    "請先解決平臺安裝包的問題。"
+    "請先解決平台安裝包的問題。"
   ],
   "torch + torchvision · default index": [
     "torch + torchvision · 默认索引",
@@ -267,7 +267,7 @@ export const environmentCopy = {
   ],
   "Platform boundary": [
     "平台限制",
-    "平臺限制"
+    "平台限制"
   ],
   "Existing environment retained": [
     "保留现有环境",
@@ -303,7 +303,7 @@ export const environmentCopy = {
   ],
   "The repository contains implementation logic, but no CI job or retained installation log that demonstrates all platform branches.": [
     "仓库包含实现逻辑，但没有覆盖所有平台分支的持续集成任务或保留的安装日志。",
-    "倉庫包含實現邏輯，但沒有覆蓋所有平臺分支的持續整合任務或保留的安裝日誌。"
+    "倉庫包含實現邏輯，但沒有覆蓋所有平台分支的持續整合任務或保留的安裝日誌。"
   ],
   "Planning only": [
     "仅作规划",
@@ -551,7 +551,7 @@ export const environmentCopy = {
   ],
   "PLATFORM": [
     "平台",
-    "平臺"
+    "平台"
   ],
   "RESOLUTION PIPELINE": [
     "解析流程",
@@ -995,7 +995,7 @@ export const environmentCopy = {
   ],
   "Platform routing": [
     "平台路径",
-    "平臺路徑"
+    "平台路徑"
   ],
   "Follow the decision from operating system and architecture to a package artifact and accelerator route.": [
     "从操作系统和架构出发，追踪如何选择安装包与加速器路径。",
@@ -1027,7 +1027,7 @@ export const environmentCopy = {
   ],
   "Cross-platform success": [
     "跨平台成功率",
-    "跨平臺成功率"
+    "跨平台成功率"
   ],
   "No CI matrix or retained installation logs prove every OS, wheel and CUDA branch.": [
     "没有持续集成矩阵或保留的安装日志，能够证明每个操作系统、wheel 包和 CUDA 分支均可运行。",
@@ -1151,7 +1151,7 @@ export const environmentCopy = {
   ],
   "A production installer would need a tested platform matrix, pinned dependencies, artifact integrity checks and retained device-verification results.": [
     "生产安装程序需要经过测试的平台矩阵、固定的依赖版本、安装包完整性检查，以及保留的设备验证结果。",
-    "生產安裝程式需要經過測試的平臺矩陣、固定的依賴版本、安裝包完整性檢查，以及保留的裝置驗證結果。"
+    "生產安裝程式需要經過測試的平台矩陣、固定的依賴版本、安裝包完整性檢查，以及保留的裝置驗證結果。"
   ],
   "PROJECT CONTRIBUTION": [
     "项目贡献",
@@ -1207,7 +1207,7 @@ export const environmentCopy = {
   ],
   "Explore how platform, accelerator and fallback choices shape a deep-learning environment. The rules reflect a December 2025 installer; use the comparison to understand its design, not to choose current package versions.": [
     "探索平台、加速器和回退选择如何塑造深度学习环境。规则来自 2025 年 12 月的安装程序；通过对照理解设计，不以此选择当前软件包版本。",
-    "探索平臺、加速器和回退選擇如何塑造深度學習環境。規則來自 2025 年 12 月的安裝程式；通過對照理解設計，不以此選擇當前軟體包版本。"
+    "探索平台、加速器和回退選擇如何塑造深度學習環境。規則來自 2025 年 12 月的安裝程式；通過對照理解設計，不以此選擇當前軟體包版本。"
   ],
   "NO INSTALL · NO DEVICE ACCESS": [
     "不安装 · 不访问设备",
@@ -1279,7 +1279,7 @@ export const environmentCopy = {
   ],
   "Platform gate": [
     "平台检查",
-    "平臺檢查"
+    "平台檢查"
   ],
   "MPS-capable package": [
     "支持 MPS 的软件包",
@@ -1479,7 +1479,7 @@ export const environmentCopy = {
   ],
   "Platform": [
     "平台",
-    "平臺"
+    "平台"
   ],
   "Artifact": [
     "安装包",

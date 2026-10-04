@@ -494,7 +494,7 @@ export const projects: Project[] = [
     demo: "mri-trust",
     sourceUrl: "https://github.com/samuel-zhang01/IX-Medical-Imaging/tree/93bc9cd3e1175ed08a6d99a3443bdec3f1214f1e",
     sourceLicence: "none-declared",
-    privacyNote: "The demo uses reported aggregate results and synthetic illustrations. It contains no patient images and is an educational research demonstration, not a diagnostic tool. The linked public code has no explicit licence.",
+    privacyNote: "The demo includes a saved reconstruction figure from the public study repository, reported aggregate results and synthetic illustrations. It does not load raw MRI datasets or trained model weights. This educational research demonstration is not a diagnostic tool. The linked public code has no explicit licence.",
     visual: "vision",
   },
   {

@@ -42,6 +42,32 @@ including the licence. Keep the licence beside the files if redistributing that
 directory independently. PDF documents displayed by the viewer are separate
 content and do not inherit PDF.js's licence.
 
+## Development lint dependency replacement
+
+Reviewed on 4 October 2026: `@next/eslint-plugin-next` remains **15.5.25**, with
+its original rule implementations and App Router coverage. Its `fast-glob`
+dependency is replaced only within that package by an npm alias to
+**`tinyglobby` 0.2.17 (MIT)**, using `fdir` 6.5.0 (MIT) and `picomatch` 4.0.7
+(MIT). Their distributed licence files remain in the installed packages.
+
+This removes the `fast-glob` → `micromatch` → `braces` tooling path affected by
+[GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm).
+The advisory and registry still offer no patched `braces` release at this review.
+[tinyglobby's upstream documentation](https://github.com/SuperchupuDev/tinyglobby)
+describes its alternative glob API; it is **not** a general replacement for every
+fast-glob call. Directory symlinks and globstar base-directory results differ.
+
+This app uses Next's default single-project root, which bypasses glob expansion.
+Before ESLint runs, [the dependency gate](scripts/check-next-lint-dependency.mjs)
+rejects configured `settings.next.rootDir` in effective source configurations,
+pins the reviewed plugin/replacement versions, and checks App Router internal
+links, grouped/dynamic routes and the original Next rule settings. Adding
+configured or symlink project roots, or upgrading the plugin, requires another
+dependency review. The full moderate-threshold audit and registry-signature
+gate remain enabled; the alias tarball's locked integrity and registry signature
+were also verified independently. A fresh isolated `npm ci` reproduced the
+replacement and passed the audit and lint checks.
+
 ## Scientific methods and source attribution
 
 ### Clapeyron.jl

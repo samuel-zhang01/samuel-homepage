@@ -367,8 +367,7 @@
 .toolIndex,
 .toolInspector,
 .signalPanel,
-.neighbourPanel,
-.reconciliationPanel {
+.neighbourPanel {
   min-width: 0;
   overflow: hidden;
   border: 1px solid #5e615a;
@@ -641,16 +640,14 @@
   outline-offset: -3px;
 }
 
-.matrixPanel table,
-.reconciliationPanel table {
+.matrixPanel table {
   width: 100%;
   min-width: 620px;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-.matrixPanel caption,
-.reconciliationPanel caption {
+.matrixPanel caption {
   padding: 7px 9px;
   color: #5c6059;
   background: #e5e3db;
@@ -659,17 +656,14 @@
 }
 
 .matrixPanel th,
-.matrixPanel td,
-.reconciliationPanel th,
-.reconciliationPanel td {
+.matrixPanel td {
   padding: 7px;
   border-right: 1px solid #aaa9a2;
   border-bottom: 1px solid #aaa9a2;
   text-align: center;
 }
 
-.matrixPanel tr > *:last-child,
-.reconciliationPanel tr > *:last-child {
+.matrixPanel tr > *:last-child {
   border-right: 0;
 }
 
@@ -1574,47 +1568,6 @@
 .ledgerHero dd {
   margin: 3px 0 0;
   font: 700 var(--s7-title)/1.4 var(--s7-font-text);
-}
-
-.reconciliationPanel {
-  margin-bottom: 9px;
-}
-
-.reconciliationPanel table {
-  min-width: 680px;
-}
-
-.reconciliationPanel thead th {
-  color: #fff;
-  background: var(--pm-blue);
-  font-size: var(--s7-small);
-}
-
-.reconciliationPanel thead th:first-child { width: 22%; }
-.reconciliationPanel thead th:nth-child(2) { width: 10%; }
-.reconciliationPanel thead th:nth-child(3) { width: 25%; }
-
-.reconciliationPanel tbody th,
-.reconciliationPanel tbody td {
-  text-align: left;
-  vertical-align: top;
-  font-size: var(--s7-small);
-  line-height: 1.4;
-}
-
-.reconciliationPanel tbody td:nth-child(2) {
-  color: var(--pm-blue);
-  font: 700 var(--s7-small)/1.4 var(--s7-font-text);
-  text-align: center;
-}
-
-.reconciliationPanel tbody td code {
-  color: var(--pm-blue);
-  font: 700 var(--s7-small)/1.4 var(--s7-font-mono);
-}
-
-.reconciliationPanel tbody tr:nth-child(even) {
-  background: #eeece5;
 }
 
 .definitionGrid {

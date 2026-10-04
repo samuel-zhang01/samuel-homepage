@@ -47,6 +47,18 @@ assert.equal(projectText("zh-TW", copy, "Status · ready"), "狀態 · 就緒", 
 assert.equal(projectText("zh-TW", copy, "Status"), "狀態", "an explicitly registered optional template fragment may be empty");
 assert.equal(projectText("zh-CN", copy, "Unknown formula x = 2"), "Unknown formula x = 2");
 assert.equal(projectText("en-GB", copy, "{count} of {total} samples", { count: 3, total: 12 }), "3 of 12 samples");
+// Imported descriptions and template values are text, including Object names.
+for (const locale of ["en-GB", "en-US", "zh-CN", "zh-TW"]) {
+  for (const source of ["constructor", "__proto__", "toString", "hasOwnProperty"]) {
+    assert.equal(translateText(locale, `  ${source} \n`), `  ${source} \n`);
+    assert.equal(projectText(locale, copy, source), source);
+  }
+  assert.equal(projectText(locale, copy, "{constructor}", {}), "{constructor}", "absent placeholders retain their authored token");
+}
+assert.equal(projectText("zh-TW", copy, "Selected: constructor"), "已選：constructor");
+const ownNameCopy = Object.fromEntries([["constructor", ["建構函式", "建構函式"]], ["__proto__", ["原型", "原型"]]]);
+assert.equal(projectText("zh-TW", ownNameCopy, "constructor"), "建構函式", "explicitly authored Object names still translate");
+assert.equal(projectText("zh-TW", ownNameCopy, "__proto__"), "原型");
 const source = React.createElement("section", { lang: "en-GB", title: "Ready", "aria-label": "Ready" },
   React.createElement("p", null, 3, " of ", 12, " samples"),
   React.createElement("code", null, "Ready"),
@@ -69,12 +81,15 @@ assert.equal(math.props.tex, String.raw`x_{\mathrm{Ready}}=2`);
 assert.equal(math.props.label, "就緒");
 
 const directory = resolve(root, "src/components/projects/copy");
+const auditDirectory = resolve(root, "scripts/fixtures/project-copy-audits");
 const placeholders = (text) => [...text.matchAll(/\{([a-zA-Z0-9_]+)\}/g)].map((match) => match[1]).sort().join(",");
 const errors = [];
 let entryCount = 0;
 let sourceCount = 0;
-for (const name of readdirSync(directory).filter((name) => name.endsWith(".audit.json"))) {
-  const audit = JSON.parse(readFileSync(resolve(directory, name), "utf8"));
+const auditFiles = readdirSync(auditDirectory).filter((name) => name.endsWith(".audit.json"));
+assert.ok(auditFiles.length > 0, "Project copy audit receipts must be present; an empty registry cannot validate coverage.");
+for (const name of auditFiles) {
+  const audit = JSON.parse(readFileSync(resolve(auditDirectory, name), "utf8"));
   const table = load(resolve(directory, audit.dictionary))[audit.exportName];
   assert.ok(table && typeof table === "object", `${name}: dictionary export exists`);
   const identities = audit.identities ?? {};

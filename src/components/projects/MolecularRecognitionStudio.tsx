@@ -921,7 +921,7 @@ export function MolecularRecognitionStudio() {
                   </div>
                 </div>
 
-                <div className={styles.metricRail} aria-label="Current comparison metrics">
+                <div role="group" className={styles.metricRail} aria-label="Current comparison metrics">
                   <div><span>Matched lines</span><strong>{matches.length}<small>/{candidate.lines.length}</small></strong></div>
                   <div><span>RMS residual</span><strong>{rms === null ? "—" : rms.toFixed(1)}<small> kHz</small></strong></div>
                   <div><span>Frequency window</span><strong>{chartRange[0].toFixed(chartRange[1] - chartRange[0] < 10 ? 3 : 0)}<small> → {chartRange[1].toFixed(chartRange[1] - chartRange[0] < 10 ? 3 : 0)}</small></strong></div>
@@ -1153,7 +1153,7 @@ export function MolecularRecognitionStudio() {
               <div><span>From molecular shape to assignment</span><h3>How the research connects theory and measurement</h3><p>Conformer searches narrow the candidate shapes; predicted rotational fingerprints are then compared with broadband measurements. Several consistent lines provide a stronger assignment than one nearby peak.</p></div>
             </div>
 
-            <div className={styles.pipeline} aria-label="Molecular recognition research pipeline">
+            <div role="group" className={styles.pipeline} aria-label="Molecular recognition research pipeline">
               {pipeline.map((stage, index) => (
                 <button key={stage.number} type="button" aria-pressed={pipelineStage === index} onClick={() => setPipelineStage(index)}>
                   <span>{stage.number}</span><strong>{stage.title}</strong><small>{stage.tag}</small>
@@ -1190,7 +1190,7 @@ export function MolecularRecognitionStudio() {
 
             <section className={styles.claimLedger} aria-labelledby="claim-ledger-title">
               <div className={styles.claimHeader}><div><span>Reading an assignment</span><h4 id="claim-ledger-title">Use several checks together</h4></div><p>A small residual is helpful only when enough lines are explained and the proposed structure is physically plausible.</p></div>
-              <div className={styles.claimTableWrap} tabIndex={0} aria-label="Scrollable spectral assignment guide"><table>
+              <div role="group" className={styles.claimTableWrap} tabIndex={0} aria-label="Scrollable spectral assignment guide"><table>
                 <caption>What each comparison contributes</caption>
                 <thead><tr><th scope="col">Check</th><th scope="col">What it asks</th><th scope="col">Useful caution</th></tr></thead>
                 <tbody>

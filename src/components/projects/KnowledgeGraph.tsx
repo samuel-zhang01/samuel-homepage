@@ -577,7 +577,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     <header className={styles.header}>
       <div><p>{t("Pick a subject or date, then click through to a project. Each one has a write-up or demo.")}</p></div>
       <div className={styles.searchContainer}><label className={styles.search}><span>{t("Find a subject, project or experience")}</span><input type="search" value={query} placeholder={t("Try Fourier, chemistry, Pfizer…")} onChange={(event) => { setQuery(event.target.value); setResultLimit(12); }} onKeyDown={(event) => { if (event.key === "Escape") setQuery(""); if (event.key === "Enter" && searchResults[0]) { event.preventDefault(); select(searchResults[0].id, true, true); } }} /></label>
-        {query.trim() && <div className={styles.searchResults} aria-label={t("Search results")}><span aria-live="polite">{searchResults.length} {t("matches")}</span>{searchResults.slice(0, 8).map((result) => <button key={result.id} onClick={() => select(result.id, true, true)}><strong>{t(result.label)}</strong><small>{t(kindLabels[result.kind])}</small></button>)}{searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}{searchResults.length > 8 && <button onClick={browseConnections}>{t("Browse all connections")} ↓</button>}</div>}
+        {query.trim() && <div role="group" className={styles.searchResults} aria-label={t("Search results")}><span aria-live="polite">{searchResults.length} {t("matches")}</span>{searchResults.slice(0, 8).map((result) => <button key={result.id} onClick={() => select(result.id, true, true)}><strong>{t(result.label)}</strong><small>{t(kindLabels[result.kind])}</small></button>)}{searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}{searchResults.length > 8 && <button onClick={browseConnections}>{t("Browse all connections")} ↓</button>}</div>}
       </div>
     </header>
     <nav className={styles.topics} aria-label={t("Explore a subject")}>
@@ -587,7 +587,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
     <div className={styles.workspace}>
       <div className={styles.visual}>
         <nav className={styles.breadcrumb} aria-label={t("Exploration path")}><button onClick={reset}>{t("All work")}</button>{trail.map((id, index) => <span key={id}><span aria-hidden="true">›</span><button aria-current={index === trail.length - 1 ? "location" : undefined} onClick={() => { select(id, false); setTrail(trail.slice(0, index + 1)); }}>{t(nodeById.get(id)!.shortLabel)}</button></span>)}</nav>
-        <div className={styles.toolbar} aria-label={t("Map controls")}>
+        <div role="group" className={styles.toolbar} aria-label={t("Map controls")}>
           <div role="group" aria-label={t("Projection")}><button className="mac-button" aria-label={t("3D view")} aria-pressed={!flat} onClick={() => setFlat(false)}>3D</button><button className="mac-button" aria-label={t("2D view")} aria-pressed={flat} onClick={() => setFlat(true)}>2D</button></div>
           <div><button className="mac-button" aria-label={t("Zoom out")} onClick={() => setCamera((current) => ({ ...current, zoom: clamp(current.zoom / 1.2, .45, 3.5) }))}>−</button><button className="mac-button" aria-label={t("Zoom in")} onClick={() => setCamera((current) => ({ ...current, zoom: clamp(current.zoom * 1.2, .45, 3.5) }))}>+</button><button className="mac-button" onClick={fit}>{t("Fit view")}</button></div>
           {selected && <button className="mac-button" onClick={() => setLocal((value) => !value)}>{t(local ? "Show all work" : "Focus connections")}</button>}
@@ -619,7 +619,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
       <aside ref={inspectorRef} className={styles.inspector} aria-labelledby={inspectorTitleId} tabIndex={-1}>
         {selected ? <>
           <div className={styles.nodeType}><i style={{ background: canvasColour(selected) }} />{t(selected.kind === "experience" && selected.section === "education" ? "Education" : kindLabels[selected.kind])}</div>
-          <h3 id={inspectorTitleId}>{t(selected.label)}</h3>{selected.period && <p className={styles.projectYear}>{t(selected.period)}</p>}<p>{t(selected.description)}</p>
+          <h2 id={inspectorTitleId}>{t(selected.label)}</h2>{selected.period && <p className={styles.projectYear}>{t(selected.period)}</p>}<p>{t(selected.description)}</p>
           {selectedProject && <>
             <p className={styles.projectYear}>{selectedProject.tools.map(t).join(" · ")}</p>
             {showcasePdf
@@ -632,7 +632,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
             {(["experience", "project", "topic", "method"] as const).map((kind) => {
               const entries = neighbours.filter((entry) => entry.node.kind === kind);
               if (!entries.length) return null;
-              return <section key={kind}><h4>{t(kind === "experience" ? "Work & education" : kind === "project" ? "Projects to explore" : kind === "topic" ? "Related subjects" : "Methods in this work")} <span>{entries.length}</span></h4>
+              return <section key={kind}><h3>{t(kind === "experience" ? "Work & education" : kind === "project" ? "Projects to explore" : kind === "topic" ? "Related subjects" : "Methods in this work")} <span>{entries.length}</span></h3>
                 {entries.slice(0, 6).map(({ node, edge }) => <button key={edge.id} onClick={() => select(node.id, true, true)} title={graphConnectionText(locale, edge)}><strong>{t(node.label)}</strong><span>{node.period ? `${t(node.period)} · ` : ""}{t(relationLabel(selected, node, edge.relation))} →</span></button>)}
                 {entries.length > 6 && <button className={styles.textAction} onClick={browseConnections}>{t("Browse all connections")} ↓</button>}
               </section>;
@@ -641,7 +641,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
           <details className={styles.edgeNotes}><summary>{t("Why these connections?")}</summary>{neighbours.map(({ node, edge }) => <p key={edge.id}><strong>{t(node.label)}</strong><br />{graphConnectionText(locale, edge)}</p>)}</details>
           <button className={`s7-button is-share ${styles.shareAction}`} onClick={share}>{t(copied ? "Link copied" : "Copy a link to this node")}</button>
         </> : <>
-          <div className={styles.nodeType}>{t("Project graph")}</div><h3 id={inspectorTitleId}>{t("A few starting points")}</h3><p>{t("Select a node to read about it and see related projects.")}</p>
+          <div className={styles.nodeType}>{t("Project graph")}</div><h2 id={inspectorTitleId}>{t("A few starting points")}</h2><p>{t("Select a node to read about it and see related projects.")}</p>
           <div className={styles.startRoutes}>
             <button onClick={() => select("topic:scientific-ml", true, true)}><strong>{t("Explore scientific ML")}</strong><span>{t("Fourier operators, imaging and microrobots")} →</span></button>
             <button onClick={() => select("experience:imperial", true, true)}><strong>{t("Follow the Imperial work")}</strong><span>{t("Coursework, research and experiments")} →</span></button>
@@ -652,7 +652,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
       </aside>
     </div>
     <section ref={navigatorRef} className={styles.navigator} aria-labelledby={navigatorId}>
-      <h3 id={navigatorId}>{query ? `${searchResults.length} ${t("matches")}` : selected ? `${t("Browse connections")} · ${neighbours.length}` : t("Browse subjects")}</h3>
+      <h2 id={navigatorId}>{query ? `${searchResults.length} ${t("matches")}` : selected ? `${t("Browse connections")} · ${neighbours.length}` : t("Browse subjects")}</h2>
       <div className={styles.nodeList}>{listNodes.slice(0, resultLimit).map((node) => <button key={node.id} onClick={() => select(node.id, true, true)}><span>{t(kindLabels[node.kind])}{node.period ? ` · ${t(node.period)}` : ""}</span><strong>{t(node.label)}</strong><span aria-hidden="true">→</span></button>)}</div>
       {listNodes.length > resultLimit && <button className="mac-button" onClick={() => setResultLimit((value) => value + 20)}>{t("Show more connections")}</button>}
       {query && searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}
@@ -663,7 +663,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
         const linked = graphIndex.neighbours(node.id).filter((entry) => entry.node.kind === "project");
         return <article key={node.id}>
           <div className={styles.timelineDate}>{t(node.period ?? "")}</div>
-          <div className={styles.timelineRecord}><h4><button onClick={() => { select(node.id); stageRef.current?.scrollIntoView({ block: "start" }); }} className={styles.timelineTitle}><span>{t(node.label)}</span>{" "}<span aria-hidden="true">↗</span></button></h4><p>{t(node.description)}</p><div className={styles.timelineProjects}>{linked.map(({ node: project, edge }) => <button key={project.id} onClick={() => { select(project.id); stageRef.current?.scrollIntoView({ block: "start" }); }} title={graphConnectionText(locale, edge)}><span>{t(project.shortLabel)}</span>{" "}<small>{t(project.period ?? "")}</small>{" "}<span aria-hidden="true">→</span></button>)}</div><a href={graphNodeHref(node, localeSlug)}>{t("Open CV record")} →</a></div>
+          <div className={styles.timelineRecord}><h3><button onClick={() => { select(node.id); stageRef.current?.scrollIntoView({ block: "start" }); }} className={styles.timelineTitle}><span>{t(node.label)}</span>{" "}<span aria-hidden="true">↗</span></button></h3><p>{t(node.description)}</p><div className={styles.timelineProjects}>{linked.map(({ node: project, edge }) => <button key={project.id} onClick={() => { select(project.id); stageRef.current?.scrollIntoView({ block: "start" }); }} title={graphConnectionText(locale, edge)}><span>{t(project.shortLabel)}</span>{" "}<small>{t(project.period ?? "")}</small>{" "}<span aria-hidden="true">→</span></button>)}</div><a href={graphNodeHref(node, localeSlug)}>{t("Open CV record")} →</a></div>
         </article>;
       })}</div>
     </details>

@@ -79,7 +79,7 @@ export const decisionDemosCopy = {
   ],
   "Air-quality sensor budget": [
     "空气质量传感器预算",
-    "空氣質量傳感器預算"
+    "空氣品質感測器預算"
   ],
   "Coursework · hypothetical": [
     "课程项目 · 假设方案",
@@ -91,7 +91,7 @@ export const decisionDemosCopy = {
   ],
   "No live sensor or procurement data": [
     "不使用实时传感器或采购数据",
-    "不使用實時傳感器或採購資料"
+    "不使用實時感測器或採購資料"
   ],
   "Historical coursework explorer": [
     "历史课程项目探索器",
@@ -99,11 +99,11 @@ export const decisionDemosCopy = {
   ],
   "The source contains 7,674 air-quality observations, train-only KNN imputation and scaling, five regression families, regularisation paths and a hypothetical sensor-cost exercise. This browser chapter exposes those stages without shipping the dataset or claiming procurement validation.": [
     "原项目包含 7,674 条空气质量观测、仅在训练集拟合的 KNN 插补与缩放、五类回归模型、正则化路径和假设的传感器成本练习。本章节展示这些阶段，不分发原始数据，也不将结果视为采购验证。",
-    "原項目包含 7,674 條空氣質量觀測、僅在訓練集擬合的 KNN 插補與縮放、五類迴歸模型、正則化路徑和假設的傳感器成本練習。本章節展示這些階段，不分發原始資料，也不將結果視為採購驗證。"
+    "原專案包含 7,674 條空氣品質觀測、僅在訓練集擬合的 KNN 插補與縮放、五類迴歸模型、正則化路徑和假設的感測器成本練習。本章節展示這些階段，不分發原始資料，也不將結果視為採購驗證。"
   ],
   "Air-quality decision lab chapter": [
     "空气质量决策实验章节",
-    "空氣質量決策實驗章節"
+    "空氣品質決策實驗章節"
   ],
   "01 · Data QA": [
     "01 · 数据检查",
@@ -115,7 +115,7 @@ export const decisionDemosCopy = {
   ],
   "03 · Sensor decision": [
     "03 · 传感器决策",
-    "03 · 傳感器決策"
+    "03 · 感測器決策"
   ],
   "Data contract": [
     "数据定义",
@@ -123,7 +123,7 @@ export const decisionDemosCopy = {
   ],
   "What one row represents": [
     "一行记录代表什么",
-    "一行記錄代表什麼"
+    "一筆記錄代表什麼"
   ],
   "Rows": [
     "记录数",
@@ -147,7 +147,7 @@ export const decisionDemosCopy = {
   ],
   "11 sensor/environment signals": [
     "11 项传感器与环境信号",
-    "11 項傳感器與環境信號"
+    "11 項感測器與環境訊號"
   ],
   "Split": [
     "划分",
@@ -227,7 +227,7 @@ export const decisionDemosCopy = {
   ],
   "Source-recorded results": [
     "原项目报告结果",
-    "原項目報告結果"
+    "原專案報告結果"
   ],
   "Five model families": [
     "五类模型",
@@ -239,7 +239,7 @@ export const decisionDemosCopy = {
   ],
   "Scrollable air-quality model comparison": [
     "可滚动的空气质量模型比较表",
-    "可滾動的空氣質量模型比較表"
+    "可滾動的空氣品質模型比較表"
   ],
   "Test R²": [
     "测试集 R²",
@@ -271,7 +271,7 @@ export const decisionDemosCopy = {
   ],
   "Available sensor budget": [
     "可用传感器预算",
-    "可用傳感器預算"
+    "可用感測器預算"
   ],
   "Best reported fit": [
     "报告中最好的拟合",
@@ -287,7 +287,7 @@ export const decisionDemosCopy = {
   ],
   "Included signals": [
     "纳入信号",
-    "納入信號"
+    "納入訊號"
   ],
   "to unlock": [
     "可解锁",
@@ -343,7 +343,7 @@ export const decisionDemosCopy = {
   ],
   "Cyber-risk cost simulator": [
     "网络风险成本模拟器",
-    "網絡風險成本模擬器"
+    "網路風險成本模擬器"
   ],
   "Synthetic scenario": [
     "合成场景",
@@ -362,8 +362,8 @@ export const decisionDemosCopy = {
     "示例不能作為驗證結果"
   ],
   "The adjustable confusion matrix is a deterministic teaching scenario, not a replay of held-out predictions. The coursework data include 4,904 duplicate rows beyond the first; 1,084 of 2,000 seeded test rows exactly recur in training. Its transform also fits during use and the threshold was selected on the test set. A grouped or deduplicated rerun with train-only preprocessing, validation selection and an untouched final test is required before reporting performance.": [
-    "可调混淆矩阵是确定性的教学场景，不是留出预测回放。课程数据在首次出现之外还有 4,904 条重复记录；固定种子的 2,000 条测试记录中，有 1,084 条在训练集中完全重现。此外，变换在使用时仍进行拟合，阈值也在测试集上选择。报告性能前，需要分组或去重后重新运行，采用仅训练集预处理、验证集选择及独立最终测试。",
-    "可調混淆矩陣是確定性的教學場景，不是留出預測回放。課程資料在首次出現之外還有 4,904 條重複記錄；固定種子的 2,000 條測試記錄中，有 1,084 條在訓練集中完全重現。此外，變換在使用時仍進行擬合，閾值也在測試集上選擇。報告性能前，需要分組或去重後重新執行，採用僅訓練集預處理、驗證集選擇及獨立最終測試。"
+    "可调混淆矩阵是确定性的教学场景，不是留出预测回放。课程数据在首次出现之外还有 4,904 条重复记录；固定种子的 2,000 条测试记录中，有 1,084 条在训练集中完全重现。此外，变换在使用时仍拟合，阈值也在测试集上选择。报告性能前，需要分组或去重后重新运行，采用仅训练集预处理、验证集选择及独立最终测试。",
+    "可調混淆矩陣是確定性的教學場景，不是留出預測回放。課程資料在首次出現之外還有 4,904 條重複記錄；固定種子的 2,000 條測試記錄中，有 1,084 條在訓練集中完全重現。此外，變換在使用時仍擬合，閾值也在測試集上選擇。報告性能前，需要分組或去重後重新執行，採用僅訓練集預處理、驗證集選擇及獨立最終測試。"
   ],
   "What-if controls": [
     "假设控制",
@@ -487,7 +487,7 @@ export const decisionDemosCopy = {
   ],
   "Noise feature": [
     "噪声特征",
-    "噪聲特徵"
+    "雜訊特徵"
   ],
   "Shrinkage Lab": [
     "收缩实验室",
@@ -547,11 +547,11 @@ export const decisionDemosCopy = {
   ],
   "L2 continuously shrinks every signal, but does not set one exactly to zero.": [
     "L2 连续收缩每个信号，但不会将其精确置零。",
-    "L2 連續收縮每個信號，但不會將其精確置零。"
+    "L2 連續收縮每個訊號，但不會將其精確置零。"
   ],
   "L1 uses soft-thresholding, so weaker signals can become exactly zero.": [
     "L1 使用软阈值，因此较弱信号可能精确变为零。",
-    "L1 使用軟閾值，因此較弱信號可能精確變為零。"
+    "L1 使用軟閾值，因此較弱訊號可能精確變為零。"
   ],
   "Live client-side calculation": [
     "客户端实时计算",
@@ -675,11 +675,11 @@ export const decisionDemosCopy = {
   ],
   "PROPENSITY < 0.20": [
     "倾向概率 < 0.20",
-    "傾向概率 < 0.20"
+    "傾向機率 < 0.20"
   ],
   "Clipped rows": [
     "已截断行",
-    "已截斷行"
+    "已截斷記錄"
   ],
   "Scrollable synthetic logged-policy evidence table": [
     "可滚动的合成策略日志证据表",
@@ -703,7 +703,7 @@ export const decisionDemosCopy = {
   ],
   "the audited Week 11 code consumes (context, action, reward, recorded behaviour propensity), fits one ridge reward model per arm, and evaluates IPS, SNIPS, Direct, DR and SWITCH-DR. This deterministic browser log is loaded from a schema-checked local CSV; it demonstrates estimator mechanics, not a deployed policy result.": [
     "第 11 周代码读取上下文、动作、奖励和记录的行为倾向概率，为每个臂拟合岭回归奖励模型，并评估 IPS、SNIPS、Direct、DR 和 SWITCH-DR。浏览器从经过结构检查的本地 CSV 读取确定性日志，用于展示估计机制，不代表已部署策略的效果。",
-    "第 11 周程式碼讀取上下文、動作、獎勵和記錄的行為傾向概率，為每個臂擬合嶺迴歸獎勵模型，並評估 IPS、SNIPS、Direct、DR 和 SWITCH-DR。瀏覽器從經過結構檢查的本地 CSV 讀取確定性日誌，用於展示估計機制，不代表已部署策略的效果。"
+    "第 11 周程式碼讀取上下文、動作、獎勵和記錄的行為傾向機率，為每個臂擬合嶺迴歸獎勵模型，並評估 IPS、SNIPS、Direct、DR 和 SWITCH-DR。瀏覽器從經過結構檢查的本地 CSV 讀取確定性日誌，用於展示估計機制，不代表已部署策略的效果。"
   ],
   "Collider opened": [
     "碰撞路径已打开",
@@ -743,7 +743,7 @@ export const decisionDemosCopy = {
   ],
   "The causal chapter asks whether an adjustment set blocks the displayed backdoor path. The OPE chapter asks what a counterfactual policy would have earned from logged bandit feedback. Both use synthetic browser fixtures and keep their assumptions visible.": [
     "因果章节检验调整集合是否阻断图中的后门路径。OPE 章节估计反事实策略在已记录的多臂老虎机反馈下会获得多少奖励。两者均采用合成浏览器样例，并公开假设。",
-    "因果章節檢驗調整集合是否阻斷圖中的後門路徑。OPE 章節估計反事實策略在已記錄的多臂老虎機反饋下會獲得多少獎勵。兩者均採用合成瀏覽器樣例，並公開假設。"
+    "因果章節檢驗調整集合是否阻斷圖中的後門路徑。OPE 章節估計反事實策略在已記錄的多臂老虎機回饋下會獲得多少獎勵。兩者均採用合成瀏覽器樣例，並公開假設。"
   ],
   "Decision evidence lab chapter": [
     "决策证据实验章节",
@@ -831,7 +831,7 @@ export const decisionDemosCopy = {
   ],
   "Propensity overlap quality": [
     "倾向概率重叠程度",
-    "傾向概率重疊程度"
+    "傾向機率重疊程度"
   ],
   "Clip applied weights at 10": [
     "将应用权重截断于 10",
@@ -863,7 +863,7 @@ export const decisionDemosCopy = {
   ],
   "Applied inverse-propensity weights for 12 synthetic units": [
     "12 个合成个体的逆倾向概率权重",
-    "12 個合成個體的逆傾向概率權重"
+    "12 個合成個體的逆傾向機率權重"
   ],
   "Treated": [
     "处理组",
@@ -887,7 +887,7 @@ export const decisionDemosCopy = {
   ],
   "stabilised (Hájek) treated mean minus control mean using inverse observed-action propensities. Exchangeability, positivity and consistency remain identification assumptions; a tidy ATE number does not verify them.": [
     "使用实际动作倾向概率的倒数，计算稳定化的 Hájek 处理组均值减去对照组均值。可交换性、正值性和一致性仍是识别假设；整齐的 ATE 数值并不能验证这些假设。",
-    "使用實際動作傾向概率的倒數，計算穩定化的 Hájek 處理組均值減去對照組均值。可交換性、正值性和一致性仍是識別假設；整齊的 ATE 數值並不能驗證這些假設。"
+    "使用實際動作傾向機率的倒數，計算穩定化的 Hájek 處理組均值減去對照組均值。可交換性、正值性和一致性仍是識別假設；整齊的 ATE 數值並不能驗證這些假設。"
   ],
   "5-fold CV RMSE": [
     "五折交叉验证 RMSE",
@@ -899,11 +899,11 @@ export const decisionDemosCopy = {
   ],
   "Turn source data quality and model evidence into an explicit trade-off between sensor cost, predictive value and interpretability.": [
     "根据原始数据质量与模型证据，明确权衡传感器成本、预测价值和可解释性。",
-    "根據原始資料質量與模型證據，明確權衡傳感器成本、預測價值和可解釋性。"
+    "根據原始資料品質與模型證據，明確權衡感測器成本、預測價值和可解釋性。"
   ],
   "Change the sensor budget and interpretability preference, then compare the feasible choices.": [
     "改变传感器预算与可解释性偏好，再比较可行选择。",
-    "改變傳感器預算與可解釋性偏好，再比較可行選擇。"
+    "改變感測器預算與可解釋性偏好，再比較可行選擇。"
   ],
   "The browser-only recommendation moves along a constrained frontier; it is not a live procurement or deployment decision.": [
     "浏览器建议沿受约束的比较范围移动；它不是实时采购或部署决策。",
@@ -911,7 +911,7 @@ export const decisionDemosCopy = {
   ],
   "The ranking blends source-recorded test R² with an explicitly authored transparency score. It is not source model selection.": [
     "排名将原项目报告的测试 R² 与本页面定义的透明度分数结合，不代表原项目的模型选择。",
-    "排名將原項目報告的測試 R² 與本頁面定義的透明度分數結合，不代表原項目的模型選擇。"
+    "排名將原專案報告的測試 R² 與本頁面定義的透明度分數結合，不代表原專案的模型選擇。"
   ],
   "The planner selects the lowest-error reported configuration that fits this ceiling.": [
     "规划器从预算内的已报告配置中选择误差最低的一项。",
@@ -967,7 +967,7 @@ export const decisionDemosCopy = {
   ],
   "Assigns each of the two synthetic actions with probability 0.5. This is the easiest overlap check.": [
     "以 0.5 的概率分配两种合成动作，适合首先检查重叠。",
-    "以 0.5 的概率分配兩種合成動作，適合首先檢查重疊。"
+    "以 0.5 的機率分配兩種合成動作，適合首先檢查重疊。"
   ],
   "Moves gradually toward action 1 as the context segment increases, staying relatively close to the logger.": [
     "随着上下文分组增加，逐步偏向动作 1，同时与日志策略保持相对接近。",
@@ -987,7 +987,7 @@ export const decisionDemosCopy = {
   ],
   "{0}/{1} rows are currently clipped; report this fraction with the estimate.": [
     "当前有 {0}/{1} 行被截断；请与估计值一起报告这一比例。",
-    "當前有 {0}/{1} 行被截斷；請與估計值一起報告這一比例。"
+    "目前有 {0}/{1} 筆記錄被截斷；請與估計值一起報告這個比例。"
   ],
   "Conditioning on C creates a non-causal association. Remove C from the adjustment set.": [
     "以 C 为条件会制造非因果关联。请将 C 移出调整集合。",

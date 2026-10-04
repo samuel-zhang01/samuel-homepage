@@ -295,7 +295,7 @@ export function SnakeGame({ locale, active = true }: GameProps) {
       <p className="arcade-game__status" aria-live="polite">{t(statusText)}</p>
 
       <div className="arcade-game__controls">
-        <div className="snake-game__dpad" aria-label={t("Snake direction controls")}>
+        <div role="group" className="snake-game__dpad" aria-label={t("Snake direction controls")}>
           <button type="button" className="snake-game__up" onClick={() => turn("up")} aria-label={t("Move up")}>↑</button>
           <button type="button" className="snake-game__left" onClick={() => turn("left")} aria-label={t("Move left")}>←</button>
           <button type="button" className="snake-game__down" onClick={() => turn("down")} aria-label={t("Move down")}>↓</button>
@@ -709,7 +709,7 @@ export function BrickBreakerGame({ locale, active = true }: GameProps) {
 
       <p className="arcade-game__status" aria-live="polite">{t(statusText)}</p>
       <div className="arcade-game__controls arcade-game__controls--brick">
-        <div className="brick-game__move-controls" aria-label={t("Paddle controls")}>
+        <div role="group" className="brick-game__move-controls" aria-label={t("Paddle controls")}>
           <button
             type="button"
             onPointerDown={() => startPaddle(-1)}

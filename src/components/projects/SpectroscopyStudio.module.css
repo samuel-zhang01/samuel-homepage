@@ -793,21 +793,6 @@
   text-align: center;
 }
 
-.sourceLedger .present {
-  color: var(--spec-green);
-  background: #e0f0e9;
-}
-
-.sourceLedger .absent {
-  color: var(--spec-red);
-  background: #f5e2e7;
-}
-
-.sourceLedger .adapted {
-  color: var(--spec-amber);
-  background: #f6edc9;
-}
-
 .sourceLedger li p {
   margin: 0;
   color: #535550;

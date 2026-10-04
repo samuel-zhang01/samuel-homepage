@@ -340,7 +340,7 @@ export const mriCopy = {
   ],
   "CARTESIAN MASK · 64-COLUMN SCHEMATIC": [
     "笛卡尔采样掩码 · 64 列示意图",
-    "笛卡爾取樣掩碼 · 64 列示意圖"
+    "笛卡爾取樣掩碼 · 64 欄示意圖"
   ],
   "{0} times Cartesian undersampling mask schematic": [
     "{0} 倍笛卡尔欠采样掩码示意图",
@@ -352,7 +352,7 @@ export const mriCopy = {
   ],
   "Generated mask follows the source algorithm: fixed central 8% ACS lines, then deterministic column placement to reach W/R. It is a schematic, not an experimental mask.": [
     "掩码遵循源码中的算法：固定保留中央 8% 的 ACS 校准线，再按确定性规则选择其他列，达到 W/R 条线。这是算法示意，并非实验使用的掩码。",
-    "掩碼遵循原始碼中的演算法：固定保留中央 8% 的 ACS 校準線，再按確定性規則選擇其他列，達到 W/R 條線。這是演算法示意，並非實驗使用的掩碼。"
+    "掩碼遵循原始碼中的演算法：固定保留中央 8% 的 ACS 校準線，再按確定性規則選擇其他欄，達到 W/R 條線。這是演算法示意，並非實驗使用的掩碼。"
   ],
   "PHYSICS-INFORMED RECONSTRUCTION": [
     "融合物理约束的重建",
@@ -543,16 +543,16 @@ export const mriCopy = {
     "單通道 · 256²"
   ],
   "Reconstruction model architecture facts": [
-    "重建模型的架构参数",
-    "重建模型的架構引數"
+    "重建模型架构信息",
+    "重建模型架構資訊"
   ],
   "TRAINABLE PARAMETERS": [
     "可训练参数",
-    "可訓練引數"
+    "可訓練參數"
   ],
   "includes 3 soft-DC scalars": [
     "包含 3 个软数据一致性标量",
-    "包含 3 個軟資料一致性標量"
+    "包含 3 個軟資料一致性純量"
   ],
   "BACKBONE CONVOLUTIONS": [
     "主干卷积",
@@ -636,7 +636,7 @@ export const mriCopy = {
   ],
   "Per-stage parameter totals are intentionally omitted: the repository defines the operations and total model count, but does not publish an audited stage-by-stage allocation.": [
     "源码给出了各操作和模型总参数量，但未提供逐阶段核对的参数分配，因此这里不列各阶段的参数总量。",
-    "原始碼給出了各操作和模型總引數量，但未提供逐階段核對的引數分配，因此這裡不列各階段的引數總量。"
+    "原始碼給出了各操作和模型總參數量，但未提供逐階段核對的參數分配，因此這裡不列各階段的參數總量。"
   ],
   "PHYSICS LAYER · SEQUENTIAL AFTER RESIDUAL U-NET": [
     "物理约束层 · 位于残差 U-Net 之后",
@@ -644,7 +644,7 @@ export const mriCopy = {
   ],
   "Three learned soft-DC scalars": [
     "三个可学习的软数据一致性标量",
-    "三個可學習的軟資料一致性標量"
+    "三個可學習的軟資料一致性純量"
   ],
   "Select data-consistency cascade": [
     "选择数据一致性级联层",
@@ -684,7 +684,7 @@ export const mriCopy = {
   ],
   "The code applies DC 1 → 2 → 3 to the running reconstruction after one residual U-Net pass. Each layer contributes one scalar parameter; trained λ values are not reported here.": [
     "残差 U-Net 完成一次处理后，重建结果依次经过 DC 1 → 2 → 3。每层包含一个标量参数；这里未报告训练后的 λ 值。",
-    "殘差 U-Net 完成一次處理後，重建結果依次經過 DC 1 → 2 → 3。每層包含一個標量引數；這裡未報告訓練後的 λ 值。"
+    "殘差 U-Net 完成一次處理後，重建結果依次經過 DC 1 → 2 → 3。每層包含一個純量參數；這裡未報告訓練後的 λ 值。"
   ],
   "MODEL ROLE SEPARATION": [
     "两个模型的不同职责",
@@ -704,7 +704,7 @@ export const mriCopy = {
   ],
   "parameters · 4-level U-Net + DC": [
     "个参数 · 四层 U-Net + DC",
-    "個引數 · 四層 U-Net + DC"
+    "個參數 · 四層 U-Net + DC"
   ],
   "Optimised from scratch to predict a residual correction, then constrained by three soft-DC layers.": [
     "从零训练以预测残差修正量，再由三层软数据一致性约束输出。",
@@ -716,15 +716,15 @@ export const mriCopy = {
   ],
   "parameters · separate 3-level U-Net": [
     "个参数 · 独立三层 U-Net",
-    "個引數 · 獨立三層 U-Net"
+    "個參數 · 獨立三層 U-Net"
   ],
   "Trained separately on ground-truth images for eight-class segmentation, then frozen while reconstructed inputs are assessed.": [
     "先用真实图像单独训练八类别分割模型，再冻结参数，用它评估重建图像。",
-    "先用真實影像單獨訓練八類別分割模型，再凍結引數，用它評估重建影像。"
+    "先用真實影像單獨訓練八類別分割模型，再凍結參數，用它評估重建影像。"
   ],
   "The segmentation network is an evaluation probe—not a decoder head, not part of the reconstruction parameter total, and not jointly optimised with ReconUNet.": [
     "分割网络是评估工具，并非重建模型的解码头；它不计入重建参数总量，也不与 ReconUNet 联合优化。",
-    "分割網路是評估工具，並非重建模型的解碼頭；它不計入重建引數總量，也不與 ReconUNet 聯合最佳化。"
+    "分割網路是評估工具，並非重建模型的解碼頭；它不計入重建參數總量，也不與 ReconUNet 聯合最佳化。"
   ],
   "Architecture tensor ledger traced to source": [
     "依据源码整理的架构张量表",
@@ -936,7 +936,7 @@ export const mriCopy = {
   ],
   "QUALITY DROP": [
     "质量下降",
-    "質量下降"
+    "品質下降"
   ],
   "calculated difference": [
     "计算得到的差值",
@@ -964,7 +964,7 @@ export const mriCopy = {
   ],
   "FGSM degrades quality monotonically with budget.": [
     "FGSM 的预算越大，重建质量越低。",
-    "FGSM 的預算越大，重建質量越低。"
+    "FGSM 的預算越大，重建品質越低。"
   ],
   "Soft DC re-imposes the untouched acquired k-space at measured locations, a physics-grounded constraint described in the report.": [
     "软数据一致性会在已采样位置重新引入未经攻击的实测 k 空间数据，形成报告中描述的物理约束。",
@@ -1012,7 +1012,7 @@ export const mriCopy = {
   ],
   "REPORTED DISTRIBUTION-SHIFT SIGNAL": [
     "报告中的分布迁移信号",
-    "報告中的分佈遷移訊號"
+    "報告中的分布遷移訊號"
   ],
   "uncertainty on CT": [
     "CT 上的不确定性",
@@ -1076,7 +1076,7 @@ export const mriCopy = {
   ],
   "Task-preservation review gate": [
     "下游任务质量复核门槛",
-    "下游任務質量複核門檻"
+    "下游任務品質複核門檻"
   ],
   "PASS": [
     "通过",
@@ -1088,7 +1088,7 @@ export const mriCopy = {
   ],
   "This interactive rule demonstrates how a downstream quality gate could operate. The report proposes uncertainty-guided flagging but does not prescribe this Dice threshold; it is not a clinical decision rule.": [
     "这个互动规则演示下游质量门槛的运作方式。报告提出按不确定性标记待复核图像，但没有规定这里的 Dice 阈值；它不是临床决策规则。",
-    "這個互動規則演示下游質量門檻的運作方式。報告提出按不確定性標記待複核影像，但沒有規定這裡的 Dice 閾值；它不是臨床決策規則。"
+    "這個互動規則演示下游品質門檻的運作方式。報告提出按不確定性標記待複核影像，但沒有規定這裡的 Dice 閾值；它不是臨床決策規則。"
   ],
   "TASK-LEVEL EVIDENCE": [
     "任务层面的证据",
@@ -1108,11 +1108,11 @@ export const mriCopy = {
   ],
   "How was reconstruction quality evaluated?": [
     "如何评估重建质量？",
-    "如何評估重建質量？"
+    "如何評估重建品質？"
   ],
   "The study combines image quality, uncertainty, adversarial stress and downstream segmentation. Explore the model configuration and evaluation population, then read what these results can support.": [
     "研究同时考察图像质量、不确定性、对抗压力和下游分割。探索模型配置与评估样本，再了解这些结果能够支持哪些结论。",
-    "研究同時考察影像質量、不確定性、對抗壓力和下游分割。探索模型配置與評估樣本，再瞭解這些結果能夠支援哪些結論。"
+    "研究同時考察影像品質、不確定性、對抗壓力和下游分割。探索模型配置與評估樣本，再瞭解這些結果能夠支援哪些結論。"
   ],
   "Inspect public source ↗": [
     "查看公开源码 ↗",
@@ -1297,7 +1297,7 @@ export const mriCopy = {
   ],
   "IMAGE QUALITY · UNCERTAINTY · DOWNSTREAM USE": [
     "图像质量 · 不确定性 · 下游应用",
-    "影像質量 · 不確定性 · 下游應用"
+    "影像品質 · 不確定性 · 下游應用"
   ],
   "STUDY RESULTS + INTERACTIVE EXPLANATIONS": [
     "研究结果与互动说明",

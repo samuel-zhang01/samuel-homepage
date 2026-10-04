@@ -1,82 +1,9 @@
 # Continue here
 
-Updated: **4 October 2026**. The owner is transferring this unfinished audit to another device.
+Updated: **4 October 2026**. The audits, four-locale translation review, cleanup and verification are complete. This file accompanies the verified release checkpoint on `main`. No audit or cleanup work remains; Git history and remote tracking refs record repository publication.
 
-Read these files first:
+Read [the current audit](docs/DEEP_AUDIT_2026-10-04.md), [README](README.md) and [the documentation index](docs/README.md). The audit replaces overlapping review reports. Keep scientific originals, licences, source records, Classic/Blue/Paper and the System 7 design contract. Save temporary captures under ignored `.codex/reports/`.
 
-1. [Audit handoff and next-agent prompt](docs/AUDIT_HANDOFF_2026-10-04.md) — full goal, changes, verified results, known failures, portable commands, exact remaining work.
-2. [Ten-round improvement plan](docs/APP_IMPROVEMENT_AUDIT_2026-10-04.md) — preserve themes; review functionality, usability, UI/UX, loading/animation, security, responsiveness, localization, cross-platform compatibility, settings and deployability.
-3. [README](README.md) and [System 7 design contract](docs/SYSTEM7_DESIGN_BENCHMARK.md) — established product/design/deployment conventions.
+Fresh verification passed on 548 frozen release inputs: strict release with zero vulnerabilities, 2,826 browser journeys across Chromium/Firefox/WebKit, 694 HTTP groups, 172 Chromium accessibility states, and per-engine 15 recovery, 8 equation, 12 locale, 7 preference and 12 historical regression groups. All registered translation checks passed. Output limits remain unchanged; browser files are 120/120 and runtime byte allowance has 33,981 bytes remaining.
 
-**Goal remains unfinished.** Settings, persistence/recovery, loading/error states and security/deploy fixes are implemented. Finish preference/browser failure/cross-platform retests, the historical regression suite (including the MRI image issue), terminal production output validation and independent final grading. The full dependency audit still fails on five high tooling paths rooted in `braces`; runtime audit is clean. Do not disable the strict release gate or infer production readiness.
-
-Use Node 22, run `npm ci`, then `npm run dev -- --port 5186`. The new Settings entry is `/en-gb/settings` (also available in the other three locales and `/settings`). Existing Classic, Blue and Paper themes are preserved. Committed screenshots are in `docs/reviews/app-improvements-2026-10-04/`. Raw logs/build directories and old process handles are not portable; rebuild and rerun commands from the handoff.
-
-No production deployment or remote push is included in this checkpoint. Ask the next agent to read the linked handoff and continue the original goal; do not use the older completion text below as current status.
-
----
-
-# Historical handoff — 9 September 2026
-
-The material below describes an older checkpoint. The 4 October continuation above supersedes its completion statements and preview/build references.
-
-## Latest window and content uniformity pass
-
-- Corrected the title-bar issue inherited from the September 4–5 implementation: close/zoom glyphs are centred, and 44px touch buttons sit inside a 45px title bar without negative margins. Fine-pointer desktop chrome remains compact. Dragging, zoom/restore and resizing still work.
-- Project sharing has a strong indigo face and the same height as neighbouring actions. Primary destinations remain blue. Mobile PDF and demo action rows retain 44px targets.
-- Project contributions, demo guidance and related explanatory/result sections are always visible. Personal narration uses I/my with matching Simplified and Traditional Chinese copy; identity labels, collaborators and source credits retain names.
-- Compiled route review passed 284/284, including checks that overview explanations, contributions and privacy text are outside disclosures. Native Edge checked desktop and 320px layouts, sharing, window close/restore/drag/resize, and visible CV demo guidance. Full lint, prebuild gates, production compilation and output checks passed. See [window and content uniformity](docs/WINDOW_CONTENT_UNIFORMITY_2026-09-09.md).
-- Follow-up: compact embedded toolbars with five actions now use two equal columns, preventing the final Share project button from stretching across the entire row. The 375px compiled phone view and copy-feedback row were checked with native Edge; CSS checks and production/output checks passed.
-- Current compiled build: `.next-toolbar`, reviewed on port 5196; ports 5180, 5190 and 5195 are refreshed to this build at handoff. Earlier ports below describe previous checkpoints.
-
-## Latest PDF reader follow-up
-
-- Fixed the reported mobile GROWMAT reader: one compact action row, descriptive document title, accurate page counter, visible **Fit width** reset and reachable horizontal overflow when zoomed.
-- The shared reader now measures actual padding, reserves each page's real aspect ratio, preserves the reading position through zoom/resizing and ignores hidden-window measurements. Canvas cancellation waits before reusing the canvas. The CV reader receives the same fixes.
-- Full prebuild gates, ESLint, six new PDF geometry regressions, production compilation and output checks passed. Native Edge computer use covered the 320px GROWMAT reader, 120% zoom, horizontal keyboard panning, fit reset, window switching and the 440px Traditional Chinese CV reader. See [PDF reader fixes](docs/PDF_READER_FIXES_2026-09-09.md).
-- The newest compiled reader build is `.next-reader`; preview uses port 5190, with port 5180 refreshed to the same build after validation. Development remains on port 5174. Earlier preview ports and output measurements below describe their dated checkpoints.
-
-## Current result
-
-- The project browser starts with the knowledge graph. Selected work / All projects use a searchable, filterable left pane and independently scrolling right-hand document. Open live demo loads experiments on demand; Open in new tab opens the full document. Mobile Back to list restores the row and focus. History, graph connections and CV links remain available.
-- Shared System 7 tokens provide distinct grey layers, crisp bevels, recessed wells and title stripes. Smooth prose fonts and Chinese fallbacks are preserved. The latest pass removed 45 inconsistent near-neutral backgrounds across 19 project modules and brought arcade navigation into the shared chrome.
-- Icons now share **39 editable SVG symbols and 11 transparent PNG variants** (50 files, 122,039 bytes). Seven newly generated icons cover MRI, chemistry, infrastructure and four arcade subjects. All seven arcade letter tiles and 23 Home Lab service plates use recognisable pictograms. COVERD retains its actual brand asset, including its project row/document.
-- Scientific viewers retain recorded CFD/microscopy media and useful teaching animations. MRI now adds a Recorded images view with the pinned IX repository's reconstruction comparison, translated captions/alt text, a contained full-size image and source links. Its example PSNR is separate from the study's aggregate metrics. Synthetic interactive phantoms remain explicitly identified. There are **172 reviewed scientific images**, including 150 GNN flow frames.
-- Both Mandarin editions have project prose, controls, feedback and accessible labels. All 118 element names, selectors and orbital exports are localized. The latest MRI view adds reviewed CN/TW copy. English US uses reviewed regional spelling. Original figure labels, PDFs, source quotations, code, formulas, names and source-language exercises retain their necessary text with context.
-- Fixed game selection retaining a scrolled-down pane. Snake and Brick Breaker pause in hidden browser tabs and require Resume. CFD playback suspends its timer while hidden, preserves the frame and resumes one timer on return; Pause/unmount clean up the listener and timer. Demo jumps measure wrapped toolbar height.
-- Updated Next.js / eslint-config-next to **15.5.25**, Sharp to **0.35.4** and js-yaml to **4.3.2** after the registry audit found newly reported issues. Updated lockfile and dependency notices.
-- Moved 17 dated review/audit reports into `docs/archive/`, repaired relative links and marked their conclusions historical. README now describes current navigation, media, icon and translation behavior. [Current documentation index](docs/README.md).
-
-## Latest cohesion and cleanup round
-
-- Replaced the 27-way demo switch with an exhaustive typed component registry. The search builder reads the same registry; lazy imports and locale propagation remain intact.
-- Removed unused old project-card CSS, mobile overrides and two unused CSS markers. Repaired the loading indicator’s ineffective animation and kept reduced-motion support. Prose boundaries use shared grey tokens.
-- Enabled TypeScript unused-local and unused-parameter checks. The import scan found no orphaned application modules; middleware/type declarations remain valid entry points.
-- Full `npm run check:release` passed, including dependency audit/signatures, lint, all gates, TypeScript with unused-code checks, and the isolated build. Final compiled QA on port **5177** passed 80 project visits, 8 four-language/width lifecycle combinations and 15 navigation assertions. Logs: `/tmp/samuel-cleanup/`.
-- Moved the optional media checklist into the documented future backlog. See [repository cleanup](docs/REPOSITORY_CLEANUP_2026-09-09.md).
-
-## Latest content and UX follow-up
-
-- Added reviewed audience/aim context and an expandable Samuel’s contribution section for the 30 projects with editorial stories. All content uses existing CN/TW records. Utility pages retain their current descriptions.
-- Exercise instructions now launch the shared demo. Closing explains unsaved changes, unmounts the demo, returns to the overview and restores launch-button focus. New controls are translated; shared components own the behavior.
-- Added a restrained inset context strip, narrower prose, CJK-friendly heading leading and shared locale-aware fonts for seven older interface-heading groups.
-- Production build/all gates, ESLint, four-locale × two-width lifecycle checks and the existing navigation regression suite passed. Reviewed seven arcade selections. See [content/UX review](docs/CONTENT_UX_REVIEW_2026-09-09.md). Temporary QA is in `/tmp/samuel-content-review/`; latest compiled server is port **5176** (dev stays 5174). No exhaustive new all-state crawl or timing benchmark is claimed.
-
-## Preview and validation
-
-- Development preview: **http://localhost:5174/en-gb/projects**. Restart with `npm run dev -- --port 5174`. The latest compiled cleanup review used port 5177.
-- Current production build, ESLint, TypeScript, repository gates and whitespace checks passed. `npm run audit:dependencies` reports zero known vulnerabilities at the configured threshold, 312 verified registry signatures and 48 verified attestations as of this review.
-- Compiled browser checks: **70 changed-state checks** across four locales, plus **80 project route visits** covering all 40 projects at 1440px English UK and 390px Traditional Mandarin. No captured page errors, document/page overflow or KaTeX errors in that route sweep. New MRI imagery is absent from network requests until its view opens.
-- The prior complete four-language crawl covered 160 project documents and 60 main app routes, plus project/shell state matrices. Its reports remain in the archive; the latest follow-up is not another exhaustive four-language crawl of every possible state.
-- Current build output: **118 browser files / 5.10 MiB**, including 257.1 KiB demand-loaded math; **249.8 KiB initial JavaScript gzip**; 4.80 MiB traced application runtime. Public icon/scientific assets have separate measured sizes and checks.
-- [Latest sweep and screenshots](docs/WIDE_SWEEP_2026-09-09.md), [icon family](docs/reviews/wide-sweep-2026-09-09/icon-family.png), [generation prompts](docs/SYSTEM7_WIDE_ICON_PROMPTS.json), [MRI source record](docs/MRI_RECORDED_FIGURE.json).
-- Temporary executable QA, measurements and logs: `/tmp/samuel-wide-sweep/`. Earlier evidence: `/tmp/samuel-refinement-review/`. Durable screenshots are under `docs/reviews/`. Chromium was used; no new Lighthouse result or exhaustive cross-browser/accessibility claim is made.
-
-## Workspace and next session
-
-- The Git checkpoint containing this handoff includes the reviewed artwork, layout, language, content and cleanup work since `d65e1d1`. Check `git status` and `git log` for subsequent changes. No deployment command was run.
-- Earlier cleanup/CV restoration is recorded in the archived integrated review. Historical `/Users/samuel/` recovery paths refer to the previous workstation, not this server.
-- Noto CJK and Unifont were installed only on this server for review; no new client font payload was added.
-- Requested implementation and iterative review are complete. Use the current preview and design benchmark as the baseline for further feedback.
-- Preserve source-media attribution and the separation of generated artwork, recorded results and calculated examples. Keep maintenance receipts in documentation rather than visitor-facing product copy.
-- For future changes, update both Mandarin editions, rebuild search indexes after copy edits and test relevant selected/empty/error/mobile states. Useful checks: `npm run lint`, `npm run build:isolated`, `npm run audit:dependencies`, `npx tsc --noEmit`, `git diff --check`.
+One earlier WebKit dual-draft timeout remains unexplained because its failed context was lost. Passing reruns and the final matrix do not establish its cause or a proven fix. Preserve this qualification. Browser evidence covers Linux engines and selected states; native-device and screen-reader studies remain separate work. Eight-key restore still uses best-effort rollback during a persistent storage outage.

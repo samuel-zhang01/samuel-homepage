@@ -283,7 +283,7 @@ function toggleCategory(categories: string[], category: string) {
 
 function ModelSwitch({ mode, setMode }: { mode: ModelMode; setMode: (mode: ModelMode) => void }) {
   return (
-    <ProjectCopy copy={courseCopy}><div className={styles.modelSwitch} aria-label="Recommendation model">
+    <ProjectCopy copy={courseCopy}><div role="group" className={styles.modelSwitch} aria-label="Recommendation model">
       <button type="button" className={mode === "source" ? styles.activeSource : ""} onClick={() => setMode("source")} aria-pressed={mode === "source"}>
         <span>SOURCE BASELINE</span><strong>Hard filters + random rank</strong><small>Seeded here only for replay</small>
       </button>

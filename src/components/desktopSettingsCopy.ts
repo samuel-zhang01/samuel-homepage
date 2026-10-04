@@ -13,7 +13,7 @@ export const settingsCopy = {
   "Show the startup sequence": ["显示启动画面", "顯示啟動畫面"],
   "Plays once per browser session when you enter through Start Here. Direct links open immediately.": ["从首页进入时，每次浏览器会话播放一次。直接链接会立即打开。", "從首頁進入時，每次瀏覽器工作階段播放一次。直接連結會立即開啟。"],
   "Your data": ["你的数据", "你的資料"],
-  "Preferences and desk notes stay in this browser profile. They do not sync to another device. Export a desk backup before clearing site data.": ["偏好与桌面笔记保存在此浏览器配置中，不会同步到其他设备。清除网站数据前，请导出桌面备份。", "偏好與桌面筆記儲存在此瀏覽器設定檔中，不會同步到其他裝置。清除網站資料前，請匯出桌面備份。"],
+  "Preferences and desk notes stay in this browser profile. They do not sync to another device. Export a desk backup before clearing site data.": ["偏好与桌面笔记保存在此浏览器的用户配置文件中，不会同步到其他设备。清除网站数据前，请导出桌面备份。", "偏好與桌面筆記儲存在此瀏覽器設定檔中，不會同步到其他裝置。清除網站資料前，請匯出桌面備份。"],
   "Open desk backup tools": ["打开桌面备份工具", "開啟桌面備份工具"],
   "Reset display settings": ["重置显示设置", "重設顯示設定"],
   "Resets the pattern, clock, effects and startup sequence. Your language, notes and other desk data stay as they are.": ["重置图案、时钟、效果与启动画面。语言、笔记和其他桌面数据保持不变。", "重設圖案、時鐘、效果與啟動畫面。語言、筆記和其他桌面資料維持不變。"],

@@ -12,9 +12,9 @@ import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
 import { ProjectLocaleProvider } from "./ProjectTranslationBoundary";
 import { getProjectArchiveCopy } from "./projectArchiveI18n";
 import { ProjectArtwork } from "./ProjectArtwork";
+import { KnowledgeGraph } from "./KnowledgeGraph";
 import styles from "./ProjectLibrary.module.css";
 
-const KnowledgeGraph = dynamic(() => import("./KnowledgeGraph").then((module) => module.KnowledgeGraph));
 const ProjectDocument = dynamic(() => import("./ProjectDocument"));
 type View = "map" | "guided" | "files";
 type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";

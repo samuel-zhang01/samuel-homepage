@@ -264,7 +264,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
   return <div className={`system7-project ${styles.app}`}>
     <header className={styles.header}>
       <div><span>{c.strap}</span><h3>{c.title}</h3><p>{c.intro}</p></div>
-      <div className={styles.presets} aria-label={c.subshell}>{[[1, "H · 1s", "1-0"], [6, "C · 2p", "2-1"], [26, "Fe · 3d", "3-2"], [58, "Ce · 4f", "4-3"]].map(([number, title, shell]) => <button className="s7-button" key={number} type="button" onClick={() => { selectElement(Number(number)); setShellKey(String(shell)); }}>{title}</button>)}</div>
+      <div role="group" className={styles.presets} aria-label={c.subshell}>{[[1, "H · 1s", "1-0"], [6, "C · 2p", "2-1"], [26, "Fe · 3d", "3-2"], [58, "Ce · 4f", "4-3"]].map(([number, title, shell]) => <button className="s7-button" key={number} type="button" onClick={() => { selectElement(Number(number)); setShellKey(String(shell)); }}>{title}</button>)}</div>
     </header>
     <details className={styles.periodic} ref={periodicRef} open={tableOpen} onToggle={(event) => setTableOpen(event.currentTarget.open)}>
       <summary>{c.periodic}<span>{element.number} · {element.symbol}</span></summary><p>{c.tableHint}</p>
@@ -273,7 +273,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
         <div className={styles.table} role="group" aria-label={c.periodic}>
           {Array.from({ length: 18 }, (_, index) => <span key={`group-${index}`} style={{ gridColumn: index + 2, gridRow: 1 }} className={styles.groupNumber} title={`${c.group} ${index + 1}`}>{index + 1}</span>)}
           {Array.from({ length: 7 }, (_, index) => <span key={`period-${index}`} style={{ gridColumn: 1, gridRow: index + 2 }} className={styles.periodNumber} title={`${c.period} ${index + 1}`}>{index + 1}</span>)}
-          <div className={styles.tableKey} aria-label={c.blockKey}>{letters.map((block) => <span key={block}><i data-block={block} />{block}</span>)}<a href={ORBITAL_SOURCES.elementIndex} target="_blank" rel="noreferrer">{c.referenceDetails} ↗</a></div>
+          <div role="group" className={styles.tableKey} aria-label={c.blockKey}>{letters.map((block) => <span key={block}><i data-block={block} />{block}</span>)}<a href={ORBITAL_SOURCES.elementIndex} target="_blank" rel="noreferrer">{c.referenceDetails} ↗</a></div>
           <span style={{ gridColumn: 4, gridRow: 7 }} className={styles.seriesPlaceholder}>57–71</span><span style={{ gridColumn: 4, gridRow: 8 }} className={styles.seriesPlaceholder}>89–103</span>
           <span className={styles.seriesName} style={{ gridColumn: "2 / 5", gridRow: 9 }}>{c.lanthanoids}</span><span className={styles.seriesName} style={{ gridColumn: "2 / 5", gridRow: 10 }}>{c.actinoids}</span>
           {elements.map((entry) => <button type="button" key={entry.number} style={{ ...tablePosition(entry), gridColumn: tablePosition(entry).gridColumn + 1 }} data-block={entry.block} aria-pressed={entry.number === atomicNumber} tabIndex={entry.number === atomicNumber ? 0 : -1} aria-label={`${entry.number} ${entry.symbol}, ${localisedElementName(locale, entry.number, entry.name)}`} title={`${entry.number} ${localisedElementName(locale, entry.number, entry.name)} · ${c.period} ${entry.period} · ${c.block} ${entry.block}`} onClick={() => selectElement(entry.number)} onKeyDown={(event) => {

@@ -11,7 +11,7 @@ import { translateText, type Locale } from "@/lib/i18n";
 import { advanceFocusState, enterCalculatorDecimal, enterCalculatorDigit, localDateKey, type FocusState } from "@/lib/deskBehavior";
 import ProductivityExtras, { normaliseProductivityExtraBackup } from "./ProductivityExtras";
 import { useDeskPersistence, type DeskFlushDetail } from "@/hooks/useDeskPersistence";
-import { commitDeskDrafts, withDeskLock, pendingPrefix, readDeskDraft, storageKeys } from "@/lib/deskPersistence";
+import { commitDeskDrafts, withDeskLock, pendingPrefix, conflictPrefix, readDeskDraft, storageKeys } from "@/lib/deskPersistence";
 import { DeskConflicts } from "./DeskConflicts";
 import styles from "./ProductivityApps.module.css";
 
@@ -132,7 +132,7 @@ function normaliseDeskBackupEntry(key: string, raw: string): string | null {
 
 // Include edits staged by an accessory that closed before its asynchronous commit.
 async function flushPendingAccessories() {
-  await withDeskLock(() => {
+  return withDeskLock(() => {
     let unreadable = false;
     for (const key of DESK_STORAGE_KEYS) {
       const pending = storageKeys(pendingPrefix(key));
@@ -148,9 +148,26 @@ async function flushPendingAccessories() {
       if (initial !== undefined) commitDeskDrafts(key, initial, validate);
       if (storageKeys(pendingPrefix(key)).length) unreadable = true;
     }
-    // Refuse an incomplete backup, after preserving every readable accessory's edits.
-    if (unreadable) throw new Error("Unreadable desk drafts are still retained in this browser");
+    return unreadable;
   });
+}
+
+async function flushOpenAccessories() {
+  const detail: DeskFlushDetail = { failedKeys: [], pending: [] };
+  window.dispatchEvent(new CustomEvent<DeskFlushDetail>(DESK_FLUSH_EVENT, { detail }));
+  await Promise.all(detail.pending ?? []);
+  return detail;
+}
+
+function downloadDeskFile(value: unknown, filename: string) {
+  const blob = new Blob([JSON.stringify(value, null, 2)], { type: "application/json;charset=utf-8" });
+  if (blob.size > MAX_BACKUP_FILE_BYTES) throw new Error("backup-too-large");
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
 }
 
 function AccessoryIcon({ kind, compact = false }: { kind: AccessoryKind; compact?: boolean }) {
@@ -330,10 +347,8 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
 
   const exportBackup = async () => {
     try {
-      const flushDetail: DeskFlushDetail = { failedKeys: [], pending: [] };
-      window.dispatchEvent(new CustomEvent<DeskFlushDetail>(DESK_FLUSH_EVENT, { detail: flushDetail }));
-      await Promise.all(flushDetail.pending ?? []);
-      await flushPendingAccessories();
+      const flushDetail = await flushOpenAccessories();
+      let retainedRecords = await flushPendingAccessories();
       if (flushDetail.failedKeys.length > 0) throw new Error("flush-failed");
       const apps: Record<string, string> = {};
       for (const key of DESK_STORAGE_KEYS) {
@@ -341,23 +356,32 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         if (value !== null) {
           const normalised = value.length <= MAX_BACKUP_ENTRY_CHARS ? normaliseDeskBackupEntry(key, value) : null;
           if (normalised === null) {
-            throw new Error("invalid-local-data");
+            retainedRecords = true;
+            continue;
           }
           apps[key] = normalised;
         }
+        retainedRecords ||= storageKeys(pendingPrefix(key)).length > 0 || storageKeys(conflictPrefix(key)).length > 0;
       }
-      const backup = JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), apps }, null, 2);
-      const blob = new Blob([backup], { type: "application/json;charset=utf-8" });
-      if (blob.size > MAX_BACKUP_FILE_BYTES) throw new Error("backup-too-large");
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `samuel-desk-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      anchor.click();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
-      setBackupStatus("Desk backup downloaded.");
+      downloadDeskFile({ version: 1, exportedAt: new Date().toISOString(), apps }, `samuel-desk-backup-${new Date().toISOString().slice(0, 10)}.json`);
+      setBackupStatus(retainedRecords ? "Readable desk data downloaded. Recovery records remain in this browser." : "Desk backup downloaded.");
     } catch {
       setBackupStatus("Backup unavailable in this browser.");
+    }
+  };
+
+  const exportRecovery = async () => {
+    try {
+      await flushOpenAccessories();
+      const records = await withDeskLock(() => Object.keys(localStorage)
+        .filter(entry => DESK_STORAGE_KEYS.some(key => entry === key || entry.startsWith(pendingPrefix(key)) || entry.startsWith(conflictPrefix(key))))
+        .sort().map(key => ({ key, raw: localStorage.getItem(key) })));
+      // An opaque envelope preserves malformed bytes without accepting them as
+      // app data. The normal restore validator deliberately rejects this format.
+      downloadDeskFile({ format: "samuel-desk-recovery-records", version: 1, exportedAt: new Date().toISOString(), records }, `samuel-desk-recovery-${new Date().toISOString().slice(0, 10)}.json`);
+      setBackupStatus("Recovery records downloaded. Keep this file for inspection; it cannot be restored here.");
+    } catch {
+      setBackupStatus("Recovery download unavailable in this browser.");
     }
   };
 
@@ -365,6 +389,7 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
     const file = event.target.files?.[0];
     event.target.value = "";
     if (!file) return;
+    let replacing = false;
     try {
       if (file.size > MAX_BACKUP_FILE_BYTES) throw new Error("backup-too-large");
       const parsed = JSON.parse(await file.text()) as { version?: unknown; apps?: unknown };
@@ -382,9 +407,25 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         candidates.set(key, normalised);
       }
       if (!window.confirm(t("Restore this backup? It will replace your current Desk Accessories data."))) return;
-      await flushPendingAccessories();
+      replacing = true;
+      // Finish every open editor before replacing canonical data. Otherwise
+      // its dirty pre-import value can be staged by the restore event afterward.
+      const flushDetail = await flushOpenAccessories();
+      if (flushDetail.failedKeys.length > 0) throw new Error("flush-failed");
+      if (await flushPendingAccessories()) throw new Error("unreadable-drafts-retained");
       await withDeskLock(() => {
         const originals = new Map(DESK_STORAGE_KEYS.map((key) => [key, window.localStorage.getItem(key)]));
+        // Valid imported data must not silently erase unsupported or damaged
+        // primary bytes. Preserve every such record before replacing anything;
+        // a quota failure here leaves all canonical records untouched.
+        for (const [key, raw] of originals) {
+          if (raw === null || normaliseDeskBackupEntry(key, raw) !== null) continue;
+          const prefix = `${conflictPrefix(key)}restore:${Date.now()}:`;
+          let index = 0;
+          let archiveKey = `${prefix}${index}:unreadable-primary`;
+          while (window.localStorage.getItem(archiveKey) !== null) archiveKey = `${prefix}${++index}:unreadable-primary`;
+          window.localStorage.setItem(archiveKey, JSON.stringify({ format: "samuel-desk-unreadable-primary", raw }));
+        }
         try {
           for (const key of DESK_STORAGE_KEYS) {
             const value = candidates.get(key);
@@ -406,7 +447,7 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
       window.dispatchEvent(new Event(DESK_RESTORE_EVENT));
       setBackupStatus("Backup restored. Open accessories are refreshed.");
     } catch {
-      setBackupStatus("That file is not a valid Desk Accessories backup.");
+      setBackupStatus(replacing ? "Restore unavailable in this browser. Current data and recovery records may still be available; export them before retrying." : "That file is not a valid Desk Accessories backup.");
     }
   };
 
@@ -430,6 +471,7 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         </div>
         <div className={styles.storageActions}>
           <button type="button" onClick={exportBackup}>{t("Export backup")}</button>
+          <button type="button" onClick={exportRecovery}>{t("Download recovery records")}</button>
           <button type="button" onClick={() => restoreInputRef.current?.click()}>{t("Restore backup…")}</button>
           <input
             ref={restoreInputRef}
@@ -442,6 +484,7 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
           />
         </div>
         <span className={styles.backupStatus} role="status">{backupStatus ? t(backupStatus) : ""}</span>
+        <small>{t("Recovery files preserve raw browser records for inspection. They cannot be restored here.")}</small>
       </section>
       <div className={styles.accessoryGrid}>
         {accessories.map((accessory) => (
@@ -870,7 +913,7 @@ function FocusClock({ locale }: { locale: Locale }) {
           <small>{timer.running ? t("COUNTING DOWN") : announcement ? t(announcement) : t("READY WHEN YOU ARE")}</small>
         </div>
 
-        <div className={styles.presetRow} aria-label={t("Timer presets")}>
+        <div role="group" className={styles.presetRow} aria-label={t("Timer presets")}>
           {[25, 5, 15].map((preset) => (
             <button
               key={preset}
@@ -1143,7 +1186,7 @@ function DeskCalculator({ locale }: { locale: Locale }) {
   ];
 
   return (
-    <div className={styles.calculator} onKeyDown={handleKeyDown} tabIndex={0} aria-label={t("Desk Calculator keyboard area")}>
+    <div role="group" className={styles.calculator} onKeyDown={handleKeyDown} tabIndex={0} aria-label={t("Desk Calculator keyboard area")}>
       <section className={styles.calculatorMachine}>
         <div className={styles.calculatorDisplay} aria-live="polite">
           <span>{memory !== 0 ? "M" : ""}</span>

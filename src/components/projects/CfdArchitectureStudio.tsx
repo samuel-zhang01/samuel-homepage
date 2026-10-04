@@ -384,7 +384,7 @@ function FnoStudio({ viewMode }: { viewMode: ViewMode }) {
 
       {viewMode === "diagram" ? (
         <>
-          <div className={styles.pipeline} aria-label={`${variant.name} architecture pipeline`}>
+          <div role="group" className={styles.pipeline} aria-label={`${variant.name} architecture pipeline`}>
             <article><span>01 · Input</span><strong>{variant.input}</strong><small>channel-last field tensor</small></article>
             <i aria-hidden="true">→</i>
             <article><span>02 · Lift</span><strong>Linear → width {variant.width}</strong><small>per grid location</small></article>
@@ -498,7 +498,7 @@ function GnnStudio({ viewMode }: { viewMode: ViewMode }) {
         <output aria-live="polite">{String(step).padStart(2, "0")} / 10</output>
       </div>
 
-      <div className={styles.processorRail} aria-label="Ten processor blocks">
+      <div role="group" className={styles.processorRail} aria-label="Ten processor blocks">
         {Array.from({ length: 10 }, (_, index) => (
           <button type="button" key={index} aria-pressed={step === index + 1} onClick={() => setStep(index + 1)}><span>{index + 1}</span><small>Edge + node</small></button>
         ))}

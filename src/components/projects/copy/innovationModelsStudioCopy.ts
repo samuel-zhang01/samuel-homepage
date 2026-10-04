@@ -83,7 +83,7 @@ export const innovationModelsStudioCopy = {
   ],
   "Resource-backed network": [
     "资源支持网络",
-    "資源支持網絡"
+    "資源支持網路"
   ],
   "distributed + funded": [
     "分散且有资金支持",
@@ -127,7 +127,7 @@ export const innovationModelsStudioCopy = {
   ],
   "ADAPTED": [
     "交互扩展",
-    "交互擴展"
+    "互動擴展"
   ],
   "Portfolio calculator": [
     "组合计算器",
@@ -303,7 +303,7 @@ export const innovationModelsStudioCopy = {
   ],
   "Weights become a normalised 100-token structural portfolio. Tokens represent attention, not money, return or probability of success.": [
     "权重会归一化为总计 100 份的结构组合。这些份额代表关注度，不代表资金、回报或成功概率。",
-    "權重會歸一化為總計 100 份的結構組合。這些份額代表關注度，不代表資金、回報或成功概率。"
+    "權重會歸一化為總計 100 份的結構組合。這些份額代表關注度，不代表資金、回報或成功機率。"
   ],
   "No performance model": [
     "不含绩效模型",
@@ -567,7 +567,7 @@ export const innovationModelsStudioCopy = {
   ],
   "Framework and interactive assumptions": [
     "框架与交互假设",
-    "框架與交互假設"
+    "框架與互動假設"
   ],
   "Use the model to ask better questions": [
     "用模型提出更好的问题",

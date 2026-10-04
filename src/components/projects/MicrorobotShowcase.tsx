@@ -28,7 +28,7 @@ export function MicrorobotShowcase({ locale = "en-GB" }: { locale?: Locale }) {
           <div><span>Explore</span><strong>{views.find((item) => item.id === view)?.detail}</strong></div>
           {views.map((item) => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)}><span aria-hidden="true">{item.icon}</span>{item.label}</button>)}
         </div>
-        <div className={styles.viewPanel} aria-label={views.find((item) => item.id === view)?.detail}>
+        <div role="group" className={styles.viewPanel} aria-label={views.find((item) => item.id === view)?.detail}>
           {view === "architecture" ? <ModelArchitectureStudio locale={locale} /> : view === "images" ? <MicrorobotResults /> : view === "benchmark" ? <MicrorobotVisionDemo locale={locale} /> : <SequenceSplitExperiment />}
         </div>
       </div>

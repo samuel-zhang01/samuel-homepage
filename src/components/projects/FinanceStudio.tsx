@@ -595,8 +595,8 @@ function ScopeControls({ range, setRange, accountId, setAccountId }: {
   setAccountId: (id: string) => void;
 }) {
   return (
-    <ProjectCopy copy={financeCopy}><div className={styles.scopeBar} aria-label="Cash-flow scope">
-      <div className={styles.rangeSwitch} aria-label="Analysis period">
+    <ProjectCopy copy={financeCopy}><div role="group" className={styles.scopeBar} aria-label="Cash-flow scope">
+      <div role="group" className={styles.rangeSwitch} aria-label="Analysis period">
         <button type="button" className={range === 30 ? styles.active : ""} onClick={() => setRange(30)} aria-pressed={range === 30}>30 days</button>
         <button type="button" className={range === 90 ? styles.active : ""} onClick={() => setRange(90)} aria-pressed={range === 90}>90 days</button>
       </div>

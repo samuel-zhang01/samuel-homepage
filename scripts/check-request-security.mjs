@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 import ts from "typescript";
@@ -16,6 +16,30 @@ async function loadSource(relativePath, environment = "") {
 }
 
 const { middleware, config } = await loadSource("../src/middleware.ts");
+const sectionSource = ts.createSourceFile("sections.tsx", await readFile(new URL("../src/app/[locale]/[section]/page.tsx", import.meta.url), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+let sectionNames;
+function findSections(node) {
+  if (ts.isVariableDeclaration(node) && node.name.getText(sectionSource) === "sections") {
+    assert.ok(ts.isObjectLiteralExpression(node.initializer));
+    sectionNames = node.initializer.properties.map(property => property.name.text);
+  }
+  ts.forEachChild(node, findSections);
+}
+findSections(sectionSource);
+assert.ok(sectionNames?.length);
+const middlewareSource = ts.createSourceFile("middleware.ts", await readFile(new URL("../src/middleware.ts", import.meta.url), "utf8"), ts.ScriptTarget.Latest, true);
+let middlewareSections;
+function findMiddlewareSections(node) {
+  if (ts.isVariableDeclaration(node) && node.name.getText(middlewareSource) === "SECTION_ROUTES") {
+    assert.ok(ts.isNewExpression(node.initializer));
+    const values = node.initializer.arguments[0];
+    assert.ok(ts.isArrayLiteralExpression(values));
+    middlewareSections = values.elements.map(value => { assert.ok(ts.isStringLiteral(value)); return value.text; });
+  }
+  ts.forEachChild(node, findMiddlewareSections);
+}
+findMiddlewareSections(middlewareSource);
+const rootPublicFiles = (await readdir(new URL("../public/", import.meta.url), { withFileTypes: true })).filter(entry => entry.isFile()).map(entry => entry.name);
 const previousEnvironment = process.env.NODE_ENV;
 let checks = 0;
 function check(name, run) {
@@ -88,6 +112,42 @@ try {
     }));
     assert.equal(response.headers.get("location"), "http://192.168.1.2:5174/zh-tw/desk?view=notes");
   });
+  for (const [segment, canonical] of [["EN-GB", "en-gb"], ["En-US", "en-us"], ["ZH-CN", "zh-cn"], ["ZH-TW", "zh-tw"], ["%65n-us", "en-us"], ["%7ah-cn", "zh-cn"], ["%75k", "en-gb"]]) {
+    check(`encoded or uppercase locale ${segment} has a canonical redirect`, () => {
+      const response = middleware(request(`/${segment}/settings?view=display`));
+      assert.equal(response.status, 308);
+      assert.equal(response.headers.get("location"), `https://me.samuelzhang.co.uk/${canonical}/settings?view=display`);
+    });
+  }
+  check("finite middleware page inventory matches the actual section router", () => {
+    assert.deepEqual([...middlewareSections].sort(), [...sectionNames, "projects"].sort());
+    for (const section of sectionNames.concat("projects")) {
+      assert.equal(middleware(request(`/${section}`)).status, 200, section);
+      for (const locale of ["en-gb", "en-us", "zh-cn", "zh-tw"]) assert.equal(middleware(request(`/${locale}/${section}`)).status, 200, `${locale}/${section}`);
+    }
+  });
+  check("actual shallow public files and metadata retain ordinary responses", () => {
+    const matcher = new RegExp(`^${config.matcher[0]}$`);
+    for (const file of rootPublicFiles.concat("robots.txt", "sitemap.xml", "manifest.webmanifest")) {
+      const route = `/${encodeURIComponent(file)}`;
+      if (matcher.test(route)) assert.equal(middleware(request(route)).status, 200, file);
+    }
+    for (const locale of ["en-gb", "en-us", "zh-cn", "zh-tw"]) assert.equal(middleware(request(`/search/project-text-${locale}.json`)).status, 200, locale);
+  });
+  for (const route of ["/audit-missing-item", "/audit.missing", "/zh-tw/audit-missing-item", "/zh-cn/audit.missing", "/xx-xz/projects", "/xx-xz/settings", "/projects/audit-missing-item", "/constructor", "/__proto__", "/toString", "/zh-tw/constructor", "/zh-tw/__proto__", "/zh-tw/toString"]) {
+    check(`finite missing route keeps an actual 404 status: ${route}`, () => {
+      for (const method of ["GET", "HEAD"]) {
+        const response = middleware(request(`${route}?view=map`, { method }));
+        assert.equal(response.status, 404);
+        assert.equal(response.headers.get("x-middleware-next"), "1");
+        assert.equal(response.headers.get("location"), null);
+        assert.equal(response.headers.get("x-middleware-rewrite"), null);
+        const expected = route.startsWith("/zh-tw/") ? "zh-TW" : route.startsWith("/zh-cn/") ? "zh-CN" : "en-GB";
+        assert.equal(response.headers.get("content-language"), expected);
+        assert.equal(response.headers.get("x-middleware-request-x-samuel-locale"), expected);
+      }
+    });
+  }
   check("canonical response receives transport headers", () => {
     const response = middleware(request());
     assert.equal(response.headers.get("cross-origin-opener-policy"), "same-origin");

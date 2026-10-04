@@ -753,7 +753,7 @@ export function CvKeywordStudio() {
               </label>
             </div>
 
-            <div className={styles.inputChecks} aria-label="Input validation checks">
+            <div role="group" className={styles.inputChecks} aria-label="Input validation checks">
               <span className={cvText.trim() ? styles.pass : styles.wait}><b>{cvText.trim() ? "✓" : "–"}</b> CV text present</span>
               <span className={jobText.trim() ? styles.pass : styles.wait}><b>{jobText.trim() ? "✓" : "–"}</b> Role brief present</span>
               <span className={styles.pass}><b>✓</b> No file upload</span>
@@ -1020,7 +1020,7 @@ export function CvKeywordStudio() {
                   <div><strong>Include cover-letter route</strong><small>Mirrors the optional production flag; no text is generated here.</small></div>
                 </label>
 
-                <div className={styles.pipeline} aria-label="Build pipeline simulation">
+                <div role="group" className={styles.pipeline} aria-label="Build pipeline simulation">
                   <div className={styles.pipelineStep}><span>1</span><div><strong>Parse</strong><small>UTF-8 input snapshot</small></div><b>{buildReady ? "DONE" : "WAIT"}</b></div>
                   <div className={styles.pipelineStep}><span>2</span><div><strong>Validate</strong><small>unique strings · max 40</small></div><b>{buildReady ? "DONE" : "WAIT"}</b></div>
                   <div className={styles.pipelineStep}><span>3</span><div><strong>Escape</strong><small>LaTeX reserved characters</small></div><b>{buildReady ? "DONE" : "WAIT"}</b></div>

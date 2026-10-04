@@ -428,7 +428,7 @@ export function DeferralRiskStudio() {
             <MacButton type="button" onClick={reset}>Restore paper point</MacButton>
           </div>
 
-          <div className={styles.modeSwitch} aria-label="Deferral policy comparison">
+          <div role="group" className={styles.modeSwitch} aria-label="Deferral policy comparison">
             {(["combined", "confidence", "entropy"] as const).map((policyMode) => (
               <button
                 key={policyMode}
@@ -677,7 +677,7 @@ function DecisionDesk({
           <div><span>Or-gate priority</span><h3 id="review-queue-title">Synthetic claim queue</h3></div>
           <span>{evaluation.deferredCount} routed to review</span>
         </div>
-        <div className={styles.tableScroll} tabIndex={0} aria-label="Scrollable synthetic claim queue">
+        <div role="group" className={styles.tableScroll} tabIndex={0} aria-label="Scrollable synthetic claim queue">
           <table>
             <thead><tr><th scope="col">Claim</th><th scope="col">Amount</th><th scope="col">Posterior</th><th scope="col">Entropy</th><th scope="col">Confidence</th><th scope="col">Trigger</th><th scope="col">Route</th></tr></thead>
             <tbody>
@@ -918,7 +918,7 @@ function TailLedger({
           <div><span>Auditable sort order</span><h3 id="tail-ledger-title">Claims contributing to empirical CVaR</h3></div>
           <span>Click a claim to inspect its Bayes trace</span>
         </div>
-        <div className={styles.tableScroll} tabIndex={0} aria-label="Scrollable CVaR tail ledger">
+        <div role="group" className={styles.tableScroll} tabIndex={0} aria-label="Scrollable CVaR tail ledger">
           <table>
             <thead><tr><th scope="col">Rank</th><th scope="col">Claim</th><th scope="col">Amount</th><th scope="col">Truth</th><th scope="col">Model</th><th scope="col">0–1 loss</th><th scope="col">Entropy</th><th scope="col">Confidence</th></tr></thead>
             <tbody>

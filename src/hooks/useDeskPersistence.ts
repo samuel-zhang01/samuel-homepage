@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
-import { commitDeskDrafts, withDeskLock, readDeskData, readDeskConflicts, stageDeskDraft, pendingPrefix, conflictPrefix, storageKeys, type DeskConflict } from "@/lib/deskPersistence";
+import { commitDeskDrafts, withDeskLock, readDeskData, readDeskConflicts, stageDeskDraft, pendingPrefix, conflictPrefix, storageKeys, hasUnreadableDeskPrimary, type DeskConflict } from "@/lib/deskPersistence";
 
 export type SaveState = "loading" | "saving" | "saved" | "recovery" | "unavailable";
 export type DeskFlushDetail = { failedKeys: string[]; pending?: Promise<void>[] };
@@ -31,6 +31,7 @@ export function useDeskPersistence<T>(key: string, initialValue: T, validate: (v
 
   useEffect(() => {
     let mounted = true;
+    let initialRead = false;
     const fail = () => { if (mounted) setState("unavailable"); };
     const stage = () => {
       if (!dirty.current) return;
@@ -38,13 +39,18 @@ export function useDeskPersistence<T>(key: string, initialValue: T, validate: (v
       base.current = latest.current;
       dirty.current = false;
     };
-    const sync = async (): Promise<boolean> => {
+    const sync = async (): Promise<"saved" | "recovery" | "unavailable"> => {
       try {
-        if (!ready.current && !dirty.current) {
-          const stored = options.current.validate(readDeskData(key, options.current.initialValue));
-          if (stored !== null && mounted) {
-            latest.current = base.current = stored;
-            render(stored);
+        // A staged edit clears dirty before its queued lock is granted. Read
+        // initial storage only once so another event cannot rewind that edit.
+        if (!initialRead) {
+          initialRead = true;
+          if (!ready.current && !dirty.current) {
+            const stored = options.current.validate(readDeskData(key, options.current.initialValue));
+            if (stored !== null && mounted) {
+              latest.current = base.current = stored;
+              render(stored);
+            }
           }
         }
         let readable = true;
@@ -54,7 +60,8 @@ export function useDeskPersistence<T>(key: string, initialValue: T, validate: (v
           // Corrupt records are retained for recovery. Valid edits are committed,
           // but the status must not imply that every draft was saved successfully.
           readable = storageKeys(pendingPrefix(key)).length === 0
-            && recovered.length === storageKeys(conflictPrefix(key)).length;
+            && recovered.length === storageKeys(conflictPrefix(key)).length
+            && !hasUnreadableDeskPrimary(key, options.current.validate);
           if (mounted) {
             // A newer keystroke always stays in the editor until its own save.
             if (!dirty.current) {
@@ -66,8 +73,8 @@ export function useDeskPersistence<T>(key: string, initialValue: T, validate: (v
             ready.current = true;
           }
         });
-        return readable;
-      } catch { fail(); return false; }
+        return readable ? "saved" : "recovery";
+      } catch { fail(); return "unavailable"; }
     };
     const flush = async (event?: Event) => {
       clearTimeout(timer.current);
@@ -77,7 +84,9 @@ export function useDeskPersistence<T>(key: string, initialValue: T, validate: (v
         detail?.failedKeys.push(key);
         return;
       }
-      const pending = sync().then(success => { if (!success) detail?.failedKeys.push(key); });
+      // Retained unreadable records do not prevent exporting the readable data.
+      // A storage failure still blocks backup because the latest edit may be unsaved.
+      const pending = sync().then(result => { if (result === "unavailable") detail?.failedKeys.push(key); });
       detail?.pending?.push(pending);
       await pending;
       if (dirty.current || !ready.current) detail?.failedKeys.push(key);

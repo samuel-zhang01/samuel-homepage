@@ -225,11 +225,10 @@
 }
 
 .metricCard > small {
-  overflow-x: auto;
-  overflow-y: hidden;
   color: #696d69;
   font-size: var(--s7-small);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .scenarioPanel,
@@ -1123,6 +1122,11 @@
   .eventTable td:nth-child(4),
   .eventTable th:nth-child(5),
   .eventTable td:nth-child(5) { display: none; }
+}
+
+@container (max-width: 350px) {
+  .metricGrid,
+  .auditMetrics { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

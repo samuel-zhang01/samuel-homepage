@@ -31,10 +31,10 @@ function patterns(copy: ProjectCopyTable) {
 /** Translate authored text or an explicitly registered interpolation template. */
 export function projectText(locale: Locale, copy: ProjectCopyTable, source: string, values?: ProjectCopyValues): string {
   const compact = source.replace(/\s+/g, " ").trim();
-  const fill = (value: string) => values ? value.replace(placeholder, (match, key: string) => String(values[key] ?? match)) : value;
+  const fill = (value: string) => values ? value.replace(placeholder, (match, key: string) => String(Object.hasOwn(values, key) ? values[key] ?? match : match)) : value;
   if (locale === "en-GB" || locale === "en-US") return translateText(locale, fill(source));
   const index = locale === "zh-CN" ? 0 : 1;
-  const direct = copy[compact];
+  const direct = Object.hasOwn(copy, compact) ? copy[compact] : undefined;
   let translated = direct ? fill(direct[index]) : undefined;
   if (translated === undefined && compact.length <= 4000) {
     for (const pattern of patterns(copy)) {
@@ -45,7 +45,7 @@ export function projectText(locale: Locale, copy: ProjectCopyTable, source: stri
         const value = captured[key];
         if (value === undefined) return token;
         const compactValue = value.replace(/\s+/g, " ").trim();
-        const capturedCopy = copy[compactValue]?.[index];
+        const capturedCopy = Object.hasOwn(copy, compactValue) ? copy[compactValue][index] : undefined;
         return capturedCopy === undefined ? translateText(locale, value) : `${value.match(/^\s*/)?.[0] ?? ""}${capturedCopy}${value.match(/\s*$/)?.[0] ?? ""}`;
       });
       break;

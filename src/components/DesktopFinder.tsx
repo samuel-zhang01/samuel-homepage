@@ -161,12 +161,30 @@ export default function DesktopFinder({
     }
   }
 
+  function containTabFocus(event: KeyboardEvent<HTMLDialogElement>) {
+    if (event.key !== "Tab" || event.defaultPrevented) return;
+    // Some engines move focus to the document after the final modal control.
+    // Keep both directions inside Find instead of leaving an invisible stop.
+    const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(
+      'button:not([disabled]):not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), [tabindex="0"]',
+    )).filter(control => control.getClientRects().length > 0);
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
+    }
+  }
+
   return (
     <dialog
       ref={dialogRef}
       className={styles.finder}
       aria-labelledby="finder-title"
       aria-describedby="finder-description"
+      onKeyDown={containTabFocus}
       onCancel={(event) => { event.preventDefault(); onCloseRef.current(); }}
     >
       <header className={styles.titlebar}>

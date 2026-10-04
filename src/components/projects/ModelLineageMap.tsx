@@ -460,7 +460,7 @@ export function ModelLineageMap({
                 ))}
               </div>
             </div>
-            <div className={styles.familyLegend} aria-label="Model family legend">{(Object.keys(FAMILY_META) as Family[]).map((item) => <span key={item} style={familyStyle(item)}><i />{FAMILY_META[item].label}</span>)}</div>
+            <div role="group" className={styles.familyLegend} aria-label="Model family legend">{(Object.keys(FAMILY_META) as Family[]).map((item) => <span key={item} style={familyStyle(item)}><i />{FAMILY_META[item].label}</span>)}</div>
           </section>
 
           <aside className={styles.inspector} style={familyStyle(selectedConfig.family)} aria-live="polite">

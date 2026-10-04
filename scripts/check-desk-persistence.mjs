@@ -157,4 +157,38 @@ check("malformed revision suffixes cannot poison subsequent save identifiers", (
   assert.deepEqual(commitDeskDrafts("notes", { note: "" }, validate), { note: "Valid" });
   assert.equal(storageKeys(pendingPrefix("notes")).length, 2);
 });
+for (const [kind, raw] of [
+  ["malformed JSON", '{partial-original'],
+  ["unsupported version", JSON.stringify({ version: 2, data: { note: "Future data" } })],
+  ["invalid schema", JSON.stringify({ version: 1, data: { note: 42 } })],
+]) check(`${kind} primary is preserved before a valid replacement`, () => {
+  const validNote = value => value && typeof value.note === "string" ? value : null;
+  const initial = { note: "" };
+  entries.set("notes", raw);
+  commitDeskDrafts("notes", initial, validNote);
+  assert.equal(entries.get("notes"), raw, "Opening alone retains the original primary");
+  assert.equal(storageKeys(conflictPrefix("notes")).length, 0);
+  stageDeskDraft("notes", { base: initial, value: { note: "Valid replacement" } });
+  assert.deepEqual(commitDeskDrafts("notes", initial, validNote), { note: "Valid replacement" });
+  const recovered = JSON.parse(entries.get(storageKeys(conflictPrefix("notes"))[0]));
+  assert.equal(recovered.format, "samuel-desk-unreadable-primary");
+  assert.equal(recovered.raw, raw);
+  assert.equal(readDeskConflicts("notes", validNote).length, 0, "Opaque original bytes are not trusted app versions");
+});
+check("failure preserving corrupt primary keeps original and staged edit intact", () => {
+  const validNote = value => value && typeof value.note === "string" ? value : null;
+  const raw = '{original-primary';
+  const initial = { note: "" };
+  entries.set("notes", raw);
+  stageDeskDraft("notes", { base: initial, value: { note: "New work" } });
+  const original = localStorage.setItem;
+  localStorage.setItem = (key, value) => { if (key.endsWith(":unreadable-primary")) throw new Error("Quota"); original(key, value); };
+  try { assert.throws(() => commitDeskDrafts("notes", initial, validNote)); }
+  finally { localStorage.setItem = original; }
+  assert.equal(entries.get("notes"), raw);
+  assert.equal(storageKeys(pendingPrefix("notes")).length, 1);
+  assert.deepEqual(commitDeskDrafts("notes", initial, validNote), { note: "New work" });
+  assert.equal(JSON.parse(entries.get(storageKeys(conflictPrefix("notes"))[0])).raw, raw);
+  assert.equal(storageKeys(pendingPrefix("notes")).length, 0);
+});
 console.log(`Desk persistence: ${checks} merge, conflict, recovery and failure checks passed.`);

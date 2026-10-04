@@ -24,6 +24,11 @@
   vertical-align: baseline;
 }
 
+.display:focus-visible {
+  outline: 2px dotted currentColor;
+  outline-offset: 2px;
+}
+
 .equation :global(.katex-display) {
   margin: 0;
 }

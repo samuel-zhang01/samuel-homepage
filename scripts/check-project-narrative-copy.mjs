@@ -32,7 +32,7 @@ const { projectOrigins } = load("src/data/projectOrigins.ts");
 const { projectNarrativeCopy } = load("src/components/projects/copy/projectNarrativeCopy.ts");
 const { projectMenuCopy } = load("src/components/projectMenuCopy.ts");
 const { getProjectText } = load("src/lib/projectNarrative.ts");
-const audit = JSON.parse(readFileSync(resolve(root, "src/components/projects/copy/projectNarrativeCopy.audit.json"), "utf8"));
+const audit = JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/projectNarrativeCopy.audit.json"), "utf8"));
 const sources = new Set();
 const add = (value) => {
   if (typeof value === "string") sources.add(value);

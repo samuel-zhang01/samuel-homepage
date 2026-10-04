@@ -6,7 +6,7 @@ export const chemistryCopy = {
   "{0} whole-walk restarts; no site revisits.": ["整条行走重新生成 {0} 次；没有重复访问位点。","整條行走重新生成 {0} 次；沒有重複訪問位點。"],
   "SAW / lattice": ["自避免行走 / 晶格","自避免行走 / 晶格"],
   "Six-neighbour self-avoiding lattice": ["六邻居自避免晶格","六鄰居自避免晶格"],
-  "Isotropic spherical control": ["各向同性球面采样对照","各向同性球面採樣對照"],
+  "Isotropic spherical control": ["各向同性球面采样对照","各向同性球面取樣對照"],
   "Methods and development": ["方法与开发过程","方法與開發過程"],
   "Recorded energies and live calculations": ["记录的能量与即时计算","記錄的能量與即時計算"],
   "COMPUTATIONAL LAB 5 · 3–4 MAR 2025": ["计算实验 5 · 2025 年 3 月 3–4 日","計算實驗 5 · 2025 年 3 月 3–4 日"],
@@ -16,14 +16,14 @@ export const chemistryCopy = {
   "Equations and method": ["方程与方法","方程與方法"],
   "COMPUTATIONAL LAB 4 · 18–23 FEB 2025": ["计算实验 4 · 2025 年 2 月 18–23 日","計算實驗 4 · 2025 年 2 月 18–23 日"],
   "Random flight": ["随机飞行","隨機飛行"],
-  "Notebook polar-angle sampler": ["课程中的极角采样器","課程中的極角採樣器"],
+  "Notebook polar-angle sampler": ["课程中的极角采样器","課程中的極角取樣器"],
   "Repeatable 3D calculation": ["可重复的三维计算","可重複的三維計算"],
   "Python study → Julia extension · Feb–Mar 2025": ["Python 练习 → Julia 扩展 · 2025 年 2–3 月","Python 練習 → Julia 擴展 · 2025 年 2–3 月"],
-  "Interactive calculation": ["交互计算","交互計算"],
+  "Interactive calculation": ["交互计算","互動計算"],
   "React extension · 25 Mar 2025": ["独立 React 扩展 · 2025 年 3 月 25 日","獨立 React 擴展 · 2025 年 3 月 25 日"],
   "Metropolis sampler": [
     "Metropolis 采样器",
-    "Metropolis 採樣器"
+    "Metropolis 取樣器"
   ],
   "Polymer walks": [
     "聚合物行走",
@@ -123,11 +123,11 @@ export const chemistryCopy = {
   ],
   "Metropolis molecular sampler": [
     "Metropolis 分子采样器",
-    "Metropolis 分子採樣器"
+    "Metropolis 分子取樣器"
   ],
   "Move one particle with a symmetric reflected-boundary proposal, evaluate the Lennard–Jones energy change, then let temperature decide whether an uphill proposal survives. Every run is deterministic for its seed.": [
     "以对称反射边界提议移动一个粒子，计算 Lennard–Jones 能量变化，再根据温度决定是否接受增能移动。相同种子会得到相同运行结果。",
-    "以對稱反射邊界提議移動一個粒子，計算 Lennard–Jones 能量變化，再根據溫度決定是否接受增能移動。相同種子會得到相同運行結果。"
+    "以對稱反射邊界提議移動一個粒子，計算 Lennard–Jones 能量變化，再根據溫度決定是否接受增能移動。相同種子會得到相同執行結果。"
   ],
   "Particle configuration": [
     "粒子构型",
@@ -155,7 +155,7 @@ export const chemistryCopy = {
   ],
   "Run 50": [
     "运行 50 次",
-    "運行 50 次"
+    "執行 50 次"
   ],
   "Reduced temperature T*": [
     "约化温度 T*",
@@ -234,8 +234,8 @@ export const chemistryCopy = {
     "降能移動必然接受；增能移動按熱機率抽樣決定。"
   ],
   "Sampling a thermal distribution": [
-    "对热分布进行采样",
-    "對熱分佈進行採樣"
+    "对热分布采样",
+    "對熱分布取樣"
   ],
   "A single-particle proposal changes the Lennard-Jones interaction energy. Downhill moves are accepted; some uphill moves are also accepted at finite temperature. After a rejected proposal, the accepted configuration and its energy stay unchanged.": [
     "单粒子移动提议会改变 Lennard–Jones 相互作用能。降能移动会被接受，有限温度下部分增能移动也会被接受。提议被拒绝后，已接受的构型和能量保持不变。",
@@ -243,7 +243,7 @@ export const chemistryCopy = {
   ],
   "The course exercises were extended with a React sampling experiment; this browser version lets you inspect each accepted or rejected move.": [
     "我将课程练习扩展为 React 采样实验；此浏览器版本可逐步查看每次移动是否被接受。",
-    "我將課程練習擴展為 React 採樣實驗；此瀏覽器版本可逐步查看每次移動是否被接受。"
+    "我將課程練習擴展為 React 取樣實驗；此瀏覽器版本可逐步查看每次移動是否被接受。"
   ],
   "Rotatable polymer conformation lab": [
     "可旋转的聚合物构象实验室",
@@ -251,7 +251,7 @@ export const chemistryCopy = {
   ],
   "Trace a continuous ideal chain, correct its angular sampler, or switch to the later self-avoiding lattice implementation. Rotation changes only the camera—never the calculated conformation.": [
     "生成连续理想链、修正角度采样方式，或切换到后来开发的自避免晶格行走。旋转只改变观察角度，不改变计算所得构象。",
-    "生成連續理想鏈、修正角度採樣方式，或切換到後來開發的自避免晶格行走。旋轉只改變觀察角度，不改變計算所得構象。"
+    "生成連續理想鏈、修正角度取樣方式，或切換到後來開發的自避免晶格行走。旋轉只改變觀察角度，不改變計算所得構象。"
   ],
   "Polymer model": [
     "聚合物模型",
@@ -259,7 +259,7 @@ export const chemistryCopy = {
   ],
   "Notebook sampler": [
     "课程采样器",
-    "課程採樣器"
+    "課程取樣器"
   ],
   "Isotropic control": [
     "各向同性对照",
@@ -327,11 +327,11 @@ export const chemistryCopy = {
   ],
   "Uniform φ targets 0.500, so poles are oversampled.": [
     "均匀采样 φ 时目标值为 0.500，因此极点附近被过度采样。",
-    "均勻採樣 φ 時目標值為 0.500，因此極點附近被過度採樣。"
+    "均勻取樣 φ 時目標值為 0.500，因此極點附近被過度取樣。"
   ],
   "Uniform cos φ targets the isotropic value 0.333.": [
     "均匀采样 cos φ 时达到各向同性目标值 0.333。",
-    "均勻採樣 cos φ 時達到各向同性目標值 0.333。"
+    "均勻取樣 cos φ 時達到各向同性目標值 0.333。"
   ],
   "{0} whole-walk restart{1}; no site revisits.": [
     "整条行走重新生成 {0} 次{1}；没有重复访问位点。",
@@ -367,7 +367,7 @@ export const chemistryCopy = {
   ],
   "Polymer sampling and self-avoidance": [
     "聚合物采样与自避免行走",
-    "聚合物採樣與自避免行走"
+    "聚合物取樣與自避免行走"
   ],
   "The February polymer exercises implement 2D/3D random flights, R": [
     "二月的聚合物练习实现了二维、三维随机飞行和端到端距离 R",
@@ -375,7 +375,7 @@ export const chemistryCopy = {
   ],
   "and the √N scaling comparison. A later Julia extension adds a six-neighbour self-avoiding walk with restart-on-trap and Makie 3D output. The browser also exposes the original non-isotropic φ sampler.": [
     "，并比较 √N 标度。三月的 Julia 扩展加入六邻居自避免行走，遇困时重新生成，并用 Makie 绘制三维结果。浏览器也展示了课程中非各向同性的 φ 采样方式。",
-    "，並比較 √N 標度。三月的 Julia 擴展加入六鄰居自避免行走，遇困時重新生成，並用 Makie 繪製三維結果。瀏覽器也展示了課程中非各向同性的 φ 採樣方式。"
+    "，並比較 √N 標度。三月的 Julia 擴展加入六鄰居自避免行走，遇困時重新生成，並用 Makie 繪製三維結果。瀏覽器也展示了課程中非各向同性的 φ 取樣方式。"
   ],
   "The course methods draw on SciPython and TU Delft teaching material.": [
     "课程方法参考 SciPython 和代尔夫特理工大学的教学资料。",
@@ -523,7 +523,7 @@ export const chemistryCopy = {
   ],
   "UNSTABLE TEACHING RUN": [
     "教学运行不稳定",
-    "教學運行不穩定"
+    "教學執行不穩定"
   ],
   "VISIBLE INTEGRATION DRIFT": [
     "可见的积分漂移",
@@ -535,7 +535,7 @@ export const chemistryCopy = {
   ],
   "Reduce Δt or shorten the run. A large energy change is a numerical failure signal, not a physical result.": [
     "请减小 Δt 或缩短运行。能量大幅变化是数值失败的信号，不能视为物理结果。",
-    "請減小 Δt 或縮短運行。能量大幅變化是數值失敗的信號，不能視為物理結果。"
+    "請減小 Δt 或縮短執行。能量大幅變化是數值失敗的訊號，不能視為物理結果。"
   ],
   "A small energy change is useful diagnostic information; compare time steps before drawing conclusions about numerical convergence.": [
     "较小的能量变化可用于诊断；判断数值收敛前，还应比较不同时间步。",
@@ -732,7 +732,7 @@ export const chemistryCopy = {
   ],
   "The five toluene SCF energies and four Na⁺–aromatic energy triplets come from completed course calculations. The browser recalculates energy differences and analytic orbital curves; it does not rerun Hartree–Fock.": [
     "五组甲苯 SCF 能量及四组 Na⁺–芳香体系能量来自已完成的课程计算。浏览器重新计算能量差及解析轨道曲线，不重新运行 Hartree–Fock。",
-    "五組甲苯 SCF 能量及四組 Na⁺–芳香體系能量來自已完成的課程計算。瀏覽器重新計算能量差及解析軌域曲線，不重新運行 Hartree–Fock。"
+    "五組甲苯 SCF 能量及四組 Na⁺–芳香體系能量來自已完成的課程計算。瀏覽器重新計算能量差及解析軌域曲線，不重新執行 Hartree–Fock。"
   ],
   "Basis-set material credits Psi4Education and Molecular Modeling Basics; the cation–π lab credits Psi4Education and Mecozzi et al., PNAS 93 (1996).": [
     "基组方法参考 Psi4Education 和 Molecular Modeling Basics；阳离子–π 实验参考 Psi4Education 及 Mecozzi 等发表于 PNAS 93（1996）的工作。",
@@ -756,11 +756,11 @@ export const chemistryCopy = {
   ],
   "Sampling and polymers": [
     "采样与聚合物",
-    "採樣與聚合物"
+    "取樣與聚合物"
   ],
   "Explore Monte Carlo sampling, the central-limit theorem and random-flight polymer models.": [
     "探索蒙特卡洛采样、中心极限定理和聚合物随机飞行模型。",
-    "探索蒙地卡羅採樣、中心極限定理和聚合物隨機飛行模型。"
+    "探索蒙地卡羅取樣、中心極限定理和聚合物隨機飛行模型。"
   ],
   "18–23 FEB": [
     "2 月 18–23 日",
@@ -796,7 +796,7 @@ export const chemistryCopy = {
   ],
   "Build Julia self-avoiding walks and a React Metropolis sampling experiment.": [
     "编写 Julia 自避免行走和 React Metropolis 采样实验。",
-    "編寫 Julia 自避免行走和 React Metropolis 採樣實驗。"
+    "編寫 Julia 自避免行走和 React Metropolis 取樣實驗。"
   ],
   "30 APR–12 MAY": [
     "4 月 30 日–5 月 12 日",
@@ -812,7 +812,7 @@ export const chemistryCopy = {
   ],
   "Five physical ideas, four interactive labs": [
     "五个物理概念，四个交互实验",
-    "五個物理概念，四個交互實驗"
+    "五個物理概念，四個互動實驗"
   ],
   "Each experiment uses a different numerical method. Compare what it calculates, how to interpret it and which assumptions matter.": [
     "每项实验采用不同的数值方法。比较它计算什么、如何解读，以及哪些假设会影响结果。",
@@ -844,7 +844,7 @@ export const chemistryCopy = {
   ],
   "Metropolis sampling": [
     "Metropolis 采样",
-    "Metropolis 採樣"
+    "Metropolis 取樣"
   ],
   "Which configurations are plausible at this temperature?": [
     "这个温度下，哪些构型更可能出现？",
@@ -916,11 +916,11 @@ export const chemistryCopy = {
   ],
   "Interactive calculations": [
     "交互计算",
-    "交互計算"
+    "互動計算"
   ],
   "Sampling, polymer generation and the small dynamics trajectory run locally with controlled inputs.": [
     "采样、聚合物生成及小型动力学轨迹均使用可控输入在本地运行。",
-    "採樣、聚合物生成及小型動力學軌跡均使用可控輸入在本地運行。"
+    "取樣、聚合物生成及小型動力學軌跡均使用可控輸入在本地執行。"
   ],
   "Recorded quantum energies": [
     "记录的量子能量",
@@ -928,7 +928,7 @@ export const chemistryCopy = {
   ],
   "The browser recomputes differences from recorded values; it does not run a new electronic-structure calculation.": [
     "浏览器根据已记录数值重算能量差，不运行新的电子结构计算。",
-    "瀏覽器根據已記錄數值重算能量差，不運行新的電子結構計算。"
+    "瀏覽器根據已記錄數值重算能量差，不執行新的電子結構計算。"
   ],
   "Model assumptions": [
     "模型假设",
@@ -944,7 +944,7 @@ export const chemistryCopy = {
   ],
   "The exercises credit Micaela Matta, Towards AI, the SciPython Book, TU Delft computational-physics lectures, NZ Nano, Psi4Education and Mecozzi et al. I completed and extended the computational work; the browser provides an interactive way to explore those methods.": [
     "练习参考 Micaela Matta、Towards AI、SciPython Book、代尔夫特理工大学计算物理课程、NZ Nano、Psi4Education 和 Mecozzi 等人的工作。我完成并扩展了计算；浏览器提供交互式方法探索。",
-    "練習參考 Micaela Matta、Towards AI、SciPython Book、代爾夫特理工大學計算物理課程、NZ Nano、Psi4Education 和 Mecozzi 等人的工作。我完成並擴展了計算；瀏覽器提供交互式方法探索。"
+    "練習參考 Micaela Matta、Towards AI、SciPython Book、代爾夫特理工大學計算物理課程、NZ Nano、Psi4Education 和 Mecozzi 等人的工作。我完成並擴展了計算；瀏覽器提供互動式方法探索。"
   ],
   "Chemistry Lab": [
     "化学实验室",
@@ -956,11 +956,11 @@ export const chemistryCopy = {
   ],
   "Four interactive labs": [
     "四个交互实验",
-    "四個交互實驗"
+    "四個互動實驗"
   ],
   "Explore how sampling, molecular shape, numerical motion and quantum-energy calculations turn physical ideas into computational experiments.": [
     "探索采样、分子形状、数值运动和量子能量计算，如何将物理概念变成计算实验。",
-    "探索採樣、分子形狀、數值運動和量子能量計算，如何將物理概念變成計算實驗。"
+    "探索取樣、分子形狀、數值運動和量子能量計算，如何將物理概念變成計算實驗。"
   ],
   "Temperature changes which moves are accepted, polymer rules change shape, and time steps change energy drift. Quantum tables retain recorded calculations.": [
     "温度改变移动的接受概率，聚合物规则改变链形状，时间步改变能量漂移。量子能量表展示已记录的计算结果。",
@@ -984,7 +984,7 @@ export const chemistryCopy = {
   ],
   "Four interactive chemistry labs": [
     "四个交互式化学实验",
-    "四個交互式化學實驗"
+    "四個互動式化學實驗"
   ],
   "Explore": [
     "探索",
@@ -992,7 +992,7 @@ export const chemistryCopy = {
   ],
   "interactive labs": [
     "交互实验",
-    "交互實驗"
+    "互動實驗"
   ],
   "Scientific computing labs": [
     "科学计算实验",

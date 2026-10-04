@@ -175,7 +175,7 @@ export const llmPostTrainingLabCopy = {
   ],
   "The DPO result measures the preference-pair objective. Generated-answer quality after DPO remains unevaluated.": [
     "DPO 结果衡量的是偏好对目标。DPO 后生成答案的质量尚未评估。",
-    "DPO 結果衡量的是偏好對目標。DPO 後生成答案的質量尚未評估。"
+    "DPO 結果衡量的是偏好對目標。DPO 後生成答案的品質尚未評估。"
   ],
   "Live calculation / lesson 02": [
     "实时计算／第 02 课",
@@ -271,7 +271,7 @@ export const llmPostTrainingLabCopy = {
   ],
   "Raise the chosen-answer probability, then move the reference above it. The same policy can now be penalised. Match the reference to recover the": [
     "先提高首选回答的概率，再将参考概率调得更高。相同策略此时可能受到惩罚。让策略与参考一致，即可恢复",
-    "先提高首選回答的概率，再將參考概率調得更高。相同策略此時可能受到懲罰。讓策略與參考一致，即可恢復"
+    "先提高首選回答的機率，再將參考機率調得更高。相同策略此時可能受到懲罰。讓策略與參考一致，即可恢復"
   ],
   "baseline.": [
     "的基准损失。",
@@ -279,11 +279,11 @@ export const llmPostTrainingLabCopy = {
   ],
   "Policy chosen probability ·": [
     "策略的首选回答概率 ·",
-    "策略的首選回答概率 ·"
+    "策略的首選回答機率 ·"
   ],
   "Reference chosen probability ·": [
     "参考模型的首选回答概率 ·",
-    "參考模型的首選回答概率 ·"
+    "參考模型的首選回答機率 ·"
   ],
   "Preference strength": [
     "偏好强度",
@@ -299,7 +299,7 @@ export const llmPostTrainingLabCopy = {
   ],
   "Preference probability": [
     "偏好概率",
-    "偏好概率"
+    "偏好機率"
   ],
   "DPO pair loss": [
     "DPO 偏好对损失",
@@ -319,7 +319,7 @@ export const llmPostTrainingLabCopy = {
   ],
   "Policy and reference agree: the preference probability is 0.5 and the loss is": [
     "策略与参考一致：偏好概率为 0.5，损失为",
-    "策略與參考一致：偏好概率為 0.5，損失為"
+    "策略與參考一致：偏好機率為 0.5，損失為"
   ],
   "The policy favours the chosen response more than the reference does; the loss falls below": [
     "策略对首选回答的偏好强于参考模型；损失低于",
@@ -331,6 +331,6 @@ export const llmPostTrainingLabCopy = {
   ],
   "A two-response probability model for inspecting the DPO objective. Real training uses completion log-probabilities over preference pairs. Changing this reference slider chooses a new toy scenario; the reference stays frozen during each actual training run.": [
     "这个双回答概率模型用于查看 DPO 目标。真实训练采用偏好对的补全文本对数概率。调整参考滑块会创建新的教学场景；在实际的每次训练中，参考模型保持冻结。",
-    "這個雙回答概率模型用於查看 DPO 目標。真實訓練採用偏好對的補全文本對數概率。調整參考滑塊會創建新的教學場景；在實際的每次訓練中，參考模型保持凍結。"
+    "這個雙回答機率模型用於查看 DPO 目標。真實訓練採用偏好對的補全文本對數機率。調整參考滑桿會建立新的教學場景；在實際的每次訓練中，參考模型保持凍結。"
   ]
 } satisfies ProjectCopyTable;

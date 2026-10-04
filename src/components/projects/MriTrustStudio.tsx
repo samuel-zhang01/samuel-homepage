@@ -446,7 +446,7 @@ function ReconstructionView() {
         </div>
         <div className={styles.controlStack}>
           <span className={styles.controlLabel}>ACCELERATION</span>
-          <div className={styles.segmented} aria-label="Acceleration factor">
+          <div role="group" className={styles.segmented} aria-label="Acceleration factor">
             {([4, 8] as const).map((value) => (
               <button key={value} type="button" aria-pressed={acceleration === value} onClick={() => chooseAcceleration(value)}>
                 R={value}×
@@ -456,7 +456,7 @@ function ReconstructionView() {
         </div>
       </div>
 
-      <div className={styles.methodRail} aria-label="Reconstruction method">
+      <div role="group" className={styles.methodRail} aria-label="Reconstruction method">
         {([
           ["zero", "Zero-filled", "IFFT baseline"],
           ["no-dc", "U-Net only", "R=4 reported"],
@@ -598,7 +598,7 @@ function ArchitectureView() {
         </div>
       </div>
 
-      <div className={styles.architectureFacts} aria-label="Reconstruction model architecture facts">
+      <div role="group" className={styles.architectureFacts} aria-label="Reconstruction model architecture facts">
         <div><span>TRAINABLE PARAMETERS</span><strong>7,756,580</strong><small>includes 3 soft-DC scalars</small></div>
         <div><span>BACKBONE CONVOLUTIONS</span><strong>18 × 3×3</strong><small>nine double-convolution blocks</small></div>
         <div><span>LEARNED UPSAMPLING</span><strong>4 × 2×2</strong><small>transposed convolutions</small></div>
@@ -777,7 +777,7 @@ function UncertaintyView() {
         </div>
         <div className={styles.controlStack}>
           <span className={styles.controlLabel}>ESTIMATOR</span>
-          <div className={styles.segmented} aria-label="Uncertainty estimator">
+          <div role="group" className={styles.segmented} aria-label="Uncertainty estimator">
             <button type="button" aria-pressed={method === "dropout"} onClick={() => setMethod("dropout")}>MC Dropout</button>
             <button type="button" aria-pressed={method === "ensemble"} onClick={() => setMethod("ensemble")}>Ensemble</button>
           </div>
@@ -870,7 +870,7 @@ export function UncertaintyRankingExperiment() {
         <div className={styles.rankingControls}>
           <div>
             <span className={styles.controlLabel}>{t("UNCERTAINTY ORDER")}</span>
-            <div className={styles.segmented} aria-label={t("Synthetic uncertainty ranking")}>
+            <div role="group" className={styles.segmented} aria-label={t("Synthetic uncertainty ranking")}>
               <button type="button" aria-pressed={!reversed} onClick={() => setReversed(false)}>{t("Aligned with error")}</button>
               <button type="button" aria-pressed={reversed} onClick={() => setReversed(true)}>{t("Reversed")}</button>
             </div>
@@ -995,7 +995,7 @@ function RobustnessView() {
         </div>
         <div className={styles.controlStack}>
           <span className={styles.controlLabel}>STRESSOR</span>
-          <div className={styles.segmented} aria-label="Robustness stressor">
+          <div role="group" className={styles.segmented} aria-label="Robustness stressor">
             <button type="button" aria-pressed={mode === "attacks"} onClick={() => setMode("attacks")}>Image attack</button>
             <button type="button" aria-pressed={mode === "shift"} onClick={() => setMode("shift")}>MR → CT shift</button>
           </div>
@@ -1007,7 +1007,7 @@ function RobustnessView() {
           <div className={styles.attackControls}>
             <div>
               <span className={styles.controlLabel}>ATTACK</span>
-              <div className={styles.segmented} aria-label="Attack type">
+              <div role="group" className={styles.segmented} aria-label="Attack type">
                 <button type="button" aria-pressed={attack === "FGSM"} onClick={() => setAttack("FGSM")}>FGSM</button>
                 <button type="button" aria-pressed={attack === "PGD-7"} onClick={() => setAttack("PGD-7")}>PGD · 7 steps</button>
               </div>
@@ -1095,7 +1095,7 @@ function SegmentationView() {
         </div>
         <div className={styles.controlStack}>
           <span className={styles.controlLabel}>ACCELERATION</span>
-          <div className={styles.factorButtons} aria-label="Segmentation acceleration factor">
+          <div role="group" className={styles.factorButtons} aria-label="Segmentation acceleration factor">
             {segmentationResults.accelerations.map((value, factorIndex) => (
               <button key={value} type="button" aria-pressed={index === factorIndex} onClick={() => setIndex(factorIndex)}>{value}×</button>
             ))}
@@ -1199,7 +1199,7 @@ function AuditView() {
           <div className={styles.xaiCanvas}>
             <SyntheticSlice mode={attribution === "Saliency" ? "segmentation" : "uncertainty"} label={`${attribution} boundary-focus schematic`} />
           </div>
-          <div className={styles.factorButtons} aria-label="Attribution method">
+          <div role="group" className={styles.factorButtons} aria-label="Attribution method">
             {(["Saliency", "Grad-CAM", "Integrated gradients"] as const).map((value) => (
               <button key={value} type="button" aria-pressed={attribution === value} onClick={() => setAttribution(value)}>{value}</button>
             ))}

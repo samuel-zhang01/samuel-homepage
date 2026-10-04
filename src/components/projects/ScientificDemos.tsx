@@ -281,7 +281,7 @@ export function CfdSurrogateDemo() {
         <section className={styles.fieldWorkspace} aria-live="polite">
           <div className={styles.workspaceToolbar}>
             <TabStrip label="Flow-field channel" options={CFD_FIELD_TABS} value={field} onChange={setField} />
-            <div className={styles.topologyToggle} aria-label="Topology overlay">
+            <div role="group" className={styles.topologyToggle} aria-label="Topology overlay">
               <button type="button" aria-pressed={topology === "grid"} className={topology === "grid" ? styles.toggleActive : ""} onClick={() => setTopology("grid")}>▦ Grid</button>
               <button type="button" aria-pressed={topology === "mesh"} className={topology === "mesh" ? styles.toggleActive : ""} onClick={() => setTopology("mesh")}>△ Mesh</button>
             </div>
@@ -323,7 +323,7 @@ export function CfdSurrogateDemo() {
           <div><dt>Parameters</dt><dd>{activeModel.parameters}</dd></div>
           <div><dt>Readout</dt><dd>{activeModel.note}</dd></div>
         </dl>
-        <div className={styles.rankStrip} aria-label="Recorded relative L2 values and their separate evaluation runs">
+        <div role="group" className={styles.rankStrip} aria-label="Recorded relative L2 values and their separate evaluation runs">
           {(Object.entries(CFD_MODELS) as [CfdModelId, (typeof CFD_MODELS)[CfdModelId]][]).map(([id, item]) => (
             <div className={model === id ? styles.rankActive : ""} key={id}>
               <span><b>{item.short}</b><em>{item.relativeL2}</em></span>

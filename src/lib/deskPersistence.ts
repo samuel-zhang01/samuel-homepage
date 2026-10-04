@@ -31,7 +31,17 @@ let coordinationDatabase: Promise<IDBDatabase> | undefined;
 
 /** IndexedDB transactions also coordinate tabs on origins without Web Locks (e.g. HTTP LAN previews). */
 export async function withDeskLock<T>(action: () => T): Promise<T> {
-  if (navigator.locks) return navigator.locks.request(deskLock, action);
+  if (navigator.locks) {
+    // Firefox can report a rejected LockGrantedCallback globally even when the
+    // request promise is caught. Return its outcome without rejection, then
+    // rethrow outside the native callback where the caller handles failures.
+    const result = await navigator.locks.request(deskLock, async () => {
+      try { return { ok: true as const, value: await action() }; }
+      catch (error) { return { ok: false as const, error }; }
+    });
+    if (!result.ok) throw result.error;
+    return result.value;
+  }
   coordinationDatabase ??= new Promise<IDBDatabase>((resolve, reject) => {
     const request = indexedDB.open("samuel-desk-coordination", 1);
     request.onupgradeneeded = () => request.result.createObjectStore("lock");
@@ -110,13 +120,32 @@ export function readDeskConflicts<T>(key: string, validate?: (value: unknown) =>
     } catch { return []; }
   });
 }
+export function hasUnreadableDeskPrimary<T>(key: string, validate: (value: unknown) => T | null): boolean {
+  const primaryRaw = localStorage.getItem(key);
+  if (primaryRaw === null) return false;
+  try {
+    const parsed = JSON.parse(primaryRaw);
+    const data = key === "samuel-system7-notepad-v1" ? { activePage: parsed?.activePage, pages: parsed?.pages } : parsed?.data;
+    return parsed?.version !== 1 || validate(data) === null;
+  } catch { return true; }
+}
+
 /** Caller holds the shared lock. Remove valid drafts only after their result is durable; retain unreadable ones. */
 export function commitDeskDrafts<T>(key: string, initial: T, validate: (value: unknown) => T | null): T {
   let current = validate(readDeskData(key, initial)) ?? initial;
+  let unreadablePrimary = hasUnreadableDeskPrimary(key, validate) ? localStorage.getItem(key) : null;
   for (const entry of storageKeys(pendingPrefix(key))) {
     const draft = readDeskDraft(entry, validate);
     if (!draft) continue;
     const { base, value: incoming } = draft;
+    if (unreadablePrimary !== null) {
+      // Preserve the exact old bytes before a valid edit replaces corrupt or
+      // unsupported primary data. If this write hits quota, leave both the
+      // old primary and the staged edit untouched for a later recovery.
+      localStorage.setItem(`${conflictPrefix(key)}${entry.slice(pendingPrefix(key).length)}:unreadable-primary`,
+        JSON.stringify({ format: "samuel-desk-unreadable-primary", raw: unreadablePrimary }));
+      unreadablePrimary = null;
+    }
     const merged = mergeDeskData(base, current, incoming);
     const value = validate(merged.value);
     // If a merged collection exceeds an app limit, preserve both complete versions.

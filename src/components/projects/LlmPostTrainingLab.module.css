@@ -43,7 +43,6 @@
 .derivation { background: var(--s7-paper); padding: 14px; }
 .mathPanel { min-width: 0; padding: 10px 12px; background: var(--s7-paper); font-size: var(--s7-text); }
 .derivation p { margin: 12px 0 0; font-size: var(--s7-text); line-height: 1.5; }
-.source { border-top: 1px solid var(--s7-shadow); padding: 12px 18px; font-size: var(--s7-small); line-height: 1.6; color: var(--s7-ink); }
 @container (max-width: 620px) {
   .controls, .comparison { grid-template-columns: 1fr; }
   .comparison article + article { border-left: 0; border-top: 1px solid var(--s7-shadow); }

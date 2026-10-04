@@ -493,7 +493,7 @@ export function ThermodynamicsStudio() {
           <ParameterSlider label="Mole fraction xA" unit="" value={xA} min={0.05} max={0.95} step={0.01} onChange={setXA} />
           <ParameterSlider label="Binary kAB" unit="" value={interaction} min={-0.1} max={0.15} step={0.01} onChange={setInteraction} />
 
-          <div className={styles.componentTabs} aria-label="Synthetic component parameter editor">
+          <div role="group" className={styles.componentTabs} aria-label="Synthetic component parameter editor">
             <button type="button" aria-pressed={selectedComponent === "A"} onClick={() => setSelectedComponent("A")}>Fluid A</button>
             <button type="button" aria-pressed={selectedComponent === "B"} onClick={() => setSelectedComponent("B")}>Fluid B</button>
           </div>

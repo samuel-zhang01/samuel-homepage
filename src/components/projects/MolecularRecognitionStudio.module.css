@@ -679,11 +679,6 @@
 .energyLegend span { display: flex; align-items: center; gap: 5px; }
 .energyLegend i { width: 13px; height: 8px; background: #275f70; }
 .energyLegend span + span i { background: #e8b54d; }
-
-.auditSeal { display: grid; min-width: 118px; padding: 10px; text-align: center; border: 1px solid #173643; background: #eaf2f0; }
-.auditSeal span,
-.auditSeal small { font: var(--s7-small)/1.4 var(--s7-font-text); letter-spacing: normal; color: #64767b; }
-.auditSeal strong { margin: 3px 0; font-family: var(--s7-font-text); font-size: var(--s7-heading); font-weight: 500; color: #17444c; }
 .pipeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: hidden; border: 1px solid #36464f; }
 .pipeline button { position: relative; display: grid; min-width: 0; min-height: 91px; align-content: start; gap: 4px; padding: 12px; text-align: left; cursor: pointer; font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; border: 0; border-right: 1px solid #7d898e; color: #32424a; background: linear-gradient(#fff, #e7eae6); }
 .pipeline button:focus-visible {
@@ -733,27 +728,11 @@
 .publicRecord li + li { margin-top: 5px; }
 .publicRecord a,
 .sourceArtifact a { display: inline-block; font-size: var(--s7-small); font-weight: 700; text-underline-offset: 3px; color: #075f6b; }
-.artifactStats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 12px 0; border: 1px solid #929da0; }
-.artifactStats > div { min-width: 0; padding: 9px; text-align: center; border-right: 1px solid #c4cbca; }
-.artifactStats > div:last-child { border-right: 0; }
-.artifactStats span,
-.artifactStats strong { display: block; }
-.artifactStats span { font: var(--s7-small)/1.4 var(--s7-font-text); color: #6a787d; }
-.artifactStats strong { overflow: hidden; margin-top: 4px; font-family: var(--s7-font-text); font-size: var(--s7-text); font-weight: 500; text-overflow: ellipsis; }
-.licenceWarning { padding: 9px; border-left: 0; background: #f7eaea; }
 
 .claimLedger { margin-top: 20px; padding: 17px; border: 1px solid #5c6970; background: #fff; box-shadow: 5px 5px 0 #dbe0dd; }
 .claimTableWrap th:first-child { width: 46%; }
 .claimTableWrap tbody th { font-weight: 600; white-space: normal; }
 .claimTableWrap tbody td:last-child { white-space: normal; }
-.publicTag,
-.sourceTag,
-.selfTag,
-.absentTag { display: inline-block; padding: 3px 5px; font: var(--s7-small)/1.4 var(--s7-font-text); font-weight: 700; letter-spacing: normal; border: 1px solid; }
-.publicTag { border-color: #287361; color: #155e4e; background: #e4f2ec; }
-.sourceTag { border-color: #247682; color: #12626d; background: #e5f2f3; }
-.selfTag { border-color: #9d701e; color: #80560f; background: #f7efd9; }
-.absentTag { border-color: #9f4650; color: #8d313b; background: #f8e7e9; }
 
 .boundaryGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 20px; }
 .boundaryGrid section { min-width: 0; padding: 14px; border: 1px solid #737f83; background: #f4f6f2; }
@@ -805,8 +784,7 @@
   .methodPanel { padding: 17px; }
   .sectionHeading { flex-direction: column; gap: 12px; }
   .recordBadge,
-  .syntheticStamp,
-  .auditSeal { align-self: stretch; }
+  .syntheticStamp { align-self: stretch; }
   .assignmentGrid { grid-template-columns: minmax(0, 1fr); }
   .controlPanel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; border-right: 0; border-bottom: 1px solid #53636d; }
   .panelTitle,
@@ -892,9 +870,6 @@
   .energyChart button { padding-inline: 2px; }
   .energyChart button > i { width: 30px; }
   .energyLegend { align-items: flex-start; flex-direction: column; gap: 5px; }
-  .artifactStats { grid-template-columns: minmax(0, 1fr); }
-  .artifactStats > div { border-right: 0; border-bottom: 1px solid #c4cbca; }
-  .artifactStats > div:last-child { border-bottom: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -947,11 +922,9 @@
 .geometryHeader strong,
 .constantBlock strong,
 .geometryNote strong,
-.auditSeal strong,
 .stageDetail > strong,
 .publicRecord h4,
 .sourceArtifact h4,
-.artifactStats strong,
 .boundaryGrid strong {
   font-family: var(--s7-font-ui);
   font-weight: 700;

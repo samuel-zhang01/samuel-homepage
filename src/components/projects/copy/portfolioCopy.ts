@@ -355,7 +355,7 @@ export const portfolioCopy = {
   ],
   "SHARED CONNECTIONS": [
     "共同联系",
-    "共同聯絡"
+    "共同關聯"
   ],
   "contexts, tools and project features": [
     "背景、工具与项目特征",
@@ -383,7 +383,7 @@ export const portfolioCopy = {
   ],
   "These projects have different contexts and methods. Select another pair to explore their connections.": [
     "这些项目具有不同背景和方法。选择另一组项目，探索它们的联系。",
-    "這些專案具有不同背景和方法。選擇另一組專案，探索它們的聯絡。"
+    "這些專案具有不同背景和方法。選擇另一組專案，探索它們的關聯。"
   ],
   "A ONLY ·": [
     "仅 A ·",
@@ -419,7 +419,7 @@ export const portfolioCopy = {
   ],
   "signals": [
     "项联系",
-    "項聯絡"
+    "項關聯"
   ],
   "FIND A WAY INTO THE WORK": [
     "找到探索工作的入口",
@@ -455,7 +455,7 @@ export const portfolioCopy = {
   ],
   "Select two projects to compare their work context, tools and outputs. The connection count describes shared features; it does not rank project quality.": [
     "选择两个项目，比较工作背景、工具和成果。联系数量描述共同特征，不用于评价项目质量。",
-    "選擇兩個專案，比較工作背景、工具和成果。聯絡數量描述共同特徵，不用於評價專案質量。"
+    "選擇兩個專案，比較工作背景、工具和成果。關聯數量描述共同特徵，不用於評價專案品質。"
   ],
   "02 · TIMELINE": [
     "02 · 时间线",
@@ -515,7 +515,7 @@ export const portfolioCopy = {
   ],
   "Each project connects its purpose, contribution, demonstrations and supporting material. Those details explain more than a count of tools or connections.": [
     "每个项目连接其目的、贡献、演示和支持材料。这些细节比工具或联系的数量更能解释工作。",
-    "每個專案連線其目的、貢獻、演示和支援材料。這些細節比工具或聯絡的數量更能解釋工作。"
+    "每個專案連線其目的、貢獻、演示和支援材料。這些細節比工具或關聯的數量更能解釋工作。"
   ],
   "SELECTED PROJECT": [
     "所选项目",
@@ -631,7 +631,7 @@ export const portfolioCopy = {
   ],
   "{0} shared tools · {1} signals": [
     "{0} 个共同工具 · {1} 项联系",
-    "{0} 個共同工具 · {1} 項聯絡"
+    "{0} 個共同工具 · {1} 項關聯"
   ],
   "website": [
     "网站",

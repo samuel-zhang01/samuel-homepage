@@ -2,8 +2,10 @@ import SystemSevenDesktop, { type AppId } from "@/components/SystemSevenDesktop"
 import { projectText } from "@/lib/projectCopy";
 import { desktopCopy } from "@/components/desktopCopy";
 import { localeOptions, normaliseLocale } from "@/lib/i18n";
+import { routeAlternates } from "@/lib/routeMetadata";
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
+import NotFound, { metadata as notFoundMetadata } from "../../not-found";
 
 const sections: Record<string, AppId> = {
   settings: "settings",
@@ -92,8 +94,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: localeParam, section } = await params;
   const locale = normaliseLocale(localeParam);
-  const content = sectionMetadata[section];
-  if (!locale || !content) return {};
+  const content = Object.hasOwn(sectionMetadata, section) ? sectionMetadata[section] : undefined;
+  if (!locale || !content) return notFoundMetadata;
 
   const canonicalLocale = localeOptions.find((option) => option.locale === locale)?.slug ?? "en-gb";
   const title = projectText(locale, desktopCopy, content.title);
@@ -101,16 +103,7 @@ export async function generateMetadata({
   return {
     title: { absolute: `${title} · Samuel Zhang` },
     description,
-    alternates: {
-      canonical: `/${canonicalLocale}/${section}`,
-      languages: {
-        "x-default": `/${section}`,
-        "en-GB": `/en-gb/${section}`,
-        "en-US": `/en-us/${section}`,
-        "zh-Hans": `/zh-cn/${section}`,
-        "zh-Hant": `/zh-tw/${section}`,
-      },
-    },
+    alternates: routeAlternates(`/${canonicalLocale}/${section}`),
     openGraph: {
       title,
       description,
@@ -130,8 +123,8 @@ export default async function LocalisedSectionPage({
   const { locale: localeSlug, section } = await params;
   const locale = normaliseLocale(localeSlug);
   if (locale && section === "resume") redirect(`/${localeSlug}/documents`);
-  const initialApp = sections[section];
-  if (!locale || !initialApp) notFound();
+  const initialApp = Object.hasOwn(sections, section) ? sections[section] : undefined;
+  if (!locale || !initialApp) return <NotFound />;
   return (
     <SystemSevenDesktop
       initialApp={initialApp}

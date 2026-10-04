@@ -20,6 +20,7 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "hackathon/**",
+      "videomate/VideoMate/**",
       // Copied verbatim from the pinned pdfjs-dist package at build time.
       // Lint our loader, not the generated third-party vendor payload.
       "public/_vendor/**",

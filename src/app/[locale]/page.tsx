@@ -1,6 +1,6 @@
 import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 import { localeOptions, normaliseLocale } from "@/lib/i18n";
-import { notFound } from "next/navigation";
+import NotFound from "../not-found";
 
 export function generateStaticParams() {
   return localeOptions.map((option) => ({ locale: option.slug }));
@@ -9,6 +9,6 @@ export function generateStaticParams() {
 export default async function LocalisedHomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: localeSlug } = await params;
   const locale = normaliseLocale(localeSlug);
-  if (!locale) notFound();
+  if (!locale) return <NotFound />;
   return <SystemSevenDesktop initialApp="about" initialLocale={locale} />;
 }

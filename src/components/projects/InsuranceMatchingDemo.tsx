@@ -738,7 +738,7 @@ export function InsuranceMatchingDemo() {
             </label>
           </fieldset>
 
-          {workbenchMode === "retired-composite" && <div className={styles.equation} aria-label="Retired composite score formula">
+          {workbenchMode === "retired-composite" && <div role="group" className={styles.equation} aria-label="Retired composite score formula">
             <span>Null-SAFE composite</span>
             <MathEquation tex={String.raw`S_m=\sum_j w_{j,m}\,N(x_{j,m})`} />
             <p>Missing pillars receive no invented value. Available weights are re-normalised per market.</p>
@@ -801,7 +801,7 @@ export function InsuranceMatchingDemo() {
 
                   <div className={styles.compositeCell}>
                     {workbenchMode === "evidence" ? (
-                      <div className={styles.evidencePills} aria-label="Separate evidence signals">
+                      <div role="group" className={styles.evidencePills} aria-label="Separate evidence signals">
                         {PILLARS.map((pillar) => <span key={pillar.key} style={{ borderColor: pillar.colour }}><small>{pillar.short}</small><strong>{candidate.normalised[pillar.key]?.toFixed(0) ?? "—"}</strong></span>)}
                       </div>
                     ) : (
@@ -830,7 +830,7 @@ export function InsuranceMatchingDemo() {
             })}
           </div>
 
-          <div className={styles.legend} aria-label="Evidence legend">
+          <div role="group" className={styles.legend} aria-label="Evidence legend">
             {PILLARS.map((pillar) => (
               <span key={pillar.key}><i style={{ backgroundColor: pillar.colour }} />{pillar.short}</span>
             ))}

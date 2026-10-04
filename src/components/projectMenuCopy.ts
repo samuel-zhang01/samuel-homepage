@@ -3,8 +3,8 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 /** Desktop project names and summaries only; long narratives stay in the lazy project document. */
 export const projectMenuCopy = {
   "VideoMate": ["VideoMate", "VideoMate"],
-  "Inspect damaged videos, recover readable material and re-encode mixed collections with qualified GPU acceleration.": ["检查受损视频，恢复可读取的内容，并在合格的 GPU 加速路径上重新编码混合媒体集合。", "檢查受損影片、復原可讀取的內容，並透過合格的 GPU 加速途徑重新編碼混合媒體集合。"],
-  "A personal finance workspace for net worth, connected bank accounts, two trading platforms and recurring-payment checks.": ["个人财务工作台，集中查看净资产、银行账户、两个交易平台和定期付款。","個人財務工作臺，集中查看淨資產、銀行賬戶、兩個交易平臺和定期付款。"],
+  "Inspect damaged videos, recover readable material and re-encode mixed collections with qualified GPU acceleration.": ["检查受损视频、恢复可读内容，并以符合条件的 GPU 加速重新编码混合媒体集合。", "檢查受損影片、復原可讀內容，並以符合條件的 GPU 加速重新編碼混合媒體集合。"],
+  "A personal finance workspace for net worth, connected bank accounts, two trading platforms and recurring-payment checks.": ["个人财务工作台：查看净资产、已连接银行账户和两个交易平台，并检查定期付款。","個人財務工作台：查看淨資產、已連接銀行帳戶和兩個交易平台，並檢查定期付款。"],
   "Orbital Lab": [
     "原子轨道实验室",
     "原子軌域實驗室"
@@ -34,8 +34,8 @@ export const projectMenuCopy = {
     "快速清單"
   ],
   "Capture tasks, mark priorities and keep the list across visits.": [
-    "记录待办事项、标记优先级，下次访问时继续使用。",
-    "記錄待辦事項、標記優先級，下次訪問時繼續使用。"
+    "记录待办、标记优先事项，并保留清单以便下次使用。",
+    "記錄待辦、標記優先事項，並保留清單供下次使用。"
   ],
   "Focus Clock": [
     "专注时钟",
@@ -50,8 +50,8 @@ export const projectMenuCopy = {
     "隨身日曆"
   ],
   "Plan by day with a private note saved to this browser.": [
-    "按日期安排事情，将私人日记保存在此浏览器中。",
-    "按日期安排事情，將私人日記保存在此瀏覽器中。"
+    "按日规划，私人笔记保存在此浏览器中。",
+    "按日規劃，私人筆記儲存在此瀏覽器中。"
   ],
   "Desk Calculator": [
     "桌面计算器",
@@ -75,7 +75,7 @@ export const projectMenuCopy = {
   ],
   "Build accessible palettes, check contrast and save favourite swatches.": [
     "创建易于阅读的配色，检查对比度并保存常用色样。",
-    "創建易於閱讀的配色，檢查對比度並保存常用色樣。"
+    "建立易於閱讀的配色，檢查對比度並保存常用色樣。"
   ],
   "coverd.ai": [
     "coverd.ai",
@@ -88,7 +88,7 @@ export const projectMenuCopy = {
   ],
   "A seven-component workload modelling platform designed to replace a fragile spreadsheet workflow with scheduled calculation, governed editing and live capacity views.": [
     "由七个组件组成的工作量建模平台，以定时计算、受控编辑和实时产能视图替代脆弱的电子表格流程。",
-    "由七個元件組成的工作量建模平臺，以定時計算、受控編輯和實時產能視圖替代脆弱的電子表格流程。"
+    "由七個元件組成的工作量建模平台，以定時計算、受控編輯和實時產能視圖替代脆弱的電子表格流程。"
   ],
   "Insurance Lead-Market Matching": [
     "保险承保市场匹配",
@@ -109,7 +109,7 @@ export const projectMenuCopy = {
   ],
   "A local-first finance application that brings statements, spending patterns, transfers and investments into one reliable view.": [
     "本地优先的财务应用，将账单、支出模式、转账和投资整合为可靠的统一视图。",
-    "本地優先的財務應用，將帳單、支出模式、轉賬和投資整合為可靠的統一視圖。"
+    "本地優先的財務應用，將帳單、支出模式、轉帳和投資整合為可靠的統一視圖。"
   ],
   "COVERD-YASA Scheduling": [
     "COVERD-YASA 排期",
@@ -120,8 +120,8 @@ export const projectMenuCopy = {
     "YASA"
   ],
   "A self-hosted scheduling platform with four allocation modes, timezone-safe availability, calendar sync and race-resistant booking.": [
-    "自托管预约平台，提供四种分配方式、时区安全的可用时间、日历同步和抵御并发冲突的预订。",
-    "自代管預約平臺，提供四種分配方式、時區安全的可用時間、日曆同步和抵禦併發衝突的預約。"
+    "自托管预约平台，提供四种分配方式、正确换算时区的可用时间、日历同步与并发预约防护。",
+    "自架預約平台，提供四種分配方式、正確換算時區的可預約時間、行事曆同步與併發預約防護。"
   ],
   "Parliamo! Italian Learning Portal": [
     "Parliamo! 意大利语学习门户",
@@ -184,8 +184,8 @@ export const projectMenuCopy = {
     "MRI 可信性實驗室"
   ],
   "Reconstructing cardiac MRI from fewer measurements while checking anatomical fidelity, uncertainty and agreement with the acquired data.": [
-    "用更少测量重建心脏 MRI，同时检查解剖保真度、不确定性及与采集数据的一致性。",
-    "用更少測量重建心臟 MRI，同時檢查解剖保真度、不確定性及與採集資料的一致性。"
+    "以较少测量数据重建心脏 MRI，并检查解剖结构保真度、不确定性与测量一致性。",
+    "以較少量測資料重建心臟 MRI，並檢查解剖結構保真度、不確定性與量測一致性。"
   ],
   "Neural CFD Surrogates": [
     "神经网络 CFD 代理模型",
@@ -196,16 +196,16 @@ export const projectMenuCopy = {
     "CFD × 3"
   ],
   "Learning to approximate expensive fluid simulations with Fourier operators, mesh message passing and a grid-based U-Net.": [
-    "用 Fourier 算子、网格消息传递和规则网格 U-Net 学习近似昂贵的流体模拟。",
-    "用 Fourier 算子、網格消息傳遞和規則網格 U-Net 學習近似昂貴的流體模擬。"
+    "利用 Fourier 算子、网格消息传递与规则网格 U-Net，学习近似计算成本高的流体模拟。",
+    "利用 Fourier 算子、網格訊息傳遞與規則網格 U-Net，學習近似運算成本高的流體模擬。"
   ],
   "Air-Quality Sensor Optimisation": [
     "空气质量传感器优化",
-    "空氣質量感測器優化"
+    "空氣品質感測器最佳化"
   ],
   "Air Quality ML": [
     "空气质量机器学习",
-    "空氣質量機器學習"
+    "空氣品質機器學習"
   ],
   "Predicting carbon-monoxide concentration while balancing regression accuracy, interpretability and a hypothetical sensor budget.": [
     "预测一氧化碳浓度，同时平衡回归精度、可解释性和假设的传感器预算。",
@@ -225,7 +225,7 @@ export const projectMenuCopy = {
   ],
   "Regularisation Paths · Air-Quality Companion": [
     "正则化路径：空气质量配套实验",
-    "正則化路徑：空氣質量配套實驗"
+    "正則化路徑：空氣品質配套實驗"
   ],
   "Regularisation Paths": [
     "正则化路径",
@@ -233,7 +233,7 @@ export const projectMenuCopy = {
   ],
   "The mathematical companion to the Air-Quality ML Decision Lab, isolating how L1 and L2 penalties alter standardised coefficient paths.": [
     "空气质量机器学习实验的数学配套，单独展示 L1 和 L2 惩罚如何改变标准化系数路径。",
-    "空氣質量機器學習實驗的數學配套，單獨展示 L1 和 L2 懲罰如何改變標準化係數路徑。"
+    "空氣品質機器學習實驗的數學配套，單獨展示 L1 和 L2 懲罰如何改變標準化係數路徑。"
   ],
   "Safety-Critical AI Studies": [
     "安全关键 AI 研究",
@@ -241,7 +241,7 @@ export const projectMenuCopy = {
   ],
   "Studying when model confidence can be trusted through uncertainty estimates, probability calibration and conformal prediction.": [
     "通过不确定性估计、概率校准和共形预测，研究何时可以信任模型置信度。",
-    "透過不確定性估計、概率校準和共形預測，研究何時可以信任模型置信度。"
+    "透過不確定性估計、機率校準和共形預測，研究何時可以信任模型信心度。"
   ],
   "Safe Learning to Defer for Insurance Fraud Detection": [
     "保险欺诈检测中的安全学习转交",
@@ -265,7 +265,7 @@ export const projectMenuCopy = {
   ],
   "A two-chapter decision lab separating causal adjustment from counterfactual policy evaluation over logged bandit feedback.": [
     "由两个章节组成的决策实验室，区分因果调整与基于已记录老虎机反馈的反事实策略评估。",
-    "由兩個章節組成的決策實驗室，區分因果調整與基於已記錄老虎機反饋的反事實策略評估。"
+    "由兩個章節組成的決策實驗室，區分因果調整與基於已記錄老虎機回饋的反事實策略評估。"
   ],
   "Four Models of Corporate Innovation": [
     "企业创新的四种模式",
@@ -337,7 +337,7 @@ export const projectMenuCopy = {
   ],
   "A compact MATLAB App Designer tool for turning two-column spectroscopy exports into presentation-ready plots with precise frequency navigation and high-resolution export.": [
     "小巧的 MATLAB App Designer 工具，将两列光谱导出数据变为可展示的图表，支持精确频率导航与高分辨率导出。",
-    "小巧的 MATLAB App Designer 工具，將兩列光譜匯出資料變為可展示的圖表，支持精確頻率導覽與高解析度匯出。"
+    "小巧的 MATLAB App Designer 工具，將雙欄光譜匯出資料變為可展示的圖表，支持精確頻率導覽與高解析度匯出。"
   ],
   "Accelerator Environment Planner": [
     "加速计算环境规划器",

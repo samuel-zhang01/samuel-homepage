@@ -463,7 +463,7 @@ export const courseCopy = {
   ],
   "The duration component is only a documented course-length proxy because the source catalog has no weekly workload. Mock rating and enrollment counts are not verified quality or popularity evidence.": [
     "由于原始课程目录没有每周学习量，时长项只以课程总周数作为代理。示例评分与报名人数不能作为已验证的质量或受欢迎程度证据。",
-    "由於原始課程目錄沒有每週學習量，時長項只以課程總週數作為代理。示例評分與報名人數不能作為已驗證的質量或受歡迎程度證據。"
+    "由於原始課程目錄沒有每週學習量，時長項只以課程總週數作為代理。示例評分與報名人數不能作為已驗證的品質或受歡迎程度證據。"
   ],
   "SAME INPUT · TWO BEHAVIOURS": [
     "相同输入 · 两种行为",
@@ -663,7 +663,7 @@ export const courseCopy = {
   ],
   "Captures name, email, role, goals, categories, level, schedule and budget in local component state.": [
     "在组件本地状态中收集姓名、邮箱、角色、目标、类别、级别、时间安排与预算。",
-    "在元件本地狀態中收集姓名、郵箱、角色、目標、類別、級別、時間安排與預算。"
+    "在元件本地狀態中收集姓名、電子郵件、角色、目標、類別、級別、時間安排與預算。"
   ],
   "BUILT": [
     "已实现",
@@ -783,7 +783,7 @@ export const courseCopy = {
   ],
   "Email": [
     "邮箱",
-    "郵箱"
+    "電子郵件"
   ],
   "Experience": [
     "经验",
@@ -867,7 +867,7 @@ export const courseCopy = {
   ],
   "SYNTHETIC · LOCAL ONLY": [
     "合成数据 · 本地运行",
-    "合成數據 · 本地執行"
+    "合成資料 · 本地執行"
   ],
   "Compare category and difficulty filtering followed by random ordering with an explicit weighted score for course preferences.": [
     "比较按类别与难度筛选后随机排序的方式，以及根据课程偏好计算的明确加权分数。",

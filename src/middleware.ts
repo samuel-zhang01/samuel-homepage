@@ -19,6 +19,36 @@ const CANONICAL_LOCALE_ALIASES: Record<string, string> = {
   zh_tw: "zh-tw",
 };
 
+// These are the finite page routes, including the CV redirect. The request
+// guard verifies this inventory against the App Router's actual section map.
+const SECTION_ROUTES = new Set([
+  "settings", "about", "contact", "coverd", "desk", "documents", "education",
+  "experience", "games", "interests", "lab", "orbitals", "sidequest", "resume", "skills", "projects",
+]);
+const ROOT_RESOURCE_ROUTES = new Set([
+  "robots.txt", "sitemap.xml", "manifest.webmanifest",
+  "GROWMAT Showcase External Highest Quality.pdf",
+  "Samuel-Zhang-Applied-AI-CV.pdf", "Samuel-Zhang-Applied-AI-CV-en-US.pdf",
+  "Samuel-Zhang-Applied-AI-CV-zh-CN.pdf", "Samuel-Zhang-Applied-AI-CV-zh-TW.pdf",
+]);
+
+function isMissingFinitePage(pathname: string) {
+  const segments = pathname.split("/").filter(Boolean);
+  // Deeper paths already reach Next's unmatched-route recovery renderer.
+  if (!segments.length || segments.length > 2) return false;
+  try {
+    for (let index = 0; index < segments.length; index++) segments[index] = decodeURIComponent(segments[index]);
+  } catch { return false; }
+  const [first, second] = segments;
+  if (segments.length === 1) {
+    return !Object.hasOwn(CONTENT_LANGUAGES, first) && !SECTION_ROUTES.has(first) && !ROOT_RESOURCE_ROUTES.has(first);
+  }
+  // Images/framework assets bypass middleware. The other shallow public files
+  // are the four generated search indexes; the full asset crawl pins their bytes.
+  if (first === "search" && /^project-text-(?:en-gb|en-us|zh-cn|zh-tw)\.json$/.test(second)) return false;
+  return !Object.hasOwn(CONTENT_LANGUAGES, first) || !SECTION_ROUTES.has(second);
+}
+
 function requestHostname(request: NextRequest) {
   const host = request.headers.get("host")?.trim().toLowerCase() ?? "";
   // Validate the entire authority before extracting it. Splitting at ':' or
@@ -81,8 +111,12 @@ export function middleware(request: NextRequest) {
   }
 
   if (request.method === "GET" || request.method === "HEAD") {
-    const localeSegment = request.nextUrl.pathname.split("/")[1]?.toLowerCase();
-    const canonicalLocale = localeSegment ? CANONICAL_LOCALE_ALIASES[localeSegment] : undefined;
+    const rawLocaleSegment = request.nextUrl.pathname.split("/")[1];
+    let localeSegment = rawLocaleSegment?.toLowerCase();
+    try { localeSegment = decodeURIComponent(rawLocaleSegment ?? "").toLowerCase(); }
+    catch { /* Malformed paths retain the normal missing-route response. */ }
+    const canonicalLocale = localeSegment ? (Object.hasOwn(CANONICAL_LOCALE_ALIASES, localeSegment) ? CANONICAL_LOCALE_ALIASES[localeSegment] : undefined)
+      ?? (Object.hasOwn(CONTENT_LANGUAGES, localeSegment) && rawLocaleSegment !== localeSegment ? localeSegment : undefined) : undefined;
     if (canonicalLocale) {
       const redirectUrl = request.nextUrl.clone();
       const pathSegments = redirectUrl.pathname.split("/");
@@ -100,11 +134,16 @@ export function middleware(request: NextRequest) {
       }
       return applyCanonicalProductionHeaders(request, NextResponse.redirect(redirectUrl, 308));
     }
-    const contentLanguage = localeSegment ? CONTENT_LANGUAGES[localeSegment] : undefined;
+    const contentLanguage = localeSegment && Object.hasOwn(CONTENT_LANGUAGES, localeSegment) ? CONTENT_LANGUAGES[localeSegment] : undefined;
     const responseLanguage = contentLanguage ?? "en-GB";
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-samuel-locale", responseLanguage);
-    const response = NextResponse.next({ request: { headers: requestHeaders } });
+    // Throwing notFound() inside these dynamic pages yields an empty error
+    // shell in this Next release. Their server-rendered recovery component
+    // keeps the original URL; middleware supplies the actual HTTP status.
+    const missingPage = isMissingFinitePage(request.nextUrl.pathname);
+    const response = NextResponse.next({ status: missingPage ? 404 : 200, request: { headers: requestHeaders } });
+    if (missingPage) response.headers.set("Cache-Control", "no-store");
     response.headers.set("Content-Language", responseLanguage);
     return applyCanonicalProductionHeaders(request, response);
   }

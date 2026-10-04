@@ -6,7 +6,7 @@ export const molecularCopy = {
   "Pass {0}: {1} matched {2}/{3} lines with {4} kHz RMS.": ["第 {0} 次比较：{1} 匹配 {2}/{3} 条谱线，均方根残差为 {4} kHz。","第 {0} 次比較：{1} 匹配 {2}/{3} 條譜線，均方根殘差為 {4} kHz。"],
   "Research result": ["研究成果","研究成果"],
   "Measurement": ["测量","測量"],
-  "Synthetic line catalogue loaded. Run the comparison, then try a different candidate.": ["合成谱线表已载入。运行比较，再试用其他候选。","合成譜線表已載入。運行比較，再試用其他候選。"],
+  "Synthetic line catalogue loaded. Run the comparison, then try a different candidate.": ["合成谱线表已载入。运行比较，再试用其他候选。","合成譜線表已載入。執行比較，再試用其他候選。"],
   ">30 conformations reported": ["报告了超过 30 种构象","報告了超過 30 種構象"],
   ">20 conformations reported": ["报告了超过 20 种构象","報告了超過 20 種構象"],
   "Matching order experiment": [
@@ -98,8 +98,8 @@ export const molecularCopy = {
     "採集 2–8 GHz 光譜"
   ],
   "Broadband CP-FTMW measurements cover 2–8 GHz, producing frequency–intensity traces that can be compared with the predicted transitions.": [
-    "宽带 CP-FTMW 测量覆盖 2–8 GHz，得到频率–强度曲线，可与预测跃迁进行比较。",
-    "寬帶 CP-FTMW 測量覆蓋 2–8 GHz，得到頻率–強度曲線，可與預測躍遷進行比較。"
+    "宽带 CP-FTMW 测量覆盖 2–8 GHz，得到频率–强度曲线，可与预测跃迁比较。",
+    "寬帶 CP-FTMW 測量覆蓋 2–8 GHz，得到頻率–強度曲線，可與預測躍遷比較。"
   ],
   "Compare obs. / calc.": [
     "比较观测与计算",
@@ -171,7 +171,7 @@ export const molecularCopy = {
   ],
   "Rotatable schematic of a 15-membered carbon ring with one oxygen atom. It is a synthetic teaching geometry, not an optimized structure from the research files.": [
     "可旋转的十五元碳环示意图，另含一个氧原子。这是合成教学几何结构，不是研究中的优化结构。",
-    "可旋轉的十五元碳環示意圖，另含一個氧原子。這是合成教學幾何結構，不是研究中的優化結構。"
+    "可旋轉的十五元碳環示意圖，另含一個氧原子。這是合成教學幾何結構，不是研究中的最佳化結構。"
   ],
   "Illustrative geometry · drag to rotate": [
     "合成几何结构 · 拖动旋转",
@@ -275,7 +275,7 @@ export const molecularCopy = {
   ],
   "Run": [
     "运行",
-    "運行"
+    "執行"
   ],
   "Molecule": [
     "分子",
@@ -287,7 +287,7 @@ export const molecularCopy = {
   ],
   "{0} selected. Re-run or inspect its line-hit pattern.": [
     "已选择{0}。可重新运行或检查其谱线命中情况。",
-    "已選擇{0}。可重新運行或檢查其譜線命中情況。"
+    "已選擇{0}。可重新執行或檢查其譜線命中情況。"
   ],
   "· synthetic": [
     "· 合成",
@@ -303,11 +303,11 @@ export const molecularCopy = {
   ],
   "Display noise": [
     "显示噪声",
-    "顯示噪聲"
+    "顯示雜訊"
   ],
   "Run comparison": [
     "运行比较",
-    "運行比較"
+    "執行比較"
   ],
   "Research context": [
     "研究背景",
@@ -395,7 +395,7 @@ export const molecularCopy = {
   ],
   "Click any row to inspect the sub-MHz neighbourhood around that synthetic peak.": [
     "点击任意一行，查看该合成谱峰周围不足 1 MHz 的区域。",
-    "點擊任意一行，查看該合成譜峰周圍不足 1 MHz 的區域。"
+    "點選任一筆記錄，查看該合成譜峰周圍不足 1 MHz 的區域。"
   ],
   "Accepted nearest-neighbour matches for": [
     "已接受的最近邻匹配，候选为",
@@ -495,7 +495,7 @@ export const molecularCopy = {
   ],
   "Rotational constants are inversely related to principal moments of inertia. Changing the mass distribution changes the spectral fingerprint; illustrative values show that relationship here.": [
     "转动常数与主惯性矩成反比。改变质量分布会改变光谱指纹；此处使用示意值来展示这种关系。",
-    "轉動常數與主慣性矩成反比。改變質量分佈會改變光譜指紋；此處使用示意值來展示這種關係。"
+    "轉動常數與主慣性矩成反比。改變質量分布會改變光譜指紋；此處使用示意值來展示這種關係。"
   ],
   "Comparison": [
     "分析记录",
@@ -611,15 +611,15 @@ export const molecularCopy = {
   ],
   "Sinusoidal puckering controls generate the ring, showing how shape changes the moments of inertia. It is an illustrative geometry rather than a research-optimised structure.": [
     "环结构由正弦翘曲控制生成，用来展示形状如何改变惯性矩，不作为研究优化结构。",
-    "環結構由正弦翹曲控制生成，用來展示形狀如何改變慣性矩，不作為研究優化結構。"
+    "環結構由正弦翹曲控制生成，用來展示形狀如何改變慣性矩，不作為研究最佳化結構。"
   ],
   "Four shapes, four rotational fingerprints": [
     "四种形状，四种转动光谱指纹",
     "四種形狀，四種轉動光譜指紋"
   ],
   "Select a column to rotate that geometry and send its calculated sticks back to the assignment desk.": [
-    "选择一列可旋转该几何结构，并将其计算棒线送回谱线指认台。",
-    "選擇一列可旋轉該幾何結構，並將其計算棒線送回譜線指認臺。"
+    "点选一根柱，即可旋转对应结构，并将计算棒线送回指认台。",
+    "點選一根柱，即可旋轉對應結構，並將計算棒線送回指認臺。"
   ],
   "Select {0}, synthetic relative energy {1} kilojoules per mole": [
     "选择{0}，合成相对能量为每摩尔 {1} 千焦",
@@ -659,7 +659,7 @@ export const molecularCopy = {
   ],
   "Macrocyclic musk conformational landscape": [
     "大环麝香分子的构象分布",
-    "大環麝香分子的構象分佈"
+    "大環麝香分子的構象分布"
   ],
   "I am a co-author of the King’s College London presentation, which describes:": [
     "我是伦敦国王学院该会议报告的共同作者，报告内容包括：",
@@ -776,7 +776,7 @@ export const molecularCopy = {
   ],
   "Does the candidate’s mass distribution fit the spectral fingerprint?": [
     "候选结构的质量分布是否符合光谱指纹？",
-    "候選結構的質量分佈是否符合光譜指紋？"
+    "候選結構的質量分布是否符合光譜指紋？"
   ],
   "Similar energies do not imply identical rotational spectra.": [
     "能量相近不代表转动光谱相同。",
@@ -808,7 +808,7 @@ export const molecularCopy = {
   ],
   "Interactive example": [
     "交互示例",
-    "交互示例"
+    "互動示例"
   ],
   "Change one assumption at a time": [
     "每次改变一个假设",

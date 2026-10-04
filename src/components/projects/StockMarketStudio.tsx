@@ -304,7 +304,7 @@ function PriceTrace({
           <span>PRICE TRACE · SYNTHETIC INSTRUMENT</span>
           <strong>{visible.length - 1} visible impact events</strong>
         </div>
-        <div className={styles.windowLegend} aria-label="Metric window legend">
+        <div role="group" className={styles.windowLegend} aria-label="Metric window legend">
           <span data-tone="average">50-period mean</span>
           <span data-tone="corrected">Correct day</span>
           <span data-tone="legacy">Source window</span>

@@ -499,7 +499,7 @@ export const italianCopy = {
   ],
   "Next review interval in days, by recall quality q and previous interval i": [
     "根据回忆质量 q 与上次间隔 i，计算以天计的下次复习间隔",
-    "根據回憶質量 q 與上次間隔 i，計算以天計的下次複習間隔"
+    "根據回憶品質 q 與上次間隔 i，計算以天計的下次複習間隔"
   ],
   "SCHEDULER READY": [
     "调度器已就绪",
@@ -515,7 +515,7 @@ export const italianCopy = {
   ],
   "Ease update from recall quality q": [
     "根据回忆质量 q 更新难易系数",
-    "根據回憶質量 q 更新難易係數"
+    "根據回憶品質 q 更新難易係數"
   ],
   "RUBRICA LOCALE · ZERO API CALLS": [
     "本地评分规则 · 不调用 API",
@@ -523,7 +523,7 @@ export const italianCopy = {
   ],
   "Feedback spiegabile, parola per parola.": [
     "逐词解释反馈。",
-    "逐詞解釋反饋。"
+    "逐詞解釋回饋。"
   ],
   "This scoring rule counts distinct useful words, one contribution per task signal and sentence completion, so repeating the same text does not increase the score.": [
     "此规则计算不同的有效词汇、每项任务线索的一次贡献与句子完整度；重复相同文本不会增加分数。",
@@ -603,7 +603,7 @@ export const italianCopy = {
   ],
   "FEEDBACK RUBRICA LOCALE": [
     "本地规则反馈",
-    "本地規則反饋"
+    "本地規則回饋"
   ],
   "This heuristic found distinct task signals; it does not judge grammar, clarity or language level.": [
     "此启发式规则找到了不同的任务线索，但不会判断语法、清晰度或语言水平。",
@@ -623,7 +623,7 @@ export const italianCopy = {
   ],
   "Each word and task signal contributes at most once to the local heuristic. The production portal can optionally request richer feedback, while local mode works without a key or metered service. The score is not a language certificate.": [
     "每个词和每项任务线索最多贡献一次。正式学习门户可选择请求更丰富的反馈，本地模式则无需密钥或按量计费的服务。该分数不是语言证书。",
-    "每個詞和每項任務線索最多貢獻一次。正式學習門戶可選擇請求更豐富的反饋，本地模式則無需金鑰或按量計費的服務。該分數不是語言證書。"
+    "每個詞和每項任務線索最多貢獻一次。正式學習門戶可選擇請求更豐富的回饋，本地模式則無需金鑰或按量計費的服務。該分數不是語言證書。"
   ],
   "PROVE, NON SOLO PERCENTUALI · FIVE SEPARATE LANES": [
     "学习证据，而非只有百分比 · 五个独立维度",
@@ -763,7 +763,7 @@ export const italianCopy = {
   ],
   "Contenuti, stato, eventi e feedback sono strutturati in D1 con cache locale.": [
     "内容、状态、事件与反馈存于 D1，并配有本地缓存。",
-    "內容、狀態、事件與反饋存於 D1，並配有本地快取。"
+    "內容、狀態、事件與回饋存於 D1，並配有本地快取。"
   ],
   "753 SEEDED ROWS": [
     "753 条初始内容记录",
@@ -915,7 +915,7 @@ export const italianCopy = {
   ],
   "PRACTICE · RECALL · FEEDBACK · PROGRESS · OFFLINE SYNC": [
     "练习 · 回忆 · 反馈 · 进度 · 离线同步",
-    "練習 · 回憶 · 反饋 · 進度 · 離線同步"
+    "練習 · 回憶 · 回饋 · 進度 · 離線同步"
   ],
   "PARLIAMO!": [
     "PARLIAMO!",

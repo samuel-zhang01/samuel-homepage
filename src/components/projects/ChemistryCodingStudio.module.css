@@ -51,8 +51,7 @@
 .bindingCard label > span,
 .basisHeader > div > span,
 .integratorHeader > div > span,
-.attributionPanel > span,
-.auditHero span {
+.attributionPanel > span {
   display: block;
   font-family: var(--s7-font-ui);
   font-size: var(--s7-small);
@@ -1059,24 +1058,6 @@
 .tableScroll tbody th { font-weight: 700; color: #1f4e58; }
 .tableScroll tbody tr:nth-child(even) { background: #f7f8f6; }
 
-.auditHero {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
-  margin-bottom: 14px;
-}
-
-.auditHero > div {
-  padding: 14px;
-  border: 1px solid #7f9095;
-  color: #e8f3f4;
-  background: linear-gradient(135deg, #0f2634, #101a25);
-}
-
-.auditHero span { color: #83bdc5; }
-.auditHero strong { display: block; margin: 5px 0 3px; font-family: var(--s7-font-text); font-size: var(--s7-title); font-weight: 500; }
-.auditHero p { margin: 0; font-size: var(--s7-text); line-height: 1.4; color: #9db0b7; }
-
 .auditGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
@@ -1164,24 +1145,11 @@
 .liveDot { background: #42c4a5; }
 .recordDot { background: #6f79c9; }
 .adaptedDot { background: #d99b45; }
-.privateDot { background: #7f8790; }
 .evidenceList strong { display: block; font-size: var(--s7-small); color: #304148; }
 .evidenceList p { margin: 2px 0 0; font-size: var(--s7-text); line-height: 1.4; color: #69757a; }
 
-.gateList { margin: 0; padding: 7px 10px 10px; }
-.gateList > div { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; padding: 7px 1px; border-bottom: 1px solid #d2d7d7; }
-.gateList > div:last-child { border-bottom: 0; }
-.gateList dt,
-.gateList dd { margin: 0; font-family: var(--s7-font-text); font-size: var(--s7-small); }
-.gateList dt { color: #657379; }
-.gateList dd { font-weight: 700; text-align: right; color: #145e56; }
-
 .claimLedger { margin-top: 12px; }
 .claimLedger table { min-width: 650px; }
-.strongEvidence,
-.weakEvidence { display: inline-block; padding: 2px 5px; font-weight: 700; border: 1px solid currentColor; }
-.strongEvidence { color: #216750; background: #e7f5eb; }
-.weakEvidence { color: #8a4e2b; background: #fff0e7; }
 
 .attributionPanel {
   margin-top: 12px;
@@ -1227,8 +1195,7 @@
   .lab { padding: 17px; }
   .labHeading { display: grid; }
   .evidenceBadge { width: fit-content; }
-  .metricsRow,
-  .auditHero { grid-template-columns: minmax(0, 1fr); }
+  .metricsRow { grid-template-columns: minmax(0, 1fr); }
   .trajectoryHeader { grid-template-columns: minmax(0, 1fr); }
   .trajectoryHeader > div:last-child { text-align: left; }
   .trajectoryControls { grid-template-columns: minmax(0, 1fr); }
@@ -1294,7 +1261,6 @@
 .basisHeader > div > span,
 .integratorHeader > div > span,
 .attributionPanel > span,
-.auditHero span,
 .labTabs button > span,
 .labTabs button > small {
   font-family: var(--s7-font-ui);
@@ -1312,8 +1278,7 @@
 .trajectoryHeader h4,
 .trajectoryHeader > div:last-child strong,
 .integratorHeader > div > strong,
-.basisHeader > div > strong,
-.auditHero strong {
+.basisHeader > div > strong {
   font-family: var(--s7-font-ui);
   font-weight: 700;
 }

@@ -1,24 +1,15 @@
-# Current documentation
+# Documentation
 
-Start with [continue.md](../continue.md) for the workspace handoff and [README.md](../README.md) for the product tour, setup and deployment commands.
+[README](../README.md) covers the product, setup and deployment. [Continue here](../continue.md) records the verified release checkpoint and review boundaries.
 
 | Document | Purpose |
 | --- | --- |
-| [4 October audit handoff](AUDIT_HANDOFF_2026-10-04.md) | Current unfinished audit checkpoint; goal, implementation, evidence, pending work and new-device commands |
-| [Ten-round app improvement plan](APP_IMPROVEMENT_AUDIT_2026-10-04.md) | Active theme-preserving audit plan, visitor journeys and per-round verification status |
-| [Window and content uniformity](WINDOW_CONTENT_UNIFORMITY_2026-09-09.md) | Historical title-bar correction, equal toolbar buttons, visible explanations and first-person wording |
-| [Mobile PDF reader fixes](PDF_READER_FIXES_2026-09-09.md) | Compact controls, accurate page position, fit/zoom geometry and shared CV reader checks |
-| [Demo windows and visual polish](DEMO_WINDOW_POLISH_2026-09-09.md) | Dedicated demo/PDF windows, sharing, colour and typography, compiled route crawl |
-| [Repository cleanup](REPOSITORY_CLEANUP_2026-09-09.md) | Typed demo registry, unused-code checks, CSS cleanup and Git handoff |
-| [Content and UX follow-up](CONTENT_UX_REVIEW_2026-09-09.md) | Audience, contribution, actionable exercises, demo close/focus behavior and typography checks |
-| [Artwork and media sweep](WIDE_SWEEP_2026-09-09.md) | Current artwork, IX scientific-media addition, colour, language, bug, performance and dependency work; validation and screenshots |
-| [System 7 design benchmark](SYSTEM7_DESIGN_BENCHMARK.md) | Maintained palette, depth, typography, icons and control contracts, with historical sources |
-| [Artwork guide](PROJECT_ARTWORK.md) | Generated illustrations and icons, delivery paths and scientific-image distinction |
-| [Translation workflow](PROJECT_COPY_WORKFLOW.md) | Four-language implementation, dynamic labels, source exclusions and checks |
-| [Third-party notices](../THIRD_PARTY_NOTICES.md) | Dependency and scientific-source attribution |
-| [Optional media backlog](MEDIA_BACKLOG.md) | Future personal photographs and gallery ideas; not part of the current release |
-| [Historical audits](archive/README.md) | Earlier checkpoints and their evidence; superseded counts and release conclusions |
+| [Current audit](DEEP_AUDIT_2026-10-04.md) | Repairs, dependency scope, recorded checks, cleanup and reproduction |
+| [Translation workflow](PROJECT_COPY_WORKFLOW.md) | Four locales, dynamic labels, source-language exceptions and checks |
+| [System 7 design benchmark](SYSTEM7_DESIGN_BENCHMARK.md) | Maintained design contracts and primary historical sources |
+| [Artwork guide](PROJECT_ARTWORK.md) | Delivered illustrations/icons, original prompts and MRI provenance |
+| [Project source record](PROJECT_SOURCE_RECORD.md) | Original repository revisions, file hashes and recorded scientific outcomes |
+| [Third-party notices](../THIRD_PARTY_NOTICES.md) | Dependency and scientific-source licences/attribution |
+| [Optional media backlog](MEDIA_BACKLOG.md) | Unscheduled personal photographs and gallery ideas |
 
-Preview: `http://localhost:5174/en-gb/projects`. The cleanup checkpoint includes the reviewed changes. Git history records publication; deploying the website remains a separate operation.
-
-Keep implementation receipts in these documents. Project pages should explain the work and its results. Update this index and the short handoff after a substantial change; retain useful older evidence in the archive with its original date.
+Temporary review logs and screenshots belong under ignored `.codex/reports/`. Update the current audit and concise handoff instead of adding overlapping dated reports. Keep scientific source records, licences and reusable QA fixtures with their consumers.

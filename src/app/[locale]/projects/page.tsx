@@ -3,8 +3,9 @@ import { getProjectArchiveCopy } from "@/components/projects/projectArchiveI18n"
 import { projects } from "@/data/projects";
 import { localeOptions, normaliseLocale } from "@/lib/i18n";
 import { getProjectText } from "@/lib/projectNarrative";
+import { routeAlternates } from "@/lib/routeMetadata";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import NotFound, { metadata as notFoundMetadata } from "../../not-found";
 
 type RouteParams = Promise<{ locale: string }>;
 type ProjectSearchParams = Promise<{ project?: string | string[]; view?: string | string[]; artifact?: string | string[] }>;
@@ -26,9 +27,9 @@ export async function generateMetadata({
     searchParams,
   ]);
   const localeSlug = canonicalLocaleSlug(localeParam);
-  if (!localeSlug) return {};
+  if (!localeSlug) return notFoundMetadata;
   const locale = normaliseLocale(localeParam);
-  if (!locale) return {};
+  if (!locale) return notFoundMetadata;
   const copy = getProjectArchiveCopy(locale);
 
   const slug = typeof projectParam === "string" ? projectParam : undefined;
@@ -43,16 +44,7 @@ export async function generateMetadata({
   return {
     title: { absolute: `${title} · Samuel Zhang` },
     description,
-    alternates: {
-      canonical,
-      languages: {
-        "x-default": `/projects${projectQuery}`,
-        "en-GB": `/en-gb/projects${projectQuery}`,
-        "en-US": `/en-us/projects${projectQuery}`,
-        "zh-Hans": `/zh-cn/projects${projectQuery}`,
-        "zh-Hant": `/zh-tw/projects${projectQuery}`,
-      },
-    },
+    alternates: routeAlternates(canonical),
     openGraph: { title, description, type: "website", url: canonical, locale: locale.replace("-", "_") },
     twitter: { card: "summary", title, description },
   };
@@ -67,7 +59,7 @@ export default async function LocalisedProjectsPage({
 }) {
   const [{ locale: localeParam }, { project, view, artifact }] = await Promise.all([params, searchParams]);
   const locale = normaliseLocale(localeParam);
-  if (!locale) notFound();
+  if (!locale) return <NotFound />;
 
   return (
     <SystemSevenDesktop

@@ -227,7 +227,7 @@ export const stockMarketCopy = {
   ],
   "Reset ledger": [
     "重置账本",
-    "重置賬本"
+    "重置帳本"
   ],
   "same seed": [
     "相同种子",
@@ -287,7 +287,7 @@ export const stockMarketCopy = {
   ],
   "Ledger reset. Step one outer loop to emit five impact events.": [
     "账本已重置。运行一次外层循环，生成五个冲击事件。",
-    "賬本已重置。執行一次外層迴圈，生成五個衝擊事件。"
+    "帳本已重置。執行一次外層迴圈，生成五個衝擊事件。"
   ],
   "FLOOR": [
     "下限",
@@ -587,7 +587,7 @@ export const stockMarketCopy = {
   ],
   "React trading UI, accounts or portfolio maths.": [
     "React 交易界面、账户或投资组合计算。",
-    "React 交易介面、賬戶或投資組合計算。"
+    "React 交易介面、帳戶或投資組合計算。"
   ],
   "CAPABILITY MATRIX": [
     "能力矩阵",
@@ -695,7 +695,7 @@ export const stockMarketCopy = {
   ],
   "No cash, position, P&L or account state": [
     "没有现金、持仓、损益或账户状态",
-    "沒有現金、持倉、損益或賬戶狀態"
+    "沒有現金、持倉、損益或帳戶狀態"
   ],
   "LIVE CONSISTENCY CHECKS": [
     "实时一致性检查",

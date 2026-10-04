@@ -132,7 +132,7 @@ The knowledge graph remains the first view. **Selected work** and **All projects
 
 Project details offer explicit **Open in new tab** and **Open live demo** actions where applicable, alongside the project's website, files, application and repository links. Embedded demonstrations open on request. **Connections** returns to the graph with the project selected. At narrow widths, the list and detail views take turns using the available width; **Back to list** restores browsing. Keep these controls and their labels available in English and both maintained Mandarin editions.
 
-The graph uses the same recessed backing to separate its white canvas from the pale inspector, with raised controls and disclosure bars around them. Documents use a double header seam, fine section rules and a recessed frame around live experiments. Demo anchor spacing follows the measured sticky toolbar height so wrapped controls remain clear of the destination. See the [depth refinement review](archive/SYSTEM7_DEPTH_REFINEMENT_2026-09-09.md) for the earlier-version comparison, inspected primary screenshots and representative browser checks.
+The graph uses the same recessed backing to separate its white canvas from the pale inspector, with raised controls and disclosure bars around them. Documents use a double header seam, fine section rules and a recessed frame around live experiments. Demo anchor spacing follows the measured sticky toolbar height so wrapped controls remain clear of the destination. The [current audit](DEEP_AUDIT_2026-10-04.md) records compiled browser coverage; the primary sources below define the design reference.
 
 ## Modern accessibility requirements
 

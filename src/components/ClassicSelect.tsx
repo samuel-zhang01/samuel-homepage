@@ -30,7 +30,7 @@ function collectOptions(children: ReactNode, group?: string, groupDisabled = fal
  * retains form semantics and emits a real change event for existing callers.
  * The popover lives in the top layer, above window overflow and resize handles.
  */
-export default function ClassicSelect({ children, value, defaultValue, disabled, id, className, style, title, onChange, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, ...nativeProps }: Props) {
+export default function ClassicSelect({ children, value, defaultValue, disabled, id, className, style, title, onChange, onInvalid, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, ...nativeProps }: Props) {
   const generatedId = useId();
   const controlId = id ?? `classic-select-${generatedId}`;
   const menuId = `${controlId}-options`;
@@ -38,35 +38,49 @@ export default function ClassicSelect({ children, value, defaultValue, disabled,
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const typeaheadRef = useRef({ text: "", time: 0 });
+  const controlledValue = useRef(value);
+  controlledValue.current = value;
   const options = useMemo(() => collectOptions(children), [children]);
   const [uncontrolledValue, setUncontrolledValue] = useState(() => String(defaultValue ?? options.find((option) => !option.disabled)?.value ?? ""));
   const selectedValue = String(value ?? uncontrolledValue);
   const selectedIndex = options.findIndex((option) => option.value === selectedValue);
   const [open, setOpen] = useState(false);
+  const [invalid, setInvalid] = useState(false);
   const [supportsPopover, setSupportsPopover] = useState(false);
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const available = options.some((option) => !option.disabled);
   const effectiveActiveIndex = options[activeIndex] && !options[activeIndex].disabled ? activeIndex : nextSelectOption(options, -1, 1);
 
-  // A form reset changes the native control without dispatching change. Read it
-  // after the browser's reset action so the visible value cannot become stale.
+  // A form reset changes the native control without dispatching change. Keep
+  // form data aligned with the visible value after the browser's reset action.
   useEffect(() => {
     const native = nativeRef.current;
     const form = native?.form;
-    if (!native || !form || value !== undefined) return;
+    if (!native || !form) return;
     let active = true;
+    let resetTimer: ReturnType<typeof setTimeout> | undefined;
     const onReset = (event: Event) => {
-      queueMicrotask(() => {
+      // A native reset-button action can run a microtask checkpoint while
+      // dispatching reset, before it changes the select. Use the next task so
+      // both a user click and form.reset() read the completed default action.
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
         if (active && !event.defaultPrevented) {
-          setUncontrolledValue(native.value);
+          if (controlledValue.current === undefined) setUncontrolledValue(native.value);
+          else native.value = String(controlledValue.current);
+          setInvalid(false);
           setOpen(false);
         }
-      });
+      }, 0);
     };
     form.addEventListener("reset", onReset);
-    return () => { active = false; form.removeEventListener("reset", onReset); };
-  }, [value, nativeProps.form]);
+    return () => { active = false; clearTimeout(resetTimer); form.removeEventListener("reset", onReset); };
+  }, [nativeProps.form]);
+
+  useEffect(() => {
+    if (nativeRef.current?.validity.valid) setInvalid(false);
+  }, [selectedValue, nativeProps.required]);
 
   useEffect(() => {
     const supported = "showPopover" in HTMLElement.prototype;
@@ -221,7 +235,7 @@ export default function ClassicSelect({ children, value, defaultValue, disabled,
       disabled={disabled || !available} role="combobox" aria-haspopup="listbox" aria-expanded={expanded} aria-controls={menuId}
       aria-activedescendant={expanded && effectiveActiveIndex >= 0 ? `${menuId}-${effectiveActiveIndex}` : undefined}
       aria-label={ariaLabel} aria-labelledby={ariaLabelledBy} aria-describedby={ariaDescribedBy} aria-required={nativeProps.required}
-      aria-invalid={nativeProps["aria-invalid"]} aria-errormessage={nativeProps["aria-errormessage"]}
+      aria-invalid={nativeProps["aria-invalid"] ?? (invalid || undefined)} aria-errormessage={nativeProps["aria-errormessage"]}
       lang={nativeProps.lang} tabIndex={nativeProps.tabIndex}
       onClick={() => open ? close() : show()} onKeyDown={onKeyDown}
       onBlur={(event) => { if (!menuRef.current?.contains(event.relatedTarget)) close(false); }}
@@ -229,7 +243,18 @@ export default function ClassicSelect({ children, value, defaultValue, disabled,
       <span className={styles.value} lang={options[selectedIndex]?.lang}>{options[selectedIndex]?.label ?? options.find((option) => !option.disabled)?.label ?? "\u00a0"}</span>
       <span className={styles.arrow} aria-hidden="true" />
     </button>
-    <select {...nativeProps} ref={nativeRef} value={value} defaultValue={defaultValue} disabled={disabled} aria-hidden="true" tabIndex={-1} hidden onChange={(event) => { setUncontrolledValue(event.currentTarget.value); onChange?.(event); }}>{children}</select>
+    <select {...nativeProps} ref={nativeRef} value={value} defaultValue={defaultValue} disabled={disabled} aria-hidden="true" tabIndex={-1} hidden
+      onInvalid={(event) => {
+        onInvalid?.(event);
+        if (!event.defaultPrevented) {
+          // Constraint validation still blocks submission. Its native focus
+          // target is hidden, so direct feedback to the visible control.
+          event.preventDefault();
+          setInvalid(true);
+          triggerRef.current?.focus({ preventScroll: true });
+        }
+      }}
+      onChange={(event) => { setUncontrolledValue(event.currentTarget.value); setInvalid(!event.currentTarget.validity.valid); onChange?.(event); }}>{children}</select>
     {portalTarget ? createPortal(menu, portalTarget) : menu}
   </>;
 }

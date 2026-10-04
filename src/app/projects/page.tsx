@@ -1,5 +1,6 @@
 import SystemSevenDesktop from "@/components/SystemSevenDesktop";
 import { projects } from "@/data/projects";
+import { routeAlternates } from "@/lib/routeMetadata";
 import type { Metadata } from "next";
 
 type ProjectSearchParams = Promise<{ project?: string | string[]; view?: string | string[]; artifact?: string | string[] }>;
@@ -16,21 +17,11 @@ export async function generateMetadata({
   const description = project?.summary
     ?? "Explore my products, applied AI research, machine-learning experiments and systems through public demos, case studies and clearly marked private work.";
   const canonical = project ? `/projects?project=${encodeURIComponent(project.slug)}` : "/projects";
-  const projectQuery = project ? `?project=${encodeURIComponent(project.slug)}` : "";
 
   return {
     title,
     description,
-    alternates: {
-      canonical,
-      languages: {
-        "x-default": `/projects${projectQuery}`,
-        "en-GB": `/en-gb/projects${projectQuery}`,
-        "en-US": `/en-us/projects${projectQuery}`,
-        "zh-Hans": `/zh-cn/projects${projectQuery}`,
-        "zh-Hant": `/zh-tw/projects${projectQuery}`,
-      },
-    },
+    alternates: routeAlternates(canonical),
     openGraph: { title, description, type: "website", url: canonical },
     twitter: { card: "summary", title, description },
   };

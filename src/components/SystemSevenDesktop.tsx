@@ -33,7 +33,7 @@ import {
 import { projectText } from "@/lib/projectCopy";
 import { desktopCopy } from "./desktopCopy";
 import { projectMenuCopy } from "./projectMenuCopy";
-import type { FinderApplication } from "./DesktopFinder";
+import DesktopFinder, { type FinderApplication } from "./DesktopFinder";
 
 const desktopText = { ...projectMenuCopy, ...desktopCopy };
 
@@ -77,7 +77,6 @@ const ProductivityApps = dynamic(() => import("@/components/ProductivityApps"), 
   loading: ClassicModuleLoading,
 });
 
-const DesktopFinder = dynamic(() => import("./DesktopFinder"), { ssr: false });
 const OrbitalLab = dynamic(() => import("./OrbitalLab"), { loading: ClassicModuleLoading });
 
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
@@ -1056,7 +1055,7 @@ function CareerProjectLinks({ originId, locale }: { originId: string; locale: Lo
         <span>{t(pdf ? "Open showcase PDF" : "Open project")}</span><strong>{t(project.shortTitle ?? project.title)} →</strong>
       </a> : null;
     });
-  return <nav className="career-projects" aria-label={t("Explore the work")} lang={locale}>
+  return <nav className="career-projects" aria-label={`${t("Explore the work")} · ${t(origin.label)}`} lang={locale}>
     <a href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`experience:${originId}`)}`}><span>{t("Related ideas and projects")}</span><strong>{t("Explore connections")} →</strong></a>
     {projectLinks.slice(0, 4)}
     {projectLinks.length > 4 ? <details className="career-projects-more">
@@ -1922,7 +1921,7 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
               />
               <button className="mac-button" type="submit" disabled={wordSolved || wordGuesses.length >= 6}>Enter</button>
             </form>
-            <div className="samword-file-actions" aria-label="SamWord file navigation">
+            <div role="group" className="samword-file-actions" aria-label="SamWord file navigation">
               <button className="mac-button" type="button" onClick={previousWord}>Previous file</button>
               <button className="mac-button" type="button" onClick={nextWord}>Next file</button>
             </div>

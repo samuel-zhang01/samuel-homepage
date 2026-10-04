@@ -69,6 +69,9 @@ const copy: Record<NotFoundLocale, {
 export const metadata: Metadata = {
   title: "Item Not Found",
   robots: { index: false, follow: false },
+  alternates: null,
+  openGraph: null,
+  twitter: null,
 };
 
 export default async function NotFound() {
@@ -80,7 +83,7 @@ export default async function NotFound() {
   const prefix = locale === "en-GB" ? "" : `/${locale.toLowerCase()}`;
 
   return (
-    <main className={styles.desktop}>
+    <main className={styles.desktop} lang={locale} data-recovery-page="">
       <header className={styles.menuBar} aria-label={c.menu}>
         <span className={styles.samuelMark} aria-hidden="true">S</span>
         <strong>{c.menu}</strong>

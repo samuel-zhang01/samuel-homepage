@@ -33,7 +33,7 @@ type Copy = { [K in keyof typeof english]: string };
 const simplified: Copy = {
   title: "原子轨道实验室", strap: "原子研究 · 01", intro: "用细密字符或立体光影，描绘一点量子力学。",
   renderMode: "渲染方式", asciiMode: "ASCII 字符", surfaceMode: "平滑 3D", detail: "细节", fine: "精细", ultra: "超精细",
-  surfaceCanvas: "明暗着色的三维原子轨道等值面", loading: "正在计算轨道等值面…", unavailable: "此设备无法使用 3D 渲染，已切回 ASCII 字符视图。",
+  surfaceCanvas: "明暗着色的三维原子轨道等值面", loading: "正在计算轨道等值面…", unavailable: "此处无法使用 3D 渲染，仍可使用 ASCII 字符视图。",
   saveImage: "保存图片…", imageSaved: "已导出轨道图片。",
   surfaceNote: "带光照的等密度面，阈值为网格采样峰值 |ψ|² 的 1%，并非电子边界，也不表示包围某一固定概率。小于网格分辨率的细节可能被省略。切片仅保留薄层中的表面，不填充切口。",
   pointsMode: "密度 3D", pointsCanvas: "透明三维原子轨道概率采样点", opacity: "点不透明度",
@@ -62,7 +62,7 @@ const simplified: Copy = {
 const traditional: Copy = {
   title: "原子軌域實驗室", strap: "原子研究 · 01", intro: "用細密字元或立體光影，描繪一點量子力學。",
   renderMode: "繪製方式", asciiMode: "ASCII 字元", surfaceMode: "平滑 3D", detail: "細節", fine: "精細", ultra: "超精細",
-  surfaceCanvas: "明暗著色的三維原子軌域等值面", loading: "正在計算軌域等值面…", unavailable: "此裝置無法使用 3D 繪製，已切回 ASCII 字元檢視。",
+  surfaceCanvas: "明暗著色的三維原子軌域等值面", loading: "正在計算軌域等值面…", unavailable: "此處無法使用 3D 繪製，仍可使用 ASCII 字元檢視。",
   saveImage: "儲存圖片…", imageSaved: "已匯出軌域圖片。",
   surfaceNote: "帶光照的等密度面，閾值為網格取樣峰值 |ψ|² 的 1%，並非電子邊界，也不代表包圍某個固定機率。小於網格解析度的細節可能被省略。切片僅保留薄層中的表面，不填滿切口。",
   pointsMode: "密度 3D", pointsCanvas: "透明三維原子軌域機率取樣點", opacity: "點不透明度",

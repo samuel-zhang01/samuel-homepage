@@ -269,8 +269,7 @@
 
 .solverGrid,
 .basisLayout,
-.validationGrid,
-.evidenceLayout {
+.validationGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(320px, .78fr);
   gap: 10px;
@@ -296,7 +295,6 @@
 .formulaLedger,
 .validationChartCard,
 .validationTableCard,
-.sourceMatrix,
 .sourceLinks {
   min-width: 0;
   border: 1px solid #5c605b;
@@ -463,16 +461,6 @@
 .ledgerGrid h3 { margin: 4px 0 7px; font-size: var(--s7-heading); }
 .ledgerGrid ul { margin: 0; padding-left: 14px; }
 .ledgerGrid li { margin: 4px 0; color: #515651; font-size: var(--s7-small); line-height: 1.4; }
-.evidenceLayout { grid-template-columns: minmax(0, 1.25fr) minmax(330px, .75fr); }
-.sourceMatrix td:first-child { font-weight: 700; }
-.sourceMatrix td:nth-child(2) { color: #5c615c; white-space: normal; }
-.sourceMatrix span[data-status] { display: inline-block; min-width: 62px; padding: 2px 4px; color: #fff; font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; text-align: center; }
-.sourceMatrix span[data-status="audited"] { background: var(--sle-plum); }
-.sourceMatrix span[data-status="open"] { background: var(--sle-green); }
-.sourceMatrix span[data-status="adapted"] { background: var(--sle-blue); }
-.sourceMatrix span[data-status="synthetic"] { color: #423300; background: #dfc25a; }
-.sourceMatrix span[data-status="excluded"],
-.sourceMatrix span[data-status="unsupported"] { background: var(--sle-red); }
 .sourceLinks > a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 9px; color: #252a26; border-bottom: 1px solid #c9cac2; text-decoration: none; }
 .sourceLinks > a:hover { background: #eeece5; }
 .sourceLinks > a > span { display: grid; width: 23px; height: 21px; place-items: center; color: #fff; background: var(--sle-green); font-size: var(--s7-small); font-weight: 700; }
@@ -486,8 +474,7 @@
   .metricGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .solverGrid,
   .basisLayout,
-  .validationGrid,
-  .evidenceLayout { grid-template-columns: 1fr; }
+  .validationGrid { grid-template-columns: 1fr; }
   .ledgerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fitControls { grid-template-columns: minmax(0, 1fr) minmax(220px, .7fr); }
   .fitButtons { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -544,8 +531,6 @@
   .studio *::before,
   .studio *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
-
-.modelCaveat { margin: 18px 0 0; padding: 12px 15px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); color: var(--s7-ink); font-size: var(--s7-text); line-height: 1.55; }
 
 .formula { display: block; white-space: normal; border: 1px solid #777a75; color: #e1eee7; background: #1c2923; }
 .calculationTape li [data-math-equation] { min-width: 0; margin-block: 0; font-size: var(--s7-small); }

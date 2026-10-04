@@ -55,7 +55,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Thompson sampling": [
     "汤普森采样",
-    "湯普森採樣"
+    "湯普森取樣"
   ],
   "Bellman equations & dynamic programming": [
     "贝尔曼方程与动态规划",
@@ -91,7 +91,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Importance sampling": [
     "重要性采样",
-    "重要性採樣"
+    "重要性取樣"
   ],
   "Control": [
     "控制",
@@ -119,7 +119,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Deep Q-Networks": [
     "深度 Q 网络",
-    "深度 Q 網絡"
+    "深度 Q 網路"
   ],
   "DQN": [
     "DQN",
@@ -131,7 +131,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Target networks": [
     "目标网络",
-    "目標網絡"
+    "目標網路"
   ],
   "Double DQN": [
     "Double DQN",
@@ -439,7 +439,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Constitutional feedback": [
     "宪法式反馈",
-    "憲法式反饋"
+    "憲法式回饋"
   ],
   "Oversight": [
     "监督",
@@ -578,8 +578,8 @@ export const rlAtlasDemoCopy = {
     "擴展閱讀"
   ],
   "PDF present in QA snapshot": [
-    "质量检查记录中包含 PDF",
-    "質量檢查記錄中包含 PDF"
+    "检查记录包含 PDF",
+    "檢查記錄包含 PDF"
   ],
   "Source workbook": [
     "原始练习册",
@@ -643,7 +643,7 @@ export const rlAtlasDemoCopy = {
   ],
   "of 25 modules visible": [
     "个模块可见，共 25 个",
-    "個模塊可見，共 25 個"
+    "個模組可見，共 25 個"
   ],
   "Selected: Week {0}": [
     "已选：第 {0} 周",
@@ -651,7 +651,7 @@ export const rlAtlasDemoCopy = {
   ],
   "No matching module": [
     "没有匹配模块",
-    "沒有匹配模塊"
+    "沒有匹配模組"
   ],
   "RL workspaces": [
     "强化学习工作区",
@@ -659,7 +659,7 @@ export const rlAtlasDemoCopy = {
   ],
   "25-module curriculum & evidence": [
     "25 个模块的课程与材料",
-    "25 個模塊的課程與材料"
+    "25 個模組的課程與材料"
   ],
   "Train an RL agent": [
     "训练强化学习智能体",
@@ -699,11 +699,11 @@ export const rlAtlasDemoCopy = {
   ],
   "Modules indexed": [
     "已索引模块",
-    "已索引模塊"
+    "已索引模組"
   ],
   "24 core + 1 audit": [
     "24 个核心模块 + 1 项审查",
-    "24 個核心模塊 + 1 項審查"
+    "24 個核心模組 + 1 項審查"
   ],
   "Executed notebooks": [
     "已执行笔记本",
@@ -747,7 +747,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Filter curriculum modules": [
     "筛选课程模块",
-    "篩選課程模塊"
+    "篩選課程模組"
   ],
   "Find a method or project": [
     "查找方法或项目",
@@ -835,7 +835,7 @@ export const rlAtlasDemoCopy = {
   ],
   "No modules match these filters": [
     "没有模块符合这些筛选条件",
-    "沒有模塊符合這些篩選條件"
+    "沒有模組符合這些篩選條件"
   ],
   "Clear one or more filters to restore the curriculum map.": [
     "清除一个或多个筛选条件以恢复课程地图。",
@@ -919,7 +919,7 @@ export const rlAtlasDemoCopy = {
   ],
   "The detail inspector will return when a module matches.": [
     "找到匹配模块后，详情面板会重新显示。",
-    "找到匹配模塊後，詳情面板會重新顯示。"
+    "找到匹配模組後，詳情面板會重新顯示。"
   ],
   "Formalise sequential decisions, policies, returns and regret before moving into control.": [
     "在进入控制问题前，形式化定义序贯决策、策略、回报与遗憾。",
@@ -943,7 +943,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Estimate values from complete sampled returns without a model of the environment.": [
     "在没有环境模型时，根据完整采样回报估计价值。",
-    "在沒有環境模型時，根據完整採樣回報估計價值。"
+    "在沒有環境模型時，根據完整取樣回報估計價值。"
   ],
   "Blackjack prediction and control": [
     "二十一点预测与控制",
@@ -959,7 +959,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Stabilise value learning with replay, target networks and practical deep-RL diagnostics.": [
     "通过回放、目标网络和实用深度强化学习诊断稳定价值学习。",
-    "通過回放、目標網絡和實用深度強化學習診斷穩定價值學習。"
+    "通過回放、目標網路和實用深度強化學習診斷穩定價值學習。"
   ],
   "LunarLander DQN training run": [
     "LunarLander DQN 训练实验",
@@ -1011,7 +1011,7 @@ export const rlAtlasDemoCopy = {
   ],
   "Learn contextual choices while evaluating new policies from logged, policy-biased feedback.": [
     "学习上下文选择，同时根据带策略偏差的日志反馈评估新策略。",
-    "學習上下文選擇，同時根據帶策略偏差的日誌反饋評估新策略。"
+    "學習上下文選擇，同時根據帶策略偏差的日誌回饋評估新策略。"
   ],
   "Synthetic insurance-lead bandit": [
     "合成保险线索多臂老虎机",
@@ -1231,7 +1231,7 @@ export const rlAtlasDemoCopy = {
   ],
   "RLHF": [
     "人类反馈强化学习",
-    "人類反饋強化學習"
+    "人類回饋強化學習"
   ],
   "GRPO / RLVR": [
     "GRPO／RLVR 方法",

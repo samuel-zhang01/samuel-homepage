@@ -135,7 +135,7 @@ export const scientificCopy = {
   ],
   "The first downsampled feature is concatenated with the 256→128 transposed-convolution output; the following 3×3 convolution maps 256 channels to 128.": [
     "第一次下采样的特征与 256→128 转置卷积输出拼接，随后由 3×3 卷积将 256 个通道映射为 128 个。",
-    "第一次下採樣的特徵與 256→128 轉置卷積輸出拼接，隨後由 3×3 卷積將 256 個通道映射為 128 個。"
+    "第一次下取樣的特徵與 256→128 轉置卷積輸出拼接，隨後由 3×3 卷積將 256 個通道映射為 128 個。"
   ],
   "The second encoder feature crosses the U at 20 × 80; concatenation temporarily forms 512 channels before the decoder convolution restores 256.": [
     "第二个编码器特征在 20 × 80 分辨率处跨越 U 形结构；拼接暂时形成 512 个通道，再由解码器卷积恢复为 256 个。",
@@ -155,7 +155,7 @@ export const scientificCopy = {
   ],
   "Mesh fields are interpolated onto a regular grid, then passed through a four-level U-Net. Training and a shifted evaluation explore both the appeal of image-style processing and its limits on unfamiliar flow fields.": [
     "将网格流场插值到规则网格，再送入四层 U-Net。训练和分布变化评估共同展示了图像式处理的优势，以及面对陌生流场时的局限。",
-    "將網格流場插值到規則網格，再送入四層 U-Net。訓練和分佈變化評估共同展示了影像式處理的優勢，以及面對陌生流場時的侷限。"
+    "將網格流場插值到規則網格，再送入四層 U-Net。訓練和分布變化評估共同展示了影像式處理的優勢，以及面對陌生流場時的侷限。"
   ],
   "Course model adapted": [
     "改编课程模型",
@@ -603,7 +603,7 @@ export const scientificCopy = {
   ],
   "The 500-file evaluation records relative L2 0.0165. That set was also checked during training; the U-Net result uses a different evaluation distribution.": [
     "500 文件评估记录的相对 L2 误差为 0.0165；训练时也检查了这个评估集。U-Net 的结果来自另一种评估分布。",
-    "500 文件評估記錄的相對 L2 誤差為 0.0165；訓練時也檢查了這個評估集。U-Net 的結果來自另一種評估分佈。"
+    "500 文件評估記錄的相對 L2 誤差為 0.0165；訓練時也檢查了這個評估集。U-Net 的結果來自另一種評估分布。"
   ],
   "Conv2d 3→64, 3×3, stride 1, padding 1 → BatchNorm → LeakyReLU(0.2)": [
     "Conv2d 3→64，3×3，步长 1，填充 1 → BatchNorm → LeakyReLU(0.2)",
@@ -675,7 +675,7 @@ export const scientificCopy = {
   ],
   "Upsample and merge Encoder 3 detail": [
     "上采样并融合编码器 3 的细节",
-    "上採樣並融合編碼器 3 的細節"
+    "上取樣並融合編碼器 3 的細節"
   ],
   "TransposeConv 512→256 + concat skip → 3×3 Conv 512→256": [
     "转置卷积 512→256 + 拼接跳跃特征 → 3×3 卷积 512→256",
@@ -687,7 +687,7 @@ export const scientificCopy = {
   ],
   "Upsample and merge Encoder 2 detail": [
     "上采样并融合编码器 2 的细节",
-    "上採樣並融合編碼器 2 的細節"
+    "上取樣並融合編碼器 2 的細節"
   ],
   "TransposeConv 256→128 + concat skip → 3×3 Conv 256→128": [
     "转置卷积 256→128 + 拼接跳跃特征 → 3×3 卷积 256→128",
@@ -699,7 +699,7 @@ export const scientificCopy = {
   ],
   "Upsample and merge Encoder 1 detail": [
     "上采样并融合编码器 1 的细节",
-    "上採樣並融合編碼器 1 的細節"
+    "上取樣並融合編碼器 1 的細節"
   ],
   "TransposeConv 128→64 + concat stem → 3×3 Conv 128→64": [
     "转置卷积 128→64 + 拼接初始特征 → 3×3 卷积 128→64",
@@ -711,7 +711,7 @@ export const scientificCopy = {
   ],
   "Upsample and merge full-resolution stem detail": [
     "上采样并融合全分辨率初始细节",
-    "上採樣並融合全解析度初始細節"
+    "上取樣並融合全解析度初始細節"
   ],
   "1×1 Conv2d 64→3": [
     "1×1 卷积 Conv2d 64→3",
@@ -763,7 +763,7 @@ export const scientificCopy = {
   ],
   "shifted split": [
     "分布变化评估集",
-    "分佈變化評估集"
+    "分布變化評估集"
   ],
   "relative error 1.2823": [
     "相对误差 1.2823",
@@ -783,7 +783,7 @@ export const scientificCopy = {
   ],
   "4×4 ↓2 then 3×3": [
     "4×4 下采样 2 倍，再进行 3×3 卷积",
-    "4×4 下採樣 2 倍，再進行 3×3 卷積"
+    "4×4 下取樣 2 倍，再進行 3×3 卷積"
   ],
   "Highlight skip {0}: {1} to {2}": [
     "突出显示跳跃连接 {0}：{1} 至 {2}",
@@ -795,7 +795,7 @@ export const scientificCopy = {
   ],
   "transpose 4×4 ↑2 · concat · 3×3": [
     "4×4 转置卷积上采样 2 倍 · 拼接 · 3×3 卷积",
-    "4×4 轉置卷積上採樣 2 倍 · 拼接 · 3×3 卷積"
+    "4×4 轉置卷積上取樣 2 倍 · 拼接 · 3×3 卷積"
   ],
   "Encoder 4 → bottleneck → decoder 1": [
     "编码器 4 → 瓶颈 → 解码器 1",
@@ -823,11 +823,11 @@ export const scientificCopy = {
   ],
   "What the shifted evaluation showed": [
     "分布变化评估说明了什么",
-    "分佈變化評估說明了什麼"
+    "分布變化評估說明了什麼"
   ],
   "Despite low validation losses during training, the U-Net recorded relative error 1.2823 on a different set of processed flow fields. Their consecutive-step values differed from the training distribution. This illustrates why a surrogate must be tested on the conditions where it will be used; these results cannot directly rank it against the FNO or graph model.": [
     "尽管训练时的验证损失较低，U-Net 在另一组处理后的流场上记录的相对误差仍为 1.2823。这些流场相邻时间步的数值与训练分布不同，说明替代模型需要在实际使用条件下测试；这些结果不能直接用于与 FNO 或图模型排名比较。",
-    "儘管訓練時的驗證損失較低，U-Net 在另一組處理後的流場上記錄的相對誤差仍為 1.2823。這些流場相鄰時間步的數值與訓練分佈不同，說明替代模型需要在實際使用條件下測試；這些結果不能直接用於與 FNO 或圖模型排名比較。"
+    "儘管訓練時的驗證損失較低，U-Net 在另一組處理後的流場上記錄的相對誤差仍為 1.2823。這些流場相鄰時間步的數值與訓練分布不同，說明替代模型需要在實際使用條件下測試；這些結果不能直接用於與 FNO 或圖模型排名比較。"
   ],
   "Project development": [
     "项目开发",
@@ -851,7 +851,7 @@ export const scientificCopy = {
   ],
   "Interactive architectures": [
     "交互式架构",
-    "交互式架構"
+    "互動式架構"
   ],
   "Detailed fluid simulations are expensive. Explore three neural models that learn to predict velocity and pressure from previous flow fields.": [
     "精细流体模拟需要大量计算。探索三种神经模型，了解它们如何从之前的流场学习预测速度和压力。",
@@ -867,7 +867,7 @@ export const scientificCopy = {
   ],
   "Interactive diagrams + recorded experiments": [
     "交互图解与记录实验",
-    "交互圖解與記錄實驗"
+    "互動圖解與記錄實驗"
   ],
   "The engineering question": [
     "工程问题",
@@ -887,7 +887,7 @@ export const scientificCopy = {
   ],
   "Architecture view mode": [
     "架构查看模式",
-    "架構查看模式"
+    "架構檢視模式"
   ],
   "VIEW": [
     "视图",
@@ -895,7 +895,7 @@ export const scientificCopy = {
   ],
   "Interactive diagram": [
     "交互示意图",
-    "交互示意圖"
+    "互動示意圖"
   ],
   "Architecture table": [
     "架构表",
@@ -970,8 +970,8 @@ export const scientificCopy = {
     "序列劃分實驗"
   ],
   "Compare frame-level and sequence-level evaluation": [
-    "比较按帧和按序列进行评估",
-    "比較按影格和按序列進行評估"
+    "比较按帧和按序列评估",
+    "比較按影格和按序列評估"
   ],
   "Microrobot project view": [
     "微型机器人项目视图",
@@ -1411,7 +1411,7 @@ export const scientificCopy = {
   ],
   "Interactive architecture diagrams": [
     "交互式架构图",
-    "交互式架構圖"
+    "互動式架構圖"
   ],
   "Project contribution": [
     "项目贡献",
@@ -1547,7 +1547,7 @@ export const scientificCopy = {
   ],
   "{0} architecture table; scroll horizontally for all columns": [
     "{0} 架构表；横向滚动查看所有列",
-    "{0} 架構表；橫向滾動查看所有列"
+    "{0} 架構表；橫向捲動可查看所有欄"
   ],
   "architecture": [
     "架构",
@@ -1655,7 +1655,7 @@ export const scientificCopy = {
   ],
   "Recorded pose and depth results show the trade-off between model size and prediction quality. The browser diagrams explain the models; they do not run a new prediction.": [
     "记录的姿态与深度结果展示模型大小和预测质量之间的取舍。浏览器图解用于解释模型，不会重新运行预测。",
-    "記錄的姿態與深度結果展示模型大小和預測質量之間的取捨。瀏覽器圖解用於解釋模型，不會重新執行預測。"
+    "記錄的姿態與深度結果展示模型大小和預測品質之間的取捨。瀏覽器圖解用於解釋模型，不會重新執行預測。"
   ],
   "New recordings": [
     "新录制数据",
@@ -1727,7 +1727,7 @@ export const scientificCopy = {
   ],
   "Interpolate mesh fields onto a grid and train a four-level U-Net for 100 epochs. A separate shifted evaluation produces relative error 1.2823, highlighting sensitivity to unfamiliar flow conditions.": [
     "将网格流场插值到栅格，训练四层 U-Net 100 轮。独立的分布变化评估得到相对误差 1.2823，体现了模型对陌生流动条件的敏感性。",
-    "將網格流場插值到柵格，訓練四層 U-Net 100 輪。獨立的分佈變化評估得到相對誤差 1.2823，體現了模型對陌生流動條件的敏感性。"
+    "將網格流場插值到柵格，訓練四層 U-Net 100 輪。獨立的分布變化評估得到相對誤差 1.2823，體現了模型對陌生流動條件的敏感性。"
   ],
   "Predict flow directly on the mesh": [
     "直接在网格上预测流动",
@@ -2171,7 +2171,7 @@ export const scientificCopy = {
   ],
   "Image quality, measurement agreement and downstream segmentation": [
     "图像质量、测量一致性和下游分割",
-    "影像質量、測量一致性和下游分割"
+    "影像品質、測量一致性和下游分割"
   ],
   "01 · Image features": [
     "01 · 图像特征",
@@ -2243,7 +2243,7 @@ export const scientificCopy = {
   ],
   "MRI consistency steps bring the reconstructed image back towards the measured frequency samples.": [
     "MRI 一致性步骤使重建图像更接近已测量的频域采样值。",
-    "MRI 一致性步驟使重建影像更接近已測量的頻域採樣值。"
+    "MRI 一致性步驟使重建影像更接近已測量的頻域取樣值。"
   ],
   "development milestones ·": [
     "个开发阶段 ·",
@@ -2279,7 +2279,7 @@ export const scientificCopy = {
   ],
   "Five residual Fourier blocks combine spectral interactions with a pointwise path. The saved image shows horizontal velocity at forecast index 9.": [
     "五个残差傅里叶模块结合频谱交互与逐点路径。保存图像显示预测索引 9 处的水平速度。",
-    "五個殘差傅里葉模組結合頻譜交互與逐點路徑。保存影像顯示預測索引 9 處的水平速度。"
+    "五個殘差傅里葉模組結合頻譜互動與逐點路徑。保存影像顯示預測索引 9 處的水平速度。"
   ],
   "Position-encoded FNO": [
     "位置编码 FNO",
@@ -2291,7 +2291,7 @@ export const scientificCopy = {
   ],
   "An encoder–decoder predicts the next flow field on an 80 × 320 grid. Skip connections restore spatial detail as the decoder upsamples.": [
     "编码器—解码器在 80 × 320 网格上预测下一时刻流场。解码器上采样时，通过跳跃连接恢复空间细节。",
-    "編碼器—解碼器在 80 × 320 網格上預測下一時刻流場。解碼器上採樣時，透過跳躍連接恢復空間細節。"
+    "編碼器—解碼器在 80 × 320 網格上預測下一時刻流場。解碼器上取樣時，透過跳躍連接恢復空間細節。"
   ],
   "Neural CFD flow explorer": [
     "神经 CFD 流场查看器",
@@ -2479,7 +2479,7 @@ export const scientificCopy = {
   ],
   "Recorded GNN results: 20 autoregressive predictions and 30 simulation frames. The sequences start from different states. Colours rescale per field and frame, so colour alone cannot compare magnitudes across time; playback speed is a display setting.": [
     "记录的 GNN 结果包含 20 个自回归预测帧和 30 个模拟帧，两组序列从不同状态开始。颜色在每个流场和帧内独立缩放，不能仅凭颜色比较跨时间的数值大小；播放速度只是显示设置。",
-    "記錄的 GNN 結果包含 20 個自迴歸預測影格和 30 個模擬影格，兩組序列從不同狀態開始。顏色在每個流場和影格內獨立縮放，不能僅憑顏色比較跨時間的數值大小；播放速度只是顯示設置。"
+    "記錄的 GNN 結果包含 20 個自迴歸預測影格和 30 個模擬影格，兩組序列從不同狀態開始。顏色在每個流場和影格內獨立縮放，不能僅憑顏色比較跨時間的數值大小；播放速度只是顯示設定。"
   ],
   "Reading the animation": [
     "理解动画",
@@ -2487,7 +2487,7 @@ export const scientificCopy = {
   ],
   "The slider moves through recorded fields on the original triangular mesh. Use the frame comparison to inspect the wake’s position and shape; the model is not being run again in the browser.": [
     "滑块在原始三角网格的记录流场间移动。使用帧比较检查尾流的位置和形状；浏览器不会重新运行模型。",
-    "滑塊在原始三角網格的記錄流場間移動。使用影格比較檢查尾流的位置和形狀；瀏覽器不會重新執行模型。"
+    "滑桿在原始三角網格的記錄流場間移動。使用影格比較檢查尾流的位置和形狀；瀏覽器不會重新執行模型。"
   ],
   "The architecture view explains message passing, and the results view gives the recorded relative L2 with its evaluation conditions. The rollout experiment shows how repeated prediction can amplify error.": [
     "架构视图解释消息传递，结果视图提供记录的相对 L2 误差及评估条件。递推实验展示重复预测如何放大误差。",
@@ -2511,7 +2511,7 @@ export const scientificCopy = {
   ],
   "Spectral blocks learn interactions between Fourier modes. A pointwise path and residual connections carry local information between blocks.": [
     "频谱模块学习傅里叶模式之间的交互，逐点路径与残差连接则在模块之间传递局部信息。",
-    "頻譜模組學習傅里葉模式之間的交互，逐點路徑與殘差連接則在模組之間傳遞局部資訊。"
+    "頻譜模組學習傅里葉模式之間的互動，逐點路徑與殘差連接則在模組之間傳遞局部資訊。"
   ],
   "Messages on a mesh": [
     "网格上的消息",
@@ -2527,7 +2527,7 @@ export const scientificCopy = {
   ],
   "Downsampling collects wider spatial context. The decoder combines it with earlier feature maps through skip connections.": [
     "下采样收集更广的空间上下文，解码器通过跳跃连接将其与早期特征图结合。",
-    "下採樣收集更廣的空間上下文，解碼器透過跳躍連接將其與早期特徵圖結合。"
+    "下取樣收集更廣的空間上下文，解碼器透過跳躍連接將其與早期特徵圖結合。"
   ],
   "Microrobot vision results": [
     "微型机器人视觉结果",
@@ -2779,7 +2779,7 @@ export const scientificCopy = {
   ],
   "Predicting many future flow fields means feeding each estimate into the next step. Change the feedback strength to see how small errors accumulate.": [
     "预测许多个未来流场时，每次估计都会成为下一步输入。改变反馈强度，观察小误差如何累积。",
-    "預測許多個未來流場時，每次估計都會成為下一步輸入。改變反饋強度，觀察小誤差如何累積。"
+    "預測許多個未來流場時，每次估計都會成為下一步輸入。改變回饋強度，觀察小誤差如何累積。"
   ],
   "Error amplification ·": [
     "误差放大系数 ·",
@@ -2831,7 +2831,7 @@ export const scientificCopy = {
   ],
   "The graph network feeds each predicted field into the next step. This simplified recurrence shows how feedback changes error over time; field accuracy and physical consistency add further checks.": [
     "图网络将每个预测流场送入下一步。这个简化递推式展示反馈如何改变误差随时间的发展；流场准确性与物理一致性还需要进一步检查。",
-    "圖網路將每個預測流場送入下一步。這個簡化遞推式展示反饋如何改變誤差隨時間的發展；流場準確性與物理一致性還需要進一步檢查。"
+    "圖網路將每個預測流場送入下一步。這個簡化遞推式展示回饋如何改變誤差隨時間的發展；流場準確性與物理一致性還需要進一步檢查。"
   ],
   "Frame and sequence split experiment": [
     "按帧与按序列划分实验",
@@ -2867,7 +2867,7 @@ export const scientificCopy = {
   ],
   "Each row is one fictional recording": [
     "每行代表一段虚构录制",
-    "每行代表一段虛構錄製"
+    "每筆記錄代表一段虛構錄製"
   ],
   "Sequence": [
     "序列",
@@ -2991,7 +2991,7 @@ export const scientificCopy = {
   ],
   "This shifted set tests unfamiliar flow conditions, so its score cannot directly rank the model against the other runs.": [
     "这个分布变化数据集测试陌生流动条件，因此分数不能直接用于与其他实验排名比较。",
-    "這個分佈變化資料集測試陌生流動條件，因此分數不能直接用於與其他實驗排名比較。"
+    "這個分布變化資料集測試陌生流動條件，因此分數不能直接用於與其他實驗排名比較。"
   ],
   "Ground truth": [
     "真实图像",
@@ -3059,7 +3059,7 @@ export const scientificCopy = {
   ],
   "The field drawing illustrates the view controls. The numerical results below are recorded evaluations; use flow playback to inspect the actual saved fields.": [
     "流场绘图用于说明视图控件。下方数值来自记录的评估；实际保存的流场可在播放页查看。",
-    "流場繪圖用於說明視圖控件。下方數值來自記錄的評估；實際保存的流場可在播放頁查看。"
+    "流場繪圖用於說明視圖控制項。下方數值來自記錄的評估；實際保存的流場可在播放頁查看。"
   ],
   "Separate runs and evaluation splits": [
     "各自的实验与评估划分",
@@ -3195,7 +3195,7 @@ export const scientificCopy = {
   ],
   "Related frames may appear in both training and testing, and the final run used test performance to select its training epoch. New recordings and microscope setups are still needed to check generalisation.": [
     "相关帧可能同时出现在训练和测试中；最终实验也使用测试表现选择训练轮次。仍需新的录制与显微镜设置，才能检查泛化表现。",
-    "相關影格可能同時出現在訓練和測試中；最終實驗也使用測試表現選擇訓練輪次。仍需新的錄製與顯微鏡設置，才能檢查泛化表現。"
+    "相關影格可能同時出現在訓練和測試中；最終實驗也使用測試表現選擇訓練輪次。仍需新的錄製與顯微鏡設定，才能檢查泛化表現。"
   ],
   "MODEL": [
     "模型",
@@ -3335,15 +3335,15 @@ export const scientificCopy = {
   ],
   "Show why a confident scientific model can still be unreliable, and how calibration and conformal sets expose that gap.": [
     "展示为何高置信度的科学模型仍可能不可靠，以及校准与保形预测集如何揭示这一差距。",
-    "展示為何高置信度的科學模型仍可能不可靠，以及校準與保形預測集如何揭示這一差距。"
+    "展示為何高信心度的科學模型仍可能不可靠，以及校準與保形預測集如何揭示這一差距。"
   ],
   "Compare saved calibration results, then move the population in the synthetic coverage experiment.": [
     "比较记录的校准结果，再在合成覆盖率实验中移动总体分布。",
-    "比較記錄的校準結果，再在合成覆蓋率實驗中移動總體分佈。"
+    "比較記錄的校準結果，再在合成覆蓋率實驗中移動總體分布。"
   ],
   "The recorded calibration trade-off stays visible. The separate shift experiment recomputes interval membership for forty outcomes.": [
     "记录的校准取舍保持可见；独立的分布变化实验会重新计算四十个结果是否落在区间内。",
-    "記錄的校準取捨保持可見；獨立的分佈變化實驗會重新計算四十個結果是否落在區間內。"
+    "記錄的校準取捨保持可見；獨立的分布變化實驗會重新計算四十個結果是否落在區間內。"
   ],
   "Temperature T = 0.9434 · 15 calibration bins": [
     "温度 T = 0.9434 · 15 个校准区间",
@@ -3359,11 +3359,11 @@ export const scientificCopy = {
   ],
   "The calibration panels read fixed results from the executed safety coursework. The separate synthetic shift experiment below recomputes interval membership in the browser. Split-conformal coverage relies on exchangeable calibration and test observations; population changes can reduce that coverage.": [
     "校准面板使用安全课程实验的固定结果。下方独立的合成分布变化实验会在浏览器中重新计算区间覆盖。分割共形预测的覆盖保证依赖校准与测试观测的可交换性；总体变化可能降低覆盖率。",
-    "校準面板使用安全課程實驗的固定結果。下方獨立的合成分佈變化實驗會在瀏覽器中重新計算區間覆蓋。分割共形預測的覆蓋保證依賴校準與測試觀測的可交換性；總體變化可能降低覆蓋率。"
+    "校準面板使用安全課程實驗的固定結果。下方獨立的合成分布變化實驗會在瀏覽器中重新計算區間覆蓋。分割共形預測的覆蓋保證依賴校準與測試觀測的可交換性；總體變化可能降低覆蓋率。"
   ],
   "Probability quality": [
     "概率质量",
-    "概率質量"
+    "機率品質"
   ],
   "Reliability diagram": [
     "可靠性图",
@@ -3927,7 +3927,7 @@ export const scientificCopy = {
   ],
   "Shifted 20-file validation run": [
     "分布变化的 20 文件验证实验",
-    "分佈變化的 20 文件驗證實驗"
+    "分布變化的 20 文件驗證實驗"
   ],
   "Three SpectralConv3d scales → concatenate/fuse + Conv3d 1×1 skip → GroupNorm": [
     "三种 SpectralConv3d 尺度 → 拼接/融合 + Conv3d 1×1 跳跃连接 → GroupNorm",
@@ -4127,11 +4127,11 @@ export const scientificCopy = {
   ],
   "Interactive display · no browser inference": [
     "交互显示 · 浏览器不运行推理",
-    "交互顯示 · 瀏覽器不執行推理"
+    "互動顯示 · 瀏覽器不執行推理"
   ],
   "The illustration explores the comparison controls; numbers come from the recorded project evaluation.": [
     "图形用于探索比较控件；数值来自项目记录的评估。",
-    "圖形用於探索比較控件；數值來自專案記錄的評估。"
+    "圖形用於探索比較控制項；數值來自專案記錄的評估。"
   ],
   "Illustrative microrobot {0} view for {1}": [
     "微型机器人 {0} 示意视图，{1}",
@@ -4291,7 +4291,7 @@ export const scientificCopy = {
   ],
   "· downsample on entry": [
     "· 入口处下采样",
-    "· 入口處下採樣"
+    "· 入口處下取樣"
   ],
   "Microrobot scene": [
     "微型机器人场景",

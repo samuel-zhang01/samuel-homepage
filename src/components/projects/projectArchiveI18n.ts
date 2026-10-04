@@ -210,7 +210,7 @@ const enGB: ProjectArchiveCopy = {
     interactive: "experiences",
     suites: "suites",
     redacted: "redacted",
-    languageNotice: "Interface and desktop app records: English (UK). Original research narratives and research demos retain their source language.",
+    languageNotice: "Interface and project text: English (UK). Original figures and files retain their source language.",
   },
   views: {
     aria: "Project Archive views",
@@ -471,7 +471,7 @@ const enUS: ProjectArchiveCopy = {
   ...enGB,
   header: {
     ...enGB.header,
-    languageNotice: "Interface and desktop app records: English (US). Original research narratives and research demos retain their source language.",
+    languageNotice: "Interface and project text: English (US). Original figures and files retain their source language.",
   },
   guided: {
     ...enGB.guided,
@@ -521,7 +521,7 @@ const zhCN: ProjectArchiveCopy = {
     interactive: "个专题体验",
     suites: "个专题",
     redacted: "项已隐去",
-    languageNotice: "界面及桌面应用档案：简体中文。原始研究叙述与研究演示保留源语言。",
+    languageNotice: "界面与项目说明：简体中文。原始图表和文件保留源语言。",
   },
   views: {
     aria: "项目档案视图",
@@ -788,7 +788,7 @@ const zhTW: ProjectArchiveCopy = {
     interactive: "個專題體驗",
     suites: "個專題",
     redacted: "項已隱去",
-    languageNotice: "介面及桌面應用程式檔案：繁體中文。原始研究敘述與研究展示保留來源語言。",
+    languageNotice: "介面與專案說明：繁體中文。原始圖表與檔案保留來源語言。",
   },
   views: {
     aria: "專案檔案檢視",

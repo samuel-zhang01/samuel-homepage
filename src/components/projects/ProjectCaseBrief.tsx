@@ -30,8 +30,8 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
       {project.detail !== story?.contribution && <p>{getProjectText(locale, project.detail)}</p>}
       {project.demo && project.privacyNote && <p>{getProjectText(locale, project.privacyNote)}</p>}
     </div>
-    {(story || project.phases.length > 0 || project.highlights.length > 0) && <details className={styles.contribution}>
-      <summary>{t("Implementation notes")}</summary>
+    {(story || project.phases.length > 0 || project.highlights.length > 0) && <section className={styles.contribution} aria-label={t("Implementation notes")}>
+      <h2>{t("Implementation notes")}</h2>
     {story && <div className={styles.context}>
       <section className={styles.problem}><h2>{t("The problem")}</h2><p>{getProjectText(locale, story.problem)}</p></section>
       <dl>
@@ -44,7 +44,7 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
       <ol>{project.phases.map(phase => <li key={phase.label}>{getProjectText(locale, phase.text)}</li>)}</ol>
     </section>}
     {project.highlights.length > 0 && <section className={styles.results}><h2>{t("Results and capabilities")}</h2><ul>{project.highlights.map(highlight => <li key={highlight}>{getProjectText(locale, highlight)}</li>)}</ul></section>}
-    </details>}
+    </section>}
     {story && project.demo && <div className={styles.walkthrough}>
       <p><strong>{t("Try it.")}</strong> {getProjectText(locale, story.walkthrough)}</p>
       {onExplore && <button type="button" className="s7-button is-primary" onClick={onExplore}>{t("Open interactive demo")} ↗</button>}

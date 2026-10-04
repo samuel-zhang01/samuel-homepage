@@ -3,7 +3,7 @@
 // REVIEW_ORIGIN=http://127.0.0.1:5186 node scripts/check-app-improvements.mjs
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
-import { mkdir } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 
 const require = createRequire(import.meta.url);
 if (!process.env.PLAYWRIGHT_CORE_PATH) throw new Error("Set PLAYWRIGHT_CORE_PATH to an installed Playwright package.");
@@ -16,18 +16,25 @@ await mkdir(output, { recursive: true });
 let checks = 0;
 const contexts = [];
 const unexpectedErrors = [];
+const report = { engine, version: browser.version(), origin, started: new Date().toISOString(), tests: [], unexpectedErrors };
 async function context(options = {}) { const c = await browser.newContext(options); contexts.push(c); return c; }
 async function page(c, path = "/en-gb/settings") {
   const p = await c.newPage(); p.setDefaultTimeout(30000);
   p.on("pageerror", error => unexpectedErrors.push(error.message));
   await p.goto(`${origin}${path}`, { timeout: 60000 });
+  await p.waitForFunction(() => document.documentElement.dataset.reduceEffects !== undefined);
+  await p.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   return p;
 }
 const settings = p => p.locator('[data-app-id="settings"]');
 async function dismissGuide(p) { await p.waitForFunction(() => document.documentElement.dataset.reduceEffects !== undefined); await p.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))); const b = p.getByRole("button", { name: /^(Got it|知道了|明白了|了解了)$/ }); if (await b.count()) await b.click(); }
 async function check(name, run) {
   if (process.env.REVIEW_GROUP && !new RegExp(process.env.REVIEW_GROUP).test(name)) return;
-  await run(); checks++; console.log(`PASS ${name}`);
+  try {
+    await run(); checks++; report.tests.push({ name, result: "PASS" }); console.log(`PASS ${name}`);
+  } catch (error) {
+    report.tests.push({ name, result: "FAIL", error: error.stack }); throw error;
+  }
 }
 async function noOverflow(p) {
   assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1), false, "No document horizontal overflow");
@@ -78,6 +85,11 @@ try {
       await b.locator(`.system-desktop.desktop-pattern--${pattern.toLowerCase()}`).waitFor();
       assert.equal(await settings(b).getByRole("radio", { name: pattern, exact: true }).isChecked(), true);
     }
+    // The existing View menu and new Settings must share one persisted value.
+    await a.getByRole("button", { name: "View", exact: true }).click();
+    await a.getByRole("menuitemradio", { name: "Paper Pattern", exact: true }).click();
+    await settings(a).getByRole("radio", { name: "Paper", exact: true, checked: true }).waitFor();
+    await settings(b).getByRole("radio", { name: "Paper", exact: true, checked: true }).waitFor();
     await settings(a).getByRole("radio", { name: "12-hour", exact: true }).check();
     await settings(a).getByRole("checkbox", { name: "Reduce interface effects", exact: true }).check();
     await b.waitForFunction(() => document.documentElement.dataset.reduceEffects === "true");
@@ -94,8 +106,15 @@ try {
     assert.equal(await a.locator(".boot-screen").count(), 0);
   });
   await check("reset preserves language and desk data; language change keeps keyboard focus", async () => {
-    const c = await context(); const p = await page(c);
-    await p.evaluate(() => localStorage.setItem("samuel-system7-notepad-v1", "EXISTING DESK DATA"));
+    const c = await context(); const p = await page(c, "/en-gb/desk");
+    await p.locator('[data-app-id="desk"]').getByRole("button", { name: /^Open Note Pad\./ }).click();
+    const note = p.locator('[data-app-id="notepad"]');
+    await note.getByText("Saved on this browser", { exact: true }).waitFor();
+    await note.locator("textarea").fill("EXISTING DESK DATA");
+    await p.waitForFunction(() => JSON.parse(localStorage.getItem("samuel-system7-notepad-v1") ?? "null")?.pages?.[0] === "EXISTING DESK DATA");
+    const savedNote = await p.evaluate(() => localStorage.getItem("samuel-system7-notepad-v1"));
+    await p.getByRole("button", { name: "Samuel menu", exact: true }).click();
+    await p.getByRole("menuitem", { name: "Settings", exact: true }).click();
     await settings(p).getByRole("radio", { name: "Blue", exact: true }).check();
     const localeRadio = settings(p).getByRole("radio", { name: "English (US)", exact: true });
     await localeRadio.focus(); await p.keyboard.press("Space");
@@ -104,7 +123,7 @@ try {
     await settings(p).getByRole("button", { name: "Reset display settings", exact: true }).click();
     assert.equal(await settings(p).getByRole("radio", { name: "Classic", exact: true }).isChecked(), true);
     assert.equal(await localeRadio.isChecked(), true);
-    assert.equal(await p.evaluate(() => localStorage.getItem("samuel-system7-notepad-v1")), "EXISTING DESK DATA");
+    assert.equal(await p.evaluate(() => localStorage.getItem("samuel-system7-notepad-v1")), savedNote);
     await settings(p).getByRole("button", { name: "Open desk backup tools", exact: true }).click();
     await p.locator('[data-app-id="desk"]').waitFor();
     assert.equal(new URL(p.url()).pathname, "/en-us/desk");
@@ -113,7 +132,7 @@ try {
     const c = await context();
     await c.addInitScript(() => { localStorage.setItem("samuel-system7-preferences-v1", '{"clockFormat":"invalid","showStartup":"false","reduceEffects":"true"}'); localStorage.setItem("samuel-system7-pattern", "paper"); });
     const p = await page(c);
-    await settings(p).getByRole("radio", { name: "Paper", exact: true }).waitFor();
+    await settings(p).getByRole("radio", { name: "Paper", exact: true, checked: true }).waitFor();
     assert.equal(await settings(p).getByRole("radio", { name: "Paper", exact: true }).isChecked(), true);
     assert.equal(await settings(p).getByRole("radio", { name: "24-hour", exact: true }).isChecked(), true);
     assert.equal(await settings(p).getByRole("checkbox", { name: "Reduce interface effects", exact: true }).isChecked(), false);
@@ -142,11 +161,14 @@ try {
     const c = await context({ reducedMotion: "reduce" }); const p = await page(c);
     assert.equal(await settings(p).getByRole("checkbox", { name: "Reduce interface effects", exact: true }).isChecked(), false);
     const duration = await settings(p).getByRole("button", { name: "Reset display settings", exact: true }).evaluate(e => getComputedStyle(e).transitionDuration);
-    assert.equal(duration, "1e-06s");
+    assert.ok(duration && duration.split(",").every(value => Number.parseFloat(value) <= 0.000001), `Reduced-motion transition duration: ${duration}`);
   });
   assert.deepEqual(unexpectedErrors, [], "No unexpected browser runtime errors");
   console.log(`${checks} app-improvement groups passed on ${engine} ${browser.version()}. Screenshots: ${output}`);
 } finally {
+  report.finished = new Date().toISOString();
+  await mkdir(".codex/reports/app-audit", { recursive: true });
+  await writeFile(`.codex/reports/app-audit/preferences-${engine}${process.env.REVIEW_REPORT_SUFFIX ?? ""}${process.env.REVIEW_GROUP ? "-focused" : ""}.json`, JSON.stringify(report, null, 2));
   for (const c of contexts) await c.close();
   await browser.close();
 }

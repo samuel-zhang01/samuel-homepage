@@ -15,9 +15,9 @@ server-side store of personal data.
 
 [Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
-Current implementation and review: [documentation index](docs/README.md). Historical audits are kept in [the archive](docs/archive/README.md); their counts describe their original checkpoints.
+Current implementation and validation: [documentation index](docs/README.md). The [current audit](docs/DEEP_AUDIT_2026-10-04.md) consolidates the completed reviews and fresh verification.
 
-![Samuel System 7 desktop with its About window and shared pixel icons](docs/reviews/wide-sweep-2026-09-09/desktop.png)
+![Samuel System 7 desktop with its About window and shared pixel icons](docs/assets/desktop.png)
 
 ## A quick look
 
@@ -25,7 +25,7 @@ A familiar title bar. A useful little notebook. An orbital you can turn in your
 hands. The old desktop language is the starting point; the interactions are
 built for today's browsers, keyboards and touch screens.
 
-![Searchable project list and independently scrolling project document](docs/reviews/wide-sweep-2026-09-09/projects.png)
+![Searchable project list and independently scrolling project document](docs/assets/project-archive.png)
 
 <table>
   <tr>
@@ -48,7 +48,7 @@ uses display-timed animation, starts paused, and respects reduced-motion setting
 
 </details>
 
-The desktop and project-browser images show the latest local refinement; the orbital and Note Pad images retain their earlier capture dates. The deployed site may remain on an earlier revision until the server owner runs the deployment script.
+The images are reference captures. The current audit records validation of the reviewed revision. The deployed site may remain on an earlier revision until the server owner runs the deployment script.
 
 ## The desk apps
 
@@ -79,6 +79,7 @@ of permanent storage. Export a backup before clearing site data or changing devi
 - A browser-native Orbital Lab: all 118 elements, real s/p/d/f orbital clouds in high-DPI ASCII, density points or smooth 3D, refresh-synchronised rotation, subshell inspection, radial curves, node counts and exports.
 - Shared System 7 pop-up menus throughout accessories, project filters and interactive labs, with keyboard/typeahead navigation and bounded touch-friendly lists.
 - Three persistent desktop patterns and a menu-bar clock that opens Pocket Calendar with one click.
+- A routed Settings panel, available from the main menu and Find, keeps Classic, Blue and Paper while offering language, 12/24-hour clock, startup and reduced-effects controls. A display reset preserves language and desk data; blocked storage keeps settings for the current visit.
 - A 41-record project archive organised into six shelves and 17 curated experiences: interactive chapters, entries for Orbital Lab and the desk apps, five reviewed PDF or external links, a searchable file list and a portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
@@ -109,7 +110,7 @@ clean black-and-white structure, and familiar visual metaphors.
   with one usable app surface, safe-area handling and coarse-pointer targets.
 
 The detailed evidence, viewport matrix and known boundaries live in the
-[release audit](docs/archive/RELEASE_AUDIT.md). The visual reference is the
+[current audit](docs/DEEP_AUDIT_2026-10-04.md). The visual reference is the
 [Macintosh Human Interface Guidelines (1992)](https://tecfa.unige.ch/tecfa/teaching/LME/lombard/HIGuidelines.pdf).
 
 ## Project archive
@@ -123,13 +124,13 @@ The Projects folder opens in a **System 7 knowledge graph with a 3D view** conne
 
 **Selected work** offers a short list of featured projects. **All projects** is a folder tree grouped by discipline, with a text filter and keyboard navigation. Press `/` while the archive is active to open that view and focus search. Enter or Down moves into its results. Detailed text is fetched only when someone searches; names, descriptions and tools still filter if that request fails.
 
-Selecting a record updates the right-hand project document beside the searchable, filterable list. The problem, work, results and career/education context are immediately available. **Open live demo** is a blue primary action that opens the experiment in its own movable, resizable desktop window; **Open in new tab** opens the complete document. **Share project**, **Share demo** and **Share PDF** copy links to the corresponding view, with a selectable address if clipboard access is unavailable. **Connections** returns to that project's graph neighbourhood. On phones, **Back to list** restores the selected row and keyboard focus. Browser Back/Forward preserves the selection and search. The nine native-app records launch their existing desktop windows.
+Selecting a record updates the right-hand project document beside the searchable, filterable list. The problem, work, results and career/education context are immediately available. **Open live demo** is a blue primary action that opens the experiment in its own movable, resizable desktop window; **Open in new tab** opens the complete document. **Share project**, **Share demo** and **Share PDF** copy links to the corresponding view, with a selectable address if clipboard access is unavailable. **Connections** returns to that project's graph neighbourhood. On phones, **Back to list** restores the selected row and keyboard focus. Browser Back/Forward preserves the selection and search. The native-app records launch their existing desktop windows.
 
 Project explanations focus on what the work does, why the method was chosen and how to explore it. Recorded measurements, illustrative calculations and their relevant limits remain distinguishable. Internal repository receipts, checkpoint reconciliation and file-by-file audit tables are developer material rather than visitor-facing project descriptions. GROWMAT’s blue **Open showcase PDF** action opens the original document in the same desktop window system, using the shared continuous PDF reader with zoom and download controls. Career showcase links and the other catalogue PDFs use this reader too. Compact mobile controls leave more room for the document; **Fit width**, zoom and resizing preserve the passage being read. The same reader serves the CVs in Documents. Closing an activity restores the originating window and keyboard focus; inactive demos preserve their working state while playback pauses.
 
 The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 41 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
 
-Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. All 118 element names are localized in both Mandarin editions, including accessible labels and orbital exports. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [current review](docs/WIDE_SWEEP_2026-09-09.md) for the tested scope and intentional source-language exceptions.
+Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. All 118 element names are localized in both Mandarin editions, including accessible labels and orbital exports. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [current audit](docs/DEEP_AUDIT_2026-10-04.md) for the tested scope and intentional source-language exceptions.
 
 `npm run prepare:search` builds four deterministic text indexes from each project's metadata and own public component copy. Translation dictionaries are not indiscriminately indexed into unrelated projects. Private notes, drawings, imported statements, linked PDFs and external websites are excluded. Rebuild these indexes after changing copy in an already-running dev session. Generated JSON is ignored in Git and rebuilt for production; it is absent from initial JavaScript.
 
@@ -201,7 +202,7 @@ Browser exhibits use deterministic, generated or clearly labelled synthetic inpu
 
 The Desk Accessories are deliberately device-local. Note pages, focus progress and calculator tape use versioned browser storage with no account, API or server database. They therefore work the same in local development and the read-only production container, but do not sync between browsers or devices.
 
-Open tabs in the same browser receive saved-state updates. This is last-observed-save behaviour, not collaborative editing or conflict merging. Export a Desk Accessories backup to keep a portable copy; a validated restore asks before replacing the current accessory data. Calendar notes also require a second click to clear. Calendar navigation supports arrows, Home/End, Page Up/Down and Shift + Page Up/Down for years.
+Open tabs in the same browser receive saved-state updates. Note Pad, Sketch Pad, Quick List, Pocket Calendar, Unit Converter and Colour Studio merge independent edits; overlapping edits retain saved drafts for review. These are browser-local safeguards, not shared accounts or live collaboration. Export a Desk Accessories backup to keep a portable copy; a validated restore asks before replacing current data. If unreadable or unsupported records remain, the normal export includes readable data and explains the omission. **Download recovery records** preserves raw records for inspection in a separate file that the normal restore deliberately rejects. Original unreadable saves are retained before valid edits replace them, and storage failures keep the original and staged edit. Calendar notes also require a second click to clear. Calendar navigation supports arrows, Home/End, Page Up/Down and Shift + Page Up/Down for years.
 
 - Finance examples use invented transactions. Raw statements, databases, identifiers, holdings and upload APIs are not shipped.
 - The CV demo uses sample text and deterministic browser-side matching. Personal applications and third-party model calls are excluded.
@@ -306,9 +307,13 @@ command. You can run each `check:*` script separately while working.
 
 `npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the desk-behaviour gate covers timer rollover and numeric-entry regressions against the actual shared helpers; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome, project summaries or suite descriptions from silently shipping.
 
-`npm run check:math` validates actual expressions with the strict KaTeX parser, accessible component output and local font assets. The output gate caps the shared math-renderer chunk at 300 KiB and rejects its inclusion in initial page entries. Initial-route JavaScript has a 270 KiB gzip ceiling. The aggregate lazy browser/runtime ceiling is 5 MiB excluding math, increased from 4 MiB for the explicit bilingual project dictionaries; this is separate from initial page cost. KaTeX uses 20 local WOFF2 fonts (253.7 KiB) and 30.6 KiB of CSS.
+`npm run check:math` validates actual expressions with the strict KaTeX parser, accessible component output and local font assets. The output gate caps the shared math-renderer chunk at 300 KiB and rejects its inclusion in initial page entries. Initial-route JavaScript has a 270 KiB gzip ceiling. Application browser output has a 5 MiB ceiling excluding the separately checked math chunk; application runtime has its own 5 MiB ceiling including math. These ceilings were increased from 4 MiB for the explicit bilingual project dictionaries and are separate from initial page cost. KaTeX uses 20 local WOFF2 fonts (253.7 KiB) and 30.6 KiB of CSS.
 
-Current measurements and the completed browser/check matrix are recorded in the [System 7 review](docs/archive/SYSTEM7_REVIEW_2026-09-09.md). The earlier restoration report describes its own prior build, not the final redesign bundle.
+Fresh release results, repository cleanup and the four-language browser matrix are in the [4 October audit](docs/DEEP_AUDIT_2026-10-04.md). All 2,826 browser journeys and the strict release gate passed after the final translation review.
+
+`npm run audit:repository` produces a read-only source/asset/fixture ownership inventory. The deeper HTTP, browser, recovery and accessibility runners are documented in the current review; they use a compiled preview and external QA tools. The ordinary release build stays independent of those external browser installations.
+
+Lint includes a compatibility guard for the scoped Next-plugin `fast-glob` replacement. It retains the reviewed default App Router discovery and all Next rules; configured `settings.next.rootDir` values fail explicitly. Changing lint roots or the pinned dependency versions requires another compatibility review. The [audit's dependency section](docs/DEEP_AUDIT_2026-10-04.md#dependencies-and-output) documents the advisory, fresh install and signature evidence.
 
 When a development server is already using `.next`, run `npm run build:isolated` instead. It writes the production checkpoint to `.next-build` so the live development cache is not replaced.
 
