@@ -1,5 +1,6 @@
 // Verify installed/browser artwork, its metadata and maskable clipping safety.
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -11,6 +12,29 @@ const read = file => readFileSync(resolve(root, file));
 const profile = read("public/system7-icons/profile.png");
 const rgba = bytes => sharp(bytes).ensureAlpha().raw().toBuffer();
 const expectedProfile = size => sharp(profile).resize(size, size, { kernel: "nearest" }).ensureAlpha().raw().toBuffer();
+
+// Integer enlargement applies Sharp's alpha round-trip without fractional
+// sampling. At an exact source-pixel boundary either neighbour is equally near;
+// libvips can choose differently across native builds when reducing 128 to 48.
+// Compare whole RGBA pixels, never a colour or alpha tolerance. The ICO digest
+// below also rejects changes between the two otherwise valid boundary choices.
+const canonicalPixels = await expectedProfile(256);
+function assertNearestIcoPixels(pixels, size) {
+  assert.equal(pixels.length, size * size * 4, "ICO frame contains complete RGBA pixels");
+  const neighbours = coordinate => {
+    const numerator = (coordinate * 2 + 1) * 256;
+    const denominator = size * 2;
+    const nearest = Math.floor(numerator / denominator);
+    return numerator % denominator === 0 ? [nearest - 1, nearest] : [nearest];
+  };
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    const pixel = pixels.subarray((y * size + x) * 4, (y * size + x + 1) * 4);
+    assert.ok(neighbours(y).some(sourceY => neighbours(x).some(sourceX => {
+      const at = (sourceY * 256 + sourceX) * 4;
+      return pixel.equals(canonicalPixels.subarray(at, at + 4));
+    })), `ICO ${size}px frame pixel ${x},${y} uses exact canonical nearest-neighbour RGBA artwork`);
+  }
+}
 
 for (const [file, size] of [
   ["public/favicon.png", 128], ["src/app/icon.png", 128],
@@ -51,6 +75,9 @@ const maskExpected = await sharp({ create: { width: 512, height: 512, channels: 
 assert.deepEqual(maskPixels, maskExpected, "Maskable icon uses the canonical profile rather than another drawing");
 
 const ico = read("public/favicon.ico");
+// Reviewed derivative recorded in docs/SYSTEM7_ICON_PROMPTS.json. Keep the
+// digest here too because deployment deliberately excludes authoring documents.
+assert.equal(createHash("sha256").update(ico).digest("hex"), "5191429d3801be542df3a8d11ef40e64c67f928bea5c2d08dc3c6ccad315f163", "ICO matches the reviewed browser artwork exactly");
 assert.equal(ico.readUInt16LE(0), 0, "ICO reserved field");
 assert.equal(ico.readUInt16LE(2), 1, "ICO image type");
 assert.equal(ico.readUInt16LE(4), 3, "ICO has three actual image frames");
@@ -69,7 +96,8 @@ for (const [index, size] of [16, 32, 48].entries()) {
   const metadata = await sharp(frame).metadata();
   assert.equal(metadata.width, size, "Decoded ICO frame matches its declared width");
   assert.equal(metadata.height, size, "Decoded ICO frame matches its declared height");
-  assert.deepEqual(await rgba(frame), await expectedProfile(size), "ICO frame uses canonical pixel artwork");
+  if (size === 48) assertNearestIcoPixels(await rgba(frame), size);
+  else assert.deepEqual(await rgba(frame), await expectedProfile(size), "ICO frame uses canonical pixel artwork");
   nextOffset += length;
 }
 assert.equal(nextOffset, ico.length, "ICO has no trailing or unreferenced frames");

@@ -1,6 +1,6 @@
 # Continue here
 
-Current validation: the combined publication source passed a fresh strict release check on 587 frozen inputs. The profile refinement, adversarial re-audit and System 7 icon browser checks retain their separate scopes below; no new full browser matrix is claimed. Git history and remote tracking refs record publication.
+Current work: repairing the real ARM64 Alpine Docker deployment failure. The [deployment repair](docs/DEEP_AUDIT_2026-10-04.md#docker-deployment-repair) records the ICO sampling assertion, missing build-only CV source and focused verification. The combined publication source previously passed a strict release check on 587 frozen inputs. The profile refinement, adversarial re-audit and System 7 icon browser checks retain their separate scopes below; no new full browser matrix is claimed. Git history and remote tracking refs record publication.
 
 Updated: **4 October 2026**. The original audit, four-locale translation review and cleanup produced the earlier release checkpoint on `main`. The profile, icon and adversarial audit changes are maintained together with separate verification scopes below; Git history and remote tracking refs record publication state.
 

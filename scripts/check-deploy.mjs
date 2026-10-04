@@ -1,8 +1,67 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, rmSync } from "node:fs";
+import { existsSync, lstatSync, mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, copyFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+
+const arguments_ = process.argv.slice(2);
+assert.ok(arguments_.length === 0 || (arguments_.length === 1 && arguments_[0] === "--docker-context"), "Usage: node scripts/check-deploy.mjs [--docker-context]");
+
+if (arguments_[0] === "--docker-context") {
+  // Ask Docker itself to apply .dockerignore. No base image, dependency install,
+  // running container or approximation of Docker's pattern rules is involved.
+  const exportRoot = mkdtempSync(join(tmpdir(), "homepage-docker-context-"));
+  try {
+    execFileSync("docker", ["build", "--progress=plain", "--file", "-", "--output", `type=local,dest=${exportRoot}`, "."], {
+      input: "FROM scratch\nCOPY . /context/\n", stdio: ["pipe", "inherit", "inherit"], timeout: 120_000,
+    });
+    const context = join(exportRoot, "context");
+    const requiredSources = [
+      "others/Samuel-Zhang-Applied-AI-CV.tex",
+      "others/localised-cv/Samuel-Zhang-Applied-AI-CV-en-US.tex",
+      "others/localised-cv/Samuel-Zhang-Applied-AI-CV-zh-TW.tex",
+    ];
+    const reviewedDocuments = new Set([
+      "public/Samuel-Zhang-Applied-AI-CV.pdf",
+      "public/Samuel-Zhang-Applied-AI-CV-en-US.pdf",
+      "public/Samuel-Zhang-Applied-AI-CV-zh-CN.pdf",
+      "public/Samuel-Zhang-Applied-AI-CV-zh-TW.pdf",
+      "public/GROWMAT Showcase External Highest Quality.pdf",
+      "public/projects/parliamo/practice-workbook.pdf",
+      "public/projects/parliamo/reading-workbook.pdf",
+      "public/projects/study-rl/syllabus.pdf",
+      "src/data/project-fixtures/decision-ope-logs.csv",
+    ]);
+    for (const file of [...requiredSources, ...reviewedDocuments]) {
+      assert.ok(existsSync(join(context, file)), `Required build input is excluded by .dockerignore: ${file}`);
+      assert.ok(lstatSync(join(context, file)).isFile(), `Required build input must be a regular file: ${file}`);
+    }
+    for (const path of [".git", ".codex", ".aws", ".ssh", "node_modules", ".next", ".next-build", "docs", "hackathon", "videomate/VideoMate", "public/_vendor", "Candidate Linkedin.txt", "CVtemplateProduct.pdf"]) {
+      assert.equal(existsSync(join(context, path)), false, `Private, authoring or generated path entered the Docker context: ${path}`);
+    }
+    const files = [];
+    function collect(directory, prefix = "") {
+      for (const entry of readdirSync(directory, { withFileTypes: true })) {
+        const path = prefix ? `${prefix}/${entry.name}` : entry.name;
+        assert.ok(!entry.isSymbolicLink(), `Unexpected symlink in the Docker context: ${path}`);
+        if (entry.isDirectory()) collect(join(directory, entry.name), path);
+        else files.push(path);
+      }
+    }
+    collect(context);
+    assert.deepEqual(files.filter(path => path.startsWith("others/")).sort(), [...requiredSources].sort(), "Only the three reviewed CV sources may enter the builder from others/");
+    for (const path of files) {
+      assert.ok(!/(?:^|\/)(?:\.env(?:\..*)?|\.npmrc|\.yarnrc.*|\.pnpmrc)$|\.(?:pem|key|crt|p12|pfx)$/i.test(path), `Credential-shaped file entered the Docker context: ${path}`);
+      if (/\.(?:pdf|docx?|xlsx?|csv|tsv|parquet|db|sqlite[^/]*|ipynb|pth|pt|ckpt|onnx|safetensors|zip|7z|tar|gz)$/i.test(path)) {
+        assert.ok(reviewedDocuments.has(path), `Unreviewed document, data or archive entered the Docker context: ${path}`);
+      }
+    }
+    console.log(`PASS Docker build context: ${requiredSources.length} reviewed CV sources and ${reviewedDocuments.size} document/data inputs present; private and unrelated source materials excluded (${files.length} files checked).`);
+  } finally {
+    rmSync(exportRoot, { recursive: true, force: true });
+  }
+  process.exit(0);
+}
 
 // Real temporary Git repositories; Docker/npm are simulated. Never touches a
 // running service, installs dependencies, or contacts a remote network service.
@@ -11,7 +70,7 @@ const root = mkdtempSync(join(tmpdir(), "homepage-deploy-check-"));
 const git = (cwd, ...args) => execFileSync("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 let checks = 0;
 try {
-  for (const scenario of ["success", "local", "dirty", "untracked", "ahead", "branch", "install", "build", "health", "first", "headers", "not-found", "port", "port-octal", "port-overflow", "port-zero", "lookup", "inspect", "empty-image", "public", "public-redirect", "environment-override", "environment-disable", "invalid-verification", "crlf", "literal-env"]) {
+  for (const scenario of ["success", "local", "dirty", "untracked", "ahead", "branch", "install", "build", "health", "first", "headers", "not-found", "port", "port-octal", "port-overflow", "port-zero", "lookup", "inspect", "empty-image", "public", "public-redirect", "environment-override", "environment-disable", "invalid-verification", "crlf", "literal-env", "progress-override"]) {
     const dir = join(root, scenario);
     const checkout = join(dir, "checkout");
     const remote = join(dir, "origin.git");
@@ -75,6 +134,7 @@ if (tool === 'curl') {
  process.exit(0);
 }
 if (tool === 'npm') process.exit(scenario === 'install' && args.startsWith('ci ') ? 1 : 0);
+if (args.startsWith('compose build')) fs.appendFileSync(process.env.DEPLOY_TEST_LOG, 'BUILDKIT_PROGRESS=' + process.env.BUILDKIT_PROGRESS + '\\n');
 if (args.startsWith('compose build') && scenario === 'build') process.exit(1);
 if (args.startsWith('compose ps -q') && scenario === 'lookup') process.exit(1);
 if (args.startsWith('inspect') && args.includes('.Image')) {
@@ -95,9 +155,10 @@ if (args.startsWith('exec')) {
     writeFileSync(logPath, "");
     const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, DEPLOY_TEST_SCENARIO: scenario, DEPLOY_TEST_LOG: logPath, DEPLOY_TEST_MARKER: join(dir, "started") };
     // Host-machine deployment preferences must never change fixture outcomes.
-    for (const key of ["HOMEPAGE_BIND_ADDRESS", "HOMEPAGE_PORT", "HOMEPAGE_PUBLIC_ORIGIN", "VERIFY_PUBLIC_ORIGIN"]) delete env[key];
+    for (const key of ["HOMEPAGE_BIND_ADDRESS", "HOMEPAGE_PORT", "HOMEPAGE_PUBLIC_ORIGIN", "VERIFY_PUBLIC_ORIGIN", "BUILDKIT_PROGRESS"]) delete env[key];
     if (scenario === "environment-override") Object.assign(env, { VERIFY_PUBLIC_ORIGIN: "1", HOMEPAGE_PORT: "5180", HOMEPAGE_PUBLIC_ORIGIN: "https://me.samuelzhang.co.uk" });
     if (scenario === "environment-disable") env.VERIFY_PUBLIC_ORIGIN = "0";
+    if (scenario === "progress-override") env.BUILDKIT_PROGRESS = "tty";
     const result = spawnSync("bash", [join(checkout, "deploy.sh"), ...(scenario === "local" ? ["--local"] : [])], {
       cwd: dir, encoding: "utf8", timeout: 20_000,
       env,
@@ -105,11 +166,16 @@ if (args.startsWith('exec')) {
     assert.ifError(result.error);
     const log = readFileSync(logPath, "utf8");
     const output = result.stdout + result.stderr;
-    assert.equal(result.status, ["success", "local", "public", "environment-override", "environment-disable", "crlf"].includes(scenario) ? 0 : 1, `${scenario}: ${output}`);
+    assert.equal(result.status, ["success", "local", "public", "environment-override", "environment-disable", "crlf", "progress-override"].includes(scenario) ? 0 : 1, `${scenario}: ${output}`);
     if (scenario === "success" || scenario === "local") {
       assert.match(log, /npm ci --include=dev --no-fund --no-audit/);
       assert.match(log, /npm run check:orbitals/);
       assert.match(log, /npm run check:security/);
+      assert.match(log, /npm run check:profile/);
+      assert.match(log, /npm run check:graph/);
+      assert.match(log, /BUILDKIT_PROGRESS=plain/);
+      assert.ok(log.indexOf("npm run check:profile") < log.indexOf("docker compose build"), "Profile evidence must be checked before building");
+      assert.ok(log.indexOf("npm run check:graph") < log.indexOf("docker compose build"), "Graph provenance must be checked before building");
       for (const locale of ["en-gb", "en-us", "zh-cn", "zh-tw"]) {
         assert.ok(log.includes(`/${locale}/orbitals`));
         assert.ok(log.includes(`/${locale}/settings`));
@@ -125,6 +191,7 @@ if (args.startsWith('exec')) {
     if (["dirty", "untracked", "ahead", "branch", "install", "build", "port", "port-octal", "port-overflow", "port-zero", "lookup", "inspect", "empty-image", "invalid-verification", "literal-env"].includes(scenario)) assert.ok(!log.includes("compose up"), scenario);
     if (scenario === "environment-override") { assert.match(log, /curl /); assert.match(output, /ready on 0\.0\.0\.0:5180/); }
     if (scenario === "environment-disable") assert.ok(!log.includes("curl "));
+    if (scenario === "progress-override") assert.match(log, /BUILDKIT_PROGRESS=tty/);
     if (scenario === "crlf") assert.match(log, /curl /);
     if (scenario === "literal-env") assert.equal(spawnSync("test", ["-e", join(checkout, "env-executed")]).status, 1);
     if (["health", "headers", "not-found", "public-redirect"].includes(scenario)) {

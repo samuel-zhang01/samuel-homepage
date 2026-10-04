@@ -338,7 +338,10 @@ commits are never reset or discarded. The ignored server `.env` is preserved.
 It then re-executes the updated script, installs locked dependencies with
 `npm ci --include=dev`, runs the audits and behavioural checks, builds the image,
 and verifies routes (including Orbital Lab in all four languages) and security
-headers. Failed post-start verification restores the previous image; a failed
+headers. Profile and graph checks run before the image build, and BuildKit uses
+plain progress output by default so a failed prebuild check remains visible in
+deployment logs (`BUILDKIT_PROGRESS` can override this). Failed post-start
+verification restores the previous image; a failed
 first deployment removes only its failed service container. A failed build
 leaves the running container untouched. Image rollback does not revert the Git
 checkout or dependencies.
@@ -351,6 +354,11 @@ use `./deploy.sh --local`. Nothing pushes server changes back to GitHub.
 `npm run check:deploy` exercises the startup, safe-update, failure and rollback
 paths with real temporary Git repositories and simulated Docker/npm commands;
 it does not start containers or contact the production server.
+Use `npm run check:deploy -- --docker-context` with a running Docker daemon to
+verify the real filtered build context: the three CV sources required by profile
+and locale validation are present, while private authoring material stays out.
+These sources are build-only inputs; the final image copies the standalone
+application and reviewed public assets.
 
 Basic manual container commands (without the script's verification/rollback):
 

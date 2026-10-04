@@ -61,9 +61,10 @@ README.md
 !THIRD_PARTY_NOTICES.md
 /docs/
 
-# Locale validation reads only these reviewed source CVs during the builder
-# stage. Keep every other authoring document out of the Docker context.
+# Profile and locale validation read these reviewed source CVs during the
+# builder stage. Keep every other authoring document out of the Docker context.
 others/*
+!others/Samuel-Zhang-Applied-AI-CV.tex
 !others/localised-cv/
 others/localised-cv/*
 !others/localised-cv/Samuel-Zhang-Applied-AI-CV-en-US.tex

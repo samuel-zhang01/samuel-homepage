@@ -160,6 +160,8 @@ npm run lint
 npm run check:artifacts
 npm run check:data
 npm run check:catalogue
+npm run check:profile
+npm run check:graph
 npm run check:styles
 npm run check:locales
 npm run check:desk
@@ -171,7 +173,8 @@ npm run check:search
 npm run check:finder
 
 echo "Building Samuel System 7..."
-"${compose[@]}" build "$service_name"
+# Preserve the failing prebuild check in non-interactive deployment logs.
+BUILDKIT_PROGRESS="${BUILDKIT_PROGRESS:-plain}" "${compose[@]}" build "$service_name"
 
 echo "Starting the verified image candidate..."
 replacement_started=1
