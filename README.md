@@ -102,7 +102,7 @@ clean black-and-white structure, and familiar visual metaphors.
 
 - Chicago-first window/menu chrome, Geneva-first content and Monaco/Courier
   machine readouts, with language-appropriate CJK fallbacks.
-- 48 × 48 desktop launchers, 32 × 32 document/navigation icons and 16 × 16 inline/menu artwork.
+- 48 × 48 desktop launchers, 32 × 32 document/card/header icons and 16 × 16 inline/menu/navigation artwork.
 - Slightly rounded push buttons, square pop-up menus, hard one-pixel relief,
   separate default-action and keyboard-focus rings, and restrained project
   colour. The [System 7 benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes

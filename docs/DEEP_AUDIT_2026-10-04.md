@@ -118,7 +118,7 @@ Stop the preview you started when finished. Browser coverage uses Linux Playwrig
 
 This refinement follows the frozen release checkpoint above. Its source changes and focused checks are recorded separately; the earlier **2,826-journey browser matrix**, dependency audit and frozen hashes have not been rerun for these changes.
 
-Profile windows, project documents and demos now share system-font headings and the **22/18/15/13/12px** title, section, prose, control and metadata scale. Inline icons use 16px, document/navigation icons 32px and desktop launchers 48px, with one canonical image per subject. Primary and sharing actions use neutral beveled faces; bold text identifies the primary destination and an outer ring identifies a default action. Warm reading paper, hard window shadows and meaningful scientific/finance palettes remain.
+Profile windows, project documents and demos now share system-font headings and the **22/18/15/13/12px** title, section, prose, control and metadata scale. Inline/navigation icons use 16px, document/card/header icons 32px and desktop launchers 48px, with one canonical image per subject. Primary and sharing actions use neutral beveled faces; bold text identifies the primary destination and an outer ring identifies a default action. Warm reading paper, hard window shadows and meaningful scientific/finance palettes remain.
 
 Selected work contains 14 projects. **Orbital Lab**, **Neural CFD Surrogates** and **Home Lab Infrastructure & Recovery** (`home-automation-stack`) join the shortlist; **CV Keyword Automator** remains in All projects. The five-document library contains the locale's Applied AI CV, the original **GROWMAT external showcase**, the reinforcement-learning syllabus and both Italian workbooks.
 
