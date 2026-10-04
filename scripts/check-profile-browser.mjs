@@ -256,6 +256,6 @@ finally {
     report.finished = new Date().toISOString();
     await writeFile(`.codex/reports/profile-interaction/${engine}.json`, JSON.stringify(report, null, 2));
 }
-if (report.harnessError || report.tests.some(test => test.result === 'FAIL') || report.pageErrors.length)
+if (report.harnessError || report.tests.some(test => test.result === 'FAIL') || report.pageErrors.length || report.requests.length)
     process.exitCode = 1;
 console.log(JSON.stringify({ engine, version: report.version, tests: report.tests.map(t => ({ name: t.name, result: t.result })), pageErrors: report.pageErrors.length, requestFailures: report.requests.length }));
