@@ -87,6 +87,7 @@
 
 .finder button:disabled { opacity: .5; cursor: default; }
 .finder button:not(:disabled):active { background: #111; color: #fff; box-shadow: none; }
+.finder :is(button, input):focus-visible { outline: 2px dotted var(--s7-selection, #11177a); outline-offset: 3px; }
 .listHeader { display: flex; justify-content: space-between; gap: 8px; margin-top: 16px; padding: 5px 8px; border: 1px solid #111; border-bottom: 0; background: #d0d0c8; font: var(--s7-small)/1.4 var(--chrome-font); }
 .results { max-height: min(340px, 42dvh); overflow: auto; overscroll-behavior: contain; border: 1px solid #111; background: #fff; }
 .results:empty { border-top: 0; }
@@ -111,6 +112,7 @@
 .itemIcon > img { width: 16px; height: 16px; }
 .itemCopy { min-width: 0; flex: 1; }
 .itemCopy strong { display: block; font-weight: 600; }
+.itemCopy strong { overflow-wrap: anywhere; }
 .itemCopy small { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--s7-small); opacity: .85; }
 .itemCopy .excerpt { white-space: normal; overflow-wrap: anywhere; }
 .itemKind { flex: 0 0 76px; text-align: right; font-size: var(--s7-small); }
@@ -137,3 +139,11 @@
 }
 
 @media print { .finder { display: none; } }
+
+@media (forced-colors: active) {
+  .finder { border-color: CanvasText; box-shadow: none; }
+  .titlebar { background: Canvas; }
+  .results button[aria-selected="true"] { color: HighlightText; background: Highlight; forced-color-adjust: none; }
+  .detailToggle input:checked { appearance: auto; }
+  .finder button:disabled { color: GrayText; opacity: 1; }
+}

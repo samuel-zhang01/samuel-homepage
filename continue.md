@@ -1,6 +1,24 @@
 # Continue here
 
-Updated: 9 September 2026. Current implementation, checks and handoff.
+Updated: **4 October 2026**. The owner is transferring this unfinished audit to another device.
+
+Read these files first:
+
+1. [Audit handoff and next-agent prompt](docs/AUDIT_HANDOFF_2026-10-04.md) — full goal, changes, verified results, known failures, portable commands, exact remaining work.
+2. [Ten-round improvement plan](docs/APP_IMPROVEMENT_AUDIT_2026-10-04.md) — preserve themes; review functionality, usability, UI/UX, loading/animation, security, responsiveness, localization, cross-platform compatibility, settings and deployability.
+3. [README](README.md) and [System 7 design contract](docs/SYSTEM7_DESIGN_BENCHMARK.md) — established product/design/deployment conventions.
+
+**Goal remains unfinished.** Settings, persistence/recovery, loading/error states and security/deploy fixes are implemented. Finish preference/browser failure/cross-platform retests, the historical regression suite (including the MRI image issue), terminal production output validation and independent final grading. The full dependency audit still fails on five high tooling paths rooted in `braces`; runtime audit is clean. Do not disable the strict release gate or infer production readiness.
+
+Use Node 22, run `npm ci`, then `npm run dev -- --port 5186`. The new Settings entry is `/en-gb/settings` (also available in the other three locales and `/settings`). Existing Classic, Blue and Paper themes are preserved. Committed screenshots are in `docs/reviews/app-improvements-2026-10-04/`. Raw logs/build directories and old process handles are not portable; rebuild and rerun commands from the handoff.
+
+No production deployment or remote push is included in this checkpoint. Ask the next agent to read the linked handoff and continue the original goal; do not use the older completion text below as current status.
+
+---
+
+# Historical handoff — 9 September 2026
+
+The material below describes an older checkpoint. The 4 October continuation above supersedes its completion statements and preview/build references.
 
 ## Latest window and content uniformity pass
 

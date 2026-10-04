@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
-import { commitDeskDrafts, withDeskLock, readDeskData, readDeskConflicts, stageDeskDraft, type DeskConflict } from "@/lib/deskPersistence";
+import { commitDeskDrafts, withDeskLock, readDeskData, readDeskConflicts, stageDeskDraft, pendingPrefix, conflictPrefix, storageKeys, type DeskConflict } from "@/lib/deskPersistence";
 
-export type SaveState = "loading" | "saving" | "saved" | "unavailable";
+export type SaveState = "loading" | "saving" | "saved" | "recovery" | "unavailable";
 export type DeskFlushDetail = { failedKeys: string[]; pending?: Promise<void>[] };
 
 export function useDeskPersistence<T>(key: string, initialValue: T, validate: (value: unknown) => T | null):
@@ -47,20 +47,26 @@ export function useDeskPersistence<T>(key: string, initialValue: T, validate: (v
             render(stored);
           }
         }
+        let readable = true;
         await withDeskLock(() => {
           const next = commitDeskDrafts(key, options.current.initialValue, options.current.validate);
+          const recovered = readDeskConflicts<T>(key, options.current.validate);
+          // Corrupt records are retained for recovery. Valid edits are committed,
+          // but the status must not imply that every draft was saved successfully.
+          readable = storageKeys(pendingPrefix(key)).length === 0
+            && recovered.length === storageKeys(conflictPrefix(key)).length;
           if (mounted) {
             // A newer keystroke always stays in the editor until its own save.
             if (!dirty.current) {
               latest.current = base.current = next;
               render(next);
-              setState("saved");
+              setState(readable ? "saved" : "recovery");
             }
-            setConflicts(readDeskConflicts<T>(key));
+            setConflicts(recovered);
             ready.current = true;
           }
         });
-        return true;
+        return readable;
       } catch { fail(); return false; }
     };
     const flush = async (event?: Event) => {

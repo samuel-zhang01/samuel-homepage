@@ -4,6 +4,8 @@ Start with [continue.md](../continue.md) for the workspace handoff and [README.m
 
 | Document | Purpose |
 | --- | --- |
+| [4 October audit handoff](AUDIT_HANDOFF_2026-10-04.md) | Current unfinished audit checkpoint; goal, implementation, evidence, pending work and new-device commands |
+| [Ten-round app improvement plan](APP_IMPROVEMENT_AUDIT_2026-10-04.md) | Active theme-preserving audit plan, visitor journeys and per-round verification status |
 | [Window and content uniformity](WINDOW_CONTENT_UNIFORMITY_2026-09-09.md) | Historical title-bar correction, equal toolbar buttons, visible explanations and first-person wording |
 | [Mobile PDF reader fixes](PDF_READER_FIXES_2026-09-09.md) | Compact controls, accurate page position, fit/zoom geometry and shared CV reader checks |
 | [Demo windows and visual polish](DEMO_WINDOW_POLISH_2026-09-09.md) | Dedicated demo/PDF windows, sharing, colour and typography, compiled route crawl |

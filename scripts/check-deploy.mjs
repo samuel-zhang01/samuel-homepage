@@ -11,7 +11,7 @@ const root = mkdtempSync(join(tmpdir(), "homepage-deploy-check-"));
 const git = (cwd, ...args) => execFileSync("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 let checks = 0;
 try {
-  for (const scenario of ["success", "local", "dirty", "untracked", "ahead", "branch", "install", "build", "health", "first", "headers", "not-found", "port", "lookup", "inspect", "empty-image", "public", "public-redirect"]) {
+  for (const scenario of ["success", "local", "dirty", "untracked", "ahead", "branch", "install", "build", "health", "first", "headers", "not-found", "port", "port-octal", "port-overflow", "port-zero", "lookup", "inspect", "empty-image", "public", "public-redirect", "environment-override", "environment-disable", "invalid-verification", "crlf", "literal-env"]) {
     const dir = join(root, scenario);
     const checkout = join(dir, "checkout");
     const remote = join(dir, "origin.git");
@@ -48,7 +48,15 @@ try {
     if (scenario === "ahead") { git(checkout, "commit", "-am", "Unpublished local work"); }
     if (scenario === "branch") git(checkout, "checkout", "-b", "review");
     if (scenario === "port") writeFileSync(join(checkout, ".env"), "HOMEPAGE_PORT=invalid\n");
+    if (scenario === "port-octal") writeFileSync(join(checkout, ".env"), "HOMEPAGE_PORT=08\n");
+    if (scenario === "port-overflow") writeFileSync(join(checkout, ".env"), "HOMEPAGE_PORT=18446744073709551617\n");
+    if (scenario === "port-zero") writeFileSync(join(checkout, ".env"), "HOMEPAGE_PORT=0\n");
     if (scenario.startsWith("public")) writeFileSync(join(checkout, ".env"), "VERIFY_PUBLIC_ORIGIN=1\n");
+    if (scenario === "environment-override") writeFileSync(join(checkout, ".env"), "VERIFY_PUBLIC_ORIGIN=0\nHOMEPAGE_PORT=5174\nHOMEPAGE_PUBLIC_ORIGIN=https://wrong.example.invalid\n");
+    if (scenario === "environment-disable") writeFileSync(join(checkout, ".env"), "VERIFY_PUBLIC_ORIGIN=1\n");
+    if (scenario === "invalid-verification") writeFileSync(join(checkout, ".env"), "VERIFY_PUBLIC_ORIGIN=true\n");
+    if (scenario === "crlf") writeFileSync(join(checkout, ".env"), "VERIFY_PUBLIC_ORIGIN=1\r\nHOMEPAGE_PORT=5174\r\n");
+    if (scenario === "literal-env") writeFileSync(join(checkout, ".env"), "IGNORED=$(touch env-executed)\nHOMEPAGE_PORT=$(touch env-executed)\n");
     const shim = `#!${process.execPath}
 const fs = require('node:fs');
 const path = require('node:path');
@@ -85,18 +93,27 @@ if (args.startsWith('exec')) {
     for (const tool of ["docker", "npm", "curl"]) writeFileSync(join(bin, tool), shim, { mode: 0o755 });
     const logPath = join(dir, "commands.log");
     writeFileSync(logPath, "");
+    const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, DEPLOY_TEST_SCENARIO: scenario, DEPLOY_TEST_LOG: logPath, DEPLOY_TEST_MARKER: join(dir, "started") };
+    // Host-machine deployment preferences must never change fixture outcomes.
+    for (const key of ["HOMEPAGE_BIND_ADDRESS", "HOMEPAGE_PORT", "HOMEPAGE_PUBLIC_ORIGIN", "VERIFY_PUBLIC_ORIGIN"]) delete env[key];
+    if (scenario === "environment-override") Object.assign(env, { VERIFY_PUBLIC_ORIGIN: "1", HOMEPAGE_PORT: "5180", HOMEPAGE_PUBLIC_ORIGIN: "https://me.samuelzhang.co.uk" });
+    if (scenario === "environment-disable") env.VERIFY_PUBLIC_ORIGIN = "0";
     const result = spawnSync("bash", [join(checkout, "deploy.sh"), ...(scenario === "local" ? ["--local"] : [])], {
       cwd: dir, encoding: "utf8", timeout: 20_000,
-      env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, DEPLOY_TEST_SCENARIO: scenario, DEPLOY_TEST_LOG: logPath, DEPLOY_TEST_MARKER: join(dir, "started"), HOMEPAGE_PUBLIC_ORIGIN: "https://me.samuelzhang.co.uk", HOMEPAGE_PORT: "5174", VERIFY_PUBLIC_ORIGIN: "0" },
+      env,
     });
     assert.ifError(result.error);
     const log = readFileSync(logPath, "utf8");
     const output = result.stdout + result.stderr;
-    assert.equal(result.status, ["success", "local", "public"].includes(scenario) ? 0 : 1, `${scenario}: ${output}`);
+    assert.equal(result.status, ["success", "local", "public", "environment-override", "environment-disable", "crlf"].includes(scenario) ? 0 : 1, `${scenario}: ${output}`);
     if (scenario === "success" || scenario === "local") {
       assert.match(log, /npm ci --include=dev --no-fund --no-audit/);
       assert.match(log, /npm run check:orbitals/);
-      for (const locale of ["en-gb", "en-us", "zh-cn", "zh-tw"]) assert.ok(log.includes(`/${locale}/orbitals`));
+      assert.match(log, /npm run check:security/);
+      for (const locale of ["en-gb", "en-us", "zh-cn", "zh-tw"]) {
+        assert.ok(log.includes(`/${locale}/orbitals`));
+        assert.ok(log.includes(`/${locale}/settings`));
+      }
       assert.ok(log.includes("/__finder_missing_item__"));
       assert.ok(!log.includes("docker tag"));
       assert.equal(readFileSync(join(checkout, ".env"), "utf8"), "VERIFY_PUBLIC_ORIGIN=0\n");
@@ -105,7 +122,11 @@ if (args.startsWith('exec')) {
       assert.equal(readFileSync(join(checkout, "fixture.txt"), "utf8"), "updated\n");
       assert.match(output, /UPDATED_SCRIPT/);
     }
-    if (["dirty", "untracked", "ahead", "branch", "install", "build", "port", "lookup", "inspect", "empty-image"].includes(scenario)) assert.ok(!log.includes("compose up"), scenario);
+    if (["dirty", "untracked", "ahead", "branch", "install", "build", "port", "port-octal", "port-overflow", "port-zero", "lookup", "inspect", "empty-image", "invalid-verification", "literal-env"].includes(scenario)) assert.ok(!log.includes("compose up"), scenario);
+    if (scenario === "environment-override") { assert.match(log, /curl /); assert.match(output, /ready on 0\.0\.0\.0:5180/); }
+    if (scenario === "environment-disable") assert.ok(!log.includes("curl "));
+    if (scenario === "crlf") assert.match(log, /curl /);
+    if (scenario === "literal-env") assert.equal(spawnSync("test", ["-e", join(checkout, "env-executed")]).status, 1);
     if (["health", "headers", "not-found", "public-redirect"].includes(scenario)) {
       assert.match(log, /docker tag sha256:previous samuel-homepage:production/);
       assert.match(log, /compose up -d --no-build --force-recreate/);

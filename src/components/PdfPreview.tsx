@@ -16,6 +16,7 @@ import type {
 } from "pdfjs-dist/types/src/display/api";
 import { capturePdfScrollAnchor, getPdfCurrentPage, getPdfPageWidth, getPdfReadingOffset, restorePdfScrollAnchor, type PdfPageGeometry, type PdfScrollAnchor } from "@/lib/pdfReaderGeometry";
 import { translateText, type Locale } from "@/lib/i18n";
+import styles from "./PdfPreview.module.css";
 
 type PdfPreviewProps = {
   src: string;
@@ -56,6 +57,7 @@ function PdfPage({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const renderTaskRef = useRef<RenderTask | null>(null);
   const [nearViewport, setNearViewport] = useState(pageNumber <= 2);
+  const [rendered, setRendered] = useState(false);
   const availableWidth = pageWidth;
 
   useEffect(() => {
@@ -77,6 +79,7 @@ function PdfPage({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    setRendered(false);
     let cancelled = false;
     let renderTask: RenderTask | null = null;
     const previousTask = renderTaskRef.current;
@@ -101,7 +104,7 @@ function PdfPage({
         renderTask = page.render({ canvas, viewport: renderViewport });
         renderTaskRef.current = renderTask;
         await renderTask.promise;
-        if (!cancelled) onRendered(pageNumber);
+        if (!cancelled) { setRendered(true); onRendered(pageNumber); }
       } catch (renderError) {
         if (cancelled || (renderError instanceof Error && renderError.name === "RenderingCancelledException")) return;
         console.error(`PDF preview failed to render page ${pageNumber}`, renderError);
@@ -119,10 +122,12 @@ function PdfPage({
       ref={wrapperRef}
       className="pdf-reader__page"
       data-pdf-page={pageNumber}
+      aria-busy={nearViewport && !rendered}
       aria-label={`${title}, ${formatPagePosition(locale, pageNumber, documentProxy.numPages)}`}
       style={{ width: `${availableWidth}px`, height: `${availableWidth * aspectRatio}px` }}
     >
       <span className="pdf-reader__page-number" aria-hidden="true">{pageNumber}</span>
+      {!rendered && <div className={styles.pageSkeleton} aria-hidden="true"><span /><span /><span /><span /></div>}
       <canvas
         ref={canvasRef}
         role="img"
@@ -178,6 +183,7 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
   }, [geometry, pageWidth]);
   const [firstPageReady, setFirstPageReady] = useState(false);
   const [error, setError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -258,7 +264,7 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
       cancelled = true;
       if (loadingTask) void loadingTask.destroy();
     };
-  }, [src]);
+  }, [src, loadAttempt]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -301,7 +307,10 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
   return (
     <div className="pdf-reader" data-status={status} data-zoomed={zoom > 1 || undefined}>
       <div className="pdf-reader__controls" aria-label={translateText(locale, "Document reader controls")}>
-        <output aria-live="polite">{statusText}</output>
+        <div className={styles.status}>
+          <output aria-live="polite">{statusText}</output>
+          <a data-native-navigation="" className={styles.sourceLink} href={src} aria-label={`${title}: ${translateText(locale, "Open this document in the current tab")}`} title={translateText(locale, "Open this document in the current tab")}>PDF</a>
+        </div>
         <span className="pdf-reader__separator" aria-hidden="true" />
         <button type="button" aria-label={translateText(locale, "Zoom out")} onClick={() => changeZoom(zoom - .2)} disabled={zoom <= .6 || !documentProxy || error}>−</button>
         <button className="pdf-reader__fit" type="button" title={fitLabel} aria-label={`${fitLabel} (${Math.round(zoom * 100)}%)`} onClick={() => changeZoom(1)} disabled={!documentProxy || error}><span>{Math.round(zoom * 100)}%</span><small>{fitLabel}</small></button>
@@ -324,10 +333,11 @@ export default function PdfPreview({ src, title, locale }: PdfPreviewProps) {
           />
         ))}
         </div>
-        {!documentProxy && !error && <p className="pdf-reader__loading">{translateText(locale, "Loading document…")}</p>}
+        {!documentProxy && !error && <p className="pdf-reader__loading" role="status">{translateText(locale, "Loading document…")}</p>}
         {error && (
-          <p className="pdf-reader__error">
+          <p className="pdf-reader__error" role="alert">
             <span>{translateText(locale, "The built-in preview could not render this file.")}</span>
+            <button type="button" className={`s7-button ${styles.retry}`} onClick={() => setLoadAttempt((attempt) => attempt + 1)}>{translateText(locale, "Try again")}</button>
             <a href={src}>{translateText(locale, "Open this document in the current tab")}</a>
           </p>
         )}

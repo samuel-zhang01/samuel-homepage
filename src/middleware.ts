@@ -21,14 +21,22 @@ const CANONICAL_LOCALE_ALIASES: Record<string, string> = {
 
 function requestHostname(request: NextRequest) {
   const host = request.headers.get("host")?.trim().toLowerCase() ?? "";
-  if (host.startsWith("[")) return host.slice(1, host.indexOf("]"));
-  return host.split(":")[0];
+  // Validate the entire authority before extracting it. Splitting at ':' or
+  // ']' would treat malformed values such as [::1]evil.invalid as loopback.
+  const authority = /^(\[[^\]]+\]|[^:[\]\s]+)(?::([0-9]{1,5}))?$/.exec(host);
+  if (!authority || (authority[2] && Number(authority[2]) > 65535)) return "";
+  return authority[1].startsWith("[") ? authority[1].slice(1, -1) : authority[1];
 }
 
 function isPrivateLanIpv4(hostname: string) {
   if (!/^\d{1,3}(?:\.\d{1,3}){3}$/.test(hostname)) return false;
-  const octets = hostname.split(".").map(Number);
+  const segments = hostname.split(".");
+  const octets = segments.map(Number);
   if (octets.length !== 4 || octets.some((octet) => !Number.isInteger(octet) || octet < 0 || octet > 255)) return false;
+  // URL parsers may interpret zero-prefixed IPv4 segments as octal. Require
+  // canonical decimal input so 010.0.0.1 cannot redirect to public 8.0.0.1,
+  // and inputs such as 10.0.0.08 cannot throw while building a locale URL.
+  if (segments.some((segment, index) => segment !== String(octets[index]))) return false;
   return octets[0] === 10
     || (octets[0] === 172 && octets[1] >= 16 && octets[1] <= 31)
     || (octets[0] === 192 && octets[1] === 168);
@@ -80,6 +88,16 @@ export function middleware(request: NextRequest) {
       const pathSegments = redirectUrl.pathname.split("/");
       pathSegments[1] = canonicalLocale;
       redirectUrl.pathname = pathSegments.join("/");
+      if (process.env.NODE_ENV === "production") {
+        // Next's URL may describe the upstream container or a forwarded
+        // hostname. Build public redirects from the authority we validated
+        // above, never from that unrelated origin or x-forwarded-host.
+        const protocol = requestHostname(request) === CANONICAL_PUBLIC_HOST ? "https:" : redirectUrl.protocol;
+        const publicOrigin = new URL(`${protocol}//${request.headers.get("host")!.trim().toLowerCase()}`);
+        redirectUrl.protocol = publicOrigin.protocol;
+        redirectUrl.hostname = publicOrigin.hostname;
+        redirectUrl.port = publicOrigin.port;
+      }
       return applyCanonicalProductionHeaders(request, NextResponse.redirect(redirectUrl, 308));
     }
     const contentLanguage = localeSegment ? CONTENT_LANGUAGES[localeSegment] : undefined;

@@ -1,6 +1,9 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const desktopCopy = {
+  "Settings": ["设置", "設定"],
+  "Desktop appearance, language and comfort settings.": ["桌面外观、语言与使用偏好设置。", "桌面外觀、語言與使用偏好設定。"],
+  "Opening application…": ["正在打开应用…", "正在開啟應用程式…"],
   "Interactive demo": ["交互演示", "互動示範"],
   "COVERD reviews applications from an applicant tracking system and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.": ["COVERD 审查申请人追踪系统中的申请，并向招聘人员提供附有理由的候选名单。最终决定由招聘人员作出。", "COVERD 審查應徵者追蹤系統中的申請，並向招募人員提供附有理由的候選名單。最終決定由招募人員作出。"],
   "Learning atlas · English PDF": ["学习图谱 · 英文 PDF", "學習圖譜 · 英文 PDF"],

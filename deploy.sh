@@ -56,10 +56,12 @@ service_name="samuel-homepage"
 deployment_image="samuel-homepage:production"
 
 # Docker Compose reads .env itself, but this script also needs the harmless
-# endpoint values for its post-deploy probes. Parse only the allowlisted keys;
+# endpoint values for its post-deploy probes. Match Compose's precedence:
+# exported values override .env defaults. Parse only the allowlisted keys;
 # do not source the file as shell code.
 if [[ -f .env ]]; then
   while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%$'\r'}"
     case "$line" in
       ""|\#*) continue ;;
     esac
@@ -68,7 +70,7 @@ if [[ -f .env ]]; then
     value="${line#*=}"
     case "$key" in
       HOMEPAGE_BIND_ADDRESS|HOMEPAGE_PORT|HOMEPAGE_PUBLIC_ORIGIN|VERIFY_PUBLIC_ORIGIN)
-        export "$key=$value"
+        if [[ ! -v "$key" ]]; then export "$key=$value"; fi
         ;;
     esac
   done < .env
@@ -84,8 +86,17 @@ if [[ "$homepage_public_origin" != "https://me.samuelzhang.co.uk" ]]; then
   exit 1
 fi
 
-if [[ ! "$homepage_port" =~ ^[0-9]+$ ]] || (( homepage_port < 1 || homepage_port > 65535 )); then
-  echo "HOMEPAGE_PORT must be an integer from 1 to 65535." >&2
+if [[ ! "$homepage_port" =~ ^[1-9][0-9]{0,4}$ ]] || (( homepage_port > 65535 )); then
+  echo "HOMEPAGE_PORT must be an integer from 1 to 65535, without leading zeroes." >&2
+  exit 1
+fi
+
+if [[ "${VERIFY_PUBLIC_ORIGIN:-0}" != "0" && "${VERIFY_PUBLIC_ORIGIN:-0}" != "1" ]]; then
+  echo "VERIFY_PUBLIC_ORIGIN must be 0 or 1." >&2
+  exit 1
+fi
+if [[ "${VERIFY_PUBLIC_ORIGIN:-0}" == "1" ]] && ! command -v curl >/dev/null 2>&1; then
+  echo "curl is required when VERIFY_PUBLIC_ORIGIN=1." >&2
   exit 1
 fi
 
@@ -154,6 +165,7 @@ npm run check:locales
 npm run check:desk
 npm run check:controls
 npm run check:orbitals
+npm run check:security
 npm run prepare:search
 npm run check:search
 npm run check:finder
@@ -177,7 +189,7 @@ for _ in {1..45}; do
   health=$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$container_id")
   case "$health" in
     healthy)
-      for required_route in / /desk /projects /sidequest /en-gb/desk /orbitals /en-gb/orbitals /en-us/orbitals /zh-cn/orbitals /zh-tw/orbitals; do
+      for required_route in / /desk /projects /sidequest /en-gb/desk /orbitals /en-gb/orbitals /en-us/orbitals /zh-cn/orbitals /zh-tw/orbitals /settings /en-gb/settings /en-us/settings /zh-cn/settings /zh-tw/settings; do
         if ! docker exec "$container_id" wget --no-verbose --tries=1 --spider \
           --header="Host: ${public_host}" "http://127.0.0.1:3000${required_route}" >/dev/null; then
           echo "The container is healthy but failed the canonical ${required_route} route probe." >&2
@@ -222,10 +234,6 @@ for _ in {1..45}; do
       echo "LAN: http://<machine-ip>:${homepage_port}"
       echo "HTTPS reverse-proxy origin: ${homepage_public_origin}"
       if [[ "${VERIFY_PUBLIC_ORIGIN:-0}" == "1" ]]; then
-        if ! command -v curl >/dev/null 2>&1; then
-          echo "curl is required when VERIFY_PUBLIC_ORIGIN=1." >&2
-          exit 1
-        fi
         echo "Verifying the public HTTPS origin..."
         public_navigation=$(curl --fail --silent --show-error --head --location \
           --proto "=https" --proto-redir "=https" --tlsv1.2 \
@@ -267,7 +275,7 @@ for _ in {1..45}; do
           echo "The public production CSP unexpectedly permits unsafe-eval." >&2
           exit 1
         fi
-        for required_route in /desk /projects /sidequest /en-gb/desk /orbitals /en-gb/orbitals /en-us/orbitals /zh-cn/orbitals /zh-tw/orbitals; do
+        for required_route in /desk /projects /sidequest /en-gb/desk /orbitals /en-gb/orbitals /en-us/orbitals /zh-cn/orbitals /zh-tw/orbitals /settings /en-gb/settings /en-us/settings /zh-cn/settings /zh-tw/settings; do
           route_probe=$(curl --silent --show-error --head --location \
             --proto "=https" --proto-redir "=https" --tlsv1.2 \
             --max-redirs 3 --max-time 20 --retry 3 --retry-delay 2 \

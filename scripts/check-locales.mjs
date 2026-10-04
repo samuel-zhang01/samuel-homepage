@@ -69,6 +69,11 @@ function flatten(value, prefix = "", result = {}) {
 const desktopCopyPath = resolve(projectRoot, "src/components/desktopCopy.ts");
 const { desktopCopy } = await compileModule(await readFile(desktopCopyPath, "utf8"), desktopCopyPath);
 const desktopCopyErrors = [];
+const settingsCopyPath = resolve(projectRoot, "src/components/desktopSettingsCopy.ts");
+const { settingsCopy } = await compileModule(await readFile(settingsCopyPath, "utf8"), settingsCopyPath);
+for (const [source, values] of Object.entries(settingsCopy)) {
+  if (!Array.isArray(values) || values.length !== 2 || values.some(value => typeof value !== "string" || !value.trim() || value === source)) desktopCopyErrors.push(`Incomplete settings translation: ${source}`);
+}
 for (const [source, values] of Object.entries(desktopCopy)) {
   if (!Array.isArray(values) || values.length !== 2 || values.some(value => typeof value !== "string" || !value.trim())) desktopCopyErrors.push(`Incomplete desktop translation: ${source}`);
   else if (source !== "Proxmox + Docker" && values.some(value => value === source)) desktopCopyErrors.push(`Untranslated desktop prose: ${source}`);

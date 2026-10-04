@@ -30,13 +30,15 @@ function SaveBadge({ locale, state }: { locale: Locale; state: SaveState }) {
   const t = (value: string) => translateText(locale, value);
   const label = state === "unavailable"
     ? t("Browser storage unavailable")
+    : state === "recovery"
+      ? t("Unreadable drafts kept in this browser")
     : state === "loading"
       ? t("Loading saved data…")
       : state === "saving"
         ? t("Saving…")
         : t("Saved on this browser");
   return (
-    <span className={`${styles.saveBadge} ${styles[`saveBadge_${state}`]}`} role="status">
+    <span className={`${styles.saveBadge} ${styles[`saveBadge_${state === "recovery" ? "unavailable" : state}`]}`} role="status">
       <i aria-hidden="true" />
       {label}
     </span>

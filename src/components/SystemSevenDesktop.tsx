@@ -1,6 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useDesktopPreferences } from "@/hooks/useDesktopPreferences";
+import { readDesktopPreferences, type DesktopPattern } from "@/lib/desktopPreferences";
+import { WindowErrorBoundary } from "./WindowErrorBoundary";
 import { System7Icon, type System7IconKind } from "./System7Icon";
 import { projects } from "@/data/projects";
 import { ProjectWindowContext } from "./projects/ProjectWindowContext";
@@ -46,8 +49,11 @@ function useSystemLocale() {
 }
 
 function ClassicModuleLoading() {
-  return <div className="classic-module-loading" aria-hidden="true"><span><i /></span></div>;
+  const locale = useSystemLocale();
+  return <div className="classic-module-loading" role="status"><strong>{translateText(locale, "Opening application…")}</strong><span aria-hidden="true"><i /></span><div className="classic-module-loading__paper" aria-hidden="true"><b /><b /><b /></div></div>;
 }
+
+const DesktopSettings = dynamic(() => import("./DesktopSettings"), { loading: ClassicModuleLoading });
 
 const PdfPreview = dynamic(() => import("@/components/PdfPreview"), {
   loading: ClassicModuleLoading,
@@ -115,6 +121,7 @@ export type AppId =
   | "documents"
   | "games"
   | "desk"
+  | "settings"
   | "notepad"
   | "sketch"
   | "tasks"
@@ -151,8 +158,6 @@ type DesktopIcon = {
 type IconKind = System7IconKind | "coverd";
 
 type SystemMenuId = "apple" | "file" | "edit" | "view" | "special" | "language";
-type DesktopPattern = "classic" | "blue" | "paper";
-const PATTERN_STORAGE_KEY = "samuel-system7-pattern";
 
 const SYSTEM_MENU_ELEMENT_IDS: Record<SystemMenuId, string> = {
   apple: "samuel-menu",
@@ -243,6 +248,7 @@ function fitWindowToViewport(item: WindowState, viewportWidth: number, viewportH
 }
 
 const INITIAL_WINDOWS: WindowState[] = [
+  { id: "settings", title: "Settings", x: 180, y: 58, width: 660, height: 650, z: 28, open: false, maximized: false },
   {
     id: "about",
     title: "About Samuel Zhang",
@@ -517,6 +523,7 @@ const DESKTOP_ICONS: DesktopIcon[] = [
 ];
 
 const UTILITY_ICONS: Partial<Record<AppId, IconKind>> = {
+  settings: "controls",
   desk: "accessories",
   notepad: "note",
   sketch: "sketch",
@@ -530,6 +537,7 @@ const UTILITY_ICONS: Partial<Record<AppId, IconKind>> = {
 };
 
 const APP_ROUTES: Record<AppId, string> = {
+  settings: "settings",
   about: "",
   coverd: "coverd",
   experience: "experience",
@@ -749,7 +757,7 @@ const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
     return {
       id: item.id,
       title: item.title,
-      description: desktopItem?.description ?? (item.id === "sidequest" ? "Latest field note · RUN/HACK" : item.id === "orbitals" ? "Explore atomic orbitals in a fast, browser-local ASCII laboratory." : "Desk Accessories"),
+      description: desktopItem?.description ?? (item.id === "settings" ? "Desktop appearance, language and comfort settings." : item.id === "sidequest" ? "Latest field note · RUN/HACK" : item.id === "orbitals" ? "Explore atomic orbitals in a fast, browser-local ASCII laboratory." : "Desk Accessories"),
       icon: <PixelIcon kind={UTILITY_ICONS[item.id] ?? desktopItem?.icon ?? "runner"} small />,
     };
   });
@@ -1567,7 +1575,7 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
   useEffect(() => {
     const activeGameButton = gamesMenuRef.current?.querySelector<HTMLElement>(`[data-game-id="${game}"]`);
     activeGameButton?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.dataset.reduceEffects === "true" ? "auto" : "smooth",
       block: "nearest",
       inline: "nearest",
     });
@@ -2176,6 +2184,7 @@ function AppContent({
   active: boolean;
 }) {
   switch (id) {
+    case "settings": return null;
     case "about": return <AboutApp openApp={openApp} locale={locale} openSelectedProjects={openSelectedProjects} />;
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
@@ -2242,7 +2251,8 @@ export default function SystemSevenDesktop({
   const [booting, setBooting] = useState(!skipBoot);
   const [bootMessageIndex, setBootMessageIndex] = useState(0);
   const [clock, setClock] = useState("--:--");
-  const [pattern, setPattern] = useState<DesktopPattern>("classic");
+  const { preferences, updatePreferences, storageAvailable } = useDesktopPreferences();
+  const { pattern } = preferences;
   const [finderOpen, setFinderOpen] = useState(false);
   const [requestedProjectSlug, setRequestedProjectSlug] = useState(initialProjectSlug);
   const [activity, setActivity] = useState<ProjectActivityRequest | null>(initialActivity);
@@ -2271,23 +2281,6 @@ export default function SystemSevenDesktop({
     projectActivity: { search: initialActivity ? projectActivitySearch(initialActivity) : "", hash: "" },
   });
   const finderReturnFocus = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const loadPattern = () => {
-      try {
-        const saved = window.localStorage.getItem(PATTERN_STORAGE_KEY);
-        setPattern(saved === "blue" || saved === "paper" ? saved : "classic");
-      } catch {
-        // Desktop appearance still works for this visit without storage.
-      }
-    };
-    const syncPattern = (event: StorageEvent) => {
-      if (event.storageArea === window.localStorage && (event.key === PATTERN_STORAGE_KEY || event.key === null)) loadPattern();
-    };
-    loadPattern();
-    window.addEventListener("storage", syncPattern);
-    return () => window.removeEventListener("storage", syncPattern);
-  }, []);
 
   useEffect(() => () => {
     if (toastTimer.current !== null) window.clearTimeout(toastTimer.current);
@@ -2354,7 +2347,7 @@ export default function SystemSevenDesktop({
   useEffect(() => {
     if (skipBoot) return;
     try {
-      if (window.sessionStorage.getItem("samuel-system7-boot") === "seen") setBooting(false);
+      if (window.sessionStorage.getItem("samuel-system7-boot") === "seen" || !readDesktopPreferences(window.localStorage).showStartup) setBooting(false);
     } catch {
       // Keep the normal startup sequence when storage is unavailable.
     }
@@ -2362,7 +2355,7 @@ export default function SystemSevenDesktop({
 
   useEffect(() => {
     if (!booting) return;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches || preferences.reduceEffects;
     setBootMessageIndex(0);
     const finishTimer = window.setTimeout(completeBoot, reduceMotion ? 700 : BOOT_DURATION);
     const messageTimer = reduceMotion
@@ -2375,7 +2368,7 @@ export default function SystemSevenDesktop({
       window.clearTimeout(finishTimer);
       if (messageTimer) window.clearInterval(messageTimer);
     };
-  }, [booting, completeBoot]);
+  }, [booting, completeBoot, preferences.reduceEffects]);
 
   useEffect(() => {
     if (!openMenu) return;
@@ -2391,11 +2384,11 @@ export default function SystemSevenDesktop({
   }, [openMenu]);
 
   useEffect(() => {
-    const updateClock = () => setClock(new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
+    const updateClock = () => setClock(new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit", hour12: preferences.clockFormat === "12h" }).format(new Date()));
     updateClock();
     const timer = window.setInterval(updateClock, 30000);
     return () => window.clearInterval(timer);
-  }, [locale]);
+  }, [locale, preferences.clockFormat]);
 
   useEffect(() => {
     const isMobile = isCompactCanvasViewport();
@@ -2686,7 +2679,7 @@ export default function SystemSevenDesktop({
   const followDesktopLink = (event: React.MouseEvent<HTMLElement>) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[href]");
-    if (!anchor || anchor.hasAttribute("download") || anchor.closest(".pdf-reader__error, .documents-fallback")) return;
+    if (!anchor || anchor.hasAttribute("download") || anchor.closest(".pdf-reader__error, .documents-fallback, [data-native-navigation]")) return;
     const url = new URL(anchor.href, window.location.href);
     if (url.origin !== window.location.origin) return;
     const pdfProject = projects.find(project => project.artifacts?.some(artifact => artifact.kind === "PDF" && new URL(artifact.href, url.origin).pathname === url.pathname));
@@ -2815,20 +2808,15 @@ export default function SystemSevenDesktop({
     window.requestAnimationFrame(() => menuButtonRefs.current[menuId]?.focus());
   };
 
-  const chooseLocale = (nextLocale: Locale) => {
+  const chooseLocale = (nextLocale: Locale, fromMenu = true) => {
     setLocale(nextLocale);
     setOpenMenu(null);
     syncAddress(activeId, nextLocale, true);
-    restoreMenuTriggerFocus("language");
+    if (fromMenu) restoreMenuTriggerFocus("language");
   };
 
   const choosePattern = (nextPattern: DesktopPattern) => {
-    setPattern(nextPattern);
-    try {
-      window.localStorage.setItem(PATTERN_STORAGE_KEY, nextPattern);
-    } catch {
-      // The selected pattern remains available until the next reload.
-    }
+    updatePreferences({ pattern: nextPattern });
     setOpenMenu(null);
     restoreMenuTriggerFocus("view");
   };
@@ -3051,7 +3039,7 @@ export default function SystemSevenDesktop({
         }
       }}
     >
-      <nav className="system-menubar" aria-label="System menu bar">
+      <nav inert={mobileGuide || finderOpen} className="system-menubar" aria-label="System menu bar">
         <div className="menu-cluster">
           <div className="menu-root">
             <button
@@ -3082,6 +3070,7 @@ export default function SystemSevenDesktop({
                 <button type="button" role="menuitem" onClick={() => openApp("orbitals")}><PixelIcon kind="orbital" small />Orbital Lab</button>
                 <button type="button" role="menuitem" onClick={() => openApp("contact")}><PixelIcon kind="mail" small />Contact Samuel</button>
                 <hr />
+                <button type="button" role="menuitem" onClick={() => openApp("settings")}><PixelIcon kind="controls" small />Settings</button>
                 <button type="button" role="menuitem" onClick={openFinder}><PixelIcon kind="folder" small />Find…</button>
                 <hr />
                 <button type="button" role="menuitem" onClick={() => openApp("sidequest")}><PixelIcon kind="runner" small />Latest field note · RUN/HACK</button>
@@ -3166,7 +3155,7 @@ export default function SystemSevenDesktop({
         </div>
       </nav>
 
-      <div className="desktop-icons" role="group" aria-label="Desktop items">
+      <div inert={mobileGuide || finderOpen} className="desktop-icons" role="group" aria-label="Desktop items">
         {DESKTOP_ICONS.map((item) => (
           <button
             key={item.id}
@@ -3182,6 +3171,7 @@ export default function SystemSevenDesktop({
         ))}
       </div>
 
+      <div className="desktop-window-layer" inert={mobileGuide || finderOpen}>
       {windows.filter((windowState) => windowState.open).map((windowState) => (
         <WindowChrome
           key={windowState.id}
@@ -3195,10 +3185,13 @@ export default function SystemSevenDesktop({
           onResizeKeyDown={(event) => resizeWithKeyboard(event, windowState.id)}
           locale={locale}
         >
-          <ProjectWindowContext.Provider value={openProjectActivity}><ProjectOpenContext.Provider value={openProjectDocument}><AppContent openSelectedProjects={openSelectedProjects} id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} activity={activity} onActivityBack={returnFromActivity} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider></ProjectWindowContext.Provider>
+          <WindowErrorBoundary key={`${windowState.id}:${windowState.id === "projectActivity" ? `${activity?.slug}:${activity?.kind}:${activity?.artifactHref ?? ""}` : windowState.id === "project" ? requestedProjectSlug : ""}`} locale={locale}>
+          {windowState.id === "settings" ? <DesktopSettings locale={locale} preferences={preferences} onChange={updatePreferences} onLocaleChange={nextLocale => chooseLocale(nextLocale, false)} onOpenBackup={() => openApp("desk")} storageAvailable={storageAvailable} /> : <ProjectWindowContext.Provider value={openProjectActivity}><ProjectOpenContext.Provider value={openProjectDocument}><AppContent openSelectedProjects={openSelectedProjects} id={windowState.id} openApp={openApp} locale={locale} initialProjectSlug={requestedProjectSlug} activity={activity} onActivityBack={returnFromActivity} onProjectBack={() => returnToProjects()} onProjectGraph={returnToProjects} active={windowState.id === activeId} /></ProjectOpenContext.Provider></ProjectWindowContext.Provider>}
+          </WindowErrorBoundary>
         </WindowChrome>
       ))}
 
+      </div>
       <div className={`desktop-hint${selectedDesktopItem ? " has-selection" : ""}`}>
         {selectedDesktopItem ? (
           <>
@@ -3209,7 +3202,7 @@ export default function SystemSevenDesktop({
           <span>Click an icon to open it · Use the menu for every destination · Drag title bars to move · Drag lower-right corners to resize</span>
         )}
       </div>
-      <div className="window-switcher" role="navigation" aria-label="Open applications">
+      <div inert={mobileGuide || finderOpen} className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
           <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, windowTitle(item))}`}>
             <PixelIcon kind={UTILITY_ICONS[item.id] ?? DESKTOP_ICONS.find((icon) => icon.id === item.id)?.icon ?? "document"} small />

@@ -72,20 +72,51 @@ function encode(key: string, value: unknown) {
 }
 /** Persist before requesting a lock: pagehide cannot wait for asynchronous work. */
 export function stageDeskDraft<T>(key: string, draft: DeskDraft<T>): void {
-  const revision = Math.max(Date.now() * 1000, ...storageKeys(pendingPrefix(key)).map(entry => Number(entry.slice(pendingPrefix(key).length).split(":")[0]) + 1));
-  localStorage.setItem(`${pendingPrefix(key)}${revision}:${crypto.randomUUID()}`, JSON.stringify(draft));
+  const revisions = storageKeys(pendingPrefix(key))
+    .map(entry => Number(entry.slice(pendingPrefix(key).length).split(":")[0]))
+    .filter(revision => Number.isSafeInteger(revision) && revision >= 0 && revision < Number.MAX_SAFE_INTEGER);
+  const revision = Math.max(Date.now() * 1000, ...revisions.map(value => value + 1));
+  // randomUUID is restricted to secure contexts; getRandomValues also works
+  // on the supported HTTP LAN preview without weakening cross-tab identifiers.
+  const identifier = typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID()
+    : Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, "0")).join("");
+  localStorage.setItem(`${pendingPrefix(key)}${revision}:${identifier}`, JSON.stringify(draft));
 }
-export function readDeskConflicts<T>(key: string): DeskConflict<T>[] {
-  return storageKeys(conflictPrefix(key)).map(entry => ({ key: entry, ...JSON.parse(localStorage.getItem(entry)!) }));
+
+/** Leave unreadable records untouched so newer edits can still be saved safely. */
+export function readDeskDraft<T>(entry: string, validate: (value: unknown) => T | null): DeskDraft<T> | null {
+  const raw = localStorage.getItem(entry);
+  try {
+    const draft: unknown = JSON.parse(raw ?? "null");
+    if (!draft || typeof draft !== "object" || Array.isArray(draft) || !("base" in draft) || !("value" in draft)) return null;
+    const base = validate(draft.base);
+    const value = validate(draft.value);
+    return base === null || value === null ? null : { base, value };
+  } catch { return null; }
 }
-/** Caller holds the shared Web Lock. Each pending record is removed only after its result is durable. */
+
+export function readDeskConflicts<T>(key: string, validate?: (value: unknown) => T | null): DeskConflict<T>[] {
+  return storageKeys(conflictPrefix(key)).flatMap(entry => {
+    const raw = localStorage.getItem(entry);
+    try {
+      const saved: unknown = JSON.parse(raw ?? "null");
+      if (!saved || typeof saved !== "object" || Array.isArray(saved) || !("current" in saved) || !("incoming" in saved)) return [];
+      const current = validate ? validate(saved.current) : saved.current as T;
+      const incoming = validate ? validate(saved.incoming) : saved.incoming as T;
+      if (current === null || incoming === null) return [];
+      // A saved JSON property must never replace the actual storage key used for dismissal.
+      return [{ key: entry, current, incoming }];
+    } catch { return []; }
+  });
+}
+/** Caller holds the shared lock. Remove valid drafts only after their result is durable; retain unreadable ones. */
 export function commitDeskDrafts<T>(key: string, initial: T, validate: (value: unknown) => T | null): T {
   let current = validate(readDeskData(key, initial)) ?? initial;
   for (const entry of storageKeys(pendingPrefix(key))) {
-    const draft = JSON.parse(localStorage.getItem(entry)!) as DeskDraft;
-    const base = validate(draft.base);
-    const incoming = validate(draft.value);
-    if (base === null || incoming === null) throw new Error("Invalid pending desk draft");
+    const draft = readDeskDraft(entry, validate);
+    if (!draft) continue;
+    const { base, value: incoming } = draft;
     const merged = mergeDeskData(base, current, incoming);
     const value = validate(merged.value);
     // If a merged collection exceeds an app limit, preserve both complete versions.

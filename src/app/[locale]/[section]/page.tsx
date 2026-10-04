@@ -1,9 +1,12 @@
 import SystemSevenDesktop, { type AppId } from "@/components/SystemSevenDesktop";
-import { localeOptions, normaliseLocale, translateText } from "@/lib/i18n";
+import { projectText } from "@/lib/projectCopy";
+import { desktopCopy } from "@/components/desktopCopy";
+import { localeOptions, normaliseLocale } from "@/lib/i18n";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 const sections: Record<string, AppId> = {
+  settings: "settings",
   about: "about",
   contact: "contact",
   coverd: "coverd",
@@ -21,6 +24,7 @@ const sections: Record<string, AppId> = {
 };
 
 const sectionMetadata: Record<string, { title: string; description: string }> = {
+  settings: { title: "Settings", description: "Desktop appearance, language and comfort settings." },
   orbitals: {
     title: "Orbital Lab",
     description: "Explore atomic orbitals in a fast, browser-local ASCII laboratory.",
@@ -92,8 +96,8 @@ export async function generateMetadata({
   if (!locale || !content) return {};
 
   const canonicalLocale = localeOptions.find((option) => option.locale === locale)?.slug ?? "en-gb";
-  const title = translateText(locale, content.title);
-  const description = translateText(locale, content.description);
+  const title = projectText(locale, desktopCopy, content.title);
+  const description = projectText(locale, desktopCopy, content.description);
   return {
     title: { absolute: `${title} · Samuel Zhang` },
     description,

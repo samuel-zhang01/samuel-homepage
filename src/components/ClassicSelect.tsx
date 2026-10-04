@@ -49,6 +49,25 @@ export default function ClassicSelect({ children, value, defaultValue, disabled,
   const available = options.some((option) => !option.disabled);
   const effectiveActiveIndex = options[activeIndex] && !options[activeIndex].disabled ? activeIndex : nextSelectOption(options, -1, 1);
 
+  // A form reset changes the native control without dispatching change. Read it
+  // after the browser's reset action so the visible value cannot become stale.
+  useEffect(() => {
+    const native = nativeRef.current;
+    const form = native?.form;
+    if (!native || !form || value !== undefined) return;
+    let active = true;
+    const onReset = (event: Event) => {
+      queueMicrotask(() => {
+        if (active && !event.defaultPrevented) {
+          setUncontrolledValue(native.value);
+          setOpen(false);
+        }
+      });
+    };
+    form.addEventListener("reset", onReset);
+    return () => { active = false; form.removeEventListener("reset", onReset); };
+  }, [value, nativeProps.form]);
+
   useEffect(() => {
     const supported = "showPopover" in HTMLElement.prototype;
     setSupportsPopover(supported);
@@ -202,6 +221,7 @@ export default function ClassicSelect({ children, value, defaultValue, disabled,
       disabled={disabled || !available} role="combobox" aria-haspopup="listbox" aria-expanded={expanded} aria-controls={menuId}
       aria-activedescendant={expanded && effectiveActiveIndex >= 0 ? `${menuId}-${effectiveActiveIndex}` : undefined}
       aria-label={ariaLabel} aria-labelledby={ariaLabelledBy} aria-describedby={ariaDescribedBy} aria-required={nativeProps.required}
+      aria-invalid={nativeProps["aria-invalid"]} aria-errormessage={nativeProps["aria-errormessage"]}
       lang={nativeProps.lang} tabIndex={nativeProps.tabIndex}
       onClick={() => open ? close() : show()} onKeyDown={onKeyDown}
       onBlur={(event) => { if (!menuRef.current?.contains(event.relatedTarget)) close(false); }}
@@ -209,7 +229,7 @@ export default function ClassicSelect({ children, value, defaultValue, disabled,
       <span className={styles.value} lang={options[selectedIndex]?.lang}>{options[selectedIndex]?.label ?? options.find((option) => !option.disabled)?.label ?? "\u00a0"}</span>
       <span className={styles.arrow} aria-hidden="true" />
     </button>
-    <select {...nativeProps} ref={nativeRef} value={value} defaultValue={defaultValue} disabled={disabled} aria-hidden="true" tabIndex={-1} hidden onChange={onChange}>{children}</select>
+    <select {...nativeProps} ref={nativeRef} value={value} defaultValue={defaultValue} disabled={disabled} aria-hidden="true" tabIndex={-1} hidden onChange={(event) => { setUncontrolledValue(event.currentTarget.value); onChange?.(event); }}>{children}</select>
     {portalTarget ? createPortal(menu, portalTarget) : menu}
   </>;
 }

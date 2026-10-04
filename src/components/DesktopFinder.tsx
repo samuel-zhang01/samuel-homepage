@@ -45,6 +45,7 @@ export default function DesktopFinder({
   const t = (text: string) => translateText(locale, text);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
   const [query, setQuery] = useState("");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
@@ -125,8 +126,15 @@ export default function DesktopFinder({
   const selected = results[selectedIndex];
 
   useEffect(() => {
-    if (!selected) return;
-    document.getElementById(`finder-${selected.key}`)?.scrollIntoView({ block: "nearest" });
+    const list = resultsRef.current;
+    const option = selected ? document.getElementById(`finder-${selected.key}`) : null;
+    if (!list || !option) return;
+    // Keep keyboard navigation inside the results. scrollIntoView also scrolls
+    // the outer dialog on short screens and can hide the search field.
+    const optionBounds = option.getBoundingClientRect();
+    const listBounds = list.getBoundingClientRect();
+    if (optionBounds.top < listBounds.top) list.scrollTop -= listBounds.top - optionBounds.top;
+    else if (optionBounds.bottom > listBounds.bottom) list.scrollTop += optionBounds.bottom - listBounds.bottom;
   }, [selected]);
 
   function openResult(result: FinderResult | undefined) {
@@ -136,7 +144,7 @@ export default function DesktopFinder({
   }
 
   function handleSearchKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.nativeEvent.isComposing) return;
+    if (event.nativeEvent.isComposing || event.defaultPrevented) return;
     if (event.key === "Escape") {
       // Search inputs otherwise consume the first Escape to clear their text.
       event.preventDefault();
@@ -210,7 +218,7 @@ export default function DesktopFinder({
           <span>{t("On Samuel HD")}</span>
           <span role="status">{t("Matches")}: {new Intl.NumberFormat(locale).format(results.length)}</span>
         </div>
-        <div className={styles.results} id="finder-results" role="listbox" aria-label={t("Found items")}>
+        <div ref={resultsRef} className={styles.results} id="finder-results" role="listbox" aria-label={t("Found items")} aria-busy={loading}>
           {results.map((result) => (
             <button
               type="button"

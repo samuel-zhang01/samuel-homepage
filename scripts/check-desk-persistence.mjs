@@ -5,7 +5,7 @@ import ts from "typescript";
 const compiled = ts.transpileModule(await readFile(new URL("../src/lib/deskPersistence.ts", import.meta.url), "utf8"), {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 }).outputText;
-const { mergeDeskData, stageDeskDraft, commitDeskDrafts, readDeskConflicts, pendingPrefix, storageKeys } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
+const { mergeDeskData, stageDeskDraft, commitDeskDrafts, readDeskConflicts, pendingPrefix, conflictPrefix, storageKeys } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
 const entries = new Map();
 globalThis.localStorage = {
   get length() { return entries.size; },
@@ -57,6 +57,28 @@ check("pagehide leaves a durable pending write for the next opener", () => {
   assert.deepEqual(commitDeskDrafts("notes", { note: "" }, validate), { note: "Last keystroke" });
   assert.equal(storageKeys(pendingPrefix("notes")).length, 0);
 });
+check("HTTP LAN drafts persist when randomUUID is unavailable", () => {
+  const cryptoDescriptor = Object.getOwnPropertyDescriptor(globalThis, "crypto");
+  const originalCrypto = globalThis.crypto;
+  Object.defineProperty(globalThis, "crypto", {
+    configurable: true,
+    value: { getRandomValues: originalCrypto.getRandomValues.bind(originalCrypto) },
+  });
+  try {
+    const base = { pages: ["", ""] };
+    stageDeskDraft("notes", { base, value: { pages: ["LAN A", ""] } });
+    stageDeskDraft("notes", { base, value: { pages: ["", "LAN B"] } });
+    const identifiers = storageKeys(pendingPrefix("notes")).map(key => key.split(":").at(-1));
+    assert.equal(identifiers.length, 2);
+    assert.ok(identifiers.every(id => /^[0-9a-f]{32}$/.test(id)));
+    assert.notEqual(identifiers[0], identifiers[1]);
+    assert.deepEqual(commitDeskDrafts("notes", base, validate), { pages: ["LAN A", "LAN B"] });
+    assert.equal(storageKeys(pendingPrefix("notes")).length, 0);
+  } finally {
+    if (cryptoDescriptor) Object.defineProperty(globalThis, "crypto", cryptoDescriptor);
+    else delete globalThis.crypto;
+  }
+});
 check("failed canonical write keeps pending and recovery copies", () => {
   entries.set("notes", JSON.stringify({ version: 1, data: { note: "A" } }));
   stageDeskDraft("notes", { base: { note: "" }, value: { note: "B" } });
@@ -77,5 +99,62 @@ check("multiple staged edits keep causal order even in one clock tick", () => {
   Date.now = original;
   assert.deepEqual(commitDeskDrafts("notes", { note: "" }, validate), { note: "two" });
   assert.equal(readDeskConflicts("notes").length, 0);
+});
+check("malformed pending JSON retains its exact raw data while newer edits commit", () => {
+  const corruptKey = `${pendingPrefix("notes")}1:broken`;
+  const corrupt = '{"base":{"note":"recoverable fragment"},';
+  entries.set(corruptKey, corrupt);
+  stageDeskDraft("notes", { base: { note: "" }, value: { note: "Valid new work" } });
+  assert.deepEqual(commitDeskDrafts("notes", { note: "" }, validate), { note: "Valid new work" });
+  assert.equal(localStorage.getItem(corruptKey), corrupt);
+  assert.deepEqual(storageKeys(pendingPrefix("notes")), [corruptKey]);
+  assert.equal(JSON.parse(localStorage.getItem("notes")).data.note, "Valid new work");
+});
+check("invalid pending shapes do not prevent drafts before and after them committing", () => {
+  const validateNote = value => value && typeof value.note === "string" ? value : null;
+  entries.set(`${pendingPrefix("notes")}1:first`, JSON.stringify({ base: { note: "" }, value: { note: "First" } }));
+  const invalidKeys = [
+    ["2:null", "null"],
+    ["3:array", "[]"],
+    ["4:missing", JSON.stringify({ value: { note: "" } })],
+    ["5:badbase", JSON.stringify({ base: { note: 42 }, value: { note: "" } })],
+    ["6:badvalue", JSON.stringify({ base: { note: "" }, value: { note: 42 } })],
+  ].map(([suffix, raw]) => [`${pendingPrefix("notes")}${suffix}`, raw]);
+  invalidKeys.forEach(([key, raw]) => entries.set(key, raw));
+  entries.set(`${pendingPrefix("notes")}7:last`, JSON.stringify({ base: { note: "First" }, value: { note: "Last" } }));
+  assert.deepEqual(commitDeskDrafts("notes", { note: "" }, validateNote), { note: "Last" });
+  invalidKeys.forEach(([key, raw]) => assert.equal(localStorage.getItem(key), raw));
+  assert.equal(storageKeys(pendingPrefix("notes")).length, invalidKeys.length);
+});
+check("malformed recovery JSON cannot hide valid conflicts or be removed by reading", () => {
+  const corruptKey = `${conflictPrefix("notes")}0:broken`;
+  entries.set(corruptKey, "{partial draft");
+  stageDeskDraft("notes", { base: { note: "" }, value: { note: "A" } });
+  stageDeskDraft("notes", { base: { note: "" }, value: { note: "B" } });
+  commitDeskDrafts("notes", { note: "" }, validate);
+  const conflicts = readDeskConflicts("notes", validate);
+  assert.equal(conflicts.length, 1);
+  assert.deepEqual(new Set([conflicts[0].current.note, conflicts[0].incoming.note]), new Set(["A", "B"]));
+  assert.equal(localStorage.getItem(corruptKey), "{partial draft");
+});
+check("recovery restore data is validated and cannot override its actual storage key", () => {
+  const validateNote = value => value && typeof value.note === "string" ? value : null;
+  const realKey = `${conflictPrefix("notes")}1:valid`;
+  const invalidKey = `${conflictPrefix("notes")}2:invalid`;
+  entries.set(realKey, JSON.stringify({ key: "unrelated-data", current: { note: "A" }, incoming: { note: "B" } }));
+  const invalid = JSON.stringify({ current: { note: 42 }, incoming: { note: "B" } });
+  entries.set(invalidKey, invalid);
+  const conflicts = readDeskConflicts("notes", validateNote);
+  assert.deepEqual(conflicts, [{ key: realKey, current: { note: "A" }, incoming: { note: "B" } }]);
+  assert.equal(localStorage.getItem(invalidKey), invalid);
+});
+check("malformed revision suffixes cannot poison subsequent save identifiers", () => {
+  entries.set(`${pendingPrefix("notes")}not-a-number:broken`, "bad data");
+  entries.set(`${pendingPrefix("notes")}Infinity:broken`, "bad data");
+  stageDeskDraft("notes", { base: { note: "" }, value: { note: "Valid" } });
+  const revision = storageKeys(pendingPrefix("notes")).map(key => key.slice(pendingPrefix("notes").length).split(":")[0]).find(value => /^\d+$/.test(value));
+  assert.ok(Number.isSafeInteger(Number(revision)));
+  assert.deepEqual(commitDeskDrafts("notes", { note: "" }, validate), { note: "Valid" });
+  assert.equal(storageKeys(pendingPrefix("notes")).length, 2);
 });
 console.log(`Desk persistence: ${checks} merge, conflict, recovery and failure checks passed.`);

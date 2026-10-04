@@ -11,7 +11,7 @@ import { translateText, type Locale } from "@/lib/i18n";
 import { advanceFocusState, enterCalculatorDecimal, enterCalculatorDigit, localDateKey, type FocusState } from "@/lib/deskBehavior";
 import ProductivityExtras, { normaliseProductivityExtraBackup } from "./ProductivityExtras";
 import { useDeskPersistence, type DeskFlushDetail } from "@/hooks/useDeskPersistence";
-import { commitDeskDrafts, withDeskLock, pendingPrefix, storageKeys } from "@/lib/deskPersistence";
+import { commitDeskDrafts, withDeskLock, pendingPrefix, readDeskDraft, storageKeys } from "@/lib/deskPersistence";
 import { DeskConflicts } from "./DeskConflicts";
 import styles from "./ProductivityApps.module.css";
 
@@ -133,9 +133,10 @@ function normaliseDeskBackupEntry(key: string, raw: string): string | null {
 // Include edits staged by an accessory that closed before its asynchronous commit.
 async function flushPendingAccessories() {
   await withDeskLock(() => {
+    let unreadable = false;
     for (const key of DESK_STORAGE_KEYS) {
-      const pending = storageKeys(pendingPrefix(key))[0];
-      if (!pending) continue;
+      const pending = storageKeys(pendingPrefix(key));
+      if (!pending.length) continue;
       const validate = (data: unknown) => {
         const encoded = JSON.stringify(key === NOTE_STORAGE_KEY ? { version: 1, ...data as object } : { version: 1, data });
         const normalised = normaliseDeskBackupEntry(key, encoded);
@@ -143,10 +144,12 @@ async function flushPendingAccessories() {
         const parsed = JSON.parse(normalised);
         return key === NOTE_STORAGE_KEY ? { activePage: parsed.activePage, pages: parsed.pages } : parsed.data;
       };
-      const initial = validate(JSON.parse(localStorage.getItem(pending)!).base);
-      if (initial === null) throw new Error("Invalid pending accessory data");
-      commitDeskDrafts(key, initial, validate);
+      const initial = pending.map(entry => readDeskDraft(entry, validate)).find(draft => draft !== null)?.base;
+      if (initial !== undefined) commitDeskDrafts(key, initial, validate);
+      if (storageKeys(pendingPrefix(key)).length) unreadable = true;
     }
+    // Refuse an incomplete backup, after preserving every readable accessory's edits.
+    if (unreadable) throw new Error("Unreadable desk drafts are still retained in this browser");
   });
 }
 
@@ -330,8 +333,8 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
       const flushDetail: DeskFlushDetail = { failedKeys: [], pending: [] };
       window.dispatchEvent(new CustomEvent<DeskFlushDetail>(DESK_FLUSH_EVENT, { detail: flushDetail }));
       await Promise.all(flushDetail.pending ?? []);
-      if (flushDetail.failedKeys.length > 0) throw new Error("flush-failed");
       await flushPendingAccessories();
+      if (flushDetail.failedKeys.length > 0) throw new Error("flush-failed");
       const apps: Record<string, string> = {};
       for (const key of DESK_STORAGE_KEYS) {
         const value = window.localStorage.getItem(key);
@@ -567,6 +570,8 @@ function NotePad({ locale }: { locale: Locale }) {
 
   const saveLabel = saveState === "unavailable"
     ? t("Browser storage unavailable")
+    : saveState === "recovery"
+      ? t("Unreadable drafts kept in this browser")
     : saveState === "loading"
       ? t("Loading saved data…")
       : saveState === "saving"

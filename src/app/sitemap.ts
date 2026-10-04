@@ -19,6 +19,7 @@ const sections = [
   "projects",
   "sidequest",
   "skills",
+  "settings",
 ] as const;
 
 function entry(

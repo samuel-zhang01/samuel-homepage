@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { ComponentType } from "react";
+import { Component, type ComponentType, type ReactNode } from "react";
 
 import type { ProjectDemoId } from "@/data/projects";
 import { translateText, type Locale } from "@/lib/i18n";
@@ -13,10 +13,46 @@ function DemoLoading() {
   const locale = useProjectLocale();
   return (
     <div className={styles.loading} role="status" aria-live="polite">
-      <span aria-hidden="true" />
       <strong>{translateText(locale, "OPENING INTERACTIVE FILE…")}</strong>
+      <div className={styles.skeleton} aria-hidden="true">
+        <div className={styles.skeletonHeading} />
+        <div className={styles.skeletonLine} />
+        <div className={styles.skeletonControls}><i /><i /><i /></div>
+        <div className={styles.skeletonPanels}><i /><i /></div>
+      </div>
     </div>
   );
+}
+
+// Keep a failed lazy chunk or render local to its project. Visitors can still
+// use the archive, settings and their other open desktop windows.
+class DemoErrorBoundary extends Component<{ locale: Locale; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() { return { failed: true }; }
+
+  render() {
+    if (!this.state.failed) return this.props.children;
+    const locale = this.props.locale;
+    const copy = locale === "zh-CN" ? {
+      title: "无法打开此交互演示",
+      detail: "其他项目和桌面工具仍可使用。请检查网络连接，再重新加载页面。",
+      reload: "重新加载页面",
+    } : locale === "zh-TW" ? {
+      title: "無法開啟此互動示範",
+      detail: "其他專案和桌面工具仍可使用。請檢查網路連線，再重新載入頁面。",
+      reload: "重新載入頁面",
+    } : {
+      title: "This interactive demo could not open",
+      detail: "Other projects and desktop tools are still available. Check your connection, then reload the page.",
+      reload: "Reload page",
+    };
+    return <section className={styles.error} role="alert" lang={locale}>
+      <h2>{copy.title}</h2>
+      <p>{copy.detail}</p>
+      <button type="button" className="s7-button" onClick={() => window.location.reload()}>{copy.reload}</button>
+    </section>;
+  }
 }
 
 const BanditStudio = dynamic(
@@ -167,7 +203,7 @@ const demoComponents: Record<ProjectDemoId, ComponentType<{ locale?: Locale }>> 
 
 export function ProjectDemoRouter({ demoId, locale = "en-GB", active = true }: { demoId: ProjectDemoId; locale?: Locale; active?: boolean }) {
   const Demo = demoComponents[demoId];
-  return <ProjectTranslationBoundary locale={locale}><ProjectDemoActivityProvider active={active}><Demo locale={locale} /></ProjectDemoActivityProvider></ProjectTranslationBoundary>;
+  return <ProjectTranslationBoundary locale={locale}><DemoErrorBoundary key={demoId} locale={locale}><ProjectDemoActivityProvider active={active}><Demo locale={locale} /></ProjectDemoActivityProvider></DemoErrorBoundary></ProjectTranslationBoundary>;
 }
 
 export default ProjectDemoRouter;

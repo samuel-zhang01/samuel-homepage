@@ -263,6 +263,7 @@ const zhCN: Record<string, string> = {
   "Backup restored. Open accessories are refreshed.": "备份已恢复，已打开的工具也已刷新。",
   "That file is not a valid Desk Accessories backup.": "该文件不是有效的桌面附件备份。",
   "Browser storage unavailable": "浏览器存储不可用",
+  "Unreadable drafts kept in this browser": "无法读取的草稿已保留在此浏览器中",
   "Loading saved data…": "正在载入已保存的数据…",
   "Saving…": "正在保存…",
   "Saved on this browser": "已保存在此浏览器中",

@@ -1,12 +1,14 @@
-// Run against a separate browser-view test session; see docs/REVIEW_2026-09-22.md.
+// Run in an isolated browser, or a separate browser-view test session. See docs/REVIEW_2026-09-22.md.
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { mkdir } from "node:fs/promises";
 const require = createRequire(import.meta.url);
-if (!process.env.BROWSER_CDP_URL || !process.env.PLAYWRIGHT_CORE_PATH) throw new Error("Set BROWSER_CDP_URL and PLAYWRIGHT_CORE_PATH for an isolated browser-view test session.");
+if (!process.env.PLAYWRIGHT_CORE_PATH) throw new Error("Set PLAYWRIGHT_CORE_PATH to a Playwright installation. BROWSER_CDP_URL optionally selects a dedicated existing test browser.");
 const { chromium } = require(process.env.PLAYWRIGHT_CORE_PATH);
-const browser = await chromium.connectOverCDP(process.env.BROWSER_CDP_URL);
-const context = browser.contexts()[0];
+const browser = process.env.BROWSER_CDP_URL
+  ? await chromium.connectOverCDP(process.env.BROWSER_CDP_URL)
+  : await chromium.launch({ headless: true, executablePath: process.env.BROWSER_EXECUTABLE_PATH, args: ["--no-sandbox"] });
+const context = process.env.BROWSER_CDP_URL ? browser.contexts()[0] : await browser.newContext();
 const origin = process.env.REVIEW_ORIGIN ?? "http://localhost:3000";
 const screenshots = process.env.REVIEW_SCREENSHOT_DIR ?? "/tmp/review-fixes-screenshots";
 await mkdir(screenshots, { recursive: true });
@@ -19,7 +21,7 @@ async function page(route = "/en-gb/desk", size = { width: 1440, height: 1000 },
   if (withoutWebLocks) await p.addInitScript(() => Object.defineProperty(navigator, "locks", { value: undefined }));
   p.on("pageerror", error => errors.push(error.message));
   await p.setViewportSize(size);
-  await p.goto(`${origin}${route}`);
+  await p.goto(`${origin}${route}`, { timeout: 60000 });
   return p;
 }
 const app = (p, id) => p.locator(`[data-app-id="${id}"]`);

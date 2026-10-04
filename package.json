@@ -30,7 +30,7 @@
     "build": "next build",
     "postbuild": "npm run check:output",
     "build:isolated": "npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy && NEXT_DIST_DIR=.next-build next build && node scripts/check-build-output.mjs .next-build",
-    "check:release": "npm run check:deploy && npm run check:finder && npm run audit:dependencies && npm run lint && npm run build:isolated",
+    "check:release": "npm run check:deploy && npm run check:security && npm run check:finder && npm run audit:dependencies && npm run lint && npm run build:isolated",
     "start": "next start",
     "lint": "eslint",
     "check:learning": "node scripts/check-learning-experiments.mjs",
@@ -41,7 +41,8 @@
     "prepare:math": "node scripts/prepare-katex-assets.mjs",
     "check:math": "node scripts/prepare-katex-assets.mjs && node scripts/check-math-equations.mjs",
     "check:project-copy": "node scripts/check-project-copy.mjs && node scripts/check-mri-localisation.mjs && node scripts/check-learning-localisation.mjs && node scripts/check-physical-localisation.mjs && node scripts/check-project-narrative-copy.mjs",
-    "check:pdf": "node scripts/check-pdf-reader.mjs"
+    "check:pdf": "node scripts/check-pdf-reader.mjs",
+    "check:security": "node scripts/check-request-security.mjs"
   },
   "dependencies": {
     "katex": "0.18.7",
@@ -54,7 +55,9 @@
     "js-yaml": "4.3.2",
     "nanoid": "3.3.18",
     "postcss": "8.5.25",
-    "sharp": "0.35.4"
+    "sharp": "0.35.4",
+    "@typescript-eslint/eslint-plugin": "8.55.0",
+    "@typescript-eslint/parser": "8.55.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
