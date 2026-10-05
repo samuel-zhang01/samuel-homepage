@@ -73,6 +73,7 @@ of permanent storage. Export a backup before clearing site data or changing devi
 
 - Four routed locales: British English, American English, Simplified Chinese and Traditional Chinese.
 - A language selector with locale persistence and mobile-safe menus.
+- Contact groups call booking, email and profile links in one view with native 32px icons. The localised scheduling link also appears in the YASA overview and interactive-demo toolbar, opening the external 30-minute booking page in a new tab.
 - One Documents app with five entries: the localised Applied AI CV, GROWMAT showcase, reinforcement-learning syllabus and two Italian workbooks, with continuously scrolling reviewed PDF previews.
 - Shared CV-backed career and education records, expanded degree subjects and awards, and 18 capabilities linked to supporting work, records and public sources.
 - Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.

@@ -1106,35 +1106,15 @@ function EducationApp({ locale }: { locale: Locale }) {
 }
 
 function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale: Locale }) {
+  const email = "sam.xiaojian.zhang@outlook.com";
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
-  const [activeService, setActiveService] = useState<"internet" | "email" | "linkedin">("internet");
   const copyResetTimer = useRef<number | null>(null);
 
   useEffect(() => () => {
     if (copyResetTimer.current !== null) window.clearTimeout(copyResetTimer.current);
   }, []);
 
-  const handleServiceTabsKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const services = ["internet", "email", "linkedin"] as const;
-    const currentIndex = services.indexOf(activeService);
-    let nextIndex: number | null = null;
-    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % services.length;
-    else if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + services.length) % services.length;
-    else if (event.key === "Home") nextIndex = 0;
-    else if (event.key === "End") nextIndex = services.length - 1;
-    if (nextIndex === null) return;
-    event.preventDefault();
-    const nextService = services[nextIndex];
-    setActiveService(nextService);
-    window.requestAnimationFrame(() => {
-      const tab = document.getElementById(`contact-tab-${nextService}`);
-      tab?.scrollIntoView({ block: "nearest", inline: "nearest" });
-      tab?.focus({ preventScroll: true });
-    });
-  };
-
   const copyEmail = async () => {
-    const email = "sam.xiaojian.zhang@outlook.com";
     let copySucceeded = false;
     try {
       if (navigator.clipboard) {
@@ -1178,41 +1158,32 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
       : translateText(locale, "Copy Email");
 
   return (
-    <TranslationBoundary locale={locale}><div className="chooser-app">
-      <div className="chooser-columns">
-        <div className="chooser-list" role="tablist" aria-label="Contact services" onKeyDown={handleServiceTabsKeyDown}>
-          <button id="contact-tab-internet" type="button" role="tab" tabIndex={activeService === "internet" ? 0 : -1} aria-selected={activeService === "internet"} aria-controls="contact-service-panel" className={activeService === "internet" ? "is-selected" : ""} onClick={() => setActiveService("internet")}><PixelIcon kind={contactIconKinds.internet} small />Internet</button>
-          <button id="contact-tab-email" type="button" role="tab" tabIndex={activeService === "email" ? 0 : -1} aria-selected={activeService === "email"} aria-controls="contact-service-panel" className={activeService === "email" ? "is-selected" : ""} onClick={() => setActiveService("email")}><PixelIcon kind={contactIconKinds.email} small />Electronic Mail</button>
-          <button id="contact-tab-linkedin" type="button" role="tab" tabIndex={activeService === "linkedin" ? 0 : -1} aria-selected={activeService === "linkedin"} aria-controls="contact-service-panel" className={activeService === "linkedin" ? "is-selected" : ""} onClick={() => setActiveService("linkedin")}><PixelIcon kind={contactIconKinds.linkedin} small />LinkedIn</button>
+    <TranslationBoundary locale={locale}><div className="contact-app">
+      <header className="contact-header">
+        <h3>Samuel Zhang</h3>
+        <p>Let’s talk about applied AI, responsible technology, product leadership or early-stage ventures.</p>
+      </header>
+      <section className="contact-destinations" aria-label="Contact services">
+        <div className="contact-destination">
+          <PixelIcon kind={contactIconKinds.call} />
+          <div className="contact-destination-copy"><h4>30-minute call</h4><p>YASA booking</p></div>
+          <div className="contact-actions"><ScheduleCallLink locale={locale} className="is-primary" compact /></div>
         </div>
-        <div id="contact-service-panel" className="chooser-detail" role="tabpanel" aria-labelledby={`contact-tab-${activeService}`}>
-          <div className="contact-machine"><PixelIcon kind={contactIconKinds[activeService]} /><span className="machine-light" /></div>
-          <h3>{activeService === "internet" ? "Samuel Zhang" : activeService === "email" ? "Electronic Mail" : "LinkedIn"}</h3>
-          <p>{activeService === "email"
-            ? "Email is the most direct way to start a useful conversation."
-            : activeService === "linkedin"
-              ? "Open my professional profile for experience, projects and shared connections."
-              : "Available for conversations about applied AI, responsible technology, product leadership, and ambitious early-stage ventures."}</p>
-          <div className="contact-links">
-            <ScheduleCallLink locale={locale} className="mac-button" />
-            {activeService === "internet" && <>
-              <button className="mac-button is-default" aria-live="polite" onClick={copyEmail}>{copyLabel}</button>
-              <a className="mac-button" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">LinkedIn</a>
-              <a className="mac-button" href="https://github.com/samuel-zhang01" target="_blank" rel="noreferrer">GitHub</a>
-              <button className="mac-button" onClick={() => openApp("coverd")}>COVERD</button>
-            </>}
-            {activeService === "email" && <>
-              <a className="mac-button is-default" href="mailto:sam.xiaojian.zhang@outlook.com">Write Email</a>
-              <button className="mac-button" aria-live="polite" onClick={copyEmail}>{copyLabel}</button>
-            </>}
-            {activeService === "linkedin" && <>
-              <a className="mac-button is-default" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">Open LinkedIn</a>
-            </>}
+        <div className="contact-destination">
+          <PixelIcon kind={contactIconKinds.email} />
+          <div className="contact-destination-copy"><h4>Email</h4><p className="contact-address">{email}</p></div>
+          <div className="contact-actions">
+            <a className="mac-button" href={`mailto:${email}`}>Write Email</a>
+            <button type="button" className="mac-button" aria-live="polite" onClick={copyEmail}>{copyLabel}</button>
           </div>
-          <dl><div><dt>Location:</dt><dd>London, UK</dd></div><div><dt>Network:</dt><dd>Open to useful conversations</dd></div></dl>
         </div>
-      </div>
-      <div className="chooser-status"><span className="status-dot" /> AppleTalk Active</div>
+      </section>
+      <nav className="contact-profiles" aria-label="Profiles and work">
+        <a className="mac-button" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noopener noreferrer"><PixelIcon kind={contactIconKinds.linkedin} />LinkedIn</a>
+        <a className="mac-button" href="https://github.com/samuel-zhang01" target="_blank" rel="noopener noreferrer"><PixelIcon kind={contactIconKinds.github} />GitHub</a>
+        <button type="button" className="mac-button" onClick={() => openApp("coverd")}><PixelIcon kind={contactIconKinds.coverd} />COVERD</button>
+      </nav>
+      <p className="contact-location">London, UK</p>
     </div></TranslationBoundary>
   );
 }

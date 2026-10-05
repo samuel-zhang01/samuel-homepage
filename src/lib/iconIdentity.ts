@@ -72,7 +72,8 @@ export const arcadeIconKinds = {
 } as const satisfies Record<string, System7IconKind>;
 
 export const contactIconKinds = {
-  internet: "network", email: applicationIconKinds.contact, linkedin: "briefcase",
+  call: projectIconKinds["coverd-yasa"], email: applicationIconKinds.contact,
+  linkedin: "briefcase", github: "computer", coverd: applicationIconKinds.coverd,
 } as const satisfies Record<string, System7IconKind>;
 
 export function getApplicationIcon(id: AppId): System7IconKind {

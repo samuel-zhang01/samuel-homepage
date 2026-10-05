@@ -2107,134 +2107,62 @@ html:lang(zh-TW) .career-record {
   color: #666;
 }
 
-/* Chooser */
+/* Contact */
 
-.chooser-app {
+.contact-app {
+  container: contact-pane / inline-size;
   min-height: 100%;
-  padding: 18px;
-  background: #ddd;
+  padding: 20px 24px;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
+  font-family: var(--s7-font-text);
 }
 
-.chooser-columns {
-  display: grid;
-  min-height: 315px;
-  grid-template-columns: 172px 1fr;
-  border: 2px solid #111;
-  background: #fff;
-}
-
-.chooser-list {
-  padding: 9px;
-  border-right: 2px solid #111;
-  background: #eee;
-}
-
-.chooser-list button {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 6px;
-  border: 0;
-  background: transparent;
-  text-align: left;
-}
-
-.chooser-list .pixel-icon--small {
-  width: var(--s7-icon-document);
-  height: var(--s7-icon-document);
-}
-
-.chooser-list button.is-selected {
-  color: #fff;
-  background: var(--selection);
-}
-
-.chooser-detail {
-  padding: 20px 21px;
-}
-
-.contact-machine {
-  position: relative;
-  float: right;
-  margin: 0 0 12px 18px;
-}
-
-.machine-light {
-  position: absolute;
-  right: 6px;
-  bottom: 5px;
-  width: 4px;
-  height: 4px;
-  border: 1px solid #111;
-  background: #45ae48;
-}
-
-.chooser-detail h3 {
+.contact-header h3 {
   margin: 0;
-  font-family: var(--system-font);
-  font-size: var(--s7-title);
+  font: 700 var(--s7-title)/1.25 var(--s7-font-ui);
 }
 
-.chooser-detail > p {
-  margin: 9px 0 20px;
+.contact-header p {
+  margin: 8px 0 20px;
   font-size: var(--s7-text);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
-.contact-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin: 0 3px 23px;
+.contact-destinations {
+  border-block: 1px solid var(--s7-shadow);
 }
 
-.chooser-detail dl {
-  clear: both;
-  padding: 10px 12px;
-  border: 1px solid var(--s7-shadow);
-  background: var(--s7-info-soft);
-  font-size: var(--s7-small);
-  border-top: 1px solid #999;
-}
-
-.chooser-detail dl div {
-  display: flex;
-  gap: 8px;
-  padding: 3px 0;
-}
-
-.chooser-detail dt {
-  width: 60px;
-  color: #666;
-}
-
-.chooser-detail dd {
-  margin: 0;
-  font-weight: 700;
-}
-
-.chooser-status {
-  display: flex;
+.contact-destination {
+  display: grid;
+  grid-template-columns: var(--s7-icon-document) minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  width: fit-content;
-  margin-top: 12px;
-  margin-left: auto;
-  padding: 6px 8px;
-  border: 1px solid var(--s7-shadow);
-  color: var(--s7-success);
-  background: var(--s7-success-soft);
-  font-size: var(--s7-ui);
+  gap: 10px 14px;
+  padding-block: 14px;
 }
 
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border: 1px solid #111;
-  border-radius: 50%;
-  background: #40a248;
+.contact-destination + .contact-destination { border-top: 1px solid var(--s7-shadow); }
+.contact-destination-copy { min-width: 0; }
+.contact-destination-copy h4 { margin: 0; font-size: var(--s7-text); line-height: 1.4; }
+.contact-destination-copy p { margin: 3px 0 0; font-size: var(--s7-small); line-height: 1.45; }
+.contact-address { overflow-wrap: anywhere; }
+.contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.contact-actions :is(a, button) { min-height: 44px; }
+
+.contact-profiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.contact-profiles :is(a, button) { min-height: 44px; gap: 8px; padding: 8px; }
+.contact-location { margin: 16px 0 0; color: var(--s7-muted); font-size: var(--s7-small); line-height: 1.45; }
+
+@container contact-pane (max-width: 440px) {
+  .contact-destination { grid-template-columns: var(--s7-icon-document) minmax(0, 1fr); }
+  .contact-actions { grid-column: 2; }
+  .contact-profiles :is(a, button) { flex-direction: column; gap: 6px; }
 }
 
 /* Document Viewer */
@@ -4690,38 +4618,7 @@ html:lang(zh-TW) .career-record {
     margin-top: 20px;
   }
 
-  .chooser-app {
-    padding: 10px;
-  }
-
-  .chooser-columns {
-    display: block;
-  }
-
-  .chooser-list {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 3px;
-    padding: 6px;
-    border-right: 0;
-    border-bottom: 2px solid #111;
-  }
-
-  .chooser-list button {
-    width: 100%;
-    min-width: 0;
-    min-height: 76px;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    padding: 6px 4px;
-    text-align: center;
-    overflow-wrap: anywhere;
-  }
-
-  .chooser-detail {
-    padding: 17px 15px;
-  }
+  .contact-app { padding: 16px 14px; }
 
   .pdf-reader__controls button,
   .pdf-reader__error a {
@@ -5166,7 +5063,6 @@ html:lang(zh-TW) .career-record {
   .coverd-actions a,
   .system-menubar button,
   .menu-dropdown button,
-  .chooser-list button,
   .window-switcher button,
   .mobile-window-guide button {
     min-height: 44px;

@@ -181,11 +181,11 @@ exactKeys(arcadeIconKinds, literalUnion(desktopFile, "ArcadeGameId"), "Arcade ic
 const serviceCodes = [];
 const contactServices = [];
 visit(source(desktopFile), node => {
+  if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "contactIconKinds") contactServices.push(node.name.text);
   if (!ts.isVariableDeclaration(node) || node.name.getText() !== "services") return;
   const array = unwrapped(node.initializer);
   if (!array || !ts.isArrayLiteralExpression(array)) return;
   for (const item of array.elements) {
-    if (ts.isStringLiteral(item)) { contactServices.push(item.text); continue; }
     if (!ts.isObjectLiteralExpression(item)) continue;
     const code = item.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText() === "code");
     if (code && ts.isStringLiteral(code.initializer)) serviceCodes.push(code.initializer.text);
