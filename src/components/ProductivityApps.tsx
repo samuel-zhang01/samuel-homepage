@@ -888,7 +888,9 @@ function formatNumber(value: number): string {
 
 function DeskCalculator({ locale }: { locale: Locale }) {
   const t = (value: string) => translateText(locale, value);
-  const [display, setDisplay] = useState("0");
+  // Rounded screen text must never become the operand for another calculation.
+  const [displayState, setDisplayState] = useState({ text: "0", value: 0 });
+  const { text: display, value: numericDisplay } = displayState;
   const [accumulator, setAccumulator] = useState<number | null>(null);
   const [operator, setOperator] = useState<Operator | null>(null);
   const [waitingForOperand, setWaitingForOperand] = useState(false);
@@ -964,17 +966,21 @@ function DeskCalculator({ locale }: { locale: Locale }) {
     };
   }, [storageReady]);
 
-  const numericDisplay = Number(display);
+  const showResult = (value: number) => {
+    setDisplayState({ text: formatNumber(value), value });
+  };
 
   const inputDigit = (digit: string) => {
     setCopyStatus("");
-    setDisplay(enterCalculatorDigit(display, waitingForOperand, digit));
+    const next = enterCalculatorDigit(display, waitingForOperand, digit);
+    if (next !== display || waitingForOperand) setDisplayState({ text: next, value: Number(next) });
     setWaitingForOperand(false);
   };
 
   const inputDecimal = () => {
     setCopyStatus("");
-    setDisplay(enterCalculatorDecimal(display, waitingForOperand));
+    const next = enterCalculatorDecimal(display, waitingForOperand);
+    if (next !== display) setDisplayState({ text: next, value: Number(next) });
     setWaitingForOperand(false);
   };
 
@@ -985,8 +991,7 @@ function DeskCalculator({ locale }: { locale: Locale }) {
       setAccumulator(input);
     } else if (!waitingForOperand) {
       const result = calculate(accumulator, input, operator);
-      const formatted = formatNumber(result);
-      setDisplay(formatted);
+      showResult(result);
       setAccumulator(Number.isFinite(result) ? result : null);
     }
     setOperator(nextOperator);
@@ -999,7 +1004,7 @@ function DeskCalculator({ locale }: { locale: Locale }) {
     const result = calculate(accumulator, right, operator);
     const formatted = formatNumber(result);
     const expression = `${formatNumber(accumulator)} ${operator} ${formatNumber(right)} =`;
-    setDisplay(formatted);
+    showResult(result);
     setTape((current) => {
       const usedIds = new Set(current.map((entry) => entry.id));
       let id = Date.now();
@@ -1012,7 +1017,7 @@ function DeskCalculator({ locale }: { locale: Locale }) {
   };
 
   const clear = () => {
-    setDisplay("0");
+    setDisplayState({ text: "0", value: 0 });
     setAccumulator(null);
     setOperator(null);
     setWaitingForOperand(false);
@@ -1022,19 +1027,19 @@ function DeskCalculator({ locale }: { locale: Locale }) {
   const toggleSign = () => {
     setCopyStatus("");
     if (display === "Error" || display === "0") return;
-    setDisplay(formatNumber(-numericDisplay));
+    showResult(-numericDisplay);
   };
 
   const percent = () => {
     setCopyStatus("");
     if (display === "Error") return;
-    setDisplay(formatNumber(numericDisplay / 100));
+    showResult(numericDisplay / 100);
     setWaitingForOperand(false);
   };
 
   const recallMemory = () => {
     setCopyStatus("");
-    setDisplay(formatNumber(memory));
+    showResult(memory);
     setWaitingForOperand(false);
   };
 

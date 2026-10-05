@@ -400,8 +400,37 @@ async function systemAppChecks(p, job, visit) {
     await keyboardActivate(p, window.getByRole("button", { name: t("Next month"), exact: true })); assert.notEqual(await month.innerText(), before);
     await window.locator("textarea").fill("Deep audit reminder"); assert.equal(await window.locator("textarea").inputValue(), "Deep audit reminder"); visit.state = "keyboard month change and selected-date note input";
   } else if (job.appId === "calculator") {
-    const keyboard = window.getByLabel(t("Desk Calculator keyboard area"), { exact: true }); await keyboard.focus(); await p.keyboard.press("2"); await p.keyboard.press("+"); await p.keyboard.press("3"); await p.keyboard.press("Enter");
-    const display = window.locator('[class*="calculatorDisplay"] strong'); assert.equal(await display.innerText(), "5"); await p.keyboard.press("Escape"); assert.equal(await display.innerText(), "0"); visit.state = "keyboard 2+3=5 and clear";
+    const keyboard = window.getByLabel(t("Desk Calculator keyboard area"), { exact: true });
+    const display = window.locator('[class*="calculatorDisplay"] strong');
+    const enter = async keys => {
+      await keyboard.focus();
+      for (const key of keys) await p.keyboard.press(key === "=" ? "Enter" : key);
+    };
+    const button = name => keyboardActivate(p, window.getByRole("button", { name: t(name), exact: true }));
+    await enter("2+3="); assert.equal(await display.innerText(), "5");
+    await p.keyboard.press("Escape"); assert.equal(await display.innerText(), "0");
+    await enter("100/3="); assert.equal(await display.innerText(), "33.3333333333");
+    await enter("*3="); assert.equal(await display.innerText(), "100", "Reusing a result retains its unrounded operand");
+    assert.equal(await window.locator('[class*="paperTape"] li strong').first().innerText(), "100");
+    await p.screenshot({ path: `${screenshots}/${engine}-calculator-precision-${job.option.slug}-${job.width}.png` });
+    await p.keyboard.press("Escape"); await enter("100/3*3="); assert.equal(await display.innerText(), "100");
+    await p.keyboard.press("Escape"); await enter("100/3="); await button("Toggle sign"); await enter("*3=");
+    assert.equal(await display.innerText(), "-100", "Sign changes preserve the unrounded result");
+    await p.keyboard.press("Escape"); await enter("100/3=%.*300=");
+    assert.equal(await display.innerText(), "100", "Percent and a redundant decimal key preserve precision");
+    for (const [control, expected] of [["Add to memory", "100"], ["Subtract from memory", "-100"]]) {
+      await button("Memory clear"); await p.keyboard.press("Escape"); await enter("100/3=");
+      await button(control); await button("Clear calculator"); await button("Memory recall");
+      await enter("9*3="); // The twelfth-digit bound rejects 9 without rounding the stored value.
+      assert.equal(await display.innerText(), expected, `${control} and recall preserve full precision`);
+    }
+    await button("Memory clear"); await p.keyboard.press("Escape"); await enter("123456789012*1000=/1000=");
+    assert.equal(await display.innerText(), "123456789012", "Scientific display formatting cannot change the operand");
+    await enter("7*3="); assert.equal(await display.innerText(), "21", "New entry replaces the previous full-precision result");
+    await p.keyboard.press("Escape"); await enter("1/0="); assert.equal(await display.innerText(), t("Error"));
+    await enter(".7*10="); assert.equal(await display.innerText(), "7", "Decimal entry recovers from an error");
+    await p.keyboard.press("Escape"); assert.equal(await display.innerText(), "0");
+    visit.state = "keyboard arithmetic/clear, unrounded result chaining, sign/percent, memory add/subtract/recall, scientific display and new/error entry";
   } else if (job.appId === "converter") {
     await window.getByRole("textbox", { name: t("Value to convert"), exact: true }).fill("12");
     const output = window.locator('[class*="converterOutput"] strong'); const expected = new Intl.NumberFormat(job.option.locale, { maximumSignificantDigits: 10 }).format(12 / .3048);

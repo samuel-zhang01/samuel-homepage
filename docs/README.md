@@ -2,7 +2,7 @@
 
 [README](../README.md) covers the product, local setup, release checks and Docker deployment. [Continue here](../continue.md) records the current maintenance handoff and review boundaries. [AGENTS.md](../AGENTS.md) contains the repository's working instructions.
 
-The current portfolio has 41 project records, 28 routed project demos, nine desk apps, four locales, five library documents and 18 evidence-backed capabilities. The profile graph contains 106 nodes and 387 edges. Recent work restores the native icon originals, improves desktop/phone demo readability, adds Contact/YASA call-booking links.
+The current portfolio has 41 project records, 28 routed project demos, nine desk apps, four locales, five library documents and 18 evidence-backed capabilities. The profile graph contains 106 nodes and 387 edges. Recent work restores the native icon originals, improves desktop/phone demo readability, adds Contact/YASA call-booking links and preserves calculator precision between operations.
 
 The last recorded production deployment is `aed8ebc` on 5 October 2026. Its Docker-context and maskable-icon repairs, full build and focused public-origin checks are [recorded separately](VERIFICATION.md#5-october-docker-context-repair) from later checkout changes. Read each verification section's scope before treating it as evidence for a newer revision.
 

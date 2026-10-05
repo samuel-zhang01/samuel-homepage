@@ -52,8 +52,9 @@ The desktop, project archive and mobile Note Pad were recaptured on 5 October
 2026 from a production build of the current checkout. The orbital image and
 animation remain earlier reference captures. The last recorded production deployment is
 `aed8ebc`, verified on 5 October 2026 with public HTTPS, artwork hashes and
-four-locale desktop/phone checks. The [verification guide](docs/VERIFICATION.md)
-records later checkout changes separately from that deployment.
+four-locale desktop/phone checks. The call-booking and calculator follow-ups are
+in the current checkout; their verification is recorded separately from that
+deployment in the [verification guide](docs/VERIFICATION.md).
 
 ## The desk apps
 
@@ -73,6 +74,11 @@ Every app has its own archive record; the records launch the same desktop window
 
 Local means this browser profile—not a cloud account, shared database or promise
 of permanent storage. Export a backup before clearing site data or changing devices.
+
+The calculator retains its underlying numeric result between operations;
+rounding the display does not round the next calculation's operand. For example,
+`100 ÷ 3 =`, followed by `× 3 =`, returns `100`. It uses JavaScript number
+arithmetic, rather than arbitrary-precision decimal arithmetic.
 
 ## What is included
 
@@ -320,7 +326,7 @@ command. You can run each `check:*` script separately while working.
 
 `npm run check:math` validates actual expressions with the strict KaTeX parser, accessible component output and local font assets. The output gate caps the shared math-renderer chunk at 300 KiB and rejects its inclusion in initial page entries. Initial-route JavaScript has a 270 KiB gzip ceiling. Application browser output has a 5 MiB ceiling excluding the separately checked math chunk; application runtime has its own 5 MiB ceiling including math. These ceilings were increased from 4 MiB for the explicit bilingual project dictionaries and are separate from initial page cost. KaTeX uses 20 local WOFF2 fonts (253.7 KiB) and 30.6 KiB of CSS.
 
-The [verification guide](docs/VERIFICATION.md) records each implementation's tested scope. The [native-artwork release](docs/VERIFICATION.md#native-artwork-release-verification-d29d92d) includes all 28 routed demos, 160 compiled demo/app journeys, the three-engine icon matrix and focused diagram checks. The [call-scheduling follow-up](docs/VERIFICATION.md#call-scheduling-follow-up) records four-locale desktop/phone link and keyboard checks. The [5 October Docker deployment](docs/VERIFICATION.md#5-october-docker-context-repair) records the actual production build and public-origin verification. Earlier navigation, reader, accessibility and history checks retain their own boundaries. Completed raw evidence is archived outside the checkout; temporary receipts stay ignored.
+The [verification guide](docs/VERIFICATION.md) records each implementation's tested scope. The [native-artwork release](docs/VERIFICATION.md#native-artwork-release-verification-d29d92d) includes all 28 routed demos, 160 compiled demo/app journeys, the three-engine icon matrix and focused diagram checks. The [call-scheduling follow-up](docs/VERIFICATION.md#call-scheduling-follow-up) records four-locale desktop/phone link and keyboard checks; the [calculator repair](docs/VERIFICATION.md#desk-calculator-precision-repair) records result-reuse, chaining and memory regressions. The [5 October Docker deployment](docs/VERIFICATION.md#5-october-docker-context-repair) records the actual production build and public-origin verification. Earlier navigation, reader, accessibility and history checks retain their own boundaries. Completed raw evidence is archived outside the checkout; temporary receipts stay ignored.
 
 `npm run audit:repository` produces a read-only source/asset/fixture ownership inventory. The deeper HTTP, browser, recovery and accessibility runners are documented in the current review; they use a compiled preview and external QA tools. The ordinary release build stays independent of those external browser installations.
 
