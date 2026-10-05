@@ -351,9 +351,10 @@ use `./deploy.sh --local`. Nothing pushes server changes back to GitHub.
 paths with real temporary Git repositories and simulated Docker/npm commands;
 it does not start containers or contact the production server.
 Use `npm run check:deploy -- --docker-context` with a running Docker daemon to
-verify the real filtered build context: the three CV sources required by profile
-and locale validation are present, while private authoring material stays out.
-These sources are build-only inputs; the final image copies the standalone
+verify the real filtered build context: the three CV sources and icon provenance
+manifest required by build validation are present, while private authoring
+material stays out. `deploy.sh` runs this check before building the image.
+These are build-only inputs; the final image copies the standalone
 application and reviewed public assets.
 
 Basic manual container commands (without the script's verification/rollback):

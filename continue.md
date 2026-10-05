@@ -12,4 +12,4 @@ Completed raw reviews move outside the checkout into hash-verified local archive
 
 Follow [AGENTS.md](AGENTS.md), [profile graph maintenance](docs/KNOWLEDGE_GRAPH_WORKFLOW.md) and [translation workflow](docs/PROJECT_COPY_WORKFLOW.md). Keep qualifiers, stable IDs, licences and confidential boundaries. Run `npm run check:release` before release and `npm run audit:repository` before deleting candidates; review affected browser behavior.
 
-Git publication and a GitHub release do not establish a new production deployment. The last recorded deployed implementation is `c3f462b`. Staging was explicitly canceled by the owner.
+The [5 October Docker context repair](docs/VERIFICATION.md#5-october-docker-context-repair) includes the icon provenance manifest required by the newer native icon gate and makes deployment validate its filtered inputs before building. Build and deployment results are recorded there as verification completes. Staging was explicitly canceled by the owner.

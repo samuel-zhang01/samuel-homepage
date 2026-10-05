@@ -172,6 +172,9 @@ npm run prepare:search
 npm run check:search
 npm run check:finder
 
+echo "Checking the filtered Docker build inputs..."
+npm run check:deploy -- --docker-context
+
 echo "Building Samuel System 7..."
 # Preserve the failing prebuild check in non-interactive deployment logs.
 BUILDKIT_PROGRESS="${BUILDKIT_PROGRESS:-plain}" "${compose[@]}" build "$service_name"

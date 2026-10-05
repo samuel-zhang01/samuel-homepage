@@ -59,7 +59,10 @@ deploy.env.example
 README.md
 *.md
 !THIRD_PARTY_NOTICES.md
-/docs/
+# The native icon gate reads provenance in the builder. Keep its manifest,
+# while excluding all other authoring documents and review artwork.
+/docs/*
+!/docs/SYSTEM7_ICON_PROMPTS.json
 
 # Profile and locale validation read these reviewed source CVs during the
 # builder stage. Keep every other authoring document out of the Docker context.

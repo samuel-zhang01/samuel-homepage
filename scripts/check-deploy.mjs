@@ -21,6 +21,7 @@ if (arguments_[0] === "--docker-context") {
       "others/localised-cv/Samuel-Zhang-Applied-AI-CV-en-US.tex",
       "others/localised-cv/Samuel-Zhang-Applied-AI-CV-zh-TW.tex",
     ];
+    const requiredManifests = ["docs/SYSTEM7_ICON_PROMPTS.json"];
     const reviewedDocuments = new Set([
       "public/Samuel-Zhang-Applied-AI-CV.pdf",
       "public/Samuel-Zhang-Applied-AI-CV-en-US.pdf",
@@ -32,11 +33,11 @@ if (arguments_[0] === "--docker-context") {
       "public/projects/study-rl/syllabus.pdf",
       "src/data/project-fixtures/decision-ope-logs.csv",
     ]);
-    for (const file of [...requiredSources, ...reviewedDocuments]) {
+    for (const file of [...requiredSources, ...requiredManifests, ...reviewedDocuments]) {
       assert.ok(existsSync(join(context, file)), `Required build input is excluded by .dockerignore: ${file}`);
       assert.ok(lstatSync(join(context, file)).isFile(), `Required build input must be a regular file: ${file}`);
     }
-    for (const path of [".git", ".codex", ".aws", ".ssh", "node_modules", ".next", ".next-build", "docs", "hackathon", "videomate/VideoMate", "public/_vendor", "Candidate Linkedin.txt", "CVtemplateProduct.pdf"]) {
+    for (const path of [".git", ".codex", ".aws", ".ssh", "node_modules", ".next", ".next-build", "hackathon", "videomate/VideoMate", "public/_vendor", "Candidate Linkedin.txt", "CVtemplateProduct.pdf"]) {
       assert.equal(existsSync(join(context, path)), false, `Private, authoring or generated path entered the Docker context: ${path}`);
     }
     const files = [];
@@ -50,13 +51,14 @@ if (arguments_[0] === "--docker-context") {
     }
     collect(context);
     assert.deepEqual(files.filter(path => path.startsWith("others/")).sort(), [...requiredSources].sort(), "Only the three reviewed CV sources may enter the builder from others/");
+    assert.deepEqual(files.filter(path => path.startsWith("docs/")).sort(), requiredManifests, "Only the icon provenance manifest may enter the builder from docs/");
     for (const path of files) {
       assert.ok(!/(?:^|\/)(?:\.env(?:\..*)?|\.npmrc|\.yarnrc.*|\.pnpmrc)$|\.(?:pem|key|crt|p12|pfx)$/i.test(path), `Credential-shaped file entered the Docker context: ${path}`);
       if (/\.(?:pdf|docx?|xlsx?|csv|tsv|parquet|db|sqlite[^/]*|ipynb|pth|pt|ckpt|onnx|safetensors|zip|7z|tar|gz)$/i.test(path)) {
         assert.ok(reviewedDocuments.has(path), `Unreviewed document, data or archive entered the Docker context: ${path}`);
       }
     }
-    console.log(`PASS Docker build context: ${requiredSources.length} reviewed CV sources and ${reviewedDocuments.size} document/data inputs present; private and unrelated source materials excluded (${files.length} files checked).`);
+    console.log(`PASS Docker build context: ${requiredSources.length} reviewed CV sources, ${requiredManifests.length} icon provenance manifest and ${reviewedDocuments.size} document/data inputs present; private and unrelated source materials excluded (${files.length} files checked).`);
   } finally {
     rmSync(exportRoot, { recursive: true, force: true });
   }
@@ -173,9 +175,11 @@ if (args.startsWith('exec')) {
       assert.match(log, /npm run check:security/);
       assert.match(log, /npm run check:profile/);
       assert.match(log, /npm run check:graph/);
+      assert.match(log, /npm run check:deploy -- --docker-context/);
       assert.match(log, /BUILDKIT_PROGRESS=plain/);
       assert.ok(log.indexOf("npm run check:profile") < log.indexOf("docker compose build"), "Profile evidence must be checked before building");
       assert.ok(log.indexOf("npm run check:graph") < log.indexOf("docker compose build"), "Graph provenance must be checked before building");
+      assert.ok(log.indexOf("npm run check:deploy -- --docker-context") < log.indexOf("docker compose build"), "The real Docker context must be checked before building");
       for (const locale of ["en-gb", "en-us", "zh-cn", "zh-tw"]) {
         assert.ok(log.includes(`/${locale}/orbitals`));
         assert.ok(log.includes(`/${locale}/settings`));

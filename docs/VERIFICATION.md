@@ -97,6 +97,12 @@ Earlier verification remains scoped to its own frozen implementation:
 
 The Docker repair included a required build-only CV source and exact nearest-neighbor ICO sampling at rational pixel boundaries. Its reviewed file hash and corruption fixtures remain enforced. It changed neither artwork nor application source. The last recorded deployment evidence is at `ef6d106`; subsequent Git publication is not a claim of a new live deployment.
 
+## 5 October Docker context repair
+
+The real pinned Node 24 Alpine build failed in `check:icons` because `check-system7-icons.mjs` now reads `docs/SYSTEM7_ICON_PROMPTS.json`, while `.dockerignore` excluded the entire documentation directory. The npm update notice was informational; the preceding `ENOENT` named the missing manifest.
+
+The builder now receives that single manifest. The real Docker-context regression requires it and rejects every other `docs/` file; `deploy.sh` runs the context check before building. The final runtime copy boundary is unchanged. No application, artwork, locale or evidence records changed. The actual Docker context passes on **563 files**, including the three reviewed CV sources, icon manifest and nine reviewed document/data inputs. The same checker rejects an archived pre-fix checkout specifically for the missing manifest. **All 27 deployment scenarios**, targeted lint and syntax/whitespace checks pass. Build and deployment verification are recorded below when complete; raw receipts stay under ignored `.codex/reports/deploy-fix-2026-10-05/` until hash-verified archival.
+
 ## Known limits
 
 - **WebKit history quota:** duplicate and unchanged graph replacements were removed, but 102 genuine archive edits in 8.81s still reproduced the browser's native limit. Pacing is recorded separately from the application repair.
