@@ -124,6 +124,8 @@ names remain associated with their respective rights holders. Third-party
 product names and logos identify the referenced products; their appearance does
 not grant trademark rights or imply endorsement.
 
+The education records display the official [King's College London logo](https://www.kcl.ac.uk/SiteElements/2017/images/kcl-logo.svg) and the Imperial College London blue wordmark from the university's [LaTeX template assets](https://github.com/ImperialCollegeLondon/imperial_latex_templates/tree/main/Images). The King's SVG is unchanged; the Imperial PDF was converted to SVG while preserving its vector geometry. These marks identify the institutions and remain their respective trademarks. Source details are recorded in [the artwork guide](docs/PROJECT_ARTWORK.md).
+
 ## Portfolio content is a separate rights category
 
 Photographs, CVs and their source documents, corporate presentations, educational

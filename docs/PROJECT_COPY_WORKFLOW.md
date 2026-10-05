@@ -56,4 +56,4 @@ The maintained routes are en-GB, en-US, zh-CN and zh-TW. Both Mandarin editions 
 
 Saved figures may contain original English labels. Retain scientific source pixels, identify that language in a translated caption, and supply a translated description and interpretation. Do not suppress the surrounding prose with `translate="no"`, and do not use image generation to translate or alter experimental evidence. Original PDFs, code, equations, proper names and source-language learning exercises retain their necessary text.
 
-The [current audit](DEEP_AUDIT_2026-10-04.md) records the four-language browser scope and changed-state checks. Keep generated review reports and screenshots under the ignored `.codex/reports/` directory. Coverage is a recorded scope, not a claim about every possible interaction.
+The [current audit](VERIFICATION.md) records the four-language browser scope and changed-state checks. Keep generated review reports and screenshots under the ignored `.codex/reports/` directory. Coverage is a recorded scope, not a claim about every possible interaction.

@@ -1065,7 +1065,16 @@ function EducationApp({ locale }: { locale: Locale }) {
       {profileEducation.map(degree => (
         <section className="education-record" key={degree.id}>
           <div className={`degree-card${degree.id === "imperial" ? " degree-card--imperial" : ""}`} id={degree.id}>
-            <div className="degree-mark">{degree.mark}</div>
+            <div className="degree-mark">
+              {degree.id === "imperial" || degree.id === "kcl" ? <Image
+                src={degree.id === "imperial" ? "/brands/imperial.svg" : "/brands/kcl.svg"}
+                width={220}
+                height={80}
+                unoptimized
+                alt=""
+                aria-hidden="true"
+              /> : degree.mark}
+            </div>
             <div><span>{degree.period}</span><h4>{degree.title}</h4><p>{degree.institution} · {degree.result}</p></div>
           </div>
           <div className="education-detail">
@@ -3008,7 +3017,10 @@ export default function SystemSevenDesktop({
               aria-controls={openMenu === "apple" ? SYSTEM_MENU_ELEMENT_IDS.apple : undefined}
               aria-expanded={openMenu === "apple"}
             >
-              <PixelIcon kind={getApplicationIcon("about")} small />
+              <svg className="human-mark" viewBox="0 0 18 18" width="18" height="18" aria-hidden="true" shapeRendering="crispEdges">
+                <circle cx="9" cy="5" r="3" />
+                <path d="M3 17v-3c0-3.2 2.4-5 6-5s6 1.8 6 5v3z" />
+              </svg>
               <span className="menu-label">Menu</span>
             </button>
             {openMenu === "apple" && (

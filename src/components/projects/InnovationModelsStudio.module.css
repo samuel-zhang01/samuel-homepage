@@ -131,11 +131,10 @@
 }
 
 .viewTabs button[aria-current="page"] {
-  color: #fff;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.055) 5px 6px),
-    var(--im-dark);
-  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.2), inset -1px -1px rgba(0, 0, 0, 0.42);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
+  font-weight: 700;
 }
 
 .viewTabs strong,

@@ -149,14 +149,22 @@
 
 .modelSwitch .activeSource {
   border-color: #a76d0b;
-  color: #4f3408;
-  background: var(--course-amber-soft);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+
+  box-shadow: var(--s7-relief-inset);
+
+  font-weight: 700;
 }
 
 .modelSwitch .activeAdapted {
   border-color: var(--course-blue);
-  color: var(--course-blue);
-  background: var(--course-blue-soft);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+
+  box-shadow: var(--s7-relief-inset);
+
+  font-weight: 700;
 }
 
 .viewTabs {
@@ -219,13 +227,15 @@
 .viewTabs button strong,
 .viewTabs button span {
   display: block;
-  overflow: hidden;
+  overflow: visible;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+
+  overflow-wrap: anywhere;
 }
 
 .viewTabs button strong {
-  font-size: var(--s7-small);
+  font-size: var(--s7-ui);
   text-transform: none;
 }
 
@@ -238,14 +248,14 @@
 .viewTabs .activeView {
   position: relative;
   z-index: 1;
-  color: #fff;
-  background: var(--course-blue);
-  box-shadow: none;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
@@ -276,7 +286,7 @@
 }
 
 .viewTabs .activeView span {
-  color: #dfe1ff;
+  color: var(--s7-muted);
 }
 
 .canvas {
@@ -463,12 +473,12 @@
 .selectGrid [data-classic-select],
 .counterfactualIntro [data-classic-select] {
   width: 100%;
-  min-height: 27px;
+  min-height: var(--s7-control-height);
   padding: 4px 5px;
   border: 1px solid var(--course-ink);
   border-radius: 0;
   background: #fff;
-  font-size: var(--s7-small);
+  font-size: var(--s7-ui);
 }
 
 .seedControl,
@@ -677,7 +687,7 @@
 }
 
 .resultCard:is(:hover, .selectedCard) .courseCopy > :is(span, h4) {
-  color: var(--s7-paper);
+  color: var(--course-ink);
 }
 
 .rankStamp {
@@ -721,11 +731,13 @@
 }
 
 .courseCopy h4 {
-  overflow: hidden;
+  overflow: visible;
   margin: 1px 0 3px;
-  font-size: var(--s7-small);
+  font-size: var(--s7-ui);
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+
+  overflow-wrap: anywhere;
 }
 
 .courseMeta {
@@ -778,16 +790,21 @@
   place-content: center;
   border: 1px solid var(--course-ink);
   border-radius: 50%;
-  box-shadow: inset 0 0 0 5px #fff;
+  box-shadow: inset 0 0 0 1px #fff;
+  overflow: hidden;
   text-align: center;
+
+  color: var(--s7-ink);
 }
 
 .sourceDial {
-  background: conic-gradient(#d28a0b var(--score), #ddd 0);
+  background: radial-gradient(circle, var(--s7-paper) 0 58%, transparent 60%), conic-gradient(#d28a0b var(--score), #ddd 0);
+
+  color: var(--s7-ink);
 }
 
 .adaptedDial {
-  background: conic-gradient(var(--course-blue) var(--score), #ddd 0);
+  background: radial-gradient(circle, var(--s7-paper) 0 58%, transparent 60%), conic-gradient(var(--course-blue) var(--score), #ddd 0);
 }
 
 .sourceDial strong,
@@ -796,6 +813,8 @@
 .adaptedDial small {
   display: block;
   line-height: 1.4;
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .sourceDial strong,

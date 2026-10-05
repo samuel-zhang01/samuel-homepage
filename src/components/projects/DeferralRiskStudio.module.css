@@ -14,6 +14,8 @@
   --risk-red: #f07a86;
   --risk-green: #87d5a8;
   --risk-shadow: #0c0910;
+  --risk-chart-retained: #257c74;
+  --risk-chart-deferred: #8962b6;
   --demo-blue: #73538c;
   --demo-green: #3f725b;
   --demo-green-soft: #dceade;
@@ -94,25 +96,24 @@
   text-transform: none;
   border: 1px solid #686169;
   border-bottom: 0;
-  color: #3c3540;
-  background: #aaa6aa;
+  color: var(--s7-ink);
+  background: var(--s7-raised);
   box-shadow: inset 1px 1px 0 #ebe8ea;
 }
 
 .viewTabs button:hover {
-  background: #c4bec6;
+  background: var(--s7-paper);
 }
 
 .viewTabs button strong,
 .viewTabs button span {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .viewTabs button strong {
-  font-size: var(--s7-small);
+  font-size: var(--s7-ui);
   letter-spacing: normal;
   text-transform: none;
 }
@@ -120,7 +121,7 @@
 .viewTabs button span {
   margin-top: 2px;
   font-size: var(--s7-small);
-  color: #625a64;
+  color: var(--s7-muted);
 }
 
 .viewTabs .activeView {
@@ -128,14 +129,14 @@
   z-index: 1;
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
-  color: var(--risk-paper);
-  background: var(--risk-deep);
-  box-shadow: inset 1px 1px #97839e;
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
 }
 
 .labCanvas {
@@ -235,9 +236,9 @@
   letter-spacing: normal;
   text-transform: none;
   border: 1px solid var(--risk-line);
-  color: var(--risk-muted);
-  background: var(--risk-panel);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--s7-ink);
+  background: var(--s7-raised);
+  box-shadow: var(--s7-relief-raised);
 }
 
 .modeSwitch button:focus-visible, .deltaSwitch button:focus-visible {
@@ -274,15 +275,15 @@
   z-index: 1;
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
   min-height: var(--s7-control-height);
-  border-color: var(--risk-cyan);
-  color: var(--risk-ink);
-  background: var(--risk-cyan);
-  box-shadow: inset 1px 1px 0 #d5fffa;
+  border-color: var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
 }
 
 .sliderGrid {
@@ -375,8 +376,8 @@
 .metricStrip {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 7px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .metricCard {
@@ -540,13 +541,32 @@
   height: 7px;
   border: 1px solid #b9d0cd;
   border-radius: 50%;
-  background: var(--risk-cyan);
+  background: var(--risk-chart-retained);
 }
 
 .legend i + i {
   margin-left: 5px;
   border-color: #dfcbed;
-  background: var(--risk-purple);
+  background: var(--risk-chart-deferred);
+}
+
+.plotViewport {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border: 1px solid var(--risk-line);
+  background: var(--s7-paper);
+  scrollbar-color: var(--s7-edge) var(--s7-chrome);
+  scrollbar-width: auto;
+}
+.plotViewport::-webkit-scrollbar { height: 14px; }
+.plotViewport::-webkit-scrollbar-track { background: var(--s7-chrome); box-shadow: var(--s7-relief-inset); }
+.plotViewport::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }
+
+
+.plotViewport:focus-visible {
+  outline: 2px dotted var(--risk-cyan);
+  outline-offset: 2px;
 }
 
 .uncertaintyMap,
@@ -554,47 +574,47 @@
   display: block;
   width: 100%;
   height: auto;
+  min-width: 640px;
   min-height: 220px;
-  border: 1px solid #493b53;
-  background: #18131e;
+  background: var(--s7-paper);
 }
 
 .plotBack {
-  fill: #211a28;
-  stroke: #6c5a76;
+  fill: var(--s7-paper);
+  stroke: var(--s7-shadow);
   stroke-width: 1;
 }
 
 .gridLine {
-  stroke: #4f4058;
+  stroke: #aaa;
   stroke-width: 0.8;
   stroke-dasharray: 2 4;
 }
 
 .uncertaintyMap text,
 .coverageChart text {
-  fill: var(--risk-muted);
-  font-family: "Courier New", monospace;
-  font-size: 12px;
+  fill: var(--s7-ink);
+  font-family: var(--s7-font-text);
+  font-size: 14px;
 }
 
 .thresholdLine {
-  stroke: var(--risk-amber);
+  stroke: #92631a;
   stroke-width: 2;
   stroke-dasharray: 6 4;
 }
 
 .retainedDot {
-  fill: var(--risk-cyan);
-  fill-opacity: 0.55;
-  stroke: #b8fff8;
+  fill: var(--risk-chart-retained);
+  fill-opacity: 0.8;
+  stroke: #173f3b;
   stroke-width: 0.5;
 }
 
 .deferredDot {
-  fill: var(--risk-purple);
-  fill-opacity: 0.72;
-  stroke: #f0ddff;
+  fill: var(--risk-chart-deferred);
+  fill-opacity: 0.8;
+  stroke: #49315f;
   stroke-width: 0.5;
 }
 
@@ -605,8 +625,8 @@
 }
 
 .axisLabel {
-  fill: var(--risk-paper) !important;
-  font-weight: 800;
+  fill: var(--s7-ink);
+  font-weight: 700;
 }
 
 .chartNote {
@@ -874,44 +894,44 @@
 
 .curveLine {
   fill: none;
-  stroke: var(--risk-cyan);
+  stroke: var(--risk-chart-retained);
   stroke-width: 3;
 }
 
 .curveDot {
-  fill: var(--risk-cyan);
-  stroke: #e2fffb;
+  fill: var(--risk-chart-retained);
+  stroke: #173f3b;
   stroke-width: 0.8;
 }
 
 .currentPoint {
   fill: var(--risk-amber);
-  stroke: #fff9df;
+  stroke: #6b4c15;
   stroke-width: 2;
 }
 
 .reportedPoint {
-  fill: var(--risk-purple);
-  stroke: #f0ddff;
+  fill: var(--risk-chart-deferred);
+  stroke: #49315f;
   stroke-width: 2;
 }
 
 .baselinePoint {
   fill: var(--risk-green);
-  stroke: #e4ffed;
+  stroke: #315b40;
   stroke-width: 2;
 }
 
 .xgbPoint {
   fill: var(--risk-red);
-  stroke: #ffe2e5;
+  stroke: #793943;
   stroke-width: 2;
 }
 
 .coverageChart .annotation {
-  fill: var(--risk-paper);
-  font-size: 12px;
-  font-weight: 800;
+  fill: var(--s7-ink);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .benchmarkHero {
@@ -1604,91 +1624,4 @@
 .formulaCard code,
 .opeBadge {
   font-family: var(--s7-font-mono);
-}
-
-.viewTabs button {
-  font-family: var(--s7-font-ui);
-  font-size: var(--s7-ui);
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: normal;
-  text-transform: none;
-  min-height: var(--s7-control-height);
-}
-
-.viewTabs button:focus-visible {
-  outline: 2px dotted var(--s7-ink);
-  outline-offset: 3px;
-}
-
-.viewTabs button:disabled, .viewTabs button[aria-disabled="true"] {
-  cursor: default;
-}
-
-.viewTabs .activeView {
-  font-family: var(--s7-font-ui);
-  font-size: var(--s7-ui);
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: normal;
-  text-transform: none;
-  min-height: var(--s7-control-height);
-  box-shadow: inset 1px 1px #97839e;
-}
-
-.viewTabs .activeView:focus-visible {
-  outline: 2px dotted var(--s7-ink);
-  outline-offset: 3px;
-}
-
-.viewTabs .activeView:disabled, .viewTabs .activeView[aria-disabled="true"] {
-  cursor: default;
-}
-
-.modeSwitch .activeMode,
-.deltaSwitch .activeMode {
-  font-family: var(--s7-font-ui);
-  font-size: var(--s7-ui);
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: normal;
-  text-transform: none;
-  min-height: var(--s7-control-height);
-}
-
-.modeSwitch .activeMode:focus-visible, .deltaSwitch .activeMode:focus-visible {
-  outline: 2px dotted var(--s7-ink);
-  outline-offset: 3px;
-}
-
-.modeSwitch .activeMode:disabled, .modeSwitch .activeMode[aria-disabled="true"], .deltaSwitch .activeMode:disabled, .deltaSwitch .activeMode[aria-disabled="true"] {
-  cursor: default;
-}
-
-.plotBack {
-  fill: #fff;
-  stroke: #777;
-}
-
-.gridLine {
-  stroke: #aaa;
-}
-
-.uncertaintyMap text,
-.coverageChart text,
-.axisLabel,
-.coverageChart .annotation {
-  fill: #333 !important;
-  font-family: var(--system-mono);
-}
-
-.retainedDot,
-.deferredDot,
-.selectedDot,
-.curveDot,
-.currentPoint,
-.reportedPoint,
-.baselinePoint,
-.xgbPoint {
-  stroke: #111;
 }

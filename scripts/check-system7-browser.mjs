@@ -62,7 +62,8 @@ const { projects } = load("src/data/projects.ts");
 const { localeOptions, translateText } = load("src/lib/i18n.ts");
 const { getProjectText } = load("src/lib/projectNarrative.ts");
 const { SYSTEM7_ICONS } = load("src/lib/system7Icons.ts");
-const canonicalPaths = new Set(Object.values(SYSTEM7_ICONS));
+const { SYSTEM7_ICON_BOUNDS } = load("src/lib/system7IconBounds.ts");
+const canonicalPaths = new Set(Object.values(SYSTEM7_ICONS).map(path => new URL(path, origin).pathname));
 const isCanonicalRequest = url => canonicalPaths.has(new URL(url).pathname);
 const { applicationIconKinds, projectIconKinds, arcadeIconKinds, serviceIconKinds } = load("src/lib/iconIdentity.ts");
 const demoLaunchCopy = documentCopyPair("Open interactive demo");
@@ -73,7 +74,7 @@ const widths = process.env.ICON_WIDTHS?.split(",").map(Number) ?? [1440, 320];
 const navigationDelayMs = Number(process.env.ICON_NAVIGATION_DELAY_MS ?? 250);
 assert.ok(locales.length > 0 && widths.length > 0 && widths.every(width => [1440, 320].includes(width)));
 assert.ok(Number.isFinite(navigationDelayMs) && navigationDelayMs >= 0, "Navigation pacing must be a nonnegative duration in milliseconds");
-const browser = await playwright[engine].launch({ headless: true, ...(engine === "chromium" ? { args: ["--no-sandbox"] } : {}) });
+const browser = await playwright[engine].launch({ headless: true, ...(engine === "chromium" ? { args: ["--no-sandbox"], ignoreDefaultArgs: ["--hide-scrollbars"] } : {}) });
 const report = { engine, browserVersion: browser.version(), origin, started: new Date().toISOString(), inventory: { iconCount: Object.keys(SYSTEM7_ICONS).length, applications: finderIds, projectCount: projects.length, demoCount: projects.filter(project => project.demo).length, locales: locales.map(option => option.slug), widths, navigationDelayMs }, assetResponses: [], profiles: [] };
 console.log(`System 7 browser audit ${engine} ${report.browserVersion}: ${Object.keys(SYSTEM7_ICONS).length} exact production assets; ${locales.length * widths.length} locale/viewport profiles.`);
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
@@ -118,7 +119,7 @@ async function inspectIcons(page, profile) {
   });
   assert.ok(decoded.length > 0, "Every inspected UI state must contain visible decoded icons");
   for (const image of decoded) {
-    const canvas = image.kind === "coverd" ? 512 : 128;
+    const canvas = SYSTEM7_ICON_BOUNDS[image.kind][4];
     assert.equal(image.width, canvas, `${image.kind}: decoded width`);
     assert.equal(image.height, canvas, `${image.kind}: decoded height`);
     assert.equal(image.rendering, image.kind === "coverd" ? "auto" : "pixelated", `${image.kind}: subject-appropriate rendering`);
@@ -168,8 +169,8 @@ try {
     assert.equal(response.status(), 200, `${kind}: production asset status`);
     assert.match(response.headers()["content-type"], /^image\/png(?:;|$)/, `${kind}: production PNG MIME`);
     const bytes = await response.body();
-    assert.equal(hash(bytes), hash(readFileSync(resolve(root, "public", `.${path}`))), `${kind}: production bytes differ from checked asset`);
-    report.assetResponses.push({ kind, bytes: bytes.length, sha256: hash(bytes) });
+    assert.equal(hash(bytes), hash(readFileSync(resolve(root, "public", `.${new URL(path, origin).pathname}`))), `${kind}: production bytes differ from checked asset`);
+    report.assetResponses.push({ kind, source: path, bytes: bytes.length, sha256: hash(bytes) });
   }
   await assetsContext.close();
   for (const option of locales) for (const width of widths) {

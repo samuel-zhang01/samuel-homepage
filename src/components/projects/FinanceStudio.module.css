@@ -54,7 +54,8 @@
 .privacyBanner code {
   padding: 7px 9px;
   font-size: var(--s7-small);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
   border: 1px solid var(--ocean-line);
   color: var(--ocean-cyan);
   background: rgba(6, 19, 28, 0.7);
@@ -116,9 +117,8 @@
 .viewTabs button strong,
 .viewTabs button span {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .viewTabs button strong {
@@ -192,7 +192,7 @@
 .ledgerFilters [data-classic-select],
 .ledgerFilters input {
   width: 100%;
-  min-height: 29px;
+  min-height: max(29px, var(--s7-control-height));
   padding: 5px 7px;
   border: 1px solid var(--ocean-line);
   border-radius: 0;
@@ -232,9 +232,10 @@
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
-  border: 1px solid var(--ocean-line);
-  color: var(--ocean-mist);
-  background: var(--ocean-surface);
+  border: 1px solid var(--s7-edge);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-raised);
 }
 
 .rangeSwitch button:focus-visible, .importMode button:focus-visible, .thresholdStrip button:focus-visible {
@@ -271,9 +272,10 @@
 .thresholdStrip .active {
   position: relative;
   z-index: 1;
-  border-color: var(--ocean-teal);
-  color: var(--ocean-abyss);
-  background: var(--ocean-teal);
+  border-color: var(--s7-ink);
+  color: var(--s7-paper);
+  background: var(--s7-selection);
+  box-shadow: var(--s7-relief-inset);
 }
 
 .metricStrip {
@@ -469,8 +471,8 @@
   height: 190px;
   align-items: stretch;
   justify-content: space-around;
-  gap: 16px;
-  padding: 16px 17px 10px;
+  gap: 8px;
+  padding: 16px 10px 10px;
   background:
     repeating-linear-gradient(to top, rgba(157, 192, 205, 0.14) 0 1px, transparent 1px 42px),
     linear-gradient(180deg, rgba(53, 199, 224, 0.025), transparent);
@@ -649,7 +651,7 @@
 
 .accountEquation {
   margin: 0;
-  color: var(--s7-ink);
+  color: var(--ocean-mist);
   font-size: var(--s7-small);
 }
 
@@ -672,16 +674,16 @@
 
 .categoryBars > div {
   display: grid;
-  grid-template-columns: minmax(82px, 0.85fr) minmax(70px, 1.6fr) 55px;
+  grid-template-columns: minmax(82px, 0.85fr) minmax(0, 1.6fr) 55px;
   align-items: center;
   gap: 7px;
   font-size: var(--s7-small);
 }
 
 .categoryBars > div > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
   color: var(--ocean-mist);
 }
 
@@ -806,6 +808,7 @@
 
 .ledgerTable td:nth-child(3) button {
   width: 100%;
+  min-height: var(--s7-control-height);
   padding: 0;
   text-align: left;
   cursor: pointer;
@@ -983,7 +986,7 @@
 .signatureBox > span,
 .matchFormula > span:not([data-math-equation]) {
   display: block;
-  color: var(--s7-ink);
+  color: var(--ocean-mist);
   font-size: var(--s7-small);
   font-weight: 700;
   letter-spacing: normal;
@@ -1131,6 +1134,8 @@
 .checkControl strong,
 .checkControl small {
   display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .checkControl strong {
@@ -1294,10 +1299,10 @@
   font-family: var(--s7-font-ui);
   line-height: 1.4;
   min-height: var(--s7-control-height);
-  border: 1px solid #1c9c90;
-  color: var(--ocean-abyss);
-  background: var(--ocean-teal);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.55), 2px 2px 0 #031017;
+  border: 1px solid var(--s7-ink);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-raised);
 }
 
 .runButton:focus-visible {
@@ -1569,6 +1574,10 @@
     overflow: visible;
     text-overflow: clip;
     white-space: normal;
+  }
+
+  .metricCard > strong {
+    font-size: clamp(var(--s7-ui), 4.8cqi, var(--s7-title));
   }
 
   .ledgerFilters,

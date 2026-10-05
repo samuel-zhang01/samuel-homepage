@@ -137,9 +137,10 @@
 }
 
 .viewTabs button[aria-current="page"] {
-  color: #fff;
-  background: var(--market-blue);
-  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.27), inset -1px -1px rgba(0, 0, 0, 0.35);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
+  font-weight: 700;
 }
 
 .viewTabs strong,
@@ -584,7 +585,16 @@
 .windowLegend span[data-tone="legacy"]::before { color: var(--market-red); background: var(--market-red-soft); }
 .windowLegend span[data-tone="average"]::before { color: var(--market-amber); background: var(--market-amber-soft); }
 
+.chartViewport {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.chartViewport:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
+
 .priceChart {
+  min-width: 820px;
   display: block;
   width: 100%;
   min-height: 215px;
@@ -1137,3 +1147,7 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+.chartViewport { scrollbar-width: auto; scrollbar-color: var(--s7-shadow) var(--s7-chrome); }
+.chartViewport::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
+.chartViewport::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }

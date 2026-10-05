@@ -131,17 +131,17 @@
   background: #fff;
 }
 
-.tabStrip .activeTab,
-.topologyToggle .toggleActive,
-.binaryToggle .toggleActive {
-  color: #fff;
-  background: #11177a;
-  box-shadow: inset 1px 1px 0 #080c50;
+.tabStrip button.activeTab,
+.topologyToggle button.toggleActive,
+.binaryToggle button.toggleActive {
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
@@ -698,7 +698,7 @@
 
 .visionControls [data-classic-select] {
   width: 100%;
-  min-height: 29px;
+  min-height: 44px;
   border: 2px solid;
   border-color: #555 #fff #fff #555;
   border-radius: 0;
@@ -1047,7 +1047,17 @@
   padding: 10px;
 }
 
+.chartViewport {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.chartViewport:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
+
 .reliabilityChart {
+  min-width: 342px;
   display: block;
   width: 100%;
   min-height: 205px;
@@ -1593,3 +1603,7 @@
     transition: none;
   }
 }
+
+.chartViewport { scrollbar-width: auto; scrollbar-color: var(--s7-shadow) var(--s7-chrome); }
+.chartViewport::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
+.chartViewport::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }

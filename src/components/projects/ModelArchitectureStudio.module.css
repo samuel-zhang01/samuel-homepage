@@ -614,6 +614,8 @@
 }
 
 .tensorBlock {
+  min-width: 44px;
+  min-height: 44px;
   position: relative;
   display: grid;
   place-items: center;
@@ -785,7 +787,7 @@
 .sectionHeading > strong,
 .sectionHeading > code {
   max-width: 50%;
-  overflow: hidden;
+  overflow-wrap: anywhere;
   padding: 4px 6px;
   border: 1px solid #85867f;
   color: var(--arch-blue);
@@ -951,8 +953,8 @@
   align-items: center;
   gap: 6px;
   width: 100%;
-  min-height: 30px;
-  padding: 4px;
+  min-height: 44px;
+  padding: 6px;
   border: 1px solid transparent;
   color: #33342f;
   background: transparent;

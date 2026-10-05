@@ -299,43 +299,45 @@ function FnoSpectrum({ phase, quadrant }: { phase: FnoPhase; quadrant: number })
 
   return (
     <ProjectCopy copy={scientificCopy}><figure className={styles.spectrumFigure}>
-      <svg viewBox="0 0 560 270" role="img" aria-labelledby="fno-spectrum-title fno-spectrum-desc">
-        <title id="fno-spectrum-title">FNO spatial and spectral operation diagram</title>
-        <desc id="fno-spectrum-desc">{phaseRecord.explanation} The index cells show retained Fourier regions only and do not encode learned coefficient values.</desc>
-        <g className={phase === "spatial" || phase === "inverse" ? styles.svgActive : styles.svgMuted}>
-          <rect className={styles.spatialPlate} x="20" y="40" width="164" height="164" />
-          {Array.from({ length: 7 }, (_, index) => <line key={`v-${index}`} x1={40 + index * 21} x2={40 + index * 21} y1="49" y2="195" />)}
-          {Array.from({ length: 7 }, (_, index) => <line key={`h-${index}`} x1="29" x2="175" y1={60 + index * 21} y2={60 + index * 21} />)}
-          <circle cx="77" cy="122" r="18" />
-          <path d="M95 91 C125 70 145 86 171 82 M95 114 C127 101 145 111 174 106 M95 137 C130 148 148 134 174 141 M95 160 C125 181 148 161 171 168" />
-        </g>
-        <path className={styles.transformArrow} d="M197 122 H239" />
-        <path className={styles.transformArrowHead} d="m232 114 9 8-9 8" />
-        <text className={styles.transformLabel} x="202" y="108">rFFT</text>
-        <g className={phase === "fft" || phase === "weights" ? styles.svgActive : styles.svgMuted}>
-          <rect className={styles.frequencyPlate} x="255" y="40" width="276" height="164" />
-          {cells.map((cell) => (
-            <rect
-              key={cell.index}
-              className={cell.corner < 0 ? styles.frequencyCell : cell.corner === quadrant ? styles.frequencyCellSelected : styles.frequencyCellRetained}
-              x={267 + cell.col * 21}
-              y={48 + cell.row * 18}
-              width="17"
-              height="14"
-            />
-          ))}
-          <line className={styles.frequencyAxis} x1="393" x2="393" y1="46" y2="196" />
-          <line className={styles.frequencyAxis} x1="262" x2="524" y1="121" y2="121" />
-          <text x="509" y="116">+x</text>
-          <text x="257" y="116">−x</text>
-          <text x="398" y="57">+y</text>
-          <text x="398" y="194">−y</text>
-        </g>
-        <text x="102" y="232" textAnchor="middle">H × W × T</text>
-        <text x="102" y="258" textAnchor="middle">Spatial field</text>
-        <text x="393" y="232" textAnchor="middle">Retained Fourier regions</text>
-        <text x="393" y="258" textAnchor="middle">Four x/y corners · low z slice</text>
-      </svg>
+      <div className={styles.diagramViewport} role="region" aria-labelledby="fno-spectrum-title" tabIndex={0}>
+        <svg viewBox="0 0 560 270" role="img" aria-labelledby="fno-spectrum-title fno-spectrum-desc">
+          <title id="fno-spectrum-title">FNO spatial and spectral operation diagram</title>
+          <desc id="fno-spectrum-desc">{phaseRecord.explanation} The index cells show retained Fourier regions only and do not encode learned coefficient values.</desc>
+          <g className={phase === "spatial" || phase === "inverse" ? styles.svgActive : styles.svgMuted}>
+            <rect className={styles.spatialPlate} x="20" y="40" width="164" height="164" />
+            {Array.from({ length: 7 }, (_, index) => <line key={`v-${index}`} x1={40 + index * 21} x2={40 + index * 21} y1="49" y2="195" />)}
+            {Array.from({ length: 7 }, (_, index) => <line key={`h-${index}`} x1="29" x2="175" y1={60 + index * 21} y2={60 + index * 21} />)}
+            <circle cx="77" cy="122" r="18" />
+            <path d="M95 91 C125 70 145 86 171 82 M95 114 C127 101 145 111 174 106 M95 137 C130 148 148 134 174 141 M95 160 C125 181 148 161 171 168" />
+          </g>
+          <path className={styles.transformArrow} d="M197 122 H239" />
+          <path className={styles.transformArrowHead} d="m232 114 9 8-9 8" />
+          <text className={styles.transformLabel} x="202" y="108">rFFT</text>
+          <g className={phase === "fft" || phase === "weights" ? styles.svgActive : styles.svgMuted}>
+            <rect className={styles.frequencyPlate} x="255" y="40" width="276" height="164" />
+            {cells.map((cell) => (
+              <rect
+                key={cell.index}
+                className={cell.corner < 0 ? styles.frequencyCell : cell.corner === quadrant ? styles.frequencyCellSelected : styles.frequencyCellRetained}
+                x={267 + cell.col * 21}
+                y={48 + cell.row * 18}
+                width="17"
+                height="14"
+              />
+            ))}
+            <line className={styles.frequencyAxis} x1="393" x2="393" y1="46" y2="196" />
+            <line className={styles.frequencyAxis} x1="262" x2="524" y1="121" y2="121" />
+            <text x="509" y="116">+x</text>
+            <text x="257" y="116">−x</text>
+            <text x="398" y="57">+y</text>
+            <text x="398" y="194">−y</text>
+          </g>
+          <text x="102" y="232" textAnchor="middle">H × W × T</text>
+          <text x="102" y="258" textAnchor="middle">Spatial field</text>
+          <text x="393" y="232" textAnchor="middle">Retained Fourier regions</text>
+          <text x="393" y="258" textAnchor="middle">Four x/y corners · low z slice</text>
+        </svg>
+      </div>
       <figcaption>
         <strong>{phaseRecord.label}</strong>
         <span>{phaseRecord.explanation}</span>

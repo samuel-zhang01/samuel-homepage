@@ -284,6 +284,7 @@ check("Actual document renderer supports PDFs without projects and CV actions se
     localeSlug: load("src/lib/i18n.ts").localeSlug,
     translateText: (_locale, text) => text,
     TranslationBoundary: ({ children }) => React.createElement(React.Fragment, null, children),
+    Image: ({ src, alt, width, height, "aria-hidden": hidden }) => React.createElement("img", { src, alt, width, height, "aria-hidden": hidden }),
     PixelIcon: () => null,
     getApplicationIcon: () => "pdf",
     CvNavigation: () => null,

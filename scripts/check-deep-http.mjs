@@ -162,6 +162,19 @@ try {
     assert.equal(Number(head.headers["content-length"]), source.length);
     return { bytes: source.length, contentType: response.headers["content-type"], head: "PASS" };
   }));
+  for (const method of ["GET", "HEAD"]) {
+    await runGroup("challenges", `${method} /icon.png: legacy URL shares the public browser icon`, async () => {
+      const response = await request("/icon.png", { method, headers: { "X-Forwarded-Host": "evil.invalid" } });
+      assert.equal(response.status, 307);
+      assert.equal(response.headers.location, "/favicon.png?v=6");
+      if (method === "HEAD") assert.equal(response.body.length, 0);
+      const delivered = await request(response.headers.location);
+      assert.equal(delivered.status, 200);
+      assert.match(delivered.headers["content-type"], /image\/png/);
+      assert.deepEqual(delivered.body, await readFile("public/favicon.png"));
+      return { location: response.headers.location, bytes: delivered.body.length };
+    });
+  }
   for (const [slug, language] of languageOptions) {
     const prefix = slug ? `/${slug}` : "";
     await runGroup("challenges", `${prefix || "/"}: missing section is a localized 404`, async () => {

@@ -18,8 +18,8 @@ export function System7Icon({ kind }: { kind: System7IconKind; miniature?: boole
     src={SYSTEM7_ICONS[kind]}
     data-system7-icon={kind}
     alt=""
-    width={128}
-    height={128}
+    width={canvas}
+    height={canvas}
     unoptimized
     aria-hidden="true"
   /></span>;

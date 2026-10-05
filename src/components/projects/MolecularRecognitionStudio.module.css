@@ -371,7 +371,7 @@
 .selectField [data-classic-select],
 .viewerToolbar [data-classic-select] {
   width: 100%;
-  min-height: 34px;
+  min-height: max(34px, var(--s7-control-height));
   padding: 5px 28px 5px 8px;
   border: 1px solid #67757d;
   border-radius: 0;
@@ -855,6 +855,7 @@
   .moleculeCard { grid-column: auto; }
   .metricRail { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .viewSwitch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .viewSwitch button { min-width: 0; white-space: normal; overflow-wrap: anywhere; }
   .viewSwitch button + button { border-left: 0; }
   .bandSwitch { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bandSwitch button:nth-child(3) { border-left: 1px solid #828e92; }

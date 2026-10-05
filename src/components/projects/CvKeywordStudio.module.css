@@ -131,7 +131,7 @@
 
 .lensControl [data-classic-select],
 .metaGrid input {
-  min-height: 31px;
+  min-height: var(--s7-control-height);
   padding: 6px 8px;
   border: 1px solid #1c1c1c;
   border-radius: 0;
@@ -217,7 +217,9 @@
 
 .stepTab strong {
   align-self: flex-end;
-  font-size: var(--s7-small);
+  font-size: var(--s7-ui);
+
+  overflow-wrap: anywhere;
 }
 
 .stepTab small {
@@ -234,14 +236,14 @@
 }
 
 .activeStep {
-  color: #fff;
-  background: var(--studio-accent);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.35);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
@@ -272,17 +274,17 @@
 }
 
 .activeStep:hover {
-  background: var(--studio-accent);
+  background: var(--s7-chrome);
 }
 
 .activeStep > span {
-  border-color: #fff;
-  color: var(--studio-accent);
-  background: #fff;
+  border-color: var(--s7-edge);
+  color: var(--s7-ink);
+  background: var(--s7-paper);
 }
 
 .activeStep small {
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--s7-muted);
 }
 
 .tabPanel {
@@ -388,7 +390,7 @@
   background: #fff;
   box-shadow: inset 1px 1px 0 #aaa;
   font-family: var(--s7-font-text);
-  font-size: var(--s7-small);
+  font-size: var(--s7-ui);
   line-height: 1.52;
 }
 
@@ -558,8 +560,8 @@
 }
 
 .panelTitle > small {
-  color: #62625e;
-  font-size: var(--s7-small);
+  color: var(--s7-ink);
+  font-size: var(--s7-ui);
   text-align: right;
 }
 
@@ -1241,12 +1243,16 @@
 }
 
 .templatePicker .activeTemplate {
-  color: #fff;
-  background: var(--studio-accent);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+
+  box-shadow: var(--s7-relief-inset);
+
+  font-weight: 700;
 }
 
 .templatePicker .activeTemplate small {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--s7-muted);
 }
 
 .outputGrid {

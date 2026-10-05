@@ -718,7 +718,7 @@ function UncertaintyMap({ settings, selectedClaim }: { settings: PolicySettings;
   const deferredCount = TEST_CLAIMS.filter((claim) => shouldDefer(claim, settings)).length;
 
   return (
-    <ProjectCopy copy={deferralRiskStudioCopy}><svg
+    <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.plotViewport} role="group" aria-labelledby="uncertainty-map-title" tabIndex={0}><svg
       className={styles.uncertaintyMap}
       viewBox={`0 0 ${width} ${height}`}
       role="img"
@@ -756,7 +756,7 @@ function UncertaintyMap({ settings, selectedClaim }: { settings: PolicySettings;
       ))}
       <text x={left + plotWidth / 2} y={height - 7} textAnchor="middle" className={styles.axisLabel}>Bayesian posterior entropy H(π), bits</text>
       <text transform={`translate(13 ${top + plotHeight / 2}) rotate(-90)`} textAnchor="middle" className={styles.axisLabel}>Calibrated classifier confidence</text>
-    </svg></ProjectCopy>
+    </svg></div></ProjectCopy>
   );
 }
 
@@ -779,7 +779,7 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
             <div><span>Threshold sweep · fictional test bench</span><h3 id="coverage-chart-title">Coverage versus system accuracy</h3></div>
             <span>{policyLabel(settings.mode)}</span>
           </div>
-          <svg
+          <div className={styles.plotViewport} role="group" aria-labelledby="coverage-chart-title" tabIndex={0}><svg
             className={styles.coverageChart}
             viewBox={`0 0 ${chartWidth} ${chartHeight}`}
             role="img"
@@ -809,7 +809,7 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
             <text x={x(1) - 7} y={y(0.81) - 10} textAnchor="end" className={styles.annotation}>XGB report</text>
             <text x={left + plotWidth / 2} y={chartHeight - 8} textAnchor="middle" className={styles.axisLabel}>Classifier coverage (not deferred)</text>
             <text transform={`translate(14 ${top + plotHeight / 2}) rotate(-90)`} textAnchor="middle" className={styles.axisLabel}>System accuracy</text>
-          </svg>
+          </svg></div>
           <p className={styles.chartNote}>The line recomputes all 200 synthetic outcomes while sweeping the active threshold. The three labelled comparison points are fixed manuscript results, not re-estimates.</p>
         </section>
 

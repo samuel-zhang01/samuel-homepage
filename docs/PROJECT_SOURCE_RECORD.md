@@ -1,6 +1,6 @@
 # Project source record
 
-These source revisions, file hashes and recorded outcomes were inspected on 9 September 2026. They preserve provenance after the dated UI reviews were consolidated. They are historical source records, not claims of new model training or current test counts. See [the current audit](DEEP_AUDIT_2026-10-04.md), [the artwork guide](PROJECT_ARTWORK.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
+These source revisions, file hashes and recorded outcomes were inspected on 9 September 2026. They preserve provenance after the dated UI reviews were consolidated. They are historical source records, not claims of new model training or current test counts. See [the current audit](VERIFICATION.md), [the artwork guide](PROJECT_ARTWORK.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
 
 ## STUDY-RL record
 

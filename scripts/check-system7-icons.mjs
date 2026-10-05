@@ -97,26 +97,40 @@ const { System7Icon } = load("src/components/System7Icon.tsx");
 const { ProjectArtwork } = load("src/components/projects/ProjectArtwork.tsx");
 const { projects } = load("src/data/projects.ts");
 const { applicationIconKinds, projectIconKinds, serviceIconKinds, arcadeIconKinds, contactIconKinds, getProjectIcon, getApplicationIcon } = load("src/lib/iconIdentity.ts");
+const provenance = JSON.parse(readFileSync(resolve(root, "docs/SYSTEM7_ICON_PROMPTS.json"), "utf8"));
+const provenanceByKind = new Map(provenance.icons.map(icon => [icon.kind, icon]));
 assert.ok(SYSTEM7_ICONS && Object.keys(SYSTEM7_ICONS).length > 0, "The generated icon registry is empty");
+assert.equal(provenanceByKind.size, provenance.icons.length, "Prompt provenance has no duplicate subjects");
+assert.deepEqual([...provenanceByKind.keys()].sort(), Object.keys(SYSTEM7_ICONS).sort(), "Prompt provenance covers every canonical subject exactly once");
 const assets = new Set();
 const hashes = new Set();
 let totalBytes = 0;
 for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   assert.match(kind, /^[a-z][a-z0-9]*$/, `Invalid icon kind ${kind}`);
-  assert.equal(path, kind === "coverd" ? "/coverd-logo-black-on-transparent.png" : `/system7-icons/${kind}.png`, `${kind}: canonical source path`);
-  assert.ok(!assets.has(path), `${kind}: another kind already owns this asset`);
-  assets.add(path);
-  const file = resolve(root, "public", `.${path}`);
+  const record = provenanceByKind.get(kind);
+  assert.equal(record.sourcePixelsPreserved, true, `${kind}: native preservation is explicitly recorded`);
+  const url = new URL(path, "http://localhost");
+  const pathname = url.pathname;
+  assert.equal(pathname, kind === "coverd" ? "/coverd-logo-black-on-transparent.png" : `/system7-icons/${kind}.png`, `${kind}: canonical source path`);
+  assert.equal(path, kind === "coverd" ? pathname : `${pathname}?v=${record.sourceSha256.slice(0, 12)}`, `${kind}: cache revision matches the authentic native source`);
+  assert.ok(!assets.has(pathname), `${kind}: another kind already owns this asset`);
+  assets.add(pathname);
+  const file = resolve(root, "public", `.${pathname}`);
   assert.ok(lstatSync(file).isFile(), `${kind}: icon must be a regular public file`);
   const bytes = readFileSync(file);
   assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", `${kind}: invalid PNG signature`);
   const hash = createHash("sha256").update(bytes).digest("hex");
+  assert.equal(hash, record.sourceSha256, `${kind}: source PNG bytes must remain intact`);
+  assert.equal(hash, record.deliveredSha256, `${kind}: reviewed delivery hash`);
+  assert.equal(bytes.length, record.bytes, `${kind}: recorded native byte count`);
   assert.ok(!hashes.has(hash), `${kind}: duplicates another named icon's complete image`);
   hashes.add(hash);
   totalBytes += bytes.length;
   const metadata = await sharp(bytes).metadata();
   assert.equal(metadata.format, "png", `${kind}: decoded format`);
-  const canvas = kind === "coverd" ? 512 : 128;
+  const canvas = record.nativeWidth;
+  assert.ok(Number.isSafeInteger(canvas) && canvas > 128, `${kind}: authentic native resolution, not an enlarged128px delivery`);
+  assert.equal(record.nativeHeight, canvas, `${kind}: recorded square native source`);
   assert.equal(metadata.width, canvas, `${kind}: width`);
   assert.equal(metadata.height, canvas, `${kind}: height`);
   assert.equal(metadata.hasAlpha, true, `${kind}: real alpha channel is required`);
@@ -128,8 +142,8 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   for (let y = 0; y < canvas; y++) for (let x = 0; x < canvas; x++) {
     const alpha = data[(y * canvas + x) * 4 + 3];
     if (alpha === 0) transparent++;
-    // Ignore nearly invisible generation dust, while still rejecting clipped
-    // visible artwork or a painted checkerboard pretending to be transparency.
+    // Measure optical framing only. No source pixels or alpha values are
+    // discarded: the exact native PNG hash above rejects image rewriting.
     if (alpha >= 16) {
       visible++;
       bounds[0] = Math.min(bounds[0], x); bounds[1] = Math.min(bounds[1], y);
@@ -148,11 +162,13 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
     assert.equal(image.alt, "", `${kind}: named neighboring text owns the accessible label`);
     assert.equal(String(image["aria-hidden"]), "true", `${kind}: decorative image stays hidden from assistive technology`);
     assert.ok(Number.isFinite(image.width) && image.width > 0 && image.width === image.height, `${kind}: square intrinsic dimensions`);
+    assert.equal(image.width, canvas, `${kind}: rendered intrinsic size matches the authentic PNG`);
     assert.equal(image.style.width, image.style.height, `${kind}: optical framing must preserve aspect ratio`);
     const scale = parseFloat(image.style.width) / 100;
     assert.ok(Math.abs(scale * Math.max(bounds[2] - bounds[0] + 1, bounds[3] - bounds[1] + 1) / canvas - .9) < 1e-9, `${kind}: visible maximum span fills 90 percent of its slot`);
   }
 }
+assert.equal(totalBytes, provenance.delivery.totalBytes, "Manifest records the actual native family bytes");
 
 const familyFiles = readdirSync(resolve(root, "public/system7-icons"), { withFileTypes: true });
 assert.ok(familyFiles.every(entry => entry.isFile()), "Icon family may not contain directories or symlinks");

@@ -53,8 +53,8 @@ const allowlist = new Map([
     type: "pdf",
   }],
   ["system7-icons/secret.png", {
-    maximumBytes: 2_000,
-    sha256: "28a16470f13c376564f70897842f23087801db14ac053372dde986d0beed4dec",
+    maximumBytes: 261_249,
+    sha256: "ec9557050830ecbf142c325f1cde8808944bcc806806a3ea1bc4ccb7199d71c2",
     type: "png",
   }],
   ...scientificMedia,
@@ -109,7 +109,7 @@ for (const statement of iconRegistrySource.statements) {
 }
 while (iconRegistry && (ts.isAsExpression(iconRegistry) || ts.isSatisfiesExpression(iconRegistry) || ts.isParenthesizedExpression(iconRegistry))) iconRegistry = iconRegistry.expression;
 const starRegistration = iconRegistry && ts.isObjectLiteralExpression(iconRegistry) && iconRegistry.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText(iconRegistrySource) === "secret");
-if (!starRegistration || !ts.isStringLiteral(starRegistration.initializer) || starRegistration.initializer.text !== `/${reviewedStarPath}`) {
+if (!starRegistration || !ts.isStringLiteral(starRegistration.initializer) || starRegistration.initializer.text !== `/${reviewedStarPath}?v=${allowlist.get(reviewedStarPath).sha256.slice(0, 12)}`) {
   throw new Error("Reviewed Secret drawing must use its canonical icon registry path");
 }
 const credentialMarkers = [

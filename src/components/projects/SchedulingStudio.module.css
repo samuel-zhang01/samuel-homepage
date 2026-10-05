@@ -81,8 +81,10 @@
 .modeTabs button:not(.modeActive):hover { background: var(--s7-paper); }
 .modeTabs strong { display: flex; justify-content: center; align-items: baseline; gap: 5px; font-size: var(--s7-ui); overflow-wrap: anywhere; }
 .modeTabs button > span { display: block; margin-top: 4px; color: var(--s7-muted); font: 400 var(--s7-small)/1.4 var(--s7-font-text); }
-.modeTabs .modeActive { color: #fff; border-color: var(--s7-info); background: #11177a; box-shadow: inset 1px 1px #080b44, inset -1px -1px #555abe; }
-.modeTabs .modeActive > span { color: #fff; }
+.modeTabs .modeActive { color: var(--s7-ink); border-color: var(--s7-info); background: var(--s7-chrome); box-shadow: var(--s7-relief-inset);
+  font-weight: 700;
+}
+.modeTabs .modeActive > span { color: var(--s7-muted); }
 .modeTabs button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
 .modeTabs button:active:not(:disabled) { color: #fff; background: var(--s7-info); box-shadow: var(--s7-relief-inset); }
 .modeTabs button:active:not(:disabled) > span { color: #fff; }

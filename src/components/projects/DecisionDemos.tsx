@@ -122,7 +122,7 @@ export function AirQualityBudgetDemo() {
     AIR_CONFIGURATIONS[0];
   const next = AIR_CONFIGURATIONS.find((configuration) => configuration.cost > budget);
   const chartWidth = 470;
-  const chartHeight = 200;
+  const chartHeight = 214;
   const x = (cost: number) => 48 + ((cost - 2_000) / 9_000) * 392;
   const y = (rmse: number) => 20 + ((1 - rmse) / 0.7) * 142;
   const cvPoints = AIR_CONFIGURATIONS.slice(0, 2)
@@ -353,7 +353,7 @@ export function AirQualityBudgetDemo() {
                     <text x={x(configuration.cost)} y={y(configuration.rmse) - 12} textAnchor="middle">
                       {configuration.rmse.toFixed(configuration.id === "full" ? 3 : 4)}
                     </text>
-                    <text x={x(configuration.cost)} y="181" textAnchor="middle">
+                    <text x={x(configuration.cost)} y={configuration.id === "balanced" ? 201 : 181} textAnchor="middle">
                       £{(configuration.cost / 1_000).toFixed(1)}k
                     </text>
                   </g>

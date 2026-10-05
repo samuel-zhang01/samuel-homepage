@@ -432,7 +432,7 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
   };
 
   return (
-    <ProjectCopy copy={banditStudioCopy}><svg className={styles.decisionMap} viewBox="0 0 860 286" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={banditStudioCopy}><div className={styles.plotViewport} role="group" aria-labelledby={`${chartId}-title`} tabIndex={0}><svg className={styles.decisionMap} viewBox="0 0 860 286" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>Recent epsilon-greedy decisions by arm</title>
       <desc id={`${chartId}-desc`}>
         {visible.length
@@ -476,7 +476,7 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
         <circle cx="73" cy="0" r="4" fill="#df7178" /><text x="82" y="3" className={styles.mapLegend}>explore</text>
         <circle cx="151" cy="0" r="4" fill="#64d8df" /><text x="160" y="3" className={styles.mapLegend}>exploit</text>
       </g>
-    </svg></ProjectCopy>
+    </svg></div></ProjectCopy>
   );
 }
 
@@ -500,7 +500,7 @@ function RegretChart({ trace }: { trace: readonly TracePoint[] }) {
   const last = trace.at(-1) ?? trace[0];
 
   return (
-    <ProjectCopy copy={banditStudioCopy}><svg className={styles.regretChart} viewBox="0 0 880 338" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={banditStudioCopy}><div className={styles.plotViewport} role="group" aria-labelledby={`${chartId}-title`} tabIndex={0}><svg className={styles.regretChart} viewBox="0 0 880 338" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>Expected pseudo-regret and realised counterfactual regret</title>
       <desc id={`${chartId}-desc`}>
         Through round {last.step}, cumulative expected pseudo-regret is {last.expectedRegret.toFixed(2)} and realised oracle-minus-policy reward is {last.realisedRegret.toFixed(2)}.
@@ -536,7 +536,7 @@ function RegretChart({ trace }: { trace: readonly TracePoint[] }) {
       </g>
       <text x="448" y="326" textAnchor="middle" className={styles.lightAxis}>Round t</text>
       <text x="18" y="154" textAnchor="middle" transform="rotate(-90 18 154)" className={styles.lightAxis}>Cumulative regret</text>
-    </svg></ProjectCopy>
+    </svg></div></ProjectCopy>
   );
 }
 

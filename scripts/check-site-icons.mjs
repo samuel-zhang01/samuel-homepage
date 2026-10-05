@@ -11,33 +11,36 @@ const root = resolve(process.argv[2] ?? resolve(dirname(fileURLToPath(import.met
 const read = file => readFileSync(resolve(root, file));
 const profile = read("public/system7-icons/profile.png");
 const rgba = bytes => sharp(bytes).ensureAlpha().raw().toBuffer();
-const expectedProfile = size => sharp(profile).resize(size, size, { kernel: "nearest" }).ensureAlpha().raw().toBuffer();
-
-// Integer enlargement applies Sharp's alpha round-trip without fractional
-// sampling. At an exact source-pixel boundary either neighbour is equally near;
-// libvips can choose differently across native builds when reducing 128 to 48.
-// Compare whole RGBA pixels, never a colour or alpha tolerance. The ICO digest
-// below also rejects changes between the two otherwise valid boundary choices.
-const canonicalPixels = await expectedProfile(256);
-function assertNearestIcoPixels(pixels, size) {
-  assert.equal(pixels.length, size * size * 4, "ICO frame contains complete RGBA pixels");
-  const neighbours = coordinate => {
-    const numerator = (coordinate * 2 + 1) * 256;
-    const denominator = size * 2;
-    const nearest = Math.floor(numerator / denominator);
-    return numerator % denominator === 0 ? [nearest - 1, nearest] : [nearest];
-  };
+// Installed/browser formats sample native pixels directly, using the same
+// proportional 90% optical frame as System7Icon. There is no small sprite
+// intermediate, interpolation, or modification of the canonical source PNG.
+const profileMetadata = await sharp(profile).metadata();
+assert.equal(profileMetadata.format, "png", "Profile source is PNG");
+assert.ok(profileMetadata.width > 512 && profileMetadata.width === profileMetadata.height && profileMetadata.hasAlpha, "Profile source retains its authentic native resolution and alpha");
+assert.equal(createHash("sha256").update(profile).digest("hex"), "6e495d0d9d64ed9c1086e133b5d7bbd1d6a5bfe34e8ed2629777a04decd1a71c", "Browser derivatives use the recovered native profile PNG");
+const nativePixels = await rgba(profile);
+const bounds = [profileMetadata.width, profileMetadata.height, -1, -1];
+for (let y = 0; y < profileMetadata.height; y++) for (let x = 0; x < profileMetadata.width; x++) {
+  if (nativePixels[(y * profileMetadata.width + x) * 4 + 3] < 16) continue;
+  bounds[0] = Math.min(bounds[0], x); bounds[1] = Math.min(bounds[1], y);
+  bounds[2] = Math.max(bounds[2], x); bounds[3] = Math.max(bounds[3], y);
+}
+const centre = [(bounds[0] + bounds[2] + 1) / 2, (bounds[1] + bounds[3] + 1) / 2];
+const framedSpan = Math.max(bounds[2] - bounds[0] + 1, bounds[3] - bounds[1] + 1) / .9;
+function expectedProfile(size) {
+  const pixels = Buffer.alloc(size * size * 4);
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
-    const pixel = pixels.subarray((y * size + x) * 4, (y * size + x + 1) * 4);
-    assert.ok(neighbours(y).some(sourceY => neighbours(x).some(sourceX => {
-      const at = (sourceY * 256 + sourceX) * 4;
-      return pixel.equals(canonicalPixels.subarray(at, at + 4));
-    })), `ICO ${size}px frame pixel ${x},${y} uses exact canonical nearest-neighbour RGBA artwork`);
+    const sourceX = Math.floor(centre[0] + (x + .5 - size / 2) * framedSpan / size);
+    const sourceY = Math.floor(centre[1] + (y + .5 - size / 2) * framedSpan / size);
+    if (sourceX < 0 || sourceX >= profileMetadata.width || sourceY < 0 || sourceY >= profileMetadata.height) continue;
+    const at = (sourceY * profileMetadata.width + sourceX) * 4;
+    nativePixels.copy(pixels, (y * size + x) * 4, at, at + 4);
   }
+  return pixels;
 }
 
 for (const [file, size] of [
-  ["public/favicon.png", 128], ["src/app/icon.png", 128],
+  ["public/favicon.png", 128],
   ["public/apple-touch-icon.png", 180], ["public/icon-192.png", 192], ["public/icon-512.png", 512],
 ]) {
   const bytes = read(file);
@@ -49,8 +52,18 @@ for (const [file, size] of [
   const pixels = await rgba(bytes);
   assert.deepEqual(pixels, await expectedProfile(size), `${file}: shares canonical profile artwork, using nearest-neighbour scaling`);
   assert.ok(pixels.some((alpha, at) => at % 4 === 3 && alpha === 0), `${file}: transparent outside the artwork`);
-  if (size === 128) assert.deepEqual(bytes, profile, `${file}: exact canonical image`);
 }
+
+// The legacy endpoint redirects to the public derivative instead of embedding
+// another copy of its PNG bytes in the application runtime.
+const iconConfigModule = { exports: {} };
+const compiledIconConfig = ts.transpileModule(read("next.config.ts").toString("utf8"), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+}).outputText;
+new Function("module", "exports", compiledIconConfig)(iconConfigModule, iconConfigModule.exports);
+assert.deepEqual(await iconConfigModule.exports.default.redirects(), [
+  { source: "/icon.png", destination: "/favicon.png?v=6", permanent: false },
+], "Legacy browser icon redirects temporarily to the reviewed public PNG without a route bundle");
 
 const maskable = read("public/icon-512-maskable.png");
 const maskMetadata = await sharp(maskable).metadata();
@@ -71,13 +84,13 @@ for (let y = 0; y < 512; y++) for (let x = 0; x < 512; x++) {
 }
 assert.ok(subjectPixels > 10_000, "Maskable icon contains visible profile artwork");
 const maskExpected = await sharp({ create: { width: 512, height: 512, channels: 4, background: { r: 133, g: 135, b: 168, alpha: 1 } } })
-  .composite([{ input: await sharp(profile).resize(288, 288, { kernel: "nearest" }).png().toBuffer(), left: 112, top: 112 }]).ensureAlpha().raw().toBuffer();
+  .composite([{ input: await sharp(expectedProfile(288), { raw: { width: 288, height: 288, channels: 4 } }).png().toBuffer(), left: 112, top: 112 }]).ensureAlpha().raw().toBuffer();
 assert.deepEqual(maskPixels, maskExpected, "Maskable icon uses the canonical profile rather than another drawing");
 
 const ico = read("public/favicon.ico");
 // Reviewed derivative recorded in docs/SYSTEM7_ICON_PROMPTS.json. Keep the
 // digest here too because deployment deliberately excludes authoring documents.
-assert.equal(createHash("sha256").update(ico).digest("hex"), "5191429d3801be542df3a8d11ef40e64c67f928bea5c2d08dc3c6ccad315f163", "ICO matches the reviewed browser artwork exactly");
+assert.equal(createHash("sha256").update(ico).digest("hex"), "449498b9487f38475bfc5d43c3b60d5ed8140d336e4317a483900c05654e3626", "ICO matches the reviewed browser artwork exactly");
 assert.equal(ico.readUInt16LE(0), 0, "ICO reserved field");
 assert.equal(ico.readUInt16LE(2), 1, "ICO image type");
 assert.equal(ico.readUInt16LE(4), 3, "ICO has three actual image frames");
@@ -96,8 +109,7 @@ for (const [index, size] of [16, 32, 48].entries()) {
   const metadata = await sharp(frame).metadata();
   assert.equal(metadata.width, size, "Decoded ICO frame matches its declared width");
   assert.equal(metadata.height, size, "Decoded ICO frame matches its declared height");
-  if (size === 48) assertNearestIcoPixels(await rgba(frame), size);
-  else assert.deepEqual(await rgba(frame), await expectedProfile(size), "ICO frame uses canonical pixel artwork");
+  assert.deepEqual(await rgba(frame), expectedProfile(size), "ICO frame uses exact native RGBA source pixels and proportional optical framing");
   nextOffset += length;
 }
 assert.equal(nextOffset, ico.length, "ICO has no trailing or unreferenced frames");
@@ -123,9 +135,9 @@ const compiledManifest = ts.transpileModule(read("src/app/manifest.ts").toString
 new Function("module", "exports", compiledManifest)(manifestModule, manifestModule.exports);
 const manifest = manifestModule.exports.default();
 assert.deepEqual(manifest.icons, [
-  { src: "/icon-192.png?v=5", sizes: "192x192", type: "image/png", purpose: "any" },
-  { src: "/icon-512.png?v=5", sizes: "512x512", type: "image/png", purpose: "any" },
-  { src: "/icon-512-maskable.png?v=5", sizes: "512x512", type: "image/png", purpose: "maskable" },
+  { src: "/icon-192.png?v=6", sizes: "192x192", type: "image/png", purpose: "any" },
+  { src: "/icon-512.png?v=6", sizes: "512x512", type: "image/png", purpose: "any" },
+  { src: "/icon-512-maskable.png?v=6", sizes: "512x512", type: "image/png", purpose: "maskable" },
 ], "Manifest exposes the verified PNG files with accurate dimensions and purposes");
 
 const layoutText = read("src/app/layout.tsx").toString("utf8");
@@ -138,13 +150,13 @@ function visit(node) {
 visit(layout);
 assert.ok(metadata && ts.isObjectLiteralExpression(metadata), "Layout declares metadata");
 const property = name => metadata.properties.find(node => ts.isPropertyAssignment(node) && node.name.getText(layout) === name)?.initializer;
-assert.equal(property("manifest")?.text, "/manifest.webmanifest?v=5", "Manifest cache version matches icon revision");
+assert.equal(property("manifest")?.text, "/manifest.webmanifest?v=6", "Manifest cache version matches icon revision");
 const layoutIcons = new Function(`return (${property("icons").getText(layout)})`)();
 assert.deepEqual(layoutIcons, {
-  icon: [{ url: "/favicon.png?v=5", sizes: "128x128", type: "image/png" }, { url: "/favicon.ico?v=5", sizes: "16x16 32x32 48x48", type: "image/x-icon" }],
-  shortcut: [{ url: "/favicon.ico?v=5", type: "image/x-icon" }],
-  apple: [{ url: "/apple-touch-icon.png?v=5", sizes: "180x180", type: "image/png" }],
-  other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg?v=5", color: "#11177a" }],
+  icon: [{ url: "/favicon.png?v=6", sizes: "128x128", type: "image/png" }, { url: "/favicon.ico?v=6", sizes: "16x16 32x32 48x48", type: "image/x-icon" }],
+  shortcut: [{ url: "/favicon.ico?v=6", type: "image/x-icon" }],
+  apple: [{ url: "/apple-touch-icon.png?v=6", sizes: "180x180", type: "image/png" }],
+  other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg?v=6", color: "#11177a" }],
 }, "Browser metadata points to the same verified profile identity");
 for (const file of ["src/app/icon.svg", "public/favicon.svg", "public/favicon-maskable.svg"]) assert.equal(existsSync(resolve(root, file)), false, `${file}: obsolete alternate icon was removed`);
-console.log(`Site icons verified: five transparent profile PNGs, three ICO frames, ${subjectPixels.toLocaleString("en-GB")} maskable subject pixels inside the safe circle, ${ink} Safari ink pixels and v5 browser/PWA metadata.`);
+console.log(`Site icons verified: four transparent profile PNGs, the legacy icon redirect, three ICO frames, ${subjectPixels.toLocaleString("en-GB")} maskable subject pixels inside the safe circle, ${ink} Safari ink pixels and v6 browser/PWA metadata.`);

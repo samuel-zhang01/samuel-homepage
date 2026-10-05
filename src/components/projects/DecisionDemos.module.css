@@ -621,7 +621,7 @@
 .pathChart {
   display: block;
   width: 100%;
-  min-width: 360px;
+  min-width: 470px;
   height: auto;
   font-family: "Courier New", monospace;
 }
@@ -633,8 +633,8 @@
 }
 
 .gridLines text {
-  fill: #60605c;
-  font-size: 12px;
+  fill: #343430;
+  font-size: 14px;
 }
 
 .frontierLine {
@@ -664,7 +664,7 @@
 .activePoint text {
   fill: #484844;
   font-family: "Courier New", monospace;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -1557,3 +1557,7 @@
     transition: none !important;
   }
 }
+
+.svgFrame, .costChartWrap { scrollbar-width: auto; scrollbar-color: var(--s7-shadow) var(--s7-chrome); }
+.svgFrame::-webkit-scrollbar, .costChartWrap::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
+.svgFrame::-webkit-scrollbar-thumb, .costChartWrap::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }

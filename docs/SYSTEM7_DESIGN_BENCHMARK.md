@@ -54,7 +54,7 @@ Use [`System7Icon`](../src/components/System7Icon.tsx) and the assets in [`publi
 | Project subjects | `microscope`, `finance`, `chart`, `molecule`, `shield`, `book`, `mri`, `flow`, `network`, `orbital` |
 | Activities and collections | `runner`, `game`, `accessories`, `photos`, `controls`, `secret` |
 
-The generated family uses crisp dark outlines, light upper edges, a small neutral palette and restrained blue, gold or red details. Every kind has one canonical asset in [`SYSTEM7_ICONS`](../src/lib/system7Icons.ts); all surfaces render that same image, including callers passing the compatibility `miniature` flag. COVERD uses its original owned logo on a white backing instead of a generated substitute. Use `--s7-icon-inline` (16px) in text, menus and inline navigation, `--s7-icon-document` (32px) for cards, Finder results, Contact destinations and the phone window switcher, and `--s7-icon-desktop` (48px) for desktop launchers and primary project headings. Keep these sizes at narrow widths; increase the surrounding target for touch. The shared renderer centers measured alpha bounds at 90% of a square frame with equal scaling on both axes. Preserve the artwork's proportions; generated subjects use pixelated sampling and the original brand uses smooth sampling.
+The generated family uses crisp dark outlines, light upper edges, a small neutral palette and restrained blue, gold or red details. Every kind has one canonical asset in [`SYSTEM7_ICONS`](../src/lib/system7Icons.ts); all surfaces render that same image, including callers passing the compatibility `miniature` flag. COVERD uses its original owned logo on a white backing instead of a generated substitute. Use `--s7-icon-inline` (16px) in text, menus and inline navigation, `--s7-icon-document` (32px) for cards, Finder results, Contact destinations and the phone window switcher, and `--s7-icon-desktop` (48px) for desktop launchers and primary project headings. Keep these sizes at narrow widths; increase the surrounding target for touch. The shared renderer centers measured alpha bounds at 90% of a square frame with equal scaling on both axes. Preserve the artwork's proportions and the untouched 1254px generated source files; generated subjects use pixelated sampling and the original brand uses smooth sampling. Never crush artwork into a smaller art field and enlarge it afterward. Required browser-format derivatives must sample the native original directly. The top-left menu uses the black person mark; education institution branding uses official vector logos rather than initials.
 
 Icons are decorative (`alt=""`, `aria-hidden`); translated text names the destination or action. An icon-only control still needs its own accessible label. Keep the artwork recognizable against white, gray and selected navy backgrounds. Document headers and compact rows use the same subject icon; larger scientific diagrams retain their authored display size.
 
@@ -131,7 +131,7 @@ Project details offer explicit **Open in new tab** and **Open live demo** action
 
 Selected work uses the catalogue's `featured` metadata as an editorial shortlist. Orbital Lab brings three visual representations and the mathematics behind them; Neural CFD Surrogates connects three model architectures with recorded fields and qualified evaluation results; Home Lab adds dependency tracing, failure simulation and backup planning. These deeper experiences now join the shortlist. CV Keyword Automator remains available in All projects. Feature future entries when their explanation and evidence support a substantial visit, keeping the shortlist smaller than the complete archive.
 
-The graph uses the same recessed backing to separate its white canvas from the pale inspector, with raised controls and disclosure bars around them. Its legend sits above the canvas. Topic captions retain complete intended captions at 15px, avoid text collisions and remain stable on hover. Displaced captions have thin leaders and matching hit bounds; review the scrolled canvas at 320px, since it lies below the initial fold. Documents use a double header seam, fine section rules and a recessed frame around live experiments. Demo anchor spacing follows the measured sticky toolbar height so wrapped controls remain clear of the destination. The [current audit](DEEP_AUDIT_2026-10-04.md) records compiled browser coverage; the primary sources below define the design reference.
+The graph uses the same recessed backing to separate its white canvas from the pale inspector, with raised controls and disclosure bars around them. Its legend sits above the canvas. Topic captions retain complete intended captions at 15px, avoid text collisions and remain stable on hover. Displaced captions have thin leaders and matching hit bounds; review the scrolled canvas at 320px, since it lies below the initial fold. Documents use a double header seam, fine section rules and a recessed frame around live experiments. Demo anchor spacing follows the measured sticky toolbar height so wrapped controls remain clear of the destination. The [current audit](VERIFICATION.md) records compiled browser coverage; the primary sources below define the design reference.
 
 ## Modern accessibility requirements
 
@@ -139,21 +139,13 @@ Use at least 44px targets for coarse pointers and compact touch layouts as a del
 
 Normal text needs at least 4.5:1 contrast; larger text has a 3:1 threshold. Default, focus, hover, selected and disabled states must remain distinguishable without relying on hue alone. [W3C contrast guidance][contrast] The keyboard focus indicator is separate from the default-button ring. Keep reduced-motion support, browser zoom, semantic headings, keyboard access and visible scrollbars. Use disclosure controls for navigation or optional tools; project explanations, instructions, methods and contribution details stay visible. Test 320px, 390px, 768px and desktop widths in English, Simplified Chinese and Traditional Chinese, including 200% zoom.
 
-## Repository findings and migration
+## Maintaining the shared styles
 
-The initial audit found 39 project CSS modules and 26 project TSX files importing `DemoChrome`. The following findings motivated the shared control library and remain useful guidance when extending it:
+Use tokens and explicit component classes from `src/app/system7.css`. Edit named rules in the owning module and remove superseded declarations when changing a control group. Preserve layout, translations and simulation behavior; a broad override cannot reliably replace an older, more specific skin.
 
-| Location | Initial issue | Implementation guidance |
-|---|---|---|
-| `src/app/globals.css` | Global `.mac-button`, broad desktop/accessory styles, separate locale font variables. | Import `system7.css` once. Keep desktop behavior stable; reuse neutral/relief tokens for menu and window surfaces. Opt project documents into `.system7-project`. Do not append a universal button override. |
-| `DemoChrome.tsx/.module.css` | Separate MacButton skin; tinted paper, striped body, blue purpose card, 10px tracked metadata. | Emit shared root/button classes; unify the shared frame and always-visible instructions; retain props, localization and demo content. |
-| `ClassicSelect.module.css` | Tripled `.trigger` specificity and separately hardcoded palette/font values. | Consume shared tokens and use one explicit trigger attribute/class selector; preserve behavior and portal styling. |
-| Project CSS modules | Repeated `viewTabs`, `panelHeading`, `metricGrid`, action colors and literal font sizes. Some files contain a second appended “System 7 surface pass.” | Migrate a whole named control group at once. Delete its superseded skin declarations, retain layout rules, and add canonical classes in its TSX. |
-| Scientific/math panels | Broad descendant `span` selectors previously damaged KaTeX. Some SVG styles intentionally use color/size overrides. | Scope authored text selectors to actual children; leave SVG/canvas and `[data-math-equation]` subtrees untouched. |
+Keep authored text selectors scoped to their actual children. Scientific SVG/canvas colors communicate data; KaTeX and `[data-math-equation]` subtrees retain their own typography. Project prose stays visible on warm paper, while controls and interactive instruments use the shared relief and local meaningful colors.
 
-Implement shared tokens and explicit classes first, then the archive/project document controls, then demo navigation/action groups, then prose and notes. Retain useful descriptions, interactive state and simulation calculations. Replace internal source receipts with the project’s purpose, method and carefully described results. Do not use `!important`, wildcard descendants, runtime DOM restyling or ever-increasing repeated classes as a migration mechanism. A low-specificity rule can establish defaults; it cannot reliably replace an old higher-specificity skin until that skin is removed.
-
-Validation should include one control-state matrix covering normal/default/focus/pressed/disabled/toggle/icon/tab/select; narrow translated labels; keyboard navigation; popovers near screen edges; and representative scientific surfaces. This matrix belongs in development/QA, not as another visible portfolio view. CSS-module resolution and production build checks complement visual review; neither proves that a button is readable.
+Selection uses the existing button face, relief and ARIA state. Leading checkmarks or empty marker columns do not belong in action buttons; native checkboxes and listbox selection marks retain their semantics. Validate default, focus, pressed, disabled and selected states, narrow translated labels, keyboard navigation and edge-positioned popovers. Source and build checks complement actual visual review.
 
 ## Sources
 
@@ -173,31 +165,3 @@ Validation should include one control-state matrix covering normal/default/focus
 [gallery753]: https://guidebookgallery.org/screenshots/macos753/
 [targets]: https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
 [contrast]: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
-
-## Surgical style integration
-
-Use the deployed site's cream paper, striped window bars, inset controls, detailed
-project narratives and restrained colour as visual references, while following the
-current shared system-font hierarchy for every heading. Historical CSS is evidence
-for individual choices, not a stylesheet to copy over the current application.
-Keep the new document structure, navigation, content, control sizes and responsive
-layouts. Edit named component rules instead of replacing every visual declaration.
-
-Shared project headers use warm paper, system-font titles and readable metadata.
-Project narratives retain their open reading layout; context and interactive
-prompts receive inset framing. Primary and sharing actions use neutral beveled
-faces at the shared control height. Generic coloured header rules are removed;
-domain status colours remain beside the experiment results they explain.
-
-Finance's introductory panels use muted green paper; its analytical instrument
-retains the ocean palette. Molecular Recognition, Bandit and Chemistry Coding use
-light instrument headers with local colour and separate diagram displays. Selected
-ledger and risk rows retain explicit highlights.
-
-Desktop visual review covered the Finance document and demo and the Molecular
-Recognition demo. Responsive rules remain in place; narrow-screen visual review
-was unavailable when the computer-use preview stopped returning screenshots.
-
-Button selection uses its existing face, relief and ARIA state. Do not add leading
-checkmarks, empty marker columns or checkbox-like decorations to buttons. Native
-checkbox inputs and selection marks inside listbox options retain their own semantics.

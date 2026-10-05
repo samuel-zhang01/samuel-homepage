@@ -207,7 +207,7 @@
 .modeButtons span { color: #666; font: 700 var(--s7-small)/1.4 var(--s7-font-text); letter-spacing: normal; }
 .modeButtons strong { margin-top: 3px; font-size: var(--s7-small); }
 .modeButtons small { margin-top: 1px; color: #666; font-size: var(--s7-small); }
-.modeButtons .modeActive { color: #fff; background: var(--match-blue); box-shadow: inset 1px 1px #656ac2, inset -1px -1px #080a43; border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; min-height: var(--s7-control-height); }
+.modeButtons .modeActive { color: var(--s7-ink); background: var(--s7-chrome); box-shadow: var(--s7-relief-inset); border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 700; line-height: 1.4; letter-spacing: normal; text-transform: none; min-height: var(--s7-control-height); }
 .modeButtons .modeActive:focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 3px;
@@ -227,8 +227,8 @@
 .modeButtons .modeActive:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .modeButtons .modeActive:active:not(:disabled):not([aria-disabled="true"]) > strong, .modeButtons .modeActive:active:not(:disabled):not([aria-disabled="true"]) > small {
   color: var(--s7-paper);
 }
-.modeButtons .modeActive span, .modeButtons .modeActive small { color: #daddff; }
-.modeButtons .modeRetiredActive { color: #492d00; background: var(--match-amber-soft); box-shadow: inset 1px 1px #fff8e6, inset -1px -1px #b38331; border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; min-height: var(--s7-control-height); }
+.modeButtons .modeActive span, .modeButtons .modeActive small { color: var(--s7-muted); }
+.modeButtons .modeRetiredActive { color: var(--s7-ink); background: var(--s7-chrome); box-shadow: var(--s7-relief-inset); border: 1px solid var(--s7-ink); border-radius: var(--s7-control-radius); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 700; line-height: 1.4; letter-spacing: normal; text-transform: none; min-height: var(--s7-control-height); }
 .modeButtons .modeRetiredActive:focus-visible {
   outline: 2px dotted var(--s7-ink);
   outline-offset: 3px;
@@ -386,14 +386,14 @@
   border: 0;
   border-right: 1px solid var(--match-ink);
   border-radius: var(--s7-control-radius);
-  background: #e7e7e2;
-  box-shadow: inset 1px 1px 0 #fff;
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
   text-align: left;
   cursor: pointer;
   color: var(--s7-ink);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
@@ -477,12 +477,14 @@
 .scenarioButton > small,
 .activeScenario > small {
   display: block;
+
+  color: var(--s7-muted);
 }
 
 .scenarioButton > span,
 .activeScenario > span {
   margin-bottom: 3px;
-  color: #666660;
+  color: var(--s7-muted);
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
   font-weight: 700;
@@ -493,12 +495,18 @@
   color: #cfd2ff;
 }
 
+.activeScenario > strong {
+  color: var(--s7-selection-text);
+}
+
 .scenarioButton > strong,
 .activeScenario > strong {
-  overflow: hidden;
-  font-size: var(--s7-small);
+  overflow: visible;
+  font-size: var(--s7-ui);
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+
+  overflow-wrap: anywhere;
 }
 
 .scenarioButton > small,
@@ -686,14 +694,14 @@
 }
 
 .segmented .segmentActive {
-  background: var(--match-ink);
-  box-shadow: inset 1px 1px 0 #4d4d4d;
-  color: #fff;
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
+  color: var(--s7-ink);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
@@ -871,11 +879,13 @@
 .selectRow [data-classic-select],
 .compareSelect [data-classic-select],
 .reviewCard [data-classic-select] {
-  min-height: 30px;
+  min-height: var(--s7-control-height);
   border: 1px solid var(--match-ink);
   border-radius: 0;
   background: #fff;
   box-shadow: inset 1px 1px 0 #aaa;
+
+  font-size: var(--s7-ui);
 }
 
 .selectRow [data-classic-select] {
@@ -1150,11 +1160,11 @@
 }
 
 .evidencePills small {
-  overflow: hidden;
+  min-width: 0;
   color: #62625d;
   font-size: var(--s7-small);
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .evidencePills strong { font: 700 var(--s7-small)/1.4 var(--s7-font-text); }
@@ -1232,7 +1242,7 @@
 .selectedRow .barLegend,
 .selectedRow .scoreCell > strong,
 .selectedRow .scoreCell > small {
-  color: var(--s7-selection-text);
+  color: var(--s7-ink);
 }
 
 .pinButton,

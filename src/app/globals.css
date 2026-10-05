@@ -316,6 +316,15 @@ body {
   padding: 0 9px;
 }
 
+.human-mark {
+  display: block;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  fill: currentColor;
+}
+
 .menu-dropdown {
   position: absolute;
   z-index: 6000;
@@ -1964,7 +1973,7 @@ html:lang(zh-TW) .career-record {
 
 .degree-card {
   display: grid;
-  grid-template-columns: var(--s7-icon-document) minmax(0, 1fr);
+  grid-template-columns: 220px minmax(0, 1fr);
   gap: 14px;
   margin-top: 17px;
   padding: 14px;
@@ -1979,16 +1988,24 @@ html:lang(zh-TW) .career-record {
 
 .degree-mark {
   display: grid;
-  width: var(--s7-icon-document);
-  height: var(--s7-icon-document);
+  width: 220px;
+  max-width: 100%;
+  height: 80px;
   place-items: center;
   border: 1px solid var(--s7-ink);
-  background: var(--s7-raised);
+  background: #fff;
   color: var(--s7-ink);
   box-shadow: var(--s7-relief-raised);
   font-family: var(--chrome-font);
   font-size: var(--s7-small);
   font-weight: 700;
+}
+
+.degree-mark img {
+  display: block;
+  width: calc(100% - 16px);
+  height: 64px;
+  object-fit: contain;
 }
 
 .education-record { min-width: 0; margin-top: 20px; }
@@ -5397,13 +5414,14 @@ html:lang(zh-TW) .career-record {
   }
 
   .degree-card {
-    grid-template-columns: var(--s7-icon-document) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
     padding: 11px;
   }
 
   .degree-mark {
-    width: var(--s7-icon-document);
-    height: var(--s7-icon-document);
+    width: 220px;
+    height: 80px;
     font-size: var(--s7-small);
   }
 

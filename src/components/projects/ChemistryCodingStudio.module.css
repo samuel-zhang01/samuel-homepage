@@ -927,7 +927,7 @@
 .bindingCard label { display: grid; gap: 6px; }
 .bindingCard [data-classic-select] {
   width: 100%;
-  min-height: 31px;
+  min-height: max(31px, var(--s7-control-height));
   padding: 5px 7px;
   border: 1px solid #80939c;
   color: #17252e;
@@ -1172,8 +1172,8 @@
 }
 
 @container (max-width: 860px) {
-  .labTabs { grid-template-columns: repeat(5, minmax(132px, 1fr)); overflow-x: auto; }
-  .labTabs button { min-width: 132px; grid-template-columns: 1fr auto; }
+  .labTabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .labTabs button { min-width: 0; grid-template-columns: 1fr auto; }
   .labTabs button > span { display: none; }
   .labTabs button strong { overflow: visible; line-height: 1.4; text-overflow: clip; white-space: normal; }
   .experimentGrid,
@@ -1205,8 +1205,8 @@
   .boundaryColumn { display: flex; flex-direction: column; }
   .polymerViewport svg { min-height: 280px; }
   .particleCanvas { min-height: 230px; }
-  .integratorTrack { grid-template-columns: repeat(5, minmax(82px, 1fr)); overflow-x: auto; }
-  .integratorTrack button { min-width: 82px; }
+  .integratorTrack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .integratorTrack button { min-width: 0; }
   .stageReadout { grid-template-columns: minmax(0, 1fr); gap: 5px; }
   .orbitalControls { grid-template-columns: minmax(0, 1fr); }
   .basisHeader { display: grid; }

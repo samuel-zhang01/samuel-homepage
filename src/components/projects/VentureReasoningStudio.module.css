@@ -242,11 +242,10 @@
 }
 
 .viewTabs button[aria-current="page"] {
-  color: #fff;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 5px, rgba(255, 255, 255, 0.055) 5px 6px),
-    var(--vr-dark);
-  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.2), inset -1px -1px rgba(0, 0, 0, 0.45);
+  color: var(--s7-ink);
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
+  font-weight: 700;
 }
 
 .viewTabs button > span {
@@ -607,7 +606,7 @@
 
 .claimSelected .contribution > strong,
 .claimSelected .contribution > span {
-  color: var(--s7-selection-text);
+  color: var(--s7-ink);
 }
 
 .contribution i {
@@ -830,7 +829,7 @@
 
 .marketMetrics > div > span,
 .runwayMetrics span {
-  color: var(--s7-ink);
+  color: #fff;
   font: 700 var(--s7-small)/1.4 var(--s7-font-text);
   letter-spacing: normal;
 }
@@ -843,7 +842,7 @@
 
 .marketMetrics > div > small,
 .runwayMetrics small {
-  color: var(--s7-ink);
+  color: #fff;
   font-size: var(--s7-small);
 }
 

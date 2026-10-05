@@ -9,7 +9,7 @@ import ts from "typescript";
 const root = process.cwd();
 const gitFiles = (...args) => execFileSync("git", ["ls-files", ...args, "-z"], {
   encoding: "utf8", maxBuffer: 64 * 1024 * 1024,
-}).split("\0").filter((filename) => filename && existsSync(filename));
+}).split("\0").filter((filename) => filename && existsSync(filename) && lstatSync(filename).isFile());
 const tracked = gitFiles("--cached");
 const untracked = gitFiles("--others", "--exclude-standard");
 const ignored = gitFiles("--others", "--ignored", "--exclude-standard");
@@ -64,7 +64,7 @@ for (const filename of sources) {
 }
 const entries = sources.filter((filename) =>
   (filename.startsWith("src/app/") && /(?:^|\/)(?:page|layout|template|loading|error|global-error|not-found|route|manifest|robots|sitemap)\.[jt]sx?$/.test(filename)) ||
-  filename === "src/app/icon.png" || filename === "src/middleware.ts" || filename.endsWith(".d.ts"));
+  filename === "src/middleware.ts" || filename.endsWith(".d.ts"));
 const reached = new Set();
 function walk(filename) {
   if (reached.has(filename)) return;
@@ -73,18 +73,17 @@ function walk(filename) {
 }
 entries.forEach(walk);
 const nonRuntime = sources.filter((filename) => !reached.has(filename));
-const translationReceipts = nonRuntime.filter((filename) => filename.endsWith(".audit.json"));
 const checkOnlyTranslationReceipts = managed.filter((filename) => filename.startsWith("scripts/fixtures/project-copy-audits/") && filename.endsWith(".audit.json"));
 const reviewedSourceFixtures = nonRuntime.filter((filename) => filename.startsWith("src/data/project-fixtures/"));
-const unresolvedOwnership = nonRuntime.filter((filename) => !translationReceipts.includes(filename) && !reviewedSourceFixtures.includes(filename));
+const unresolvedOwnership = nonRuntime.filter((filename) => !reviewedSourceFixtures.includes(filename));
 
 const publicFiles = managed.filter((filename) => filename.startsWith("public/"));
-const texts = new Map(managed.filter((filename) => /\.(?:tsx?|mjs|css|json|md)$/.test(filename) && !filename.startsWith("docs/reviews/")).map((filename) => [filename, readFileSync(filename, "utf8")]));
+const texts = new Map(managed.filter((filename) => /\.(?:tsx?|mjs|css|json|md)$/.test(filename)).map((filename) => [filename, readFileSync(filename, "utf8")]));
 const iconSource = ts.createSourceFile("system7Icons.ts", readFileSync("src/lib/system7Icons.ts", "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
 const iconKinds = new Set();
 function findIconPaths(node) {
   if (ts.isStringLiteral(node)) {
-    const match = node.text.match(/^\/system7-icons\/([a-z][a-z0-9]*)\.png$/);
+    const match = node.text.match(/^\/system7-icons\/([a-z][a-z0-9]*)\.png(?:\?v=[a-f0-9]{12})?$/);
     if (match) iconKinds.add(match[1]);
   }
   ts.forEachChild(node, findIconPaths);
@@ -108,18 +107,23 @@ for (const filename of managed) {
   digests.set(digest, group);
 }
 const scriptFiles = managed.filter((filename) => filename.startsWith("scripts/"));
+// The copy checker reads every .audit.json in this directory; individual
+// basenames need not appear in imports. Preserve these active gate inputs.
+const copyFixtureConsumer = "scripts/check-project-copy.mjs";
+const computedCopyFixtures = new Set(texts.get(copyFixtureConsumer)?.includes('"scripts/fixtures/project-copy-audits"') ? checkOnlyTranslationReceipts : []);
 const scriptCandidates = scriptFiles.filter((filename) => {
+  if (computedCopyFixtures.has(filename)) return false;
   const basename = path.basename(filename);
   return ![...texts].some(([owner, text]) => owner !== filename && (text.includes(filename) || text.includes(basename)));
 });
 const report = {
-  method: "Git-managed inventory; TypeScript module resolution plus static/dynamic imports, worker URLs and CSS imports; Next convention entries; computed icon contract; literal asset/script owner candidates need human review.",
+  method: "Git-managed inventory; TypeScript module resolution plus static/dynamic imports, worker URLs and CSS imports; Next convention entries; computed icon and translation-fixture consumers; literal asset/script owner candidates need human review.",
   tracked: { files: tracked.length, groups: totals(tracked) },
   untracked: { files: untracked.length, groups: totals(untracked) },
   ignored: { files: ignored.length, groups: totals(ignored) },
-  reachability: { entries: entries.length, managedSources: sources.length, reachableManagedSources: sources.filter((filename) => reached.has(filename)).length, unresolvedImports: unresolved, translationReceipts, checkOnlyTranslationReceipts, reviewedSourceFixtures, unresolvedOwnership },
+  reachability: { entries: entries.length, managedSources: sources.length, reachableManagedSources: sources.filter((filename) => reached.has(filename)).length, unresolvedImports: unresolved, checkOnlyTranslationReceipts, reviewedSourceFixtures, unresolvedOwnership },
   assets: { managedPublicFiles: publicFiles.length, computedIconFiles: computedIcons.length, withoutLiteralOrComputedOwner: assetCandidates },
-  scripts: { files: scriptFiles.length, withoutLiteralOwner: scriptCandidates },
+  scripts: { files: scriptFiles.length, directoryFixtureConsumer: { file: copyFixtureConsumer, fixtures: [...computedCopyFixtures] }, withoutLiteralOwner: scriptCandidates },
   byteIdenticalGroups: [...digests.values()].filter((group) => group.length > 1),
 };
 console.log(JSON.stringify(report, null, 2));

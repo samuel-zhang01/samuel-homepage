@@ -683,7 +683,9 @@ export function ReliabilityLabDemo() {
             />
           </div>
           <div className={styles.chartWrap} aria-live="polite">
-            <ReliabilityChart view={calibrationView} />
+            <div className={styles.chartViewport} role="region" aria-label="Reliability diagram" tabIndex={0}>
+              <ReliabilityChart view={calibrationView} />
+            </div>
             <div className={styles.calibrationMetrics}>
               <article>
                 <span>ECE</span><strong>{calibration.ece}</strong>

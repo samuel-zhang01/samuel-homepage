@@ -285,7 +285,7 @@ function TopologyMap({
   highlightedEdges: Set<string>;
 }) {
   return (
-      <ProjectCopy copy={homeLabCopy}><div className={styles.topologyMap} role="group" aria-label="Service topology">
+      <ProjectCopy copy={homeLabCopy}><div className={styles.mapViewport} role="region" aria-label="Service topology" tabIndex={0}><div className={styles.topologyMap}>
       <svg className={styles.edgeLayer} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
         {EDGES.map((edge) => {
           const coordinates = edgeCoordinates(edge);
@@ -320,7 +320,7 @@ function TopologyMap({
         <span><i className={styles.legendMembership} /> membership</span>
         <span><i className={styles.legendOperation} /> operation</span>
       </div>
-    </div></ProjectCopy>
+    </div></div></ProjectCopy>
   );
 }
 

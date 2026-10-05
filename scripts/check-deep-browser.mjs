@@ -93,7 +93,7 @@ for (const width of widths) for (const pattern of ["classic", "blue", "paper"]) 
 const selectedJobs = jobs.filter(job => !groupFilter || groupFilter.test(job.group));
 assert.ok(selectedJobs.length > 0, "Selected matrix is nonempty");
 const report = { engine, browserVersion: null, playwrightVersion: require(resolve(process.env.PLAYWRIGHT_CORE_PATH, "package.json")).version, origin, started: new Date().toISOString(), inventory: { projectCount: projects.length, demoCount: Object.keys(demoRegistry).length, pdfCount: projects.flatMap(project => project.artifacts?.filter(artifact => artifact.kind === "PDF") ?? []).length, gameIds, systemApps: systemProjects.map(project => ({ appId: project.systemApp, slug: project.slug })), sections, locales: selectedLocales.map(option => option.slug), widths }, planned: Object.fromEntries(["documents", "sections", "demos", "pdfs", "games", "systemApps", "nojs", "missing", "themes"].map(group => [group, selectedJobs.filter(job => job.group === group).length])), visits: [] };
-const browser = await pw[engine].launch({ headless: true, ...(engine === "chromium" ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH, args: ["--no-sandbox"] } : {}) });
+const browser = await pw[engine].launch({ headless: true, ...(engine === "chromium" ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH, args: ["--no-sandbox"], ignoreDefaultArgs: ["--hide-scrollbars"] } : {}) });
 report.browserVersion = browser.version();
 console.log(`Deep crawl ${engine} ${report.browserVersion}: ${selectedJobs.length} source-derived journeys; ${JSON.stringify(report.planned)}`);
 const app = (p, id) => p.locator(`[data-app-id="${id}"]`);

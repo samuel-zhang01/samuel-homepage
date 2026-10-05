@@ -929,11 +929,12 @@ function AttackChart({ selectedAttack, selectedIndex }: { selectedAttack: Attack
       <div className={styles.chartLegend}>
         {series.map((item) => <span key={item.label}><i style={{ background: item.color }} />{item.label}</span>)}
       </div>
+      <div className={styles.chartScroll} role="region" aria-label="Reported PSNR under FGSM and PGD attacks" tabIndex={0}>
       <svg viewBox="0 0 300 185" role="img" aria-label="Reported PSNR under FGSM and PGD attacks">
         {[20, 24, 28, 32].map((tick) => (
           <g key={tick}>
             <line x1="35" x2="273" y1={toY(tick)} y2={toY(tick)} stroke="#d0d0ca" strokeWidth="1" />
-            <text x="29" y={toY(tick) + 3} textAnchor="end" fontSize="8" fill="#5e5e5a">{tick}</text>
+            <text x="29" y={toY(tick) + 3} textAnchor="end" fontSize="10" fill="#5e5e5a">{tick}</text>
           </g>
         ))}
         {series.map((item) => (
@@ -961,11 +962,12 @@ function AttackChart({ selectedAttack, selectedIndex }: { selectedAttack: Attack
           </g>
         ))}
         {attackResults.epsilons.map((epsilon, index) => (
-          <text key={epsilon} x={toX(index)} y="174" textAnchor="middle" fontSize="8" fill="#5e5e5a">{epsilon}</text>
+          <text key={epsilon} x={toX(index)} y="174" textAnchor="middle" fontSize="10" fill="#5e5e5a">{epsilon}</text>
         ))}
-        <text x="153" y="184" textAnchor="middle" fontSize="8" fill="#343431">attack budget ε</text>
-        <text x="8" y="20" fontSize="8" fill="#343431">PSNR dB</text>
+        <text x="153" y="180" textAnchor="middle" fontSize="10" fill="#343431">attack budget ε</text>
+        <text x="8" y="20" fontSize="10" fill="#343431">PSNR dB</text>
       </svg>
+      </div>
       <p>Aggregate values transcribed from the final report; no per-slice samples are plotted.</p>
     </div></ProjectCopy>
   );

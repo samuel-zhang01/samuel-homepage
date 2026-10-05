@@ -264,7 +264,7 @@
 
 .filterBar [data-classic-select],
 .inputWrap {
-  min-height: 29px;
+  min-height: var(--s7-control-height);
   border: 2px solid;
   border-color: #555 #fff #fff #555;
   border-radius: 0;
@@ -274,7 +274,7 @@
 .filterBar [data-classic-select] {
   width: 100%;
   padding: 3px 6px;
-  font-size: var(--s7-small);
+  font-size: var(--s7-ui);
 }
 
 .inputWrap {
@@ -500,7 +500,7 @@
   z-index: 1;
   display: grid;
   min-width: 0;
-  min-height: 36px;
+  min-height: var(--s7-control-height);
   grid-template-columns: 25px minmax(0, 1fr) 8px;
   align-items: center;
   gap: 4px;
@@ -1238,7 +1238,7 @@
 }
 
 .workspaceTabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-.workspaceTabs button { min-height: 44px; padding: 8px 14px; border: 1px solid var(--s7-ink); background: var(--s7-paper); box-shadow: 1px 1px 0 var(--s7-shadow); font: 700 var(--s7-ui)/1.4 var(--s7-font-ui); cursor: pointer; border-radius: var(--s7-control-radius); color: var(--s7-ink); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; }
+.workspaceTabs button { min-height: 44px; padding: 8px 14px; border: 1px solid var(--s7-ink); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); font: 700 var(--s7-ui)/1.4 var(--s7-font-ui); cursor: pointer; border-radius: var(--s7-control-radius); color: var(--s7-ink); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; }
 .workspaceTabs button:disabled, .workspaceTabs button[aria-disabled="true"] {
   color: var(--s7-muted);
   background: var(--s7-chrome);
@@ -1254,7 +1254,11 @@
 .workspaceTabs button:active:not(:disabled):not([aria-disabled="true"]) > span:not([data-math-equation]), .workspaceTabs button:active:not(:disabled):not([aria-disabled="true"]) > strong, .workspaceTabs button:active:not(:disabled):not([aria-disabled="true"]) > small {
   color: var(--s7-paper);
 }
-.workspaceTabs button[aria-pressed="true"] { background: var(--s7-chrome); color: var(--s7-ink); }
+.workspaceTabs button[aria-pressed="true"] { background: var(--s7-chrome); color: var(--s7-ink);
+  box-shadow: var(--s7-relief-inset);
+
+  font-weight: 700;
+}
 .workspaceTabs button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
 
 .filterBar { grid-template-columns: minmax(170px, 1fr) repeat(3, minmax(120px, .6fr)) auto; border: 1px solid #171717; background: #d8d8d3; box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #858581; }

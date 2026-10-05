@@ -1,5 +1,6 @@
 "use client";
-import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { projectText } from "@/lib/projectCopy";
 import { molecularCopy } from "./copy/molecularCopy";
 import { MatchingOrderExperiment } from "./ScientificFailureExperiments";
 
@@ -328,6 +329,7 @@ function SpectrumPlot({
 }) {
   const rawId = useId();
   const chartId = `recognition-${rawId.replace(/:/g, "")}`;
+  const locale = useProjectLocale();
   const [minimum, maximum] = range;
   const span = maximum - minimum;
   const plot = { x: 58, y: 34, width: 790, height: 222 };
@@ -356,7 +358,7 @@ function SpectrumPlot({
 
   return (
     <ProjectCopy copy={molecularCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.spectrum} viewBox="0 0 880 330" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
-      <title id={`${chartId}-title`}>{record.name} synthetic observed and predicted spectrum comparison</title>
+      <title id={`${chartId}-title`}>{`${record.name} ${projectText(locale, molecularCopy, "synthetic observed and predicted spectrum comparison")}`}</title>
       <desc id={`${chartId}-desc`}>
         Synthetic CP-FTMW teaching trace from {minimum.toFixed(isFine ? 3 : 0)} to {maximum.toFixed(isFine ? 3 : 0)} megahertz.
         {` ${visibleObserved.length} observed peaks, ${visiblePredicted.length} predicted sticks and ${matches.length} matches are represented.`}
@@ -499,6 +501,7 @@ function ConformerProjection({
 }) {
   const rawId = useId();
   const titleId = `conformer-${rawId.replace(/:/g, "")}`;
+  const locale = useProjectLocale();
   const points = makeGeometry(record, candidate).map((point) => rotatePoint(point, yaw, pitch));
   const project = (point: Point3) => {
     const scale = 118 * (1 + point.z * 0.055);
@@ -523,7 +526,7 @@ function ConformerProjection({
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
-      <title id={`${titleId}-title`}>{record.name} synthetic {candidate.id} conformer schematic</title>
+      <title id={`${titleId}-title`}>{`${record.name} ${projectText(locale, molecularCopy, "synthetic")} ${candidate.id} ${projectText(locale, molecularCopy, "conformer schematic")}`}</title>
       <desc id={`${titleId}-desc`}>
         Rotatable schematic of a 15-membered carbon ring with one oxygen atom. It is a synthetic teaching geometry, not an optimized structure from the research files.
       </desc>

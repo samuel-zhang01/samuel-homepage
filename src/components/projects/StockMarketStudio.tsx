@@ -310,53 +310,55 @@ function PriceTrace({
           <span data-tone="legacy">Source window</span>
         </div>
       </div>
-      <svg
-        className={styles.priceChart}
-        viewBox={`0 0 ${width} ${height}`}
-        role="img"
-        aria-label={`Synthetic price trace from ${formatMoney(visible[0])} to ${formatMoney(visible.at(-1) ?? visible[0])}. Visible minimum ${formatMoney(minimum)}, maximum ${formatMoney(maximum)}.`}
-      >
-        <title>Synthetic single-stock price trace</title>
-        <desc>
-          This chart replays the Julia stochastic impact equations with a deterministic browser random-number generator. It is not real market data.
-        </desc>
-        {[0, 1, 2, 3, 4].map((row) => {
-          const y = padding + (row / 4) * (height - padding * 2);
-          return <line key={row} className={styles.gridLine} x1={padding} x2={width - padding} y1={y} y2={y} />;
-        })}
-        {audit ? (
-          <>
-            <rect
-              className={`${styles.windowBand} ${styles.correctedBand}`}
-              x={correctedStart}
-              y={padding}
-              width={Math.max(chartEnd - correctedStart, 2)}
-              height={height - padding * 2}
-              opacity={mode === "corrected" ? 0.2 : 0.08}
-            />
-            <rect
-              className={`${styles.windowBand} ${styles.legacyBand}`}
-              x={legacyStart}
-              y={padding}
-              width={Math.max(chartEnd - legacyStart, 2)}
-              height={height - padding * 2}
-              opacity={mode === "legacy" ? 0.26 : 0.1}
-            />
-          </>
-        ) : null}
-        <polyline className={styles.traceShadow} points={points} />
-        <polyline className={styles.traceLine} points={points} />
-        <polyline className={styles.movingAverage} points={movingAveragePoints} />
-        <circle
-          className={styles.lastPoint}
-          cx={Number(lastPointCoordinates[0])}
-          cy={Number(lastPointCoordinates[1])}
-          r="4.5"
-        />
-        <text className={styles.axisText} x={padding} y={18}>{formatMoney(maximum)}</text>
-        <text className={styles.axisText} x={padding} y={height - 8}>{formatMoney(minimum)}</text>
-        <text className={styles.axisTextEnd} x={width - padding} y={height - 8}>event {history.length - 1}</text>
-      </svg>
+      <div className={styles.chartViewport} role="region" aria-label="Synthetic single-stock price trace" tabIndex={0}>
+        <svg
+          className={styles.priceChart}
+          viewBox={`0 0 ${width} ${height}`}
+          role="img"
+          aria-label={`Synthetic price trace from ${formatMoney(visible[0])} to ${formatMoney(visible.at(-1) ?? visible[0])}. Visible minimum ${formatMoney(minimum)}, maximum ${formatMoney(maximum)}.`}
+        >
+          <title>Synthetic single-stock price trace</title>
+          <desc>
+            This chart replays the Julia stochastic impact equations with a deterministic browser random-number generator. It is not real market data.
+          </desc>
+          {[0, 1, 2, 3, 4].map((row) => {
+            const y = padding + (row / 4) * (height - padding * 2);
+            return <line key={row} className={styles.gridLine} x1={padding} x2={width - padding} y1={y} y2={y} />;
+          })}
+          {audit ? (
+            <>
+              <rect
+                className={`${styles.windowBand} ${styles.correctedBand}`}
+                x={correctedStart}
+                y={padding}
+                width={Math.max(chartEnd - correctedStart, 2)}
+                height={height - padding * 2}
+                opacity={mode === "corrected" ? 0.2 : 0.08}
+              />
+              <rect
+                className={`${styles.windowBand} ${styles.legacyBand}`}
+                x={legacyStart}
+                y={padding}
+                width={Math.max(chartEnd - legacyStart, 2)}
+                height={height - padding * 2}
+                opacity={mode === "legacy" ? 0.26 : 0.1}
+              />
+            </>
+          ) : null}
+          <polyline className={styles.traceShadow} points={points} />
+          <polyline className={styles.traceLine} points={points} />
+          <polyline className={styles.movingAverage} points={movingAveragePoints} />
+          <circle
+            className={styles.lastPoint}
+            cx={Number(lastPointCoordinates[0])}
+            cy={Number(lastPointCoordinates[1])}
+            r="4.5"
+          />
+          <text className={styles.axisText} x={padding} y={18}>{formatMoney(maximum)}</text>
+          <text className={styles.axisText} x={padding} y={height - 8}>{formatMoney(minimum)}</text>
+          <text className={styles.axisTextEnd} x={width - padding} y={height - 8}>event {history.length - 1}</text>
+        </svg>
+      </div>
     </div></ProjectCopy>
   );
 }

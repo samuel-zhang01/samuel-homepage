@@ -15,7 +15,7 @@ server-side store of personal data.
 
 [Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
-Current implementation and validation: [documentation index](docs/README.md). The [current audit](docs/DEEP_AUDIT_2026-10-04.md) preserves the earlier release checkpoint and records subsequent profile refinement separately.
+Current implementation and validation: [documentation index](docs/README.md). The [verification guide](docs/VERIFICATION.md) records current checks, earlier scopes and known limits.
 
 ![Samuel System 7 desktop with its About window and shared pixel icons](docs/assets/desktop.png)
 
@@ -89,9 +89,7 @@ of permanent storage. Export a backup before clearing site data or changing devi
 - A localised Finder-style crash dialog for unknown routes that preserves the real HTTP 404 status and offers safe ways home.
 
 
-The 9 September update adds direct career and education links, employer-aware project search and project context before launch. Demo URLs retain `&view=demo`. STUDY-RL now includes actual seeded CliffWalking Q-learning/SARSA, recorded small-model answer comparison, live LoRA updates and a DPO objective calculator. The source review records 25 executed notebooks, 448 lecture pages, 279 passing tests and one Week 25 failure.
-
-New experiments include finance import identity, overlap replay, provider-ID corrections and reconciliation edge cases; scheduling across daylight-saving changes, backup failure sequences, MRI residual patterns and acquisition budgets, CFD rollout amplification, vision sequence splits, spectral matching order and coverage under population shift. Their controls label calculated teaching examples separately from recorded source results. MRI also exposes uncertainty rescaling, ranking and pixel-removal budgets against an equal-budget oracle. Saved CFD sequences support pinned-frame comparison; microscopy supports pose/depth Grad-CAM comparison on the same source image. MRI also offers a recorded reconstruction figure from its pinned IX repository, separate from the synthetic interactive phantoms. Large scientific images load only in their selected view. CFD playback suspends its timer in hidden browser tabs; Snake and Brick Breaker pause and wait for Resume. `npm run check:learning` checks 148 source transition fixtures, control semantics, learning calculations, response evidence and career references before production builds. `npm run check:experiments` checks eight scientific/product interaction suites, seven original finance-source fixture attempts and 70 MRI scale/ranking/removal configurations with independent numerical expectations and control interactions. `npm run check:scientific-media` checks the archived media and playback/comparison controls.
+The scientific exhibits include seeded reinforcement learning, post-training objectives, finance import/reconciliation, daylight-saving schedules, MRI acquisition and uncertainty, CFD rollout stability, microscopy attribution and spectral matching. Controls distinguish calculated teaching examples from recorded source results. Source provenance and qualifications are maintained in [the project source record](docs/PROJECT_SOURCE_RECORD.md); the release gates verify calculations, transitions, reviewed media and translated controls.
 
 ## System 7 design contract
 
@@ -111,7 +109,7 @@ clean black-and-white structure, and familiar visual metaphors.
   with one usable app surface, safe-area handling and coarse-pointer targets.
 
 The detailed evidence, viewport matrix and known boundaries live in the
-[current audit](docs/DEEP_AUDIT_2026-10-04.md). The visual reference is the
+[current audit](docs/VERIFICATION.md). The visual reference is the
 [Macintosh Human Interface Guidelines (1992)](https://tecfa.unige.ch/tecfa/teaching/LME/lombard/HIGuidelines.pdf).
 
 ## Project archive
@@ -131,7 +129,7 @@ Project explanations focus on what the work does, why the method was chosen and 
 
 The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 41 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
 
-Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. All 118 element names are localized in both Mandarin editions, including accessible labels and orbital exports. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [current audit](docs/DEEP_AUDIT_2026-10-04.md) for the tested scope and intentional source-language exceptions.
+Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. All 118 element names are localized in both Mandarin editions, including accessible labels and orbital exports. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [current audit](docs/VERIFICATION.md) for the tested scope and intentional source-language exceptions.
 
 `npm run prepare:search` builds four deterministic text indexes from each project's metadata and own public component copy. Translation dictionaries are not indiscriminately indexed into unrelated projects. Private notes, drawings, imported statements, linked PDFs and external websites are excluded. Rebuild these indexes after changing copy in an already-running dev session. Generated JSON is ignored in Git and rebuilt for production; it is absent from initial JavaScript.
 
@@ -141,7 +139,7 @@ Project documents and controls share `src/app/system7.css`: white and warm readi
 
 Future experiences are declared once in the shared profile records with stable evidence and project references. The resolver derives project provenance and graph edges, preserving direct work separately from related later projects. Capabilities and documents declare their supporting references in the same data model. [AGENTS.md](AGENTS.md) directs future agents to the [maintenance workflow](docs/KNOWLEDGE_GRAPH_WORKFLOW.md) for source review, translated copy and profile/graph validation.
 
-Desktop, Finder, app menus, project cards, accessories, arcade and Home Lab share 42 canonical subjects: 41 generated System 7 PNGs and COVERD's original owned logo. Measured artwork bounds keep their prominence consistent without stretching. The [artwork guide](docs/PROJECT_ARTWORK.md) links the complete family, generation records, identity mappings and unchanged scientific-media sources.
+Desktop, Finder, app menus, project cards, accessories, arcade and Home Lab share 42 canonical subjects: 41 untouched 1254px generated System 7 PNGs and COVERD's original owned logo. Browser rendering uses crisp pixelated sampling for the generated artwork; favicon/PWA derivatives sample the native source directly. Measured artwork bounds keep their prominence consistent without stretching. The [artwork guide](docs/PROJECT_ARTWORK.md) links the complete family, generation records, identity mappings and unchanged scientific-media sources.
 
 Mathematical expressions across the project studios use the shared `MathEquation` component with KaTeX 0.18.7 and accessible MathML. Equations retain their source meaning and readable labels; code and pseudocode remain code. The renderer loads on demand, with local CSS and fonts and no CDN dependency. Wide equation panels and aligned long expressions preserve readable typesetting within the System 7 framing.
 
@@ -312,13 +310,11 @@ command. You can run each `check:*` script separately while working.
 
 `npm run check:math` validates actual expressions with the strict KaTeX parser, accessible component output and local font assets. The output gate caps the shared math-renderer chunk at 300 KiB and rejects its inclusion in initial page entries. Initial-route JavaScript has a 270 KiB gzip ceiling. Application browser output has a 5 MiB ceiling excluding the separately checked math chunk; application runtime has its own 5 MiB ceiling including math. These ceilings were increased from 4 MiB for the explicit bilingual project dictionaries and are separate from initial page cost. KaTeX uses 20 local WOFF2 fonts (253.7 KiB) and 30.6 KiB of CSS.
 
-The earlier release checkpoint, repository cleanup and four-language browser matrix are in the [4 October audit](docs/DEEP_AUDIT_2026-10-04.md). Its 2,826 browser journeys and strict release result precede the subsequent profile refinement. That refinement passed 24 focused mobile journeys across four locales, 96 maintained Chromium journeys in English and Traditional Chinese at desktop and short mobile sizes, 34 graph checks, 9 profile checks and locale/copy gates. Its final isolated build generated 88 pages within the output budgets; 46 accessibility audits reported zero axe violations, with two closed Orbital combobox results remaining incomplete and their listbox references checked separately. Linked skill/project/CV and graph/GROWMAT journeys passed in four locale/width profiles. The audit records the precise scope and the short mobile document-reader fix; the earlier full matrix and dependency audit were not rerun.
-
-The subsequent [adversarial re-audit](docs/DEEP_AUDIT_2026-10-04.md#adversarial-re-audit-of-the-refinement) repaired evidence, document history, keyboard focus, future PDF actions, small desktop-window layouts and PDF cancellation faults. Its reader/layout build passed **33 navigation, 84 resize and 21 real PDF worker journeys across Chromium/Firefox/WebKit**, 12 profile/38 graph source checks, 46 core/expanded accessibility audits and maintained output budgets. Eight Find modal checks and three PDF import-recovery checks also passed. A later graph-only history fix removes duplicate or unchanged URL replacements; its build passed 33 navigation and nine history regressions in all three engines, plus 12 expanded accessibility audits. Fresh npm advisory audit reported zero vulnerabilities. The audit records exact scopes, full-file PDF startup, cached Find recovery, genuine WebKit history quotas, graph scale limits and a retained concurrent Chromium native-tab timeout; the historical full browser crawl and dependency signatures were not rerun within this re-audit.
+The [verification guide](docs/VERIFICATION.md) separates the latest visual checkpoint from earlier navigation, reader, accessibility and history checks. The earlier `effc55f` implementation passed its representative screenshot review and three-engine icon matrix; the later user review identified icon detail lost during export. The current pass restores native originals and checks all 28 routed demos for desktop/mobile readability. Historical results remain distinct from fresh verification. The final compiled pass includes the three-engine icon matrix, 160 demo/app journeys and focused cross-browser diagram checks. Completed raw evidence is archived outside the checkout; temporary receipts stay ignored.
 
 `npm run audit:repository` produces a read-only source/asset/fixture ownership inventory. The deeper HTTP, browser, recovery and accessibility runners are documented in the current review; they use a compiled preview and external QA tools. The ordinary release build stays independent of those external browser installations.
 
-Lint includes a compatibility guard for the scoped Next-plugin `fast-glob` replacement. It retains the reviewed default App Router discovery and all Next rules; configured `settings.next.rootDir` values fail explicitly. Changing lint roots or the pinned dependency versions requires another compatibility review. The [audit's dependency section](docs/DEEP_AUDIT_2026-10-04.md#dependencies-and-output) documents the advisory, fresh install and signature evidence.
+Lint includes a compatibility guard for the scoped Next-plugin `fast-glob` replacement. It retains the reviewed default App Router discovery and all Next rules; configured `settings.next.rootDir` values fail explicitly. Changing lint roots or the pinned dependency versions requires another compatibility review. The [audit's dependency section](docs/VERIFICATION.md#dependencies-and-output) documents the advisory, fresh install and signature evidence.
 
 When a development server is already using `.next`, run `npm run build:isolated` instead. It writes the production checkpoint to `.next-build` so the live development cache is not replaced.
 
@@ -395,83 +391,16 @@ Internet Explorer is not supported by Next.js 15. IE 10/11 receive a small serve
 ## Relevant structure
 
 ```text
-src/
-├── app/
-│   ├── [locale]/
-│   ├── page.tsx
-│   └── projects/page.tsx
-├── components/
-│   ├── PdfPreview.tsx
-│   ├── DesktopFinder.tsx
-│   ├── OrbitalLab.tsx
-│   ├── OrbitalSurfaceCanvas.tsx
-│   ├── ProductivityApps.tsx
-│   ├── ProductivityExtras.tsx
-│   ├── SideQuestCabinetApp.tsx
-│   ├── SystemSevenDesktop.tsx
-│   └── projects/
-│       ├── DemoChrome.tsx
-│       ├── ProjectDemoRouter.tsx
-│       ├── ProjectExplorer.tsx
-│       ├── ProjectCaseBrief.tsx
-│       ├── projectStories.ts
-│       ├── projectSuites.ts
-│       ├── PortfolioMap.tsx
-│       ├── PortfolioMap.module.css
-│       ├── ModelLineageMap.tsx
-│       ├── ModelLineageMap.module.css
-│       ├── ProjectDocument.tsx
-│       ├── ProjectArtwork.tsx
-│       ├── KnowledgeGraph.tsx
-│       ├── projectArchiveI18n.ts
-│       ├── CvKeywordStudio.tsx
-│       ├── SchedulingStudio.tsx
-│       ├── InsuranceMatchingDemo.tsx
-│       ├── ItalianLearningStudio.tsx
-│       ├── FinanceStudio.tsx
-│       ├── CourseRecommenderStudio.tsx
-│       ├── MriTrustStudio.tsx
-│       ├── CfdArchitectureStudio.tsx
-│       ├── CfdShowcase.tsx
-│       ├── DeferralRiskStudio.tsx
-│       ├── SpectroscopyStudio.tsx
-│       ├── ThermodynamicsStudio.tsx
-│       ├── EnvironmentPlannerStudio.tsx
-│       ├── ModelArchitectureStudio.tsx
-│       ├── MicrorobotShowcase.tsx
-│       ├── ChemistryCodingStudio.tsx
-│       ├── HomeLabTopologyStudio.tsx
-│       ├── StockMarketStudio.tsx
-│       ├── InnovationModelsStudio.tsx
-│       ├── VentureReasoningStudio.tsx
-│       ├── MolecularRecognitionStudio.tsx
-│       ├── DrugSolubilityStudio.tsx
-│       ├── BanditStudio.tsx
-│       ├── DecisionDemos.tsx
-│       ├── ScientificDemos.tsx
-│       └── RlAtlasDemo.tsx
-├── data/projects.ts
-└── lib/
-    ├── i18n.ts
-    ├── projectSearch.ts
-    ├── orbitals.ts
-    ├── orbitalAnimation.ts
-    └── orbitalWebgl.ts
-
-scripts/
-├── prepare-project-search.mjs
-├── prepare-pdfjs-assets.mjs
-├── check-project-search.mjs
-└── check-deploy.mjs
-
-docs/                 # Technical audits and README media
-LICENSE               # Original-code reuse conditions
-THIRD_PARTY_NOTICES.md # Dependency and content boundaries
-
-public/projects/
-├── neural-cfd-surrogates/
-├── parliamo/
-└── study-rl/
+src/app/                # Routes, metadata and shared System 7 styles
+src/components/         # Desktop windows, accessories and project exhibits
+src/data/               # Reviewed projects, profile, documents and fixtures
+src/lib/                # Identity, localization, evidence and shared calculations
+public/                 # Curated public PDFs, icons and scientific media
+scripts/                # Asset preparation and reusable release/browser checks
+others/                 # Maintained CV authoring sources
+docs/                  # Design, provenance, workflows and verification
+LICENSE                 # Original-code reuse conditions
+THIRD_PARTY_NOTICES.md   # Dependency and content attribution
 ```
 
 Private research, raw bank statements and non-public authoring material are not

@@ -127,7 +127,7 @@
 
 .languageToggle,
 .resetButton {
-  min-height: 32px;
+  min-height: var(--s7-control-height);
   border: 1px solid var(--studio-ink);
   background: #efefe9;
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #a4a49e;
@@ -278,10 +278,12 @@
 
 .appMenu button strong {
   align-self: flex-end;
-  overflow: hidden;
-  font-size: var(--s7-small);
+  overflow: visible;
+  font-size: var(--s7-ui);
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+
+  overflow-wrap: anywhere;
 }
 
 .appMenu button small {
@@ -293,14 +295,14 @@
 .appMenu button.activeMenu {
   position: relative;
   z-index: 1;
-  background: var(--studio-blue-soft);
-  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #8a91ab;
+  background: var(--s7-chrome);
+  box-shadow: var(--s7-relief-inset);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   color: var(--s7-ink);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
@@ -493,14 +495,14 @@
 
 .practiceControls button.selected,
 .artifactControls button.selected {
-  background: var(--studio-blue);
-  color: #fff;
-  box-shadow: inset 1px 1px 0 #4e64a7;
+  background: var(--s7-chrome);
+  color: var(--s7-ink);
+  box-shadow: var(--s7-relief-inset);
   border: 1px solid var(--s7-ink);
   border-radius: var(--s7-control-radius);
   font-family: var(--s7-font-ui);
   font-size: var(--s7-ui);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: normal;
   text-transform: none;
@@ -2027,8 +2029,8 @@
 }
 
 .syncLog li:last-child { border-bottom: 0; }
-.syncLog span { color: #89928a; font-family: var(--s7-font-text); font-size: var(--s7-small); }
-.syncLog > li > span:last-child { color: var(--s7-ink); font-family: var(--s7-font-mono); font-size: var(--s7-small); }
+.syncLog span { color: #b6c4b8; font-family: var(--s7-font-text); font-size: var(--s7-small); }
+.syncLog > li > span:last-child { color: #e5e9df; font-family: var(--s7-font-text); font-size: var(--s7-small); }
 
 .privacyNote > div { display: grid; gap: 2px; }
 .privacyNote strong { font-size: var(--s7-small); }

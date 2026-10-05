@@ -59,6 +59,10 @@ const nextConfig: NextConfig = {
     config.module.rules.push({ test: /\.csv$/i, type: "asset/source" });
     return config;
   },
+  async redirects() {
+    // Preserve the original icon URL without a duplicate PNG or route bundle.
+    return [{ source: "/icon.png", destination: "/favicon.png?v=6", permanent: false }];
+  },
   async headers() {
     return [
       {

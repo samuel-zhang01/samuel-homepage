@@ -388,6 +388,7 @@
 .xaiPanel,
 .specPanel,
 .datasetLedger {
+  min-width: 0;
   border: 1px solid #858681;
   background: #eeeeea;
   box-shadow: inset 1px 1px #fff, 2px 2px #d1d1cc;
@@ -507,6 +508,7 @@
 .maskHeader,
 .panelTitle {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
@@ -626,6 +628,7 @@
   justify-items: center;
   gap: 5px;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .pipeline li:not(:last-child)::after {
@@ -866,9 +869,23 @@
 .chartPanel svg {
   display: block;
   width: 100%;
+  min-width: 360px;
   border: 1px solid #bbbcb6;
   background: #fafaf6;
 }
+
+.chartScroll {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: auto;
+  scrollbar-color: var(--s7-shadow) var(--s7-chrome);
+}
+
+.chartScroll::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
+.chartScroll::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }
+.chartScroll:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
 
 .chartLegend {
   display: flex;
@@ -1681,7 +1698,7 @@
 }
 
 .dcEquation > span:not([data-math-equation]) {
-  color: var(--s7-ink);
+  color: #e7eaec;
   font-weight: 700;
 }
 
@@ -1926,6 +1943,7 @@
 
 .ledgerTable {
   display: grid;
+  min-width: 0;
   gap: 1px;
   padding: 1px;
   border: 1px solid #999a95;
@@ -1934,13 +1952,15 @@
 
 .ledgerTable > div {
   display: grid;
-  grid-template-columns: 1.2fr repeat(3, 1fr);
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
   background: #f8f8f4;
 }
 
 .ledgerTable span,
 .ledgerTable strong {
-  padding: 5px 7px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 5px 4px;
   border-right: 1px solid #d1d1cc;
   font-family: var(--s7-font-text);
   font-size: var(--s7-small);
@@ -2200,7 +2220,7 @@
 
   .barRows > div,
   .diceRows > div {
-    grid-template-columns: 78px minmax(80px, 1fr) 45px;
+    grid-template-columns: 78px minmax(0, 1fr) 45px;
   }
 }
 
@@ -2210,10 +2230,14 @@
   }
 }
 
-.tabs { display: flex; overflow-x: auto; border: 1px solid #242522; background: #242522; box-shadow: inset 1px 1px #fff,
+.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid #242522; background: #242522; box-shadow: inset 1px 1px #fff,
     2px 2px 0 #a5a5a0; }
 .tabs button { flex: 1 0 140px; min-height: 50px; border: 0; background: #e4e4df; box-shadow: inset 1px 1px #fff, inset -1px -1px #9b9c97; }
 .tabs button strong { white-space: normal; overflow: visible; text-overflow: clip; font-size: var(--s7-small); }
+
+@container (max-width: 680px) {
+  .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 .rankingExperiment {
   margin-top: 16px;

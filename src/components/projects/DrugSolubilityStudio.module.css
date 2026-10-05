@@ -149,7 +149,7 @@
 .metricCard > strong,
 .metricCard > small { display: block; min-width: 0; }
 .metricCard > span { overflow: hidden; color: #626661; font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; text-overflow: ellipsis; text-transform: none; white-space: nowrap; }
-.metricCard > strong { margin: 5px 0 3px; overflow: hidden; color: #171b18; font-family: var(--s7-font-mono); font-size: var(--s7-title); line-height: 1.4; letter-spacing: normal; text-overflow: ellipsis; white-space: nowrap; }
+.metricCard > strong { margin: 5px 0 3px; overflow-wrap: anywhere; color: #171b18; font-family: var(--s7-font-mono); font-size: var(--s7-title); line-height: 1.4; letter-spacing: normal; white-space: normal; }
 .metricCard[data-tone="amber"] > strong { overflow: visible; font-size: var(--s7-title); line-height: 1.4; text-overflow: clip; white-space: normal; }
 .metricCard > small { overflow: hidden; color: #6a6e69; font-size: var(--s7-small); text-overflow: ellipsis; white-space: nowrap; }
 
@@ -305,6 +305,7 @@
 .chartHeader,
 .panelHeading {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
@@ -317,7 +318,7 @@
 .chartHeader > div:first-child span { color: var(--sle-blue); font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
 .chartHeader > div:first-child strong { margin-top: 2px; font-size: var(--s7-small); }
 .legend,
-.pointLegend { display: flex; gap: 8px; color: #4e534e; font-size: var(--s7-small); font-weight: 700; }
+.pointLegend { display: flex; flex-wrap: wrap; gap: 8px; color: #4e534e; font-size: var(--s7-small); font-weight: 700; }
 .legend span::before,
 .pointLegend span::before { display: inline-block; width: 8px; height: 8px; margin-right: 4px; border: 1px solid currentColor; content: ""; }
 .legend span[data-line="ideal"]::before { color: var(--sle-amber); background: var(--sle-amber-soft); }
@@ -421,7 +422,7 @@
 .conversionReadout article strong,
 .conversionReadout article small { display: block; }
 .conversionReadout article span { color: var(--sle-green); font-size: var(--s7-small); font-weight: 700; letter-spacing: normal; }
-.conversionReadout article strong { margin: 7px 0 3px; overflow: hidden; font-family: var(--s7-font-mono); font-size: var(--s7-title); text-overflow: ellipsis; white-space: nowrap; }
+.conversionReadout article strong { margin: 7px 0 3px; overflow-wrap: anywhere; font-family: var(--s7-font-mono); font-size: var(--s7-title); white-space: normal; }
 .conversionReadout article small { color: #686c67; font-size: var(--s7-small); }
 .conversionReadout > div { color: var(--sle-plum); font-size: var(--s7-title); font-weight: 700; text-align: center; }
 .roundTrip { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 9px; align-items: center; margin: 0 10px 10px; padding: 9px; border: 1px solid var(--sle-green); background: var(--sle-green-soft); }
@@ -481,6 +482,8 @@
 }
 
 @container (max-width: 740px) {
+  .basisHero,
+  .evidenceHero { grid-template-columns: minmax(0, 1fr); }
   .boundaryBanner,
   .syntheticBanner { grid-template-columns: auto minmax(0, 1fr); }
   .boundaryBanner > strong,
@@ -515,8 +518,8 @@
   .basisSwitch > span { min-height: 25px; }
   .scenarioButtons button + button,
   .basisSwitch button + button { border-top: 1px solid #8c8f89; border-left: 0; }
-  .legend,
-  .pointLegend { display: none; }
+  .chartHeader { align-items: flex-start; flex-direction: column; }
+  .panelHeading strong { white-space: normal; }
   .chart,
   .validationChart { min-height: 145px; }
   .conversionReadout { grid-template-columns: 1fr; }
