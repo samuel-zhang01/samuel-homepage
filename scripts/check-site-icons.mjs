@@ -66,6 +66,7 @@ assert.deepEqual(await iconConfigModule.exports.default.redirects(), [
 ], "Legacy browser icon redirects temporarily to the reviewed public PNG without a route bundle");
 
 const maskable = read("public/icon-512-maskable.png");
+assert.equal(createHash("sha256").update(maskable).digest("hex"), "bb3b0fc5e21da32b8a80ac1c737ae8613ac03c5864393b26f59e09827dd52739", "Maskable icon matches the reviewed browser artwork exactly");
 const maskMetadata = await sharp(maskable).metadata();
 assert.equal(maskMetadata.format, "png", "Maskable icon is PNG");
 assert.equal(maskMetadata.width, 512, "Maskable width matches manifest");
@@ -83,9 +84,26 @@ for (let y = 0; y < 512; y++) for (let x = 0; x < 512; x++) {
   }
 }
 assert.ok(subjectPixels > 10_000, "Maskable icon contains visible profile artwork");
-const maskExpected = await sharp({ create: { width: 512, height: 512, channels: 4, background: { r: 133, g: 135, b: 168, alpha: 1 } } })
-  .composite([{ input: await sharp(expectedProfile(288), { raw: { width: 288, height: 288, channels: 4 } }).png().toBuffer(), left: 112, top: 112 }]).ensureAlpha().raw().toBuffer();
-assert.deepEqual(maskPixels, maskExpected, "Maskable icon uses the canonical profile rather than another drawing");
+// Verify source-over composition with integer arithmetic, rather than asking
+// the current native libvips build to reproduce another build's float rounding.
+// At exact integer results, a semi-transparent blend can round one value down;
+// the reviewed PNG has 13 such channels. The digest above rejects any byte
+// change, including choosing another otherwise valid boundary value.
+const maskSubject = expectedProfile(288);
+for (let y = 0; y < 512; y++) for (let x = 0; x < 512; x++) {
+  const at = (y * 512 + x) * 4;
+  const inside = x >= 112 && x < 400 && y >= 112 && y < 400;
+  const sourceAt = inside ? ((y - 112) * 288 + x - 112) * 4 : 0;
+  const alpha = inside ? maskSubject[sourceAt + 3] : 0;
+  for (let channel = 0; channel < 3; channel++) {
+    const source = inside ? maskSubject[sourceAt + channel] : 0;
+    const numerator = source * alpha + background[channel] * (255 - alpha);
+    const expected = Math.floor(numerator / 255);
+    const value = maskPixels[at + channel];
+    const roundedBoundary = alpha > 0 && alpha < 255 && numerator % 255 === 0 && value === expected - 1;
+    assert.ok(value === expected || roundedBoundary, `Maskable pixel ${x},${y} channel ${channel} uses canonical source-over artwork`);
+  }
+}
 
 const ico = read("public/favicon.ico");
 // Reviewed derivative recorded in docs/SYSTEM7_ICON_PROMPTS.json. Keep the
