@@ -9,6 +9,7 @@ import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
 import { getProjectText } from "@/lib/projectNarrative";
 import { ProjectDemoRouter } from "./ProjectDemoRouter";
 import { ProjectLocaleProvider, useProjectLocale } from "./ProjectTranslationBoundary";
+import { ScheduleCallLink } from "../ScheduleCallLink";
 import styles from "./ProjectActivity.module.css";
 
 const copy = {
@@ -97,6 +98,7 @@ export default function ProjectActivity({ slug, locale, kind, artifactHref, acti
           {t(kind === "demo" ? "Share demo" : "Share PDF")}
           <svg className={styles.shareIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1" /><path d="M15 8V4H4v11h4" /></svg>
         </button>
+        {project!.slug === "coverd-yasa" && kind === "demo" && <ScheduleCallLink locale={locale} className={styles.scheduleButton} />}
         {artifact && <a className={`s7-button ${styles.downloadButton}`} href={artifact.href} download aria-label={t("Save PDF")} title={t("Save PDF")}>
           <span className={styles.downloadLabel}>{t("Save PDF")}</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5" /></svg>

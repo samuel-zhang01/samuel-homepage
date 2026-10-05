@@ -151,6 +151,8 @@ const zhCN: Record<string, string> = {
   "RUN/HACK — Field Journal": "跑步黑客松 — 现场记录",
   "A rain-soaked running hackathon field journal: the runner-only build rule, 44 team kilometres, a 100+ person track community and second-place app SideQuest.": "一份雨中跑步黑客松现场记录：仅限跑者构建的规则、44 公里团队里程、100 多人的跑道社区，以及获得第二名的应用 SideQuest。",
   "Contact Samuel": "联系 Samuel",
+  "Schedule a call with Samuel": "预约与 Samuel 通话",
+  "Book a 30-minute call (opens in a new tab)": "预约 30 分钟通话（在新标签页打开）",
   "Email is the most direct way to start a useful conversation.": "电子邮件是开启有价值交流最直接的方式。",
   "Open my professional profile for experience, projects and shared connections.": "打开我的职业档案，查看我的经历、项目与共同人脉。",
   "Write Email": "撰写邮件",
@@ -1582,6 +1584,8 @@ const zhCN: Record<string, string> = {
 };
 
 const zhTWOverrides: Record<string, string> = {
+  "Schedule a call with Samuel": "預約與 Samuel 通話",
+  "Book a 30-minute call (opens in a new tab)": "預約 30 分鐘通話（在新分頁開啟）",
   "Download recovery records": "下載復原記錄",
   "Readable desk data downloaded. Recovery records remain in this browser.": "可讀取的桌面資料已下載。復原記錄仍保留在此瀏覽器中。",
   "Recovery files preserve raw browser records for inspection. They cannot be restored here.": "復原檔案保留瀏覽器中的原始記錄以供檢查，無法在此直接還原。",

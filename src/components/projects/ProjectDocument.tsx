@@ -11,6 +11,7 @@ import { ProjectLocaleProvider } from "./ProjectTranslationBoundary";
 import { ProjectCaseBrief } from "./ProjectCaseBrief";
 import { ProjectWindowContext } from "./ProjectWindowContext";
 import { ProjectArtwork } from "./ProjectArtwork";
+import { ScheduleCallLink } from "../ScheduleCallLink";
 export { default as ProjectActivity } from "./ProjectActivity";
 
 import styles from "./ProjectDocument.module.css";
@@ -68,6 +69,7 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
       {project.demo && <button className="s7-button is-primary" onClick={openDemo} title={t("Opens in a desktop window")}>{t("Open interactive demo")} ↗</button>}
       {primaryPdf && <button className="s7-button is-primary" onClick={() => openActivity?.({ slug, kind: "pdf", artifactHref: primaryPdf.href })} title={getProjectText(locale, primaryPdf.label)}>{t(slug === "growmat" ? "Open showcase PDF" : "Open PDF")} ↗</button>}
       <button className={`s7-button ${embedded ? styles.backToList : ""}`} onClick={onBack}>← {t(embedded ? "Back to list" : "All projects")}</button>
+      {project.slug === "coverd-yasa" && <ScheduleCallLink locale={locale} className={styles.scheduleButton} />}
       {shareStatus && <span role="status">{t(shareStatus)}</span>}
     </nav>
     <details className={styles.secondaryActions}>

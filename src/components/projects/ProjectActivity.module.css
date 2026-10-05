@@ -66,6 +66,7 @@
   .shortBackLabel { display: inline; }
   .activity .toolbar > .downloadButton { width: 44px; height: 44px; padding: 0; }
   .shareStatus, .shareFallback { grid-column: 1 / -1; }
+  .scheduleButton { grid-column: 1 / -1; }
   .demo { padding: 5px; }
   .reader :global(.pdf-reader__stage) { padding: 8px; }
 }

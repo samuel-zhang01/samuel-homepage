@@ -5,6 +5,7 @@ import { useDesktopPreferences } from "@/hooks/useDesktopPreferences";
 import { readDesktopPreferences, type DesktopPattern } from "@/lib/desktopPreferences";
 import { WindowErrorBoundary } from "./WindowErrorBoundary";
 import { System7Icon, type System7IconKind } from "./System7Icon";
+import { ScheduleCallLink } from "./ScheduleCallLink";
 import { arcadeIconKinds, contactIconKinds, getApplicationIcon, getProjectIcon, serviceIconKinds } from "@/lib/iconIdentity";
 import { projects } from "@/data/projects";
 import { ProjectWindowContext } from "./projects/ProjectWindowContext";
@@ -1192,25 +1193,22 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
             : activeService === "linkedin"
               ? "Open my professional profile for experience, projects and shared connections."
               : "Available for conversations about applied AI, responsible technology, product leadership, and ambitious early-stage ventures."}</p>
-          {activeService === "internet" && (
-            <div className="contact-links">
+          <div className="contact-links">
+            <ScheduleCallLink locale={locale} className="mac-button" />
+            {activeService === "internet" && <>
               <button className="mac-button is-default" aria-live="polite" onClick={copyEmail}>{copyLabel}</button>
               <a className="mac-button" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">LinkedIn</a>
               <a className="mac-button" href="https://github.com/samuel-zhang01" target="_blank" rel="noreferrer">GitHub</a>
               <button className="mac-button" onClick={() => openApp("coverd")}>COVERD</button>
-            </div>
-          )}
-          {activeService === "email" && (
-            <div className="contact-links">
+            </>}
+            {activeService === "email" && <>
               <a className="mac-button is-default" href="mailto:sam.xiaojian.zhang@outlook.com">Write Email</a>
               <button className="mac-button" aria-live="polite" onClick={copyEmail}>{copyLabel}</button>
-            </div>
-          )}
-          {activeService === "linkedin" && (
-            <div className="contact-links">
+            </>}
+            {activeService === "linkedin" && <>
               <a className="mac-button is-default" href="https://www.linkedin.com/in/samuel-xj-zhang/" target="_blank" rel="noreferrer">Open LinkedIn</a>
-            </div>
-          )}
+            </>}
+          </div>
           <dl><div><dt>Location:</dt><dd>London, UK</dd></div><div><dt>Network:</dt><dd>Open to useful conversations</dd></div></dl>
         </div>
       </div>

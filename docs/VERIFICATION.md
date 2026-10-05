@@ -14,7 +14,19 @@ The black person mark is restored at the top left. Education uses official King'
 
 Automated development captures cover the primary views of all **28 routed project demos** at 1440, 390 and 320px. The first nineteen have full en-GB/zh-TW capture matrices; the other nine have complete English matrices and additional Mandarin affected-state coverage. Changes stay in project modules: contrast, wrapping, controls, navigation and chart viewports. Scientific values, evidence qualifications and meaningful project colours are preserved. The independent judge directly inspected one desktop and one phone content state for each of all 28 demos, plus additional plot, interaction, Mandarin and branding samples. The first pass scored 9.2 coherence  / 8.7 readability and exposed calibration hover, framework metadata, insurance labels and course score-badge issues. A fresh affected-state re-review scored **9.2/10 coherence, 9.0/10 readability and 9.3/10 native icon fidelity** after repair. These are representative development grades. Independent compiled cross-review later exposed crowded Home map labels, undersized CFD schematic text and Insurance selected-state contrast. Those repairs preserve scientific values and project palettes. Compiled checks are recorded separately and screenshots do not establish production deployment.
 
-## Current release verification
+## Call scheduling follow-up
+
+Contact now includes a small shared System 7 link on all three service tabs. The YASA overview and interactive-demo toolbar expose the same link to `https://schedule.coverd.ai/book/samuel/30mins-chat`. It opens in a new tab, preserves the desktop/demo state, and has reviewed English/CN/TW labels and a localized 30-minute/new-tab tooltip. Phone project toolbars give the label its own row while retaining 44px touch targets.
+
+This follow-up passed lint and an optimized production build, including all prebuild profile, graph, locale, copy, icon, scientific and navigation gates and build-time types. Output remains within unchanged limits: **120 browser files / 5.19 MiB**, **262.9 KiB initial JavaScript gzip**, **2,063 runtime files / 4.92 MiB application runtime**. Current ownership reaches **225/225 application sources and 237 public assets**, with zero unresolved imports or unowned assets.
+
+Compiled Chromium verification passed **16/16 YASA overview/demo journeys** across all four locales at 1440 and 320px. A separate button review passed **eight profiles / 24 link surfaces**, **24 Contact tab checks** and **24 actual keyboard popup activations**, with zero page/resource errors, contained layouts and restored demo-launcher focus. Twenty-four screenshots were captured; direct visual inspection covered English phone Contact/overview, English desktop demo and Traditional Chinese phone demo. The live booking URL returned HTTP 200. Popup routing checks intercepted its response; calendar availability and booking confirmation are outside this scope.
+
+Helper failures are retained separately: an overly specific dotted-focus assertion, an undismissed first-visit mobile guide, an early focus-restoration sample and an invalid comma-separated regular-expression filter. Corrected helpers passed without another application change. These focused checks do not replace the broader native-artwork release evidence below.
+
+The 42 completed follow-up files (2,840,698 bytes) are archived locally outside the checkout at `~/.local/share/samuel-homepage/review-archive/schedule-call-20261005.tar.gz`, with a neighboring manifest. Every member hash was verified before removal; archive SHA-256 is `931c0b7278140c261c0590ff2829b46f6752fd62d8719b685918bbfd2e840abb`. The temporary build cache was pruned; the reviewed preview remains outside the checkout.
+
+## Native artwork release verification (`d29d92d`)
 
 The restored native-artwork implementation passed `npm run check:release` on **587 frozen inputs**, using dependencies physically inside the build tracing root. Deployment/security fixtures, dependency advisory/signature checks, lint, types, source/scientific/profile/graph/locale gates, optimized compilation and output gates passed. Results include zero vulnerabilities, 307 registry signatures and 58 attestations. The existing limits remain unchanged: **120 browser files / 5.19 MiB including 257.1 KiB deferred math**, **262.5 KiB initial JavaScript gzip**, **2,063 traced runtime files** and **4.92 MiB application runtime**. The initial JavaScript and runtime limits remain 270 KiB and 5 MiB respectively.
 
@@ -129,7 +141,7 @@ All **31 evidence files / 536,206 bytes**, including the two failed builds and d
 
 ## Repository cleanup
 
-The initial cleanup checked actual module reachability and literal/computed consumers before deletion: **225/225 application sources and 235 public files** had owners. The subsequent fidelity/UI work changes source and artwork and adds two official university assets. Consolidating the duplicate framework icon into a configuration redirect removes one binary source. The current inventory has **224 reachable application sources and 237 owned public files**, with no unresolved imports or unowned runtime assets.
+The initial cleanup checked actual module reachability and literal/computed consumers before deletion: **225/225 application sources and 235 public files** had owners. The subsequent fidelity/UI work changes source and artwork and adds two official university assets. Consolidating the duplicate framework icon into a configuration redirect removes one binary source. The fidelity-pass inventory had **224 reachable application sources and 237 owned public files**, with no unresolved imports or unowned runtime assets.
 
 False positives were reviewed and retained:
 
