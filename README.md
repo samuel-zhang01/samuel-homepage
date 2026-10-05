@@ -11,13 +11,13 @@ server-side store of personal data.
 **[Browse the project archive](https://me.samuelzhang.co.uk/projects)** ·
 **[Explore Orbital Lab](https://me.samuelzhang.co.uk/orbitals)**
 
-**41 project files · 9 desk apps · 4 languages · no account required**
+**41 project files · 28 routed demos · 9 desk apps · 4 languages · no account required**
 
 [Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
 Current implementation and validation: [documentation index](docs/README.md). The [verification guide](docs/VERIFICATION.md) records current checks, earlier scopes and known limits.
 
-![Samuel System 7 desktop with its About window and shared pixel icons](docs/assets/desktop.png)
+![Samuel System 7 desktop with its About window, all desktop launchers and COVERD's original logo](docs/assets/desktop.png?v=20261005)
 
 ## A quick look
 
@@ -25,7 +25,7 @@ A familiar title bar. A useful little notebook. An orbital you can turn in your
 hands. The old desktop language is the starting point; the interactions are
 built for today's browsers, keyboards and touch screens.
 
-![Searchable project list and independently scrolling project document](docs/assets/project-archive.png)
+![All 41 project files in the searchable archive beside the selected Neural CFD Surrogates document](docs/assets/project-archive.png?v=20261005)
 
 <table>
   <tr>
@@ -34,7 +34,7 @@ built for today's browsers, keyboards and touch screens.
   </tr>
   <tr>
     <td><img src="docs/assets/orbital-density.png" alt="Sharp phase-coloured probability points in Orbital Lab" width="560" /></td>
-    <td><img src="docs/assets/mobile-note-pad.png" alt="Traditional Chinese Note Pad on a phone, with aligned ruled text and clear page controls" width="240" /></td>
+    <td><img src="docs/assets/mobile-note-pad.png?v=20261005" alt="Traditional Chinese Note Pad on a phone, with saved notes, aligned ruled text and clear page controls" width="240" /></td>
   </tr>
 </table>
 
@@ -48,7 +48,12 @@ uses display-timed animation, starts paused, and respects reduced-motion setting
 
 </details>
 
-The images are reference captures. The current audit records validation of the reviewed revision. The deployed site may remain on an earlier revision until the server owner runs the deployment script.
+The desktop, project archive and mobile Note Pad were recaptured on 5 October
+2026 from a production build of the current checkout. The orbital image and
+animation remain earlier reference captures. The last recorded production deployment is
+`aed8ebc`, verified on 5 October 2026 with public HTTPS, artwork hashes and
+four-locale desktop/phone checks. The [verification guide](docs/VERIFICATION.md)
+records later checkout changes separately from that deployment.
 
 ## The desk apps
 
@@ -61,7 +66,7 @@ Every app has its own archive record; the records launch the same desktop window
 | Quick List | Small tasks, priorities and completion | Local autosave and desk backup |
 | Focus Clock | Timed focus sessions and a daily tally | Local progress and desk backup |
 | Pocket Calendar | Private notes attached to dates | Local autosave and desk backup |
-| Desk Calculator | Everyday arithmetic with a paper tape | Copy result, local tape and desk backup |
+| Desk Calculator | Chained arithmetic with a paper tape | Copy result, local tape and desk backup |
 | Unit Converter | Length, mass, temperature and decimal data units | Copy result |
 | Colour Studio | Palette swatches and contrast checks | Local swatches and desk backup |
 | Orbital Lab | ASCII, probability points and smooth orbital surfaces | Text/PNG exports with model context |
@@ -102,6 +107,7 @@ clean black-and-white structure, and familiar visual metaphors.
 - Chicago-first window/menu chrome, Geneva-first content and Monaco/Courier
   machine readouts, with language-appropriate CJK fallbacks.
 - 48 × 48 desktop launchers and primary project heading icons, 32 × 32 card/Find/Contact/phone-switcher icons, and 16 × 16 inline/menu/navigation artwork.
+- Text-only centered window and Find titles, a bounded 14px gray stripe band and larger touch hit areas. The active app icon appears on the right of the main menu bar; the black person mark and official university logos retain their own branding.
 - Slightly rounded push buttons, square pop-up menus, hard one-pixel relief,
   separate default-action and keyboard-focus rings, and restrained project
   colour. The [System 7 benchmark](docs/SYSTEM7_DESIGN_BENCHMARK.md) distinguishes
@@ -192,7 +198,8 @@ boundaries or comparable atomic sizes. The smooth surface is a sampled 1%-of-pea
 resolves high-n cores; small features below the 80-cell grid can still be omitted.
 
 The interface has all four locales, with separate Mandarin terminology for
-Mainland China and Taiwan. Element names retain their English reference labels.
+Mainland China and Taiwan. All 118 element names, accessible labels and export
+headings are localised; chemical symbols and scientific notation retain their spelling.
 The bounded sampler and renderer make no runtime third-party calls and rotation
 starts paused. Surface meshing runs in a same-origin worker with a three-entry
 cache. 3D uses WebGL and falls back to ASCII if unavailable; no account, chemistry
@@ -219,8 +226,9 @@ Open tabs in the same browser receive saved-state updates. Note Pad, Sketch Pad,
 
 ## Technology
 
-- Next.js 15 App Router
-- React 19 and TypeScript
+- Next.js 15.5.25 App Router
+- React 19.1.0 and TypeScript
+- Locally prepared PDF.js readers, KaTeX equations and deferred project search indexes
 - Hand-written CSS and generated System 7 icon artwork
 - Static generation for locale and application routes
 - Standalone, non-root Docker runtime
@@ -303,15 +311,16 @@ npm run check:release
 
 This includes deployment-script simulations, search checks, dependency auditing
 and signature verification, lint, TypeScript checking and an isolated production
-build. The build also runs the artifact, data, desk, control, orbital, catalogue,
-style, locale and output-budget gates. No production server is changed by this
+build. The build also runs the artifact, icon, data, desk, PDF, control, orbital,
+learning, scientific, catalogue, profile, graph, navigation, math, style, locale,
+project-copy and output-budget gates. No production server is changed by this
 command. You can run each `check:*` script separately while working.
 
 `npm run build` runs all portfolio gates automatically. The artifact gate rejects unexpected files and verifies reviewed assets by size, signature and SHA-256; the local-data gate pins the reviewed CSV schema and bytes; the desk-behaviour gate covers timer rollover and numeric-entry regressions against the actual shared helpers; the catalogue gate checks unique routes/demos, disclosure rules, source-licence status, local artifact paths and HTTPS references; the CSS-module gate verifies that every static project style reference resolves; and the locale gate keeps archive schemas aligned while preventing untranslated System 7 chrome, project summaries or suite descriptions from silently shipping.
 
 `npm run check:math` validates actual expressions with the strict KaTeX parser, accessible component output and local font assets. The output gate caps the shared math-renderer chunk at 300 KiB and rejects its inclusion in initial page entries. Initial-route JavaScript has a 270 KiB gzip ceiling. Application browser output has a 5 MiB ceiling excluding the separately checked math chunk; application runtime has its own 5 MiB ceiling including math. These ceilings were increased from 4 MiB for the explicit bilingual project dictionaries and are separate from initial page cost. KaTeX uses 20 local WOFF2 fonts (253.7 KiB) and 30.6 KiB of CSS.
 
-The [verification guide](docs/VERIFICATION.md) separates the latest visual checkpoint from earlier navigation, reader, accessibility and history checks. The earlier `effc55f` implementation passed its representative screenshot review and three-engine icon matrix; the later user review identified icon detail lost during export. The current pass restores native originals and checks all 28 routed demos for desktop/mobile readability. Historical results remain distinct from fresh verification. The final compiled pass includes the three-engine icon matrix, 160 demo/app journeys and focused cross-browser diagram checks. Completed raw evidence is archived outside the checkout; temporary receipts stay ignored.
+The [verification guide](docs/VERIFICATION.md) records each implementation's tested scope. The [native-artwork release](docs/VERIFICATION.md#native-artwork-release-verification-d29d92d) includes all 28 routed demos, 160 compiled demo/app journeys, the three-engine icon matrix and focused diagram checks. The [call-scheduling follow-up](docs/VERIFICATION.md#call-scheduling-follow-up) records four-locale desktop/phone link and keyboard checks. The [5 October Docker deployment](docs/VERIFICATION.md#5-october-docker-context-repair) records the actual production build and public-origin verification. Earlier navigation, reader, accessibility and history checks retain their own boundaries. Completed raw evidence is archived outside the checkout; temporary receipts stay ignored.
 
 `npm run audit:repository` produces a read-only source/asset/fixture ownership inventory. The deeper HTTP, browser, recovery and accessibility runners are documented in the current review; they use a compiled preview and external QA tools. The ordinary release build stays independent of those external browser installations.
 
@@ -358,6 +367,11 @@ material stays out. `deploy.sh` runs this check before building the image.
 These are build-only inputs; the final image copies the standalone
 application and reviewed public assets.
 
+The 5 October repair also keeps maskable-icon verification portable across native
+compositors: the gate checks source-over arithmetic and the reviewed PNG's exact
+SHA-256. The successful ARM64 Alpine deployment and the failed builds that led
+to both repairs are recorded in the [deployment evidence](docs/VERIFICATION.md#5-october-docker-context-repair).
+
 Basic manual container commands (without the script's verification/rollback):
 
 ```bash
@@ -399,6 +413,7 @@ src/data/               # Reviewed projects, profile, documents and fixtures
 src/lib/                # Identity, localization, evidence and shared calculations
 public/                 # Curated public PDFs, icons and scientific media
 scripts/                # Asset preparation and reusable release/browser checks
+scripts/fixtures/       # Validation inputs, including 30 project-copy audit receipts
 others/                 # Maintained CV authoring sources
 docs/                  # Design, provenance, workflows and verification
 LICENSE                 # Original-code reuse conditions
