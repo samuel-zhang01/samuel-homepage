@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import Image from "next/image";
 import { MriErrorExperiment } from "./SourceExperiments";
 
@@ -344,11 +345,8 @@ function SyntheticSlice({
             <path d="M75 126 Q120 155 172 125" stroke="#78a8ff" />
           </g>
         ) : null}
-        <text x="12" y="177" fill="#b9bec4" fontSize="8" letterSpacing="1.2">
-          GENERATED ANATOMY-LIKE PHANTOM
-        </text>
       </svg>
-      <figcaption>{label}</figcaption>
+      <figcaption><span className={styles.phantomProvenance}>GENERATED ANATOMY-LIKE PHANTOM</span>{label}</figcaption>
     </figure></ProjectCopy>
   );
 }
@@ -393,7 +391,8 @@ function KSpaceMask({ acceleration }: { acceleration: Acceleration }) {
           );
         })}
         <path d="M120 9 H136" stroke="#fff" strokeWidth="1" />
-        <text x="128" y="18" textAnchor="middle" fill="#fff" fontSize="7">
+        <rect x="104" y="12" width="48" height="24" fill="#090c16" />
+        <text x="128" y="30" textAnchor="middle" fill="#fff" fontSize="16">
           ACS
         </text>
       </svg>
@@ -929,12 +928,12 @@ function AttackChart({ selectedAttack, selectedIndex }: { selectedAttack: Attack
       <div className={styles.chartLegend}>
         {series.map((item) => <span key={item.label}><i style={{ background: item.color }} />{item.label}</span>)}
       </div>
-      <div className={styles.chartScroll} role="region" aria-label="Reported PSNR under FGSM and PGD attacks" tabIndex={0}>
-      <svg viewBox="0 0 300 185" role="img" aria-label="Reported PSNR under FGSM and PGD attacks">
+      <PlotPanHint /><div className={styles.chartScroll} role="region" aria-label="Reported PSNR under FGSM and PGD attacks" tabIndex={0}>
+      <svg viewBox="0 0 300 210" role="img" aria-label="Reported PSNR under FGSM and PGD attacks">
         {[20, 24, 28, 32].map((tick) => (
           <g key={tick}>
             <line x1="35" x2="273" y1={toY(tick)} y2={toY(tick)} stroke="#d0d0ca" strokeWidth="1" />
-            <text x="29" y={toY(tick) + 3} textAnchor="end" fontSize="10" fill="#5e5e5a">{tick}</text>
+            <text x="29" y={toY(tick) + 3} textAnchor="end" fontSize="12" fill="#5e5e5a">{tick}</text>
           </g>
         ))}
         {series.map((item) => (
@@ -962,10 +961,10 @@ function AttackChart({ selectedAttack, selectedIndex }: { selectedAttack: Attack
           </g>
         ))}
         {attackResults.epsilons.map((epsilon, index) => (
-          <text key={epsilon} x={toX(index)} y="174" textAnchor="middle" fontSize="10" fill="#5e5e5a">{epsilon}</text>
+          <text key={epsilon} x={toX(index)} y="174" textAnchor="middle" fontSize="12" fill="#5e5e5a">{epsilon}</text>
         ))}
-        <text x="153" y="180" textAnchor="middle" fontSize="10" fill="#343431">attack budget ε</text>
-        <text x="8" y="20" fontSize="10" fill="#343431">PSNR dB</text>
+        <text x="153" y="198" textAnchor="middle" fontSize="12" fill="#343431">attack budget ε</text>
+        <text x="8" y="20" fontSize="12" fill="#343431">PSNR dB</text>
       </svg>
       </div>
       <p>Aggregate values transcribed from the final report; no per-slice samples are plotted.</p>

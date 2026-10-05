@@ -1660,7 +1660,7 @@
   }
 
   .stepTab {
-    min-height: 42px;
+    min-height: 44px;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     padding: 6px;
@@ -1693,7 +1693,8 @@
 
   .signalRail {
     display: grid;
-    max-height: 230px;
+    max-height: none;
+    overflow: visible;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1702,8 +1703,26 @@
   }
 
   .signalRail > button {
+    min-height: 44px;
+    gap: 3px 7px;
     border: 1px solid #c0c0ba;
   }
+
+  .signalRail > button > span:nth-child(2) { display: contents; }
+  .signalRail > button strong { grid-column: 1 / -1; }
+  .signalRail > button > span:first-child { grid-column: 1; grid-row: 2; }
+  .signalRail > button small { grid-column: 2; grid-row: 2; }
+  .signalRail > button b { grid-column: 3; grid-row: 2; }
+
+  .signalRail button strong,
+  .signalRail button small {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .signalRail button strong { font-size: var(--s7-ui); }
 
   .rewriteDiff {
     grid-template-columns: 1fr;
@@ -1758,10 +1777,6 @@
 
   .categoryRow > small {
     display: none;
-  }
-
-  .signalRail {
-    grid-template-columns: 1fr;
   }
 
   .evidenceDetail > header {

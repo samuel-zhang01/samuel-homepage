@@ -238,7 +238,7 @@
 
 .filterBar {
   display: grid;
-  grid-template-columns: minmax(190px, 1.45fr) repeat(3, minmax(118px, 0.78fr)) auto;
+  grid-template-columns: minmax(170px, 1fr) repeat(3, minmax(120px, .6fr)) auto;
   align-items: flex-end;
   gap: 8px;
   margin-bottom: 14px;
@@ -1261,9 +1261,7 @@
 }
 .workspaceTabs button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
 
-.filterBar { grid-template-columns: minmax(170px, 1fr) repeat(3, minmax(120px, .6fr)) auto; border: 1px solid #171717; background: #d8d8d3; box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #858581; }
 .weekNode { grid-template-columns: 30px minmax(0, 1fr) 8px; border: 1px solid #171717; background: #fff; box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #a6a6a1, 1px 1px 0 #777772; }
-@container rl-atlas (max-width: 700px) { .filterBar { grid-template-columns: 1fr; } }
 
 .weekNode[aria-pressed="true"], .weekNode[aria-pressed="true"] strong, .weekNode[aria-pressed="true"] small, .weekSelected, .weekSelected strong { color: var(--s7-ink); }
 
@@ -1272,5 +1270,3 @@
 .artifactPanel li { grid-template-columns: minmax(108px, .8fr) minmax(0, 1.4fr); border-bottom: 1px dotted #b8b8b3; }
 .artifactState { max-width: 100%; line-height: 1.4; border: 1px solid; }
 .artifactState i { flex-shrink: 0; border: 1px solid currentColor; }
-@container rl-atlas (max-width: 1000px) { .filterBar { grid-template-columns: repeat(2, minmax(0, 1fr)); } .searchField { grid-column: 1 / -1; } }
-@container rl-atlas (max-width: 500px) { .filterBar { grid-template-columns: minmax(0, 1fr); } }

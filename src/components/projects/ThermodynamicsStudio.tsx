@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { thermodynamicsCopy } from "./copy/thermodynamicsCopy";
@@ -320,7 +321,7 @@ function IsothermChart({
     (_, index) => yMin + (index / 4) * (yMax - yMin),
   );
 
-  return (<ProjectCopy copy={thermodynamicsCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg
+  return (<ProjectCopy copy={thermodynamicsCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg
       className={styles.chart}
       viewBox="0 0 700 350"
       role="img"

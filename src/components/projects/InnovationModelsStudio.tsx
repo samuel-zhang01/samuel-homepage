@@ -1,5 +1,7 @@
 "use client";
 
+import { PlotPanHint } from "./PlotPanHint";
+
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { innovationModelsStudioCopy } from "./copy/innovationModelsStudioCopy";
 
@@ -236,6 +238,7 @@ function MatrixView() {
         </aside>
       </div>
 
+      <PlotPanHint />
       <section className={styles.comparisonTable} role="region" aria-label="Four-model structural comparison" tabIndex={0}>
         <div className={styles.panelHeading}><span>≠</span><strong>Structural comparison</strong><em>Descriptive, not prescriptive</em></div>
         <div className={styles.comparisonHeader}><span>Model</span><span>Ownership</span><span>Authority</span><span>Standing pathway</span></div>
@@ -330,6 +333,7 @@ function PortfolioView() {
         </aside>
       </div>
 
+      <PlotPanHint />
       <section className={styles.allocationTable} role="region" aria-label="Portfolio allocation table" tabIndex={0}>
         <div className={styles.allocationHeader}><span>Model</span><span>Input weight</span><span>Normalised tokens</span><span>Ownership</span><span>Authority</span></div>
         {MODEL_IDS.map((id) => <div key={id}><strong>{MODELS[id].name}</strong><span>{weights[id]}</span><span>{shares[id].toFixed(1)}</span><span>{MODELS[id].ownership}</span><span>{MODELS[id].authority}</span></div>)}

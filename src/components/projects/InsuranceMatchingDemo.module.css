@@ -1596,6 +1596,8 @@
   background: #fff;
 }
 
+.compareTable:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: -3px; }
+
 .compareRow {
   display: grid;
   min-height: 36px;

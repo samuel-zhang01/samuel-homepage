@@ -1359,9 +1359,9 @@
 .sourceStats strong,
 .sourceStats small {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  line-height: 1.45;
 }
 
 .sourceStats span {
@@ -1654,7 +1654,7 @@
 
 @container (max-width: 440px) {
   .canvas {
-    padding: 8px;
+    padding: 0;
   }
 
   .categoryFieldset > div,

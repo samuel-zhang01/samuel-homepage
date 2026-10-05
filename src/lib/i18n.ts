@@ -1107,6 +1107,7 @@ const zhCN: Record<string, string> = {
   "Match retention time, amplitude and elution order, then inspect the closest pair for co-elution.": "匹配保留时间、峰振幅和洗脱顺序，然后检查最近峰对是否共洗脱。",
   "Dock three fixed-shape Gaussian components under the sample trace. Match retention time and preserve elution order; the two late components overlap.": "将三个固定形状的高斯组分对接到样品曲线下方。匹配保留时间并保持洗脱顺序；后两个组分彼此重叠。",
   "Chromatogram legend": "色谱图图例",
+  "View chromatogram": "查看色谱图",
   "SAMPLE TRACE": "样品曲线",
   "FITTED SUM": "拟合总和",
   "COMPONENTS": "组分",

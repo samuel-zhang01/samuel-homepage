@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
 import { projectText } from "@/lib/projectCopy";
 import { molecularCopy } from "./copy/molecularCopy";
@@ -357,7 +358,7 @@ function SpectrumPlot({
   const isFine = span < 10;
 
   return (
-    <ProjectCopy copy={molecularCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.spectrum} viewBox="0 0 880 330" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={molecularCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.spectrum} viewBox="0 0 880 330" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>{`${record.name} ${projectText(locale, molecularCopy, "synthetic observed and predicted spectrum comparison")}`}</title>
       <desc id={`${chartId}-desc`}>
         Synthetic CP-FTMW teaching trace from {minimum.toFixed(isFine ? 3 : 0)} to {maximum.toFixed(isFine ? 3 : 0)} megahertz.

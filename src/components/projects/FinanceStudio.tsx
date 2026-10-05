@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import ClassicSelect from "../ClassicSelect";
 import { System7Icon } from "../System7Icon";
@@ -583,7 +584,7 @@ function InvestmentsView() {
     </div>
     <section className={styles.financePanel}>
       <div className={styles.panelTitle}><div><span>READ-ONLY PORTFOLIO</span><h3>Holdings</h3></div></div>
-      <div className={styles.ledgerTableWrap}><table className={styles.ledgerTable}><thead><tr><th>Account</th><th>Security</th><th>Shares</th><th>Cost</th><th>Market value</th></tr></thead><tbody>{rows.map((row) => <tr key={row.id}><td>{accountFor(row.accountId).label}</td><td>{row.ticker}</td><td>{row.shares}</td><td>{money((row.shares ?? 0) * (row.unitPrice ?? 0))}</td><td>{money((row.shares ?? 0) * (HOLDING_PRICES.find((holding) => holding.ticker === row.ticker)?.price ?? 0))}</td></tr>)}{!rows.length && <tr><td colSpan={5}>No holdings in this example account; its cash still contributes to net worth.</td></tr>}</tbody></table></div>
+      <PlotPanHint /><div className={styles.ledgerTableWrap} role="region" aria-label="Holdings" tabIndex={0}><table className={styles.ledgerTable}><thead><tr><th>Account</th><th>Security</th><th>Shares</th><th>Cost</th><th>Market value</th></tr></thead><tbody>{rows.map((row) => <tr key={row.id}><td>{accountFor(row.accountId).label}</td><td>{row.ticker}</td><td>{row.shares}</td><td>{money((row.shares ?? 0) * (row.unitPrice ?? 0))}</td><td>{money((row.shares ?? 0) * (HOLDING_PRICES.find((holding) => holding.ticker === row.ticker)?.price ?? 0))}</td></tr>)}{!rows.length && <tr><td colSpan={5}>No holdings in this example account; its cash still contributes to net worth.</td></tr>}</tbody></table></div>
       <p className={styles.methodNote}>The real investment workspace also includes saved activity, orders, allocation and dated snapshots. Example securities and prices here are fictional.</p>
     </section>
   </></ProjectCopy>;
@@ -777,7 +778,8 @@ function LedgerView({ rangeLedger, defaultTransfers, anomalies }: {
           <label><span>Category</span><ClassicSelect value={category} onChange={(event) => setCategory(event.target.value as "all" | Category)}><option value="all">All categories</option>{CATEGORY_ORDER.map((item) => <option value={item} key={item}>{item}</option>)}</ClassicSelect></label>
           <label><span>Budget treatment</span><ClassicSelect value={mode} onChange={(event) => setMode(event.target.value as typeof mode)}><option value="all">All rows</option><option value="household">Household cash flow</option><option value="excluded">Transfers + investment churn</option></ClassicSelect></label>
         </div>
-        <div className={styles.ledgerTableWrap}>
+        <PlotPanHint />
+        <div className={styles.ledgerTableWrap} role="region" aria-label="Synthetic ledger" tabIndex={0}>
           <table className={styles.ledgerTable}>
             <thead><tr><th>Date</th><th>Account</th><th>Description</th><th>Category</th><th>Model</th><th>Amount</th></tr></thead>
             <tbody>
@@ -853,7 +855,8 @@ function RecurringView() {
 
       <section className={styles.financePanel} aria-labelledby="patterns-table-title">
         <div className={styles.panelTitle}><div><span>EXPLAINABLE RESULT SET</span><h3 id="patterns-table-title">Recurring candidates</h3></div><span className={styles.rowCount}>{patterns.length} pass</span></div>
-        <div className={styles.patternTableWrap}>
+        <PlotPanHint />
+        <div className={styles.patternTableWrap} role="region" aria-label="Recurring candidates" tabIndex={0}>
           <table className={styles.patternTable}>
             <thead><tr><th>Merchant</th><th>Category</th><th>Cadence</th><th>Median gap</th><th>Typical</th><th>Monthly equivalent</th><th>Evidence</th><th>Status</th></tr></thead>
             <tbody>
@@ -943,7 +946,8 @@ function ImportView() {
 
       <section className={`${styles.financePanel} ${styles.auditPanel}`} aria-labelledby="reconciliation-title">
         <div className={styles.panelTitle}><div><span>PENNY-CLOSE CONTROL</span><h3 id="reconciliation-title">Example ledger: balance checks</h3></div><span className={`${styles.rowCount} ${reconciledBanks.length === bankStatements.length ? styles.pass : styles.fail}`}>{reconciledBanks.length}/{bankStatements.length} pass</span></div>
-        <div className={styles.auditTableWrap}>
+        <PlotPanHint />
+        <div className={styles.auditTableWrap} role="region" aria-labelledby="reconciliation-title" tabIndex={0}>
           <table className={styles.auditTable}>
             <thead><tr><th>Adapter</th><th>Rows</th><th>Opening</th><th>Σ movement</th><th>Closing</th><th>Difference</th><th>Control</th></tr></thead>
             <tbody>

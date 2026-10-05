@@ -1239,17 +1239,19 @@ function DocumentsApp({ locale }: { locale: Locale }) {
         ))}
       </aside>
       <section className="documents-preview">
-        {activeDocument.id === "ai-cv" ? <CvNavigation locale={locale} /> : <nav className="button-row" aria-label={translateText(locale, "Explore the work")}>
-          {activeDocument.projectSlug ? <a className="mac-button" href={`/${localeSlug(locale)}/projects?project=${activeDocument.projectSlug}`}>{translateText(locale, "Open related project")} →</a> : null}
-          <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`document:${activeDocument.id}`)}`}>{translateText(locale, "Explore connections")} →</a>
-        </nav>}
-        <p className="document-description">{activeDocument.description}</p>
         <div className="documents-toolbar">
           <span>{activeDocument.title}</span>
           <span className="documents-toolbar__hint">Scroll continuously to read every page; zoom when needed.</span>
           <a className="mac-button" href={activeDocument.src} download>{activeDocument.id === "ai-cv" ? "Download CV" : "Save a copy"}</a>
         </div>
         <PdfPreview key={activeDocument.id} src={activeDocument.src} title={translateText(locale, activeDocument.title)} locale={locale} />
+        <div className="documents-context">
+          {activeDocument.id === "ai-cv" ? <CvNavigation locale={locale} /> : <nav className="button-row" aria-label={translateText(locale, "Explore the work")}>
+            {activeDocument.projectSlug ? <a className="mac-button" href={`/${localeSlug(locale)}/projects?project=${activeDocument.projectSlug}`}>{translateText(locale, "Open related project")} →</a> : null}
+            <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`document:${activeDocument.id}`)}`}>{translateText(locale, "Explore connections")} →</a>
+          </nav>}
+          <p className="document-description">{activeDocument.description}</p>
+        </div>
         <p className="documents-fallback">
           Prefer your browser&apos;s full PDF tools? <a href={activeDocument.src}>Open this document in the current tab</a>.
         </p>

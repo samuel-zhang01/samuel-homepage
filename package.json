@@ -48,6 +48,7 @@
     "check:deep:http": "node scripts/check-deep-http.mjs",
     "check:deep:browser": "node scripts/check-deep-browser.mjs",
     "check:resize": "node scripts/check-project-window-resize.mjs",
+    "check:phone-space": "node scripts/check-phone-space.mjs",
     "check:deep:recovery": "node scripts/check-deep-recovery.mjs",
     "check:profile": "node scripts/check-profile.mjs"
   },

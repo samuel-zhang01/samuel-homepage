@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { scientificCopy } from "./copy/scientificCopy";
 
@@ -683,7 +684,7 @@ export function ReliabilityLabDemo() {
             />
           </div>
           <div className={styles.chartWrap} aria-live="polite">
-            <div className={styles.chartViewport} role="region" aria-label="Reliability diagram" tabIndex={0}>
+            <PlotPanHint /><div className={styles.chartViewport} role="region" aria-label="Reliability diagram" tabIndex={0}>
               <ReliabilityChart view={calibrationView} />
             </div>
             <div className={styles.calibrationMetrics}>

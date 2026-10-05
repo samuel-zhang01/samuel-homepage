@@ -1601,9 +1601,9 @@
 .sourceSummary strong,
 .sourceSummary small {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
 }
 
 .sourceSummary span {
@@ -1850,7 +1850,7 @@
   }
 
   .topologyNode {
-    width: 92px;
+    width: 112px;
   }
 
   .node_operation {
@@ -1989,6 +1989,8 @@
 }
 
 @container home-lab-studio (max-width: 560px) {
+  .topologyView, .failureView, .capacityView, .auditView { padding: 0; }
+  .traceToolbar { gap: 12px; margin-bottom: 16px; padding: 12px; }
   .provenanceBanner,
   .failureBanner {
     grid-template-columns: 1fr;
@@ -2067,4 +2069,12 @@
   .viewTabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .viewTabs button { min-height: 50px; }
   .viewTabs strong, .viewTabs span { white-space: normal; overflow: visible; }
+}
+
+.mountViewport { max-width: 100%; overflow-x: auto; outline-offset: -3px; }
+.mountViewport:focus-visible { outline: 2px dotted var(--s7-ink); }
+@container home-lab-studio (max-width: 620px) {
+  .mountTable { min-width: 450px; }
+  .mountHeader, .mountRow { grid-template-columns: minmax(190px, 1fr) 70px 70px 70px; }
+  .mountRow > strong { white-space: normal; overflow-wrap: anywhere; }
 }

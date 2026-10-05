@@ -4,7 +4,8 @@ import { scientificCopy } from "./copy/scientificCopy";
 
 import Image from "next/image";
 import ClassicSelect from "@/components/ClassicSelect";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
+import { PlotPanHint } from "./PlotPanHint";
 import styles from "./ScientificPlayback.module.css";
 import { useProjectLocale } from "./ProjectTranslationBoundary";
 import { useProjectDemoActive } from "./ProjectDemoActivityContext";
@@ -19,10 +20,10 @@ const channels = [{ id: "velocity-y", label: "Vertical velocity · v" }, { id: "
 type FlowChannel = (typeof channels)[number]["id"] | "all";
 const framePath = (sequence: FlowSequence, frame: number, channel: string) => `/projects/neural-cfd/media/${sequence}/frame-${String(frame).padStart(2, "0")}-${channel}.webp`;
 const forecastModels = [
-  { id: "fno-baseline", label: "Fourier operator", image: "fno-baseline-prediction.webp", note: "A Fourier neural operator processes a ten-frame input window and predicts the next ten frames. This image shows the horizontal-velocity forecast at index 9." },
-  { id: "fno-residual", label: "Residual FNO", image: "fno-residual-prediction.webp", note: "Five residual Fourier blocks combine spectral interactions with a pointwise path. The saved image shows horizontal velocity at forecast index 9." },
-  { id: "fno-multiscale", label: "Position-encoded FNO", image: "fno-multiscale-prediction.webp", note: "Spatial and temporal coordinates join the flow channels before Fourier processing. This image shows horizontal velocity at forecast index 9." },
-  { id: "unet", label: "U-Net", image: "unet-prediction.webp", note: "An encoder–decoder predicts the next flow field on an 80 × 320 grid. Skip connections restore spatial detail as the decoder upsamples." },
+  { id: "fno-baseline", width: 543, height: 172, label: "Fourier operator", image: "fno-baseline-prediction.webp", note: "A Fourier neural operator processes a ten-frame input window and predicts the next ten frames. This image shows the horizontal-velocity forecast at index 9." },
+  { id: "fno-residual", width: 543, height: 172, label: "Residual FNO", image: "fno-residual-prediction.webp", note: "Five residual Fourier blocks combine spectral interactions with a pointwise path. The saved image shows horizontal velocity at forecast index 9." },
+  { id: "fno-multiscale", width: 519, height: 389, label: "Position-encoded FNO", image: "fno-multiscale-prediction.webp", note: "Spatial and temporal coordinates join the flow channels before Fourier processing. This image shows horizontal velocity at forecast index 9." },
+  { id: "unet", width: 1292, height: 351, label: "U-Net", image: "unet-prediction.webp", note: "An encoder–decoder predicts the next flow field on an 80 × 320 grid. Skip connections restore spatial detail as the decoder upsamples." },
 ];
 
 export function CfdFlowPlayer() {
@@ -37,7 +38,7 @@ export function CfdFlowPlayer() {
   const [fps, setFps] = useState(8);
   const [loaded, setLoaded] = useState(0);
   const [failed, setFailed] = useState(false);
-  const [forecast, setForecast] = useState(2);
+  const [forecast, setForecast] = useState(0);
   const frames = sequence === "gnn-rollout" ? 20 : 30;
   const model = forecastModels[forecast];
   const visibleChannels = channels.filter((channel) => channelFilter === "all" || channel.id === channelFilter);
@@ -99,7 +100,7 @@ export function CfdFlowPlayer() {
       {failed && <p className={styles.note} role="status">A frame could not load. Reload the project to try again.</p>}
       <div className={styles.explanation}><div><h3>{sequence === "gnn-rollout" ? "Each prediction becomes the next input." : "A wake moves across the mesh."}</h3><p>{sequence === "gnn-rollout" ? "The graph network updates velocity and pressure at mesh nodes, then feeds its predicted field into the next step. The triangular mesh stays fixed as the state evolves." : "These saved simulation snapshots show vertical velocity, horizontal velocity and pressure over the same cylinder domain. Vertical velocity reveals the alternating wake above and below the centre line."}</p></div><p className={styles.note}>Recorded GNN results: 20 autoregressive predictions and 30 simulation frames. The sequences start from different states. Colours rescale per field and frame, so colour alone cannot compare magnitudes across time; playback speed is a display setting.</p></div>
       <section className={styles.sourceDetails}><h3>Reading the animation</h3><p>The slider moves through recorded fields on the original triangular mesh. Use the frame comparison to inspect the wake’s position and shape; the model is not being run again in the browser.</p><p>The architecture view explains message passing, and the results view gives the recorded relative L2 with its evaluation conditions. The rollout experiment shows how repeated prediction can amplify error.</p></section>
-    </> : <div className={styles.forecasts}><nav className={styles.modelChoices} aria-label="Forecast model">{forecastModels.map((item, index) => <button key={item.id} aria-pressed={forecast === index} onClick={() => setForecast(index)}>{item.label}</button>)}</nav><figure className={styles.forecastFigure}><Image unoptimized src={`/projects/neural-cfd/media/${model.image}`} alt={`${model.label} saved horizontal velocity prediction around a cylinder`} width={700} height={500} /><figcaption>{model.note}</figcaption></figure><p className={styles.note}>These FNO and U-Net forecasts are recorded still figures. The motion tab plays GNN results. Use the architecture and results tabs to connect each picture with its model and evaluation conditions.</p><div className={styles.modelCards}><article><span>Fourier</span><h3>Fields in frequency space</h3><p>Spectral blocks learn interactions between Fourier modes. A pointwise path and residual connections carry local information between blocks.</p></article><article><span>Graph</span><h3>Messages on a mesh</h3><p>Node states combine with edge geometry. Message aggregation updates each node before the next velocity and pressure prediction.</p></article><article><span>U-Net</span><h3>Detail across scales</h3><p>Downsampling collects wider spatial context. The decoder combines it with earlier feature maps through skip connections.</p></article></div></div>}
+    </> : <div className={styles.forecasts}><nav className={styles.modelChoices} aria-label="Forecast model">{forecastModels.map((item, index) => <button key={item.id} aria-pressed={forecast === index} onClick={() => setForecast(index)}>{item.label}</button>)}</nav><figure className={styles.forecastFigure}><PlotPanHint /><div className={styles.forecastViewport} role="region" aria-label={model.label} tabIndex={0}><Image unoptimized src={`/projects/neural-cfd/media/${model.image}`} alt={`${model.label} saved horizontal velocity prediction around a cylinder`} width={model.width} height={model.height} style={{ "--forecast-source-width": `${model.width}px` } as CSSProperties} /></div><figcaption>{model.note}</figcaption></figure><p className={styles.note}>These FNO and U-Net forecasts are recorded still figures. The motion tab plays GNN results. Use the architecture and results tabs to connect each picture with its model and evaluation conditions.</p><div className={styles.modelCards}><article><span>Fourier</span><h3>Fields in frequency space</h3><p>Spectral blocks learn interactions between Fourier modes. A pointwise path and residual connections carry local information between blocks.</p></article><article><span>Graph</span><h3>Messages on a mesh</h3><p>Node states combine with edge geometry. Message aggregation updates each node before the next velocity and pressure prediction.</p></article><article><span>U-Net</span><h3>Detail across scales</h3><p>Downsampling collects wider spatial context. The decoder combines it with earlier feature maps through skip connections.</p></article></div></div>}
   </section></ProjectCopy>;
 }
 

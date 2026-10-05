@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { banditStudioCopy } from "./copy/banditStudioCopy";
@@ -432,7 +433,7 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
   };
 
   return (
-    <ProjectCopy copy={banditStudioCopy}><div className={styles.plotViewport} role="group" aria-labelledby={`${chartId}-title`} tabIndex={0}><svg className={styles.decisionMap} viewBox="0 0 860 286" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={banditStudioCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotViewport} role="group" aria-labelledby={`${chartId}-title`} tabIndex={0}><svg className={styles.decisionMap} viewBox="0 0 860 286" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>Recent epsilon-greedy decisions by arm</title>
       <desc id={`${chartId}-desc`}>
         {visible.length
@@ -500,7 +501,7 @@ function RegretChart({ trace }: { trace: readonly TracePoint[] }) {
   const last = trace.at(-1) ?? trace[0];
 
   return (
-    <ProjectCopy copy={banditStudioCopy}><div className={styles.plotViewport} role="group" aria-labelledby={`${chartId}-title`} tabIndex={0}><svg className={styles.regretChart} viewBox="0 0 880 338" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
+    <ProjectCopy copy={banditStudioCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotViewport} role="group" aria-labelledby={`${chartId}-title`} tabIndex={0}><svg className={styles.regretChart} viewBox="0 0 880 338" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
       <title id={`${chartId}-title`}>Expected pseudo-regret and realised counterfactual regret</title>
       <desc id={`${chartId}-desc`}>
         Through round {last.step}, cumulative expected pseudo-regret is {last.expectedRegret.toFixed(2)} and realised oracle-minus-policy reward is {last.realisedRegret.toFixed(2)}.
@@ -797,6 +798,7 @@ export function BanditStudio() {
 
             <section className={styles.dataLedger} aria-labelledby="bandit-ledger-title">
               <div className={styles.boardHeading}><div><span>Accessible run state</span><h4 id="bandit-ledger-title">Arm-by-arm data ledger</h4></div><p>The visual cards and this table expose the same deterministic state.</p></div>
+              <PlotPanHint />
               <div role="group" className={styles.tableWrap} tabIndex={0} aria-label="Scrollable arm statistics table">
                 <table>
                   <caption>Arm statistics after {rounds} seeded rounds</caption>
@@ -902,6 +904,7 @@ export function BanditStudio() {
 
             <section className={styles.checkpointLedger} aria-labelledby="checkpoint-title">
               <div className={styles.boardHeading}><div><span>Trace reconciliation</span><h4 id="checkpoint-title">Selected checkpoints</h4></div><p>Expected difference equals pseudo-regret at every row by construction.</p></div>
+              <PlotPanHint />
               <div role="group" className={styles.tableWrap} tabIndex={0} aria-label="Scrollable regret checkpoint table">
                 <table>
                   <caption>Expected and realised regret checkpoints</caption>
@@ -942,6 +945,7 @@ export function BanditStudio() {
               <section className={styles.equationDeck} aria-labelledby="equation-deck-title">
                 <div className={styles.cardCap}><span>Executable equations</span><strong>Generic bandit math</strong></div>
                 <h4 id="equation-deck-title">Four lines drive the workbench</h4>
+                <PlotPanHint />
                 <div className={styles.equationRow}><span>POLICY</span><div><MathEquation tex={String.raw`A_t = \begin{cases} \operatorname{uniform}(\mathcal A), & \text{with probability }\varepsilon, \\ \operatorname*{arg\,max}_a \widehat Q_a, & \text{otherwise}. \end{cases}`} label="Epsilon-greedy policy" /></div></div>
                 <div className={styles.equationRow}><span>UPDATE</span><div><MathEquation tex={String.raw`\widehat Q_{a,n} \leftarrow \widehat Q_{a,n-1} + \frac{R_n - \widehat Q_{a,n-1}}{n}`} label="Incremental sample-mean update" /></div></div>
                 <div className={styles.equationRow}><span>PSEUDO</span><div><MathEquation tex={String.raw`\bar R_T = \sum_{t=1}^{T}(\mu^* - \mu_{A_t}) = \sum_a N_a(T)\Delta_a`} label="Cumulative pseudo-regret identity" /></div></div>

@@ -36,6 +36,7 @@
 /* Desk Accessories launcher */
 
 .launcher {
+  position: relative;
   display: flex;
   height: 100%;
   min-height: 0;
@@ -70,6 +71,10 @@
   margin: 1rem 0;
   line-height: 1.5;
 }
+
+.backupJump { display: flex; align-items: center; min-height: 44px; margin-top: 6px; color: var(--s7-selection); font-size: var(--s7-ui); text-underline-offset: 3px; }
+.launcher > .storageStrip { margin-top: 20px; scroll-margin-top: 12px; }
+.launcher > .storageStrip:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
 
 .accessoryGrid {
   display: grid;
@@ -1826,6 +1831,16 @@
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
+  .quickList {
+    display: block;
+    overflow: auto;
+  }
+
+  .taskListWrap {
+    min-height: 220px;
+    overflow: visible;
+  }
+
   .taskComposer [data-classic-select] {
     grid-column: 1;
   }
@@ -2024,6 +2039,11 @@
   .taskCheck {
     width: 2.75rem;
     height: 2.75rem;
+  }
+
+  .taskList li > button {
+    width: 2.75rem;
+    min-height: 2.75rem;
   }
 
   .monthToolbar button {

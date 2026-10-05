@@ -621,7 +621,7 @@
 .pathChart {
   display: block;
   width: 100%;
-  min-width: 470px;
+  min-width: 600px;
   height: auto;
   font-family: "Courier New", monospace;
 }
@@ -908,7 +908,7 @@
 .segmentedFieldset label {
   position: relative;
   display: grid;
-  min-height: 31px;
+  min-height: var(--s7-control-height);
   place-items: center;
   background: #f3f3ee;
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999;
@@ -1506,6 +1506,7 @@
 }
 
 @container (max-width: 520px) {
+  .logTableWrap { max-height: none; }
   .lowerLegend,
   .hypothesisBadge {
     display: none;
@@ -1526,17 +1527,13 @@
   }
 
   .dagCanvas {
+    min-width: 480px;
     min-height: 310px;
   }
 
   .dagNode {
-    width: 96px;
-    grid-template-columns: 26px 1fr;
-  }
-
-  .dagNode > span {
-    width: 23px;
-    height: 23px;
+    width: 132px;
+    grid-template-columns: 30px minmax(0, 1fr);
   }
 
   .opeMetrics {
@@ -1561,3 +1558,8 @@
 .svgFrame, .costChartWrap { scrollbar-width: auto; scrollbar-color: var(--s7-shadow) var(--s7-chrome); }
 .svgFrame::-webkit-scrollbar, .costChartWrap::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
 .svgFrame::-webkit-scrollbar-thumb, .costChartWrap::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }
+
+.dagViewport { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: auto; scrollbar-color: var(--s7-shadow) var(--s7-chrome); }
+.dagViewport:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
+.dagViewport::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
+.dagViewport::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }

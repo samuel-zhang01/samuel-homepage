@@ -1,5 +1,6 @@
 "use client";
 
+import { PlotPanHint } from "./PlotPanHint";
 import { MathEquation } from "./MathEquation";
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { stockMarketCopy } from "./copy/stockMarketCopy";
@@ -310,6 +311,7 @@ function PriceTrace({
           <span data-tone="legacy">Source window</span>
         </div>
       </div>
+      <PlotPanHint />
       <div className={styles.chartViewport} role="region" aria-label="Synthetic single-stock price trace" tabIndex={0}>
         <svg
           className={styles.priceChart}
@@ -556,6 +558,7 @@ export function StockMarketStudio() {
           <div className={styles.marketGrid}>
             <div className={styles.traceColumn}>
               <PriceTrace history={result.history} audit={latestAudit} mode={metricMode} />
+              <PlotPanHint />
               <section className={styles.equationStrip} aria-label="Source price impact equations">
                 <div><span>BUY</span><MathEquation tex={String.raw`P_t=P_{t-1}+q\,u\,\alpha`} /></div>
                 <div><span>SELL</span><MathEquation tex={String.raw`P_t=\max(P_{t-1}-q\,u\,\alpha,0.01)`} /></div>
@@ -568,6 +571,7 @@ export function StockMarketStudio() {
                 <div><span>IMPACT EVENT TAPE</span><h3 id="tape-heading">Latest state mutations</h3></div>
                 <strong>{result.floorHits} floor hits</strong>
               </div>
+              <PlotPanHint />
               <div className={styles.tableScroll} role="region" aria-label="Latest impact events" tabIndex={0}>
                 <table className={styles.eventTable}>
                   <thead><tr><th>#</th><th>Side</th><th>Qty</th><th>Sent.</th><th>Δ requested</th><th>Price</th></tr></thead>
@@ -593,6 +597,7 @@ export function StockMarketStudio() {
 
           <section className={styles.dataFallback}>
             <h4>Accessible price-series table <span>{result.history.length} observations</span></h4>
+            <PlotPanHint />
             <div className={styles.tableScroll} role="region" aria-label="Price history data" tabIndex={0}>
               <table>
                 <thead><tr><th>History index</th><th>Price</th><th>Submitted quantity</th><th>Cumulative volume</th></tr></thead>
@@ -653,6 +658,7 @@ export function StockMarketStudio() {
                 <section className={styles.comparisonCard}>
                   <div className={styles.cardKicker}>RECONCILIATION · DAY {latestAudit.day}</div>
                   <h3>Same path, different denominator</h3>
+                  <PlotPanHint />
                   <div className={styles.tableScroll} role="region" aria-label="Legacy and corrected daily metric comparison" tabIndex={0}>
                     <table className={styles.comparisonTable}>
                       <thead><tr><th>Metric</th><th>Source</th><th>Corrected</th><th>Difference</th></tr></thead>
@@ -730,6 +736,7 @@ export function StockMarketStudio() {
           <div className={styles.evidenceGrid}>
             <section className={styles.capabilityCard}>
               <div className={styles.panelHeading}><div><span>CAPABILITY MATRIX</span><h3>Capabilities and limits</h3></div><strong>9 CHECKS</strong></div>
+              <PlotPanHint />
               <div className={styles.tableScroll} role="region" aria-label="Model capability table" tabIndex={0}>
                 <table className={styles.capabilityTable}>
                   <thead><tr><th>Capability</th><th>How it works</th><th>Verdict</th></tr></thead>

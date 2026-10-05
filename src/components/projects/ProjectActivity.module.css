@@ -59,7 +59,9 @@
 @container project-activity (max-width: 620px) {
   .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; padding: 8px; }
   .activity[data-kind="pdf"] .toolbar { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) 44px; }
-  .title { grid-column: 1 / -1; grid-row: 1; padding-inline: 0; font-size: var(--s7-small); }
+  /* The full name remains in the window title and accessible heading. Avoid
+     repeating it as a tall toolbar row on a narrow working surface. */
+  .title { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .activity .toolbar > :is(button, a) { padding-inline: 6px; }
   .backButton, .shareButton { width: 100%; }
   .fullBackLabel, .downloadLabel { display: none; }
@@ -68,6 +70,7 @@
   .shareStatus, .shareFallback { grid-column: 1 / -1; }
   .scheduleButton { grid-column: 1 / -1; }
   .demo { padding: 5px; }
+  .activity[data-kind="demo"] .toolbar { position: static; }
   .reader :global(.pdf-reader__stage) { padding: 8px; }
 }
 
@@ -75,9 +78,6 @@
   .shareIcon { display: none; }
 }
 
-@container project-activity (max-width: 620px) {
-  .activity[data-kind="demo"] .toolbar { position: static; }
-}
 @media (max-height: 650px) {
   .activity[data-kind="demo"] .toolbar { position: static; }
 }

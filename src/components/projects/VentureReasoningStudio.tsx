@@ -1,5 +1,7 @@
 "use client";
 
+import { PlotPanHint } from "./PlotPanHint";
+
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { ventureReasoningStudioCopy } from "./copy/ventureReasoningStudioCopy";
 
@@ -478,11 +480,12 @@ function MarketLab({ inputs, onChange }: { inputs: MarketInputs; onChange: (inpu
         </figure>
 
         <section className={styles.equationSheet}>
+          <PlotPanHint />
           <PanelHeading code="Σ" title="Reconciliation sheet" note="Live math" />
           <table>
             <caption>Traceable market calculation</caption>
             <tbody>
-              <tr><th scope="row">Serviceable revenue</th><td><MathEquation tex={String.raw`${inputs.accounts}\times ${inputs.sites.toFixed(1)}\times \pounds ${inputs.monthlyPrice}\times 12`} /></td><td>{currency(serviceableRevenue)}</td></tr>
+              <tr><th scope="row">Serviceable revenue</th><td><MathEquation tex={String.raw`${inputs.accounts}\times ${inputs.sites.toFixed(1)}\times \pounds ${inputs.monthlyPrice}\times 12`} label="Serviceable revenue" /></td><td>{currency(serviceableRevenue)}</td></tr>
               <tr><th scope="row">Year-end target</th><td><MathEquation tex={String.raw`${inputs.accounts}\times ${inputs.penetration}\%`} /></td><td>{integer(targetLogos)} logos</td></tr>
               <tr><th scope="row">Annual churn</th><td><MathEquation tex={String.raw`1-\left(1-${inputs.monthlyChurn.toFixed(1)}\%\right)^{12}`} /></td><td>{(annualChurn * 100).toFixed(1)}%</td></tr>
               <tr><th scope="row">Replacement wins</th><td><MathEquation tex={String.raw`${Math.round(targetLogos)}\times ${(annualChurn * 100).toFixed(1)}\%`} /></td><td>{integer(replacementLogos)}</td></tr>

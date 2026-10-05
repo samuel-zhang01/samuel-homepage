@@ -29,7 +29,8 @@
 .origin small { margin-left: 12px; font-size: inherit; }
 .origin p { max-width: 84ch; margin: 6px 0 0; }
 @container (max-width: 620px) {
-  .brief { display: block; margin-inline: 16px; padding: 14px; font-size: var(--s7-text, 15px); }
+  .brief { display: block; margin-inline: 16px; padding: 0; font-size: var(--s7-text, 15px); }
+  .context, .walkthrough { padding: 12px; }
   .context dl { grid-template-columns: 1fr; gap: 14px; }
   .origin small { display: block; margin: 4px 0; }
 }

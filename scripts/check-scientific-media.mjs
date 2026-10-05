@@ -112,6 +112,11 @@ const compiled = ts.transpileModule(readFileSync(sourcePath, "utf8"), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
   fileName: sourcePath,
 }).outputText;
+const panHintPath = join(root, "src/components/projects/PlotPanHint.tsx");
+const compiledPanHint = ts.transpileModule(readFileSync(panHintPath, "utf8"), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
+  fileName: panHintPath,
+}).outputText;
 
 function harness(componentName, body = compiled, locale = "en-GB", expandChildren = false) {
   const values = [], effects = [], pending = [], timers = new Map(), requests = [];
@@ -155,6 +160,16 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
     document,
     module: { exports }, exports,
     require(name) {
+      if (name === "./PlotPanHint") {
+        const hint = { exports: {} };
+        runInNewContext(compiledPanHint, { module: hint, exports: hint.exports, require(dependency) {
+          if (dependency.endsWith("ProjectTranslationBoundary")) return { useProjectLocale: () => locale };
+          if (dependency === "@/lib/projectCopy") return loadCopyModule("src/lib/projectCopy.ts");
+          if (dependency.endsWith(".module.css")) return { __esModule: true, default: { hint: "hint" } };
+          return require(dependency);
+        } }, { filename: panHintPath });
+        return hint.exports;
+      }
       if (name === "./MathEquation") return { MathEquation: (props) => React.createElement("span", { "data-equation": props.tex }, props.label ?? props.tex) };
       if (name === "react") return statefulReact;
       if (name === "next/image") return { __esModule: true, default: "img" };
@@ -302,6 +317,25 @@ test("forecast choices use their matching saved scientific figures", () => {
   for (const [label, file] of [["Fourier operator", "fno-baseline-prediction.webp"], ["Residual FNO", "fno-residual-prediction.webp"], ["Position-encoded FNO", "fno-multiscale-prediction.webp"], ["U-Net", "unet-prediction.webp"]]) {
     click(tree, label); tree = app.render();
     assert.equal(images(tree)[0].props.src, `/projects/neural-cfd/media/${file}`);
+  }
+});
+
+test("forecast pan instructions render in all four locales", () => {
+  const { projectText: captionText } = loadCopyModule("src/lib/projectCopy.ts");
+  for (const [locale, expectedCaption] of [
+    ["en-GB", "Swipe sideways; use arrow keys when focused."],
+    ["en-US", "Swipe sideways; use arrow keys when focused."],
+    ["zh-CN", "横向滑动；聚焦后可使用方向键。"],
+    ["zh-TW", "橫向滑動；聚焦後可使用方向鍵。"],
+  ]) {
+    const app = harness("CfdFlowPlayer", compiled, locale, true);
+    let tree = app.render();
+    click(tree, captionText(locale, scientificCopy, "FNO & U-Net forecasts"));
+    tree = app.render();
+    const caption = descendants(tree).find(node => node.type === "p" && node.props.className === "hint");
+    assert.ok(caption, `${locale}: the actual pan instruction component renders`);
+    assert.equal(caption.props.children, expectedCaption);
+    app.dispose();
   }
 });
 

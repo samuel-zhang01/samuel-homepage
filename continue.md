@@ -1,5 +1,7 @@
 # Continue here
 
+The phone working-area follow-up covers all 28 routed demos plus Documents, Desk Accessories, graph, Orbital Lab and native tools/games. Separate adversarial reviews use the shared System 7 phone contract and preserve full content, data and native artwork. Final build/browser evidence, failed rounds and limitations are recorded in [verification](docs/VERIFICATION.md); reproduce the working-area regression with `npm run check:phone-space` and an external Playwright installation. Completed QA is hash-verified outside the checkout. This follow-up has not been deployed to production.
+
 The [Contact layout simplification](docs/VERIFICATION.md#contact-layout-simplification) replaces redundant service tabs with direct call/email actions, a visible email address and one LinkedIn/GitHub/COVERD row. It reuses five canonical 32px icons and reviewed four-locale copy. An isolated optimized build and all prebuild gates pass; 24 profiles across three browsers verify 120 icons, 72 clipboard cases, 72 keyboard popups and 36 layouts. Completed evidence, including failed resize-helper attempts, is hash-verified outside the checkout. The YASA booking destination is unchanged; this follow-up has not been deployed.
 
 Read [verification and known limits](docs/VERIFICATION.md), [README](README.md) and [the documentation index](docs/README.md). This handoff records current maintenance instructions; earlier chronological reviews remain recoverable from Git history.

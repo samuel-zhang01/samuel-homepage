@@ -1,0 +1,12 @@
+.hint {
+  display: none;
+}
+
+@container (max-width: 680px) {
+  .hint {
+    display: block;
+    margin: 10px 0 6px;
+    color: inherit;
+    font: var(--s7-small)/1.5 var(--s7-font-text);
+  }
+}

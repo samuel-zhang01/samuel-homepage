@@ -51,10 +51,23 @@ const evaluated = { exports: {} };
 const component = ts.transpileModule(readFileSync(new URL("src/components/projects/MriTrustStudio.tsx", root), "utf8"), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
 });
+const panHint = ts.transpileModule(readFileSync(new URL("src/components/projects/PlotPanHint.tsx", root), "utf8"), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
+});
 runInNewContext(component.outputText, {
   module: evaluated,
   exports: evaluated.exports,
   require(name) {
+    if (name === "./PlotPanHint") {
+      const hint = { exports: {} };
+      runInNewContext(panHint.outputText, { module: hint, exports: hint.exports, require(dependency) {
+        if (dependency === "./ProjectTranslationBoundary") return { useProjectLocale: () => "en-GB" };
+        if (dependency === "@/lib/projectCopy") return { projectText: (_locale, _copy, text) => text };
+        if (dependency.endsWith(".module.css")) return { __esModule: true, default: { hint: "hint" } };
+        return require(dependency);
+      } });
+      return hint.exports;
+    }
     if (name === "react") return {
       ...React,
       useId: () => "mri-test",

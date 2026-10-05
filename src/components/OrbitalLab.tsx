@@ -263,7 +263,7 @@ export default function OrbitalLab({ locale, active = true }: { locale: Locale; 
 
   return <div className={`system7-project ${styles.app}`}>
     <header className={styles.header}>
-      <div><span>{c.strap}</span><h3>{c.title}</h3><p>{c.intro}</p></div>
+      <div><span>{c.strap}</span><h3>{c.title}</h3><p>{c.intro}</p><button type="button" className={`s7-button ${styles.phoneJump}`} onClick={() => { canvasRef.current?.scrollIntoView({ block: "center" }); canvasRef.current?.focus({ preventScroll: true }); }}>{c.viewOrbital} ↓</button></div>
       <div role="group" className={styles.presets} aria-label={c.subshell}>{[[1, "H · 1s", "1-0"], [6, "C · 2p", "2-1"], [26, "Fe · 3d", "3-2"], [58, "Ce · 4f", "4-3"]].map(([number, title, shell]) => <button className="s7-button" key={number} type="button" onClick={() => { selectElement(Number(number)); setShellKey(String(shell)); }}>{title}</button>)}</div>
     </header>
     <details className={styles.periodic} ref={periodicRef} open={tableOpen} onToggle={(event) => setTableOpen(event.currentTarget.open)}>

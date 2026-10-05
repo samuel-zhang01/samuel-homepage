@@ -1075,6 +1075,7 @@
 
 .tailFormula > div {
   min-width: 0;
+  color: var(--risk-paper);
   padding: 8px;
   border: 1px solid #4d3f56;
   background: #1b161f;
@@ -1087,7 +1088,7 @@
 
 .tailFormula > div > span:not([data-math-equation]) {
   margin-bottom: 5px;
-  color: var(--s7-ink);
+  color: var(--risk-paper);
   font-size: var(--s7-small);
 }
 

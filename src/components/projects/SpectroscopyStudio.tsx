@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
 import { spectroscopyCopy } from "./copy/spectroscopyCopy";
@@ -121,7 +122,7 @@ function SpectrumChart({
     .map((point, index) => `${index === 0 ? "M" : "L"}${xToSvg(point.x).toFixed(2)},${yToSvg(point.y).toFixed(2)}`)
     .join(" ");
 
-  return (<ProjectCopy copy={spectroscopyCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.chart} viewBox="0 0 780 372" role="img" aria-labelledby={`${clipId}-title ${clipId}-description`}>
+  return (<ProjectCopy copy={spectroscopyCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.chart} viewBox="0 0 780 372" role="img" aria-labelledby={`${clipId}-title ${clipId}-description`}>
       <title id={`${clipId}-title`}>{title || "Untitled spectrum"}</title>
       <desc id={`${clipId}-description`}>
         {loaded

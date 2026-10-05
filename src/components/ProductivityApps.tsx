@@ -363,8 +363,28 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
       </header>
       <p className={styles.launcherIntro}>
         {t("Notes, drawings and plans are saved in this browser. There is no cloud backup; export a backup to move them.")}
+        <a className={styles.backupJump} href="#desk-backup">{t("Desk data and backup")} ↓</a>
       </p>
-      <section className={styles.storageStrip} aria-label={t("Desk data and backup")}>
+      <div className={styles.accessoryGrid}>
+        {accessories.map((accessory) => (
+          <button
+            key={accessory.id}
+            type="button"
+            className={styles.accessoryCard}
+            onClick={() => openApp(accessory.id)}
+            aria-label={`${t("Open")} ${t(accessory.name)}. ${t(accessory.description)}`}
+          >
+            <AccessoryIcon kind={accessory.id} />
+            <span className={styles.accessoryCardCopy}>
+              <small>{t(accessory.eyebrow)}</small>
+              <strong>{t(accessory.name)}</strong>
+              <span>{t(accessory.description)}</span>
+            </span>
+            <span className={styles.openGlyph} aria-hidden="true">↗</span>
+          </button>
+        ))}
+      </div>
+      <section id="desk-backup" tabIndex={-1} className={styles.storageStrip} aria-label={t("Desk data and backup")}>
         <span className={styles.storageLamp} aria-hidden="true" />
         <div>
           <strong>{t("Saved in this browser")}</strong>
@@ -387,25 +407,6 @@ function DeskAccessories({ locale, openApp }: Omit<ProductivityAppsProps, "app">
         <span className={styles.backupStatus} role="status">{backupStatus ? t(backupStatus) : ""}</span>
         <small>{t("Recovery files preserve raw browser records for inspection. They cannot be restored here.")}</small>
       </section>
-      <div className={styles.accessoryGrid}>
-        {accessories.map((accessory) => (
-          <button
-            key={accessory.id}
-            type="button"
-            className={styles.accessoryCard}
-            onClick={() => openApp(accessory.id)}
-            aria-label={`${t("Open")} ${t(accessory.name)}. ${t(accessory.description)}`}
-          >
-            <AccessoryIcon kind={accessory.id} />
-            <span className={styles.accessoryCardCopy}>
-              <small>{t(accessory.eyebrow)}</small>
-              <strong>{t(accessory.name)}</strong>
-              <span>{t(accessory.description)}</span>
-            </span>
-            <span className={styles.openGlyph} aria-hidden="true">↗</span>
-          </button>
-        ))}
-      </div>
       <p className={styles.launcherFootnote}>
         {t("Inspired by the desk accessories tucked into the classic Macintosh Apple menu.")}
       </p>

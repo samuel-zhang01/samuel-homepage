@@ -52,8 +52,14 @@
   .metrics article { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
   .metrics strong { font-size: var(--s7-heading); margin: 0; }
   .metrics article > small { width: 100%; }
-  .heading, .panel { padding: 14px; }
+  .heading, .panel { padding: 12px; }
+  .comparison { margin-inline: -12px; }
+  .comparison article { padding: 12px; }
+  .mathPanel, .derivation { padding: 0; }
   .heading h3 { font-size: var(--s7-heading); }
 }
 
 .chartLegend { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 12px 0 6px; font-size: var(--s7-text); line-height: 1.5; }
+.coveragePlot { max-width: 100%; overflow-x: auto; }
+.coveragePlot:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+.coveragePlot svg { display: block; width: 100%; min-width: 620px; height: auto; min-height: 220px; background: white; border: 1px solid var(--s7-shadow); }

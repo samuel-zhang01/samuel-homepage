@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { chemistryCopy } from "./copy/chemistryCopy";
 
@@ -387,7 +388,7 @@ function MetropolisLab() {
             <span>Particle configuration · 2D</span>
             <strong>{particles.length} particles</strong>
           </div>
-          <svg
+          <PlotPanHint /><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg
             className={styles.particleCanvas}
             viewBox="0 0 480 310"
             role="img"
@@ -422,6 +423,7 @@ function MetropolisLab() {
               seed {seed}
             </text>
           </svg>
+          </div>
           <div className={styles.simActions}>
             <button type="button" onClick={() => runMoves(1)}>Single move</button>
             <button type="button" onClick={() => runMoves(50)} className={styles.primaryAction}>Run 50</button>
@@ -461,7 +463,7 @@ function MetropolisLab() {
           </div>
           <div className={styles.historyCard}>
             <div><span>Accepted-state energy</span><strong>last {history.length}</strong></div>
-            <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 460 130" role="img" aria-label="Accepted configuration energy history">
+            <PlotPanHint /><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 460 130" role="img" aria-label="Accepted configuration energy history">
               <line x1="14" x2="446" y1="116" y2="116" />
               <path d={chartPath} />
             </svg></div>
@@ -667,7 +669,9 @@ function PolymerLab() {
             <span>Conformation · orthographic projection</span>
             <strong>{modeDescription}</strong>
           </div>
-          <svg viewBox="0 0 520 440" role="img" aria-label={`${length}-monomer ${modeDescription} projected in three dimensions`}>
+          <PlotPanHint />
+          <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}>
+          <svg className={styles.polymerCanvas} viewBox="0 0 520 440" role="img" aria-label={`${length}-monomer ${modeDescription} projected in three dimensions`}>
             <defs>
               <linearGradient id="chem-polymer-gradient" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stopColor="#0c706d" />
@@ -705,6 +709,7 @@ function PolymerLab() {
             ) : null}
             <text x="24" y="34" className={styles.svgReadout}>Start → end / {length} sites · {bonds} bonds</text>
           </svg>
+          </div>
           <div className={styles.legendRow}>
             <span><i className={styles.startDot} /> start</span>
             <span><i className={styles.chainLine} /> chain index</span>
@@ -918,7 +923,7 @@ function DynamicsLab() {
             <span>Pair potential · reduced coordinates</span>
             <strong>r<sub>min</sub> = {equilibrium.toFixed(3)}</strong>
           </div>
-          <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 270" role="img" aria-label="Lennard-Jones potential and cutoff-shifted potential as a function of separation">
+          <PlotPanHint /><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 270" role="img" aria-label="Lennard-Jones potential and cutoff-shifted potential as a function of separation">
             <g className={styles.chartGrid} aria-hidden="true">
               <line x1="42" x2="582" y1={chart.zeroY} y2={chart.zeroY} />
               <line x1="42" x2="42" y1="18" y2="232" />
@@ -975,7 +980,7 @@ function DynamicsLab() {
           </svg>
           <div className={styles.energyTrace}>
             <div><span>Total energy change</span><strong>E₀ {miniMd.initialEnergy.toFixed(6)} → Eₜ {miniMd.finalEnergy.toFixed(6)}</strong></div>
-            <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 180" role="img" aria-label={`Total energy trace over ${trajectorySteps} velocity-Verlet steps`}>
+            <PlotPanHint /><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 180" role="img" aria-label={`Total energy trace over ${trajectorySteps} velocity-Verlet steps`}>
               <line x1="30" x2="580" y1="152" y2="152" />
               <path d={linePath(miniMd.energies, 600, 180, 30)} />
             </svg></div>
@@ -1101,7 +1106,7 @@ function QuantumLab() {
             <span>Normalised 1D 1s cross-section</span>
             <strong>φ(r)</strong>
           </div>
-          <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 270" role="img" aria-label="Slater-type and Gaussian-type 1s orbital functions">
+          <PlotPanHint /><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg viewBox="0 0 600 270" role="img" aria-label="Slater-type and Gaussian-type 1s orbital functions">
             <g className={styles.chartGrid} aria-hidden="true">
               <line x1="38" x2="582" y1={orbitalChart.baselineY} y2={orbitalChart.baselineY} />
               <line x1={orbitalChart.zeroX} x2={orbitalChart.zeroX} y1="18" y2="238" />
@@ -1150,6 +1155,8 @@ function QuantumLab() {
           <div><span>Toluene HF basis-set convergence</span><strong>{selectedEnergy.basis}</strong></div>
           <p>{selectedEnergy.functions} basis functions · ΔE from STO-3G {formatSigned(selectedEnergy.energy - referenceEnergy, 6)} E<sub>h</sub></p>
         </div>
+        <PlotPanHint />
+        <div className={styles.plotScroll} role="region" aria-label="Toluene Hartree-Fock energies by basis-set size" tabIndex={0}>
         <div className={styles.energyPlot} role="group" aria-label="Toluene Hartree-Fock energies by basis-set size">
           {basisEnergies.map((entry, index) => {
             const position = ((entry.energy - energyMaximum) / -energySpan) * 100;
@@ -1169,6 +1176,8 @@ function QuantumLab() {
           })}
           <div className={styles.energyAxis}><span>−266.48 E<sub>h</sub></span><span>lower SCF energy →</span><span>−269.80 E<sub>h</sub></span></div>
         </div>
+        </div>
+        <PlotPanHint />
         <div className={styles.tableScroll} tabIndex={0} role="region" aria-label="Recorded basis-set energy table">
           <table>
             <thead><tr><th>Basis</th><th>Functions</th><th>SCF energy / E<sub>h</sub></th><th>Δ from prior / E<sub>h</sub></th></tr></thead>
@@ -1234,6 +1243,7 @@ function AuditLab() {
     <LabHeading kicker="Methods and development" title="Five physical ideas, four interactive labs" description="Each experiment uses a different numerical method. Compare what it calculates, how to interpret it and which assumptions matter." evidence="Computational chemistry" />
     <section className={styles.claimLedger}>
       <div className={styles.sectionTitle}><span>01</span><div><strong>Choose a question to explore</strong><small>Connect the calculation to its physical meaning</small></div></div>
+      <PlotPanHint />
       <div className={styles.tableScroll} tabIndex={0} role="region" aria-label="Computational chemistry method guide"><table>
         <thead><tr><th>Method</th><th>Question</th><th>What to inspect</th></tr></thead>
         <tbody>

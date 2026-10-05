@@ -1106,7 +1106,9 @@
   .provenanceBanner { grid-template-columns: auto minmax(0, 1fr); }
   .provenanceBanner > strong { grid-column: 1 / -1; text-align: center; }
   .scenarioPanel,
-  .modePanel { grid-template-columns: 1fr; }
+  .modePanel,
+  .evidenceHero { grid-template-columns: 1fr; }
+  .evidenceHero > strong { justify-self: start; }
   .parameterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .equationStrip { grid-template-columns: 1fr; }
   .ledgerGrid { grid-template-columns: 1fr; }
@@ -1125,13 +1127,12 @@
   .scenarioButtons button + button,
   .modeSwitch button + button { border-top: 1px solid #8c8f8a; border-left: 0; }
   .parameterGrid { grid-template-columns: 1fr; }
-  .windowLegend { display: none; }
-  .priceChart { min-height: 145px; }
+  .windowLegend { flex-wrap: wrap; justify-content: flex-start; }
+  .priceChart { min-height: 220px; }
   .auditTrail { grid-template-columns: 1fr; }
-  .eventTable th:nth-child(4),
-  .eventTable td:nth-child(4),
-  .eventTable th:nth-child(5),
-  .eventTable td:nth-child(5) { display: none; }
+  .eventTable { min-width: 560px; }
+  .tableScroll { outline-offset: -3px; }
+  .tableScroll:focus-visible { outline: 2px dotted var(--s7-ink); }
 }
 
 @container (max-width: 350px) {

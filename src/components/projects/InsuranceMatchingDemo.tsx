@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { insuranceMatchingDemoCopy } from "./copy/insuranceMatchingDemoCopy";
@@ -939,7 +940,8 @@ export function InsuranceMatchingDemo() {
           </label>
         </div>
 
-        <div className={styles.compareTable} role="table" aria-label={`Rank comparison between ${scenario.name} and ${comparison.name}`}>
+        <PlotPanHint />
+        <div className={styles.compareTable} role="table" tabIndex={0} aria-label={`Rank comparison between ${scenario.name} and ${comparison.name}`}>
           <div className={styles.compareRow} role="row">
             <strong role="columnheader">MARKET</strong>
             <strong role="columnheader">{scenario.code}</strong>

@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { deferralRiskStudioCopy } from "./copy/deferralRiskStudioCopy";
@@ -507,6 +508,7 @@ export function DeferralRiskStudio() {
             </fieldset>
           </div>
 
+          <PlotPanHint />
           <div className={styles.ruleReadout} aria-live="polite">
             <MathEquation tex={String.raw`\mathrm{defer}\iff ${mode === "confidence" ? String.raw`\mathrm{confidence}<${confidenceThreshold.toFixed(2)}` : mode === "entropy" ? String.raw`H(\pi)>${entropyThreshold.toFixed(2)}` : String.raw`H(\pi)>${entropyThreshold.toFixed(2)}\lor\mathrm{confidence}<${confidenceThreshold.toFixed(2)}`}`} />
             <span>
@@ -678,6 +680,7 @@ function DecisionDesk({
           <div><span>Or-gate priority</span><h3 id="review-queue-title">Synthetic claim queue</h3></div>
           <span>{evaluation.deferredCount} routed to review</span>
         </div>
+        <PlotPanHint />
         <div role="group" className={styles.tableScroll} tabIndex={0} aria-label="Scrollable synthetic claim queue">
           <table>
             <thead><tr><th scope="col">Claim</th><th scope="col">Amount</th><th scope="col">Posterior</th><th scope="col">Entropy</th><th scope="col">Confidence</th><th scope="col">Trigger</th><th scope="col">Route</th></tr></thead>
@@ -718,7 +721,7 @@ function UncertaintyMap({ settings, selectedClaim }: { settings: PolicySettings;
   const deferredCount = TEST_CLAIMS.filter((claim) => shouldDefer(claim, settings)).length;
 
   return (
-    <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.plotViewport} role="group" aria-labelledby="uncertainty-map-title" tabIndex={0}><svg
+    <ProjectCopy copy={deferralRiskStudioCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotViewport} role="group" aria-labelledby="uncertainty-map-title" tabIndex={0}><svg
       className={styles.uncertaintyMap}
       viewBox={`0 0 ${width} ${height}`}
       role="img"
@@ -779,7 +782,7 @@ function CoverageLab({ settings, evaluation, curve }: { settings: PolicySettings
             <div><span>Threshold sweep · fictional test bench</span><h3 id="coverage-chart-title">Coverage versus system accuracy</h3></div>
             <span>{policyLabel(settings.mode)}</span>
           </div>
-          <div className={styles.plotViewport} role="group" aria-labelledby="coverage-chart-title" tabIndex={0}><svg
+          <PlotPanHint /><div className={styles.plotViewport} role="group" aria-labelledby="coverage-chart-title" tabIndex={0}><svg
             className={styles.coverageChart}
             viewBox={`0 0 ${chartWidth} ${chartHeight}`}
             role="img"
@@ -879,6 +882,7 @@ function TailLedger({
             <div><span>EMPIRICAL 0–1 LOSS</span><h3 id="tail-risk-title">Worst-{Math.round(settings.delta * 100)}% retained tail</h3></div>
             <span>{tailErrors} errors / {evaluation.tailCount} rows</span>
           </div>
+          <PlotPanHint />
           <div className={styles.tailFormula}>
             <div><span>Sort retained losses</span><MathEquation tex={String.raw`\ell_{(1)}\ge\ell_{(2)}\ge\cdots\ge\ell_{(N_r)}`} /></div>
             <b aria-hidden="true">→</b>
@@ -919,6 +923,7 @@ function TailLedger({
           <div><span>Auditable sort order</span><h3 id="tail-ledger-title">Claims contributing to empirical CVaR</h3></div>
           <span>Click a claim to inspect its Bayes trace</span>
         </div>
+        <PlotPanHint />
         <div role="group" className={styles.tableScroll} tabIndex={0} aria-label="Scrollable CVaR tail ledger">
           <table>
             <thead><tr><th scope="col">Rank</th><th scope="col">Claim</th><th scope="col">Amount</th><th scope="col">Truth</th><th scope="col">Model</th><th scope="col">0–1 loss</th><th scope="col">Entropy</th><th scope="col">Confidence</th></tr></thead>
@@ -973,6 +978,7 @@ function ResearchNotes() {
             <li><b>Reject.</b> Defer when entropy exceeds τ <em>or</em> classifier confidence falls below κ.</li>
             <li><b>Score.</b> Inspect a selected τ and subtract λ times empirical CVaR on non-deferred 0–1 losses; this browser control does not choose an optimum.</li>
           </ol>
+          <PlotPanHint />
           <div className={styles.formulaCard}>
             <MathEquation tex={String.raw`H(\pi)=-\pi\log_2\pi-(1-\pi)\log_2(1-\pi)`} />
             <MathEquation tex={String.raw`r(x)=\mathbb{1}[H(\pi)>\tau]\lor\mathbb{1}[\max\sigma(g(x))<\kappa]`} />

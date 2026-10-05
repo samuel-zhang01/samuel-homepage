@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import { projectText } from "@/lib/projectCopy";
 import { useProjectLocale, ProjectCopy } from "./ProjectTranslationBoundary";
 import { scientificCopy } from "./copy/scientificCopy";
@@ -299,7 +300,7 @@ function FnoSpectrum({ phase, quadrant }: { phase: FnoPhase; quadrant: number })
 
   return (
     <ProjectCopy copy={scientificCopy}><figure className={styles.spectrumFigure}>
-      <div className={styles.diagramViewport} role="region" aria-labelledby="fno-spectrum-title" tabIndex={0}>
+      <PlotPanHint /><div className={styles.diagramViewport} role="region" aria-labelledby="fno-spectrum-title" tabIndex={0}>
         <svg viewBox="0 0 560 270" role="img" aria-labelledby="fno-spectrum-title fno-spectrum-desc">
           <title id="fno-spectrum-title">FNO spatial and spectral operation diagram</title>
           <desc id="fno-spectrum-desc">{phaseRecord.explanation} The index cells show retained Fourier regions only and do not encode learned coefficient values.</desc>

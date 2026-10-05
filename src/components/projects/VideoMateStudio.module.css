@@ -98,5 +98,5 @@
 .resultNote { margin: 13px 0 0; padding: 10px 12px; border: 1px dashed var(--s7-edge); color: var(--s7-ink); background: var(--s7-info-soft); font-size: var(--s7-small); line-height: 1.5; }
 @container (max-width: 880px) { .heroStat { min-width: 145px; } .mainGrid, .controlGrid { grid-template-columns: 1fr; } .pipeline { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 @container (max-width: 600px) { .hero { align-items: flex-start; flex-direction: column; padding: 15px; } .heroStat { width: 100%; } .brand { gap: 10px; } .workflows { grid-template-columns: 1fr; } .workflows button { min-height: 55px; } .queue, .inspector, .settings, .runPanel, .results { padding: 12px; } .pipeline { grid-template-columns: 1fr; } .step { display: grid; grid-template-columns: 25px minmax(0, 1fr); align-items: baseline; gap: 8px; min-height: 52px; } .step strong { margin-top: 0; font-size: var(--s7-ui); } .result { grid-template-columns: 24px minmax(0, 1fr); } .result b { grid-column: 2; text-align: left; } }
-@container (max-width: 400px) { .filmstrip { gap: 1px; min-height: 55px; } .trackFoot span:nth-child(2) { display: none; } }
+@container (max-width: 400px) { .filmstrip { gap: 2px; min-height: 112px; } .trackFoot span:nth-child(2) { display: none; } }
 @media (prefers-reduced-motion: reduce) { .studio * { scroll-behavior: auto !important; } }

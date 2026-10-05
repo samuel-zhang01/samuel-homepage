@@ -661,7 +661,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
 
   return <section ref={graphRef} className={`system7-project ${styles.graph}`} aria-label={t("Knowledge graph")} lang={locale}>
     <header className={styles.header}>
-      <div><p>{t("Start with a subject, experience, skill or document. Follow its evidence to the work.")}</p></div>
+      <div><p>{t("Start with a subject, experience, skill or document. Follow its evidence to the work.")}</p><button type="button" className={`s7-button ${styles.phoneJump}`} onClick={() => { stageRef.current?.scrollIntoView({ block: "start" }); stageRef.current?.focus({ preventScroll: true }); }}>{t("View in graph")} ↓</button></div>
       <div className={styles.searchContainer}><label className={styles.search}><span>{t("Find a subject, project, experience, skill or document")}</span><input type="search" value={query} placeholder={t("Try Fourier, chemistry, Pfizer…")} onChange={(event) => { setQuery(event.target.value); setResultLimit(12); }} onKeyDown={(event) => { if (event.key === "Escape") setQuery(""); if (event.key === "Enter" && searchResults[0]) { event.preventDefault(); select(searchResults[0].id, true, true); } }} /></label>
         {query.trim() && <div role="group" className={styles.searchResults} aria-label={t("Search results")}><span aria-live="polite">{searchResults.length} {t("matches")}</span>{searchResults.slice(0, 8).map((result) => <button key={result.id} onClick={() => select(result.id, true, true)}><strong>{t(result.label)}</strong><small>{t(kindLabels[result.kind])}</small></button>)}{searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}{searchResults.length > 8 && <button onClick={browseConnections}>{t("Browse all connections")} ↓</button>}</div>}
       </div>
@@ -680,7 +680,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
           <button className="mac-button" onClick={() => { if (timelineRef.current) { timelineRef.current.open = true; timelineRef.current.scrollIntoView({ block: "start" }); } }}>{t("Projects along the timeline")} ↓</button>
         </div>
         <div className={styles.legend}><span>● {t("Topics")}</span><span>● {t("Projects")}</span><span>◇ {t("Work & education")}</span><span>● {t("Skills")}</span><span>□ {t("Documents")}</span>{selected && <span>· {t("Methods")}</span>}</div>
-        <div className={styles.stage} ref={stageRef}>
+        <div className={styles.stage} ref={stageRef} tabIndex={-1}>
           <canvas ref={canvasRef} aria-hidden="true" className={styles.canvas}
             onPointerDown={(event) => { stopMotion(); displayScene({ ...sceneRef.current, opacity }); drag.current = { x: event.clientX, y: event.clientY, camera: sceneRef.current.camera, moved: false, pan: event.shiftKey || flat }; event.currentTarget.setPointerCapture(event.pointerId); }}
             onPointerMove={(event) => {

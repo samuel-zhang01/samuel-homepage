@@ -1208,7 +1208,7 @@
 .packageHeader,
 .packageRow {
   display: grid;
-  grid-template-columns: 30px minmax(100px, 1fr) minmax(100px, 1fr) minmax(90px, 0.8fr) 68px;
+  grid-template-columns: 30px minmax(100px, 1fr) minmax(100px, 1fr) minmax(90px, 0.8fr) 90px;
   gap: 1px;
 }
 
@@ -1650,6 +1650,7 @@
 }
 
 @container (max-width: 430px) {
+  .controls, .workspace { padding: 12px; }
   .segmented,
   .metricStrip,
   .manifestSummary,
@@ -1669,6 +1670,7 @@
 
   .pipeline {
     grid-template-columns: 1fr;
+    row-gap: 12px;
   }
 
   .pipeline li .stepRail > i {
@@ -1722,4 +1724,15 @@
     scroll-behavior: auto !important;
     transition: none !important;
   }
+}
+
+.packageViewport { max-width: 100%; overflow-x: auto; outline-offset: -3px; }
+.packageViewport:focus-visible { outline: 2px dotted var(--s7-ink); }
+@container (max-width: 650px) {
+  .packageTable { min-width: 650px; }
+  .packageHeader, .packageRow { grid-template-columns: 32px minmax(155px, 1fr) minmax(155px, 1fr) minmax(140px, 0.8fr) 90px; }
+  .packageHeader span:nth-child(3), .packageHeader span:nth-child(4) { display: block; }
+  .packageRow > *:nth-child(3), .packageRow > *:nth-child(4) { display: flex; }
+  .packageRows { max-height: none; overflow: visible; }
+  .packageRow > * { overflow: visible; overflow-wrap: anywhere; }
 }

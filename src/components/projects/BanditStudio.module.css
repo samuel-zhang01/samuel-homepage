@@ -486,8 +486,17 @@
   .viewTabs button > span { display: block; margin-bottom: 3px; }
   .policyPanel,
   .regretPanel,
-  .methodPanel { padding: 12px; }
-  .controlDesk { grid-template-columns: minmax(0, 1fr); }
+  .methodPanel { padding: 0; }
+  .sectionHeading { padding: 12px; }
+  .mapFrame { padding: 0; }
+  .controlDesk { grid-template-columns: minmax(0, 1fr); padding: 12px; }
+  .panelCap { margin: -12px -12px 12px; }
+  .transport { padding: 0 12px 12px; }
+  .equationDeck,
+  .sourceLedger,
+  .dataLedger,
+  .checkpointLedger { padding: 12px; }
+  .cardCap { margin: -12px -12px 12px; }
   .panelCap,
   .truthToggle,
   .scenarioCard { grid-column: auto; }

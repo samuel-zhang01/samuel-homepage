@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { solubilityCopy } from "./copy/solubilityCopy";
@@ -246,7 +247,7 @@ function SolubilityChart({ curve, config, result, basis }: { curve: CurvePoint[]
         <div><span>Invented Q/L phase boundary</span><strong>Temperature sensitivity on a logarithmic reporting axis</strong></div>
         <div className={styles.legend}><span data-line="ideal">Ideal γ = 1</span><span data-line="nonideal">Symmetric Margules</span></div>
       </div>
-      <div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.chart} viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`Synthetic solubility curve in ${basis === "mole" ? "mole fraction" : "milligrams per gram solvent"}, from ${minimumTemperature.toFixed(0)} to ${maximumTemperature.toFixed(0)} kelvin.`}>
+      <PlotPanHint /><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.chart} viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`Synthetic solubility curve in ${basis === "mole" ? "mole fraction" : "milligrams per gram solvent"}, from ${minimumTemperature.toFixed(0)} to ${maximumTemperature.toFixed(0)} kelvin.`}>
         <title>Synthetic solid–liquid equilibrium curve</title>
         <desc>Ideal and activity-corrected illustrative solubility for invented Compound Q in invented Solvent L. The vertical scale is logarithmic.</desc>
         {Array.from({ length: 5 }, (_, index) => {
@@ -319,7 +320,7 @@ function ValidationChart({ rows }: { rows: Array<SyntheticPoint & { predicted: n
   const yScale = (value: number) => top + ((maxLog - Math.log10(value)) / span) * (height - top - bottom);
   const predictedPath = linePath(rows.map((row) => ({ x: xScale(row.temperature), y: yScale(row.predicted) })));
 
-  return (<ProjectCopy copy={solubilityCopy}><div className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.validationChart} viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Synthetic calibration and holdout observations compared with the current illustrative model curve.">
+  return (<ProjectCopy copy={solubilityCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotScroll} role="region" aria-label="Scrollable plot" tabIndex={0}><svg className={styles.validationChart} viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Synthetic calibration and holdout observations compared with the current illustrative model curve.">
       <title>Synthetic validation exercise</title>
       <desc>Four invented calibration points and two invented holdout points compared with a symmetric Margules solid-liquid equilibrium calculation.</desc>
       {[0, 1, 2, 3].map((index) => {
@@ -436,6 +437,7 @@ export function DrugSolubilityStudio() {
             </div>
             <section className={styles.calculationTape} aria-labelledby="calculation-tape-heading">
               <div className={styles.panelHeading}><div><span>Visible calculation tape</span><h3 id="calculation-tape-heading">From fusion penalty to reportable basis</h3></div><strong>{result.converged ? "Converged" : "Review"}</strong></div>
+              <PlotPanHint />
               <ol>
                 <li><span>01</span><div><strong>Fusion term</strong><MathEquation tex={String.raw`\frac{\Delta H_{\mathrm{fus}}}{R}\left(\frac{1}{T_m}-\frac{1}{T}\right)`} label="ΔHfus/R · (1/Tm − 1/T)" /><output>{result.rhs.toFixed(6)}</output></div></li>
                 <li><span>02</span><div><strong>Ideal boundary</strong><MathEquation tex={String.raw`x_{\mathrm{ideal}} = \exp(\Phi_{\mathrm{fus}})`} label="xideal = exp(fusion term)" /><output>{formatScientific(result.idealX, 5)}</output></div></li>
@@ -449,6 +451,7 @@ export function DrugSolubilityStudio() {
 
           <section className={styles.dataFallback}>
             <h4>Accessible phase-boundary table <span>{curve.length} synthetic temperatures</span></h4>
+            <PlotPanHint />
             <div className={styles.tableScroll} role="region" aria-label="Synthetic solubility curve data" tabIndex={0}>
               <table><thead><tr><th>T / K</th><th>Ideal xQ</th><th>Activity-corrected xQ</th><th>Ideal mg g⁻¹</th><th>Corrected mg g⁻¹</th></tr></thead><tbody>{curve.map((point) => <tr key={point.temperature}><td>{point.temperature.toFixed(2)}</td><td>{formatScientific(point.idealX, 5)}</td><td>{formatScientific(point.nonIdealX, 5)}</td><td>{point.idealMass.toFixed(5)}</td><td>{point.nonIdealMass.toFixed(5)}</td></tr>)}</tbody></table>
             </div>
@@ -478,6 +481,7 @@ export function DrugSolubilityStudio() {
               <div className={styles.roundTrip}><span>Convert and return</span><code>x → mg/g solvent → x</code><strong>absolute Δ = {formatScientific(Math.abs(roundTripX - basisX), 2)}</strong></div>
             </section>
             <section className={styles.formulaLedger}>
+              <PlotPanHint />
               <div className={styles.panelHeading}><div><span>Unit conversion</span><h3>Two reciprocal transforms</h3></div><strong>Illustrative system</strong></div>
               <article><span>Forward</span><h4>Mole fraction → mass ratio</h4><div className={styles.formula}><MathEquation tex={String.raw`m_{Q/L}=\frac{x_Q}{1-x_Q}\frac{M_Q}{M_L}\,1000`} label="mQ/L = xQ/(1 − xQ) × MQ/ML × 1000" /></div><p>The result is milligrams of Q per gram of solvent L—not milligrams per gram of the final solution.</p></article>
               <article><span>Inverse</span><h4>Mass ratio → mole fraction</h4><div className={styles.formula}><MathEquation tex={String.raw`\begin{aligned}x_Q&=\frac{r}{1+r}\\r&=m\cdot0.001\frac{M_L}{M_Q}\end{aligned}`} label="xQ = r/(1 + r), where r = m × 0.001 × ML/MQ" /></div><p>The inverse is useful when an experimental reporting basis must be reconciled before model comparison.</p></article>
@@ -503,7 +507,7 @@ export function DrugSolubilityStudio() {
           </section>
           <div className={styles.validationGrid}>
             <section className={styles.validationChartCard}><div className={styles.panelHeading}><div><span>Calibration and holdout</span><h3>Prediction curve and invented observations</h3></div><div className={styles.pointLegend}><span data-point="calibration">Calibration</span><span data-point="holdout">Holdout</span></div></div><ValidationChart rows={validationRows} /></section>
-            <section className={styles.validationTableCard}><div className={styles.panelHeading}><div><span>Calculated values</span><h3>Compare the six observations</h3></div><strong>6 synthetic observations</strong></div><div className={styles.tableScroll} role="region" aria-label="Synthetic calibration and holdout values" tabIndex={0}><table><thead><tr><th>T / K</th><th>Split</th><th>Observed xQ</th><th>Predicted xQ</th><th>Abs. rel.</th></tr></thead><tbody>{validationRows.map((row) => <tr key={row.temperature}><td>{row.temperature}</td><td><span data-split={row.split}>{row.split}</span></td><td>{formatScientific(row.observed, 4)}</td><td>{formatScientific(row.predicted, 4)}</td><td>{(Math.abs((row.predicted - row.observed) / row.observed) * 100).toFixed(2)}%</td></tr>)}</tbody></table></div><p>Grid fitting minimises calibration AARD only. Holdout rows never enter the objective.</p></section>
+            <section className={styles.validationTableCard}><div className={styles.panelHeading}><div><span>Calculated values</span><h3>Compare the six observations</h3></div><strong>6 synthetic observations</strong></div><PlotPanHint /><div className={styles.tableScroll} role="region" aria-label="Synthetic calibration and holdout values" tabIndex={0}><table><thead><tr><th>T / K</th><th>Split</th><th>Observed xQ</th><th>Predicted xQ</th><th>Abs. rel.</th></tr></thead><tbody>{validationRows.map((row) => <tr key={row.temperature}><td>{row.temperature}</td><td><span data-split={row.split}>{row.split}</span></td><td>{formatScientific(row.observed, 4)}</td><td>{formatScientific(row.predicted, 4)}</td><td>{(Math.abs((row.predicted - row.observed) / row.observed) * 100).toFixed(2)}%</td></tr>)}</tbody></table></div><p>Grid fitting minimises calibration AARD only. Holdout rows never enter the objective.</p></section>
           </div>
         </div>
       ) : null}

@@ -1203,7 +1203,6 @@
   .controlRail,
   .quantumRail,
   .boundaryColumn { display: flex; flex-direction: column; }
-  .polymerViewport svg { min-height: 280px; }
   .particleCanvas { min-height: 230px; }
   .integratorTrack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .integratorTrack button { min-width: 0; }
@@ -1212,7 +1211,6 @@
   .basisHeader { display: grid; }
   .basisHeader p { text-align: left; }
   .energyPlot { min-width: 520px; }
-  .basisCard { overflow: auto; }
 }
 
 @container (max-width: 430px) {
@@ -1221,8 +1219,7 @@
   .lab { padding: 12px; }
   .labHeading h3 { font-size: var(--s7-heading); }
   .cardToolbar { align-items: flex-start; flex-direction: column; gap: 2px; }
-  .particleCanvas { min-height: 200px; }
-  .polymerViewport svg { min-height: 240px; }
+  .particleCanvas { min-height: 310px; }
   .potentialCard svg,
   .orbitalCard > svg { min-height: 210px; }
   .formulaGrid { grid-template-columns: minmax(0, 1fr); }
@@ -1336,6 +1333,12 @@
   font-family: var(--system-mono);
 }
 
+.polymerViewport .axisTripod text,
+.polymerViewport .svgReadout {
+  fill: #8fb3bc;
+  font-size: var(--s7-small);
+}
+
 .simActions button,
 .seedButton,
 .integratorHeader button {
@@ -1412,3 +1415,6 @@
 .plotScroll > svg { min-width: 600px; }
 
 .integratorTrack button[aria-pressed="true"] > span { color: var(--s7-paper); }
+
+.plotScroll > .particleCanvas { min-width: 480px; }
+.plotScroll > .polymerCanvas { min-width: 520px; }

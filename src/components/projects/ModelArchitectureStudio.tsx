@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import { projectText } from "@/lib/projectCopy";
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { scientificCopy } from "./copy/scientificCopy";
@@ -660,7 +661,7 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
           </div>
 
           <p className={styles.sceneHint}>Scroll sideways to follow all stages. Select a tensor to inspect it.</p>
-          <div className={styles.sceneViewport} role="region" aria-label="Tensor graph; scroll horizontally to follow all stages" tabIndex={0}>
+          <PlotPanHint /><div className={styles.sceneViewport} role="region" aria-label="Tensor graph; scroll horizontally to follow all stages" tabIndex={0}>
             <div
               className={`${styles.network3d} ${spinning ? styles.spinning : ""}`}
               style={sceneStyle}
@@ -773,7 +774,7 @@ export function ModelArchitectureStudio({ locale = "en-GB" }: { locale?: Locale 
             <p>The bars use the recorded five-model comparison, before final retraining. Pose scores varied slightly between recorded evaluations; the depth results shown here use one comparison table consistently.</p>
             <p className={styles.exclusion}>SimpleCNN scores describe an earlier version without the two learned projection skips shown in the developed architecture. The original image-level split may place related video frames in training and testing; the sequence experiment explores why that matters.</p>
             <p>The classification CSV and report agree exactly for ResNet34. The other models differ by 0.25–1.25 percentage points. I show both saved evaluations below so that the difference remains visible.</p>
-            <div className={styles.comparisonScroll} tabIndex={0} role="region" aria-label="Recorded classification accuracy comparison">
+            <PlotPanHint /><div className={styles.comparisonScroll} tabIndex={0} role="region" aria-label="Recorded classification accuracy comparison">
               <table>
                 <thead><tr><th scope="col">Model</th><th scope="col">CSV test</th><th scope="col">Report test</th><th scope="col">Difference (percentage points)</th></tr></thead>
                 <tbody>{models.map((model) => {

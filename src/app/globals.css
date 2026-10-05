@@ -2271,13 +2271,15 @@ html:lang(zh-TW) .career-record {
   background: #777;
 }
 
-.documents-preview > .button-row {
+.documents-context > .button-row {
   flex: 0 0 auto;
   justify-content: flex-start;
   margin: 0;
   padding: 12px;
   background: var(--s7-raised);
 }
+
+.documents-context { flex: 0 0 auto; background: var(--s7-raised); }
 
 .document-description {
   flex: 0 0 auto;
@@ -3023,6 +3025,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-peak-dock {
   width: min(100%, 760px);
+  container-type: inline-size;
   margin: 0 auto;
 }
 
@@ -3035,7 +3038,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-kicker {
   color: #087f8c;
-  font: 900 8px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
   letter-spacing: .1em;
 }
 
@@ -3047,7 +3050,7 @@ html:lang(zh-TW) .career-record {
 .hplc-header p {
   margin: 0;
   color: #555;
-  font-size: 10px;
+  font-size: var(--s7-small);
 }
 
 .hplc-detector {
@@ -3064,7 +3067,7 @@ html:lang(zh-TW) .career-record {
   padding: 4px;
   border-bottom: 1px solid #6e75b9;
   color: #9bdfea;
-  font: 900 7px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
   letter-spacing: .1em;
 }
 
@@ -3083,7 +3086,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-difficulty > legend {
   padding: 0 5px;
-  font: 900 8px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
   letter-spacing: .08em;
 }
 
@@ -3119,13 +3122,13 @@ html:lang(zh-TW) .career-record {
 }
 
 .hplc-difficulty__levels strong {
-  font: 900 10px/1 var(--system-font);
+  font: 900 var(--s7-small)/1 var(--system-font);
 }
 
 .hplc-difficulty__levels small {
   overflow-wrap: anywhere;
   color: #555;
-  font: 800 7px/1.25 var(--system-mono);
+  font: 800 var(--s7-small)/1.25 var(--system-mono);
   text-transform: uppercase;
 }
 
@@ -3147,7 +3150,7 @@ html:lang(zh-TW) .career-record {
 .hplc-sample-strip p {
   margin: 0;
   color: #444;
-  font: 800 8px/1.35 var(--system-mono);
+  font: 800 var(--s7-small)/1.35 var(--system-mono);
 }
 
 .hplc-new-sample {
@@ -3177,13 +3180,13 @@ html:lang(zh-TW) .career-record {
 
 .hplc-context span {
   color: #087f8c;
-  font: 900 7px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
   letter-spacing: .08em;
 }
 
 .hplc-context p {
   margin: 4px 0 0;
-  font-size: 9px;
+  font-size: var(--s7-small);
   line-height: 1.35;
 }
 
@@ -3200,7 +3203,7 @@ html:lang(zh-TW) .career-record {
   gap: 5px 12px;
   margin: 0 0 4px 46px;
   color: #444;
-  font: 800 7px/1 var(--system-mono);
+  font: 800 var(--s7-small)/1 var(--system-mono);
 }
 
 .hplc-chart-legend span {
@@ -3221,9 +3224,19 @@ html:lang(zh-TW) .career-record {
 .hplc-chart {
   display: block;
   width: 100%;
+  min-width: 760px;
+  aspect-ratio: 760 / 304;
   height: auto;
   overflow: visible;
   background: #fff;
+}
+
+.hplc-chart-pan { max-width: 100%; overflow-x: auto; }
+.hplc-chart-pan:focus-visible { outline: 2px solid var(--s7-selection); outline-offset: 2px; }
+.hplc-chart-jump { display: none; }
+@container (max-width: 680px) {
+  .hplc-chart-jump { display: inline-flex; min-height: 44px; margin-top: 8px; }
+  .hplc-disclaimer { grid-template-columns: 1fr; }
 }
 
 .hplc-grid line {
@@ -3238,7 +3251,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-axes text {
   fill: #333;
-  font: 8px var(--system-mono);
+  font: var(--s7-small) var(--system-mono);
   text-anchor: middle;
 }
 
@@ -3279,7 +3292,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-peak-marker text {
   fill: #111;
-  font: 900 10px var(--system-mono);
+  font: 900 var(--s7-small) var(--system-mono);
   text-anchor: middle;
   paint-order: stroke;
   stroke: #fff;
@@ -3297,7 +3310,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-controls legend {
   padding: 0 5px;
-  font: 900 8px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
   letter-spacing: .06em;
 }
 
@@ -3314,7 +3327,7 @@ html:lang(zh-TW) .career-record {
   justify-content: space-between;
   gap: 5px;
   min-height: 29px;
-  font-size: 8px;
+  font-size: var(--s7-small);
   font-weight: 800;
   line-height: 1.2;
 }
@@ -3325,12 +3338,12 @@ html:lang(zh-TW) .career-record {
 }
 
 .hplc-control label > span > strong {
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .hplc-control label > span > small {
   color: #666;
-  font: 800 6px/1 var(--system-mono);
+  font: 800 var(--s7-small)/1 var(--system-mono);
   letter-spacing: .04em;
 }
 
@@ -3339,13 +3352,13 @@ html:lang(zh-TW) .career-record {
   padding: 3px 4px;
   border: 1px solid #111;
   background: #fff;
-  font: 900 9px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
 }
 
 .hplc-control output small {
   margin-left: 2px;
   color: #666;
-  font-size: 6px;
+  font-size: var(--s7-small);
 }
 
 .hplc-range-row {
@@ -3386,16 +3399,16 @@ html:lang(zh-TW) .career-record {
   border: 1px dotted #888;
   color: #555;
   background: #e9e9e3;
-  font: 800 7px/1 var(--system-mono);
+  font: 800 var(--s7-small)/1 var(--system-mono);
 }
 
 .hplc-amplitude-lock strong {
   color: #111;
-  font-size: 9px;
+  font-size: var(--s7-small);
 }
 
 .hplc-amplitude-lock strong small {
-  font-size: 6px;
+  font-size: var(--s7-small);
 }
 
 .hplc-amplitude-lock b {
@@ -3403,7 +3416,7 @@ html:lang(zh-TW) .career-record {
   border: 1px solid #777;
   color: #555;
   background: #d2d2cc;
-  font-size: 6px;
+  font-size: var(--s7-small);
 }
 
 .hplc-actions {
@@ -3432,7 +3445,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-result > p {
   margin: 0;
-  font-size: 9px;
+  font-size: var(--s7-small);
   line-height: 1.45;
 }
 
@@ -3446,7 +3459,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-result > header span {
   color: #087f8c;
-  font: 900 9px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
   letter-spacing: .08em;
 }
 
@@ -3457,7 +3470,7 @@ html:lang(zh-TW) .career-record {
 .hplc-result > header small {
   margin-left: 2px;
   color: #666;
-  font-size: 8px;
+  font-size: var(--s7-small);
 }
 
 .hplc-metrics {
@@ -3476,15 +3489,15 @@ html:lang(zh-TW) .career-record {
 
 .hplc-metrics dt {
   color: #666;
-  font: 800 7px/1 var(--system-mono);
+  font: 800 var(--s7-small)/1 var(--system-mono);
 }
 
 .hplc-metrics dd {
   margin: 3px 0 0;
-  font: 900 11px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
 }
 
-.hplc-metrics small { font-size: 7px; }
+.hplc-metrics small { font-size: var(--s7-small); }
 
 .hplc-resolution {
   display: flex;
@@ -3499,7 +3512,7 @@ html:lang(zh-TW) .career-record {
 
 .hplc-resolution span,
 .hplc-resolution b {
-  font: 900 7px/1 var(--system-mono);
+  font: 900 var(--s7-small)/1 var(--system-mono);
 }
 
 .hplc-resolution strong {
@@ -3520,7 +3533,7 @@ html:lang(zh-TW) .career-record {
   display: block;
   margin-top: 5px;
   color: #666;
-  font-size: 7px;
+  font-size: var(--s7-small);
 }
 
 .hplc-disclaimer {
@@ -3536,16 +3549,29 @@ html:lang(zh-TW) .career-record {
 
 .hplc-disclaimer strong {
   color: #111;
-  font: 900 7px/1.3 var(--system-mono);
+  font: 900 var(--s7-small)/1.3 var(--system-mono);
   white-space: nowrap;
 }
 
 .hplc-disclaimer p {
   margin: 0;
-  font-size: 7px;
+  font-size: var(--s7-small);
   line-height: 1.35;
 }
 
+/* Keep chromatogram captions and controls legible beside the native plot. */
+.hplc-peak-dock :is(.hplc-kicker, .hplc-detector span, .hplc-difficulty > legend,
+  .hplc-difficulty__levels small, .hplc-chart-legend, .hplc-context span,
+  .hplc-controls legend, .hplc-control label small, .hplc-control output,
+  .hplc-amplitude-lock, .hplc-metrics dt, .hplc-result > header span,
+  .hplc-resolution span, .hplc-resolution b, .hplc-disclaimer strong) {
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+.hplc-peak-dock :is(.hplc-difficulty__levels strong, .hplc-control label,
+  .hplc-control label strong) { font-size: var(--s7-ui); line-height: 1.4; }
+.hplc-peak-dock .hplc-difficulty__levels small { font-size: var(--s7-small); }
+.hplc-context p, .hplc-result > p, .hplc-disclaimer p { font-size: var(--s7-text); line-height: 1.55; }
 .game-header {
   display: flex;
   align-items: flex-start;
@@ -3865,11 +3891,14 @@ html:lang(zh-TW) .career-record {
     #222b67;
   box-shadow: 1px 1px 0 #555;
   font-family: var(--system-mono);
-  font-size: 10px;
+  font-size: var(--s7-small);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.3;
   text-align: center;
+  overflow-wrap: anywhere;
 }
+
+.memory-grid button:not(.is-visible) span { font-size: var(--s7-heading); }
 
 .memory-grid button.is-visible {
   border: 2px solid #111;
@@ -4931,7 +4960,6 @@ html:lang(zh-TW) .career-record {
   .memory-grid button {
     min-height: 58px;
     padding: 3px;
-    font-size: 8px;
   }
 
   .memory-status {
@@ -5388,19 +5416,19 @@ html:lang(zh-TW) .career-record {
     overflow: visible;
   }
 
-  .documents-preview > .button-row {
-    flex-wrap: nowrap;
-    overflow-x: auto;
+  .documents-context > .button-row {
+    flex-direction: column;
+    align-items: stretch;
     padding: 8px;
   }
 
-  .documents-preview > .button-row > a {
-    flex-shrink: 0;
+  .documents-context > .button-row > a {
+    min-height: 44px;
   }
 
   .documents-preview > .pdf-reader {
-    flex: 1 0 240px;
-    min-height: 240px;
+    flex: 1 0 clamp(300px, 55dvh, 480px);
+    min-height: clamp(300px, 55dvh, 480px);
   }
 
   .documents-toolbar__hint {

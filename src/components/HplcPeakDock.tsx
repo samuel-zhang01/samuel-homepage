@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties } from "react";
 import { translateText, type Locale } from "@/lib/i18n";
+import { PlotPanHint } from "./projects/PlotPanHint";
 
 type Difficulty = "easy" | "medium" | "hard";
 
@@ -350,6 +351,7 @@ function fitNarrative(locale: Locale, result: FitResult, adjustableAmplitude: bo
 export default function HplcPeakDock({ locale }: { locale: Locale }) {
   const t = (source: string) => translateText(locale, source);
   const chartTitleId = useId();
+  const chartPanRef = useRef<HTMLDivElement>(null);
   const chartDescriptionId = useId();
   const [dockState, setDockState] = useState<DockState>(() => makeDockState(INITIAL_DIFFICULTY, INITIAL_SEED));
   const [result, setResult] = useState<FitResult | null>(null);
@@ -489,6 +491,7 @@ export default function HplcPeakDock({ locale }: { locale: Locale }) {
           <span className="hplc-kicker">{t("ANALYTICAL ACCESSORY 06")}</span>
           <h3 id="hplc-peak-dock-title">{t("Peak Dock")}</h3>
           <p>{t("Synthetic HPLC–UV peak fitting")}</p>
+          <button type="button" className="s7-button hplc-chart-jump" onClick={() => { chartPanRef.current?.scrollIntoView({ block: "center" }); chartPanRef.current?.focus({ preventScroll: true }); }}>{t("View chromatogram")} ↓</button>
         </div>
         <div role="group" className="hplc-detector" aria-label={t("UV detector wavelength: 254 nanometres")}>
           <span>{t("UV–VIS")}</span>
@@ -548,6 +551,8 @@ export default function HplcPeakDock({ locale }: { locale: Locale }) {
           <span className="hplc-legend-fit"><i aria-hidden="true" />{t("FITTED SUM")}</span>
           <span className="hplc-legend-components"><i aria-hidden="true" />{t("COMPONENTS")}</span>
         </div>
+        <PlotPanHint locale={locale} />
+        <div ref={chartPanRef} className="hplc-chart-pan" role="region" tabIndex={0} aria-label={t("Synthetic HPLC–UV chromatogram at 254 nanometres")}>
         <svg
           className="hplc-chart"
           viewBox="0 0 760 304"
@@ -623,6 +628,7 @@ export default function HplcPeakDock({ locale }: { locale: Locale }) {
             ))}
           </g>
         </svg>
+        </div>
       </div>
 
       <fieldset className="hplc-controls">

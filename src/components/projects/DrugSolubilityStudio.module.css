@@ -499,6 +499,7 @@
 }
 
 @container (max-width: 540px) {
+  .dataFallback .tableScroll { max-height: none; }
   .boundaryBanner,
   .syntheticBanner { grid-template-columns: 1fr; gap: 7px; }
   .boundaryBanner > span,

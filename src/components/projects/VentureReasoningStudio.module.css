@@ -1520,7 +1520,7 @@
   .marketView,
   .askView,
   .ledgerView {
-    padding: 7px;
+    padding: 0;
   }
 
   .claimRows > article {
@@ -1587,8 +1587,15 @@
 
 @container venture-reasoning (max-width: 360px) {
 
-  .viewTabs {
+  .viewTabs button {
     grid-template-columns: minmax(0, 1fr);
+    row-gap: 3px;
+    padding: 8px;
+  }
+
+  .viewTabs button > span {
+    grid-row: auto;
+    justify-self: start;
   }
 
   .panelHeading > em {
@@ -1652,3 +1659,7 @@
 .marketMetrics > div > small { overflow: visible; white-space: normal; line-height: 1.6; }
 .claimMath dd { font-size: var(--s7-small); }
 .equationBar > [data-math-equation] { font-size: var(--s7-text); }
+
+@container (max-width: 620px) {
+  .viewTabs strong, .viewTabs small { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+}

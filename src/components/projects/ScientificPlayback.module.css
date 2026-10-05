@@ -51,7 +51,7 @@
   .explanation, .modelCards { grid-template-columns: 1fr; gap: 22px; padding: 20px 15px; }
   .forecasts { padding: 16px 12px; }
   .forecastFigure { padding: 10px; }
-  .forecastFigure img { height: 280px; }
+  .forecastFigure img { width: max(700px, var(--forecast-source-width)); min-width: 700px; max-width: none; height: auto; }
 }
 
 /* Use the same raised controls and readable type as the desktop. */
@@ -139,3 +139,8 @@
   .referenceControls, .readingGuide { padding: 14px 13px; }
   .attributionLedger { grid-template-columns: minmax(0, 1fr); padding: 16px 13px; }
 }
+
+.forecastViewport { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-color: var(--s7-edge) var(--s7-chrome); scrollbar-width: auto; }
+.forecastViewport:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
+.forecastViewport::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
+.forecastViewport::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }

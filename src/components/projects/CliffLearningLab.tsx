@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { cliffLearningLabCopy } from "./copy/cliffLearningLabCopy";
@@ -38,7 +39,7 @@ export function CliffLearningLab() {
       <div className={styles.actions}><button type="button" onClick={() => setAgent((current) => trainCliff(current, settings, 1, "steps"))}>Take one learning step</button><button type="button" disabled={agent.episode >= 2000} onClick={() => setAgent((current) => trainCliff(current, settings, Math.min(100, 2000 - current.episode), "episodes"))}>Train 100 episodes</button><button type="button" onClick={() => setAgent(createCliffAgent(settings))}>Reset run</button></div>
       <div className={styles.readouts} aria-live="polite"><div><span>Completed episodes</span><strong>{agent.episode}</strong></div><div><span>Learning updates</span><strong>{agent.totalSteps.toLocaleString()}</strong></div><div><span>Last {recent.length || 50} · mean return</span><strong>{average === null ? "—" : average.toFixed(1)}</strong></div><div><span>Goals in that window</span><strong>{recent.filter((item) => item.goal).length}/{recent.length}</strong></div></div>
       <div className={styles.actions} role="group" aria-label="Inspect the learning state"><button type="button" aria-pressed={view === "training"} onClick={() => setView("training")}>Live agent &amp; Q values</button><button type="button" aria-pressed={view === "policy"} onClick={() => setView("policy")}>Test greedy route</button></div>
-      <div className={styles.gridViewport} role="group" aria-label="CliffWalking states" tabIndex={0}><div role="group" className={styles.grid} aria-label="CliffWalking states">
+      <PlotPanHint /><div className={styles.gridViewport} role="group" aria-label="CliffWalking states" tabIndex={0}><div role="group" className={styles.grid} aria-label="CliffWalking states">
         {agent.q.map((values, state) => {
           const cliff = state > 36 && state < 47;
           const special = state === 36 ? "S" : state === 47 ? "G" : cliff ? "×" : arrows[greedyAction(values)];

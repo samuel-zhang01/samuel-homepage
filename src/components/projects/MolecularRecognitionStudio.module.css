@@ -823,6 +823,9 @@
 }
 
 @container (max-width: 440px) {
+  .studioTabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .studioTabs button:nth-child(-n+2) { border-bottom: 1px solid #9aa5a9; }
+  .studioTabs button:nth-child(2n) { border-right: 0; }
   .hero { padding: 18px; }
   .hero h2 { font-size: var(--s7-title); }
   .truthStrip { grid-template-columns: minmax(0, 1fr); }

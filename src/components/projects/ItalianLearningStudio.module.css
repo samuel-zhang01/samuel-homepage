@@ -2161,7 +2161,7 @@
   .sampleActions button:last-child { margin-left: 0; }
 
   .laneList {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .laneList button {
@@ -2172,13 +2172,14 @@
     place-items: center;
     padding: 5px 2px;
     border-right: 1px solid #a5a69f;
-    border-bottom: 0;
+    border-bottom: 1px solid #a5a69f;
     text-align: center;
   }
 
-  .laneList button:last-child { border-right: 0; }
+  .laneList button:nth-child(2n) { border-right: 0; }
+  .laneList button:last-child { grid-column: 1 / -1; border-right: 0; }
   .laneList button > span { width: 20px; height: 20px; grid-row: auto; font-size: var(--s7-small); }
-  .laneList button strong { max-width: 100%; overflow: hidden; font-size: var(--s7-small); text-overflow: ellipsis; }
+  .laneList button strong { max-width: 100%; overflow: visible; font-size: var(--s7-small); white-space: normal; text-overflow: clip; }
   .laneList button small { display: none; }
 
   .artifactControls { grid-template-columns: 1fr; gap: 11px; }
@@ -2202,7 +2203,12 @@
 @container (max-width: 420px) {
   .utilityBar > div:first-child strong { display: none; }
   .appMenu button strong { font-size: var(--s7-small); }
-  .viewPanel { padding: 9px; }
+  .viewPanel { padding: 0; }
+  .exerciseCard { padding: 14px 12px; }
+  .appMenu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .appMenu button { grid-template-columns: var(--s7-icon-inline) minmax(0, 1fr); grid-template-rows: auto; gap: 7px; padding: 8px; text-align: left; }
+  .appMenu button strong { align-self: center; }
+  .appMenu button:last-child { grid-column: 1 / -1; }
   .sectionIntro { display: grid; }
   .xpBadge, .deckCount, .meanBadge, .localBadge { justify-self: flex-start; }
   .exerciseMeta span:last-child { display: none; }

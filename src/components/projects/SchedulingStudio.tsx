@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import { SchedulingDstExperiment } from "./SourceExperiments";
 
 import ClassicSelect from "../ClassicSelect";
@@ -620,9 +621,7 @@ export function SchedulingStudio() {
             <div><span>03 · AVAILABILITY RESULT</span><h3 id="slot-heading">24–28 August · London source dates</h3></div>
             <div className={styles.legend}><span data-state="available">Bookable</span><span data-state="conflict">Busy</span><span data-state="outside">Outside</span></div>
           </div>
-          <p className={styles.keyboardHelp} id="scheduling-slot-navigation-help">
-            <strong>Keyboard:</strong> Tab enters the calendar once. Use <kbd>←</kbd><kbd>→</kbd> across a time row, <kbd>↑</kbd><kbd>↓</kbd> within a day, and <kbd>Home</kbd>/<kbd>End</kbd> for row edges. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Home</kbd>/<kbd>End</kbd> moves to the first or last generated slot. Busy and outside cells remain readable; only bookable cells activate.
-          </p>
+          <PlotPanHint />
           <div
             className={styles.calendarScroll}
             role="group"
@@ -675,6 +674,9 @@ export function SchedulingStudio() {
               })}
             </div>
           </div>
+          <p className={styles.keyboardHelp} id="scheduling-slot-navigation-help">
+            <strong>Keyboard:</strong> Tab enters the calendar once. Use <kbd>←</kbd><kbd>→</kbd> across a time row, <kbd>↑</kbd><kbd>↓</kbd> within a day, and <kbd>Home</kbd>/<kbd>End</kbd> for row edges. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Home</kbd>/<kbd>End</kbd> moves to the first or last generated slot. Busy and outside cells remain readable; only bookable cells activate.
+          </p>
           {removalReasons.length > 0 && (
             <section className={styles.slotAudit}>
               <h4>{constraintsRemoved} generated candidates removed — inspect reasons</h4>

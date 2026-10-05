@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { decisionDemosCopy } from "./copy/decisionDemosCopy";
@@ -232,6 +233,7 @@ export function AirQualityBudgetDemo() {
               <div><span>Source-recorded results</span><h3 id="air-model-table-title">Five model families</h3></div>
               <span className={styles.lowerLegend}>RANDOM 80/20 TEST</span>
             </div>
+            <PlotPanHint />
             <div className={styles.modelTableWrap} role="region" tabIndex={0} aria-label="Scrollable air-quality model comparison">
               <table className={styles.modelTable}>
                 <thead><tr><th>Model</th><th>Test R²</th><th>Test RMSE</th><th>Features</th><th>Browser score</th></tr></thead>
@@ -316,7 +318,7 @@ export function AirQualityBudgetDemo() {
             <span className={styles.lowerLegend}>Lower RMSE is better</span>
           </div>
 
-          <div
+          <PlotPanHint /><div
             className={styles.svgFrame}
             role="region"
             tabIndex={0}
@@ -544,7 +546,7 @@ export function CyberThresholdDemo() {
           <strong>{pounds.format(totalCost)}</strong>
           <small>{matrix.fn} misses × {pounds.format(falseNegativeCost)} + {matrix.fp} false alarms × {pounds.format(falsePositiveCost)}</small>
         </div>
-        <div
+        <PlotPanHint /><div
           className={styles.costChartWrap}
           role="region"
           tabIndex={0}
@@ -675,7 +677,8 @@ export function RegularisationLabDemo() {
           />
           <div className={styles.formulaCard}>
             <span>Orthonormal closed form</span>
-            <MathEquation tex={method === "ridge"
+            <PlotPanHint />
+            <MathEquation label="Orthonormal closed form" tex={method === "ridge"
               ? String.raw`\widehat{\beta}_{\mathrm{ridge}}=\frac{\widehat{\beta}_{\mathrm{OLS}}}{1+\lambda}`
               : String.raw`\widehat{\beta}_{\mathrm{lasso}}=\operatorname{sign}(\widehat{\beta}_{\mathrm{OLS}})\max\!\left(\lvert\widehat{\beta}_{\mathrm{OLS}}\rvert-\lambda,0\right)`} />
             <p>
@@ -694,7 +697,7 @@ export function RegularisationLabDemo() {
             </div>
             <span className={styles.lambdaBadge}>λ {lambda.toFixed(2)}</span>
           </div>
-          <div
+          <PlotPanHint /><div
             className={styles.svgFrame}
             role="region"
             tabIndex={0}
@@ -991,6 +994,7 @@ function OpeEstimatorWorkbench() {
           </div>
         </div>
 
+        <PlotPanHint />
         <div className={styles.logTableWrap} role="region" tabIndex={0} aria-label="Scrollable synthetic logged-policy evidence table">
           <table className={styles.logTable}>
             <thead>
@@ -1114,7 +1118,7 @@ export function CausalOpeDemo() {
               Clear set
             </MacButton>
           </div>
-          <div className={styles.dagCanvas}>
+          <PlotPanHint /><div className={styles.dagViewport} role="region" aria-labelledby="dag-title" tabIndex={0}><div className={styles.dagCanvas}>
             <svg viewBox="0 0 480 240" aria-hidden="true" focusable="false">
               <defs>
                 <marker id={arrowId} markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
@@ -1162,6 +1166,7 @@ export function CausalOpeDemo() {
               <strong>Response flag</strong>
               <small>{adjustCollider ? "ADJUSTING" : "COLLIDER"}</small>
             </button>
+          </div>
           </div>
           <div className={`${styles.dagStatus} ${adjustmentStatus.tone === "warning" ? "" : styles[adjustmentStatus.tone]}`} aria-live="polite">
             <span aria-hidden="true">{adjustmentStatus.tone === "success" ? "✓" : "!"}</span>

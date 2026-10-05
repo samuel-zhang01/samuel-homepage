@@ -23,6 +23,8 @@
 .header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, .65fr); align-items: center; gap: 24px; padding: 13px 18px; border-bottom: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }
 .header > div > span { color: var(--s7-ink); font: var(--s7-small)/1.4 var(--s7-font-ui); letter-spacing: normal; }
 .header p { max-width: 610px; margin: 0; font-size: var(--s7-text); color: var(--s7-ink); }
+.phoneJump { display: none; }
+.stage:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: -4px; }
 .searchContainer { position: relative; min-width: 0; z-index: 5; }
 .search { display: grid; gap: 5px; font-size: var(--s7-small); font-weight: 700; }
 .search input { min-width: 0; width: 100%; min-height: 38px; padding: 7px 9px; border: 1px solid var(--s7-ink); border-radius: 0; box-shadow: inset 1px 1px 0 var(--s7-shadow); background: var(--s7-paper); color: var(--s7-ink); font-size: var(--s7-ui); }
@@ -287,6 +289,7 @@
   .header { grid-template-columns: 1fr; gap: 12px; padding: 13px; }
   .header > div > span { display: none; }
   .header p { font-size: var(--s7-text); }
+  .graph .phoneJump { display: inline-flex; min-height: 44px; margin-top: 8px; }
   .search input { min-height: 44px; font-size: var(--s7-text); }
   .workspace { display: flex; flex-direction: column; gap: 7px; padding: 6px; }
   .visual { width: 100%; }
@@ -296,7 +299,11 @@
   .topics button, .toolbar button, .footer button, .navigator > button { min-height: 44px; }
   .topics { padding: 7px 9px; }
   .toolbar { padding: 7px 9px; }
-  .toolbar button { min-width: 41px; }
+  .toolbar button { min-width: 44px; }
+  .toolbar > div { flex-wrap: nowrap; gap: 3px; padding: 0; border: 0; background: transparent; box-shadow: none; }
+  .toolbar > div:nth-child(2) { flex: 1 1 160px; min-width: 160px; }
+  .toolbar > div:nth-child(2) > button:last-child { flex: 1; }
+  .toolbar > button { flex: 1 0 100%; }
   .toolbar a { display: inline-flex; align-items: center; min-height: 36px; }
   .stage { height: 350px; }
   .breadcrumb button { min-height: max(var(--s7-control-height), 35px); }

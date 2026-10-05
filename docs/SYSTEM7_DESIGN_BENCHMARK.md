@@ -123,6 +123,16 @@ Components may add a small outer shadow to lift an action or frame. Selected tog
 - `.s7-note` is a plain labeled note with a thin border. Internal audit receipts belong in development documentation. A visitor-facing limitation belongs beside the result it qualifies. Use an information tint for explanations, an accent tint for context and a caution tint only where caution is intended. Actual errors retain explicit text and a recognizable status cue.
 - Preserve color maps, molecule atoms, graph clusters, uncertainty bands and chart series in their scientific regions. Their legends carry domain meaning; the shared palette styles their surrounding controls and explanatory panels.
 
+## Phone working area
+
+Review real 320×568 and 390×844 portrait views. Keep 12–16px inside content panels and 16–24px between major sections; an 8px outer frame may surround a padded panel. Remove compounded gutters instead of shrinking type, icons or touch targets. At the short phone size, retain at least 300px of scrollable window content. Navigation and ordinary form controls need 44px targets; dense game boards and periodic-table cells need a separate interaction review.
+
+The window title names the demo. Its phone toolbar should keep Back, Share and any project-specific action without repeating the full title. Let the toolbar scroll away with the content. Keep primary plots and canvases useful, normally at least 220px high. Preserve wide diagrams, full labels and legends with a contained, focusable pan region and a visible swipe/arrow-key hint. Do not stretch an authored scientific image to meet a height target; assess its useful field and original aspect ratio separately. Text-led experiences need comfortable reading and control space rather than an artificial plot-height requirement.
+
+Use one clear vertical scrolling owner, except for an instrument that requires its own reader or work area. Put document provenance after the initial PDF viewport and desk backup controls after the app launchers. Keep that context reachable with keyboard navigation. Graph and orbital controls retain their explanations and provide a direct phone jump to the instrument. Review English and Traditional Chinese primary views, spot-check the other locales, and compare desktop references. Each demo needs a separate adversarial decision on visual coherence, readability and useful display area; a passing geometry check alone is not a visual grade.
+
+Run `npm run check:phone-space` against a compiled preview with `PLAYWRIGHT_CORE_PATH` set to an external Playwright installation and `REVIEW_ORIGIN` set to that preview. `BROWSER_ENGINE` selects Chromium, Firefox or WebKit; `PHONE_SPACE_LOCALES`, `PHONE_SPACE_SIZES`, `PHONE_SPACE_GROUP` and `PHONE_SPACE_SLUGS` narrow the matrix. Set `PHONE_SPACE_REPORT_DIR` under ignored `.codex/reports/`. Use the maintained deep journey and icon runners alongside it to check real interactions and canonical artwork.
+
 ## Project browser
 
 The knowledge graph remains the first view. **Selected work** and **All projects** use a left list pane with visible search and discipline filters, alongside the selected project's details in the right pane. Selecting a row updates those details within the same project window. The list and detail content scroll independently, with gray framing and white content wells separating their roles.

@@ -345,7 +345,7 @@
 .axisLabel {
   fill: #292a28;
   font-family: var(--s7-font-text);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .tickLabel {

@@ -1,5 +1,7 @@
 "use client";
 
+import { PlotPanHint } from "./PlotPanHint";
+
 import ClassicSelect from "../ClassicSelect";
 
 import { useMemo, useState } from "react";
@@ -867,6 +869,9 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
             <button key={item} type="button" aria-pressed={filter === item} onClick={() => setFilter(item)}>{item}</button>
           ))}
         </div>
+        <PlotPanHint />
+        <div className={styles.packageViewport} role="region" aria-label="CORE PACKAGE LEDGER" tabIndex={0}>
+        <div className={styles.packageTable}>
         <div className={styles.packageHeader}><span>#</span><span>Distribution</span><span>Import probe</span><span>Group</span><span>Alignment</span></div>
         <div className={styles.packageRows}>
           {visiblePackages.map((item) => {
@@ -882,6 +887,7 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
             );
           })}
         </div>
+        </div></div>
       </section>
 
       <div className={styles.manifestBottom}>

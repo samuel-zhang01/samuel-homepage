@@ -1,4 +1,5 @@
 "use client";
+import { PlotPanHint } from "./PlotPanHint";
 import { BackupFailureExperiment } from "./SourceExperiments";
 
 import ClassicSelect from "../ClassicSelect";
@@ -285,7 +286,7 @@ function TopologyMap({
   highlightedEdges: Set<string>;
 }) {
   return (
-      <ProjectCopy copy={homeLabCopy}><div className={styles.mapViewport} role="region" aria-label="Service topology" tabIndex={0}><div className={styles.topologyMap}>
+      <ProjectCopy copy={homeLabCopy}><PlotPanHint key="topology-pan-hint" /><div key="topology-map" className={styles.mapViewport} role="region" aria-label="Service topology" tabIndex={0}><div className={styles.topologyMap}>
       <svg className={styles.edgeLayer} viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
         {EDGES.map((edge) => {
           const coordinates = edgeCoordinates(edge);
@@ -539,6 +540,9 @@ function CapacityView() {
       <div className={styles.capacityLayout}>
         <section className={styles.mountPanel}>
           <div className={styles.panelHeading}><span>Σ</span><strong>COMPOSE ENTRY RECONCILIATION</strong><em>EXACT COUNTS</em></div>
+          <PlotPanHint />
+          <div className={styles.mountViewport} role="region" aria-label="COMPOSE ENTRY RECONCILIATION" tabIndex={0}>
+          <div className={styles.mountTable}>
           <div className={styles.mountHeader}><span>Service</span><span>Mounts</span><span>Ports</span><span>Depends</span></div>
           {MOUNT_ROWS.map((row) => (
             <div className={styles.mountRow} key={row.name}>
@@ -548,6 +552,7 @@ function CapacityView() {
               <span><i style={{ "--bar-width": `${row.dependencies * 25}%` } as CSSProperties} />{row.dependencies}</span>
             </div>
           ))}
+          </div></div>
           <div className={styles.reconcileTotal}>
             <span>Mount reconciliation</span><MathEquation tex={String.raw`2+3+2+1+1+3=12`} label="Total mount entries" />
           </div>
