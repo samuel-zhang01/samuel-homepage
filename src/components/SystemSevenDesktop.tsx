@@ -682,7 +682,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
         <p className="portrait-caption">SAMUEL.ZHANG</p>
         <dl className="quick-facts">
           <div><dt>Location</dt><dd>London, UK</dd></div>
-          <div><dt>Current</dt><dd>Senior Coordinator</dd></div>
+          <div><dt>Current</dt><dd>Stealth Startup</dd></div>
           <div><dt>Venture</dt><dd>coverd.ai</dd></div>
           <div><dt>Direction</dt><dd>Product leadership</dd></div>
         </dl>
