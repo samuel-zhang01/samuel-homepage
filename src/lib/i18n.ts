@@ -615,6 +615,7 @@ const zhCN: Record<string, string> = {
 
   "Applied AI Engineer · Product Builder · Founder": "应用人工智能工程师 · 产品构建者 · 创始人",
   "Current": "当前经历",
+  "Stealth Startup": "未公开的初创公司",
   "Pfizer": "辉瑞",
   "Research & teaching": "研究与教学",
   "Public service": "公共服务",
@@ -1591,6 +1592,7 @@ const zhCN: Record<string, string> = {
 };
 
 const zhTWOverrides: Record<string, string> = {
+  "Stealth Startup": "尚未公開的新創公司",
   "Schedule a call with Samuel": "預約與 Samuel 通話",
   "Schedule a call": "預約通話",
   "30-minute call": "30 分鐘通話",
