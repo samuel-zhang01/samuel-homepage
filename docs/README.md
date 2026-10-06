@@ -4,7 +4,7 @@
 
 The current portfolio has 41 project records, 28 routed project demos, nine desk apps, four locales, five library documents and 18 evidence-backed capabilities. The profile graph contains 106 nodes and 387 edges. Recent work restores the native icon originals, improves desktop/phone demo readability, adds Contact/YASA call-booking links and preserves calculator precision between operations.
 
-The last recorded production deployment is `aed8ebc` on 5 October 2026. Its Docker-context and maskable-icon repairs, full build and focused public-origin checks are [recorded separately](VERIFICATION.md#5-october-docker-context-repair) from later checkout changes. Read each verification section's scope before treating it as evidence for a newer revision.
+The last recorded production deployment is `71e58c0` on 6 October 2026. Its locale repair, healthy deployment, public HTTPS verification and focused four-locale desktop/phone checks are [recorded here](VERIFICATION.md#6-october-production-redeployment). The earlier Docker-context and maskable-icon repairs remain [recorded separately](VERIFICATION.md#5-october-docker-context-repair). Read each verification section's scope before treating it as evidence for a newer revision.
 
 | Document | Purpose |
 | --- | --- |

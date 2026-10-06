@@ -14,6 +14,16 @@ Focused compiled Chromium checks pass **eight profiles across four locales at 14
 
 All **26 evidence files / 1,340,739 bytes**, including both failed build receipts and browser-helper qualifications, are archived at `~/.local/share/samuel-homepage/review-archive/deployment-locale-20261006.tar.gz` with a neighboring manifest. Every member was read back and hash-verified before temporary reports were removed. Archive SHA-256: `99f15b71741dd89f28003ceee98ea3d0fe5fa97b91a9b73c0f93646d427ea9cc`. Restore with `tar -xzf "$HOME/.local/share/samuel-homepage/review-archive/deployment-locale-20261006.tar.gz" -C .codex/reports` after creating that ignored directory.
 
+## 6 October production redeployment
+
+The owner requested publication and redeployment. The reviewed lockfile update was committed separately as `7aa160d`; the locale repair and its verification were committed as `71e58c0`. Both were pushed to `origin/main`, then the clean checkout deployed successfully through `VERIFY_PUBLIC_ORIGIN=1 ./deploy.sh` using host Node 22. Locked installation, dependency advisory/signature verification, lint, source/profile/graph/locale gates and the real Docker-context check passed. Docker reused the verified production build layers recorded above.
+
+Revision `71e58c0` is live in healthy image `sha256:8ea5feeef8b43127dc671a235ee3422f6fd66a0534ad066eab27bb8421a219f2`, build ID `EE4uNqL39xzh-OXnjQGl5`. Container route probes, unknown-route HTTP 404, untrusted-host HTTP 421, production security headers and canonical public HTTPS route/header checks passed. This redeployment includes the earlier phone working-area, Contact and calculator follow-ups; their implementation and broader historical browser evidence retain their original scopes.
+
+Fresh checks against **the public HTTPS site** pass eight Chromium profiles across all four locales at 1440×1000 and 320×568. They verify visible current-role translations, contained About layouts, keyboard Documents navigation, completed first-page PDF rendering and each locale's source PDF response. No page or HTTP errors were recorded. English desktop and Traditional Chinese phone screenshots were directly inspected. These are focused live About/document checks, not a new full-site or multi-engine matrix.
+
+All **15 evidence files / 1,275,329 bytes** are archived at `~/.local/share/samuel-homepage/review-archive/redeploy-71e58c0-20261006.tar.gz`, with a neighboring manifest. Every member was read back and hash-verified before temporary reports were removed. Archive SHA-256: `0664355ea81f9366085c9daf3dc5d2094a93957c5a7011c2958d4dcd88591c45`. Restore with `tar -xzf "$HOME/.local/share/samuel-homepage/review-archive/redeploy-71e58c0-20261006.tar.gz" -C .codex/reports` after creating that ignored directory. The subsequent deployment-documentation commit does not change application/build inputs.
+
 ## Phone working areas — 5 October follow-up
 
 All 28 routed demos receive separate adversarial reviews against the shared phone contract in [the design benchmark](SYSTEM7_DESIGN_BENCHMARK.md). The threshold is 9/10 for coherence, readability and useful display space, with at most 15 repair rounds. Reviews include English and Traditional Chinese at 320×568 and 390×844, changed or populated states and desktop references. The earlier artwork-release grades above do not grade this follow-up.

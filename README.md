@@ -51,10 +51,10 @@ uses display-timed animation, starts paused, and respects reduced-motion setting
 The desktop, project archive and mobile Note Pad were recaptured on 5 October
 2026 from a production build of the current checkout. The orbital image and
 animation remain earlier reference captures. The last recorded production deployment is
-`aed8ebc`, verified on 5 October 2026 with public HTTPS, artwork hashes and
-four-locale desktop/phone checks. The call-booking and calculator follow-ups are
-in the current checkout; their verification is recorded separately from that
-deployment in the [verification guide](docs/VERIFICATION.md).
+`71e58c0`, verified on 6 October 2026 with container health, public HTTPS and
+four-locale desktop/phone About and document checks. It includes the call-booking,
+Contact, phone-layout and calculator follow-ups. Their broader verification and
+the earlier deployment scopes remain separate in the [verification guide](docs/VERIFICATION.md#6-october-production-redeployment).
 
 ## The desk apps
 
