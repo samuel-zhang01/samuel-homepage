@@ -1,6 +1,26 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const cliffLearningLabCopy = {
+  "Pause learning": ["暂停学习", "暫停學習"],
+  "Continue learning": ["继续学习", "繼續學習"],
+  "Watch 100 updates": ["观看 100 次更新", "觀看 100 次更新"],
+  "Keep this run for comparison": ["保留此轮结果以比较", "保留此輪結果以比較"],
+  "Learning one move at a time. Pause to inspect the latest update.": ["逐步学习每次移动。暂停后可查看最近的更新。", "逐步學習每次移動。暫停後可查看最近的更新。"],
+  "Playback finished. The learned Q table is kept.": ["播放结束。已学到的 Q 表仍然保留。", "播放結束。已學到的 Q 表仍然保留。"],
+  "Ordinary moves cost −1; falling off the cliff costs −100.": ["普通移动的奖励为 −1；坠崖为 −100。", "普通移動的獎勵為 −1；墜崖為 −100。"],
+  "Compare learned runs": ["比较训练结果", "比較訓練結果"],
+  "Saved run vs current run": ["保留结果与当前结果", "保留結果與目前結果"],
+  "Clear comparison": ["清除比较", "清除比較"],
+  "Keep one run, change the update rule, then train again. Compare equal episode counts and the same seed.": ["保留一轮结果，更换更新规则后重新训练。请使用相同种子和相同回合数比较。", "保留一輪結果，更換更新規則後重新訓練。請使用相同種子與相同回合數比較。"],
+  "Run": ["实验", "實驗"],
+  "Episodes": ["回合数", "回合數"],
+  "Greedy return": ["贪心策略回报", "貪心策略回報"],
+  "Cliff falls": ["坠崖次数", "墜崖次數"],
+  "Saved": ["已保留", "已保留"],
+  "Current": ["当前", "目前"],
+  "Seed {0} · ε {1} · α {2}": ["种子 {0} · ε {1} · α {2}", "種子 {0} · ε {1} · α {2}"],
+  "Goal not reached": ["未到终点", "未到終點"],
+  "Seed": ["种子", "種子"],
   "Train a reinforcement-learning agent": [
     "训练强化学习智能体",
     "訓練強化學習智慧代理"
@@ -200,5 +220,8 @@ export const cliffLearningLabCopy = {
   "Reward {0}; next state {1}.": [
     "奖励 {0}；下一状态 {1}。",
     "獎勵 {0}；下一狀態 {1}。"
-  ]
+  ],
+  "Training can reach the goal using exploratory moves while the greedy test loops. Train more and test again; compare algorithms at equal episode counts.": ["训练可凭探索动作到达终点，而贪心测试可能循环。增加训练后再测试；比较算法时须使用相同回合数。", "訓練可憑探索動作到達終點，而貪心測試可能循環。增加訓練後再測試；比較演算法時須使用相同回合數。"],
+  "Training includes exploration; the greedy test uses only learned values. Reset with different settings to start a new comparison.": ["训练包含探索；贪心测试只使用已学价值。重置并更改设置，可开始新的比较。", "訓練包含探索；貪心測試只使用已學價值。重置並更改設定，可開始新的比較。"],
+
 } satisfies ProjectCopyTable;

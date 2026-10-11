@@ -1262,5 +1262,13 @@ export const rlAtlasDemoCopy = {
   "Curriculum materials": ["课程材料", "課程材料"],
   "Learning by consequences": ["从后果中学习", "從後果中學習"]
 ,
-  "Review status": ["审查状态", "審查狀態"]
+  "Review status": ["审查状态", "審查狀態"],
+  "I study how language models improve after initial training. Compare recorded answers, then change a small adapter or a preference policy yourself.": ["我研究语言模型在初次训练后如何改进。比较已记录的答案，再亲自调整小型适配器或偏好策略。", "我研究語言模型在初次訓練後如何改進。比較已記錄的答案，再親自調整小型適配器或偏好策略。"],
+  "I wrote this curriculum to connect learning theory with runnable algorithms. Choose a module to see the question, method and experiment.": ["我编写这套课程，将学习理论与可运行算法连接起来。选择模块，了解问题、方法和实验。", "我編寫這套課程，將學習理論與可執行演算法連結起來。選擇模組，了解問題、方法和實驗。"],
+  "Choose Train an adapter or Change a preference. Watch ten updates and follow the loss as the parameters change.": ["选择「训练适配器」或「调整偏好」。观看十次更新，追踪参数变化时的损失。", "選擇「訓練適配器」或「調整偏好」。觀看十次更新，追蹤參數變化時的損失。"],
+  "Choose a week, or open Train an RL agent to try the cliff exercise.": ["选择一周课程，或打开「训练 RL 智能体」尝试悬崖练习。", "選擇一週課程，或開啟「訓練 RL 智慧體」嘗試懸崖練習。"],
+  "Train 100 episodes and save the run. Change Q-learning to SARSA, train again and compare their greedy routes.": ["训练 100 回合并保存。将 Q-learning 改为 SARSA，再次训练并比较贪心路线。", "訓練 100 回合並儲存。將 Q-learning 改為 SARSA，再次訓練並比較貪心路線。"],
+  "The live calculations change actual parameters. The 32 recorded model answers remain separate, and correct format alone does not guarantee correct arithmetic.": ["实时计算会改变实际参数。32 个已记录模型答案独立呈现；格式正确并不保证算术正确。", "即時計算會改變實際參數。32 個已記錄模型答案獨立呈現；格式正確並不保證算術正確。"],
+  "Each module connects a question, a method and a runnable exercise; open the syllabus for the wider sequence.": ["每个模块连接一个问题、一种方法和可运行练习；打开大纲查看完整顺序。", "每個模組連結一個問題、一種方法和可執行練習；開啟大綱查看完整順序。"],
+
 } satisfies ProjectCopyTable;

@@ -1,6 +1,20 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const insuranceMatchingDemoCopy = {
+  "Fictional insurers and check results. Load missing records, compare the three views and decide what needs broker review.": ["虚构的保险人和检查结果。加载缺失记录、比较三个视图，再判断哪些部分需要经纪人复核。", "虛構的保險人與檢查結果。載入缺漏紀錄、比較三個視圖，再判斷哪些部分需要經紀人複核。"],
+
+  "Example follow-up: dated participation records now support a historical lead-share check. This does not establish current appetite.": ["示例追问：带日期的参与记录现在可支持历史主承保份额检查。这不能证明当前承保意愿。", "範例追問：帶日期的參與紀錄現在可支持歷史主承保份額檢查。這不能證明目前承保意願。"],
+  "Example follow-up: a wording comparison for this market is now available. A broker still reviews the clauses.": ["示例追问：现在有此保险市场的条款比较。仍需经纪人复核条款。", "範例追問：現在有此保險市場的條款比較。仍需經紀人複核條款。"],
+  "Inspect Market 06 and complete its example checks. Watch the missing fields fill in while the authority gate remains active; then pin it for broker review.": ["查看市场 06 并完成示例检查。观察缺失字段被补充，而授权检查仍保持启用；然后将其标记供经纪人复核。", "檢視市場 06 並完成範例檢查。觀察缺漏欄位被補充，而授權檢查仍保持啟用；然後將其標記供經紀人複核。"],
+  "Complete example checks": ["完成示例检查", "完成範例檢查"],
+  "These buttons load fictional follow-up records. Each check stays separate; no combined suitability score is created.": ["这些按钮加载虚构的补充记录。各项检查保持独立，不生成综合适合度分数。", "這些按鈕載入虛構的補充紀錄。各項檢查保持獨立，不產生綜合適合度分數。"],
+  "Load example lead history": ["加载示例主承保历史", "載入範例主承保歷史"],
+  "Load example wording comparison": ["加载示例条款比较", "載入範例條款比較"],
+  "Confirm example authority check": ["确认示例授权检查", "確認範例授權檢查"],
+  "Undo example checks": ["撤销示例检查", "復原範例檢查"],
+  "The example checks allow broker review. They do not choose the insurer.": ["示例检查允许经纪人复核，不会选定保险人。", "範例檢查允許經紀人複核，不會選定保險人。"],
+  "Missing checks still block the review pin.": ["缺失的检查仍阻止复核标记。", "缺漏的檢查仍阻止複核標記。"],
+
   "Trading": [
     "交易表现",
     "交易表現"
@@ -921,10 +935,7 @@ export const insuranceMatchingDemoCopy = {
     "未评估：证据要求未满足。",
     "未評估：證據要求未滿足。"
   ],
-  "Unassessed: no market-conditional artifact is available.": [
-    "未评估：没有与具体市场相关的材料。",
-    "未評估：沒有與具體市場相關的材料。"
-  ],
+  "Unassessed: no market-conditional artifact is available.": ["未评估：没有与具体市场相关的材料。","未評估：沒有與具體市場相關的材料。"],
   "Technology errors & omissions": [
     "科技错误与疏漏责任险",
     "科技錯誤與疏漏責任險"

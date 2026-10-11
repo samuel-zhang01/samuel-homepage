@@ -1,25 +1,38 @@
 "use client";
-import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
 import { scientificCopy } from "./copy/scientificCopy";
 
 import { MathEquation } from "./MathEquation";
 
 import { useState } from "react";
 import styles from "./LlmPostTrainingLab.module.css";
+import motion from "./ScientificExperiments.module.css";
+import { useScientificExperimentClock } from "./useScientificExperimentClock";
+import { projectText } from "@/lib/projectCopy";
+import { rolloutErrors } from "@/lib/scientificExperiments";
 
 export function RolloutExperiment() {
+  const locale = useProjectLocale();
   const [gain, setGain] = useState(1.02);
   const [steps, setSteps] = useState(20);
   const [feedback, setFeedback] = useState(true);
-  const errors = [0];
-  for (let i = 0; i < steps; i++) errors.push((feedback ? gain * errors[i] : 0) + .01);
+  const [cursor, setCursor] = useState<number | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const errors = rolloutErrors(gain, steps, feedback);
+  const visibleStep = Math.min(cursor ?? steps, steps);
+  const motionAllowed = useScientificExperimentClock(playing, () => {
+    if (visibleStep >= steps) setPlaying(false);
+    else setCursor(visibleStep + 1);
+  }, 300);
   const max = Math.max(.5, ...errors);
   return <ProjectCopy copy={scientificCopy}><section className={styles.lab} aria-label="Autoregressive rollout experiment">
     <header className={styles.heading}><span>CFD / Rollout mechanics</span><h3>One-step error can compound.</h3><p>Predicting many future flow fields means feeding each estimate into the next step. Change the feedback strength to see how small errors accumulate.</p></header>
-    <div className={styles.panel}><div className={styles.controls}><label>Error amplification · {gain.toFixed(2)}×<input type="range" min=".9" max="1.1" step=".01" value={gain} onChange={(e) => setGain(Number(e.target.value))} /></label><label>Rollout length · {steps} steps<input type="range" min="1" max="40" step="1" value={steps} onChange={(e) => setSteps(Number(e.target.value))} /></label></div><div className={styles.actions}><button type="button" aria-pressed={feedback} onClick={() => setFeedback(true)}>Feed predictions forward</button><button type="button" aria-pressed={!feedback} onClick={() => setFeedback(false)}>Reset input error each step</button></div>
+    <div className={styles.panel}><div className={styles.controls}><label>Error amplification · {gain.toFixed(2)}×<input type="range" min=".9" max="1.1" step=".01" value={gain} onChange={(e) => { setPlaying(false); setGain(Number(e.target.value)); }} /></label><label>Rollout length · {steps} steps<input type="range" min="1" max="40" step="1" value={steps} onChange={(e) => { setPlaying(false); setSteps(Number(e.target.value)); }} /></label></div><div className={styles.actions}><button type="button" aria-pressed={feedback} onClick={() => setFeedback(true)}>Feed predictions forward</button><button type="button" aria-pressed={!feedback} onClick={() => setFeedback(false)}>Reset input error each step</button></div>
+      <div className={motion.actions}><button type="button" disabled={!motionAllowed} onClick={() => { setCursor(0); setPlaying(true); }}>Trace the rollout</button><button type="button" disabled={!playing} onClick={() => setPlaying(false)}>Pause experiment</button><button type="button" onClick={() => { setPlaying(false); setCursor(cursor === null || visibleStep >= steps ? 1 : visibleStep + 1); }}>Advance one prediction</button><button type="button" onClick={() => { setPlaying(false); setCursor(null); }}>Show complete rollout</button></div>
+      <p className={motion.checkpoint} aria-live={playing ? "off" : "polite"}>{projectText(locale,scientificCopy,"Prediction step {0} / {1} · accumulated error {2}.",{0:visibleStep,1:steps,2:errors[visibleStep].toFixed(4)})} {feedback ? "Each new prediction inherits the previous error." : "Each prediction starts from a fresh input."}</p>
       <div className={styles.metrics} aria-live="polite"><article><span>Fresh error per step</span><strong>0.0100</strong></article><article><span>Final error</span><strong>{errors[steps].toFixed(4)}</strong></article><article><span>Relative to one step</span><strong>{(errors[steps] / .01).toFixed(1)}×</strong></article></div>
       <div className={styles.chartLegend}><span>Error scale: 0–{max.toFixed(2)}</span><span>Steps: 0–{steps}</span></div>
-      <svg viewBox="0 0 600 185" role="img" aria-label={`Calculated error grows from 0 to ${errors[steps].toFixed(4)} over ${steps} steps`} style={{ width:"100%", background:"white", border:"1px solid #999" }}><path d="M50 15V165H580" stroke="#777" fill="none" /><polyline points={errors.map((value,i) => `${50+i/steps*530},${165-value/max*145}`).join(" ")} fill="none" stroke="#11177a" strokeWidth="3"/></svg>
+      <svg viewBox="0 0 600 185" role="img" aria-label={projectText(locale,scientificCopy,"Calculated error is {0} at prediction step {1} of {2}",{0:errors[visibleStep].toFixed(4),1:visibleStep,2:steps})} style={{ width:"100%", background:"white", border:"1px solid #999" }}><path d="M50 15V165H580" stroke="#777" fill="none" /><polyline points={errors.slice(0,visibleStep+1).map((value,i) => `${50+i/steps*530},${165-value/max*145}`).join(" ")} fill="none" stroke="#11177a" strokeWidth="3" className={motion.trace}/><circle cx={50+visibleStep/steps*530} cy={165-errors[visibleStep]/max*145} r="5" className={motion.currentPoint}/></svg>
       <div className={styles.derivation}><MathEquation tex={feedback ? String.raw`e_{t+1}=g\,e_t+0.01,\qquad e_0=0` : String.raw`e_{t+1}=0.01`} />{!feedback && <p>Reset input error each step</p>}<p>At 20 steps, gain 0.98 gives 0.1662, while 1.02 gives 0.2430. Both begin with the same 0.01 error.</p></div>
       <p className={styles.note}>The graph network feeds each predicted field into the next step. This simplified recurrence shows how feedback changes error over time; field accuracy and physical consistency add further checks.</p>
     </div>

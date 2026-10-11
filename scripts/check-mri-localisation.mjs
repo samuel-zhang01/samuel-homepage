@@ -77,7 +77,7 @@ for (locale of ["zh-CN", "zh-TW"]) {
   for (const view of ["images", "experiments", "reconstruction", "architecture", "uncertainty", "robustness", "segmentation", "audit"]) {
     for (const variant of [0, 1]) {
       states = {
-        MriTrustStudio: [view], ReconstructionView: variant ? [8, "zero", .5] : [4, "dc", .72],
+        MriTrustStudio: [view], MriRecordedComparison: variant ? [8, "zero", "errors", 0] : [4, "reconstructed", "images", 50], ReconstructionView: variant ? [8, "zero", .5] : [4, "dc", .72],
         ArchitectureView: [variant ? "output" : "bottleneck", variant ? 0 : 3, variant ? 3 : 1],
         UncertaintyView: [variant ? "ensemble" : "dropout"],
         UncertaintyRankingExperiment: [variant ? 8 : 1, Boolean(variant), variant ? 0 : 4],
@@ -265,3 +265,27 @@ for (locale of ["zh-CN", "zh-TW"]) for (const view of ["compare", "timeline", "m
   portfolioCases += 1;
 }
 console.log(`Portfolio localization: ${portfolioCases} rendered comparison/timeline/matrix/tool/guide/locale cases passed.`);
+
+// New science interactions: reference changes, partial traces and saved shift comparisons.
+const { MicrorobotVisionDemo } = load("src/components/projects/ScientificDemos.tsx");
+const { RolloutExperiment } = load("src/components/projects/ScientificFailureExperiments.tsx");
+for (const name of Object.keys(JSON.parse(readFileSync(resolve(root,"scripts/fixtures/project-copy-audits/scientificCopy.audit.json"),"utf8")).identities)) identity.add(name);
+let scienceCases = 0;
+for (locale of ["zh-CN","zh-TW"]) {
+  for (const model of ["mobile","resnet34","vit"]) for (const benchmark of ["pose","depth"]) {
+    states={ MicrorobotVisionDemo:[model,benchmark,"resnet34"] };
+    assertMandarin(() => React.createElement(MicrorobotVisionDemo,{locale}), `${locale}/vision-comparison/${model}/${benchmark}`);
+    scienceCases++;
+  }
+  for (const feedback of [true,false]) for (const cursor of [0,4,20]) {
+    states={ RolloutExperiment:[1.02,20,feedback,cursor,false] };
+    assertMandarin(RolloutExperiment, `${locale}/rollout/${feedback}/${cursor}`);
+    scienceCases++;
+  }
+  for (const shift of [0,1,2]) for (const target of [.9,.95]) {
+    states={ CoverageShiftExperiment:[shift,target,false,{target:.9,shift:0}] };
+    assertMandarin(CoverageShiftExperiment, `${locale}/saved-shift/${target}/${shift}`);
+    scienceCases++;
+  }
+}
+console.log(`Science interaction localization: ${scienceCases} rendered comparison/trace/checkpoint/locale cases passed.`);

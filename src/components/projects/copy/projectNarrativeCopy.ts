@@ -2,6 +2,27 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Reviewed project descriptions and career context; names and scientific quantities stay intact. */
 export const projectNarrativeCopy = {
+  "My Fourier model’s saved horizontal-velocity forecast around a cylinder.": ["我的傅里叶模型保存的圆柱周围水平速度预测。","我的傅立葉模型儲存的圓柱周圍水平速度預測。"],
+  "My saved cardiac MRI comparison: fewer measurements, reconstructed heart structures and remaining errors. The demo lets you inspect one slice at a readable size.": ["我保存的心脏 MRI 比较：更少的测量、重建的心脏结构和剩余误差。演示可用清晰的尺寸检查单张切片。","我儲存的心臟 MRI 比較：更少的量測、重建的心臟結構與剩餘誤差。示範可用清晰的尺寸檢查單張切片。"],
+  "My saved cardiac MRI reference, reconstructions and error maps": ["我保存的心脏 MRI 参考图、重建图和误差图","我儲存的心臟 MRI 參考圖、重建圖與誤差圖"],
+  "The saved Grad-CAM response for that orientation estimate. It shows where the model responded, not a guarantee of a correct prediction.": ["该方向估计的已保存 Grad-CAM 响应，显示模型响应的位置，并不保证预测正确。","該方向估計的已儲存 Grad-CAM 反應，顯示模型反應的位置，並不保證預測正確。"],
+  "My saved pose-classification response map for the same microscope image": ["同一显微镜图像的已保存姿态分类响应图","同一顯微鏡影像的已儲存姿態分類反應圖"],
+  "My saved microscope example, labelled 30° pitch and 45° roll. Open the demo to compare the image with the model’s response.": ["我保存的显微镜示例，标注为俯仰 30°、横滚 45°。打开演示，可将图像与模型响应比较。","我儲存的顯微鏡範例，標註為俯仰 30°、橫滾 45°。開啟示範，可將影像與模型反應比較。"],
+  "The microscope image I used to estimate a robot’s orientation": ["我用于估计机器人方向的显微镜图像","我用於估計機器人方向的顯微鏡影像"],
+  "Model response": ["模型响应","模型反應"],
+  "Microscope image": ["显微镜图像","顯微鏡影像"],
+  "Estimate 40 orientations and a normalised depth": ["估计 40 种方向与归一化深度","估計 40 種方向與正規化深度"],
+  "Inspect real microscope images and model responses": ["查看真实显微镜图像与模型响应","檢視真實顯微鏡影像與模型反應"],
+  "Compare compact models with larger image networks": ["比较紧凑模型与大型图像网络","比較精簡模型與大型影像網路"],
+  "Recover heart structures from fewer measurements": ["用更少测量恢复心脏结构","用較少量測復原心臟結構"],
+  "Inspect saved reconstructions with a movable divider": ["用可移动分隔线检查保存的重建图","用可移動分隔線檢查儲存的重建圖"],
+  "Compare measurement budgets and remaining errors": ["比较测量预算与剩余误差","比較量測預算與剩餘誤差"],
+  "Play saved flow predictions around a cylinder": ["播放保存的圆柱周围流场预测","播放儲存的圓柱周圍流場預測"],
+  "Compare wave, mesh and image-based models": ["比较波、网格和图像模型","比較波、網格與影像模型"],
+  "Step through how repeated predictions grow error": ["逐步观察反复预测如何增加误差","逐步觀察反覆預測如何增加誤差"],
+  "Test venture assumptions against customers and costs": ["用客户与成本检验创业假设","用客戶與成本檢驗創業假設"],
+  "Save a funding plan and replay monthly cash": ["保存融资计划并播放每月现金","儲存融資計畫並播放每月現金"],
+  "Compare a spending increase with the next milestone": ["比较支出增加对下一里程碑的影响","比較支出增加對下一里程碑的影響"],
   "I built Ultra Convert so I can select different file types in Finder and convert them together. I can also build rules from matching and action blocks: convert an image, rename it and run the same sequence whenever a new file arrives in a watched folder. Originals stay in place; outputs get separate, collision-safe names.": ["我制作 Ultra Convert，让我在 Finder 中选择不同类型的文件，一起转换。我还可以用匹配与操作积木建立规则：转换图片、重命名，并在监控文件夹有新文件时自动执行同一流程。原始文件保留，输出使用独立且避免冲突的名称。", "我製作 Ultra Convert，讓我在 Finder 中選擇不同類型的檔案，一起轉換。我也能以匹配與操作積木建立規則：轉換圖片、重新命名，並在監看資料夾有新檔案時自動執行同一流程。原始檔案保留，輸出使用獨立且避免衝突的名稱。"],
   "Convert a mixed Finder selection in one batch": ["在同一批次转换 Finder 中的混合文件", "在同一批次轉換 Finder 中的混合檔案"],
   "Build puzzle-style rules: match → convert → rename": ["积木式规则：匹配 → 转换 → 重命名", "積木式規則：匹配 → 轉換 → 重新命名"],
@@ -1276,10 +1297,7 @@ export const projectNarrativeCopy = {
     "平衡自动处理覆盖率、不确定性和高成本误判，将欺诈预测与人工审阅结合起来。",
     "平衡自動處理覆蓋率、不確定性和高成本誤判，將欺詐預測與人工審閱結合起來。"
   ],
-  "I co-developed a study with Miltiades Georgantzis and Sulieman Ibsais, combining isotonic-calibrated XGBoost, sequential Bayesian uncertainty and a confidence-or-entropy deferral rule. A CVaR-aware threshold score considers the worst retained losses as well as average performance. The reported operating point gives 89.5% system accuracy at 64% coverage. Fictional claims in the browser let visitors inspect the arithmetic and the small tail sample; they do not provide independent validation.": [
-    "我与 Miltiades Georgantzis 和 Sulieman Ibsais 合作研究了保序校准的 XGBoost、序贯贝叶斯不确定性和置信度或熵触发的转交规则。考虑 CVaR 的阈值评分同时关注最严重的保留损失与平均表现。报告的工作点在 64% 覆盖率下达到 89.5% 系统准确率。浏览器中的虚构理赔用于检查计算和很小的尾部样本，并不提供独立验证。",
-    "我與 Miltiades Georgantzis 和 Sulieman Ibsais 合作研究了保序校準的 XGBoost、序貫貝氏不確定性和信心度或熵觸發的轉交規則。考慮 CVaR 的閾值評分同時關注最嚴重的保留損失與平均表現。報告的工作點在 64% 覆蓋率下達到 89.5% 系統準確率。瀏覽器中的虛構理賠用於檢查計算和很小的尾部樣本，並不提供獨立驗證。"
-  ],
+  "I developed a study combining isotonic-calibrated XGBoost, sequential Bayesian uncertainty and a confidence-or-entropy deferral rule. A CVaR-aware threshold score considers the worst retained losses as well as average performance. The reported operating point gives 89.5% system accuracy at 64% coverage. Fictional claims in the browser let visitors inspect the arithmetic and the small tail sample; they do not provide independent validation.": ["我开展了一项研究，结合等渗校准的 XGBoost、序贯贝叶斯不确定性和基于置信度或熵的转交规则。CVaR 阈值评分同时考虑平均表现和保留预测中最严重的损失。报告的运行点为 64% 覆盖率下的 89.5% 系统准确率。浏览器中的虚构案例用于检查计算和较小的尾部样本，不提供独立验证。","我開展了一項研究，結合等滲校準的 XGBoost、序貫貝葉斯不確定性與基於信心或熵的轉交規則。CVaR 閾值評分同時考慮平均表現和保留預測中最嚴重的損失。報告的執行點為 64% 涵蓋率下的 89.5% 系統準確率。瀏覽器中的虛構案例用於檢查計算與較小的尾部樣本，不提供獨立驗證。"],
   "XGBoost": [
     "XGBoost",
     "XGBoost"
@@ -1976,10 +1994,7 @@ export const projectNarrativeCopy = {
     "风险与候选市场 → 排序、历史与条款分析 → 来源、置信度与暂缓判断 → 经纪人审阅",
     "風險與候選市場 → 排序、歷史與條款分析 → 來源、信心程度與暫緩判斷 → 經紀人審閱"
   ],
-  "Select a fictional market, compare its three signals, then raise the minimum-information requirement to see when the system asks for more review.": [
-    "选择一个虚构市场，比较其三个信号，再提高最低信息要求，观察系统何时请求进一步审阅。",
-    "選擇一個虛構市場，比較其三個訊號，再提高最低資訊要求，觀察系統何時請求進一步審閱。"
-  ],
+  "Select Market 06 and load its missing history and wording. Authority must still be confirmed before you can pin it; undo a check to see why the gate returns.": ["选择市场 06，载入缺失的历史和条款。确认授权后才能固定比较；撤销一项检查，看看为何限制再次出现。","選擇市場 06，載入缺少的歷史與條款。確認授權後才能固定比較；撤銷一項檢查，看看為何限制再次出現。"],
   "Adapting a CV to each role takes time, and important experience can be overlooked when the job description uses different language.": [
     "为每个岗位调整简历需要时间；当职位说明使用不同措辞时，相关经验也可能被忽略。",
     "為每個職缺調整履歷需要時間；當職位說明使用不同措辭時，相關經驗也可能被忽略。"
@@ -2052,10 +2067,7 @@ export const projectNarrativeCopy = {
     "学习偏好 → 浏览器筛选与随机排序 → 独立 API 契约检查 → 示意性加权比较",
     "學習偏好 → 瀏覽器篩選與隨機排序 → 獨立 API 契約檢查 → 示意性加權比較"
   ],
-  "Choose preferences, compare two random orderings, then change one weight in the illustrative ranking and inspect which courses move.": [
-    "选择偏好，比较两次随机排序，再调整说明性排序中的一个权重，检查哪些课程移动了位置。",
-    "選擇偏好，比較兩次隨機排序，再調整說明性排序中的一個權重，檢查哪些課程移動了位置。"
-  ],
+  "Save a ranking, change one preference and compare which courses moved. Open Explain to see how the weighted example differs from the original random ordering.": ["保存排序，更改一个偏好，比较课程位置的变化。打开解释，看看加权示例与原始随机排序的区别。","儲存排序，更改一個偏好，比較課程位置的變化。開啟解釋，看看加權範例與原始隨機排序的差別。"],
   "An agent must learn from the consequences of its actions while balancing uncertain rewards, delayed outcomes and limited feedback.": [
     "智能体必须从行动后果中学习，同时应对不确定奖励、延迟结果和有限反馈。",
     "智能體必須從行動後果中學習，同時應對不確定獎勵、延遲結果和有限回饋。"
@@ -2064,10 +2076,7 @@ export const projectNarrativeCopy = {
     "多臂老虎机与价值更新 → 策略和深度强化学习 → 离线与基于模型的学习 → 语言模型后训练 → 实际决策问题",
     "多臂老虎機與價值更新 → 策略和深度強化學習 → 離線與基於模型的學習 → 語言模型後訓練 → 實際決策問題"
   ],
-  "Train 100 CliffWalking episodes, inspect a value update and test the learned route. Then compare recorded answers before and after fine-tuning and try the LoRA and DPO controls.": [
-    "训练 100 轮 CliffWalking，检查一次价值更新并测试学到的路线。再比较微调前后的记录答案，尝试 LoRA 和 DPO 控制。",
-    "訓練 100 輪 CliffWalking，檢查一次價值更新並測試學到的路線。再比較微調前後的記錄答案，嘗試 LoRA 和 DPO 控制。"
-  ],
+  "Watch a cliff-walking agent learn, pause and compare its route. In the language-model lab, run LoRA updates or DPO preference steps and watch the loss change.": ["观看悬崖行走智能体学习，暂停并比较路线。在语言模型实验中运行 LoRA 更新或 DPO 偏好步骤，观察损失的变化。","觀看懸崖行走智能體學習，暫停並比較路線。在語言模型實驗中執行 LoRA 更新或 DPO 偏好步驟，觀察損失的變化。"],
   "Trying an unfamiliar option may reveal a better reward, but spending too long exploring can sacrifice good choices already known.": [
     "尝试陌生选项可能发现更好的奖励，但探索过久也可能错过已经知道的好选择。",
     "嘗試陌生選項可能發現更好的獎勵，但探索過久也可能錯過已經知道的好選擇。"
@@ -2080,10 +2089,7 @@ export const projectNarrativeCopy = {
     "可选动作 → 策略选择 → 奖励 → 估计更新 → 遗憾与重复实验比较",
     "可選動作 → 策略選擇 → 獎勵 → 估計更新 → 遺憾與重複實驗比較"
   ],
-  "Step through the first observations, run 100 rounds and compare the policies. Inspect both expected reward gaps and the noisier realised reward trace.": [
-    "逐步观察最初几次探索，运行 100 轮并比较策略，同时检查期望奖励差距和波动更大的实际奖励曲线。",
-    "逐步觀察最初幾次探索，執行 100 輪並比較策略，同時檢查期望獎勵差距和波動更大的實際獎勵曲線。"
-  ],
+  "Choose an action-selection rule and play the rounds. Inspect its estimates, uncertainty and next choice, then compare policies on the same seeded rewards.": ["选择动作规则并播放各轮。检查估计值、不确定性和下一步选择，再用相同随机种子的奖励比较策略。","選擇動作規則並播放各輪。檢查估計值、不確定性和下一步選擇，再用相同隨機種子的獎勵比較策略。"],
   "orientation-corrected image → grayscale backbone → pose or depth head → checkpoint, error and split checks": [
     "方向校正图像 → 灰度主干网络 → 姿态或深度输出头 → 检查点、误差与数据划分检查",
     "方向校正圖像 → 灰階主幹網路 → 姿態或深度輸出頭 → 檢查點、誤差與資料劃分檢查"
@@ -2108,10 +2114,7 @@ export const projectNarrativeCopy = {
     "模型分数与标签 → 不确定性和校准 → 预测集合 → 覆盖率与分布变化检查",
     "模型分數與標籤 → 不確定性和校準 → 預測集合 → 覆蓋率與分布變化檢查"
   ],
-  "Change calibration and shift settings, compare the confidence curve and prediction-set size, then inspect how coverage changes when the calibration data no longer represent the new inputs.": [
-    "改变校准和分布变化设置，比较置信度曲线与预测集合大小，再检查校准数据不再代表新输入时覆盖率如何变化。",
-    "改變校準和分布變化設定，比較信心度曲線與預測集合大小，再檢查校準資料不再代表新輸入時覆蓋率如何變化。"
-  ],
+  "Save the current coverage, then sweep the input shift. Watch more residuals fall outside the same interval; change the requested coverage to see what recalibration changes.": ["保存当前覆盖率，再逐步改变输入偏移。观察更多残差落在同一区间外；更改目标覆盖率，看看重新校准改变了什么。","儲存目前涵蓋率，再逐步改變輸入偏移。觀察更多殘差落在同一區間外；更改目標涵蓋率，看看重新校準改變了什麼。"],
   "Using every available sensor can be expensive, while a small or opaque model may miss important patterns in pollution measurements.": [
     "使用所有传感器可能成本过高，而小型或不透明模型可能遗漏重要污染模式。",
     "使用所有感測器可能成本過高，而小型或不透明模型可能遺漏重要汙染模式。"
@@ -2124,10 +2127,7 @@ export const projectNarrativeCopy = {
     "传感器与环境观测 → 缺失处理和缩放 → 五种回归模型 → 误差与传感器成本比较",
     "感測器與環境觀測 → 缺失處理和縮放 → 五種迴歸模型 → 誤差與感測器成本比較"
   ],
-  "Compare the five recorded models, inspect which measurements are missing, then adjust the sensor budget and interpretability preference in the illustrative decision view.": [
-    "比较五种记录模型，检查缺失测量，再在说明性决策视图中调整传感器预算和可解释性偏好。",
-    "比較五種記錄模型，檢查缺失測量，再在說明性決策視圖中調整感測器預算和可解釋性偏好。"
-  ],
+  "Disconnect a sensor in the browser experiment and compare the missing information and assumed cost. Keep the recorded model results beside it to separate a cheaper setup from a tested prediction.": ["在浏览器实验中断开一个传感器，比较缺失信息与假定成本。对照已有模型结果，区分更便宜的设置与经过测试的预测。","在瀏覽器實驗中斷開一個感測器，比較缺少的資訊與假定成本。對照已有模型結果，區分較便宜的設定與經過測試的預測。"],
   "A detection threshold controls which network flows trigger attention, balancing missed threats against the cost of investigating benign traffic.": [
     "检测阈值决定哪些网络流量需要关注，在漏掉威胁与调查正常流量的成本之间取舍。",
     "檢測閾值決定哪些網路流量需要關注，在漏掉威脅與調查正常流量的成本之間取捨。"
@@ -2140,10 +2140,7 @@ export const projectNarrativeCopy = {
     "网络流量特征 → 分类器分数 → 告警阈值 → 误报、漏报与期望成本",
     "網路流量特徵 → 分類器分數 → 告警閾值 → 誤報、漏報與期望成本"
   ],
-  "Change the relative cost of a missed attack and a false alarm, observe how the preferred threshold moves, and read why these historical results require a cleaner evaluation.": [
-    "调整漏报攻击和误报的相对成本，观察优选阈值如何移动，再阅读这些历史结果为何需要更干净的评估。",
-    "調整漏報攻擊和誤報的相對成本，觀察優選閾值如何移動，再閱讀這些歷史結果為何需要更乾淨的評估。"
-  ],
+  "Change attack prevalence and the cost of missed attacks. See how the same threshold creates a different alert workload, then compare the threshold choices.": ["更改攻击占比与漏检攻击的代价。看看相同阈值如何产生不同告警工作量，再比较各阈值选择。","更改攻擊占比與漏檢攻擊的代價。看看相同閾值如何產生不同告警工作量，再比較各閾值選擇。"],
   "Correlated or weak predictors can make a regression model unstable and encourage it to fit noise.": [
     "相关或弱预测变量可能让回归模型不稳定，并鼓励模型拟合噪声。",
     "相關或弱預測變量可能讓迴歸模型不穩定，並鼓勵模型擬合雜訊。"
@@ -2156,10 +2153,7 @@ export const projectNarrativeCopy = {
     "说明性标准化系数 → 惩罚强度 → 收缩或软阈值 → 系数路径与有效特征",
     "說明性標準化係數 → 懲罰強度 → 收縮或軟閾值 → 係數路徑與有效特徵"
   ],
-  "Raise the penalty until a LASSO coefficient reaches zero, compare it with Ridge, then open the air-quality project to see the recorded model comparison.": [
-    "提高惩罚，直到一个 LASSO 系数归零，与 Ridge 比较，再打开空气质量项目查看记录的模型比较。",
-    "提高懲罰，直到一個 LASSO 係數歸零，與 Ridge 比較，再打開空氣品質專案查看記錄的模型比較。"
-  ],
+  "Change an input measurement, then increase the penalty. Compare how Ridge and LASSO change the prediction and which coefficients disappear.": ["更改输入测量，再增加惩罚强度。比较 Ridge 与 LASSO 如何改变预测，以及哪些系数消失。","更改輸入量測，再增加懲罰強度。比較 Ridge 與 LASSO 如何改變預測，以及哪些係數消失。"],
   "Automating too many uncertain cases can leave costly errors unreviewed, while sending everything to a person overwhelms the review process.": [
     "自动处理过多不确定案例可能留下高成本误判，而全部交给人工则会压垮审阅流程。",
     "自動處理過多不確定案例可能留下高成本誤判，而全部交給人工則會壓垮審閱流程。"
@@ -2180,10 +2174,7 @@ export const projectNarrativeCopy = {
     "观测或记录的情境、动作、奖励与倾向概率 → 调整或岭回归奖励模型 → 效应与价值估计 → 重叠与有效样本量",
     "觀測或記錄的情境、動作、獎勵與傾向機率 → 調整或嶺迴歸獎勵模型 → 效應與價值估計 → 重疊與有效樣本量"
   ],
-  "Explore a confounder and a collider in the causal graph, then switch to policy evaluation and reduce overlap to see the estimates become less stable.": [
-    "在因果图中探索混杂因素和碰撞点，再切换策略评估并降低重叠，观察估计如何变得不稳定。",
-    "在因果圖中探索混雜因素和碰撞點，再切換策略評估並降低重疊，觀察估計如何變得不穩定。"
-  ],
+  "Compare pooled and grouped outcomes to see a confounder reverse the conclusion. Then change reward-model bias and inspect one policy-value calculation from its logged rows.": ["比较合并与分组结果，看看混杂因素如何反转结论。再更改奖励模型偏差，从日志行检查一次策略价值计算。","比較合併與分組結果，看看混雜因素如何反轉結論。再更改獎勵模型偏差，從紀錄列檢查一次策略價值計算。"],
   "New ventures need resources and freedom to explore, but they also need a workable relationship with the existing organisation.": [
     "新业务需要资源和探索自由，也必须与现有组织形成可行的关系。",
     "新業務需要資源和探索自由，也必須與現有組織形成可行的關係。"
@@ -2196,10 +2187,7 @@ export const projectNarrativeCopy = {
     "有吸引力的路演仍需要可信需求、现实的获客路线，以及足够资金来达到下一个有用里程碑。",
     "有吸引力的路演仍需要可信需求、現實的獲客路線，以及足夠資金來達到下一個有用里程碑。"
   ],
-  "Strengthen a traction claim, lower the sales-conversion assumption and change the funding ask to see whether the next milestone remains achievable.": [
-    "增强一项进展主张，降低销售转化假设并改变融资要求，观察下一里程碑是否仍然可达。",
-    "增強一項進展主張，降低銷售轉化假設並改變融資要求，觀察下一里程碑是否仍然可達。"
-  ],
+  "Save a funding plan, increase monthly spending and play the cash timeline. Compare the saved plan with the new balance when the next milestone arrives.": ["保存融资计划，增加每月支出并播放现金时间线。到达下一里程碑时，比较已保存计划与新的余额。","儲存融資計畫，增加每月支出並播放現金時間線。到達下一里程碑時，比較已儲存計畫與新的餘額。"],
   "Predicting pressure and phase behaviour requires a model that connects temperature, density and composition with molecular size and attraction.": [
     "预测压力与相行为，需要把温度、密度和组成与分子大小和吸引力联系起来的模型。",
     "預測壓力與相行為，需要把溫度、密度和組成與分子大小和吸引力聯繫起來的模型。"
@@ -2571,13 +2559,13 @@ export const projectNarrativeCopy = {
   "Calculating a detailed fluid simulation takes time. I wanted to see how well a trained model could predict the next state, and where its predictions would start to fail.": ["详细计算流体模拟需要时间。我想了解训练后的模型能多准确地预测下一状态，以及预测会从哪里开始失效。","詳細計算流體模擬需要時間。我想瞭解訓練後的模型能多準確地預測下一狀態，以及預測會從哪裡開始失效。"],
   "I reconstructed heart MRI from fewer measurements and checked whether the important structures survived.": ["我用更少的测量重建心脏 MRI，并检查重要结构是否保留下来。","我用更少的量測重建心臟 MRI，並檢查重要結構是否保留下來。"],
   "Taking fewer MRI measurements could shorten a scan, but it leaves gaps in the image. I wanted to recover the heart’s structure while identifying places where the model might be wrong.": ["减少 MRI 测量可能缩短扫描时间，但图像会出现缺失。我想恢复心脏结构，同时找出模型可能出错的位置。","減少 MRI 量測可能縮短掃描時間，但影像會出現缺失。我想復原心臟結構，同時找出模型可能出錯的位置。"],
-  "Compare the fully measured image, the incomplete image and my reconstruction in the first saved figure. Look at the heart’s edges. Then change the measurement budget in the browser experiment to see why a shorter scan makes reconstruction harder.": ["在第一张保存的图中，比较完整测量图像、不完整图像和我的重建结果，注意心脏边缘。再在浏览器实验中改变测量预算，了解扫描越短为什么重建越难。","在第一張儲存的圖中，比較完整量測影像、不完整影像和我的重建結果，注意心臟邊緣。再在瀏覽器實驗中改變量測預算，瞭解掃描越短為什麼重建越難。"],
+  "Drag the divider across the saved heart image. Switch from fourfold to eightfold undersampling and compare the reconstruction with its incomplete input and remaining errors.": ["拖动已保存心脏图像上的分隔线。从四倍切换到八倍欠采样，比较重建图、不完整输入和剩余误差。","拖動已儲存心臟影像上的分隔線。從四倍切換到八倍欠取樣，比較重建圖、不完整輸入與剩餘誤差。"],
   "I used microscope images to estimate a tiny robot’s tilt and depth, so its position can be tracked.": ["我用显微镜图像估计微型机器人的倾斜角度和深度，以便追踪位置。","我用顯微鏡影像估計微型機器人的傾斜角度和深度，以便追蹤位置。"],
   "I trained image models to read a microrobot’s orientation and depth from a grayscale microscope image. My coursework compared a network I designed with four adapted image models across 2,000 images and 40 orientations. Here you can inspect actual microscope images, see where the models focused, and compare their recorded errors.": ["我训练图像模型，从灰度显微镜图像中读取微型机器人的朝向和深度。课程项目用 2,000 张图像和 40 种朝向，比较我设计的网络与四种改造后的图像模型。在这里可以查看真实显微镜图像、模型关注的位置，并比较记录的误差。","我訓練影像模型，從灰階顯微鏡影像中讀取微型機器人的朝向和深度。課程專案用 2,000 張影像和 40 種朝向，比較我設計的網路與四種改造後的影像模型。在這裡可以查看真實顯微鏡影像、模型關注的位置，並比較記錄的誤差。"],
   "A tiny robot is hard to guide if I cannot tell how it is tilted or how far it sits below the microscope. I wanted an image model to estimate both from the same type of picture.": ["如果无法判断微型机器人的倾斜角度和它在显微镜下的深度，就很难引导它。我想用图像模型从同一类图像中估计两者。","如果無法判斷微型機器人的傾斜角度和它在顯微鏡下的深度，就很難引導它。我想用影像模型從同一類影像中估計兩者。"],
-  "Start with the microscope image. Compare the two recorded attention maps to see where each model looked, then switch between pose and depth results. A good orientation score and a small depth error answer different parts of the tracking problem.": ["先查看显微镜图像，比较两张记录的关注图，观察各模型看了哪里，再切换朝向和深度结果。高朝向识别分数与低深度误差回答的是追踪问题的不同部分。","先查看顯微鏡影像，比較兩張記錄的關注圖，觀察各模型看了哪裡，再切換朝向和深度結果。高朝向辨識分數與低深度誤差回答的是追蹤問題的不同部分。"],
+  "Compare pose and depth responses for the same microscope image. Blend the overlay, then compare a compact model with the larger reference to see the size and error trade-off.": ["比较同一显微镜图像的姿态和深度响应。调整叠加比例，再比较紧凑模型与大型参考模型的大小和误差取舍。","比較同一顯微鏡影像的姿態與深度反應。調整疊加比例，再比較精簡模型與大型參考模型的大小和誤差取捨。"],
   "I built a fraud-classification study that lets a model pass difficult cases to a human reviewer. I compared always deciding automatically with handing over the least reliable predictions. The useful question is how much review is needed to reduce costly mistakes, rather than simply making the accuracy number bigger.": ["我制作了一个欺诈分类研究，让模型把困难案例交给人工审核。我比较了全部自动决定和移交最不可靠预测两种方式。真正有用的问题是需要多少人工审核才能减少代价高昂的错误，而不是只追求更高的准确率。","我製作了一個詐欺分類研究，讓模型把困難案例交給人工審核。我比較了全部自動決定和移交最不可靠預測兩種方式。真正有用的問題是需要多少人工審核才能減少代價高昂的錯誤，而不是只追求更高的準確率。"],
-  "Increase the number of cases sent for review. Watch automatic coverage fall and the mistakes among accepted predictions change. Then increase the cost of a missed fraud to see why the same review policy may no longer make sense.": ["增加送交审核的案例数，观察自动处理比例下降，以及保留预测中的错误如何变化。再提高漏判欺诈的代价，看看同一审核策略为何可能不再适合。","增加送交審核的案例數，觀察自動處理比例下降，以及保留預測中的錯誤如何變化。再提高漏判詐欺的代價，看看同一審核策略為何可能不再適合。"],
+  "Send uncertain cases to review, then reduce reviewer capacity. Watch the pending queue grow and compare automatic coverage, missed fraud and tail loss.": ["将不确定案例送交复核，再降低复核容量。观察待处理队列增长，比较自动覆盖率、漏检欺诈和尾部损失。","將不確定案例送交複核，再降低複核容量。觀察待處理佇列成長，比較自動涵蓋率、漏檢欺詐與尾部損失。"],
   "For my MSc thesis, I studied how an insurance broker could narrow a large set of possible insurers to a useful shortlist. I built models that learn from past placements, a view of historical lead shares, and tools for comparing policy wording. I tested what changes when the model can only use information available before a placement. The prototype keeps these views separate so the broker can understand their different purposes; its historical ranking results describe past lead selections, not a guarantee of future suitability.": ["在硕士论文中，我研究保险经纪人如何从大量可能的承保机构中筛出有用的候选清单。我制作了学习历史承保记录的模型、历史主承保份额视图，以及比较保单条款的工具。我测试了模型只能使用承保前已知信息时的变化。原型把这些视图分别呈现，让经纪人理解不同用途；历史排序结果描述过去的主承保选择，并不保证未来适用性。","在碩士論文中，我研究保險經紀人如何從大量可能的承保機構中篩出有用的候選清單。我製作了學習歷史承保記錄的模型、歷史主承保份額檢視，以及比較保單條款的工具。我測試了模型只能使用承保前已知資訊時的變化。原型把這些檢視分別呈現，讓經紀人理解不同用途；歷史排序結果描述過去的主承保選擇，並不保證未來適用性。"],
   "I studied insurer selection for my MSc thesis and built a broker-facing prototype. It brings together a ranking learned from past placements, each insurer’s lead history, and relevant policy wording. I keep the three views separate so a broker can understand why an insurer appears and decide what to investigate next.": ["我在硕士论文中研究承保机构选择，并制作了面向经纪人的原型。它结合从历史承保中学习的排序、各机构的主承保记录，以及相关保单条款。我把三个视图分别呈现，便于经纪人理解机构出现的原因，并决定下一步调查什么。","我在碩士論文中研究承保機構選擇，並製作了面向經紀人的原型。它結合從歷史承保中學習的排序、各機構的主承保記錄，以及相關保單條款。我把三個檢視分別呈現，便於經紀人理解機構出現的原因，並決定下一步調查什麼。"],
   "Ultra Convert": ["Ultra Convert","Ultra Convert"],
@@ -2607,7 +2595,7 @@ export const projectNarrativeCopy = {
   "AppKit": ["AppKit","AppKit"],
   "Read my microrobot vision report": ["阅读我的微型机器人视觉报告","閱讀我的微型機器人視覺報告"],
   "I built a model that fills in a heart MRI when only part of its measurements are available. I kept the reconstruction tied to the measurements actually taken, then tested image quality, uncertainty and how well the heart could still be outlined. The saved images in the demo show what that looked like.": ["我构建了一个模型，在只获得部分测量数据时补全心脏 MRI。我让重建结果遵循实际采集的测量，再测试图像质量、不确定性，以及心脏轮廓是否仍能准确识别。演示中的已保存图像展示了这些结果。","我建立了一個模型，在只取得部分量測資料時補全心臟 MRI。我讓重建結果遵循實際採集的量測，再測試影像品質、不確定性，以及心臟輪廓是否仍能準確辨識。示範中的已儲存影像展示了這些結果。"],
-  "Press Play flow and follow the wake behind the cylinder. Switch between the saved model outputs to see the flows each network predicted. Then open How the models work to see why working with waves, a mesh or pixels changes what each network learns.": ["点击“播放流场”，观察圆柱后方的尾流。切换已保存的模型输出，查看各网络预测的流动。然后打开“模型如何工作”，了解波、网格和像素表示如何改变网络学习的内容。","點擊「播放流場」，觀察圓柱後方的尾流。切換已儲存的模型輸出，查看各網路預測的流動。然後開啟「模型如何運作」，了解波、網格和像素表示如何改變網路學習的內容。"],
+  "Play the saved wake and compare its first and final frames. Then step through the separate error-growth exercise to see why repeatedly feeding back a prediction can amplify mistakes.": ["播放保存的尾流，比较第一帧与最后一帧。再逐步运行独立的误差增长练习，看看反复反馈预测为何会放大错误。","播放儲存的尾流，比較第一幀與最後一幀。再逐步執行獨立的誤差成長練習，看看反覆回饋預測為何會放大錯誤。"],
   "I used Julia to study how molecular size and attraction change a fluid’s pressure. This browser exposes that part of the model with two example fluids: change their interaction and watch the pressure respond.": ["我用 Julia 研究分子大小和吸引力如何改变流体压力。浏览器用两种示例流体展示模型的这一部分：改变它们的相互作用，观察压力如何响应。","我用 Julia 研究分子大小和吸引力如何改變流體壓力。瀏覽器用兩種範例流體展示模型的這一部分：改變它們的交互作用，觀察壓力如何回應。"],
   "I analysed molecular shapes by combining conformational searches, theoretical spectra and 2–8 GHz microwave measurements. The study considered more than 20 Exaltenone and more than 30 Muscone conformations. In this browser I use example spectra and structures to explain how matching spectral lines helps distinguish candidate shapes.": ["我结合构象搜索、理论光谱和 2–8 GHz 微波测量来分析分子形状。研究考察了超过 20 种 Exaltenone 构象和超过 30 种 Muscone 构象。在浏览器中，我用示例光谱和结构解释如何通过匹配谱线区分候选形状。","我結合構象搜尋、理論光譜和 2–8 GHz 微波量測來分析分子形狀。研究考察了超過 20 種 Exaltenone 構象和超過 30 種 Muscone 構象。在瀏覽器中，我用範例光譜和結構解釋如何透過匹配譜線區分候選形狀。"],
   "My MATLAB app for inspecting spectral peaks and making clear figures from laboratory measurements.": ["我用 MATLAB 开发的应用，用于查看光谱峰并将实验室测量绘制成清晰的图表。","我用 MATLAB 開發的應用，用於檢視光譜峰並將實驗室量測繪製成清楚的圖表。"],

@@ -1,12 +1,13 @@
 "use client";
 import { PlotPanHint } from "./PlotPanHint";
 
-import { ProjectCopy } from "./ProjectTranslationBoundary";
+import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
+import { projectText } from "@/lib/projectCopy";
 import { banditStudioCopy } from "./copy/banditStudioCopy";
 
 import ClassicSelect from "../ClassicSelect";
 
-import { type KeyboardEvent as ReactKeyboardEvent, useId, useMemo, useState } from "react";
+import { type KeyboardEvent as ReactKeyboardEvent, useEffect, useId, useMemo, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import { MathEquation } from "./MathEquation";
 import styles from "./BanditStudio.module.css";
@@ -14,7 +15,7 @@ import styles from "./BanditStudio.module.css";
 type ViewId = "policy" | "regret" | "method";
 type ScenarioId = "wide" | "close" | "gaussian";
 type RewardKind = "bernoulli" | "gaussian";
-type DecisionMode = "initialise" | "explore" | "exploit";
+type DecisionMode = "initialise" | "explore" | "exploit" | "optimism" | "posterior";
 type ComparisonPolicy = "epsilon" | "ucb1" | "thompson";
 
 type ArmDefinition = {
@@ -54,6 +55,7 @@ type BanditEvent = {
   expectedGap: number;
   realisedGap: number;
   estimateAfter: number;
+  scores: number[];
 };
 
 type TracePoint = {
@@ -247,7 +249,7 @@ function policyBakeoff(scenario: Scenario, rounds: number) {
   });
 }
 
-function simulateBandit(scenario: Scenario, epsilon: number, seed: number, rounds: number): Simulation {
+function simulateBandit(scenario: Scenario, epsilon: number, seed: number, rounds: number, policy: ComparisonPolicy = "epsilon"): Simulation {
   const stats: ArmStat[] = scenario.arms.map(() => ({
     pulls: 0,
     reward: 0,
@@ -265,7 +267,7 @@ function simulateBandit(scenario: Scenario, epsilon: number, seed: number, round
     policyExpected: 0,
     oracleExpected: 0,
   }];
-  const modeCounts: Record<DecisionMode, number> = { initialise: 0, explore: 0, exploit: 0 };
+  const modeCounts: Record<DecisionMode, number> = { initialise: 0, explore: 0, exploit: 0, optimism: 0, posterior: 0 };
   const policyRandom = mulberry32((seed ^ scenario.seedSalt ^ 0xa53a9e71) >>> 0);
   const bestMean = Math.max(...scenario.arms.map((arm) => arm.mean));
   const bestArmIndex = scenario.arms.findIndex((arm) => arm.mean === bestMean);
@@ -279,11 +281,20 @@ function simulateBandit(scenario: Scenario, epsilon: number, seed: number, round
   for (let stepIndex = 0; stepIndex < rounds; stepIndex += 1) {
     let armIndex: number;
     let mode: DecisionMode;
+    let scores = stats.map(stat => stat.estimate);
 
     if (stepIndex < scenario.arms.length) {
       // Browser contract: exactly one deterministic observation per arm before ε-greedy begins.
       armIndex = stepIndex;
       mode = "initialise";
+    } else if (policy === "ucb1") {
+      scores = stats.map(stat => stat.estimate + Math.sqrt(2 * (scenario.kind === "gaussian" ? scenario.sigma ** 2 : 1) * Math.log(stepIndex + 1) / stat.pulls));
+      armIndex = scores.indexOf(Math.max(...scores));
+      mode = "optimism";
+    } else if (policy === "thompson") {
+      scores = stats.map(stat => betaSample(stat.reward + 1, stat.pulls - stat.reward + 1, policyRandom));
+      armIndex = scores.indexOf(Math.max(...scores));
+      mode = "posterior";
     } else if (policyRandom() < epsilon) {
       armIndex = Math.min(scenario.arms.length - 1, Math.floor(policyRandom() * scenario.arms.length));
       mode = "explore";
@@ -327,6 +338,7 @@ function simulateBandit(scenario: Scenario, epsilon: number, seed: number, round
       expectedGap,
       realisedGap,
       estimateAfter: stat.estimate,
+      scores,
     });
     trace.push({
       step: stepIndex + 1,
@@ -430,14 +442,16 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
     initialise: "#f1be52",
     explore: "#df7178",
     exploit: "#64d8df",
+    optimism: "#64d8df",
+    posterior: "#df7178",
   };
 
   return (
     <ProjectCopy copy={banditStudioCopy}><PlotPanHint key="pan-instruction" /><div key="plot-region" className={styles.plotViewport} role="group" aria-labelledby={`${chartId}-title`} tabIndex={0}><svg className={styles.decisionMap} viewBox="0 0 860 286" role="img" aria-labelledby={`${chartId}-title ${chartId}-desc`}>
-      <title id={`${chartId}-title`}>Recent epsilon-greedy decisions by arm</title>
+      <title id={`${chartId}-title`}>Recent policy choices by arm</title>
       <desc id={`${chartId}-desc`}>
         {visible.length
-          ? `${visible.length} decisions from round ${firstStep} to ${lastStep}. Gold marks forced initialization, red marks exploration and cyan marks exploitation.`
+          ? `${visible.length} decisions from round ${firstStep} to ${lastStep}. Each dot shows the selected arm; the final choice is circled.`
           : "No decisions yet. Step the seeded simulation to populate the decision map."}
       </desc>
       <rect width="860" height="286" fill="#091724" />
@@ -472,10 +486,10 @@ function DecisionMap({ scenario, events }: { scenario: Scenario; events: readonl
       )}
       <text x={plot.x} y="272" className={styles.mapTick}>{visible.length ? `ROUND ${String(firstStep).padStart(3, "0")}` : "ROUND 000"}</text>
       <text x={plot.x + plot.width} y="272" textAnchor="end" className={styles.mapTick}>{visible.length ? `ROUND ${String(lastStep).padStart(3, "0")}` : ""}</text>
-      <g transform="translate(570 16)">
+      <g transform="translate(400 16)">
         <circle cx="0" cy="0" r="4" fill="#f1be52" /><text x="9" y="3" className={styles.mapLegend}>forced</text>
-        <circle cx="73" cy="0" r="4" fill="#df7178" /><text x="82" y="3" className={styles.mapLegend}>explore</text>
-        <circle cx="151" cy="0" r="4" fill="#64d8df" /><text x="160" y="3" className={styles.mapLegend}>exploit</text>
+        <circle cx="73" cy="0" r="4" fill="#df7178" /><text x="82" y="3" className={styles.mapLegend}>random / sampled</text>
+        <circle cx="245" cy="0" r="4" fill="#64d8df" /><text x="254" y="3" className={styles.mapLegend}>value / bound</text>
       </g>
     </svg></div></ProjectCopy>
   );
@@ -542,6 +556,8 @@ function RegretChart({ trace }: { trace: readonly TracePoint[] }) {
 }
 
 export function BanditStudio() {
+  const locale = useProjectLocale();
+  const t = (source: string, values?: Record<string, string | number>) => projectText(locale, banditStudioCopy, source, values);
   const [view, setView] = useState<ViewId>("policy");
   const [scenarioId, setScenarioId] = useState<ScenarioId>("wide");
   const [epsilonPercent, setEpsilonPercent] = useState(10);
@@ -549,10 +565,15 @@ export function BanditStudio() {
   const [rounds, setRounds] = useState(0);
   const [revealTruth, setRevealTruth] = useState(false);
   const [message, setMessage] = useState("Seed 23 is ready. The first three steps are forced initialization, one arm at a time.");
+  const [policy, setPolicy] = useState<ComparisonPolicy>("epsilon");
+  const [playing, setPlaying] = useState(false);
+  const [playTarget, setPlayTarget] = useState(0);
+  const running = playing && rounds < playTarget;
   const scenario = scenarios[scenarioId];
+  const policyLabel = policy === "epsilon" ? "ε-greedy" : policy === "ucb1" ? "UCB1 policy" : "Thompson sampling";
   const simulation = useMemo(
-    () => simulateBandit(scenario, epsilonPercent / 100, seed, rounds),
-    [scenario, epsilonPercent, seed, rounds],
+    () => simulateBandit(scenario, epsilonPercent / 100, seed, rounds, policy),
+    [scenario, epsilonPercent, seed, rounds, policy],
   );
   const bakeoff = useMemo(() => policyBakeoff(scenario, Math.max(50, rounds)), [rounds, scenario]);
   const current = simulation.trace.at(-1) ?? simulation.trace[0];
@@ -567,20 +588,29 @@ export function BanditStudio() {
   const optimalShare = postInitRounds > 0
     ? Math.max(0, optimalPulls - 1) / postInitRounds
     : 0;
+  useEffect(() => {
+    if (!running) return;
+    const timer = window.setInterval(() => setRounds(value => Math.min(MAX_STEPS, value + 1)), 150);
+    return () => window.clearInterval(timer);
+  }, [running]);
 
   function changeScenario(next: ScenarioId) {
+    setPlaying(false); setPlayTarget(0);
+    if (next === "gaussian" && policy === "thompson") setPolicy("epsilon");
     setScenarioId(next);
     setRounds(0);
     setMessage(`${scenarios[next].label} loaded. Replay begins with ${scenarios[next].arms.length} forced initialization steps.`);
   }
 
   function changeSeed(next: number) {
+    setPlaying(false); setPlayTarget(0);
     setSeed(next);
     setRounds(0);
     setMessage(`Seed ${next} loaded. Policy and per-arm reward streams are deterministic and separate.`);
   }
 
   function changeEpsilon(next: number) {
+    setPlaying(false);
     setEpsilonPercent(next);
     setMessage(
       rounds
@@ -595,10 +625,11 @@ export function BanditStudio() {
     if (next === rounds) return;
     if (delta < 0) setMessage(`Replay moved back to round ${next}; all estimates were rebuilt from seed ${seed}.`);
     else if (next <= scenario.arms.length) setMessage(`Forced initialization ${next}/${scenario.arms.length}: ${scenario.arms[next - 1].label} received its first observation.`);
-    else setMessage(`Advanced to round ${next} using deterministic ε-greedy decisions and reward streams.`);
+    else setMessage(`Advanced to round ${next}. The selected policy and reward streams reproduce the same seed.`);
   }
 
   function replay() {
+    setPlaying(false); setPlayTarget(0);
     setRounds(0);
     setMessage(`Seed ${seed} rewound to round 0. Repeating the same controls reproduces the same trajectory.`);
   }
@@ -629,36 +660,19 @@ export function BanditStudio() {
       title="Sequential Decisions Console"
       status={rounds ? `${rounds} SEEDED ROUNDS` : "Ready at round 0"}
       purpose="See how a learning policy balances trying uncertain options against repeatedly choosing the current best option."
-      tryThis="Run 100 seeded rounds, then change epsilon or the reward scenario."
+      tryThis="Watch 100 rounds. Pause to read why the last arm was chosen, then replay with UCB1 or Thompson sampling."
       watchFor="The chosen arms, learned value estimates and regret trace change together; the oracle is a comparison, not information available to the policy."
       statusTone={rounds ? "working" : "safe"}
       className={styles.studio}
       footer={
         <>
-          <span>ε-Greedy · incremental sample mean</span>
+          <span>{policyLabel} · incremental sample mean</span>
           <span>Toy environment · no live decisions</span>
         </>
       }
     >
-      <section className={styles.hero} aria-labelledby="bandit-studio-title">
-        <div className={styles.heroCopy}>
-          <span>EXPLORE × EXPLOIT × ACCOUNT</span>
-          <h2 id="bandit-studio-title">Watch a policy learn which lever pays—one uncertain reward at a time.</h2>
-          <p>
-            A deterministic browser reconstruction of the STUDY-RL Week 01 bandit testbed. Step through every decision,
-            replay the same seed, and keep expected regret separate from noisy realised reward.
-          </p>
-        </div>
-        <div className={styles.heroMachine} aria-hidden="true">
-          <div className={styles.machineDial}><i style={{ transform: `rotate(${epsilonPercent * 2.4 - 120}deg)` }} /></div>
-          <div className={styles.machineReadout}><span>ε</span><strong>{epsilonPercent}%</strong><small>EXPLORATION</small></div>
-          <div className={styles.machineLamps}>{scenario.arms.map((arm, index) => <i key={arm.id} className={lastEvent?.armIndex === index ? styles.lampOn : ""} />)}</div>
-        </div>
-      </section>
-
       <div className={styles.boundaryStrip} role="note">
-        <strong>Synthetic testbed</strong>
-        <p>Fixed fictional means, locally generated rewards, no API and no operational decision data. The oracle exists only because this is a controlled teaching world.</p>
+        <p>Generated rewards, real policy updates. The true means stay hidden from the learner.</p>
         <span>SEED {seed}</span>
       </div>
 
@@ -684,28 +698,45 @@ export function BanditStudio() {
         {view === "policy" ? (
           <section id="bandit-panel-policy" role="tabpanel" aria-labelledby="bandit-tab-policy" className={styles.policyPanel}>
             <div className={styles.sectionHeading}>
-              <div><span>One state · k actions</span><h3>Policy console</h3><p>Forced initialization makes every estimate defined; ε-greedy takes over only after each arm has one observation.</p></div>
-              <div className={styles.phaseBadge}><small>Policy phase</small><strong>{rounds < scenario.arms.length ? "INITIALISE" : "ε-GREEDY"}</strong><span>{rounds < scenario.arms.length ? `${rounds}/${scenario.arms.length} arms observed` : `${simulation.modeCounts.explore} explore · ${simulation.modeCounts.exploit} exploit`}</span></div>
+              <div><span>One state · k actions</span><h3>Policy console</h3><p>Every arm starts with one observation. After that, your chosen policy decides where to look next.</p></div>
+              <div className={styles.phaseBadge}><small>Policy phase</small><strong>{rounds < scenario.arms.length ? "INITIALISE" : policyLabel}</strong><span>{rounds < scenario.arms.length ? `${rounds}/${scenario.arms.length} arms observed` : `${rounds - scenario.arms.length} policy choices`}</span></div>
             </div>
 
+            <div role="group" className={styles.transport} aria-label="Simulation transport controls">
+              <button type="button" className={styles.stepButton} disabled={rounds === MAX_STEPS} onClick={() => { if (running) setPlaying(false); else { if (rounds >= playTarget) setPlayTarget(Math.min(MAX_STEPS, rounds + 100)); setPlaying(true); } }}>{running ? "Pause" : rounds > 0 && rounds < playTarget ? "Continue" : "Watch 100 rounds"}</button>
+              <button type="button" disabled={running || rounds === MAX_STEPS} onClick={() => moveRounds(1)}>Step once</button>
+              <button type="button" disabled={running || rounds === 0} onClick={() => moveRounds(-1)}>← Back 1</button>
+              <button type="button" disabled={running || rounds === MAX_STEPS} onClick={() => moveRounds(25)}>+25 rounds</button>
+              <button type="button" disabled={running || rounds === MAX_STEPS} onClick={() => moveRounds(100)}>+100 rounds</button>
+              <button type="button" disabled={rounds === 0} onClick={replay}>Replay seed</button>
+            </div>
             <div className={styles.consoleGrid}>
               <aside className={styles.controlDesk} aria-label="Bandit simulation controls">
                 <div className={styles.panelCap}><span>Experiment controls</span><b>{scenario.shortLabel}</b></div>
                 <label className={styles.selectField}>
+                  <span>Learning policy</span>
+                  <ClassicSelect aria-label={t("Learning policy")} value={policy} onChange={(event) => { setPlaying(false); setPlayTarget(0); setPolicy(event.target.value as ComparisonPolicy); setRounds(0); setMessage("Policy changed. Start with the same seed to compare its choices."); }}>
+                    <option value="epsilon">{t("ε-greedy")}</option>
+                    <option value="ucb1">{t("UCB1 policy")}</option>
+                    <option value="thompson" disabled={scenario.kind === "gaussian"}>{t("Thompson sampling")}</option>
+                  </ClassicSelect>
+                  <small>{policy === "epsilon" ? "Explore randomly with probability ε; otherwise choose the largest estimate." : policy === "ucb1" ? "Add an uncertainty bonus to each estimate; choose the largest upper bound." : "Draw one plausible success rate per arm; choose the largest sampled rate."}</small>
+                </label>
+                <label className={styles.selectField}>
                   <span>Environment</span>
-                  <ClassicSelect value={scenarioId} onChange={(event) => changeScenario(event.target.value as ScenarioId)}>
-                    <option value="wide">Bernoulli · wide gaps</option>
-                    <option value="close">Bernoulli · close contest</option>
-                    <option value="gaussian">Gaussian · noisy values</option>
+                  <ClassicSelect aria-label={t("Environment")} value={scenarioId} onChange={(event) => changeScenario(event.target.value as ScenarioId)}>
+                    <option value="wide">{t("Bernoulli · wide gaps")}</option>
+                    <option value="close">{t("Bernoulli · close contest")}</option>
+                    <option value="gaussian">{t("Gaussian · noisy values")}</option>
                   </ClassicSelect>
                 </label>
                 <label className={styles.selectField}>
                   <span>Replay seed</span>
-                  <ClassicSelect value={seed} onChange={(event) => changeSeed(Number(event.target.value))}>
-                    {seeds.map((entry) => <option key={entry} value={entry}>Seed {entry}</option>)}
+                  <ClassicSelect aria-label={t("Replay seed")} value={seed} onChange={(event) => changeSeed(Number(event.target.value))}>
+                    {seeds.map((entry) => <option key={entry} value={entry}>{t("Seed {0}", {0: entry})}</option>)}
                   </ClassicSelect>
                 </label>
-                <RangeControl
+                {policy === "epsilon" ? <RangeControl
                   id="bandit-epsilon"
                   label="Exploration ε"
                   value={epsilonPercent}
@@ -714,7 +745,7 @@ export function BanditStudio() {
                   step={5}
                   output={`${epsilonPercent}%`}
                   onChange={changeEpsilon}
-                />
+                /> : null}
                 <label className={styles.truthToggle}>
                   <input type="checkbox" checked={revealTruth} onChange={(event) => setRevealTruth(event.target.checked)} />
                   <span><strong>Reveal true means</strong><small>The policy never reads this switch.</small></span>
@@ -746,19 +777,20 @@ export function BanditStudio() {
                     <strong>{simulation.modeCounts.initialise} FORCED</strong>
                   </div>
                 </div>
-                <div role="group" className={styles.transport} aria-label="Simulation transport controls">
-                  <button type="button" disabled={rounds === 0} onClick={() => moveRounds(-1)} aria-label="Move back one round">← Back 1</button>
-                  <button type="button" className={styles.stepButton} disabled={rounds === MAX_STEPS} onClick={() => moveRounds(1)}><span aria-hidden="true">▶</span> Step once</button>
-                  <button type="button" disabled={rounds === MAX_STEPS} onClick={() => moveRounds(25)}>+25 rounds</button>
-                  <button type="button" disabled={rounds === MAX_STEPS} onClick={() => moveRounds(100)}>+100 rounds</button>
-                  <button type="button" disabled={rounds === 0} onClick={replay}><span aria-hidden="true">↺</span> Replay seed</button>
-                </div>
+
               </div>
             </div>
 
             <div className={styles.liveStatus} role="status" aria-live="polite">
-              <span>Run log</span><p>{message}</p><strong>Local · seeded</strong>
+              <span>Run log</span><p>{running ? "Learning one round at a time. Pause to inspect the last decision." : rounds > 0 && playTarget > 0 ? rounds >= playTarget ? `Playback finished at round ${rounds}. Estimates and choices are kept.` : `Paused at round ${rounds}. Continue or inspect the last choice.` : message}</p><strong>Local · seeded</strong>
             </div>
+
+            {lastEvent ? <section className={styles.choiceExplanation} aria-labelledby="choice-title">
+              <h4 id="choice-title">Why this arm?</h4>
+              <p>{lastEvent.mode === "initialise" ? "First observation: try each arm once before comparing estimates." : lastEvent.mode === "explore" ? "The exploration coin chose a random arm; a smaller estimate can still be selected." : lastEvent.mode === "exploit" ? "This arm had the largest estimate before the reward. Ties are broken randomly." : lastEvent.mode === "optimism" ? "This arm had the largest estimate plus uncertainty bonus before the reward." : "This arm had the largest sampled success rate. The next draw can choose differently."}</p>
+              <div className={styles.choiceScores} role="list" aria-label="Scores before the last choice">{scenario.arms.map((arm, index) => <div role="listitem" key={arm.id} className={index === lastEvent.armIndex ? styles.selectedScore : ""}><span>{arm.label}</span><strong>{lastEvent.scores[index].toFixed(3)}</strong><small>{policy === "ucb1" ? "Upper bound" : policy === "thompson" ? "Sampled rate" : "Prior estimate"}</small></div>)}</div>
+              <p>{t("{arm} received reward {reward}; its estimate is now {estimate}.", {arm: t(lastEvent.armLabel), reward: formatReward(lastEvent.reward, scenario.kind), estimate: lastEvent.estimateAfter.toFixed(3)})}</p>
+            </section> : null}
 
             <section className={styles.armBoard} aria-labelledby="arm-board-title">
               <div className={styles.boardHeading}><div><span>Empirical estimates</span><h4 id="arm-board-title">What the policy currently believes</h4></div><p><MathEquation tex={String.raw`\widehat Q`} display={false} /> is updated only for the selected arm using the incremental sample mean.</p></div>
@@ -929,12 +961,12 @@ export function BanditStudio() {
               <div><span>Method</span><h3>From a policy choice to cumulative regret</h3><p>Each round selects an arm, observes a seeded reward and updates the estimate. The oracle makes the cost of exploration visible.</p></div>
             </div>
 
-            <div role="group" className={styles.algorithmFlow} aria-label="Epsilon-greedy browser algorithm">
+            <div role="group" className={styles.algorithmFlow} aria-label="Browser learning sequence">
               <div><span>01</span><strong>Force K pulls</strong><small>A, B, … exactly once</small></div>
               <i aria-hidden="true">→</i>
-              <div><span>02</span><strong>Draw policy coin</strong><small>u &lt; ε means explore</small></div>
+              <div><span>02</span><strong>Apply chosen policy</strong><small>random, bound or posterior</small></div>
               <i aria-hidden="true">→</i>
-              <div><span>03</span><strong>Select arm</strong><small>uniform or arg max Q̂</small></div>
+              <div><span>03</span><strong>Select arm</strong><small>use information so far</small></div>
               <i aria-hidden="true">→</i>
               <div><span>04</span><strong>Observe reward</strong><small>seeded per t × arm</small></div>
               <i aria-hidden="true">→</i>
@@ -968,7 +1000,7 @@ export function BanditStudio() {
 
             <section className={styles.initialisationAudit} aria-labelledby="initialisation-title">
               <div><span>Browser hardening</span><h4 id="initialisation-title">Forced initialization is a declared policy stage</h4><p>ε-greedy does not mathematically require forced pulls: zero estimates plus random tie-breaking are also valid. This exhibit intentionally pulls A → B → … once, because its interface promises defined empirical estimates before ε-greedy begins.</p></div>
-              <div className={styles.initSequence}>{scenario.arms.map((arm, index) => <span key={arm.id} className={rounds > index ? styles.initDone : ""}><b>{index + 1}</b>{arm.id}</span>)}<i>then ε-policy</i></div>
+              <div className={styles.initSequence}>{scenario.arms.map((arm, index) => <span key={arm.id} className={rounds > index ? styles.initDone : ""}><b>{index + 1}</b>{arm.id}</span>)}<i>then chosen policy</i></div>
             </section>
 
             <aside className={styles.boundaryGrid} role="note">

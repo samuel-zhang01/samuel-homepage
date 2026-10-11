@@ -1,0 +1,11 @@
+.actions { display: flex; gap: 7px; flex-wrap: wrap; margin-block: 14px; }
+.actions button { font: inherit; min-height: 38px; padding: 7px 10px; border: 1px solid var(--s7-ink); color: var(--s7-ink); background: var(--s7-paper); border-radius: var(--s7-control-radius); box-shadow: var(--s7-relief-raised); cursor: pointer; }
+.actions button:disabled { color: var(--s7-muted); box-shadow: none; cursor: default; }
+.actions button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+.checkpoint { padding: 10px 12px; margin: 12px 0; border: 1px solid var(--s7-shadow); background: var(--s7-chrome); font-size: var(--s7-ui); line-height: 1.5; }
+.checkpoint strong { font-variant-numeric: tabular-nums; }
+.movingPoint { transition: transform .18s linear; }
+.receiptSummary { padding: 8px 0; cursor: pointer; }
+.trace { stroke-linecap: round; stroke-linejoin: round; }
+.currentPoint { fill: var(--s7-paper); stroke: #11177a; stroke-width: 3; }
+@media (prefers-reduced-motion: reduce) { .movingPoint { transition: none; } }

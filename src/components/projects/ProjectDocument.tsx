@@ -90,7 +90,7 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
     </header>
     {preview && <figure className={styles.preview}>
       {previewImages.length > 1 && <div className={styles.previewTabs} role="group" aria-label={t("Explore the project")}>{previewImages.map((image, index) => <button key={image.src} type="button" className="s7-button" aria-pressed={effectivePreviewIndex === index} onClick={() => setPreviewIndex(index)}>{getProjectText(locale, image.label ?? image.alt)}</button>)}</div>}
-      <Image unoptimized src={preview.src} alt={getProjectText(locale, preview.alt)} width={preview.width ?? 543} height={preview.height ?? 172} sizes="(max-width: 720px) 90vw, 640px" />
+      <Image unoptimized src={preview.src} alt={getProjectText(locale, preview.alt)} width={preview.width ?? 543} height={preview.height ?? 172} style={{ maxWidth: preview.width ?? "100%" }} sizes="(max-width: 720px) 90vw, 640px" />
       <figcaption>{getProjectText(locale, preview.caption)} <a href={preview.src} target="_blank" rel="noopener noreferrer">{t("View full screenshot")} ↗</a></figcaption>
     </figure>}
     {slug === "videomate" && <div className={styles.preview}><ProductPreviewMotion locale={locale} /></div>}

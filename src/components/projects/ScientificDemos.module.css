@@ -1620,3 +1620,21 @@
 .resultChoices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
 .resultSummary { display: grid; grid-template-columns: minmax(150px, 1fr) minmax(0, 2fr); gap: 12px; padding: 12px; border: 1px solid var(--s7-ink); background: var(--s7-paper); margin-bottom: 12px; }
 @container (max-width: 560px) { .resultChoices, .resultSummary { grid-template-columns: minmax(0, 1fr); } }
+
+.comparisonActions { display: flex; flex-wrap: wrap; gap: 7px; padding: 12px 15px; border-bottom: 1px solid var(--s7-shadow); }
+.comparisonActions button { min-height: 38px; padding: 7px 10px; border: 1px solid var(--s7-ink); color: var(--s7-ink); background: var(--s7-paper); font: var(--s7-ui)/1.4 var(--s7-font-ui); box-shadow: var(--s7-relief-raised); border-radius: var(--s7-control-radius); cursor: pointer; }
+.comparisonActions button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+.visionComparison { container: vision-comparison / inline-size; padding: 15px; border-block: 1px solid var(--s7-shadow); background: var(--s7-paper); }
+.parameterBars { display: grid; gap: 10px; }
+.parameterBars > div { display: grid; grid-template-columns: minmax(130px, 1fr) 2fr 55px; align-items: center; gap: 10px; font-size: var(--s7-ui); }
+.parameterBars > div > div { height: 15px; border: 1px solid var(--s7-shadow); background: var(--s7-chrome); }
+.parameterBars i { display: block; height: 100%; background: var(--s7-ink); transition: width .25s ease; }
+.visionComparison dl { display: flex; flex-wrap: wrap; gap: 12px 25px; margin: 15px 0 8px; }
+.visionComparison dl div { display: grid; gap: 4px; }
+.visionComparison dt { font-size: var(--s7-small); }
+.visionComparison dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.visionComparison dd small { font-weight: 400; }
+.visionComparison p { margin: 0; font-size: var(--s7-ui); line-height: 1.5; }
+@container vision-comparison (max-width: 500px) { .parameterBars > div { grid-template-columns: minmax(0, 1fr) 55px; } .parameterBars > div > div { grid-row: 2; grid-column: 1 / -1; } }
+@media (max-width: 500px) { .parameterBars > div { grid-template-columns: minmax(0, 1fr) 55px; } .parameterBars > div > div { grid-row: 2; grid-column: 1 / -1; } }
+@media (prefers-reduced-motion: reduce) { .parameterBars i { transition: none; } }

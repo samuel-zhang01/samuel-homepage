@@ -261,7 +261,7 @@ const SAFE_REWRITES = [
     needle: "Containerised a Docker inference service and introduced CI/CD checks, reducing release rollback time by 45%.",
     replacement: "Reduced release rollback time by 45% by containerising a Docker inference service and introducing CI/CD checks.",
     label: "Connect delivery work to impact",
-    reason: "Keeps the exact deployment evidence and makes its operational result easier to scan.",
+    reason: "Keeps the deployment description and makes its operational result easier to scan.",
   },
 ] as const;
 
@@ -443,7 +443,7 @@ function buildSuggestions(cv: string, report: AnalysisReport): RewriteSuggestion
     kind: "gap",
     label: `Validate “${signal.label}”`,
     reason: "The role asks for this signal, but the supplied CV contains no supporting sentence.",
-    original: "No evidence located in the CV snapshot.",
+    original: "No matching sentence found in the CV.",
     replacement: `If true, add: [action] ${signal.label} for [scope], resulting in [verified outcome].`,
     canStage: false,
   }));
@@ -473,6 +473,27 @@ function escapeCount(value: string) {
 
 function formatPercent(value: number) {
   return `${Math.max(0, Math.min(value, 100))}%`;
+}
+
+function MatchedSentence({ text, signals }: { text: string; signals: readonly SignalResult[] }) {
+  const tokens = [...text.matchAll(/[a-z0-9+#]+/gi)];
+  const ranges: Array<[number, number]> = [];
+  for (const signal of signals) for (const variant of signal.variants) {
+    if (!containsVariant(text, variant)) continue;
+    const parts = normalise(variant).split(" ");
+    for (let index = 0; index <= tokens.length - parts.length; index += 1) {
+      if (parts.every((part, offset) => tokens[index + offset][0].toLowerCase() === part)) {
+        const last = tokens[index + parts.length - 1];
+        ranges.push([tokens[index].index, last.index + last[0].length]);
+      }
+    }
+  }
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged: Array<[number, number]> = [];
+  for (const range of ranges) { const previous = merged.at(-1); if (previous && range[0] <= previous[1]) previous[1] = Math.max(previous[1], range[1]); else merged.push([...range]); }
+  let cursor = 0;
+  const fragments = merged.map(([start, end]) => { const before = text.slice(cursor, start); cursor = end; return <span key={start}>{before}<mark>{text.slice(start, end)}</mark></span>; });
+  return <ProjectCopy copy={cvKeywordCopy}><p className={styles.matchedSentence} lang="en" translate="no">{fragments}{text.slice(cursor)}</p></ProjectCopy>;
 }
 
 function ScoreRing({ value, label }: { value: number; label: string }) {
@@ -543,11 +564,18 @@ export function CvKeywordStudio() {
   const [selectedSignal, setSelectedSignal] = useState<string>("python");
   const [runNumber, setRunNumber] = useState(1);
   const [announcement, setAnnouncement] = useState("Sample analysed. Inspect the matches or edit the inputs.");
+  const [previousReport, setPreviousReport] = useState<AnalysisReport | null>(null);
 
   const report = useMemo(
     () => analyse(analysed.cv, analysed.job, lens),
     [analysed, lens],
   );
+  const liveReport = useMemo(() => analyse(cvText, jobText, lens), [cvText, jobText, lens]);
+  const addedMatches = liveReport.matched.filter(signal => !report.matched.some(old => old.id === signal.id));
+  const lostMatches = report.matched.filter(signal => !liveReport.matched.some(current => current.id === signal.id));
+  const oldSentences = sentences(analysed.cv);
+  const changedSentence = sentences(cvText).find(sentence => !oldSentences.includes(sentence));
+  const previewSentence = changedSentence ?? matchingSentence(cvText, liveReport.matched.flatMap(signal => signal.variants));
   const suggestions = useMemo(
     () => buildSuggestions(analysed.cv, report),
     [analysed.cv, report],
@@ -574,14 +602,16 @@ export function CvKeywordStudio() {
 
   function runAnalysis() {
     if (!cvText.trim() || !jobText.trim()) return;
+    setPreviousReport(report);
     setAnalysed({ cv: cvText, job: jobText, role, company });
     setStagedRewrites(new Set());
     setRunNumber((current) => current + 1);
     setActiveTab("analysis");
-    setAnnouncement("Analysis complete. Weighted matching and evidence checks are current.");
+    setAnnouncement("Analysis complete. Weighted matching and sentence checks are current.");
   }
 
   function loadSample() {
+    setPreviousReport(null);
     setCvText(SAMPLE_CV);
     setJobText(SAMPLE_JOB);
     setRole("Applied Machine Learning Engineer");
@@ -603,6 +633,7 @@ export function CvKeywordStudio() {
   }
 
   function clearWorkspace() {
+    setPreviousReport(null);
     setCvText("");
     setJobText("");
     setRole("");
@@ -643,7 +674,7 @@ export function CvKeywordStudio() {
       title="Tailor a CV to a role"
       status={isDirty ? "Editing · run to update" : "Analysis current"}
       purpose="I built a CV workflow that connects a job’s requirements to experience already described in a CV."
-      tryThis="The sample is already analysed. Open Refine to review one suggested edit, or change a sentence in Brief and run the analysis again."
+      tryThis="Open Brief and change a sentence. Live highlights show which job terms it explains; Run analysis keeps the edit for comparison."
       watchFor="Matched requirements show the supporting CV sentence. Missing requirements remain gaps; edits should explain existing experience more clearly."
       statusTone={isDirty ? "working" : "safe"}
       className={styles.studio}
@@ -667,9 +698,9 @@ export function CvKeywordStudio() {
           </div>
           <label className={styles.lensControl}>
             <span>Extraction lens</span>
-            <ClassicSelect value={lens} onChange={(event) => setLens(event.target.value as PriorityLens)}>
-              <option value="all">Balanced · all detected</option>
-              <option value="core">Core · essential / weight 5</option>
+            <ClassicSelect aria-label={t("Extraction lens")} value={lens} onChange={(event) => setLens(event.target.value as PriorityLens)}>
+              <option value="all">{t("Balanced · all detected")}</option>
+              <option value="core">{t("Core · essential / weight 5")}</option>
             </ClassicSelect>
           </label>
         </div>
@@ -678,7 +709,7 @@ export function CvKeywordStudio() {
           <span className={styles.shield} aria-hidden="true">✓</span>
           <div>
             <strong>Find the experience behind each requirement.</strong>
-            <p>My original workflow extracted requirements and prepared LaTeX CV templates. This browser version matches 18 English terms so you can inspect the sentences it finds. The fictional sample stays in English because that is what the matcher reads.</p>
+            <p>Edit the English sample and see its matches change. This local 18-term rule checks wording, not employability.</p>
           </div>
           <span className={styles.memoryBadge}>SESSION MEMORY ONLY</span>
         </aside>
@@ -754,6 +785,15 @@ export function CvKeywordStudio() {
               </label>
             </div>
 
+            <section className={styles.liveFeedback} aria-labelledby="live-feedback-title">
+              <div><h4 id="live-feedback-title">While you edit</h4><strong>{liveReport.matched.length}/{liveReport.signals.length} matched · {liveReport.weightedCoverage}% weighted coverage</strong></div>
+              <p>Highlighted words occur in both the CV sentence and the job requirements. A new match needs a truthful sentence behind it.</p>
+              {previewSentence ? <MatchedSentence text={previewSentence} signals={liveReport.matched} /> : <p>No matching sentence yet.</p>}
+              <div className={styles.matchChanges}><p><strong>New matches:</strong> {addedMatches.length ? addedMatches.map(signal => t(signal.label)).join(" · ") : "None"}</p><p><strong>Lost matches:</strong> {lostMatches.length ? lostMatches.map(signal => t(signal.label)).join(" · ") : "None"}</p></div>
+              <p>{isDirty ? "Unsaved edit: Run analysis to keep this version." : "This is the version used in Match and Refine."}</p>
+              <MacButton primary onClick={runAnalysis} disabled={!cvText.trim() || !jobText.trim()}>Run analysis</MacButton>
+            </section>
+
             <div role="group" className={styles.inputChecks} aria-label="Input validation checks">
               <span className={cvText.trim() ? styles.pass : styles.wait}><b>{cvText.trim() ? "✓" : "–"}</b> CV text present</span>
               <span className={jobText.trim() ? styles.pass : styles.wait}><b>{jobText.trim() ? "✓" : "–"}</b> Role brief present</span>
@@ -778,13 +818,15 @@ export function CvKeywordStudio() {
               <p>Editing aid, never a candidate rank or hiring recommendation.</p>
             </div>
 
+            {previousReport ? <section className={styles.savedComparison} aria-label="Compare CV versions"><h4>Previous analysis → current analysis</h4><p>{previousReport.matched.length}/{previousReport.signals.length} → {report.matched.length}/{report.signals.length} matched · {previousReport.weightedCoverage}% → {report.weightedCoverage}% weighted coverage</p><p>Both counts describe detected wording. Review the matching sentences before accepting an edit.</p><button type="button" className="s7-button" onClick={() => setPreviousReport(null)}>Clear comparison</button></section> : null}
+
             <div className={styles.scoreGrid}>
               <article className={styles.primaryScore}>
                 <ScoreRing value={report.readiness} label="Document editing readiness" />
                 <div>
                   <span>EDITING READINESS</span>
-                  <strong>{report.readiness >= 80 ? "Strong evidence base" : report.readiness >= 60 ? "Good base, clear gaps" : "Needs substantiation"}</strong>
-                  <p>60% weighted coverage + 30% evidence quality + 10% section structure.</p>
+                  <strong>{report.readiness >= 80 ? "Clear experience and outcomes" : report.readiness >= 60 ? "Good base, clear gaps" : "Explain the missing details"}</strong>
+                  <p>60% weighted coverage + 30% sentence clarity + 10% section structure.</p>
                 </div>
               </article>
               <article className={styles.metricCard}>
@@ -834,7 +876,7 @@ export function CvKeywordStudio() {
                       <div><strong>{signal.label}</strong><small>{signal.required ? "Essential wording" : "Supporting signal"} · {signal.category}</small></div>
                     </li>
                   ))}
-                  {!report.missing.length ? <li className={styles.emptyState}>No detected gaps. Review proof quality next.</li> : null}
+                  {!report.missing.length ? <li className={styles.emptyState}>No detected gaps. Review sentence clarity next.</li> : null}
                 </ol>
               </article>
             </div>
@@ -846,7 +888,7 @@ export function CvKeywordStudio() {
               </div>
               <div className={styles.signalTableWrap}>
                 <table className={styles.signalTable}>
-                  <thead><tr><th>Signal</th><th>Family</th><th>Priority</th><th>Weight</th><th>CV evidence</th></tr></thead>
+                  <thead><tr><th>Signal</th><th>Family</th><th>Priority</th><th>Weight</th><th>Matching CV sentence</th></tr></thead>
                   <tbody>
                     {report.signals.map((signal) => (
                       <tr key={signal.id} className={selectedSignal === signal.id ? styles.selectedRow : ""}>
@@ -911,7 +953,7 @@ export function CvKeywordStudio() {
                       </div>
                       <div className={styles.miniMeter}>
                         <span style={{ width: formatPercent(selected.evidenceStrength) }} />
-                        <b>{selected.evidenceStrength}% proof quality</b>
+                        <b>{selected.evidenceStrength}% sentence clarity</b>
                       </div>
                     </header>
                     <div className={styles.quotePair}>
@@ -925,7 +967,7 @@ export function CvKeywordStudio() {
                       <span className={selected.hasOutcome ? styles.checkOn : ""}><b>{selected.hasOutcome ? "✓" : "–"}</b> Outcome</span>
                     </div>
                   </>
-                ) : <p className={styles.emptyState}>Run an analysis to inspect evidence.</p>}
+                ) : <p className={styles.emptyState}>Run analysis to inspect matching sentences.</p>}
               </article>
             </div>
 
@@ -1009,7 +1051,7 @@ export function CvKeywordStudio() {
                 </div>
                 <dl className={styles.buildStats}>
                   <div><dt>Template focus</dt><dd>{templateProfile.emphasis}</dd></div>
-                  <div><dt>Relevant signals</dt><dd>{templateMatched}/{templateSignals.length || 0} evidenced</dd></div>
+                  <div><dt>Relevant signals</dt><dd>{templateMatched}/{templateSignals.length || 0} shown in the CV</dd></div>
                   <div><dt>Keyword payload</dt><dd>{report.signals.length} unique · JSON shape checked</dd></div>
                   <div><dt>LaTeX escaping</dt><dd>{escapeCount(report.signals.map((signal) => signal.label).join(", "))} reserved characters</dd></div>
                   <div><dt>Staged edits</dt><dd>{`Factual rewrites: ${stagedCount}`}</dd></div>
@@ -1052,17 +1094,17 @@ export function CvKeywordStudio() {
                   </section>
                   <section>
                     <h5>Role alignment</h5>
-                    <p className={styles.keywordLine}>{report.matched.slice(0, 9).map((signal) => t(signal.label)).join(" · ") || "Run analysis to populate evidenced signals"}</p>
+                    <p className={styles.keywordLine}>{report.matched.slice(0, 9).map((signal) => t(signal.label)).join(" · ") || "Run analysis to show matching terms"}</p>
                   </section>
                   <footer>Demonstration preview · fictional content · not a generated file</footer>
-                </div> : <div className={styles.buildEmpty} role="status"><span aria-hidden="true">□</span><strong>No validated snapshot</strong><p>Return to Brief, add CV evidence and a role description, then run the analysis before inspecting output.</p></div>}
+                </div> : <div className={styles.buildEmpty} role="status"><span aria-hidden="true">□</span><strong>No analysis yet</strong><p>Return to Brief, describe your experience and the role, then run analysis to preview the output.</p></div>}
               </article>
             </div>
 
             <article className={`${styles.panel} ${styles.manifest}`}>
               <div className={styles.panelTitle}>
                 <div><span>OUTPUT MANIFEST</span><strong translate="no">YYYYMMDD {analysed.role || "Role"} from {analysed.company || "Company"}/</strong></div>
-                <small>{buildReady ? `${includeCoverLetter ? 4 : 2} dated outputs · 1 workspace file` : "Build waiting for a validated snapshot"}</small>
+                <small>{buildReady ? `${includeCoverLetter ? 4 : 2} dated outputs · 1 workspace file` : "Run analysis to prepare the preview"}</small>
               </div>
               <div className={styles.fileGrid}>
                 <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="pdf" miniature /></span><p><strong>CV.pdf</strong><small>role-tailored document</small></p><b>{buildReady ? "READY" : "WAITING"}</b></div>
@@ -1078,9 +1120,9 @@ export function CvKeywordStudio() {
         <section className={styles.methodology}>
           <h3>Method and interpretation</h3>
           <div>
-            <p><strong>Project workflow:</strong> connect a job description to ranked signals, a role-specific LaTeX template and a dated output bundle. The original workflow validates structured keyword data, removes duplicates, handles LaTeX special characters and offers eight template families. This demonstration makes each signal visible and links it to evidence you can inspect.</p>
-            <p><strong>Browser adaptation:</strong> this showcase replaces external model inference with a deterministic 18-signal dictionary. <MathEquation tex={String.raw`\begin{aligned}\text{weight}={}&\text{base relevance}+\text{specificity}\\&+\min(\max(\text{frequency}-1,0),2)\\&+\begin{cases}2,&\text{essential wording}\\0,&\text{otherwise}\end{cases}\end{aligned}`} />Repetition adds up to 2 points; essential wording adds 2 points. Proof quality separately checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.</p>
-            <p><strong>Review before editing:</strong> a missing signal is never inserted automatically. Only three rewrites grounded verbatim in the fictional sample can be staged, and every generated coaching prompt contains explicit placeholders for evidence that must be verified.</p>
+            <p><strong>Project workflow:</strong> I built a workflow that turns a job description into ranked keywords, chooses a LaTeX template and writes dated output files. It validates keyword data, removes duplicates, escapes LaTeX characters and offers eight template families. Here, each detected term links to its matching sentence.</p>
+            <p><strong>Browser adaptation:</strong> this showcase replaces external model inference with a deterministic 18-signal dictionary. <MathEquation tex={String.raw`\begin{aligned}\text{weight}={}&\text{base relevance}+\text{specificity}\\&+\min(\max(\text{frequency}-1,0),2)\\&+\begin{cases}2,&\text{essential wording}\\0,&\text{otherwise}\end{cases}\end{aligned}`} />Repetition adds up to 2 points; essential wording adds 2 points. Sentence clarity checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.</p>
+            <p><strong>Review before editing:</strong> Missing terms are not added automatically. Three rewrites reuse the fictional sample’s facts; prompts for gaps ask you to supply an action, scope and outcome that actually happened.</p>
           </div>
         </section>
       </div>

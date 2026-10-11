@@ -313,9 +313,9 @@ export const cvKeywordCopy = {
     "说明交付工作带来的成果",
     "說明交付工作帶來的成果"
   ],
-  "Keeps the exact deployment evidence and makes its operational result easier to scan.": [
-    "保留完全相同的部署证据，让运营成果更容易阅读。",
-    "保留完全相同的部署證據，讓運營成果更容易閱讀。"
+  "Keeps the deployment description and makes its operational result easier to scan.": [
+    "保留部署描述，让实际成果更容易阅读。",
+    "保留部署描述，讓實際成果更容易閱讀。"
   ],
   "Brief": [
     "背景",
@@ -549,21 +549,21 @@ export const cvKeywordCopy = {
     "编辑准备度",
     "編輯準備度"
   ],
-  "Strong evidence base": [
-    "证据基础扎实",
-    "證據基礎紮實"
+  "Clear experience and outcomes": [
+    "经历与成果描述清楚",
+    "經歷與成果描述清楚"
   ],
   "Good base, clear gaps": [
     "基础良好，但有明确缺口",
     "基礎良好，但有明確缺口"
   ],
-  "Needs substantiation": [
-    "需要补充证据",
-    "需要補充證據"
+  "Explain the missing details": [
+    "补充说明缺失的细节",
+    "補充說明缺少的細節"
   ],
-  "60% weighted coverage + 30% evidence quality + 10% section structure.": [
-    "60% 加权覆盖率 + 30% 证据质量 + 10% 章节结构。",
-    "60% 加權覆蓋率 + 30% 證據品質 + 10% 章節結構。"
+  "60% weighted coverage + 30% sentence clarity + 10% section structure.": [
+    "60% 加权覆盖率 + 30% 句子清晰度 + 10% 章节结构。",
+    "60% 加權覆蓋率 + 30% 句子清晰度 + 10% 章節結構。"
   ],
   "WEIGHTED COVERAGE": [
     "加权覆盖率",
@@ -625,9 +625,9 @@ export const cvKeywordCopy = {
     "支持性信号",
     "支援性訊號"
   ],
-  "No detected gaps. Review proof quality next.": [
-    "未检测到缺口。接下来检查证据质量。",
-    "未檢測到缺口。接下來檢查證據品質。"
+  "No detected gaps. Review sentence clarity next.": [
+    "未检测到缺口。接下来检查句子是否清楚。",
+    "未檢測到缺口。接下來檢查句子是否清楚。"
   ],
   "EXTRACTED SIGNALS": [
     "已提取信号",
@@ -653,9 +653,9 @@ export const cvKeywordCopy = {
     "权重",
     "權重"
   ],
-  "CV evidence": [
-    "简历证据",
-    "履歷證據"
+  "Matching CV sentence": [
+    "匹配的简历句子",
+    "相符的履歷句子"
   ],
   "Support": [
     "支持项",
@@ -717,9 +717,9 @@ export const cvKeywordCopy = {
     "次于岗位说明",
     "次於崗位說明"
   ],
-  "% proof quality": [
-    "% 证据质量",
-    "% 證據品質"
+  "% sentence clarity": [
+    "% 句子清晰度",
+    "% 句子清晰度"
   ],
   "ROLE EVIDENCE": [
     "岗位证据",
@@ -749,9 +749,9 @@ export const cvKeywordCopy = {
     "结果",
     "結果"
   ],
-  "Run an analysis to inspect evidence.": [
-    "运行分析后即可检查证据。",
-    "執行分析後即可檢查證據。"
+  "Run analysis to inspect matching sentences.": [
+    "运行分析后即可查看匹配的句子。",
+    "執行分析後即可查看相符的句子。"
   ],
   "TRUTH-PRESERVING REWRITE DESK": [
     "保留事实的改写台",
@@ -841,9 +841,9 @@ export const cvKeywordCopy = {
     "相关信号",
     "相關訊號"
   ],
-  "evidenced": [
-    "有证据支持",
-    "有證據支援"
+  "shown in the CV": [
+    "出现在简历中",
+    "出現在履歷中"
   ],
   "Keyword payload": [
     "关键词数据",
@@ -977,21 +977,21 @@ export const cvKeywordCopy = {
     "岗位契合",
     "崗位契合"
   ],
-  "Run analysis to populate evidenced signals": [
-    "运行分析以填入有证据支持的信号",
-    "執行分析以填入有證據支援的訊號"
+  "Run analysis to show matching terms": [
+    "运行分析以显示匹配的词语",
+    "執行分析以顯示相符的詞語"
   ],
   "Demonstration preview · fictional content · not a generated file": [
     "演示预览 · 虚构内容 · 并非生成的文件",
     "示範預覽 · 虛構內容 · 並非生成的檔案"
   ],
-  "No validated snapshot": [
-    "尚无已验证的快照",
-    "尚無已驗證的快照"
+  "No analysis yet": [
+    "尚未分析",
+    "尚未分析"
   ],
-  "Return to Brief, add CV evidence and a role description, then run the analysis before inspecting output.": [
-    "返回“背景”，添加简历证据和岗位描述，运行分析后再查看输出。",
-    "返回“背景”，新增履歷證據和崗位描述，執行分析後再檢視輸出。"
+  "Return to Brief, describe your experience and the role, then run analysis to preview the output.": [
+    "返回“背景”，说明你的经历和岗位要求，再运行分析以预览输出。",
+    "返回「背景」，說明你的經歷和崗位要求，再執行分析以預覽輸出。"
   ],
   "OUTPUT MANIFEST": [
     "输出清单",
@@ -1017,9 +1017,9 @@ export const cvKeywordCopy = {
     "{0} 个带日期的输出文件 · 1 个工作区文件",
     "{0} 個帶日期的輸出檔案 · 1 個工作區檔案"
   ],
-  "Build waiting for a validated snapshot": [
-    "构建正在等待有效快照",
-    "構建正在等待有效快照"
+  "Run analysis to prepare the preview": [
+    "运行分析以准备预览",
+    "執行分析以準備預覽"
   ],
   "PDF": [
     "PDF",
@@ -1089,9 +1089,9 @@ export const cvKeywordCopy = {
     "项目工作流：",
     "專案工作流："
   ],
-  "connect a job description to ranked signals, a role-specific LaTeX template and a dated output bundle. The original workflow validates structured keyword data, removes duplicates, handles LaTeX special characters and offers eight template families. This demonstration makes each signal visible and links it to evidence you can inspect.": [
-    "将职位描述与排序后的信号、面向岗位的 LaTeX 模板及带日期的输出文件包连接起来。原始工作流验证结构化关键词数据、去重、处理 LaTeX 特殊字符，并提供八种模板。本演示让每项信号可见，并连接到可检查的证据。",
-    "將職位描述與排序後的訊號、面向崗位的 LaTeX 模板及帶日期的輸出檔案包連線起來。原始工作流驗證結構化關鍵詞資料、去重、處理 LaTeX 特殊字元，並提供八種模板。本示範讓每項訊號可見，並連線到可檢查的證據。"
+  "I built a workflow that turns a job description into ranked keywords, chooses a LaTeX template and writes dated output files. It validates keyword data, removes duplicates, escapes LaTeX characters and offers eight template families. Here, each detected term links to its matching sentence.": [
+    "我构建的流程将职位描述转为排序后的关键词，选择 LaTeX 模板并写出带日期的文件。流程验证关键词数据、去重、处理 LaTeX 特殊字符，并提供八种模板。这里，每个检测到的词语都对应其匹配的句子。",
+    "我建立的流程將職位描述轉為排序後的關鍵詞，選擇 LaTeX 模板並寫出帶日期的檔案。流程驗證關鍵詞資料、去重、處理 LaTeX 特殊字元，並提供八種模板。這裡，每個偵測到的詞語都對應其相符的句子。"
   ],
   "Browser adaptation:": [
     "浏览器扩展：",
@@ -1101,17 +1101,17 @@ export const cvKeywordCopy = {
     "本演示以确定性的 18 项信号词典替代外部模型推理。",
     "本示範以確定性的 18 項訊號詞典替代外部模型推理。"
   ],
-  "Repetition adds up to 2 points; essential wording adds 2 points. Proof quality separately checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.": [
-    "重复最多加 2 分，必需项措辞加 2 分。证据质量分别检查相关句子、行动动词、带单位或百分比的测量或方向性结果，以及明确的结果用语；单纯的版本号不算成果。编辑准备度仅反馈文档情况，不模拟招聘系统、不评估就业能力，也不作自动招聘决定。",
-    "重複最多加 2 分，必需項措辭加 2 分。證據品質分別檢查相關句子、行動動詞、帶單位或百分比的測量或方向性結果，以及明確的結果用語；單純的版本號不算成果。編輯準備度僅回饋文件情況，不模擬招聘系統、不評估就業能力，也不作自動招聘決定。"
+  "Repetition adds up to 2 points; essential wording adds 2 points. Sentence clarity checks a relevant sentence, an action verb, a measured unit/percentage or directional result, and an explicit outcome phrase; bare version numbers do not count as impact. Editing readiness is document feedback only, not an ATS emulator, employability score, or automated hiring decision.": [
+    "重复最多加 2 分，必需项措辞加 2 分。句子清晰度检查相关句子、行动动词、带单位或百分比的测量或方向性结果，以及明确的结果用语；单纯的版本号不算成果。编辑准备度仅反馈文档情况，不模拟招聘系统、不评估就业能力，也不作自动招聘决定。",
+    "重複最多加 2 分，必需項措辭加 2 分。句子清晰度檢查相關句子、行動動詞、帶單位或百分比的測量或方向性結果，以及明確的結果用語；單純的版本號不算成果。編輯準備度僅回饋文件情況，不模擬招聘系統、不評估就業能力，也不作自動招聘決定。"
   ],
   "Review before editing:": [
     "编辑前先审核：",
     "編輯前先稽核："
   ],
-  "a missing signal is never inserted automatically. Only three rewrites grounded verbatim in the fictional sample can be staged, and every generated coaching prompt contains explicit placeholders for evidence that must be verified.": [
-    "缺失信号不会自动插入。只有三项逐字依据虚构示例的改写可以暂存；所有指导提示都带有明确的占位符，要求补充经过核实的证据。",
-    "缺失訊號不會自動插入。只有三項逐字依據虛構示例的改寫可以暫存；所有指導提示都帶有明確的佔位符，要求補充經過核實的證據。"
+  "Missing terms are not added automatically. Three rewrites reuse the fictional sample’s facts; prompts for gaps ask you to supply an action, scope and outcome that actually happened.": [
+    "缺失的词语不会自动添加。三项改写沿用虚构示例中的事实；针对缺口的提示要求你说明实际发生的行动、范围和结果。",
+    "缺少的詞語不會自動加入。三項改寫沿用虛構示例中的事實；針對缺口的提示要求你說明實際發生的行動、範圍和結果。"
   ],
   "Systems, delivery and technical depth": [
     "系统、交付与技术深度",
@@ -1149,9 +1149,9 @@ export const cvKeywordCopy = {
     "虚构示例已加载。可以开始分析。",
     "虛構示例已載入。可以開始分析。"
   ],
-  "Analysis complete. Weighted matching and evidence checks are current.": [
-    "分析完成。加权匹配和证据检查已更新。",
-    "分析完成。加權匹配和證據檢查已更新。"
+  "Analysis complete. Weighted matching and sentence checks are current.": [
+    "分析完成。加权匹配和句子检查已更新。",
+    "分析完成。加權匹配和句子檢查已更新。"
   ],
   "The fictional example has been restored.": [
     "已恢复虚构示例。",
@@ -1161,9 +1161,9 @@ export const cvKeywordCopy = {
     "工作区已清空，未使用浏览器持久存储。",
     "工作區已清空，未使用瀏覽器持久儲存。"
   ],
-  "No evidence located in the CV snapshot.": [
-    "简历快照中没有找到证据。",
-    "履歷快照中沒有找到證據。"
+  "No matching sentence found in the CV.": [
+    "简历中没有找到匹配的句子。",
+    "履歷中沒有找到相符的句子。"
   ],
   "If true, add: [action] {0} for [scope], resulting in [verified outcome].": [
     "如果属实，请补充：针对[范围]，[行动] {0}，取得[已核实的结果]。",
@@ -1233,5 +1233,24 @@ export const cvKeywordCopy = {
   "— NO MATCHING SENTENCE": ["— 没有匹配句子", "— 沒有符合的句子"],
   "JOB REQUIREMENT": ["职位要求", "職位要求"],
   "CV SENTENCE": ["简历句子", "履歷句子"],
-  "MISSING EXPERIENCE": ["缺少相关经历", "缺少相關經歷"]
+  "MISSING EXPERIENCE": ["缺少相关经历", "缺少相關經歷"],
+  "Open Brief and change a sentence. Live highlights show which job terms it explains; Run analysis keeps the edit for comparison.": ["打开「背景」修改一句话。即时高亮显示它对应的岗位词语；运行分析可保留这一版供比较。", "開啟「背景」修改一句話。即時醒目標示顯示它對應的職缺詞語；執行分析可保留這一版供比較。"],
+  "Edit the English sample and see its matches change. This local 18-term rule checks wording, not employability.": ["编辑英文示例，观察匹配变化。本地 18 项规则只检查措辞，不判断就业能力。", "編輯英文範例，觀察比對變化。本機 18 項規則只檢查措辭，不判斷就業能力。"],
+  "While you edit": ["编辑时的反馈", "編輯時的回饋"],
+  "{0}/{1} matched · {2}% weighted coverage": ["匹配 {0}/{1} 项 · 加权覆盖率 {2}%", "比對 {0}/{1} 項 · 加權涵蓋率 {2}%"],
+  "matched ·": ["项匹配 ·", "項比對 ·"],
+  "% weighted coverage": ["% 加权覆盖率", "% 加權涵蓋率"],
+  "Highlighted words occur in both the CV sentence and the job requirements. A new match needs a truthful sentence behind it.": ["高亮词同时出现在简历句子和岗位要求中。新增匹配须由真实经历支撑。", "醒目詞語同時出現在履歷句子和職缺要求中。新增比對須由真實經歷支持。"],
+  "No matching sentence yet.": ["尚未找到匹配句子。", "尚未找到比對句子。"],
+  "New matches:": ["新增匹配：", "新增比對："],
+  "Lost matches:": ["减少的匹配：", "減少的比對："],
+  "None": ["无", "無"],
+  "Unsaved edit: Run analysis to keep this version.": ["尚未保存的修改：运行分析以保留这一版。", "尚未儲存的修改：執行分析以保留這一版。"],
+  "This is the version used in Match and Refine.": ["这是「匹配」与「完善」当前使用的版本。", "這是「匹配」與「完善」目前使用的版本。"],
+  "Compare CV versions": ["比较简历版本", "比較履歷版本"],
+  "Previous analysis → current analysis": ["上次分析 → 当前分析", "上次分析 → 目前分析"],
+  "{0}/{1} → {2}/{3} matched · {4}% → {5}% weighted coverage": ["匹配 {0}/{1} → {2}/{3} 项 · 加权覆盖率 {4}% → {5}%", "比對 {0}/{1} → {2}/{3} 項 · 加權涵蓋率 {4}% → {5}%"],
+  "Both counts describe detected wording. Review the matching sentences before accepting an edit.": ["两组数字描述检测到的措辞。接受修改前，请核对匹配句子。", "兩組數字描述偵測到的措辭。接受修改前，請核對比對句子。"],
+  "Clear comparison": ["清除比较", "清除比較"],
+
 } as const satisfies ProjectCopyTable;

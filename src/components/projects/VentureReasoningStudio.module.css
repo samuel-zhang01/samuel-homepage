@@ -1663,3 +1663,16 @@
 @container (max-width: 620px) {
   .viewTabs strong, .viewTabs small { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
 }
+.cashReplay { padding: 16px; border: 1px solid var(--s7-edge); background: var(--s7-paper); }
+.cashReplay h3 { margin: 0; font-size: var(--s7-heading); }
+.cashReplay > p { margin: 8px 0 14px; font-size: var(--s7-small); line-height: 1.6; }
+.cashActions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.cashActions button { min-height: 44px; white-space: normal; }
+.cashChart { margin: 0; }
+.cashChart svg { display: block; width: 100%; height: auto; max-height: 210px; border: 1px solid var(--s7-edge); background: var(--s7-paper); }
+.cashChart figcaption { margin-top: 6px; color: var(--s7-muted); font-size: var(--s7-small); line-height: 1.6; }
+.cashResults { display: grid; gap: 6px; margin-top: 12px; font-size: var(--s7-small); line-height: 1.6; }
+.cashResults strong { font-size: var(--s7-ui); }
+.cashDetails { padding: 10px; border: 1px solid var(--s7-edge); background: var(--s7-paper); }
+.cashDetails summary { min-height: 44px; cursor: pointer; font-weight: bold; align-content: center; }
+.cashDetails summary:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }

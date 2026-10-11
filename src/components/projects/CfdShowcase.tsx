@@ -25,8 +25,8 @@ export function CfdShowcase() {
       <section className={styles.projectPurpose} aria-labelledby="cfd-purpose">
         <span>My fluid-prediction experiments</span>
         <h3 id="cfd-purpose">Can a neural network predict the next flow field?</h3>
-        <p>I trained Fourier, graph and U-Net models to predict velocity and pressure around a cylinder. A full fluid simulation is expensive; I wanted to understand which representations could learn its changing flow.</p>
-        <p><strong>Start here:</strong> press Play flow and follow the alternating wake behind the cylinder. These are saved predictions from my graph model; the other tabs explain my results and model choices.</p>
+        <p>I trained three neural networks to predict flow around a cylinder, exploring alternatives to an expensive simulation.</p>
+
       </section>
       <div className={styles.viewSwitch} role="group" aria-label="Neural CFD project view">
         <div><span>Explore</span><strong>{views.find((item) => item.id === view)?.detail}</strong></div>

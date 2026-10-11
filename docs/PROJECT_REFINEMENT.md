@@ -41,7 +41,7 @@ Goal: remove decorative vertical accent bars, shorten product openings, show the
 - [x] VideoMate: selected queues, inspection coverage, repair options, animated verification and migration policy.
 - [x] YASA: real guest flow, host/timezone/question choices and local booking lifecycle.
 - [x] Product showcases: authentic UI screenshots or explanatory animations, concise core features.
-- [ ] ML/AI batches: inspect source code, enrich purposeful experiments and review changed states.
+- [x] ML/AI batches: inspect source code, enrich purposeful experiments and review changed states.
 - [ ] Independent adversarial desktop/phone review at 9/10 or better; retain rejected rounds.
 - [ ] Commit and push validated checkpoints, then complete release verification and handoff.
 

@@ -520,8 +520,23 @@ export function InsuranceMatchingDemo() {
   const [selectedId, setSelectedId] = useState("market-01");
   const [reviewReason, setReviewReason] = useState("Broker context requires discussion");
   const [pinned, setPinned] = useState<{ scenarioId: string; candidateId: string; reason: string } | null>(null);
+  const [exampleChecks, setExampleChecks] = useState<Record<string, Partial<Record<PillarKey | "authority", boolean>>>>({});
 
-  const scenario = SCENARIOS.find((item) => item.id === scenarioId) ?? SCENARIOS[0];
+  const baseScenario = SCENARIOS.find((item) => item.id === scenarioId) ?? SCENARIOS[0];
+  const scenario = useMemo(() => ({ ...baseScenario, candidates: baseScenario.candidates.map(candidate => {
+    const checks = exampleChecks[`${baseScenario.id}:${candidate.id}`] ?? {};
+    return { ...candidate,
+      authorityVerified: candidate.authorityVerified || Boolean(checks.authority),
+      signals: { ...candidate.signals,
+        appetite: candidate.signals.appetite ?? (checks.appetite ? 64 : null),
+        quality: candidate.signals.quality ?? (checks.quality ? 72 : null),
+      },
+      evidence: { ...candidate.evidence,
+        appetite: candidate.signals.appetite === null && checks.appetite ? "Example follow-up: dated participation records now support a historical lead-share check. This does not establish current appetite." : candidate.evidence.appetite,
+        quality: candidate.signals.quality === null && checks.quality ? "Example follow-up: a wording comparison for this market is now available. A broker still reviews the clauses." : candidate.evidence.quality,
+      },
+    };
+  }) }), [baseScenario, exampleChecks]);
   const comparison = SCENARIOS.find((item) => item.id === comparisonId) ?? SCENARIOS[1];
   const totalWeight = PILLARS.reduce((sum, pillar) => sum + weights[pillar.key], 0);
 
@@ -579,7 +594,7 @@ export function InsuranceMatchingDemo() {
       title="Compare insurers for a lead role"
       status={workbenchMode === "evidence" ? "Current design · broker order" : "Retired composite · what-if"}
       purpose="I built a comparison workflow for brokers choosing an insurer to lead an insurance placement. It puts trading history, past lead roles and policy wording side by side."
-      tryThis="Inspect Market 06. See which information is missing and why it cannot yet be pinned for broker review."
+      tryThis="Inspect Market 06 and complete its example checks. Watch the missing fields fill in while the authority gate remains active; then pin it for broker review."
       watchFor="Missing information stays visible rather than becoming a low score. The broker can compare suitable candidates before making the final choice."
       statusTone="safe"
       className={styles.window}
@@ -595,8 +610,7 @@ export function InsuranceMatchingDemo() {
         <div>
           <strong>Try the workflow with fictional insurers.</strong>
           <p>
-            Market names, risks, values, thresholds, weights and explanations below are synthetic. The what-if
-            composite illustrates sensitivity to weights; it is separate from the evidence view, which preserves broker order.
+            Fictional insurers and check results. Load missing records, compare the three views and decide what needs broker review.
           </p>
         </div>
       </aside>
@@ -699,7 +713,6 @@ export function InsuranceMatchingDemo() {
             <div className={styles.currentModelNote} role="note">
               <span>No aggregate</span>
               <strong>Three checks describe each insurer separately.</strong>
-              <p>I keep the broker’s order and show what is known about each insurer. A missing check stays missing.</p>
             </div>
           )}
 
@@ -884,6 +897,17 @@ export function InsuranceMatchingDemo() {
                 <option value="Specialist wording review requested">Specialist wording review requested</option>
               </ClassicSelect>
             </label>
+            {workbenchMode === "evidence" && <details className={styles.exampleChecks} open={!selected.eligible || Object.values(exampleChecks[`${scenario.id}:${selected.id}`] ?? {}).some(Boolean)}>
+              <summary>Complete example checks</summary>
+              <p>These buttons load fictional follow-up records. Each check stays separate; no combined suitability score is created.</p>
+              <div>
+                {baseScenario.candidates.find(candidate => candidate.id === selected.id)?.signals.appetite === null && <MacButton disabled={Boolean(exampleChecks[`${scenario.id}:${selected.id}`]?.appetite)} onClick={() => setExampleChecks(previous => ({ ...previous, [`${scenario.id}:${selected.id}`]: { ...previous[`${scenario.id}:${selected.id}`], appetite: true } }))}>Load example lead history</MacButton>}
+                {baseScenario.candidates.find(candidate => candidate.id === selected.id)?.signals.quality === null && <MacButton disabled={Boolean(exampleChecks[`${scenario.id}:${selected.id}`]?.quality)} onClick={() => setExampleChecks(previous => ({ ...previous, [`${scenario.id}:${selected.id}`]: { ...previous[`${scenario.id}:${selected.id}`], quality: true } }))}>Load example wording comparison</MacButton>}
+                {!baseScenario.candidates.find(candidate => candidate.id === selected.id)?.authorityVerified && <MacButton disabled={Boolean(exampleChecks[`${scenario.id}:${selected.id}`]?.authority)} onClick={() => setExampleChecks(previous => ({ ...previous, [`${scenario.id}:${selected.id}`]: { ...previous[`${scenario.id}:${selected.id}`], authority: true } }))}>Confirm example authority check</MacButton>}
+                <MacButton disabled={!Object.values(exampleChecks[`${scenario.id}:${selected.id}`] ?? {}).some(Boolean)} onClick={() => { setExampleChecks(previous => ({ ...previous, [`${scenario.id}:${selected.id}`]: {} })); if (pinned?.scenarioId === scenario.id && pinned.candidateId === selected.id) setPinned(null); }}>Undo example checks</MacButton>
+              </div>
+              <p role="status">{selected.eligible ? "The example checks allow broker review. They do not choose the insurer." : "Missing checks still block the review pin."}</p>
+            </details>}
             <MacButton
               primary
               onClick={() => togglePinned(selected)}

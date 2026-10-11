@@ -83,6 +83,10 @@ runInNewContext(component.outputText, {
     if (name === "./ProjectTranslationBoundary") return { useProjectLocale: () => "en-GB", ProjectCopy: (props) => props.children };
     if (name === "./copy/mriCopy") return { mriCopy: {} };
     if (name === "./MathEquation") return { MathEquation: (props) => React.createElement("math", props) };
+    // This harness invokes only UncertaintyRankingExperiment. The saved-image
+    // viewer has its own rendered-locale and real-browser checks; it is unrelated
+    // to the uncertainty arithmetic exercised here.
+    if (name === "./MriRecordedComparison") return { MriRecordedComparison: () => null };
     if (name === "./SourceExperiments" || name === "./DemoChrome") return {};
     if (name.endsWith(".module.css")) return { __esModule: true, default: new Proxy({}, { get: (_, key) => key }) };
     return require(name);

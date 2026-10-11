@@ -9,8 +9,8 @@
  */
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFileSync, lstatSync, readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { readFileSync, lstatSync, readdirSync, existsSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { createRequire } from "node:module";
 import { runInNewContext } from "node:vm";
 import { scientificMedia } from "./fixtures/scientific-media.mjs";
@@ -155,11 +155,22 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
     if (expandChildren && typeof node.type === "function") return React.cloneElement(node, {}, resolveCopyScopes(node.type(node.props)));
     return React.cloneElement(node, {}, resolveCopyScopes(node.props.children));
   }
-  const exports = {};
-  runInNewContext(body, {
-    document,
-    module: { exports }, exports,
-    require(name) {
+  const dependencyCache = new Map();
+  function loadDependency(absolute) {
+    if (dependencyCache.has(absolute)) return dependencyCache.get(absolute);
+    const evaluated = { exports: {} };
+    dependencyCache.set(absolute, evaluated.exports);
+    const output = ts.transpileModule(readFileSync(absolute, "utf8"), {
+      fileName: absolute,
+      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
+    }).outputText;
+    runInNewContext(output, {
+      module: evaluated, exports: evaluated.exports,
+      require: (name) => resolveDependency(name, absolute), document,
+    }, { filename: absolute });
+    return evaluated.exports;
+  }
+  function resolveDependency(name, importer = sourcePath) {
       if (name === "./PlotPanHint") {
         const hint = { exports: {} };
         runInNewContext(compiledPanHint, { module: hint, exports: hint.exports, require(dependency) {
@@ -184,8 +195,21 @@ function harness(componentName, body = compiled, locale = "en-GB", expandChildre
       if (name.endsWith("DemoChrome")) return { DemoWindow: "section", MacButton: "button" };
       if (name.endsWith("ClassicSelect")) return { __esModule: true, default: "select" };
       if (name.endsWith(".module.css")) return { __esModule: true, default: new Proxy({}, { get: (_, key) => String(key) }) };
+      // Execute the real helper calculation instead of substituting a result.
+      // Presentation adapters above stay shared across the recursive graph.
+      if (name.startsWith("@/") || name.startsWith(".")) {
+        const base = name.startsWith("@/") ? resolve(root, "src", name.slice(2)) : resolve(dirname(importer), name);
+        const absolute = [base, `${base}.ts`, `${base}.tsx`].find((candidate) => existsSync(candidate) && lstatSync(candidate).isFile());
+        assert.ok(absolute, `Unresolved scientific dependency ${name} from ${importer}`);
+        return loadDependency(absolute);
+      }
       return require(name);
-    },
+  }
+  const exports = {};
+  runInNewContext(body, {
+    document,
+    module: { exports }, exports,
+    require: resolveDependency,
     window: {
       Image: class { set src(value) { assert.ok(expected.has(value.slice(1)), `Unreviewed frame request ${value}`); requests.push(value); this.onload?.(); } },
       setInterval(callback) { const id = nextTimer++; timers.set(id, callback); return id; },

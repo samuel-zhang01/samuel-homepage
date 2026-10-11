@@ -1626,3 +1626,29 @@
 .opeBadge {
   font-family: var(--s7-font-mono);
 }
+
+.researchBanner { display: block; background: var(--s7-paper); color: var(--s7-ink); border: 1px solid var(--s7-edge); box-shadow: var(--s7-relief-raised); }
+.researchBanner summary { font-weight: bold; cursor: pointer; min-height: 24px; }
+.researchBanner .researchIcon { display: none; }
+.researchBanner[open] p { margin: 8px 0; }
+.researchBanner a { display: inline-flex; color: var(--s7-ink); background: var(--s7-raised); }
+.capacityExperiment { margin-bottom: 12px; padding: 14px; border: 1px solid var(--s7-edge); color: var(--s7-ink); background: var(--s7-paper); box-shadow: var(--s7-relief-raised); line-height: 1.5; }
+.capacityControls { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.capacityControls label { display: grid; grid-template-columns: 1fr auto; flex: 1 1 250px; gap: 6px; }
+.capacityControls input { grid-column: 1 / -1; width: 100%; min-height: 28px; accent-color: #565175; }
+.capacityControls output { font-family: var(--s7-font-mono); font-weight: bold; }
+.capacityFlow { display: flex; height: 20px; border: 1px solid #3c3c3c; background: #deded6; }
+.capacityFlow i { background: #387b73; transition: width 180ms ease; }
+.capacityFlow i + i { background: #8962b6; }
+.capacityFlow i + i + i { background: #d7bc77; }
+.capacityResults { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; margin: 10px 0; }
+.capacityResults article { display: grid; align-content: start; gap: 4px; padding: 10px; border: 1px solid #919187; background: #fffef8; }
+.capacityResults strong { font-family: var(--s7-font-mono); font-size: var(--s7-heading); }
+.capacityQueue { margin: 12px 0; }
+.capacityQueue > div { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.capacityQueue button { min-height: 32px; padding: 5px 8px; color: var(--s7-ink); border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); font-family: var(--s7-font-mono); cursor: pointer; }
+.capacityQueue button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
+@container (max-width: 680px) { .capacityResults { grid-template-columns: repeat(2,minmax(0,1fr)); } .capacityExperiment { padding: 10px; } }
+@media (prefers-reduced-motion: reduce) { .capacityFlow i { transition: none; } }
+.capacityExperiment .sectionHeading h3 { color: var(--s7-ink); }
+.capacityExperiment .sectionHeading > div > span { color: #555; }

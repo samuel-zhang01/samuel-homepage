@@ -2,6 +2,7 @@
 import { PlotPanHint } from "./PlotPanHint";
 import Image from "next/image";
 import { MriErrorExperiment } from "./SourceExperiments";
+import { MriRecordedComparison } from "./MriRecordedComparison";
 
 import { useId, useMemo, useState } from "react";
 import { mriUncertaintySample } from "@/lib/mriUncertainty";
@@ -1267,18 +1268,15 @@ function AuditView() {
 }
 
 function RecordedImagesView() {
-  return <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-recorded-heading">
-    <div className={styles.sectionLead}><div>
-      <span className={styles.kicker}>Saved study figure</span>
-      <h3 id="mri-recorded-heading">What I recovered from fewer MRI measurements</h3>
-      <p>Read left to right: the full reference, the image made from retained measurements alone, then my reconstructed image. At 4× and 8× undersampling, the lower row shows where each result differs from the reference.</p>
-    </div></div>
-    <figure className={styles.recordedFigure}>
+  return <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-label="My saved MRI results">
+    <MriRecordedComparison />
+    <details className={styles.recordedFigure}><summary>Original full comparison figure</summary>
+    <figure>
       <div className={styles.recordedScroll} role="region" tabIndex={0} aria-label="Recorded MRI reconstruction comparison">
         <Image unoptimized src="/projects/mri/media/recorded-reconstruction.webp" width={2200} height={948} alt="Saved cardiac MRI comparison: reference, zero-filled and reconstructed images at two acceleration factors, with error maps below." />
       </div>
       <figcaption>These are saved images from the IX-Medical-Imaging repository. The PSNR values belong to the pictured examples, not the 236-slice averages in the reconstruction controls. Original figure labels are in English.</figcaption>
-    </figure>
+    </figure></details>
     <div className={styles.recordedActions}>
       <a className="s7-button" href="/projects/mri/media/recorded-reconstruction.webp" target="_blank" rel="noopener noreferrer">Open full-size figure ↗</a>
       <a className="s7-button" href={`${REPOSITORY_URL.replace("/tree/", "/blob/")}/latex/figures/fig4_reconstruction_comparison.png`} target="_blank" rel="noopener noreferrer">View original source ↗</a>
@@ -1296,8 +1294,8 @@ export function MriTrustStudio() {
       appName="MRI reconstruction lab"
       title="Trustworthy MRI Reconstruction"
       status="Saved study results"
-      purpose="I built a model that reconstructs cardiac MRI from fewer measurements, then tested whether it preserves heart structures and recognises when it may be wrong."
-      tryThis="Compare the full reference with my reconstructed image, then inspect the error map below. Open Reconstruct to compare 4× and 8× undersampling."
+      purpose="I reconstructed cardiac MRI from fewer measurements and checked which heart details survived."
+      tryThis="Drag the image divider, choose 8× undersampling and inspect Where the errors remain."
       watchFor="Keeping fewer measurements can lose heart detail. Compare the reconstruction with the full reference, especially around tissue boundaries."
       statusTone="safe"
       className={styles.studio}

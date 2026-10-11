@@ -88,5 +88,13 @@ export const coverageShiftCopy = {
   "This example shows how population change affects coverage. The saved coursework results above describe my separate model evaluation.": [
     "这个示例说明总体变化如何影响覆盖率。上方保存的课程研究结果描述了我另一次模型评估。",
     "這個範例說明母體變化如何影響涵蓋率。上方儲存的課程研究結果描述了我另一次模型評估。"
-  ]
+  ],
+  "Watch the population move": ["观看人群变化", "觀看群體變化"],
+  "Pause experiment": ["暂停实验", "暫停實驗"],
+  "Step shift +0.25": ["偏移前进一步 +0.25", "偏移前進一步 +0.25"],
+  "Save current comparison": ["保存当前比较", "儲存目前比較"],
+  "Saved comparison: {0} / {1} covered at shift +{2}. Current batch: {3} / {1}.": ["保存的比较：偏移 +{2} 时覆盖 {0} / {1}。当前批次：{3} / {1}。", "儲存的比較：偏移 +{2} 時涵蓋 {0} / {1}。目前批次：{3} / {1}。"],
+  "The calibrated interval is unchanged.": ["校准区间没有改变。", "校準區間沒有改變。"],
+  "The requested coverage changed, so the calibrated radius also changed.": ["要求的覆盖率改变，因此校准半径也改变了。", "要求的涵蓋率改變，因此校準半徑也改變了。"],
+  "Circles: covered. Crosses: outside the interval.": ["圆点：被区间覆盖。叉号：位于区间外。", "圓點：被區間涵蓋。叉號：位於區間外。"],
 } as const satisfies ProjectCopyTable;

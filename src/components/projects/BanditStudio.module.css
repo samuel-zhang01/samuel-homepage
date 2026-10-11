@@ -629,3 +629,16 @@
 .transport .stepButton:disabled, .transport .stepButton[aria-disabled="true"] {
   cursor: default;
 }
+
+.transport { padding: 0; margin: 12px 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.transport button:last-child, .transport .stepButton { grid-column: auto; }
+.choiceExplanation { margin: 14px 0; padding: 12px; border: 1px solid var(--s7-ink); background: var(--s7-paper); }
+.choiceExplanation h4 { margin: 0 0 6px; font: var(--s7-ui) var(--s7-font-ui); }
+.choiceExplanation p { margin: 6px 0; font: var(--s7-small)/1.5 var(--s7-font-ui); }
+.choiceScores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.choiceScores > div { display: grid; gap: 3px; padding: 8px; border: 1px solid var(--s7-border); }
+.choiceScores strong { font: var(--s7-ui) var(--s7-font-mono); }
+.choiceScores small { font-size: var(--s7-small); }
+.choiceScores .selectedScore { outline: 2px solid var(--s7-ink); outline-offset: -2px; background: var(--s7-raised); }
+.selectField > small { font: var(--s7-small)/1.45 var(--s7-font-ui); }
+@media (max-width: 600px) { .transport { grid-template-columns: repeat(2, minmax(0, 1fr)); } .choiceScores { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

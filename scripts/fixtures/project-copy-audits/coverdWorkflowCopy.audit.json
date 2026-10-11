@@ -1,0 +1,8 @@
+{
+  "dictionary": "coverdWorkflowCopy.ts",
+  "exportName": "coverdWorkflowCopy",
+  "sources": [
+    "src/components/projects/CoverdWorkflow.tsx"
+  ],
+  "identities": {}
+}

@@ -2,7 +2,8 @@
   "dictionary": "mriCopy.ts",
   "exportName": "mriCopy",
   "sources": [
-    "src/components/projects/MriTrustStudio.tsx"
+    "src/components/projects/MriTrustStudio.tsx",
+    "src/components/projects/MriRecordedComparison.tsx"
   ],
   "identities": {
     "MC Dropout": "Established method/metric acronym or numerical mathematical label, preserved across locales.",
@@ -29,6 +30,7 @@
     "dec1": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
     "dec2": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
     "dec3": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
-    "dec4": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately."
+    "dec4": "Structural architecture identifier used by the model; its displayed descriptive label is translated separately.",
+    "dB": "Decibel unit used by the original PSNR metric."
   }
 }

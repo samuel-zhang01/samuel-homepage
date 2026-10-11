@@ -872,5 +872,26 @@ export const deferralRiskStudioCopy = {
     "覆蓋率與尾部風險呈相反變化趨勢；所有輸出來自確定性的虛構索賠。"
   ],
   "Worst losses": ["最严重的损失", "最嚴重的損失"],
-  "Inspect the hardest cases": ["查看最难处理的案例", "查看最難處理的案例"]
+  "Inspect the hardest cases": ["查看最难处理的案例", "查看最難處理的案例"],
+  "Set the review desk to 20 slots. Watch flagged claims wait for a person instead of being forced back into automation.": ["把复核席位设为 20，观察已标记索赔等待人工处理，而不会被迫交回自动系统。", "把複核席位設為 20，觀察已標記索賠等待人工處理，而不會被迫交回自動系統。"],
+  "flagged for review": ["件标记为待复核", "件標記為待複核"],
+  "Full-review accuracy": ["全部复核后的准确率", "全部複核後的準確率"],
+  "Assumes every flagged claim receives its simulated review": ["假设每件标记索赔都完成模拟复核", "假設每件標記索賠都完成模擬複核"],
+  "A browser extension of the research policy": ["研究策略的浏览器延伸实验", "研究策略的瀏覽器延伸實驗"],
+  "What if the investigator’s desk is full?": ["如果调查员的复核席位已满呢？", "如果調查員的複核席位已滿呢？"],
+  "Restore full review": ["恢复全部复核", "恢復全部複核"],
+  "Available review slots": ["可用复核席位", "可用複核席位"],
+  "Only 20 review slots": ["仅 20 个复核席位", "僅 20 個複核席位"],
+  "Add 10 review slots": ["增加 10 个复核席位", "增加 10 個複核席位"],
+  "Reviewed": ["已复核", "已複核"],
+  "Awaiting a person": ["等待人工处理", "等待人工處理"],
+  "Accuracy among resolved cases": ["已完成案件的准确率", "已完成案件的準確率"],
+  "correct /": ["件正确／", "件正確／"],
+  "resolved": ["件已完成", "件已完成"],
+  "{0} correct / {1} resolved": ["{0} 件正确／{1} 件已完成", "{0} 件正確／{1} 件已完成"],
+  "Pending claims have no final decision. I exclude them from resolved-case accuracy; this is not full-system accuracy.": ["待处理索赔没有最终决定。我将它们排除在已完成案件准确率之外；这不是全系统准确率。", "待處理索賠沒有最終決定。我將它們排除在已完成案件準確率之外；這不是全系統準確率。"],
+  "Every claim has a decision. Resolved-case accuracy now equals the full-review benchmark below.": ["每件索赔都有了决定。已完成案件准确率现在等于下方全部复核的基准。", "每件索賠都有了決定。已完成案件準確率現在等於下方全部複核的基準。"],
+  "Next claims awaiting review": ["接下来等待复核的索赔", "接下來等待複核的索賠"],
+  "Reviewed claims to inspect": ["可查看的已复核索赔", "可查看的已複核索賠"],
+  "I prioritise the highest entropy, then the lowest confidence. This queue rule and capacity limit are a browser experiment; the paper assumes all deferred claims receive a simulated investigator decision.": ["我先处理熵最高的案件，再按置信度从低到高排序。这个队列规则和容量限制属于浏览器实验；论文假设所有转交索赔都会得到模拟调查员的决定。", "我先處理熵最高的案件，再按信心度從低到高排序。這個佇列規則和容量限制屬於瀏覽器實驗；論文假設所有轉交索賠都會得到模擬調查員的決定。"]
 } satisfies ProjectCopyTable;

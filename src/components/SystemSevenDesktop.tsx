@@ -113,6 +113,8 @@ const ProductivityApps = dynamic(() => import("@/components/ProductivityApps"), 
 
 const OrbitalLab = dynamic(() => import("./OrbitalLab"), { loading: ClassicModuleLoading });
 
+const CoverdWorkflow = dynamic(() => import("./projects/CoverdWorkflow"), { loading: ClassicModuleLoading });
+
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
   loading: function ProjectExplorerLoading() {
     const locale = useSystemLocale();
@@ -814,14 +816,6 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
 }
 
 function CoverdApp({ locale }: { locale: Locale }) {
-  const pipeline = [
-    ["01", "Connect the ATS", "Read applications from the team’s existing applicant tracking system (ATS)."],
-    ["02", "Read every application", "Apply the same structured review to every candidate without reviewer-fatigue shortcuts."],
-    ["03", "Separate the evidence", "Review skills, experience, domain knowledge, trajectory, communication and culture separately, retaining the reasons for each assessment."],
-    ["04", "Enrich when useful", "Use voice interviews, portfolio review or follow-ups when the existing record leaves material gaps."],
-    ["05", "Shortlist with reasons", "Return a reviewable pipeline; recruiters examine uncertainty and make the final decision."],
-  ];
-
   return (
     <TranslationBoundary locale={locale}><div className="coverd-app">
       <header className="coverd-hero">
@@ -852,39 +846,7 @@ function CoverdApp({ locale }: { locale: Locale }) {
         </div>
       </header>
 
-      <section className="coverd-section coverd-section--pipeline">
-        <div className="coverd-section__heading">
-          <span>OPERATING MODEL</span>
-          <h4>From application volume to a reasoned shortlist.</h4>
-        </div>
-        <div className="coverd-pipeline">
-          {pipeline.map(([number, title, copy]) => (
-            <article key={number}>
-              <b>{number}</b>
-              <div><h5>{title}</h5><p>{copy}</p></div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="coverd-ethics">
-        <div className="coverd-ethics__intro">
-          <span className="eyebrow">RESPONSIBLE BY DESIGN</span>
-          <h4>Hiring intelligence people can inspect.</h4>
-          <p>Recruiters can inspect the evidence behind each assessment and review uncertain cases before deciding.</p>
-        </div>
-        <div className="coverd-principles">
-          <article><strong>Every score has a reason</strong><p>Recruiters receive the evidence, reasoning and supporting record behind each assessment.</p></article>
-          <article><strong>Candidate agency matters</strong><p>The public product commits to evaluation visibility, correction requests and consent withdrawal.</p></article>
-          <article><strong>Enrichment is purposeful</strong><p>Voice interviews and follow-ups should address a specific evidence gap and earn their place in the workflow.</p></article>
-          <article><strong>Uncertainty triggers review</strong><p>Low-confidence or conflicting evidence is routed to human attention, with the uncertainty left visible.</p></article>
-          <article><strong>Consistency is testable</strong><p>Specialist dimensions, audit trails and fairness testing give recruiters a reviewable process.</p></article>
-          <article><strong>Recruiters remain accountable</strong><p>AI carries repetition and context; people retain the judgement and responsibility.</p></article>
-        </div>
-        <div className="coverd-values">
-          {["ATS-CONNECTED", "EVIDENCE-LED", "VOICE-ENRICHED", "HUMAN-OWNED", "CANDIDATE-FIRST"].map((value) => <span key={value}>{value}</span>)}
-        </div>
-      </section>
+      <CoverdWorkflow locale={locale} />
     </div></TranslationBoundary>
   );
 }
@@ -2306,6 +2268,18 @@ export default function SystemSevenDesktop({
       setMobileGuide(true);
     }
   }, []);
+
+  useEffect(() => {
+    // A phone guide hidden by the desktop breakpoint must release its modal
+    // input lock when the window grows or a device rotates.
+    if (!mobileGuide) return;
+    const releaseHiddenGuide = () => {
+      if (!isCompactCanvasViewport()) setMobileGuide(false);
+    };
+    releaseHiddenGuide();
+    window.addEventListener("resize", releaseHiddenGuide);
+    return () => window.removeEventListener("resize", releaseHiddenGuide);
+  }, [mobileGuide]);
 
   useEffect(() => {
     // The guide is not mounted while the boot screen owns the page. Wait for

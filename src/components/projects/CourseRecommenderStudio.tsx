@@ -4,7 +4,7 @@ import { MathEquation } from "./MathEquation";
 
 import ClassicSelect from "../ClassicSelect";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 import { DemoWindow } from "./DemoChrome";
 import styles from "./CourseRecommenderStudio.module.css";
@@ -311,6 +311,8 @@ function PreferenceControls({
   weights: Weights;
   setWeights: (weights: Weights) => void;
 }) {
+  const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, courseCopy, source);
   return (
     <ProjectCopy copy={courseCopy}><section className={`${styles.panel} ${styles.controlsPanel}`} aria-labelledby="course-inputs-title">
       <div className={styles.panelHeading}>
@@ -336,9 +338,9 @@ function PreferenceControls({
       </fieldset>
 
       <div className={styles.selectGrid}>
-        <label><span>Preferred difficulty</span><ClassicSelect value={preferences.difficulty} onChange={(event) => setPreferences({ ...preferences, difficulty: event.target.value as Difficulty })}><option value="Any">Any</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></ClassicSelect></label>
-        <label><span>Time commitment</span><ClassicSelect value={preferences.time} onChange={(event) => setPreferences({ ...preferences, time: event.target.value as TimeCommitment })}><option value="Any">Any</option><option value="part-time">Part-time</option><option value="full-time">Full-time</option><option value="flexible">Flexible</option></ClassicSelect></label>
-        <label><span>Budget range</span><ClassicSelect value={preferences.budget} onChange={(event) => setPreferences({ ...preferences, budget: event.target.value as Budget })}><option value="Any">Any</option><option value="free">Free</option><option value="under-100">Under $100</option><option value="100-500">$100–$500</option><option value="over-500">Over $500</option></ClassicSelect></label>
+        <label><span>Preferred difficulty</span><ClassicSelect aria-label={t("Preferred difficulty")} value={preferences.difficulty} onChange={(event) => setPreferences({ ...preferences, difficulty: event.target.value as Difficulty })}><option value="Any">{t("Any")}</option><option value="Beginner">{t("Beginner")}</option><option value="Intermediate">{t("Intermediate")}</option><option value="Advanced">{t("Advanced")}</option></ClassicSelect></label>
+        <label><span>Time commitment</span><ClassicSelect aria-label={t("Time commitment")} value={preferences.time} onChange={(event) => setPreferences({ ...preferences, time: event.target.value as TimeCommitment })}><option value="Any">{t("Any")}</option><option value="part-time">{t("Part-time")}</option><option value="full-time">{t("Full-time")}</option><option value="flexible">{t("Flexible")}</option></ClassicSelect></label>
+        <label><span>Budget range</span><ClassicSelect aria-label={t("Budget range")} value={preferences.budget} onChange={(event) => setPreferences({ ...preferences, budget: event.target.value as Budget })}><option value="Any">{t("Any")}</option><option value="free">{t("Free")}</option><option value="under-100">{t("Under $100")}</option><option value="100-500">{t("$100–$500")}</option><option value="over-500">{t("Over $500")}</option></ClassicSelect></label>
       </div>
 
       {mode === "source" ? (
@@ -414,6 +416,7 @@ function RecommendView({
   selectedId,
   setSelectedId,
   openExplain,
+  comparison,
 }: {
   preferences: Preferences;
   setPreferences: (preferences: Preferences) => void;
@@ -426,6 +429,7 @@ function RecommendView({
   selectedId: number;
   setSelectedId: (id: number) => void;
   openExplain: () => void;
+  comparison: ReactNode;
 }) {
   const candidateCount = mode === "source" ? COURSES.filter((course) => sourceEligible(course, preferences)).length : COURSES.length;
   const topMargin = ranking.length > 1 ? ranking[0].score - ranking[1].score : 0;
@@ -445,6 +449,7 @@ function RecommendView({
         </div>
         {mode === "source" && <div className={styles.sourceWarning}><strong>Not a match score.</strong> Preferences decide who remains; the source then gives each survivor a random number. Reasons do not contribute to that number.</div>}
         {mode === "adapted" && <div className={styles.adaptedNotice}><strong>Illustrative rubric, not an outcome model.</strong> Points expose declared preferences against six mock catalog rows. No completion, satisfaction or learning-impact data exist.</div>}
+        {comparison}
         <div className={styles.resultList}>
           {ranking.map((result, index) => <ResultCard result={result} rank={index + 1} mode={mode} selected={result.course.id === selectedId} onSelect={() => setSelectedId(result.course.id)} key={result.course.id} />)}
           {!ranking.length && (
@@ -695,8 +700,21 @@ export function CourseRecommenderStudio() {
   const [weights, setWeights] = useState<Weights>(DEFAULT_WEIGHTS);
   const [seed, setSeed] = useState(4);
   const [selectedId, setSelectedId] = useState(2);
+  const [saved, setSaved] = useState<{ mode: ModelMode; preferences: Preferences; weights: Weights; seed: number; ranking: ScoredCourse[] } | null>(null);
   const ranking = useMemo(() => rankCourses(mode, preferences, weights, seed), [mode, preferences, seed, weights]);
+  const allRanking = useMemo(() => mode === "source" ? sourceReplayPool(preferences, seed) : rankAllAdapted(preferences, weights), [mode, preferences, seed, weights]);
   const effectiveSelected = ranking.some((result) => result.course.id === selectedId) ? selectedId : (ranking[0]?.course.id ?? selectedId);
+  const comparison = saved ? <section className={styles.rankingComparison} aria-labelledby="ranking-comparison-title">
+        <h3 id="ranking-comparison-title">What moved since you saved?</h3>
+        <p>Positions cover all six sample courses. The first four form the shortlist; the original model can filter courses out.</p>
+        <div className={styles.savedModel}><span>Saved: {saved.mode === "source" ? "Original random ranking" : "Weighted rubric"}</span><span>Now: {mode === "source" ? "Original random ranking" : "Weighted rubric"}</span></div>
+        <ol className={styles.rankingMovement}>{COURSES.map(course => {
+          const oldIndex = saved.ranking.findIndex(item => item.course.id === course.id);
+          const newIndex = allRanking.findIndex(item => item.course.id === course.id);
+          const movement = oldIndex < 0 && newIndex < 0 ? "Still filtered out" : oldIndex < 0 ? "Entered ranking" : newIndex < 0 ? "Filtered out" : newIndex < oldIndex ? `Up ${oldIndex - newIndex} ${oldIndex - newIndex === 1 ? "place" : "places"}` : newIndex > oldIndex ? `Down ${newIndex - oldIndex} ${newIndex - oldIndex === 1 ? "place" : "places"}` : "Same position";
+          return <li key={course.id}><strong>{course.title}</strong><span>Saved {oldIndex < 0 ? "—" : `#${oldIndex + 1}`} → Now {newIndex < 0 ? "—" : `#${newIndex + 1}`}</span><b>{movement}</b></li>;
+        })}</ol>
+      </section> : null;
 
   return (
     <ProjectCopy copy={courseCopy}><DemoWindow
@@ -704,7 +722,7 @@ export function CourseRecommenderStudio() {
       title="Explore learning preferences"
       status="Fictional course catalogue"
       purpose="I built a course finder to turn interests, skill level, time and budget into a manageable shortlist."
-      tryThis="Untick AI/ML and see which course moves to the top. Open Explain to see why the selected course earned its points."
+      tryThis="Save this ranking, then untick AI/ML. Compare which courses moved and open Explain to see the points behind a result."
       watchFor="Watch how changing weights alters the ranking and how each active preference contributes to the final score."
       statusTone="safe"
       className={styles.courseStudio}
@@ -715,12 +733,6 @@ export function CourseRecommenderStudio() {
         </>
       }
     >
-      <div className={styles.safetyBanner} role="note">
-        <span aria-hidden="true">✓</span>
-        <div><strong>Explore the reasons behind a recommendation</strong><p>Adjust the subject, difficulty, time and budget preferences. Compare the original filtering rules with a weighted rubric, then inspect the contributions behind each result.</p></div>
-        <span>FILTER · RANK · EXPLAIN</span>
-      </div>
-
       <ModelSwitch mode={mode} setMode={setMode} />
 
       <nav className={styles.viewTabs} aria-label="Course recommender views">
@@ -731,8 +743,14 @@ export function CourseRecommenderStudio() {
         ))}
       </nav>
 
+      <div className={styles.comparisonActions} role="group" aria-label="Keep a course ranking">
+        <button type="button" className="s7-button" onClick={() => setSaved({mode, preferences: {...preferences, categories: [...preferences.categories]}, weights: {...weights}, seed, ranking: allRanking})}>Save this ranking</button>
+        {saved ? <><button type="button" className="s7-button" onClick={() => { setMode(saved.mode); setPreferences({...saved.preferences, categories: [...saved.preferences.categories]}); setWeights({...saved.weights}); setSeed(saved.seed); setView("recommend"); }}>Restore saved preferences</button><button type="button" className="s7-button" onClick={() => setSaved(null)}>Clear comparison</button></> : <p>Keep a baseline before changing your priorities.</p>}
+      </div>
+
+
       <div className={styles.canvas}>
-        {view === "recommend" && <RecommendView preferences={preferences} setPreferences={setPreferences} mode={mode} seed={seed} setSeed={setSeed} weights={weights} setWeights={setWeights} ranking={ranking} selectedId={effectiveSelected} setSelectedId={setSelectedId} openExplain={() => setView("explain")} />}
+        {view === "recommend" && <RecommendView preferences={preferences} setPreferences={setPreferences} mode={mode} seed={seed} setSeed={setSeed} weights={weights} setWeights={setWeights} ranking={ranking} selectedId={effectiveSelected} setSelectedId={setSelectedId} openExplain={() => setView("explain")} comparison={comparison} />}
         {view === "explain" && <ExplainView preferences={preferences} weights={weights} mode={mode} seed={seed} selectedId={effectiveSelected} setSelectedId={setSelectedId} />}
         {view === "counterfactual" && <CounterfactualView preferences={preferences} weights={weights} selectedId={effectiveSelected} setSelectedId={setSelectedId} />}
         {view === "source" && <SourceMapView />}

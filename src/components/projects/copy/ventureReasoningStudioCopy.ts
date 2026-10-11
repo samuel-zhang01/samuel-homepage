@@ -1,6 +1,34 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const ventureReasoningStudioCopy = {
+  "Blue: current plan with the selected burn increase. Grey: saved plan at its saved burn. Dashed blue: future months.": ["蓝线：采用所选开支增幅的当前计划。灰线：采用保存时开支的已保存计划。蓝色虚线：未来月份。", "藍線：採用所選開支增幅的目前計畫。灰線：採用儲存時開支的已儲存計畫。藍色虛線：未來月份。"],
+  "Selected milestone · {0}": ["所选里程碑 · {0}", "所選里程碑 · {0}"],
+  "Choose the next milestone": ["选择下一个里程碑", "選擇下一個里程碑"],
+  "Selected milestone ·": ["所选里程碑 ·", "所選里程碑 ·"],
+  "Funding → reserve → milestone": ["融资 → 预留 → 里程碑", "融資 → 預留 → 里程碑"],
+  "Budget covers the milestone": ["预算覆盖里程碑", "預算涵蓋里程碑"],
+  "Funding gap": ["资金缺口", "資金缺口"],
+  "Budget calculation and planning questions": ["预算计算和规划问题", "預算計算與規劃問題"],
+  "About this example venture": ["关于这个示例企业", "關於這個範例企業"],
+
+  "Save the current plan, increase the burn and play the monthly budget. Compare when the operating cash runs out with the saved plan.": ["保存当前计划，提高开支，再播放每月预算。比较当前计划与已保存计划的运营现金何时耗尽。", "儲存目前計畫，提高開支，再播放每月預算。比較目前計畫與已儲存計畫的營運現金何時耗盡。"],
+
+  "Watch the budget reach the milestone": ["观察预算如何到达里程碑", "觀察預算如何到達里程碑"],
+  "The reserve stays protected. Month one pays the fixed milestone cost, then each month pays the operating burn.": ["预留资金保持不动。第一个月支付里程碑固定成本，然后每个月支付运营开支。", "預留資金保持不動。第一個月支付里程碑固定成本，然後每個月支付營運開支。"],
+  "Burn increase": ["开支增幅", "開支增幅"],
+  "Pause budget": ["暂停预算", "暫停預算"],
+  "Play budget": ["播放预算", "播放預算"],
+  "Next month": ["下个月", "下個月"],
+  "Restart budget": ["重新开始预算", "重新開始預算"],
+  "Save current plan for comparison": ["保存当前计划用于比较", "儲存目前計畫以供比較"],
+  "Cash remaining over the milestone horizon": ["里程碑期间的剩余现金", "里程碑期間的剩餘現金"],
+  "Blue: current plan with the selected burn increase. Grey: saved plan at its original burn. Dashed blue: future months.": ["蓝线：采用所选开支增幅的当前计划。灰线：采用原始开支的已保存计划。蓝色虚线：未来月份。", "藍線：採用所選開支增幅的目前計畫。灰線：採用原始開支的已儲存計畫。藍色虛線：未來月份。"],
+  "Month {0} · {1} remaining": ["第 {0} 个月 · 剩余 {1}", "第 {0} 個月 · 剩餘 {1}"],
+  "The operating budget has run out; the reserve has not been spent.": ["运营预算已耗尽；预留资金尚未支出。", "營運預算已耗盡；預留資金尚未支出。"],
+  "This is operating cash after the costs paid so far.": ["这是支付截至目前的成本后剩余的运营现金。", "這是支付截至目前的成本後剩餘的營運現金。"],
+  "Saved plan: {0} at the same month.": ["已保存计划：同月剩余 {0}。", "已儲存計畫：同月剩餘 {0}。"],
+  "The saved plan targets a different milestone. Compare its fixed cost and horizon before interpreting the gap.": ["已保存计划针对不同的里程碑。解释差异前，请比较其固定成本和期限。", "已儲存計畫針對不同的里程碑。解讀差異前，請比較其固定成本與期限。"],
+
   "Claim desk": [
     "主张工作台",
     "主張工作臺"
@@ -65,10 +93,7 @@ export const ventureReasoningStudioCopy = {
     "只有陈述",
     "只有陳述"
   ],
-  "A sentence exists, but no supporting artifact is attached.": [
-    "已有一句陈述，但尚未附上支持材料。",
-    "已有一句陳述，但尚未附上支持材料。"
-  ],
+  "A sentence exists, but no supporting artifact is attached.": ["已有一句陈述，但尚未附上支持材料。","已有一句陳述，但尚未附上支持材料。"],
   "SIGNAL": [
     "信号",
     "訊號"
@@ -161,10 +186,7 @@ export const ventureReasoningStudioCopy = {
     "提示词、输出与模型说明",
     "提示詞、輸出與模型說明"
   ],
-  "The submission retains the instruction, generated response and model identification as distinct artifacts with clear authorship boundaries.": [
-    "原始作品分别保留指令、生成回答和模型标识，明确不同内容的作者。",
-    "原始作品分別保留指令、生成回答和模型標識，明確不同內容的作者。"
-  ],
+  "The submission retains the instruction, generated response and model identification as distinct artifacts with clear authorship boundaries.": ["原始作品分别保留指令、生成回答和模型标识，明确不同内容的作者。","原始作品分別保留指令、生成回答和模型標識，明確不同內容的作者。"],
   "Source themes": [
     "原始主题",
     "原始主題"

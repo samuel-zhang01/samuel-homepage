@@ -7,6 +7,7 @@ import { deferralRiskStudioCopy } from "./copy/deferralRiskStudioCopy";
 import { MathEquation } from "./MathEquation";
 import { System7Icon } from "../System7Icon";
 
+import { allocateReview } from "@/lib/decisionExperiments";
 import { useMemo, useState, type CSSProperties } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
@@ -388,22 +389,22 @@ export function DeferralRiskStudio() {
       title="Fraud-risk deferral workbench"
       status={isReportedSettings ? "Paper point loaded" : "Synthetic policy active"}
       purpose="I designed a fraud-screening policy that can ask a human for help when the classifier is unsure, while keeping an eye on its worst mistakes."
-      tryThis="Raise the minimum classifier confidence. More uncertain claims should move from automatic decisions to human review."
+      tryThis="Set the review desk to 20 slots. Watch flagged claims wait for a person instead of being forced back into automation."
       watchFor="Review volume rises as automation coverage falls. Compare the remaining mistakes and worst-case risk; the adjustable desk uses fictional claims and a simulated investigator."
       statusTone="safe"
       className={styles.studio}
       footer={(
         <div className={styles.footerLine}>
           <span>1,000 fictional records · 200-row test bench · seed locked</span>
-          <span>{policyLabel(mode)} · {evaluation.retainedCount} automated / {evaluation.deferredCount} reviewed</span>
+          <span>{policyLabel(mode)} · {evaluation.retainedCount} automated / {evaluation.deferredCount} flagged for review</span>
         </div>
       )}
     >
-      <section className={styles.researchBanner} aria-label="Simulation assumptions">
+      <details className={styles.researchBanner}><summary>Why I let the model ask for help</summary>
         <div className={styles.researchIcon} aria-hidden="true"><System7Icon kind="book" /></div>
-        <div><strong>Why I let the model ask for help</strong><p>A missed fraudulent claim and a false accusation both have consequences. My study reached 89.5% system accuracy at 64% automation coverage with a simulated investigator. This desk lets you explore that trade-off; the research notes compare it with a simpler confidence-only policy.</p></div>
+        <div><p>A missed fraudulent claim and a false accusation both have consequences. My study reached 89.5% system accuracy at 64% automation coverage with a simulated investigator. This desk lets you explore that trade-off; the research notes compare it with a simpler confidence-only policy.</p></div>
         <a href={SOURCE_URL} target="_blank" rel="noreferrer">Read the research ↗</a>
-      </section>
+      </details>
 
       <nav className={styles.viewTabs} aria-label="Safe deferral studio views">
         {VIEWS.map((item) => (
@@ -421,6 +422,7 @@ export function DeferralRiskStudio() {
       </nav>
 
       <div className={styles.labCanvas}>
+        <ReviewCapacityExperiment evaluation={evaluation} onInspect={claimId => { setSelectedClaimId(claimId); setView("decisions"); }} />
         <section className={styles.policyPanel} aria-labelledby="policy-controls-title">
           <div className={styles.panelHeading}>
             <div>
@@ -524,9 +526,9 @@ export function DeferralRiskStudio() {
             <small>{evaluation.retainedCount} of {TEST_SIZE} claims automated</small>
           </article>
           <article className={styles.metricCard}>
-            <span>System accuracy</span>
+            <span>Full-review accuracy</span>
             <strong>{percent(evaluation.systemAccuracy)}</strong>
-            <small>Model + deterministic investigator outcomes</small>
+            <small>Assumes every flagged claim receives its simulated review</small>
           </article>
           <article className={styles.metricCard}>
             <span>Retained accuracy</span>
@@ -573,6 +575,23 @@ export function DeferralRiskStudio() {
       </div>
     </DemoWindow></ProjectCopy>
   );
+}
+
+
+function ReviewCapacityExperiment({ evaluation, onInspect }: { evaluation: Evaluation; onInspect: (id: string) => void }) {
+  const [capacity, setCapacity] = useState(200);
+  const allocation = useMemo(() => allocateReview(evaluation.deferred, capacity), [capacity, evaluation.deferred]);
+  const decided = evaluation.retainedCount + allocation.completed.length;
+  const correct = evaluation.retained.filter(claim => claim.modelCorrect).length + allocation.completed.filter(claim => claim.investigatorCorrect).length;
+  return <ProjectCopy copy={deferralRiskStudioCopy}><section className={styles.capacityExperiment} aria-labelledby="review-capacity-title">
+    <div className={styles.sectionHeading}><div><span>A browser extension of the research policy</span><h3 id="review-capacity-title">What if the investigator’s desk is full?</h3></div><MacButton onClick={() => setCapacity(200)}>Restore full review</MacButton></div>
+    <div className={styles.capacityControls}><label><span>Available review slots</span><output>{capacity}</output><input type="range" aria-label="Available review slots" min={0} max={200} step={1} value={capacity} onChange={event => setCapacity(Number(event.target.value))} /></label><MacButton onClick={() => setCapacity(20)}>Only 20 review slots</MacButton><MacButton onClick={() => setCapacity(current => Math.min(200, current + 10))}>Add 10 review slots</MacButton></div>
+    <div className={styles.capacityFlow} aria-hidden="true"><i style={{width:`${evaluation.retainedCount / TEST_SIZE * 100}%`}} /><i style={{width:`${allocation.completed.length / TEST_SIZE * 100}%`}} /><i style={{width:`${allocation.pending.length / TEST_SIZE * 100}%`}} /></div>
+    <div className={styles.capacityResults} aria-live="polite"><article><span>Model decides</span><strong>{evaluation.retainedCount}</strong></article><article><span>Reviewed</span><strong>{allocation.completed.length}</strong></article><article><span>Awaiting a person</span><strong>{allocation.pending.length}</strong></article><article><span>Accuracy among resolved cases</span><strong>{decided ? percent(correct / decided) : "—"}</strong><small>{correct} correct / {decided} resolved</small></article></div>
+    <p>{allocation.pending.length ? "Pending claims have no final decision. I exclude them from resolved-case accuracy; this is not full-system accuracy." : "Every claim has a decision. Resolved-case accuracy now equals the full-review benchmark below."}</p>
+    <div className={styles.capacityQueue}><strong>{allocation.pending.length ? "Next claims awaiting review" : "Reviewed claims to inspect"}</strong><div>{(allocation.pending.length ? allocation.pending : allocation.completed).slice(0, 8).map(claim => <button key={claim.id} type="button" onClick={() => onInspect(claim.id)}>{claim.id}</button>)}</div></div>
+    <small>I prioritise the highest entropy, then the lowest confidence. This queue rule and capacity limit are a browser experiment; the paper assumes all deferred claims receive a simulated investigator decision.</small>
+  </section></ProjectCopy>;
 }
 
 function DecisionDesk({

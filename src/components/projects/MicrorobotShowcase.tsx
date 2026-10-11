@@ -28,8 +28,8 @@ export function MicrorobotShowcase({ locale = "en-GB" }: { locale?: Locale }) {
         <section className={styles.projectPurpose} aria-labelledby="microrobot-purpose">
           <span>My microscope-image study</span>
           <h3 id="microrobot-purpose">Which way is a microrobot pointing, and how deep is it?</h3>
-          <p>A single microscope image hides depth and orientation. I trained five image models on 2,000 grayscale images to recognise 40 pitch-roll poses and estimate normalised depth, so a robot could eventually be tracked and controlled from its image.</p>
-          <p><strong>Start here:</strong> switch between Pose and Depth, then move the overlay slider. The same image serves two different tasks; the warm regions show where each trained model responds.</p>
+          <p>I trained five image models to estimate a tiny robot’s tilt and depth from microscope images, towards tracking it during an experiment.</p>
+
         </section>
         <div className={styles.viewSwitch} role="group" aria-label="Microrobot project view">
           <div><span>Explore</span><strong>{views.find((item) => item.id === view)?.detail}</strong></div>

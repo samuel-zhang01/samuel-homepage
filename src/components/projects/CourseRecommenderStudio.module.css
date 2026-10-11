@@ -1710,3 +1710,15 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.comparisonActions { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 0; align-items: center; }
+.comparisonActions p { margin: 0; font: var(--s7-small)/1.4 var(--s7-font-ui); }
+.rankingComparison { padding: 12px; margin-bottom: 14px; border: 1px solid var(--s7-ink); background: var(--s7-paper); font: var(--s7-ui)/1.5 var(--s7-font-ui); }
+.rankingComparison h3 { margin: 0; font-size: var(--s7-ui); font-weight: 400; }
+.rankingComparison p { margin: 7px 0; }
+.savedModel { display: flex; gap: 12px; flex-wrap: wrap; font-size: var(--s7-small); }
+.rankingMovement { margin: 10px 0 0; padding: 0; list-style: none; }
+.rankingMovement li { display: grid; grid-template-columns: 2fr 1.2fr 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid var(--s7-border); align-items: center; }
+.rankingMovement li strong, .rankingMovement li b { font-weight: 400; }
+.rankingMovement li span { font-family: var(--s7-font-mono); font-size: var(--s7-small); }
+@media (max-width: 600px) { .rankingMovement li { grid-template-columns: 1fr 1fr; gap: 5px; } .rankingMovement li strong { grid-column: 1 / -1; } }

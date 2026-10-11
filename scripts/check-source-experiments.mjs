@@ -10,7 +10,7 @@
  * Run: node scripts/check-source-experiments.mjs
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -108,6 +108,8 @@ function createHarness(filename, componentName) {
   let hookIndex = 0;
   const statefulReact = {
     ...React,
+    useEffect: () => {}, // Timers/visibility are exercised in the real browser review.
+    useContext: () => true,
     useState(initialValue) {
       const index = hookIndex++;
       if (!(index in hookValues)) {
@@ -135,6 +137,23 @@ function createHarness(filename, componentName) {
   );
   assert.equal(errors.length, 0, `Transpilation errors in ${filename}`);
 
+  const dependencies = new Map();
+  function loadDependency(absolute) {
+    if (dependencies.has(absolute)) return dependencies.get(absolute);
+    const evaluated = { exports: {} };
+    dependencies.set(absolute, evaluated.exports);
+    const output = ts.transpileModule(readFileSync(absolute,"utf8"), { fileName:absolute, compilerOptions:{ module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true } }).outputText;
+    runInNewContext(output, { module:evaluated,exports:evaluated.exports,require(name) {
+      if (name === "react") return statefulReact;
+      if (name === "./ProjectDemoActivityContext") return { useProjectDemoActive:() => true };
+      if (name.startsWith(".") || name.startsWith("@/")) {
+        const base = name.startsWith("@/") ? resolve(repositoryRoot,"src",name.slice(2)) : resolve(dirname(absolute),name);
+        return loadDependency(base+(existsSync(`${base}.tsx`) ? ".tsx" : ".ts"));
+      }
+      return require(name);
+    },Math,Date,Intl,Set,Map,Array,console }, {filename:absolute});
+    return evaluated.exports;
+  }
   const evaluatedModule = { exports: {} };
   runInNewContext(compiled.outputText, {
     module: evaluatedModule,
@@ -150,11 +169,16 @@ function createHarness(filename, componentName) {
       if (name === "./MathEquation") {
         return { MathEquation: (props) => React.createElement("span", { "data-equation": props.tex }, props.label ?? props.tex) };
       }
-      if (name === "./ProjectTranslationBoundary") return { ProjectCopy: (props) => props.children };
+      if (name === "./ProjectTranslationBoundary") return { ProjectCopy: (props) => props.children, useProjectLocale: () => "en-GB" };
+      if (name === "./ProjectDemoActivityContext") return { useProjectDemoActive: () => true };
       if (name === "./copy/sourceExperimentsCopy") return { sourceExperimentsCopy: {} };
       if (name === "./copy/scientificCopy") return { scientificCopy: {} };
       if (name.endsWith(".module.css")) {
         return { __esModule: true, default: new Proxy({}, { get: (_, key) => String(key) }) };
+      }
+      if (name.startsWith(".") || name.startsWith("@/")) {
+        const base = name.startsWith("@/") ? resolve(repositoryRoot,"src",name.slice(2)) : resolve(dirname(sourcePath),name);
+        return loadDependency(base+(existsSync(`${base}.tsx`) ? ".tsx" : ".ts"));
       }
       return require(name);
     },
@@ -269,6 +293,22 @@ test("Rollout values match a geometric series and reset baseline", () => {
       approximately(parseFloat(metricValues(tree)[2]), 1);
     }
   }
+});
+
+test("Rollout manual trace reports the selected calculated step", () => {
+  const harness = createHarness("ScientificFailureExperiments.tsx", "RolloutExperiment");
+  let tree = harness.render();
+  click(tree,"Advance one prediction");
+  tree = harness.render();
+  assert.ok(text(tree).includes("Prediction step 1 / 20 · accumulated error 0.0100."));
+  click(tree,"Advance one prediction");
+  tree = harness.render();
+  assert.ok(text(tree).includes("Prediction step 2 / 20 · accumulated error 0.0202."));
+  click(tree,"Reset input error each step");
+  tree = harness.render();
+  assert.ok(text(tree).includes("Prediction step 2 / 20 · accumulated error 0.0100."));
+  click(tree,"Show complete rollout");
+  assert.ok(text(harness.render()).includes("Prediction step 20 / 20 · accumulated error 0.0100."));
 });
 
 test("Sequence splits preserve 12/12 frames while eliminating shared sequences", () => {

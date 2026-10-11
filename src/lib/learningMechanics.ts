@@ -6,6 +6,13 @@ export function dpoPreference(policy: number, reference: number, beta: number) {
   return { margin, probability, loss: Math.max(0, -logit) + Math.log1p(Math.exp(-Math.abs(logit))), gradient: -beta * (1 - probability) };
 }
 
+/** One SGD step in the logit of a two-response policy, with a fixed reference. */
+export function stepDpoPolicy(policy: number, reference: number, beta: number, rate = .25) {
+  if (![policy, reference].every(value => Number.isFinite(value) && value > 0 && value < 1) || !Number.isFinite(beta) || beta <= 0 || !Number.isFinite(rate) || rate <= 0) throw new RangeError("Choose probabilities between zero and one, and positive beta and learning rate.");
+  const logit = Math.log(policy / (1 - policy));
+  return 1 / (1 + Math.exp(-(logit - rate * dpoPreference(policy, reference, beta).gradient)));
+}
+
 export type LoraState = { a: [number, number]; b: [number, number]; step: number };
 export const initialLoraState: LoraState = { a: [1, -1], b: [0, 0], step: 0 };
 export function inspectLora(state: LoraState) {

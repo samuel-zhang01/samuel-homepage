@@ -566,6 +566,7 @@ function formatWeek(number: number) {
 
 export function RlAtlasDemo() {
   const locale = useProjectLocale();
+  const t = (source: string) => projectText(locale, rlAtlasDemoCopy, source);
   const [workspace, setWorkspace] = useState<"control" | "lab" | "atlas">("control");
   const [query, setQuery] = useState("");
   const [trackFilter, setTrackFilter] = useState<TrackFilter>("all");
@@ -608,9 +609,9 @@ export function RlAtlasDemo() {
       appName="RL Atlas 2.0"
       title="STUDY-RL Learning Atlas"
       status="Learning by consequences"
-      purpose="I built a reinforcement-learning curriculum to understand how an agent learns from the consequences of its actions. Try that idea in this small grid world."
-      tryThis="Press Train 100 episodes, then Test greedy route. Compare Q-learning with SARSA to see which route the agent learns beside the cliff."
-      watchFor="The route and Q values change with experience. A cliff fall costs 100 points, so the shortest route and the safer learning behaviour can differ."
+      purpose={workspace === "lab" ? "I study how language models improve after initial training. Compare recorded answers, then change a small adapter or a preference policy yourself." : workspace === "atlas" ? "I wrote this curriculum to connect learning theory with runnable algorithms. Choose a module to see the question, method and experiment." : "I built a reinforcement-learning curriculum to understand how an agent learns from the consequences of its actions. Try that idea in this small grid world."}
+      tryThis={workspace === "lab" ? "Choose Train an adapter or Change a preference. Watch ten updates and follow the loss as the parameters change." : workspace === "atlas" ? "Choose a week, or open Train an RL agent to try the cliff exercise." : "Train 100 episodes and save the run. Change Q-learning to SARSA, train again and compare their greedy routes."}
+      watchFor={workspace === "lab" ? "The live calculations change actual parameters. The 32 recorded model answers remain separate, and correct format alone does not guarantee correct arithmetic." : workspace === "atlas" ? "Each module connects a question, a method and a runnable exercise; open the syllabus for the wider sequence." : "The route and Q values change with experience. A cliff fall costs 100 points, so the shortest route and the safer learning behaviour can differ."}
       statusTone="working"
       className={styles.atlasWindow}
       footer={
@@ -712,34 +713,34 @@ export function RlAtlasDemo() {
         </label>
         <label>
           <span>Track</span>
-          <ClassicSelect value={trackFilter} onChange={(event) => setTrackFilter(event.target.value as TrackFilter)}>
-            <option value="all">All 11 tracks</option>
+          <ClassicSelect aria-label={t("Track")} value={trackFilter} onChange={(event) => setTrackFilter(event.target.value as TrackFilter)}>
+            <option value="all">{t("All 11 tracks")}</option>
             {TRACKS.map((track) => (
-              <option key={track.id} value={track.id}>{track.code} · {track.label}</option>
+              <option key={track.id} value={track.id}>{track.code} · {t(track.label)}</option>
             ))}
           </ClassicSelect>
         </label>
         <label>
           <span>Review status</span>
           <ClassicSelect
-            value={evidenceFilter}
+            aria-label={t("Review status")} value={evidenceFilter}
             onChange={(event) => setEvidenceFilter(event.target.value as EvidenceFilter)}
           >
-            <option value="all">Any QA state</option>
-            <option value="attention">Needs attention</option>
-            <option value="clean">No recorded flags</option>
+            <option value="all">{t("Any QA state")}</option>
+            <option value="attention">{t("Needs attention")}</option>
+            <option value="clean">{t("No recorded flags")}</option>
           </ClassicSelect>
         </label>
         <label>
           <span>Disclosure</span>
           <ClassicSelect
-            value={disclosureFilter}
+            aria-label={t("Disclosure")} value={disclosureFilter}
             onChange={(event) => setDisclosureFilter(event.target.value as DisclosureFilter)}
           >
-            <option value="all">All boundaries</option>
-            <option value="public">Public curriculum</option>
-            <option value="synthetic">Synthetic only</option>
-            <option value="restricted">Restricted audit</option>
+            <option value="all">{t("All boundaries")}</option>
+            <option value="public">{t("Public curriculum")}</option>
+            <option value="synthetic">{t("Synthetic only")}</option>
+            <option value="restricted">{t("Restricted audit")}</option>
           </ClassicSelect>
         </label>
         <button className={styles.resetButton} type="button" onClick={resetFilters}>

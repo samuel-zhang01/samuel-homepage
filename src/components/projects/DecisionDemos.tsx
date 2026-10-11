@@ -8,6 +8,7 @@ import { MathEquation } from "./MathEquation";
 
 import { useId, useMemo, useState, type CSSProperties } from "react";
 
+import { cyberCohort, shrinkCoefficient, predictionSensitivity, biasedReward, confoundingCohort } from "@/lib/decisionExperiments";
 import { DECISION_OPE_LOGS } from "@/data/decisionOpeLogs";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
@@ -32,15 +33,15 @@ function SourceNote({
   tone?: "blue" | "amber" | "green";
 }) {
   return (
-    <ProjectCopy copy={decisionDemosCopy}><aside className={`${styles.sourceNote} ${tone === "blue" ? "" : styles[tone]}`} role="note">
+    <ProjectCopy copy={decisionDemosCopy}><details className={`${styles.sourceNote} ${tone === "blue" ? "" : styles[tone]}`}>
+      <summary>{title}</summary>
       <span className={styles.sourceIcon} aria-hidden="true">
         {tone === "amber" ? "!" : tone === "green" ? "✓" : "i"}
       </span>
       <div>
-        <strong>{title}</strong>
         <p>{children}</p>
       </div>
-    </aside></ProjectCopy>
+    </details></ProjectCopy>
   );
 }
 
@@ -61,7 +62,7 @@ function RangeField({
         <strong>{label}</strong>
         <output>{valueLabel}</output>
       </span>
-      <input {...props} type="range" aria-describedby={help ? helpId : undefined} />
+      <input {...props} type="range" aria-label={label} aria-describedby={help ? helpId : undefined} />
       {help ? <small id={helpId}>{help}</small> : null}
     </label></ProjectCopy>
   );
@@ -74,7 +75,7 @@ const AIR_CONFIGURATIONS = [
     cost: 2_500,
     rmse: 0.9211,
     sensors: ["C6H6(GT)"],
-    metric: "5-fold CV RMSE",
+    metric: "5-fold cross-validation RMSE",
   },
   {
     id: "balanced",
@@ -82,7 +83,7 @@ const AIR_CONFIGURATIONS = [
     cost: 3_500,
     rmse: 0.8286,
     sensors: ["C6H6(GT)", "PT08.S1(CO)"],
-    metric: "5-fold CV RMSE",
+    metric: "5-fold cross-validation RMSE",
   },
   {
     id: "full",
@@ -119,9 +120,11 @@ export function AirQualityBudgetDemo() {
   const [surface, setSurface] = useState<"data" | "models" | "planner">("planner");
   const [budget, setBudget] = useState(3_500);
   const [interpretability, setInterpretability] = useState(60);
-  const selected = AIR_CONFIGURATIONS.filter((configuration) => configuration.cost <= budget).at(-1) ??
-    AIR_CONFIGURATIONS[0];
-  const next = AIR_CONFIGURATIONS.find((configuration) => configuration.cost > budget);
+  const [outage, setOutage] = useState<"none" | "co" | "benzene">("none");
+  const available = AIR_CONFIGURATIONS.filter((configuration) => outage === "none" || (outage === "co" && configuration.id === "lean"));
+  const selected = available.filter((configuration) => configuration.cost <= budget).at(-1);
+  const unavailable = AIR_CONFIGURATIONS.filter((configuration) => !available.includes(configuration));
+  const next = available.find((configuration) => configuration.cost > budget);
   const chartWidth = 470;
   const chartHeight = 214;
   const x = (cost: number) => 48 + ((cost - 2_000) / 9_000) * 392;
@@ -143,7 +146,7 @@ export function AirQualityBudgetDemo() {
       title="Air-quality sensor budget"
       status="Coursework · hypothetical"
       purpose="I compared models that estimate carbon monoxide from other sensor readings, then asked which sensors are worth paying for in a compact air-quality monitor."
-      tryThis="Lower Available sensor budget from £3,500 to £2,500. See which signal remains and how prediction error changes."
+      tryThis="Switch off the CO sensor. Watch the balanced monitor fall back to the benzene-only design, then restore the sensor."
       watchFor="A smaller budget removes sensor choices. The recorded model scores come from my coursework; sensor prices and the recommendation are a hypothetical planning exercise."
       statusTone="safe"
       className={styles.window}
@@ -277,7 +280,18 @@ export function AirQualityBudgetDemo() {
             <span>£10.7k</span>
           </div>
 
-          <div className={styles.selectionCard} aria-live="polite">
+          <fieldset className={styles.experimentChoices}>
+            <legend>What if a sensor stops reporting?</legend>
+            {(["none", "co", "benzene"] as const).map((choice) => <label key={choice}>
+              <input type="radio" name="air-outage" checked={outage === choice} onChange={() => setOutage(choice)} />
+              <span>{choice === "none" ? "All signals available" : choice === "co" ? "CO sensor offline" : "Benzene signal offline"}</span>
+            </label>)}
+          </fieldset>
+          <div className={styles.actionStrip}><MacButton onClick={() => { setBudget(3500); setInterpretability(60); setOutage("none"); }}>Reset monitor</MacButton></div>
+          <div className={styles.availabilityMap} aria-label="Reported designs available under this outage">
+            {AIR_CONFIGURATIONS.map(configuration => <span key={configuration.id} data-available={!unavailable.includes(configuration)}>{!unavailable.includes(configuration) ? "✓" : "×"} {configuration.name}</span>)}
+          </div>
+          {selected ? <div className={styles.selectionCard} aria-live="polite">
             <span className={styles.selectionFlag}>Best reported fit</span>
             <h4>{selected.name}</h4>
             <div className={styles.bigMetric}>
@@ -305,9 +319,9 @@ export function AirQualityBudgetDemo() {
                 Add <strong>{pounds.format(next.cost - budget)}</strong> to unlock {next.name.toLowerCase()}.
               </p>
             ) : (
-              <p className={styles.nextStep}>All reported predictors fit inside this ceiling.</p>
+              <p className={styles.nextStep}>{outage === "none" ? "All reported predictors fit inside this ceiling." : "Restore the missing signal to make the other designs available."}</p>
             )}
-          </div>
+          </div> : <div className={styles.emptyExperiment} role="status"><strong>No recorded design can run</strong><p>Every recorded design needs the benzene signal. I have not measured a replacement configuration, so no prediction error is shown.</p></div>}
         </section>
 
         <section className={styles.chartPanel} aria-labelledby="air-frontier-title">
@@ -349,9 +363,9 @@ export function AirQualityBudgetDemo() {
                 y2={y(AIR_CONFIGURATIONS[2].rmse)}
               />
               {AIR_CONFIGURATIONS.map((configuration) => {
-                const active = configuration.id === selected.id;
+                const active = configuration.id === selected?.id;
                 return (
-                  <g key={configuration.id} className={active ? styles.activePoint : styles.chartPoint}>
+                  <g key={configuration.id} className={`${active ? styles.activePoint : styles.chartPoint} ${unavailable.includes(configuration) ? styles.unavailablePoint : ""}`}>
                     <circle cx={x(configuration.cost)} cy={y(configuration.rmse)} r={active ? 8 : 6} />
                     <text x={x(configuration.cost)} y={y(configuration.rmse) - 12} textAnchor="middle">
                       {configuration.rmse.toFixed(configuration.id === "full" ? 3 : 4)}
@@ -366,10 +380,11 @@ export function AirQualityBudgetDemo() {
           </div>
 
           <div className={styles.legendRow}>
-            <span><i className={styles.solidKey} /> Same CV comparison</span>
+            <span><i className={styles.solidKey} /> Same cross-validation comparison</span>
             <span><i className={styles.dashedKey} /> Different evaluation result</span>
           </div>
 
+          <p className={styles.identificationNote}>The outage experiment checks which recorded inputs are still present. It does not refit a model or estimate failure-time accuracy.</p>
           <SourceNote title="Methodology caveat" tone="amber">
             The £2,500 and £3,500 designs report five-fold cross-validation RMSE. The £10,700 point
             matches the full KRR-RBF test RMSE, so the dashed connection is context—not a controlled
@@ -382,36 +397,25 @@ export function AirQualityBudgetDemo() {
   );
 }
 
-function cyberRates(threshold: number) {
-  const falsePositiveRate = clamp(0.257 * (1 - threshold ** 2.2), 0, 1);
-  const truePositiveRate = clamp(1 - 0.005 * (threshold / 0.5) ** 6, 0.55, 1);
-  return { falsePositiveRate, truePositiveRate };
-}
-
-function cyberMatrix(threshold: number) {
-  const { falsePositiveRate, truePositiveRate } = cyberRates(threshold);
-  const fp = Math.round(falsePositiveRate * 1_000);
-  const tp = Math.round(truePositiveRate * 1_000);
-  return { tn: 1_000 - fp, fp, fn: 1_000 - tp, tp };
-}
-
 function MatrixCell({
   label,
   value,
   tone,
+  denominator,
 }: {
   label: string;
   value: number;
+  denominator: number;
   tone: "good" | "bad";
 }) {
   return (
     <ProjectCopy copy={decisionDemosCopy}><div
       className={`${styles.matrixCell} ${tone === "good" ? "" : styles[tone]}`}
-      style={{ "--heat": `${8 + (value / 1_000) * 32}%` } as CSSProperties}
+      style={{ "--heat": `${8 + (value / Math.max(denominator, 1)) * 32}%` } as CSSProperties}
     >
       <span>{label}</span>
       <strong>{value.toLocaleString("en-GB")}</strong>
-      <small>{(value / 10).toFixed(1)}% of class</small>
+      <small>{(100 * value / Math.max(denominator, 1)).toFixed(1)}% of class</small>
     </div></ProjectCopy>
   );
 }
@@ -420,19 +424,22 @@ export function CyberThresholdDemo() {
   const [thresholdPercent, setThresholdPercent] = useState(20);
   const [falseNegativeCost, setFalseNegativeCost] = useState(1_000_000);
   const [falsePositiveCost, setFalsePositiveCost] = useState(1_000);
+  const [attackPercent, setAttackPercent] = useState(50);
   const threshold = thresholdPercent / 100;
-  const matrix = cyberMatrix(threshold);
+  const matrix = cyberCohort(threshold, attackPercent);
+  const alerts = matrix.tp + matrix.fp;
+  const precision = alerts ? matrix.tp / alerts : 0;
   const totalCost = matrix.fn * falseNegativeCost + matrix.fp * falsePositiveCost;
   const curve = useMemo(() => {
     return Array.from({ length: 50 }, (_, index) => {
       const pointThreshold = (index + 1) / 50;
-      const pointMatrix = cyberMatrix(pointThreshold);
+      const pointMatrix = cyberCohort(pointThreshold, attackPercent);
       return {
         threshold: pointThreshold,
         cost: pointMatrix.fn * falseNegativeCost + pointMatrix.fp * falsePositiveCost,
       };
     });
-  }, [falseNegativeCost, falsePositiveCost]);
+  }, [attackPercent, falseNegativeCost, falsePositiveCost]);
   const maximumCost = Math.max(...curve.map((point) => point.cost), 1);
   const pointX = (pointThreshold: number) => 42 + pointThreshold * 372;
   const pointY = (cost: number) => 18 + (1 - cost / maximumCost) * 112;
@@ -444,7 +451,7 @@ export function CyberThresholdDemo() {
       title="Cyber-risk cost simulator"
       status="Synthetic scenario"
       purpose="I studied when a cyber classifier should raise an alert: missing an attack and interrupting legitimate traffic carry different costs."
-      tryThis="Raise Alert threshold to suppress more alerts. Compare the missed attacks and false alarms below."
+      tryThis="Choose a rare-attack day. The detector has the same rate functions, but far fewer alerts now correspond to real attacks."
       watchFor="A lower threshold catches more attacks and creates more false alarms. The displayed counts are a teaching scenario; my original dataset needs a cleaner split before I can claim detection performance."
       statusTone="working"
       className={styles.window}
@@ -470,6 +477,8 @@ export function CyberThresholdDemo() {
               <h3 id="cyber-controls-title">Choose the operating point</h3>
             </div>
           </div>
+          <div className={styles.actionStrip}><MacButton onClick={() => setAttackPercent(50)}>Balanced test cohort</MacButton><MacButton onClick={() => setAttackPercent(1)}>Rare-attack day</MacButton></div>
+          <RangeField label="Attack prevalence" valueLabel={`${attackPercent}%`} min={1} max={50} value={attackPercent} onChange={event => setAttackPercent(Number(event.target.value))} help="Change how many of the 2,000 flows are attacks. The detector's rate functions stay the same." />
           <RangeField
             label="Alert threshold"
             valueLabel={threshold.toFixed(2)}
@@ -480,6 +489,13 @@ export function CyberThresholdDemo() {
             onChange={(event) => setThresholdPercent(Number(event.target.value))}
             help="Lower values flag more traffic; higher values suppress alerts."
           />
+          <div className={styles.experimentResult} aria-live="polite">
+            <strong>{alerts} alerts · {(precision * 100).toFixed(1)}% actually attacks</strong>
+            <div className={styles.alertMix} aria-hidden="true"><i style={{width: `${precision * 100}%`}} /></div>
+            <span>{matrix.tp} attack alerts / {matrix.fp} false alarms</span>
+            <small>{matrix.attacks} attacks among 2,000 flows. This is a fictional base-rate experiment.</small>
+          </div>
+          <details className={styles.costAssumptions}><summary>Change the cost assumptions</summary>
           <RangeField
             label="Cost of one missed attack"
             valueLabel={pounds.format(falseNegativeCost)}
@@ -498,9 +514,11 @@ export function CyberThresholdDemo() {
             value={falsePositiveCost}
             onChange={(event) => setFalsePositiveCost(Number(event.target.value))}
           />
+          </details>
           <div className={styles.actionStrip}>
             <MacButton
               onClick={() => {
+                setAttackPercent(50);
                 setThresholdPercent(20);
                 setFalseNegativeCost(1_000_000);
                 setFalsePositiveCost(1_000);
@@ -530,10 +548,10 @@ export function CyberThresholdDemo() {
               <span>Actual attack</span>
             </div>
             <div className={styles.matrixGrid}>
-              <MatrixCell label="True negative" value={matrix.tn} tone="good" />
-              <MatrixCell label="False positive" value={matrix.fp} tone="bad" />
-              <MatrixCell label="False negative" value={matrix.fn} tone="bad" />
-              <MatrixCell label="True positive" value={matrix.tp} tone="good" />
+              <MatrixCell label="True negative" value={matrix.tn} denominator={matrix.benign} tone="good" />
+              <MatrixCell label="False positive" value={matrix.fp} denominator={matrix.benign} tone="bad" />
+              <MatrixCell label="False negative" value={matrix.fn} denominator={matrix.attacks} tone="bad" />
+              <MatrixCell label="True positive" value={matrix.tp} denominator={matrix.attacks} tone="good" />
             </div>
           </div>
         </section>
@@ -595,18 +613,21 @@ const COEFFICIENT_SERIES = [
 ] as const;
 
 function regularisedCoefficient(beta: number, lambda: number, method: RegularisationMethod) {
-  if (method === "ridge") return beta / (1 + lambda);
-  return Math.sign(beta) * Math.max(Math.abs(beta) - lambda, 0);
+  return shrinkCoefficient(beta, lambda, method);
 }
 
 export function RegularisationLabDemo() {
   const [method, setMethod] = useState<RegularisationMethod>("lasso");
   const [lambdaHundredths, setLambdaHundredths] = useState(45);
+  const [inputs, setInputs] = useState([1, 0, 0, 0]);
+  const [noise, setNoise] = useState(3);
   const lambda = lambdaHundredths / 100;
   const coefficients = COEFFICIENT_SERIES.map((series) => ({
     ...series,
     value: regularisedCoefficient(series.beta, lambda, method),
   }));
+  const unpenalised = predictionSensitivity(COEFFICIENT_SERIES.map(series => series.beta), inputs, noise);
+  const penalised = predictionSensitivity(coefficients.map(series => series.value), inputs, noise);
   const zeroCount = coefficients.filter((series) => Math.abs(series.value) < 0.0001).length;
   const chartPath = (beta: number) =>
     Array.from({ length: 61 }, (_, index) => {
@@ -623,7 +644,7 @@ export function RegularisationLabDemo() {
       title="Ridge & LASSO coefficient paths"
       status="Concept explorer"
       purpose="I made a small calculator to show how a model can rely less on noisy inputs. Ridge reduces every input's weight; LASSO can remove weak inputs completely."
-      tryThis="Select LASSO and move Penalty strength (λ) to the right. Watch coefficients reach zero as weak inputs disappear."
+      tryThis="Move Noise feature in the prediction desk. Compare its effect before and after LASSO removes that input; then switch to Ridge."
       watchFor="A zero coefficient means an input is unused. These are exact calculations on a simple teaching example; my air-quality coursework fit is a separate result."
       statusTone="safe"
       className={styles.window}
@@ -640,6 +661,23 @@ export function RegularisationLabDemo() {
         fitting and validation.
       </SourceNote>
 
+      <section className={styles.predictionDesk} aria-labelledby="prediction-desk-title">
+        <div className={styles.chartHeading}><div><span>Try a new observation</span><h3 id="prediction-desk-title">How much can a noisy input move the prediction?</h3></div><MacButton onClick={() => { setMethod("lasso"); setLambdaHundredths(45); setInputs([1,0,0,0]); setNoise(3); }}>Reset prediction desk</MacButton></div>
+        <div className={styles.actionStrip}><MacButton onClick={() => setMethod("lasso")} aria-pressed={method === "lasso"}>LASSO · L1</MacButton><MacButton onClick={() => setMethod("ridge")} aria-pressed={method === "ridge"}>Ridge · L2</MacButton><span>λ {lambda.toFixed(2)}</span></div>
+        <div className={styles.predictionGrid}>
+          <div>
+            <RangeField label="Noise feature" valueLabel={inputs[3].toFixed(1)} min={-30} max={30} value={Math.round(inputs[3] * 10)} onChange={event => setInputs(current => current.map((value, index) => index === 3 ? Number(event.target.value) / 10 : value))} />
+            <p className={styles.inputPrediction} aria-live="polite">Prediction: {penalised.prediction.toFixed(3)} · without penalty {unpenalised.prediction.toFixed(3)}</p>
+            <RangeField label="Noise uncertainty ±" valueLabel={noise.toFixed(1)} min={0} max={30} value={noise * 10} onChange={event => setNoise(Number(event.target.value) / 10)} />
+            <details className={styles.costAssumptions}><summary>Change the other inputs</summary>{COEFFICIENT_SERIES.slice(0,3).map((series,index) => <RangeField key={series.name} label={series.name} valueLabel={inputs[index].toFixed(1)} min={-30} max={30} step={1} value={Math.round(inputs[index] * 10)} onChange={event => setInputs(current => current.map((value, position) => position === index ? Number(event.target.value) / 10 : value))} />)}</details>
+          </div>
+          <div className={styles.predictionResults} aria-live="polite">
+            <p>Prediction = the sum of each input × its coefficient. The interval varies only the noise feature; it is a sensitivity range, not a confidence interval.</p>
+            {[{title:"Model without penalty",result:unpenalised},{title:"Model with penalty",result:penalised}].map(item => <article key={item.title}><span>{item.title}</span><strong>{item.result.prediction.toFixed(3)}</strong><small>{item.result.low.toFixed(3)} to {item.result.high.toFixed(3)} · span {item.result.span.toFixed(3)}</small><div className={styles.sensitivityTrack} aria-hidden="true"><i style={{width:`${Math.min(100,item.result.span / 1.14 * 100)}%`}} /></div></article>)}
+            <p>{Math.abs(coefficients[3].value) < .0001 ? "Noise is unused: changing it cannot move this prediction." : "Noise still contributes: changing it moves this prediction."}</p>
+          </div>
+        </div>
+      </section>
       <div className={styles.regularisationLayout}>
         <section className={styles.controlPanel} aria-labelledby="regularisation-controls-title">
           <div className={styles.panelTitle}>
@@ -830,6 +868,8 @@ function OpeEstimatorWorkbench() {
   const [clipEnabled, setClipEnabled] = useState(false);
   const [clipAt, setClipAt] = useState(5);
   const [switchTau, setSwitchTau] = useState(4);
+  const [rewardBias, setRewardBias] = useState(0);
+  const [selectedLog, setSelectedLog] = useState(DECISION_OPE_LOGS[0].id);
 
   const audit = useMemo(() => {
     const stress = (100 - overlapQuality) / 90;
@@ -842,7 +882,8 @@ function OpeEstimatorWorkbench() {
       const targetProbability = action === 1 ? targetOne : 1 - targetOne;
       const rawWeight = targetProbability / propensity;
       const weight = clipEnabled ? Math.min(rawWeight, clipAt) : rawWeight;
-      const { q0, q1, reward } = sourceRow;
+      const { reward } = sourceRow;
+      const { q0, q1 } = biasedReward(sourceRow.q0, sourceRow.q1, rewardBias / 100);
       const qLogged = action === 1 ? q1 : q0;
       const qTarget = (1 - targetOne) * q0 + targetOne * q1;
       const correction = weight * (reward - qLogged);
@@ -881,9 +922,10 @@ function OpeEstimatorWorkbench() {
       clippedCount: rows.filter((row) => row.rawWeight > clipAt).length,
       unsupportedCount: rows.filter((row) => row.propensity < 0.2).length,
     };
-  }, [clipAt, clipEnabled, overlapQuality, policy, switchTau]);
+  }, [clipAt, clipEnabled, overlapQuality, policy, rewardBias, switchTau]);
 
   const essShare = audit.ess / audit.rows.length;
+  const inspected = audit.rows.find(row => row.id === selectedLog) ?? audit.rows[0];
 
   return (
     <ProjectCopy copy={decisionDemosCopy}><div className={styles.opeWorkbench}>
@@ -913,6 +955,10 @@ function OpeEstimatorWorkbench() {
         </fieldset>
         <p className={styles.policyDescription}>{OPE_POLICY_COPY[policy].text}</p>
 
+        <div className={styles.actionStrip}><MacButton onClick={() => { setPolicy("challenger"); setOverlapQuality(58); setClipEnabled(false); setClipAt(5); setSwitchTau(4); setRewardBias(0); setSelectedLog(DECISION_OPE_LOGS[0].id); }}>Reset policy experiment</MacButton></div>
+        <RangeField label="Reward-model bias" valueLabel={`${rewardBias >= 0 ? "+" : ""}${(rewardBias / 100).toFixed(2)}`} min={-30} max={30} value={rewardBias} onChange={event => setRewardBias(Number(event.target.value))} help="Shift both predicted rewards and keep them within 0–1. IPS uses observed rewards, so it does not change; Direct and DR respond differently." />
+        <div className={styles.modelBiasComparison} aria-label="Effect of model bias" aria-live="polite">{(["IPS", "Direct", "DR"] as const).map(name => <article key={name}><span>{name}</span><strong>{audit.estimates[name].toFixed(3)}</strong></article>)}</div>
+        <p className={styles.policyDescription}>The observed rewards stay fixed. Direct follows the model; DR also adds the residual correction.</p>
         <RangeField
           label="Logger overlap quality"
           valueLabel={`${overlapQuality}%`}
@@ -993,6 +1039,11 @@ function OpeEstimatorWorkbench() {
           </div>
         </div>
 
+        <div className={styles.logInspector}>
+          <label>Inspect one logged decision<select value={selectedLog} onChange={event => setSelectedLog(event.target.value)}>{audit.rows.map(row => <option key={row.id} value={row.id}>{row.id}</option>)}</select></label>
+          <div className={styles.experimentResult} aria-live="polite"><strong>DR contribution: {inspected.dr.toFixed(3)}</strong><span>Target prediction {inspected.qTarget.toFixed(3)} + correction {(inspected.weight * (inspected.reward - inspected.qLogged)).toFixed(3)}</span><small>Observed reward {inspected.reward} − predicted logged reward {inspected.qLogged.toFixed(3)}, multiplied by weight {inspected.weight.toFixed(3)}.</small></div>
+          <p>Try a positive model bias. The residual correction can offset the optimistic prediction, but weak overlap and finite data still limit the estimate.</p>
+        </div>
         <PlotPanHint />
         <div className={styles.logTableWrap} role="region" tabIndex={0} aria-label="Scrollable synthetic decision log">
           <table className={styles.logTable}>
@@ -1080,8 +1131,8 @@ export function CausalOpeDemo() {
       title="Causal adjustment & off-policy evaluation"
       status="Interactive examples"
       purpose="I built two worked examples: finding whether a treatment causes an outcome, and estimating how a new decision rule might perform using old decisions."
-      tryThis="Click Experience (Z) in the causal graph to account for a factor that affects both treatment and outcome."
-      watchFor="A valid comparison closes the shared-cause path without opening the response-flag path. The policy chapter separately tests whether old decisions cover a new rule."
+      tryThis={surface === "ope" ? "Move Reward-model bias. Compare Direct and DR with the unchanged IPS estimate, then select L-01 to inspect the correction." : "Compare the pooled result with the experience groups. A negative pooled difference becomes positive when the shared cause is accounted for."}
+      watchFor={surface === "ope" ? "Observed rewards stay fixed. Direct follows the model, while DR adds a weighted residual correction; these fictional logs cannot establish a real policy's performance." : "A valid comparison closes the shared-cause path without opening the response-flag path. The policy chapter separately tests whether old decisions cover a new rule."}
       statusTone="safe"
       className={styles.window}
       footer={
@@ -1100,7 +1151,7 @@ export function CausalOpeDemo() {
         <button type="button" aria-pressed={surface === "ope"} onClick={() => setSurface("ope")}>02 · Off-policy evaluation</button>
       </div>
 
-      {surface === "ope" ? <OpeEstimatorWorkbench /> : <div className={styles.causalLayout}>
+      {surface === "ope" ? <OpeEstimatorWorkbench /> : <><ConfoundingExperiment adjustConfounder={adjustConfounder} adjustCollider={adjustCollider} onAdjust={() => { setAdjustConfounder(true); setAdjustCollider(false); }} /><div className={styles.causalLayout}>
         <section className={styles.dagPanel} aria-labelledby="dag-title">
           <div className={styles.chartHeading}>
             <div>
@@ -1250,7 +1301,20 @@ export function CausalOpeDemo() {
             identification assumptions; a tidy ATE number does not verify them.
           </p>
         </section>
-      </div>}
+      </div></>}
     </DemoWindow></ProjectCopy>
   );
+}
+
+function ConfoundingExperiment({ adjustConfounder, adjustCollider, onAdjust }: { adjustConfounder: boolean; adjustCollider: boolean; onAdjust: () => void }) {
+  const [imbalance, setImbalance] = useState(35);
+  const cohort = confoundingCohort(imbalance);
+  return <ProjectCopy copy={decisionDemosCopy}><section className={styles.confoundingExperiment} aria-labelledby="confounding-experiment-title">
+    <div className={styles.chartHeading}><div><span>A fictional 200-person cohort</span><h3 id="confounding-experiment-title">Can a helpful treatment look harmful?</h3></div><MacButton onClick={() => setImbalance(35)}>Reset cohort</MacButton></div>
+    <RangeField label="Experienced share in treatment" valueLabel={`${50 - imbalance}%`} min={10} max={50} value={50 - imbalance} onChange={event => setImbalance(50 - Number(event.target.value))} help="Lower the share to send treatment mainly to less-experienced people. The control changes group composition, not the within-group success rates." />
+    <div className={styles.cohortRows}>{cohort.groups.map(group => <div key={group.key}><strong>{group.key === "less" ? "Less experienced" : "More experienced"}</strong><span>{group.treated} treated · {(group.treatedRate * 100).toFixed(0)}% chance of success</span><span>{group.control} controls · {(group.controlRate * 100).toFixed(0)}% chance of success</span><div className={styles.cohortBars} aria-hidden="true"><i style={{width:`${group.treatedRate * 100}%`}} /><i style={{width:`${group.controlRate * 100}%`}} /></div></div>)}</div>
+    <div className={styles.experimentResult} aria-live="polite"><strong>{adjustCollider ? "No valid adjusted estimate" : adjustConfounder ? "Compare within experience groups" : "Pooled comparison"}</strong><span>{adjustCollider ? "Remove the response flag from the adjustment set." : `${((adjustConfounder ? cohort.adjusted : cohort.observed) * 100).toFixed(1)} percentage points`}</span><p>{adjustCollider ? "The response flag is affected by both treatment and outcome. Conditioning on it can create a misleading association." : adjustConfounder ? "Treatment helps by 10 points in both groups. Equal group weighting recovers that constructed effect." : "The pooled rates mix different experience levels. This association can reverse the within-group effect."}</p></div>
+    <MacButton onClick={onAdjust}>Compare within experience groups</MacButton>
+    <p className={styles.identificationNote}>I constructed these success rates to demonstrate confounding. They are not measured treatment results; the graph below states the required assumptions.</p>
+  </section></ProjectCopy>;
 }

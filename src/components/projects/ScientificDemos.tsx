@@ -13,6 +13,7 @@ import { useId, useState } from "react";
 import { DemoWindow } from "./DemoChrome";
 import { ProjectTranslationBoundary } from "./ProjectTranslationBoundary";
 import styles from "./ScientificDemos.module.css";
+import { visionTradeoff } from "@/lib/scientificExperiments";
 
 type TabOption<T extends string> = {
   id: T;
@@ -168,19 +169,24 @@ const VISION_MODELS: Record<VisionModelId, {
   poseAccuracy: string;
   depthRmse: string;
   parameters: string;
+  depthParameters: string;
   pretraining: string;
 }> = {
-  simple: { name: "SimpleCNN + skips", poseAccuracy: "98.25%", depthRmse: "0.0478", parameters: "4.2M", pretraining: "From scratch" },
-  resnet18: { name: "ResNet18", poseAccuracy: "97.50%", depthRmse: "0.0256", parameters: "11.2M", pretraining: "ImageNet" },
-  resnet34: { name: "ResNet34", poseAccuracy: "98.50%", depthRmse: "0.0256", parameters: "21.3M", pretraining: "ImageNet" },
-  mobile: { name: "MobileNetV3", poseAccuracy: "97.50%", depthRmse: "0.0325", parameters: "1.6M", pretraining: "ImageNet" },
-  vit: { name: "ViT-B/16", poseAccuracy: "98.25%", depthRmse: "0.0265", parameters: "85.4M", pretraining: "ImageNet" },
+  simple: { name: "SimpleCNN + skips", poseAccuracy: "98.25%", depthRmse: "0.0478", parameters: "4.2M", depthParameters: "4.1M", pretraining: "From scratch" },
+  resnet18: { name: "ResNet18", poseAccuracy: "97.50%", depthRmse: "0.0256", parameters: "11.2M", depthParameters: "11.3M", pretraining: "ImageNet" },
+  resnet34: { name: "ResNet34", poseAccuracy: "98.50%", depthRmse: "0.0256", parameters: "21.3M", depthParameters: "21.4M", pretraining: "ImageNet" },
+  mobile: { name: "MobileNetV3", poseAccuracy: "97.50%", depthRmse: "0.0325", parameters: "1.6M", depthParameters: "1.5M", pretraining: "ImageNet" },
+  vit: { name: "ViT-B/16", poseAccuracy: "98.25%", depthRmse: "0.0265", parameters: "85.4M", depthParameters: "85.6M", pretraining: "ImageNet" },
 };
 
 export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/lib/i18n").Locale }) {
   const [model, setModel] = useState<VisionModelId>("resnet34");
   const [benchmark, setBenchmark] = useState<VisionBenchmark>("pose");
-  const activeModel = VISION_MODELS[model];
+  const [referenceModel, setReferenceModel] = useState<VisionModelId>("resnet34");
+  const activeModel = { ...VISION_MODELS[model], parameters: benchmark === "pose" ? VISION_MODELS[model].parameters : VISION_MODELS[model].depthParameters };
+  const reference = { ...VISION_MODELS[referenceModel], parameters: benchmark === "pose" ? VISION_MODELS[referenceModel].parameters : VISION_MODELS[referenceModel].depthParameters };
+  const tradeoff = visionTradeoff(activeModel, reference);
+  const parameterMaximum = Math.max(parseFloat(activeModel.parameters), parseFloat(reference.parameters));
   const primaryMetric = benchmark === "pose" ? activeModel.poseAccuracy : activeModel.depthRmse;
   const primaryLabel = benchmark === "pose" ? "Pose accuracy" : "Depth RMSE";
 
@@ -189,16 +195,13 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
     title="Which microrobot model would I choose?"
     status="Five-model comparison"
     purpose="I compared prediction quality with model size, because tracking a tiny robot needs both useful estimates and practical computing requirements."
-    tryThis="Switch between pose and depth, then choose a model from the table. Compare its error with the number of learned parameters."
+    tryThis="Compare the compact model with ResNet34, then switch from pose to depth to see the cost of a smaller model."
     watchFor="Higher pose accuracy is better; lower depth RMSE is better. MobileNetV3 is much smaller than ResNet34 or ViT, while the best model depends on the task."
     statusTone="safe"
     className={styles.scientificWindow}
     footer={<><span>Five models · 40 orientation classes</span><span>Recorded comparison · microscope images in the first tab</span></>}
   >
-    <div className={styles.resultsIntro}>
-      <h3>Two tasks, two ways to read the result</h3>
-      <p>Pose accuracy is the percentage of images assigned the correct pitch-roll class. Depth RMSE is the typical size of an error on the normalised depth scale; it is not a distance in millimetres.</p>
-    </div>
+    <div className={styles.comparisonActions}><button type="button" onClick={() => { setReferenceModel("resnet34"); setModel("mobile"); }}>Compare the compact model</button><button type="button" onClick={() => setReferenceModel(model)}>Use selected model as reference</button></div>
     <div className={styles.visionControls}>
       <label><span>Model</span><ClassicSelect value={model} onChange={(event) => setModel(event.target.value as VisionModelId)}>
         {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => <option value={id} key={id}>{item.name}</option>)}
@@ -217,11 +220,16 @@ export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/
         <div><dt>Initialisation</dt><dd>{activeModel.pretraining}</dd></div>
       </dl>
     </section>
+    <section className={styles.visionComparison} aria-label="Prediction quality and model size comparison">
+      <div className={styles.parameterBars}>{([reference, activeModel]).map((item,index) => <div key={index}><span>{index === 0 ? "Reference" : "Selected"} · {item.name}</span><div><i style={{ width:`${100*parseFloat(item.parameters)/parameterMaximum}%` }} /></div><strong>{item.parameters}</strong></div>)}</div>
+      <dl><div><dt>Size relative to reference</dt><dd>{tradeoff.parameterPercent.toFixed(1)}%</dd></div><div><dt>{benchmark === "pose" ? "Pose accuracy change" : "Depth error change"}</dt><dd>{benchmark === "pose" ? `${tradeoff.poseDifference > 0 ? "+" : ""}${tradeoff.poseDifference.toFixed(2)}` : `${tradeoff.depthDifference > 0 ? "+" : ""}${tradeoff.depthDifference.toFixed(4)}`} <small>{benchmark === "pose" ? "percentage points" : "normalised depth units"}</small></dd></div></dl>
+      <p>{benchmark === "pose" ? "Higher pose accuracy means more correctly labelled orientations." : "Lower depth RMSE means a smaller typical error on the normalised depth scale; it is not millimetres."} Parameter count describes model size, not measured speed on a device.</p>
+    </section>
     <section className={styles.modelMatrix} aria-label="Five-model benchmark comparison">
       <div className={styles.matrixHeader}><span>Architecture</span><span>Pose</span><span>Depth RMSE</span><span>Params</span></div>
       {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => (
         <button type="button" aria-pressed={model === id} className={model === id ? styles.matrixActive : ""} key={id} onClick={() => setModel(id)}>
-          <strong>{item.name}</strong><span>{item.poseAccuracy}</span><span>{item.depthRmse}</span><span>{item.parameters}</span>
+          <strong>{item.name}</strong><span>{item.poseAccuracy}</span><span>{item.depthRmse}</span><span>{benchmark === "pose" ? item.parameters : item.depthParameters}</span>
         </button>
       ))}
     </section>

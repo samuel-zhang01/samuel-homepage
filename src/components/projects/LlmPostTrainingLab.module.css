@@ -44,6 +44,13 @@
 .derivation { background: var(--s7-paper); padding: 14px; }
 .mathPanel { min-width: 0; padding: 10px 12px; background: var(--s7-paper); font-size: var(--s7-text); }
 .derivation p { margin: 12px 0 0; font-size: var(--s7-text); line-height: 1.5; }
+.lossPlot { margin: 12px 0; padding: 10px; border: 1px solid var(--s7-edge); background: var(--s7-paper); }
+.lossPlot figcaption { font-size: var(--s7-small); }
+.lossPlot svg { display: block; width: 100%; max-height: 220px; }
+.lossPlot text { font: 10px var(--s7-font-mono); fill: var(--s7-ink); }
+.axis { fill: none; stroke: var(--s7-muted); stroke-width: 1; }
+.lossLine { fill: none; stroke: var(--s7-selection); stroke-width: 2; }
+.receipt summary { min-height: 44px; cursor: pointer; font-weight: bold; }
 @container (max-width: 620px) {
   .controls, .comparison { grid-template-columns: 1fr; }
   .comparison article + article { border-left: 0; border-top: 1px solid var(--s7-shadow); }

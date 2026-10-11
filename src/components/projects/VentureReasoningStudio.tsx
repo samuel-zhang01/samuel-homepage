@@ -5,7 +5,7 @@ import { PlotPanHint } from "./PlotPanHint";
 import { ProjectCopy } from "./ProjectTranslationBoundary";
 import { ventureReasoningStudioCopy } from "./copy/ventureReasoningStudioCopy";
 
-import { type CSSProperties, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 
 import { DemoWindow, MacButton } from "./DemoChrome";
 import { MathEquation } from "./MathEquation";
@@ -300,6 +300,7 @@ function Slider({
       <span>{label}<b>{display}</b></span>
       <input
         type="range"
+        aria-label={label}
         min={min}
         max={max}
         step={step}
@@ -524,6 +525,27 @@ function AskPlanner({
   const fundingCoverage = deployable / requiredBeforeReserve;
   const clearsGate = headroom >= 0 && runway >= milestone.months;
   const timelineMax = Math.max(24, Math.ceil(runway + 2));
+  const [burnIncrease, setBurnIncrease] = useState(0);
+  const [month, setMonth] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [baseline, setBaseline] = useState<FundingInputs | null>(null);
+  const shownMonth = Math.min(month, milestone.months);
+  const stressedBurn = inputs.monthlyBurn * (1 + burnIncrease / 100);
+  const cashAt = (point: number) => deployable - (point > 0 ? milestone.fixedCost : 0) - point * stressedBurn;
+  const baselineGate = baseline ? MILESTONES.find(item => item.id === baseline.milestone) ?? MILESTONES[0] : null;
+  const baselineCashAt = (point: number) => baseline ? baseline.ask * (1 - baseline.reserve / 100) - (point > 0 ? baselineGate!.fixedCost : 0) - point * baseline.monthlyBurn : 0;
+  const points = Array.from({ length: milestone.months + 1 }, (_, index) => index);
+  const minimumCash = Math.min(0, cashAt(milestone.months), baseline ? baselineCashAt(milestone.months) : 0);
+  const maximumCash = Math.max(1, deployable, baseline ? baselineCashAt(0) : 0);
+  const chartY = (value: number) => 16 + (maximumCash - value) / (maximumCash - minimumCash) * 130;
+  const chartX = (point: number) => 30 + point / milestone.months * 440;
+  const cashPath = (values: number[], saved: boolean) => values.map(point => `${chartX(point)},${chartY(saved ? baselineCashAt(point) : cashAt(point))}`).join(" ");
+  useEffect(() => {
+    if (!playing) return;
+    if (month >= milestone.months) { setPlaying(false); return; }
+    const timer = window.setTimeout(() => setMonth(previous => previous + 1), 650);
+    return () => window.clearTimeout(timer);
+  }, [month, milestone.months, playing]);
 
   function update<Key extends keyof FundingInputs>(key: Key, value: FundingInputs[Key]) {
     onChange({ ...inputs, [key]: value });
@@ -542,7 +564,7 @@ function AskPlanner({
         </section>
 
         <section className={styles.milestonePicker}>
-          <PanelHeading code="GATE" title="Next falsifiable milestone" note="Select one" />
+          <PanelHeading code="GATE" title="Choose the next milestone" note="Select one" />
           <div className={styles.milestoneButtons}>
             {MILESTONES.map((item) => (
               <button
@@ -557,7 +579,7 @@ function AskPlanner({
           </div>
           <div className={styles.milestoneBrief} aria-live="polite">
             <div>
-              <span>SELECTED EVIDENCE CONTRACT · {milestone.code}</span>
+              <span>{`Selected milestone · ${milestone.code}`}</span>
               <strong>{milestone.label}</strong>
               <p>{milestone.proof}</p>
             </div>
@@ -570,7 +592,7 @@ function AskPlanner({
       </div>
 
       <section className={styles.runwayPanel} aria-live="polite">
-        <PanelHeading code="RUN" title="Ask → reserve → evidence gate" note={clearsGate ? "Arithmetic clears" : "Arithmetic gap"} />
+        <PanelHeading code="RUN" title="Funding → reserve → milestone" note={clearsGate ? "Budget covers the milestone" : "Funding gap"} />
         <div className={styles.runwayMetrics}>
           <div><span>DEPLOYABLE</span><strong>{compactCurrency(deployable)}</strong><small>after {compactCurrency(reserveAmount)} reserve</small></div>
           <div><span>RUNWAY</span><strong>{runway.toFixed(1)}m</strong><small>at stated operating burn</small></div>
@@ -587,7 +609,37 @@ function AskPlanner({
         </figure>
       </section>
 
-      <div className={styles.askBottom}>
+      <section className={styles.cashReplay}>
+        <h3>Watch the budget reach the milestone</h3>
+        <p>The reserve stays protected. Month one pays the fixed milestone cost, then each month pays the operating burn.</p>
+        <Slider label="Burn increase" value={burnIncrease} display={`${burnIncrease}%`} min={0} max={60} step={5} onChange={value => { setBurnIncrease(value); setPlaying(false); }} />
+        <div className={styles.cashActions}>
+          <MacButton onClick={() => { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setMonth(milestone.months); setPlaying(false); return; } if (shownMonth === milestone.months) setMonth(0); setPlaying(previous => !previous); }}>{playing ? "Pause budget" : "Play budget"}</MacButton>
+          <MacButton disabled={shownMonth === milestone.months} onClick={() => { setPlaying(false); setMonth(previous => Math.min(milestone.months, previous + 1)); }}>Next month</MacButton>
+          <MacButton onClick={() => { setPlaying(false); setMonth(0); setBurnIncrease(0); }}>Restart budget</MacButton>
+          <MacButton onClick={() => setBaseline({ ...inputs, monthlyBurn: stressedBurn })}>Save current plan for comparison</MacButton>
+        </div>
+        <figure className={styles.cashChart}>
+          <svg viewBox="0 0 500 175" role="img" aria-label="Cash remaining over the milestone horizon">
+            <line x1="30" x2="470" y1={chartY(0)} y2={chartY(0)} stroke="currentColor" strokeDasharray="2 4" />
+            <polyline points={cashPath(points, false)} fill="none" stroke="#182078" strokeWidth="1.5" strokeDasharray="4 4" opacity=".5" />
+            {baseline && <polyline points={cashPath(points, true)} fill="none" stroke="#555" strokeWidth="2" />}
+            <polyline points={cashPath(points.slice(0, shownMonth + 1), false)} fill="none" stroke="#182078" strokeWidth="3" />
+            <circle cx={chartX(shownMonth)} cy={chartY(cashAt(shownMonth))} r="4" fill={cashAt(shownMonth) >= 0 ? "#182078" : "#a44721"} />
+            <text x="2" y={chartY(0) - 5} fontSize="10">£0</text>
+            <text x="30" y="169" fontSize="11">0</text><text x="470" y="169" fontSize="11" textAnchor="end">{milestone.months}</text>
+          </svg>
+          <figcaption>Blue: current plan with the selected burn increase. Grey: saved plan at its saved burn. Dashed blue: future months.</figcaption>
+        </figure>
+        <div className={styles.cashResults} role="status" aria-live="polite">
+          <strong>{`Month ${shownMonth} · ${currency(cashAt(shownMonth))} remaining`}</strong>
+          <span>{cashAt(shownMonth) < 0 ? "The operating budget has run out; the reserve has not been spent." : "This is operating cash after the costs paid so far."}</span>
+          {baseline && <span>{`Saved plan: ${currency(baselineCashAt(shownMonth))} at the same month.`}</span>}
+          {baselineGate && baselineGate.id !== milestone.id && <small>The saved plan targets a different milestone. Compare its fixed cost and horizon before interpreting the gap.</small>}
+        </div>
+      </section>
+
+      <details className={styles.cashDetails}><summary>Budget calculation and planning questions</summary><div className={styles.askBottom}>
         <section className={styles.askLedger}>
           <PanelHeading code="CALC" title="Capital reconciliation" note="TRACEABLE" />
           <dl>
@@ -605,7 +657,7 @@ function AskPlanner({
             <li><span>03</span><p><strong>Capital discipline</strong>{clearsGate ? `${compactCurrency(headroom)} remains after the stated gate and reserve policy.` : `${compactCurrency(Math.abs(headroom))} remains unreconciled under the current assumptions.`}</p></li>
           </ol>
         </aside>
-      </div>
+      </div></details>
     </div></ProjectCopy>
   );
 }
@@ -666,7 +718,7 @@ export function VentureReasoningStudio() {
       title="Can this business reach its next milestone?"
       status="Synthetic reconstruction"
       purpose="I built this planner to connect a business idea with customers, monthly spending and the money needed to reach a milestone."
-      tryThis="Increase monthly spending in Ask planner. Watch how many months the available cash will last."
+      tryThis="Save the current plan, increase the burn and play the monthly budget. Compare when the operating cash runs out with the saved plan."
       watchFor="Less time remains to reach the milestone. Changing the funding request shows how much extra time it would buy in this example."
       statusTone="safe"
       className={styles.studio}
@@ -691,11 +743,11 @@ export function VentureReasoningStudio() {
             </button>
           ))}
         </div>
-        <dl className={styles.scenarioContext}>
+        <details className={styles.cashDetails}><summary>About this example venture</summary><dl className={styles.scenarioContext}>
           <div><dt>Customer</dt><dd>{scenario.customer}</dd></div>
           <div><dt>Job</dt><dd>{scenario.job}</dd></div>
           <div><dt>Proposed distinction</dt><dd>{scenario.distinction}</dd></div>
-        </dl>
+        </dl></details>
       </section>
 
       <nav className={styles.viewTabs} aria-label="Venture reasoning views">

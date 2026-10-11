@@ -1797,3 +1797,12 @@
     margin: 8px auto;
   }
 }
+
+.liveFeedback, .savedComparison { margin: 14px 0; padding: 12px; border: 1px solid var(--s7-ink); background: var(--s7-paper); font: var(--s7-ui)/1.5 var(--s7-font-ui); }
+.liveFeedback h4, .savedComparison h4 { margin: 0; font-weight: 400; }
+.liveFeedback > div:first-child { display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between; }
+.liveFeedback p, .savedComparison p { margin: 7px 0; }
+.matchedSentence { white-space: pre-wrap; overflow-wrap: anywhere; padding: 10px; border: 1px solid var(--s7-border); }
+.matchedSentence mark { color: var(--s7-ink); background: #f8e67e; border-bottom: 1px solid var(--s7-ink); }
+.matchChanges { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 600px) { .matchChanges { grid-template-columns: 1fr; gap: 0; } }

@@ -9,6 +9,13 @@
 .controls label { display: grid; gap: 8px; min-width: 0; font-size: var(--s7-text); font-weight: 700; line-height: 1.5; }
 .controls input { width: 100%; min-height: var(--s7-control-height); accent-color: #11177a; }
 .lab .hint { font-size: var(--s7-text); color: var(--s7-ink); }
+.lab .playStatus { margin: 8px 0; font-size: var(--s7-small); }
+.comparison { margin: 12px 0; border: 1px solid var(--s7-edge); padding: 12px; overflow-x: auto; }
+.comparison > div { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.comparison h4 { margin: 0; font-size: var(--s7-ui); }
+.comparison table { width: 100%; border-collapse: collapse; font-size: var(--s7-small); }
+.comparison th, .comparison td { border: 1px solid var(--s7-edge); padding: 8px; text-align: left; }
+.comparison small { display: block; font-weight: normal; margin-top: 4px; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
 .actions button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--s7-ink); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); color: var(--s7-ink); font: 700 var(--s7-ui)/1.4 var(--s7-font-ui); cursor: pointer; border-radius: var(--s7-control-radius); font-family: var(--s7-font-ui); font-size: var(--s7-ui); font-weight: 400; line-height: 1.4; letter-spacing: normal; text-transform: none; }
 .actions button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }

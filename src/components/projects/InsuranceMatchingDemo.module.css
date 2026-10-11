@@ -2132,3 +2132,8 @@
     animation-iteration-count: 1 !important;
   }
 }
+.exampleChecks { margin: 12px 0; padding: 10px; border: 1px solid var(--s7-edge); background: var(--s7-paper); }
+.exampleChecks summary { min-height: 44px; cursor: pointer; font-weight: bold; }
+.exampleChecks p { margin: 8px 0; font-size: var(--s7-small); line-height: 1.6; }
+.exampleChecks > div { display: grid; gap: 8px; }
+.exampleChecks button { min-height: 44px; white-space: normal; }

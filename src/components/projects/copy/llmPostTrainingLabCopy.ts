@@ -1,6 +1,16 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const llmPostTrainingLabCopy = {
+  "Loss after each learning step": ["每次学习更新后的损失", "每次學習更新後的損失"],
+  "Loss trajectory": ["损失变化曲线", "損失變化曲線"],
+  "Step": ["步数", "步數"],
+  "Pause training": ["暂停训练", "暫停訓練"],
+  "Run 10 gradient steps": ["运行 10 次梯度更新", "執行 10 次梯度更新"],
+  "Take one preference step": ["执行一次偏好更新", "執行一次偏好更新"],
+  "Run 10 preference steps": ["运行 10 次偏好更新", "執行 10 次偏好更新"],
+  "Train the policy probability while the reference stays fixed. This is a two-response calculation, not language-model training.": ["更新策略概率，同时保持参考模型不变。这是两个回答的数值计算，不是在训练语言模型。", "更新策略機率，同時保持參考模型不變。這是兩個回答的數值計算，不是在訓練語言模型。"],
+  "Preference updates: {0} / 20": ["偏好更新：{0} / 20", "偏好更新：{0} / 20"],
+  "Preference updates:": ["偏好更新：", "偏好更新："],
   "LLM post-training laboratory": [
     "大语言模型后训练实验室",
     "大語言模型後訓練實驗室"
