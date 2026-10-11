@@ -40,3 +40,11 @@ Development hot reload occasionally removed lazily loaded CSS or reset an active
 The mathematical additions operate on teaching inputs. Saved research images/results retain their source metrics and evaluation conditions. Browser interactions are labelled where they use fictional data, simplified recurrences or fixed saved pixels. Original raw datasets, account state and native operator media are not exported.
 
 Independent review results are in INTERACTIVE_RESEARCH_DECISIONS.md, INTERACTIVE_RESEARCH_LEARNING.md and INTERACTIVE_SCIENCE_CROSS_REVIEW.md. Reviewers score purpose, understandable changed outcomes, interaction/navigation, phone readability and visual consistency. A score covers the described journeys, not every possible state or a recruited user study.
+
+## Final compiled checkpoint
+
+All described product and research journeys pass independent desktop, 390px and 320px review at 9.1–9.4. The final owned-source export passes full lint/prebuild, optimized compilation and the output gate: 124 browser files /5.47MiB, 259.5KiB initial JavaScript gzip and 5.18MiB application runtime. Its 592 staged source/asset/check inputs match exactly. The final HTTP crawl covers 290 route groups /270 asset groups /134 challenge groups with zero failures; all 246 application sources and 242 public assets have owners.
+
+The compiled learning repeat confirms actual lazy CSS, uninterrupted ten-step parameter updates, retained pause state, CV saved comparison and changed course ranks. The guide-resize check clears both the dialog and inert lock when an undismissed 320px view becomes desktop. The final CFD trace pauses at step16/error0.1864 and keeps that value. Actual-hook tests cover visibility, reduced motion, focus, manual pause and cleanup.
+
+Passing and failed QA, review snapshots and native fixture harnesses are read-back/hash verified in the archive recorded in [verification](VERIFICATION.md#interactive-products-and-mlai--11-october-2026). Implementation checkpoints ac50764 and148f7e5 were pushed during the work; final repairs/documentation follow in a separate completion commit. Owned fixture/compiled servers are stopped; the live development preview stays on port3000. Unrelated public-link and Secret app changes are preserved and excluded from this compiled scope.

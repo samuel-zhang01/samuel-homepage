@@ -14,6 +14,8 @@ The last recorded production deployment is `71e58c0` on 6 October 2026. Its loca
 | [Decision and research review](PROJECT_VISITOR_REVIEW_DECISIONS.md) | Six further desktop/phone journeys, changed outcomes and interpretation repairs |
 | [Academic source research](ACADEMIC_PROJECT_RESEARCH.md) | Original IX repositories, course materials, recorded outcomes and interpretation |
 | [Product source research](PRODUCT_REFINEMENT_RESEARCH.md) | Ultra Convert and VideoMate features, preview installation and verification |
+| [Interactive product checkpoint](INTERACTIVE_PRODUCT_CHECKPOINT.md) | Native showcases, rule/watch/repair/booking tasks and capture limits |
+| [Interactive research checkpoint](INTERACTIVE_RESEARCH_ROOT.md) | Source mapping, meaningful experiments, independent reviews and final compiled checks |
 | [Verification and maintenance](VERIFICATION.md) | Current checks, historical scopes, known limits, cleanup and reproduction |
 | [Profile knowledge graph workflow](KNOWLEDGE_GRAPH_WORKFLOW.md) | Source-backed records, automatic evidence links and future-agent maintenance |
 | [Translation workflow](PROJECT_COPY_WORKFLOW.md) | Four locales, dynamic labels, source-language exceptions and checks |

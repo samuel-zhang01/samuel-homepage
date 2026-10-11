@@ -62,3 +62,18 @@ Development hot reloads during concurrent edits reset several fresh-route intera
 The newcomer review rejected the unexplained SARSA result: 100 episodes could reach the goal during exploratory training while the greedy test looped. The conditional failure explanation now names that distinction, recommends further training and preserves the equal-episode rule for algorithm comparisons. A source reviewer confirmed a further 100 episodes reached the goal for seed 7; the interface does not promise this for other settings.
 
 The CV reviewer also rejected remaining audit-like labels despite the successful live editing flow. Eighteen visible phrases were replaced across the four locales: “evidence checks” became sentence checks, “evidence/proof quality” became sentence clarity, “CV evidence” became Matching CV sentence, and empty/build states now describe running analysis. The method explains my workflow and each term's matching sentence; missing-term prompts request an action, scope and outcome that actually happened. Internal data fields, weighting and numerical results remain unchanged. Focused ESLint, 8,385-copy inventory, 350 locale states and the numerical interaction gate passed after this wording repair. Final independent scores are recorded separately by the reviewer.
+
+### Final independent learning review
+
+The source-projects reviewer independently used the first-visit actions and changed states on desktop, 390px and 320px. The frozen production checkpoint `148f7e5` on localhost:3108 then passed desktop and 320px repeats with its actual lazy CSS: Cliff training and repaired greedy-loop explanation, uninterrupted ten-step LoRA/DPO updates, pause retaining the preference count, UCB upper-bound explanation, CV saved sentence comparison and course rank movement. No development reload, stylesheet loss or remount reproduced in the compiled journeys.
+
+| Experience | Desktop | 390px | 320px |
+| --- | --- | --- | --- |
+| Curriculum | 9.2 | 9.1 | 9.1 |
+| Cliff learning | 9.3 | 9.2 | 9.1 |
+| Adapter / preference labs | 9.3 | 9.2 | 9.1 |
+| Bandit decisions | 9.3 | 9.2 | 9.1 |
+| CV matching | 9.3 | 9.2 | 9.1 |
+| Course ranking | 9.3 | 9.2 | 9.1 |
+
+The initial SARSA explanation failed the 9/10 threshold; its visible exploratory-versus-greedy explanation now passes, including on the compiled 320px page. The remaining limits are stated beside the relevant results: toy updates are separate from saved model answers, CV matching checks wording, course scores are illustrative, and policy comparisons require matching episode counts/settings. The first-visit phone guide was dismissed normally. Viewport restored to desktop 1466×854. Actual interactions, numbers, repairs and limits are detailed in [the independent learning review](PROJECT_VISITOR_REVIEW_LEARNING.md).

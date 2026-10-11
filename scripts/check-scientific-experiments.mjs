@@ -44,4 +44,99 @@ assert.equal(baseline.radius,shifted.radius);
 assert.equal(shifted.radius,outside.radius);
 assert.ok(shiftedCoverage(.95,0).radius>baseline.radius);
 assert.equal(shifted.rows.length,40);
-console.log('Scientific experiments: independent rollout formula, authentic model-size/quality units, fixed-radius shift coverage and reset boundaries passed.');
+
+// Exercise the actual clock hook, including browser events and effect cleanup.
+// A numerical step is counted separately from its scheduled callback so a
+// hidden document cannot advance and a resumed document cannot gain two clocks.
+const clockCode = ts.transpileModule(readFileSync(new URL('../src/components/projects/useScientificExperimentClock.ts',import.meta.url),'utf8'), {
+  compilerOptions:{ target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS },
+}).outputText;
+function clockHarness({ reduced = false, hidden = false } = {}) {
+  const states = [], effects = [], pending = [], timers = new Map();
+  const visibilityListeners = new Set(), motionListeners = new Set();
+  let stateIndex=0, effectIndex=0, dirty=false, active=true, playing=false, nextTimer=1, steps=0;
+  const document={ hidden,
+    addEventListener(name,callback) { assert.equal(name,'visibilitychange'); visibilityListeners.add(callback); },
+    removeEventListener(name,callback) { assert.equal(name,'visibilitychange'); visibilityListeners.delete(callback); },
+  };
+  const preference={ matches:reduced,
+    addEventListener(name,callback) { assert.equal(name,'change'); motionListeners.add(callback); },
+    removeEventListener(name,callback) { assert.equal(name,'change'); motionListeners.delete(callback); },
+  };
+  const react={
+    useState(initial) {
+      const index=stateIndex++;
+      if (!(index in states)) states[index]=typeof initial==='function' ? initial() : initial;
+      return [states[index],next=>{
+        const value=typeof next==='function' ? next(states[index]) : next;
+        if (!Object.is(states[index],value)) { states[index]=value; dirty=true; }
+      }];
+    },
+    useEffect(callback,dependencies) {
+      const index=effectIndex++, previous=effects[index];
+      if (!previous || dependencies.some((value,i)=>!Object.is(value,previous.dependencies[i]))) {
+        pending.push(()=>{ previous?.cleanup?.(); effects[index]={ dependencies,cleanup:callback() }; });
+      }
+    },
+  };
+  const evaluated={ exports:{} };
+  runInNewContext(clockCode,{ module:evaluated,exports:evaluated.exports,document,
+    require(name) {
+      if (name==='react') return react;
+      if (name==='./ProjectDemoActivityContext') return { useProjectDemoActive:()=>active };
+      throw new Error(`Unexpected clock dependency: ${name}`);
+    },
+    window:{
+      matchMedia(query) { assert.equal(query,'(prefers-reduced-motion: reduce)'); return preference; },
+      setTimeout(callback,milliseconds) { assert.equal(milliseconds,250); const id=nextTimer++; timers.set(id,callback); return id; },
+      clearTimeout(id) { timers.delete(id); },
+    },
+  });
+  function render(nextPlaying=playing) {
+    playing=nextPlaying;
+    for (let attempt=0;attempt<5;attempt++) {
+      stateIndex=0; effectIndex=0; dirty=false;
+      const allowed=evaluated.exports.useScientificExperimentClock(playing,()=>{ steps++; });
+      while (pending.length) pending.shift()();
+      if (!dirty) return allowed;
+    }
+    throw new Error('Scientific clock did not settle');
+  }
+  return {
+    render,
+    tick() { for (const [id,callback] of [...timers]) { timers.delete(id); callback(); } render(); },
+    hide(value) { document.hidden=value; for (const callback of visibilityListeners) callback(); render(); },
+    reduce(value) { preference.matches=value; for (const callback of motionListeners) callback(); render(); },
+    focus(value) { active=value; render(); },
+    dispose() { effects.forEach(effect=>effect?.cleanup?.()); },
+    get timerCount() { return timers.size; },
+    get listenerCount() { return visibilityListeners.size+motionListeners.size; },
+    get steps() { return steps; },
+  };
+}
+const clock=clockHarness();
+assert.equal(clock.render(),true);
+assert.equal(clock.timerCount,0,'No automatic playback on first render');
+clock.render(true); assert.equal(clock.timerCount,1);
+clock.tick(); assert.equal(clock.steps,1); assert.equal(clock.timerCount,1);
+for (let cycle=0;cycle<3;cycle++) {
+  clock.hide(true); assert.equal(clock.timerCount,0,'Backgrounding cancels the pending step');
+  clock.tick(); assert.equal(clock.steps,1,'A hidden experiment cannot advance');
+  clock.hide(false); assert.equal(clock.timerCount,1,'Returning resumes exactly one pending step');
+}
+clock.focus(false); assert.equal(clock.timerCount,0);
+clock.tick(); assert.equal(clock.steps,1);
+clock.focus(true); assert.equal(clock.timerCount,1);
+clock.reduce(true); assert.equal(clock.timerCount,0);
+clock.tick(); assert.equal(clock.steps,1);
+clock.reduce(false); assert.equal(clock.timerCount,1);
+clock.render(false); assert.equal(clock.timerCount,0);
+clock.hide(true); clock.hide(false); assert.equal(clock.timerCount,0,'Visibility cannot override a manual pause');
+clock.render(true); clock.dispose();
+assert.equal(clock.timerCount,0,'Unmount cancels playback');
+assert.equal(clock.listenerCount,0,'Unmount removes visibility and preference listeners');
+const initiallyReduced=clockHarness({ reduced:true });
+assert.equal(initiallyReduced.render(true),false); assert.equal(initiallyReduced.timerCount,0); initiallyReduced.dispose();
+const initiallyHidden=clockHarness({ hidden:true });
+initiallyHidden.render(true); assert.equal(initiallyHidden.timerCount,0); initiallyHidden.hide(false); assert.equal(initiallyHidden.timerCount,1); initiallyHidden.dispose();
+console.log('Scientific experiments: independent rollout formula, authentic model-size/quality units, fixed-radius coverage, and actual clock visibility, reduced-motion, pause/resume and cleanup checks passed.');

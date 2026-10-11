@@ -42,7 +42,9 @@ Goal: remove decorative vertical accent bars, shorten product openings, show the
 - [x] YASA: real guest flow, host/timezone/question choices and local booking lifecycle.
 - [x] Product showcases: authentic UI screenshots or explanatory animations, concise core features.
 - [x] ML/AI batches: inspect source code, enrich purposeful experiments and review changed states.
-- [ ] Independent adversarial desktop/phone review at 9/10 or better; retain rejected rounds.
-- [ ] Commit and push validated checkpoints, then complete release verification and handoff.
+- [x] Independent adversarial desktop/phone review at 9/10 or better; retain rejected rounds.
+- [x] Commit and push validated checkpoints, then complete release verification and handoff.
 
 Agents own separate product components initially. The coordinator owns shared presentation, screenshots, integration and release checks. Later batches are assigned after product code freezes, with cross-agent review separated from implementation. Native/source repositories are read-only inputs; generated fixtures supply screenshots without operator data. All visible additions cover the four locales and keep the System 7 theme, genuine icons and reduced-motion support.
+
+Completed follow-up: all described product and ML/decision journeys pass independent desktop, 390px and 320px reviews at 9.1–9.4. The final owned-source optimized build, full prebuild/lint, 592-input source match, compiled learning/animation/guide checks and 290-route-group HTTP crawl pass. The [final verification scope](VERIFICATION.md#interactive-products-and-mlai--11-october-2026) retains rejected rounds, native capture limits, archive hashes and concurrent-work boundaries. The development preview remains on port 3000.

@@ -37,10 +37,12 @@ Both new animation clocks start only after an explicit action, stop for inactive
 ## Validation and visitor journeys
 
 - `node scripts/check-scientific-experiments.mjs`: independent geometric-series rollout result, fresh-input reset, authentic pose/depth model ratios/units, fixed-radius coverage counts and boundary cases passed.
+- The actual scientific clock is tested with fake browser events/timers: three hide/resume cycles, inactive demo focus, reduced-motion changes and initial preference, initial-hidden mount, manual pause retention and unmount cleanup. Visibility events immediately cancel the pending step and resume exactly one clock when appropriate. Full prebuild and TypeScript passed again after this repair.
 - Scoped ESLint and TypeScript passed.
 - `node scripts/check-project-copy.mjs`: all current registered bilingual copy passed (including accessible labels and the new helper boundary).
 - `node scripts/check-project-css-modules.mjs`: all current referenced classes resolved.
 - `node scripts/check-mri-localisation.mjs`: existing locale chains plus 36 new rendered Mandarin model-comparison, partial-trace and saved-shift cases passed. MRI image/error states include the new helper.
+- The maintained source-experiment and scientific-media harnesses now load actual helper TypeScript recursively. The MRI-uncertainty harness keeps its independent ranking/removal arithmetic and treats the unrelated saved-image viewer as presentation. Full `npm run check:experiments` and full `npm run prebuild` passed after these integration repairs; all three repaired scripts passed scoped ESLint.
 - Desktop: MRI divider keyboard 51%, 4×→8×, retained-only and common-scale error panels; CFD first/final frame 0/19, play advanced then pause, manual rollout step 1 and paused trace step 18, reset error 0.01; microscope same-input comparison/blend 0%, compact pose 7.5%/−1pp and depth +0.0069; reliability step 0.25 saved baseline 36/current 33, explicit sweep paused at 0.80 current 22 with radius 0.90.
 
 - 390×844: saved MRI full-result shortcut and keyboard divider, 8× common-scale error pair (viewer width/scrollWidth 312/312); CFD first/final then one-frame-left comparison; microscope input/overlay pair at 100% blend and real depth benchmark (1.5M/21.4M, 7.0% relative size); shift stepped 0→1, 36→18 covered with radius 0.90.
