@@ -25,6 +25,7 @@ const copy = {
   "Work in software, science and product design.": ["软件、科学与产品设计作品。", "軟體、科學與產品設計作品。"],
   "Browse the files. Take a closer look.": ["浏览项目，深入了解。", "瀏覽專案，深入瞭解。"],
   "Built systems, research and interactive experiments worth a closer look.": ["值得深入了解的系统、研究与交互实验。", "值得深入瞭解的系統、研究與互動實驗。"],
+  "Apps I use, questions I studied, and experiments you can try.": ["我自己使用的应用、我研究的问题，以及你可以动手尝试的实验。", "我自己使用的應用程式、我研究的問題，以及你可以動手嘗試的實驗。"],
   "Knowledge graph": ["知识图谱", "知識圖譜"], "Selected work": ["精选作品", "精選作品"], "All projects": ["全部项目", "全部專案"],
   "Project views": ["项目视图", "專案檢視"], "Search projects": ["搜索项目", "搜尋專案"],
   "Search titles, methods or experience…": ["搜索名称、方法或经历…", "搜尋名稱、方法或經歷…"],
@@ -45,7 +46,7 @@ const copy = {
 const fold = (text: string) => text.normalize("NFKD").replace(/\p{M}/gu, "").toLocaleLowerCase();
 function viewFromAddress(): View {
   const view = new URL(window.location.href).searchParams.get("view");
-  return view === "guided" ? "guided" : view === "files" || view === "list" ? "files" : "map";
+  return view === "map" || new URL(window.location.href).searchParams.has("node") ? "map" : view === "files" || view === "list" ? "files" : "guided";
 }
 
 function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
@@ -53,7 +54,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
 }) {
   const t = (source: string) => projectText(locale, copy, source);
   const archiveCopy = getProjectArchiveCopy(locale);
-  const [view, setView] = useState<View>("map");
+  const [view, setView] = useState<View>("guided");
   const [node, setNode] = useState<string | null>(null);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [query, setQuery] = useState("");
@@ -77,7 +78,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
       .finally(() => { if (!controller.signal.aborted) setIndexLoading(false); });
     return () => controller.abort();
   }, [locale, needIndex]);
-  const [mapVisited, setMapVisited] = useState(true);
+  const [mapVisited, setMapVisited] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLElement>(null);
@@ -188,7 +189,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
     updateAddress({ q: nextQuery || null, area: nextArea === "all" ? null : nextArea, selected: null }, true);
     if (listRef.current) listRef.current.scrollTop = 0;
   };
-  const tabs: View[] = ["map", "guided", "files"];
+  const tabs: View[] = ["guided", "files", "map"];
   const labels = { map: "Knowledge graph", guided: "Selected work", files: "All projects" };
   const tabKey = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     const next = event.key === "ArrowRight" ? (index + 1) % tabs.length : event.key === "ArrowLeft" ? (index + tabs.length - 1) % tabs.length : event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : null;
@@ -208,7 +209,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
     <span className={styles.openArrow} aria-hidden="true">›</span>
   </button></li>;
   return <ProjectLocaleProvider locale={locale}><div ref={rootRef} className={`system7-project ${styles.library}`} lang={locale}>
-    <header className={styles.header}><h1>{t("Projects")}</h1><p>{t(view === "map" ? "Work in software, science and product design." : view === "guided" ? "Built systems, research and interactive experiments worth a closer look." : "Browse the files. Take a closer look.")}</p></header>
+    <header className={styles.header}><h1>{t("Projects")}</h1><p>{t(view === "map" ? "Work in software, science and product design." : view === "guided" ? "Apps I use, questions I studied, and experiments you can try." : "Browse the files. Take a closer look.")}</p></header>
     <div className={`s7-tabs ${styles.tabs}`} role="tablist" aria-label={t("Project views")}>
       {tabs.map((tab, index) => <button key={tab} ref={el => { tabsRef.current[index] = el; }} className="s7-tab" role="tab" id={`${id}-${tab}-tab`} aria-controls={`${id}-${tab}`} aria-selected={view === tab} tabIndex={view === tab ? 0 : -1} onKeyDown={event => tabKey(event, index)} onClick={() => chooseView(tab)}>{t(labels[tab])}</button>)}
     </div>
@@ -234,7 +235,6 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
         </div>
         <div ref={listRef} className={styles.catalogue}>
           {filtered.length ? view === "guided" ? <ul data-featured>{filtered.map(projectRow)}</ul> : projectAreas.filter(value => filtered.some(project => project.area === value)).map(value => <details className={styles.folder} key={value} open><summary><span className={styles.folderIcon} aria-hidden="true"><System7Icon kind="folder" miniature /></span> {archiveCopy.areas[value]} <small>{filtered.filter(project => project.area === value).length}</small></summary><ul>{filtered.filter(project => project.area === value).map(projectRow)}</ul></details>) : <div className={styles.empty}><p>{t("No projects match.")}</p><button className="s7-button" onClick={() => changeFilters("", "all")}>{t("Clear filters")}</button></div>}
-          {view === "guided" && !query && area === "all" && <article className={styles.latest}><h2>{t("Building on the run")}</h2><p>{t("A 44 km relay, a voice-built running app and a second-place finish.")}</p><button className="s7-button" onClick={() => onOpenApp("sidequest")}>{t("Read the RUN/HACK story")} ↗</button></article>}
         </div>
       </aside>
       <section ref={detailRef} id={`${id}-detail`} tabIndex={-1} className={styles.detailPane} aria-label={t("Project details")}>
