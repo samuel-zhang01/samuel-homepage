@@ -2106,7 +2106,7 @@
   }
 
   .appMenu button > span { grid-row: auto; }
-  .appMenu button small { display: none; }
+  .appMenu button small { display: block; }
 
   .sectionIntro { gap: 10px; }
   .sectionIntro h3 { font-size: var(--s7-heading); }
@@ -2207,7 +2207,9 @@
   .exerciseCard { padding: 14px 12px; }
   .appMenu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .appMenu button { grid-template-columns: var(--s7-icon-inline) minmax(0, 1fr); grid-template-rows: auto; gap: 7px; padding: 8px; text-align: left; }
-  .appMenu button strong { align-self: center; }
+  .appMenu button strong { align-self: end; grid-column: 2; }
+  .appMenu button small { grid-column: 2; }
+  .appMenu button > span { grid-row: 1 / 3; }
   .appMenu button:last-child { grid-column: 1 / -1; }
   .sectionIntro { display: grid; }
   .xpBadge, .deckCount, .meanBadge, .localBadge { justify-self: flex-start; }

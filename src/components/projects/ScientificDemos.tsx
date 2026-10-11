@@ -316,9 +316,9 @@ export function ReliabilityLabDemo() {
       appName="Reliability Laboratory"
       title="Calibration & Conformal Explorer"
       status="Executed results"
-      purpose="Show why a confident scientific model can still be unreliable, and how calibration and conformal sets expose that gap."
-      tryThis="Compare saved calibration results, then move the population in the synthetic coverage experiment."
-      watchFor="The recorded calibration trade-off stays visible. The separate shift experiment recomputes interval membership for forty outcomes."
+      purpose="I tested whether a model's confidence matches its mistakes, and how wide a prediction interval must be to cover more outcomes."
+      tryThis="Select 95% target coverage and compare its interval width with 80%."
+      watchFor="Covering more outcomes needs a wider range of possible answers. The saved coursework results and separate population-shift example show two different tests."
       statusTone="safe"
       className={styles.scientificWindow}
       footer={

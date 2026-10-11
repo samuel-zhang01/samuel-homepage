@@ -1261,4 +1261,6 @@ export const rlAtlasDemoCopy = {
   "25-module curriculum": ["25 个模块课程", "25 個模組課程"],
   "Curriculum materials": ["课程材料", "課程材料"],
   "Learning by consequences": ["从后果中学习", "從後果中學習"]
+,
+  "Review status": ["审查状态", "審查狀態"]
 } satisfies ProjectCopyTable;

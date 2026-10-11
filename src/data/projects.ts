@@ -43,11 +43,6 @@ export type ProjectDemoId =
   | "solubility-workflow"
   | "venture-reasoning";
 
-export type ProjectPhase = {
-  label: "Start small" | "Move forward" | "Polish";
-  text: string;
-};
-
 export type ProjectArtifact = {
   label: string;
   href: string;
@@ -70,7 +65,6 @@ export type Project = {
   /** Stable concept IDs from the knowledge graph; first ID determines its home cluster. */
   concepts?: string[];
   highlights: string[];
-  phases: ProjectPhase[];
   demo?: ProjectDemoId;
   sourceUrl?: string;
   sourceLicence?: "explicit-open-source" | "none-declared";
@@ -88,16 +82,6 @@ export type Project = {
 export function isInteractiveProject(project: Pick<Project, "demo" | "systemApp" | "access">) {
   return Boolean(project.demo || (project.access === "public-demo" && project.systemApp));
 }
-
-const phases = (
-  start: string,
-  move: string,
-  polish: string,
-): ProjectPhase[] => [
-  { label: "Start small", text: start },
-  { label: "Move forward", text: move },
-  { label: "Polish", text: polish },
-];
 
 export const projects: Project[] = [
   {
@@ -120,20 +104,6 @@ export const projects: Project[] = [
       "One batch for images, audio, video, documents and data",
       "Finder actions and per-category output formats",
       "Separate results while preserving original files"
-    ],
-    phases: [
-      {
-        label: "Start small",
-        text: "Build local conversion with a reviewed output format."
-      },
-      {
-        label: "Move forward",
-        text: "Add mixed batches and Finder actions."
-      },
-      {
-        label: "Polish",
-        text: "Refine saved formats, conversion rules and installation."
-      }
     ],
     demo: "ultra-convert",
     sourceUrl: "https://github.com/samuel-zhang01/UltraConvert/tree/53c7e55f3c7ff995a1d88637fa57c12e0237d0e3",
@@ -158,11 +128,6 @@ export const projects: Project[] = [
     tools: ["Python", "Tkinter", "FFmpeg / FFprobe", "Hardware encoding", "Offline desktop app"],
     concepts: ["products", "recovery", "local-first"],
     highlights: ["Software-decoded inspection and independent output verification", "GPU-qualified HEVC migration with software fallback", "Original-preserving recovery, migration and private resume", "Native GUI and CLI; platform qualification is still in progress"],
-    phases: phases(
-      "Build local video inspection and verified repair while preserving originals.",
-      "Add folder migration, processing profiles and qualified hardware encoding routes.",
-      "Develop native packages, interruption recovery and privacy-conscious diagnostics.",
-    ),
     demo: "videomate",
     privacyNote: "This browser walkthrough uses five invented files. The separate desktop app processes files locally; its public release is currently a source preview.",
     visual: "flow",
@@ -178,11 +143,6 @@ export const projects: Project[] = [
     detail: "Browse all 118 elements and explore their electron configurations through real angular orbital components. Phase colours show the wavefunction sign, while point clouds sample probability density. Radial plots and central slices connect the 3D shapes to the mathematics. The hydrogen-like model is educational; it does not calculate a full many-electron atom.",
     tools: ["TypeScript", "WebGL", "Web Workers", "Hydrogen-like orbitals"],
     highlights: ["118 elements with electron configurations", "ASCII, density and surface views", "Radial probability and model caveats"],
-    phases: phases(
-      "Build an interactive view of real angular orbital components.",
-      "Add electron configurations, probability density, radial plots and central slices.",
-      "Refine rotation, display performance, accessibility and export.",
-    ),
     systemApp: "orbitals", visual: "vision",
     privacyNote: "Calculations run in this browser. This is an educational atomic model, not a quantum-chemistry solver.",
   },
@@ -191,7 +151,6 @@ export const projects: Project[] = [
     eyebrow: "EIGHT QUICK PAGES", summary: "Jot something down, turn the page and find it here next time.",
     detail: "Eight ruled pages save notes in this browser. Insert the date, export a text copy, or include the notebook in a Desk Accessories backup.",
     tools: ["TypeScript", "Local storage", "Text export"], highlights: [],
-    phases: [],
     systemApp: "notepad", visual: "book", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -199,7 +158,6 @@ export const projects: Project[] = [
     eyebrow: "INK WITHOUT THE MESS", summary: "Draw with mouse, trackpad or touch; undo freely and export a PNG.",
     detail: "A small drawing surface with ink colours, stroke sizes and undo. Pointer input works with mouse or touch, the drawing stays local, and PNG export turns a quick sketch into a file.",
     tools: ["TypeScript", "Canvas 2D", "Pointer Events"], highlights: [],
-    phases: [],
     systemApp: "sketch", visual: "vision", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -207,7 +165,6 @@ export const projects: Project[] = [
     eyebrow: "A TINY COMMAND CENTRE", summary: "Capture tasks, mark priorities and keep the list across visits.",
     detail: "A compact task list with priorities, completion controls and filters. Keep the next few jobs visible without turning a checklist into a project-management system.",
     tools: ["TypeScript", "Local storage", "Accessible forms"], highlights: [],
-    phases: [],
     systemApp: "tasks", visual: "grid", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -215,11 +172,6 @@ export const projects: Project[] = [
     eyebrow: "A FRIENDLIER ALARM CLOCK", summary: "Run a focus sprint, take a short break and keep a tiny daily tally.",
     detail: "A deadline-based focus timer with pause, reset and a daily completion tally. Elapsed time is derived from the clock rather than counting browser ticks; background tabs may still delay the audible alert.",
     tools: ["TypeScript", "Web Audio", "Deadline-based timing"], highlights: ["Focus and break presets", "Pause, resume and daily tally"],
-    phases: phases(
-      "Create a focus timer with work and break presets.",
-      "Add pause, resume and a daily completion tally.",
-      "Keep elapsed time tied to the clock and handle delayed background alerts.",
-    ),
     systemApp: "focus", visual: "chart", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -227,11 +179,6 @@ export const projects: Project[] = [
     eyebrow: "DATES WITH A MEMORY", summary: "Plan by day with a private note saved to this browser.",
     detail: "Browse months, return to today and attach a short note to a calendar date. Notes use local calendar dates and remain on this device; this is a day notebook, not an external calendar integration.",
     tools: ["TypeScript", "Local dates", "Local storage"], highlights: ["Month navigation and today shortcut", "Notes attached to local dates"],
-    phases: phases(
-      "Build a browsable monthly calendar.",
-      "Attach notes to local calendar dates and add a today shortcut.",
-      "Keep date notes across visits and include them in backups.",
-    ),
     systemApp: "calendar", visual: "grid", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -239,11 +186,6 @@ export const projects: Project[] = [
     eyebrow: "WITH PAPER TAPE", summary: "Make a quick calculation and keep the latest workings in view.",
     detail: "A four-function desk calculator with keyboard entry, memory controls and a paper tape of recent calculations. Copy the result and review earlier workings without leaving the desktop.",
     tools: ["TypeScript", "Keyboard input", "Local storage"], highlights: ["Keyboard and memory controls", "Paper tape and result copying"],
-    phases: phases(
-      "Build four-function calculation with keyboard entry.",
-      "Add memory controls and a paper tape of recent work.",
-      "Support copying results and preserving the tape.",
-    ),
     systemApp: "calculator", visual: "chart", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -251,11 +193,6 @@ export const projects: Project[] = [
     eyebrow: "MEASURE TWICE", summary: "Convert everyday length, mass, temperature and data units.",
     detail: "Choose a quantity, select source and destination units, swap the direction and copy the answer. Data sizes use decimal factors: one kilobyte is 1,000 bytes.",
     tools: ["TypeScript", "Unit conversion", "Accessible controls"], highlights: ["Length, mass, temperature and data", "Explicit decimal data units"],
-    phases: phases(
-      "Implement length, mass, temperature and data conversions.",
-      "Show conversions as the visitor types and support swapping units.",
-      "Make decimal data factors explicit and support copying results.",
-    ),
     systemApp: "converter", visual: "flow", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -263,11 +200,6 @@ export const projects: Project[] = [
     eyebrow: "COLOUR WITH CONTRAST", summary: "Build accessible palettes, check contrast and save favourite swatches.",
     detail: "Compare foreground and background colours, inspect the contrast ratio and keep favourite swatches. The result describes that colour pair; it is not an accessibility audit of an entire interface.",
     tools: ["TypeScript", "Relative luminance", "Local storage"], highlights: ["Foreground and background comparison", "Contrast ratio and saved swatches"],
-    phases: phases(
-      "Compare foreground and background colour pairs.",
-      "Calculate contrast and save useful swatches.",
-      "Refine keyboard controls and make the scope of each contrast result clear.",
-    ),
     systemApp: "palette", visual: "grid", privacyNote: "Saved locally in this browser; no account or cloud synchronisation. Export a backup before clearing browser data.",
   },
   {
@@ -283,11 +215,6 @@ export const projects: Project[] = [
     detail: "I founded COVERD to help recruiters review applications consistently while retaining the reasons behind each assessment. The product sits over an existing ATS and combines specialist review of skills, experience, domain knowledge, trajectory, communication and culture. Optional automated voice interviews add context, and the system returns a shortlist with supporting reasons for recruiter review.",
     tools: ["Multi-agent AI", "ATS integration", "Automated voice interviews", "Evidence synthesis", "Responsible AI"],
     highlights: ["Six specialist review dimensions", "CV review with optional voice interviews", "Reasoned shortlists within existing ATS workflows", "Recruiters retain decision authority"],
-    phases: phases(
-      "Test whether structured application review could make screening more consistent.",
-      "Develop specialist evaluation and company-aware voice interviews.",
-      "Integrate the review layer with ATS workflows and recruiter decisions.",
-    ),
     systemApp: "coverd",
     websiteUrl: "https://coverd.ai/",
     privacyNote: "Candidate records, production prompts and internal implementation remain private.",
@@ -306,11 +233,6 @@ export const projects: Project[] = [
     detail: "GROWMAT replaces a slow, conflict-prone workload spreadsheet with a connected planning system. Scheduled acquisition feeds PostgreSQL; a Julia service calculates workload and due-date projections; a Next.js scheduler supports governed edits; and Spotfire shows capacity, overdue work and future demand. The seven components support a two-hour calculation and visualisation cycle, with backup and recovery tooling for continued operation.",
     tools: ["Next.js", "Julia", "PostgreSQL", "Docker", "Dataiku", "Spotfire", "Ofelia"],
     highlights: ["7 interlinked components", "10 source datasets into 11 governed tables", "Two-hour calculation and visualisation refresh", "Daily backup with 180-day retention"],
-    phases: phases(
-      "Replace one slow, conflict-prone capacity workbook with a focused workload calculator.",
-      "Unify scheduled data acquisition, FTE/day modelling, job-level editing and capacity visualisation.",
-      "Containerise seven components, automate two-hour refreshes and add validation, recovery and long-term support.",
-    ),
     artifacts: [
       { label: "Open the original GROWMAT showcase PDF", href: "/GROWMAT%20Showcase%20External%20Highest%20Quality.pdf", kind: "PDF" },
     ],
@@ -330,11 +252,6 @@ export const projects: Project[] = [
     detail: "For my MSc thesis, I studied how an insurance broker could narrow a large set of possible insurers to a useful shortlist. I built models that learn from past placements, a view of historical lead shares, and tools for comparing policy wording. I tested what changes when the model can only use information available before a placement. The prototype keeps these views separate so the broker can understand their different purposes; its historical ranking results describe past lead selections, not a guarantee of future suitability.",
     tools: ["LightGBM / LambdaRank", "Python + FastAPI", "React + TypeScript", "Node / Express", "Temporal validation", "Empirical Bayes"],
     highlights: ["Temporal learning-to-rank for risk and market pairs", "Historical placement context and cold-start fallbacks", "Market-specific wording comparison", "Confidence, missing information and broker review"],
-    phases: phases(
-      "Define the placement decision, candidate-market identities and time-based evaluation.",
-      "Build ranking, historical placement and wording-analysis components.",
-      "Integrate the separate signals with confidence indicators and broker review.",
-    ),
     demo: "insurance-matching",
     privacyNote: "All displayed risks, markets and scores are fictional. Client placements, policy documents and trained models remain private.",
     visual: "network",
@@ -351,11 +268,6 @@ export const projects: Project[] = [
     detail: "I built a Python workflow that extracts job requirements, selects a pre-authored CV template and compiles a PDF with LaTeX. The browser demo uses fictional text to show which suggested changes the sample CV supports.",
     tools: ["Python", "NLP", "LaTeX", "Document generation"],
     highlights: ["Role-specific CV templates", "Job-language extraction and document compilation", "Interactive review of supporting experience"],
-    phases: phases(
-      "Extract the important requirements from one job description.",
-      "Select CV and cover-letter templates for different roles.",
-      "Add a browser companion with visible scoring and factual rewrite review.",
-    ),
     demo: "cv-keywords",
     privacyNote: "The demo uses invented text. Original CVs, applications and personal files are never shipped.",
     visual: "terminal",
@@ -373,11 +285,6 @@ export const projects: Project[] = [
     detail: "Ledger brings Lunch Flow bank feeds and read-only SnapTrade investment connections together with retained PDF and CSV statement history. Net worth combines bank balances, broker cash, holdings and credit debt without counting connected and imported accounts twice. Spending, transaction review, recurring-payment checks and planning turn that account history into useful decisions. The blue-themed demo showcases five bank and credit accounts and two trading platforms, Trading 212 and Moomoo, using fictional balances and transactions. Toggle accounts in net worth, inspect investment values, find price changes in regular bills or explore the import and transfer checks.",
     tools: ["FastAPI", "React", "SQLite", "Statement parsers", "Reconciliation", "Transfer matching"],
     highlights: ["Net worth across five bank and credit accounts","Two trading platforms: Trading 212 and Moomoo","Recurring bills, price changes and spending review","Fictional data with interactive account and investment filters"],
-    phases: phases(
-      "Parse one statement format and check its opening and closing balance.",
-      "Unify account feeds with deduplication, categories and transfer matching.",
-      "Build spending, recurring-payment and investment views with useful import diagnostics.",
-    ),
     demo: "finance",
     privacyNote: "The demo uses fictional transactions and account labels. No personal statements or bank identifiers are published.",
     visual: "chart",
@@ -396,11 +303,6 @@ export const projects: Project[] = [
     detail: "I built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The browser uses fictional calendars to make those scheduling decisions explorable. The reservation uses a canonical UTC key with a ten-minute expiry; a database overlap constraint provides a second safeguard against simultaneous bookings.",
     tools: ["FastAPI", "PostgreSQL", "React", "Microsoft Graph", "Redis", "Docker"],
     highlights: ["Four host-allocation modes", "Time-zone, daylight-saving and buffer-aware availability", "Reservations and final overlap checks", "Calendar events, invitations and booking-management links"],
-    phases: phases(
-      "Generate valid slots for an individual host across local working windows.",
-      "Add weighted Round Robin, Collective intersection and First Available union logic.",
-      "Harden timezone conversion, buffers, double-booking reservations, revalidation and release checks.",
-    ),
     demo: "scheduling",
     privacyNote: "The interactive example uses fictional people and calendars and sends no bookings or messages.",
     visual: "grid",
@@ -419,11 +321,6 @@ export const projects: Project[] = [
     detail: "I organised a 5,070-minute study plan into 56 daily agendas and 28 lesson hubs, supported by a 753-record content library. The portal combines exercises, vocabulary recall, writing, speech and recording work with progress across listening, reading, interaction, spoken production and writing. Local caching keeps practice usable offline, while revision checks help recover synchronisation conflicts. The browser uses example attempts to demonstrate the learning and recovery workflows; its task-coverage feedback is not a judgement of language correctness. The full product records actual study time, confidence and checkpoints alongside seven mastery dimensions. Four-way recall feedback updates review intervals, and a recoverable HTTP 409/rebase flow protects offline edits; daily SQLite backups and integrity checks support persistence.",
     tools: ["React 19", "TypeScript", "Vinext", "Cloudflare D1", "Drizzle ORM", "Spaced repetition"],
     highlights: ["56 days and 5,070 planned study minutes", "753 content records, including 211 exercises and 360 vocabulary cards", "Progress across five language skills", "Offline practice and conflict recovery"],
-    phases: phases(
-      "Organise the A1 course into dated daily work and lesson references.",
-      "Build bilingual practice, spaced recall and progress tracking.",
-      "Add offline persistence, conflict recovery and portable practice workbooks.",
-    ),
     demo: "italian-learning",
     artifacts: [
       { label: "Open the Italian practice workbook", href: "/projects/parliamo/practice-workbook.pdf", kind: "PDF" },
@@ -445,11 +342,6 @@ export const projects: Project[] = [
     detail: "I built a four-step course finder with React and FastAPI to turn a learner’s preferences into a shortlist. The early prototype filtered courses but shuffled their order at random. This demo puts that behaviour beside a simple weighted ranking: change the importance of cost, time or subject fit and see why a course moves. It explains the design question I was working on: what makes a recommendation useful to the person receiving it?",
     tools: ["React", "FastAPI", "PostgreSQL", "Redis / RQ", "Docker Compose", "Explainable scoring"],
     highlights: ["Four-step learner-preference flow", "Six example courses with preference filters", "Repeatable random and weighted comparisons", "Visible score contributions and sensitivity to one changed preference"],
-    phases: phases(
-      "Build a preference wizard over a small example course catalogue.",
-      "Connect the product concept to API, database and background-job services.",
-      "Add explainable scoring experiments and inspect how preferences change the course order.",
-    ),
     demo: "course-recommender",
     sourceUrl: "https://github.com/samuel-zhang01/Demo-Course-Recommender/tree/f80fa51ccd7f847521fed87dd54c647a989c1c9a",
     sourceLicence: "none-declared",
@@ -469,11 +361,6 @@ export const projects: Project[] = [
     detail: "I wrote a 25-module reinforcement-learning curriculum with runnable notebooks and worked examples. It starts with learning which option to choose, then moves to agents that plan ahead and language models that learn from preferences. Here you can train an agent to cross a cliff-side grid and see why two algorithms learn different routes. My small-model fine-tuning experiment answered 19 of 32 held-out synthetic prompts correctly, compared with 0 before training; that measures exact answers on this exercise.",
     tools: ["PyTorch", "Jupyter", "Gymnasium", "LaTeX", "LoRA", "SFT", "DPO", "pytest"],
     highlights: ["25 modules with executable notebooks and teaching guides", "64 worked examples and 75 self-checks", "Live Q-learning, SARSA, LoRA and DPO exercises", "32 recorded before-and-after fine-tuning answers"],
-    phases: phases(
-      "Build executable foundations for bandits, dynamic programming and temporal-difference learning.",
-      "Extend into deep value, policy, offline, multi-agent and model-based methods.",
-      "Connect language-model post-training and safety questions to applied decision exercises.",
-    ),
     demo: "rl-atlas",
     artifacts: [{ label: "Curriculum syllabus", href: "/projects/study-rl/syllabus.pdf", kind: "PDF" }],
     visual: "book",
@@ -491,11 +378,6 @@ export const projects: Project[] = [
     detail: "This companion to STUDY-RL turns exploration and exploitation into a step-by-step experiment. Visitors replay seeded Bernoulli or Gaussian reward environments, inspect policy choices and updated estimates, and compare epsilon-greedy, UCB1 and Thompson Sampling across twelve paired synthetic runs. Separate regret traces distinguish the expected cost of an action from the noise in the realised rewards. The calculation keeps action-path pseudo-regret separate from realised counterfactual regret, with forced initial observations and incremental value updates available step by step.",
     tools: ["Reinforcement learning", "Epsilon-greedy", "UCB1", "Thompson Sampling", "TypeScript"],
     highlights: ["Step through seeded policy decisions", "Compare expected and realised reward gaps", "Twelve paired policy-comparison runs", "Inspect estimates and updates after each action"],
-    phases: phases(
-      "Build a reproducible multi-armed bandit environment.",
-      "Expose policy choices, rewards, estimates and regret after each step.",
-      "Compare three exploration policies across repeated paired runs.",
-    ),
     demo: "bandits",
     privacyNote: "All arms, probabilities and rewards are fictional and generated locally for learning.",
     visual: "chart",
@@ -513,11 +395,6 @@ export const projects: Project[] = [
     detail: "I built a custom CNN and adapted ResNet18, ResNet34, MobileNetV3 and ViT to predict 40 pitch–roll classes or a continuous depth value from 224×224 images. The developed residual CNN has 4,154,856 pose-classification parameters. The interactive architecture view follows features through each model and changes the output head between tasks. Saved microscopy, pose predictions and Grad-CAM maps help explain the results. The original image-level split can mix related frames between training and testing; a fictional sequence exercise shows why unseen recordings provide a stronger evaluation. The model atlas distinguishes partially pretrained and newly initialised layers, and compares declared tensor shapes and parameter counts with older saved checkpoints.",
     tools: ["PyTorch", "ResNet", "MobileNet", "ViT", "Grad-CAM"],
     highlights: ["Custom residual CNN and four pretrained-model adaptations", "40 orientation classes and continuous depth estimation", "Interactive model stages, shapes and parameter counts", "Same-image pose/depth Grad-CAM comparison"],
-    phases: phases(
-      "Build CNN baselines for orientation classification and depth regression.",
-      "Train and compare adapted ResNet, MobileNet and transformer models.",
-      "Inspect errors, learned features and Grad-CAM maps, and examine the effect of correlated frames.",
-    ),
     demo: "microrobot-vision",
     privacyNote: "Selected recorded microscopy and response maps are shown alongside illustrative diagrams. Full datasets and trained weights remain private.",
     visual: "vision",
@@ -537,11 +414,6 @@ export const projects: Project[] = [
     detail: "I designed a four-level residual U-Net with three learnable soft data-consistency steps for retrospectively undersampled cardiac MRI. The study compares MC-dropout and deep ensembles, tests adversarial perturbations and MR-to-CT shift, and measures the effect on eight-class segmentation. At R=4×, the reported reconstruction reaches 31.90 dB PSNR and 0.889 SSIM. Synthetic browser experiments connect acquisition budget, error distribution and uncertainty ranking to the resulting measures. Training used Optuna-selected loss and dropout settings; robustness tests include single-step FGSM and iterative PGD attacks, measured against the zero-filled baseline.",
     tools: ["PyTorch", "U-Net", "FFT / k-space", "MC Dropout", "Deep Ensembles", "Optuna"],
     highlights: ["7,756,580-parameter residual U-Net + three soft-DC scalars", "31.90 dB PSNR and 0.889 SSIM at R=4×", "Soft-DC ablation causes an 8.1 dB collapse", "Ensemble ECE 0.017; MC Dropout error correlation r=0.590", "92% downstream Dice preservation at R=4×"],
-    phases: phases(
-      "Simulate single-coil Cartesian undersampling and establish an initial reconstruction baseline.",
-      "Train a residual U-Net with tuned loss, dropout and three data-consistency steps.",
-      "Evaluate uncertainty, robustness, distribution shift and downstream segmentation.",
-    ),
     demo: "mri-trust",
     sourceUrl: "https://github.com/samuel-zhang01/IX-Medical-Imaging/tree/93bc9cd3e1175ed08a6d99a3443bdec3f1214f1e",
     sourceLicence: "none-declared",
@@ -562,11 +434,6 @@ export const projects: Project[] = [
     detail: "I completed and trained three neural approaches to predicting velocity and pressure. The Fourier operator maps ten input frames to ten future frames, MeshGraphNet predicts repeatedly on the original mesh, and U-Net predicts the next rasterised field. The browser explains their representations with an animated Fourier walkthrough, graph processors and selectable skip connections. Saved GNN sequences include 20 rollout frames and 30 simulation frames showing horizontal velocity, vertical velocity and pressure. Runs use different evaluation conditions, including a shifted U-Net result, so they do not form a common accuracy ranking. The architecture atlas also reconciles tensor shapes and checkpoint compatibility, keeping saved results attached to the implementation and evaluation conditions that produced them.",
     tools: ["PyTorch", "FNO", "MeshGraphNet", "U-Net", "CFD"],
     highlights: ["Baseline FNO: 3.99M parameters, relative L2 0.0163", "MeshGraphNet: 8,323 parameters, relative L2 0.0165", "U-Net: 50.54M parameters and a separate shifted evaluation", "Vertical-velocity playback and same-sequence frame comparison", "Residual and multi-scale Fourier design experiments"],
-    phases: phases(
-      "Prepare velocity and pressure fields for learned prediction.",
-      "Train spectral, mesh and grid-based models and explore their representation choices.",
-      "Inspect predicted fields, repeated-step error and sensitivity to unfamiliar flow conditions.",
-    ),
     demo: "cfd-surrogates",
     privacyNote: "Selected recorded fields and model diagrams are available here. Full simulation datasets and trained weights remain private.",
     preview: {
@@ -589,11 +456,6 @@ export const projects: Project[] = [
     detail: "I used 7,674 ambient observations to predict CO(GT) from eleven sensor and environmental signals. Imputation and scaling were fitted on the training partition before comparing OLS, Ridge, LASSO and polynomial and RBF kernel models. A later exercise connects selected signals with assumed hardware prices. The browser presents the five recorded models and lets visitors explore sensor-cost and interpretability choices. The random 80/20 split does not establish performance at a future time or a new site.",
     tools: ["scikit-learn", "KNN imputation", "Ridge / LASSO", "Kernel ridge", "Data preparation"],
     highlights: ["7,674 observations: 6,139 training and 1,535 test", "Training-only imputation and scaling", "Five regression-model comparisons", "Illustrative sensor-cost and interpretability trade-offs"],
-    phases: phases(
-      "Clean missing measurements and establish an OLS baseline with stated assumptions.",
-      "Compare regularisation and nonlinear models under cross-validation.",
-      "Translate error curves into a cost-conscious sensor recommendation.",
-    ),
     demo: "air-quality",
     privacyNote: "Recorded coursework results and illustrative cost assumptions are labelled separately. Raw observations are not included.",
     visual: "chart",
@@ -611,11 +473,6 @@ export const projects: Project[] = [
     detail: "I compared logistic and kernel classifiers, ROC behaviour and an expected-cost threshold model on 10,000 labelled network-flow rows. The work illustrates how operational priorities change the alert threshold. Later review found 4,904 duplicate rows beyond their first occurrence and 54.2% exact test-to-training overlap, alongside preprocessing and threshold-selection leakage. The recorded curves therefore explain the historical workflow, but require a clean, separate evaluation before they can support a detection-performance claim. A valid rerun needs deduplication or grouped splitting, transforms fitted only on training data, threshold choice on validation data and an untouched final test.",
     tools: ["scikit-learn", "Data analysis", "Logistic regression", "SVM", "ROC analysis"],
     highlights: ["10,000 labelled network-flow examples", "Logistic and kernel classifier comparison", "False-alarm versus missed-attack cost controls", "Evaluation limitations made clear alongside the results"],
-    phases: phases(
-      "Explore labelled network flows and build classification baselines.",
-      "Compare ROC curves and thresholds under different error costs.",
-      "Identify duplicate leakage and specify separate training, validation and final-test evaluation.",
-    ),
     demo: "cyber-threshold",
     privacyNote: "The historical results are not a validated operational detector. Duplicate handling and a clean evaluation are needed before using its performance estimates.",
     visual: "chart",
@@ -633,11 +490,6 @@ export const projects: Project[] = [
     detail: "Ridge spreads shrinkage across the coefficients, while LASSO can set some coefficients to zero. In the air-quality study, the recorded choices were Ridge alpha 8.6975 and LASSO alpha 0.0010, with ten of eleven LASSO features retained. The browser uses a simpler orthonormal synthetic design so visitors can follow the exact shrinkage and soft-threshold calculations as the penalty changes.",
     tools: ["Python", "Jupyter", "scikit-learn", "Data visualisation"],
     highlights: ["Interactive Ridge and LASSO coefficient paths", "Exact shrinkage in a controlled example", "Connection to the recorded air-quality model comparison"],
-    phases: phases(
-      "Study coefficient instability and overfitting in regression.",
-      "Compare L1 and L2 penalties and their effect on retained features.",
-      "Build a controlled interactive example that connects the equations to the coefficient paths.",
-    ),
     demo: "regularisation",
     visual: "chart",
   },
@@ -653,11 +505,6 @@ export const projects: Project[] = [
     detail: "My computational study moves from bootstrap and Bayesian uncertainty to temperature scaling and split-conformal prediction. Temperature scaling reduced ECE from 0.03994 to 0.03792 but slightly worsened test negative log-likelihood, showing that calibration measures can disagree. A recorded exchangeable-data experiment achieved 95.75% empirical coverage. The interactive companion explores why changing the input distribution can break that coverage guarantee.",
     tools: ["PyTorch", "Bayesian modelling", "Calibration", "Conformal prediction"],
     highlights: ["ECE 0.03994 → 0.03792", "95.75% empirical coverage under exchangeability", "Covariate-shift limitation made explicit"],
-    phases: phases(
-      "Explore predictive uncertainty through bootstrap and Bayesian examples.",
-      "Compare probability calibration and prediction-set methods.",
-      "Test where distribution shift and differing reliability measures limit their use.",
-    ),
     demo: "reliability",
     visual: "grid",
   },
@@ -675,11 +522,6 @@ export const projects: Project[] = [
     detail: "I co-developed a study with Miltiades Georgantzis and Sulieman Ibsais, combining isotonic-calibrated XGBoost, sequential Bayesian uncertainty and a confidence-or-entropy deferral rule. A CVaR-aware threshold score considers the worst retained losses as well as average performance. The reported operating point gives 89.5% system accuracy at 64% coverage. Fictional claims in the browser let visitors inspect the arithmetic and the small tail sample; they do not provide independent validation.",
     tools: ["XGBoost", "Bayesian KDE", "Isotonic calibration", "Learning to defer", "CVaR"],
     highlights: ["89.5% reported system accuracy at 64% coverage", "Adjustable confidence and uncertainty deferral", "Inspect the 13-sample CVaR tail", "Compare automated coverage with human-review volume"],
-    phases: phases(
-      "Separate an automated prediction from the option to request human review.",
-      "Combine Bayesian uncertainty, calibrated confidence and retained-loss CVaR.",
-      "Compare coverage and tail risk, and explain the limits of the small evaluation sample.",
-    ),
     demo: "deferral-risk",
     sourceUrl: "https://github.com/samuel-zhang01/IX-Safety-Latex/tree/00c5099469c98fb6271a1754d6cf565963df898a",
     sourceLicence: "none-declared",
@@ -699,11 +541,6 @@ export const projects: Project[] = [
     detail: "The first chapter uses twelve synthetic observations to explain confounding, collider bias, adjustment and overlap in a treatment-effect question. The second adapts the STUDY-RL policy-evaluation methods to 24 synthetic logged decisions with known action probabilities. Visitors compare IPS, SNIPS, Direct, doubly robust and SWITCH-DR estimates, then change the target policy, overlap and weight clipping. Effective sample size and per-row weights show when a result depends heavily on only a few observations. The recorded policy-evaluation methods come from STUDY-RL Week 11 and fit one ridge reward model per action. The interactive SWITCH threshold controls when the doubly robust correction is replaced by the direct model estimate.",
     tools: ["Causal DAGs", "Hájek IPW", "IPS / SNIPS", "Direct / DR / SWITCH-DR", "Effective sample size"],
     highlights: ["Clickable confounder and collider paths", "Separate logged and proposed policies", "Five off-policy value estimators", "Inspect overlap, clipping and effective sample size"],
-    phases: phases(
-      "Frame a concrete intervention question and identify confounding.",
-      "Estimate a treatment effect with appropriate adjustment and overlap checks.",
-      "Compare policy-value estimators using logged action probabilities and controlled synthetic examples.",
-    ),
     demo: "causal-ope",
     privacyNote: "All observations and logged decisions in the browser are synthetic teaching examples.",
     visual: "network",
@@ -721,11 +558,6 @@ export const projects: Project[] = [
     detail: "I wrote this Imperial reflection to understand why useful ideas sometimes stall inside large companies. I compared four arrangements for ownership and funding, then related them to my experience developing automation at Pfizer. My main argument is that time matters too: an idea needs support long enough to become something people can use. The interactive matrix lets you explore the four arrangements before reading my original diagram.",
     tools: ["Innovation strategy", "Organisational ambidexterity", "Corporate entrepreneurship", "Portfolio concentration", "Scenario modelling"],
     highlights: ["Interactive ownership and resource-authority matrix", "Four organisational models", "100-token innovation portfolio", "Transition questions about evidence, integration and runway"],
-    phases: phases(
-      "Connect disruption and exploration with organisational design.",
-      "Compare four structures by ownership and resource authority.",
-      "Develop fictional allocation and transition scenarios to test the ideas.",
-    ),
     demo: "innovation-models",
     privacyNote: "The interactive organisations and projects are fictional. Original assessed prose remains private.",
     visual: "book",
@@ -744,11 +576,6 @@ export const projects: Project[] = [
     detail: "I wrote and critiqued venture proposals to understand how customer demand, a route to market and a funding request fit together. This companion makes the arithmetic tangible: choose an example business, change its customer conversion and spending, and see how many months it has to reach a milestone. The example businesses are invented so you can explore the reasoning without needing a finance background.",
     tools: ["Venture critique","Market sizing","Runway modelling"],
     highlights: ["Six venture claims with adjustable supporting evidence", "Bottom-up market and customer-pipeline calculations", "Funding, runway and milestone comparison", "Three fictional business scenarios"],
-    phases: phases(
-      "Challenge the proposal’s customer, cost and funding assumptions.",
-      "Test the proposal’s demand, traction, specificity and investor relevance.",
-      "Build fictional scenarios that connect customer assumptions and funding to a milestone.",
-    ),
     demo: "venture-reasoning",
     privacyNote: "All businesses, claims and numeric inputs in the demo are fictional. Original assessed work and real venture details remain private.",
     visual: "chart",
@@ -766,11 +593,6 @@ export const projects: Project[] = [
     detail: "I used Julia and Clapeyron to calculate fluid properties and phase equilibrium from a molecular model called PC-SAFT. The question is simple: how do the size of molecules and their attraction to each other change a liquid or gas? Here you can change those assumptions and see the pressure curve respond. The example fluids illustrate the equations; the original Julia work also explores mixtures and critical points.",
     tools: ["Julia", "Clapeyron.jl", "PC-SAFT", "Jupyter", "PyPlot", "Numerical thermodynamics"],
     highlights: ["Julia workflows for bulk properties and phase equilibrium", "Hard-chain and dispersion energy contributions", "Interactive binary-mixture sensitivity", "Pressure–density curves with typeset equations"],
-    phases: phases(
-      "Build Julia workflows for bulk properties and compare equations of state.",
-      "Extend the calculations to phase equilibrium and critical behaviour.",
-      "Create an interactive non-associating PC-SAFT example with visible equations and assumptions.",
-    ),
     demo: "thermodynamics",
     privacyNote: "The browser uses invented fluid parameters and publicly attributed equations. Compound-specific research and experimental data remain private.",
     visual: "chart",
@@ -788,11 +610,6 @@ export const projects: Project[] = [
     detail: "I built Julia calculations for solid–liquid equilibrium: how much of a solid can dissolve in a solvent at a given temperature. The workflow combines melting properties with liquid interactions, then converts the answer into units a laboratory can use. In this demo, warm an example mixture and watch both the dissolved fraction and mg per gram of solvent change. You can also fit a few example measurements and check whether the model predicts the remaining ones.",
     tools: ["Julia", "Clapeyron.jl", "SolidHfus", "Margules activity model", "Numerical root finding", "TypeScript / React"],
     highlights: ["Activity-corrected equilibrium calculation", "Visible root-finding convergence", "Mole fraction and mg per gram of solvent conversion", "Fictional calibration and holdout experiment"],
-    phases: phases(
-      "Combine fusion-property and liquid-phase models in an equilibrium workflow.",
-      "Convert model concentrations into the reporting units used for observations.",
-      "Create an invented-compound example with visible convergence and separate fitting and holdout checks.",
-    ),
     demo: "solubility-workflow",
     privacyNote: "The example uses invented compounds, parameters and observations. It demonstrates the method without publishing private experimental results or claiming predictive validation.",
     visual: "chart",
@@ -810,11 +627,6 @@ export const projects: Project[] = [
     detail: "I analysed molecular shapes by combining conformational searches, theoretical spectra and 2–8 GHz microwave measurements. The study considered more than 20 Exaltenone and more than 30 Muscone conformations. In this browser I use example spectra and structures to explain how matching spectral lines helps distinguish candidate shapes.",
     tools: ["CP-FTMW spectroscopy", "MATLAB", "Conformer search", "Spectral assignment"],
     highlights: ["Co-authored research presented at ISMS 2025", "Conformer search and 2–8 GHz rotational spectroscopy", "20+ Exaltenone and 30+ Muscone conformations reported by the group", "Interactive spectral matching and conformer views"],
-    phases: phases(
-      "Map plausible macrocycle conformations and predict relative energies and spectroscopic parameters.",
-      "Acquire 2–8 GHz CP-FTMW spectra and compare experimental observations with theoretical fingerprints.",
-      "Identify candidate structures; the 2025 public record reports 20+ Exaltenone and 30+ Muscone conformations across the group study.",
-    ),
     demo: "molecular-recognition",
     artifacts: [{
       label: "2025 ISMS conference record",
@@ -837,11 +649,6 @@ export const projects: Project[] = [
     detail: "I built a small MATLAB App Designer utility because preparing spectroscopy figures meant repeating the same plotting steps. It lets me set labels and colours, move to an exact frequency window and export a high-resolution figure. The browser reproduces those controls with a generated spectrum. Try panning across it to understand how I inspect a dense measurement without redrawing the whole plot.",
     tools: ["MATLAB App Designer", "MATLAB exportgraphics", "Scientific visualisation", "Desktop GUI"],
     highlights: ["Single two-column numeric trace workflow", "Fine/coarse centring plus ±0.1/10/100 MHz pan", "PNG/JPG/TIF/PDF/EPS export with 600-DPI default", "Responsive two-panel desktop layout"],
-    phases: phases(
-      "Load one two-column instrument export and map frequency against signal strength.",
-      "Add titles, labels, grid, legend, colour selection and exact frequency-window navigation.",
-      "Package a responsive App Designer interface with high-resolution multi-format export.",
-    ),
     demo: "spectroscopy",
     sourceUrl: "https://github.com/samuel-zhang01/CPROT-Spec-Fast-Plotter/tree/9c6496d7b3c9f67dad163bf6f289de5e22ed3fd0",
     sourceLicence: "none-declared",
@@ -861,11 +668,6 @@ export const projects: Project[] = [
     detail: "I built a Bash installer that detects the host and accelerator, creates a Python 3.13 Conda environment and installs a scientific package set with PyTorch, TensorFlow and the Hugging Face CLI. Platform-specific routes and fallbacks are followed by import and device checks. The browser planner lets visitors choose example hosts, simulate installation failures and compare more cautious architecture and verification checks. It runs no installer and does not guarantee current compatibility for every historical package route. The historical target manifest contains 19 core-package targets, four framework targets and one CLI target. Failure injection shows how fallback branches and Bash set -e affect completion, while the comparison view adds manifest and runtime-device checks.",
     tools: ["Bash", "Conda", "PyTorch", "TensorFlow", "CUDA / MPS", "Dependency management"],
     highlights: ["OS, architecture and accelerator-aware setup", "PyTorch and TensorFlow installation fallbacks", "Scientific packages and Hugging Face CLI", "Simulated failures and import/device verification"],
-    phases: phases(
-      "Automate creation of a Conda environment and scientific package set.",
-      "Add platform and accelerator-specific framework installation routes.",
-      "Build an interactive planner to explain fallbacks and verification without changing the visitor’s machine.",
-    ),
     demo: "dl-environment",
     privacyNote: "The planner uses fictional host profiles and performs no installation, system probing or network requests.",
     visual: "terminal",
@@ -883,11 +685,6 @@ export const projects: Project[] = [
     detail: "I configured WSL 2, CUDA, NVIDIA Container Toolkit and Docker, then completed a containerised GROMACS topology-preparation step on a small tutorial structure. The work documents how the environment layers fit together and the preparation stage reached. It does not include a completed molecular-dynamics run or a simulation-performance result. The completed preprocessing command is gmx pdb2gmx. The retained record lacks a pinned container image, run protocol and trajectory or energy outputs, so it documents setup progress rather than a reproducible end-to-end simulation.",
     tools: ["GROMACS", "CUDA", "WSL 2", "Docker", "NVIDIA Container Toolkit"],
     highlights: ["WSL 2, CUDA and container setup", "Containerised GROMACS topology preparation", "Documented environment and preprocessing workflow"],
-    phases: phases(
-      "Configure the Windows/Linux, GPU and container prerequisites.",
-      "Run GROMACS topology preparation in the container.",
-      "Document the completed setup and the further work needed for a full simulation.",
-    ),
     sourceUrl: "https://github.com/samuel-zhang01/WSL-GROMACS-Docker/tree/88628f1cccdab28b2b8f9a821f7809496046df99",
     sourceLicence: "none-declared",
     privacyNote: "This is an environment-setup case study. The linked public notes have no explicit licence.",
@@ -907,11 +704,6 @@ export const projects: Project[] = [
     detail: "I run a containerised home lab for my applications, databases, automation and backups. I built it to keep services under my control and to understand what happens when one dependency fails. This demo shows a small example of that setup: stop its database, follow the services that lose their connection, then explore how backup size and retention affect storage. The example explains the design without exposing my live machines or configuration.",
     tools: ["Docker Compose", "PostgreSQL", "Ofelia", "Shell", "Dependency graphs"],
     highlights: ["Six-service interactive topology", "Dependency tracing and simulated failures", "Scheduled database backups and restore tooling", "Backup-capacity and retention experiments"],
-    phases: phases(
-      "Containerise the initial services and their persistent storage.",
-      "Connect application, data and operations services through a shared network.",
-      "Add scheduled backups and restore tooling, then examine recovery and monitoring gaps.",
-    ),
     demo: "home-lab-topology",
     systemApp: "lab",
     privacyNote: "The demo uses fictional service names and exposes no private addresses or credentials. It is a topology and recovery-planning example, not live monitoring.",
@@ -930,11 +722,6 @@ export const projects: Project[] = [
     detail: "I wrote a simulation in which five traders act across ten loops per day, producing 50 buy/sell events. Perturbed sentiment affects direction, quantity scales the random impact and a $0.01 floor limits sell-side price changes. The browser adds seeded replay, price and volume traces, and a comparison between the original partial-day statistics and a corrected full-day window. It illustrates the chosen event rules rather than predicting a real market. Before applying direction and the price floor, the requested impact is quantity × a sampled random value × an impact coefficient. The original daily statistics use ten saved prices, covering nine transitions; the corrected window uses all 50 transitions in the day.",
     tools: ["Julia", "Random / Statistics", "Plots", "TypeScript / React"],
     highlights: ["50 buy/sell events per simulated day", "Adjustable sentiment and quantity-scaled impact", "Seeded price and volume replay", "Partial-day versus full-day statistics"],
-    phases: phases(
-      "Define a single-stock stochastic price and sentiment model.",
-      "Record price, volume, order direction and summary statistics.",
-      "Add repeatable browser experiments and correct the daily statistics window.",
-    ),
     demo: "stock-market-engine",
     privacyNote: "All prices, traders and transactions are synthetic. The simulator is an educational model, not investment advice or a market forecast.",
     visual: "chart",
@@ -951,11 +738,6 @@ export const projects: Project[] = [
     detail: "During national service, I built decision support from public epidemiological information and automated parts of emergency-operations workflows. The work connected changing data with planning and activation needs under time pressure. Only the public contribution and outcome-level context are shared.",
     tools: ["Decision support", "Statistical modelling", "Workflow automation", "Operations"],
     highlights: ["Public-data analysis for emergency operations", "Planning and activation workflow automation", "High-pressure operational use"],
-    phases: phases(
-      "Replace one repetitive planning calculation with a controlled model.",
-      "Join forecasts with cross-system activation workflows.",
-      "Operationalise the system for high-pressure, repeatable use.",
-    ),
     privacyNote: "Operational and personnel details are not published.",
     visual: "grid",
   },
@@ -972,11 +754,6 @@ export const projects: Project[] = [
     detail: "I completed and extended scientific-computing notebooks covering Lennard-Jones Metropolis sampling, ideal and self-avoiding polymer walks, velocity-Verlet dynamics, basis-set convergence and cation–π energies. Later Julia and React experiments extend that work. The browser lets visitors replay a seeded sampler, rotate three polymer models, step through a four-particle periodic trajectory and inspect energy drift, then compare recorded quantum-chemistry calculations. The polymer comparison separates the archived ideal-chain sampler, an isotropic control and self-avoiding lattice walks. The dynamics example uses periodic minimum-image distances with velocity-Verlet updates.",
     tools: ["Python", "Julia", "Jupyter", "Monte Carlo", "Molecular simulation concepts", "React"],
     highlights: ["Seeded Lennard-Jones Metropolis sampling", "Three rotatable polymer models", "Velocity-Verlet trajectory and energy-drift inspection", "Basis-set and cation–π energy comparisons"],
-    phases: phases(
-      "Complete scientific-computing exercises in sampling, polymers, dynamics and quantum chemistry.",
-      "Extend the work with Julia polymer generation and a React sampling experiment.",
-      "Build interactive calculations that connect the numerical updates with their physical meaning.",
-    ),
     demo: "chemistry-coding",
     systemApp: "experience",
     privacyNote: "The browser uses newly implemented calculations and selected recorded numerical results. Course exercises and methods retain their attribution; assessed materials remain private.",

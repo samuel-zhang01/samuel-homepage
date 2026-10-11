@@ -199,6 +199,7 @@ try {
     const p = await page("/en-gb/projects?view=files");
     await p.locator('[data-project-slug="cv-keyword-automator"]').click();
     await p.getByRole("button", { name: "Open interactive demo", exact: false }).first().click();
+    await p.locator("#cv-studio-tab-inputs").click();
     const editor = p.locator('[aria-describedby="cv-studio-cv-help"]');
     await editor.fill("CV DRAFT SURVIVES WINDOW FOCUS");
     await p.locator("#cv-studio-tab-output").click();
@@ -217,7 +218,7 @@ try {
       await p.waitForTimeout(500);
       const detail = app(p, "projectActivity").locator(".mac-window__content");
       const bounds = await detail.boundingBox();
-      const title = await p.getByRole("heading", { name: "Role-tailored CV build lab", exact: true }).boundingBox();
+      const title = await p.getByRole("heading", { name: "Tailor a CV to a role", exact: true }).boundingBox();
       const action = await p.getByRole("button", { name: "Restore sample", exact: true }).boundingBox();
       assert.ok(title.y >= bounds.y && title.y + title.height <= bounds.y + bounds.height, `Title visible at ${size.width}`);
       assert.ok(action.y >= bounds.y && action.y + action.height <= bounds.y + bounds.height, `Demo action visible at ${size.width}: ${JSON.stringify({ action, bounds })}`);
@@ -239,6 +240,7 @@ try {
       await p.setViewportSize({ width: 320, height: 568 });
       await p.locator('[data-embedded="true"] > nav button.is-primary').first().click();
       const experiment = app(p, "projectActivity").locator("[data-locale]");
+      await experiment.locator("#cv-studio-tab-inputs").click();
       await experiment.locator('[aria-describedby="cv-studio-cv-help"]').waitFor();
       await p.waitForTimeout(500);
       const pane = await app(p, "projectActivity").locator(".mac-window__content").boundingBox();
@@ -251,40 +253,37 @@ try {
       await p.close();
     }
   });
-  await check("Project explanations and results are visible without opening a disclosure in all four locales", async () => {
+  await check("Project purpose and action are visible before optional method details in all four locales", async () => {
     for (const [locale, labels] of [
-      ["en-gb", ["Implementation notes", "The problem", "Who it helps", "The aim", "How it works", "Development", "Results and capabilities"]],
-      ["en-us", ["Implementation notes", "The problem", "Who it helps", "The aim", "How it works", "Development", "Results and capabilities"]],
-      ["zh-cn", ["实现说明", "要解决的问题", "适用人群", "项目目标", "工作流程", "开发过程", "成果与功能"]],
-      ["zh-tw", ["實作說明", "要解決的問題", "適用對象", "專案目標", "運作流程", "開發過程", "成果與功能"]],
+      ["en-gb", ["What I built", "Why I built it", "Try it", "How it works", "What it can do"]],
+      ["en-us", ["What I built", "Why I built it", "Try it", "How it works", "What it can do"]],
+      ["zh-cn", ["我做了什么", "我为什么做这个项目", "动手试试", "工作流程", "它能做什么"]],
+      ["zh-tw", ["我做了什麼", "我為什麼做這個專案", "動手試試", "運作流程", "它能做什麼"]],
     ]) {
       for (const slug of ["cv-keyword-automator", "trustworthy-mri-reconstruction", "growmat"]) {
         for (const size of [{ width: 1440, height: 1000 }, { width: 320, height: 568 }]) {
           const p = await page(`/${locale}/projects?project=${slug}`, size);
           const acknowledge = p.getByRole("button", { name: /^(Got it|知道了|明白了|了解了)$/ });
           if (size.width === 320) await acknowledge.click();
-          const notes = app(p, "project").getByRole("region", { name: labels[0], exact: true });
-          await notes.waitFor();
-          if (slug === "trustworthy-mri-reconstruction") {
-            const figureDescription = locale === "zh-cn" ? "来自公开研究仓库的已保存重建图" : locale === "zh-tw" ? "來自公開研究儲存庫的已儲存重建圖" : "a saved reconstruction figure from the public study repository";
-            assert.equal(await app(p, "project").getByText(figureDescription, { exact: false }).isVisible(), true);
-            assert.equal((await app(p, "project").innerText()).includes("contains no patient images"), false);
+          const project = app(p, "project");
+          const opening = project.getByRole("region", { name: labels[0], exact: true });
+          await opening.waitFor();
+          assert.equal(await opening.evaluate(element => element.tagName), "SECTION");
+          assert.equal(await opening.locator("details, summary").count(), 0);
+          assert.ok((await opening.locator("p").innerText()).trim().length > 0);
+          for (const label of slug === "growmat" ? [labels[4]] : [labels[1], labels[2], labels[4]]) {
+            assert.equal(await project.getByRole("heading", { name: label, exact: true }).isVisible(), true);
           }
-          assert.equal(await notes.evaluate(element => element.tagName), "SECTION");
-          assert.equal(await notes.locator("details, summary").count(), 0);
-          const required = slug === "growmat" ? labels.slice(5) : labels.slice(1);
-          for (const label of required) {
-            const content = notes.getByText(label, { exact: true });
-            assert.equal(await content.isVisible(), true, `${locale}/${slug}: ${label} has no collapsed ancestor`);
-          }
-          for (const body of await notes.locator("p, dd, ol, ul").all()) {
-            assert.equal(await body.isVisible(), true, `${locale}/${slug}: explanation body has no collapsed ancestor`);
-            assert.ok((await body.innerText()).trim().length > 0);
+          if (slug !== "growmat") {
+            const method = project.locator("details").filter({ has: project.getByText(labels[3], { exact: true }) });
+            assert.equal(await method.getAttribute("open"), null, "Methods start optional");
+            await method.locator("summary").click();
+            assert.ok((await method.innerText()).trim().length > labels[3].length);
           }
           assert.equal(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
-          assert.equal(await app(p, "project").locator(".mac-window__content").evaluate(element => element.scrollWidth <= element.clientWidth + 1), true);
+          assert.equal(await project.locator(".mac-window__content").evaluate(element => element.scrollWidth <= element.clientWidth + 1), true);
           if (slug === "trustworthy-mri-reconstruction" && size.width === 320) {
-            await notes.getByRole("heading", { name: labels[1], exact: true }).scrollIntoViewIfNeeded();
+            await opening.scrollIntoViewIfNeeded();
             await p.screenshot({ path: `${screenshots}/project-context-${locale}-320.png` });
           }
           await p.close();

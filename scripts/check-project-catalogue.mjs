@@ -33,7 +33,6 @@ const errors = [];
 const slugs = new Set();
 const demoOwners = new Map();
 const artifactOwners = new Map();
-const expectedPhaseLabels = ["Start small", "Move forward", "Polish"];
 const nativeAppIds = ["orbitals", "notepad", "sketch", "tasks", "focus", "calendar", "calculator", "converter", "palette"];
 for (const appId of nativeAppIds) {
   const entries = projects.filter((project) => project.systemApp === appId);
@@ -101,16 +100,7 @@ for (const project of projects) {
     fail(project, "at least two concrete tools or methods are required");
   }
   if (!Array.isArray(project.highlights) || (!project.slug.startsWith("desk-") && project.highlights.length < 2)) {
-    fail(project, "at least two evidence highlights are required");
-  }
-  if (!Array.isArray(project.phases) || (!project.slug.startsWith("desk-") && project.phases.length !== 3)) {
-    fail(project, "build log must contain exactly three phases");
-  } else {
-    project.phases.forEach((phase, index) => {
-      if (phase.label !== expectedPhaseLabels[index] || !phase.text?.trim()) {
-        fail(project, `phase ${index + 1} must be ${expectedPhaseLabels[index]} with copy`);
-      }
-    });
+    fail(project, "at least two useful capabilities or results are required");
   }
 
   if (project.access === "proprietary" && !project.privacyNote?.trim()) {
@@ -177,7 +167,7 @@ for (const suite of projectSuites) {
   }
 }
 
-const requiredStoryFields = ["audience", "problem", "objective", "contribution", "pipeline", "walkthrough"];
+const requiredStoryFields = ["problem", "contribution", "pipeline", "walkthrough"];
 for (const [demo, slug] of demoOwners) {
   const story = projectStories[demo];
   if (!story) {

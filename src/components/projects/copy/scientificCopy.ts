@@ -4392,5 +4392,8 @@ export const scientificCopy = {
   "Tensor graph; scroll horizontally to follow all stages": [
     "张量图；横向滚动可查看全部阶段",
     "張量圖；橫向捲動可查看全部階段"
-  ]
+  ],
+  "I tested whether a model's confidence matches its mistakes, and how wide a prediction interval must be to cover more outcomes.": ["我测试了模型的置信度是否与错误相符，以及预测区间需要多宽才能涵盖更多结果。", "我測試了模型的信賴程度是否與錯誤相符，以及預測區間需要多寬才能涵蓋更多結果。"],
+  "Select 95% target coverage and compare its interval width with 80%.": ["选择 95% 的目标覆盖率，再与 80% 的区间宽度比较。", "選擇 95% 的目標涵蓋率，再與 80% 的區間寬度比較。"],
+  "Covering more outcomes needs a wider range of possible answers. The saved coursework results and separate population-shift example show two different tests.": ["要涵盖更多结果，就需要更宽的可能答案范围。保存的课程研究结果与另一个总体偏移示例展示了两种不同的测试。", "要涵蓋更多結果，就需要更寬的可能答案範圍。儲存的課程研究結果與另一個母體偏移範例展示了兩種不同的測試。"]
 } satisfies ProjectCopyTable;

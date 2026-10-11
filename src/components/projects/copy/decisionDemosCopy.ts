@@ -658,9 +658,10 @@ export const decisionDemosCopy = {
     "最大应用权重",
     "最大應用權重"
   ],
-  "Estimator receipt": [
-    "估计量明细",
-    "估計量明細"
+  "Lower Available sensor budget from £3,500 to £2,500. See which signal remains and how prediction error changes.": ["把可用传感器预算从 £3,500 降到 £2,500，查看还保留了哪个信号，以及预测误差怎样变化。", "把可用感測器預算從 £3,500 降到 £2,500，查看還保留了哪個訊號，以及預測誤差怎樣變化。"],
+  "Policy estimates": [
+    "策略估计",
+    "策略估計"
   ],
   "Same log, five estimators": [
     "同一日志，五种估计量",
@@ -750,9 +751,9 @@ export const decisionDemosCopy = {
     "不使用考核文本、私有日志或真实决策",
     "不使用考核文本、私有日誌或真實決策"
   ],
-  "Two questions that should not be collapsed": [
-    "两个应当分别回答的问题",
-    "兩個應當分別回答的問題"
+  "Two ways to study decisions": [
+    "研究决策的两种方式",
+    "研究決策的兩種方式"
   ],
   "The causal chapter asks whether an adjustment set blocks the displayed backdoor path. The OPE chapter asks what a counterfactual policy would have earned from logged bandit feedback. Both use synthetic browser fixtures and keep their assumptions visible.": [
     "因果章节检验调整集合是否阻断图中的后门路径。OPE 章节估计反事实策略在已记录的多臂老虎机反馈下会获得多少奖励。两者均采用合成浏览器样例，并公开假设。",
@@ -1057,5 +1058,13 @@ export const decisionDemosCopy = {
   "SWITCH-DR": [
     "切换双重稳健（SWITCH-DR）",
     "切換雙重穩健（SWITCH-DR）"
-  ]
+  ],
+  "I made a small calculator to show how a model can rely less on noisy inputs. Ridge reduces every input's weight; LASSO can remove weak inputs completely.": ["我制作了一个小计算器，展示模型如何减少对含噪输入的依赖。Ridge 会降低每个输入的权重；LASSO 可以完全去掉较弱的输入。", "我製作了一個小計算器，展示模型如何減少對含雜訊輸入的依賴。Ridge 會降低每個輸入的權重；LASSO 可以完全移除較弱的輸入。"],
+  "Select LASSO and move Penalty strength (λ) to the right. Watch coefficients reach zero as weak inputs disappear.": ["选择 LASSO，把惩罚强度（λ）向右调，观察较弱的输入消失时系数降至零。", "選擇 LASSO，把懲罰強度（λ）向右調，觀察較弱的輸入消失時係數降至零。"],
+  "RMSE measures carbon-monoxide prediction error in mg/m³. Lower is closer to the measured concentration.": ["RMSE 以 mg/m³ 衡量一氧化碳预测误差。数值越低，预测越接近实测浓度。", "RMSE 以 mg/m³ 衡量一氧化碳預測誤差。數值越低，預測越接近實測濃度。"],
+  "Raise Alert threshold to suppress more alerts. Compare the missed attacks and false alarms below.": ["提高警报阈值以减少警报，再比较下方漏报攻击和误报的数量。", "提高警報閾值以減少警報，再比較下方漏報攻擊和誤報的數量。"],
+  "A zero coefficient means an input is unused. These are exact calculations on a simple teaching example; my air-quality coursework fit is a separate result.": ["系数为零表示该输入不再使用。这里是一个简单教学示例的精确计算；我的空气质量课程研究拟合是另一个结果。", "係數為零表示該輸入不再使用。這裡是一個簡單教學範例的精確計算；我的空氣品質課程研究擬合是另一個結果。"],
+  "I built two worked examples: finding whether a treatment causes an outcome, and estimating how a new decision rule might perform using old decisions.": ["我建立了两个完整示例：判断处理是否引起结果，以及利用以往决策估计新决策规则的表现。", "我建立了兩個完整範例：判斷處理是否引起結果，以及利用以往決策估計新決策規則的表現。"],
+  "Click Experience (Z) in the causal graph to account for a factor that affects both treatment and outcome.": ["点击因果图中的经验（Z），考虑这个同时影响处理与结果的因素。", "點選因果圖中的經驗（Z），考慮這個同時影響處理與結果的因素。"],
+  "A valid comparison closes the shared-cause path without opening the response-flag path. The policy chapter separately tests whether old decisions cover a new rule.": ["有效比较会关闭共同原因路径，同时避免打开响应标记路径。策略章节另外检查以往决策是否足以涵盖新规则。", "有效比較會關閉共同原因路徑，同時避免開啟回應標記路徑。策略章節另外檢查以往決策是否足以涵蓋新規則。"]
 } satisfies ProjectCopyTable;

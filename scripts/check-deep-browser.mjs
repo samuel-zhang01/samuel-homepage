@@ -103,10 +103,10 @@ async function sampleScreenshot(p, job, visit, name) {
   await p.screenshot({ path: `${screenshots}/${file}` }); visit.screenshot = file;
 }
 const labels = {
-  "en-gb": { guide: "Got it", launch: "Open interactive demo", notes: "Implementation notes", nojs: "JavaScript is turned off.", back: "Back to project" },
-  "en-us": { guide: "Got it", launch: "Open interactive demo", notes: "Implementation notes", nojs: "JavaScript is turned off.", back: "Back to project" },
-  "zh-cn": { guide: "知道了", launch: "打开交互演示", notes: "实现说明", nojs: "JavaScript 已关闭。", back: "返回项目" },
-  "zh-tw": { guide: "知道了", launch: "開啟互動示範", notes: "實作說明", nojs: "JavaScript 已關閉。", back: "返回專案" },
+  "en-gb": { guide: "Got it", launch: "Open interactive demo", notes: "What I built", nojs: "JavaScript is turned off.", back: "Back to project" },
+  "en-us": { guide: "Got it", launch: "Open interactive demo", notes: "What I built", nojs: "JavaScript is turned off.", back: "Back to project" },
+  "zh-cn": { guide: "知道了", launch: "打开交互演示", notes: "我做了什么", nojs: "JavaScript 已关闭。", back: "返回项目" },
+  "zh-tw": { guide: "知道了", launch: "開啟互動示範", notes: "我做了什麼", nojs: "JavaScript 已關閉。", back: "返回專案" },
 };
 async function ready(p, job) {
   await p.waitForFunction(() => document.documentElement.dataset.reduceEffects !== undefined);
@@ -163,7 +163,7 @@ async function documentChecks(p, job, visit) {
   await document.getByRole("heading", { level: 1, name: getProjectText(job.option.locale, job.project.title), exact: true }).waitFor();
   assert.equal(await document.getByText(getProjectText(job.option.locale, job.project.summary), { exact: true }).isVisible(), true);
   const notes = document.getByRole("region", { name: labels[job.option.slug].notes, exact: true });
-  if (getProjectStory(job.project) || job.project.phases.length || job.project.highlights.length) {
+  if (getProjectStory(job.project) || job.project.highlights.length) {
     await notes.waitFor(); assert.equal(await notes.locator("details, summary").count(), 0);
     for (const block of await notes.locator("p, dd, ol, ul").all()) assert.equal(await block.isVisible(), true, "Project explanation is visible without disclosure");
   }

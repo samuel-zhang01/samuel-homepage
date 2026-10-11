@@ -2,12 +2,18 @@
 
 [README](../README.md) covers the product, local setup, release checks and Docker deployment. [Continue here](../continue.md) records the current maintenance handoff and review boundaries. [AGENTS.md](../AGENTS.md) contains the repository's working instructions.
 
-The current portfolio has 41 project records, 28 routed project demos, nine desk apps, four locales, five library documents and 18 evidence-backed capabilities. The profile graph contains 106 nodes and 387 edges. Recent work restores the native icon originals, improves desktop/phone demo readability, adds Contact/YASA call-booking links and preserves calculator precision between operations.
+The current portfolio has 42 project records, 29 routed project demos, nine desk apps, four locales, six library documents and 18 capabilities. The profile graph contains 108 nodes and 392 edges. The October explanation pass leads with Selected work, adds Ultra Convert and updated VideoMate walkthroughs, and uses original reports and saved scientific results to explain each project.
 
 The last recorded production deployment is `71e58c0` on 6 October 2026. Its locale repair, healthy deployment, public HTTPS verification and focused four-locale desktop/phone checks are [recorded here](VERIFICATION.md#6-october-production-redeployment). The earlier Docker-context and maskable-icon repairs remain [recorded separately](VERIFICATION.md#5-october-docker-context-repair). Read each verification section's scope before treating it as evidence for a newer revision.
 
 | Document | Purpose |
 | --- | --- |
+| [Explanation pass](PROJECT_REFINEMENT.md) | Goals, ownership and completion tracking for the October project refinement |
+| [Visitor comprehension review](PROJECT_VISITOR_REVIEW.md) | Adversarial desktop/phone grades, initial failures and repairs |
+| [Additional project review](PROJECT_VISITOR_REVIEW_ADDITIONAL.md) | Purposeful demo journeys for the remaining research and utility projects |
+| [Decision and research review](PROJECT_VISITOR_REVIEW_DECISIONS.md) | Six further desktop/phone journeys, changed outcomes and interpretation repairs |
+| [Academic source research](ACADEMIC_PROJECT_RESEARCH.md) | Original IX repositories, course materials, recorded outcomes and interpretation |
+| [Product source research](PRODUCT_REFINEMENT_RESEARCH.md) | Ultra Convert and VideoMate features, preview installation and verification |
 | [Verification and maintenance](VERIFICATION.md) | Current checks, historical scopes, known limits, cleanup and reproduction |
 | [Profile knowledge graph workflow](KNOWLEDGE_GRAPH_WORKFLOW.md) | Source-backed records, automatic evidence links and future-agent maintenance |
 | [Translation workflow](PROJECT_COPY_WORKFLOW.md) | Four locales, dynamic labels, source-language exceptions and checks |

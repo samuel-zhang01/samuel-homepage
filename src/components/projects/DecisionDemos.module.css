@@ -292,7 +292,7 @@
   font-weight: 700;
 }
 
-.policyChoices label.policyActive { border-color: var(--decision-blue); color: var(--s7-selection-text); background: var(--decision-blue-soft); }
+.policyChoices label.policyActive { border-color: var(--decision-blue); color: var(--s7-ink); background: var(--decision-blue-soft); }
 .policyChoices label.policyActive > span { color: inherit; }
 .policyChoices input { margin: 0; accent-color: var(--decision-blue); }
 .policyDescription { margin-top: 6px !important; color: #555550; font-size: var(--s7-text); line-height: 1.55; }

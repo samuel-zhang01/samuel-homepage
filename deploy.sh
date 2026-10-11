@@ -70,7 +70,7 @@ if [[ -f .env ]]; then
     value="${line#*=}"
     case "$key" in
       HOMEPAGE_BIND_ADDRESS|HOMEPAGE_PORT|HOMEPAGE_PUBLIC_ORIGIN|VERIFY_PUBLIC_ORIGIN)
-        if [[ ! -v "$key" ]]; then export "$key=$value"; fi
+        if ! declare -p "$key" >/dev/null 2>&1; then export "$key=$value"; fi
         ;;
     esac
   done < .env

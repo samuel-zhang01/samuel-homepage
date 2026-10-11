@@ -773,7 +773,7 @@ export function CvKeywordStudio() {
             <div className={styles.sectionHeading}>
               <div>
                 <span>WEIGHTED MATCH REPORT</span>
-                <h3>Coverage is useful only when evidence is visible</h3>
+                <h3>See which requirements the CV explains</h3>
               </div>
               <p>Editing aid, never a candidate rank or hiring recommendation.</p>
             </div>
@@ -793,7 +793,7 @@ export function CvKeywordStudio() {
                 <p>{report.matchedWeight} of {report.totalWeight} priority points</p>
               </article>
               <article className={styles.metricCard}>
-                <span>EVIDENCE QUALITY</span>
+                <span>SENTENCE CLARITY</span>
                 <strong>{report.evidenceQuality}%</strong>
                 <p>action + metric + outcome checks</p>
               </article>
@@ -877,8 +877,8 @@ export function CvKeywordStudio() {
           >
             <div className={styles.sectionHeading}>
               <div>
-                <span>EVIDENCE MAPPER</span>
-                <h3>Trace role language to proof, then edit truthfully</h3>
+                <span>EXPERIENCE MATCH</span>
+                <h3>Match the job’s requirements with actual experience</h3>
               </div>
               <p>Missing terms are coaching prompts, never auto-inserted claims.</p>
             </div>
@@ -905,7 +905,7 @@ export function CvKeywordStudio() {
                   <>
                     <header>
                       <div>
-                        <span className={selected.matched ? styles.foundTag : styles.missingTag}>{selected.matched ? "✓ EVIDENCE LOCATED" : "— NO CV EVIDENCE"}</span>
+                        <span className={selected.matched ? styles.foundTag : styles.missingTag}>{selected.matched ? "✓ SENTENCE FOUND" : "— NO MATCHING SENTENCE"}</span>
                         <h4>{selected.label}</h4>
                         <p>{selected.category} · weight {selected.weight} · seen {selected.frequency}× in role brief</p>
                       </div>
@@ -915,8 +915,8 @@ export function CvKeywordStudio() {
                       </div>
                     </header>
                     <div className={styles.quotePair}>
-                      <div><span>ROLE EVIDENCE</span><blockquote lang="en" translate="no">{shorten(selected.jobEvidence, 240)}</blockquote></div>
-                      <div><span>CV EVIDENCE</span><blockquote lang={selected.cvEvidence ? "en" : undefined} translate={selected.cvEvidence ? "no" : undefined} className={!selected.cvEvidence ? styles.noEvidence : ""}>{selected.cvEvidence ? shorten(selected.cvEvidence, 240) : "No matching sentence. Validate experience before adding this term."}</blockquote></div>
+                      <div><span>JOB REQUIREMENT</span><blockquote lang="en" translate="no">{shorten(selected.jobEvidence, 240)}</blockquote></div>
+                      <div><span>CV SENTENCE</span><blockquote lang={selected.cvEvidence ? "en" : undefined} translate={selected.cvEvidence ? "no" : undefined} className={!selected.cvEvidence ? styles.noEvidence : ""}>{selected.cvEvidence ? shorten(selected.cvEvidence, 240) : "No matching sentence. Validate experience before adding this term."}</blockquote></div>
                     </div>
                     <div className={styles.proofChecks}>
                       <span className={selected.cvEvidence ? styles.checkOn : ""}><b>{selected.cvEvidence ? "✓" : "–"}</b> Relevant sentence</span>
@@ -940,7 +940,7 @@ export function CvKeywordStudio() {
                   return (
                     <article key={suggestion.id} className={suggestion.kind === "gap" ? styles.gapSuggestion : ""}>
                       <header>
-                        <span>{suggestion.kind === "rewrite" ? "SAFE REWRITE" : "EVIDENCE GAP"}</span>
+                        <span>{suggestion.kind === "rewrite" ? "SAFE REWRITE" : "MISSING EXPERIENCE"}</span>
                         <strong>{suggestion.label}</strong>
                       </header>
                       <p>{suggestion.reason}</p>

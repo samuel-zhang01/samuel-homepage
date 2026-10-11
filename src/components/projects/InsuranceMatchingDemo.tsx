@@ -145,7 +145,7 @@ const SCENARIOS: Scenario[] = [
         evidence: {
           trading: "Mixed synthetic ranking evidence with narrower industry breadth.",
           appetite: "Recent synthetic lead/follow evidence exists at class level.",
-          quality: "Unassessed: no market-conditional wording artifact is available.",
+          quality: "Not assessed: no policy-wording comparison is available for this insurer.",
         },
         reliability: 0.6,
         authorityVerified: true,
@@ -172,7 +172,7 @@ const SCENARIOS: Scenario[] = [
         evidence: {
           trading: "A synthetic trading descriptor exists, but corroborating pillars do not.",
           appetite: "Unassessed: no availability-attested history for this scenario.",
-          quality: "Unassessed: no market-conditional wording artifact is available.",
+          quality: "Not assessed: no policy-wording comparison is available for this insurer.",
         },
         reliability: 0.52,
         authorityVerified: false,
@@ -299,7 +299,7 @@ const SCENARIOS: Scenario[] = [
         evidence: {
           trading: "Synthetic placement evidence transfers only partially to this class.",
           appetite: "Some recent synthetic participation, but exact peers are sparse.",
-          quality: "Unassessed: no market-conditional wording artifact is available.",
+          quality: "Not assessed: no policy-wording comparison is available for this insurer.",
         },
         reliability: 0.5,
         authorityVerified: true,
@@ -605,7 +605,7 @@ export function InsuranceMatchingDemo() {
         <summary>Compare matching approaches</summary>
       <section className={styles.modeChooser} aria-labelledby="workbench-mode-title">
         <div>
-          <span>Source-fidelity switch</span>
+          <span>Historical comparison</span>
           <strong id="workbench-mode-title">Choose what the workbench demonstrates</strong>
           <p>The current design keeps Trading, historical lead share and Wording separate. The weighted composite remains only as a sensitivity experiment; its visible weights show why premature aggregation is risky.</p>
         </div>
@@ -698,13 +698,13 @@ export function InsuranceMatchingDemo() {
           ) : (
             <div className={styles.currentModelNote} role="note">
               <span>No aggregate</span>
-              <strong>Three agents return evidence, confidence, provenance and null states.</strong>
-              <p>The candidate list stays in the broker-supplied order while the shared decision objective remains unvalidated. Missing evidence is shown—not silently filled.</p>
+              <strong>Three checks describe each insurer separately.</strong>
+              <p>I keep the broker’s order and show what is known about each insurer. A missing check stays missing.</p>
             </div>
           )}
 
           <fieldset className={styles.guardrailFieldset}>
-            <legend>Evidence guardrails</legend>
+            <legend>Comparison inputs</legend>
             <label className={styles.checkRow}>
               <input
                 type="checkbox"
@@ -714,7 +714,7 @@ export function InsuranceMatchingDemo() {
               <span><strong>Hold unverified authority</strong><small>Make unresolved capacity unavailable for broker pinning.</small></span>
             </label>
             <label className={styles.selectRow}>
-              <span><strong>Minimum assessed signals</strong><small>Fail closed when evidence is too thin.</small></span>
+              <span><strong>Minimum assessed signals</strong><small>Require enough completed checks before pinning.</small></span>
               <ClassicSelect
                 value={minimumSignals}
                 onChange={(event) => setMinimumSignals(Number(event.target.value) as MinimumSignals)}
@@ -739,18 +739,18 @@ export function InsuranceMatchingDemo() {
               <span>03</span>
               <div>
                 <p>{workbenchMode === "evidence" ? "Broker-controlled panel" : "Retired recommendation set"}</p>
-                <h3 id="ranking-title">{workbenchMode === "evidence" ? "Separate evidence · received order" : "What-if ranked candidate panel"}</h3>
+                <h3 id="ranking-title">{workbenchMode === "evidence" ? "Three checks · broker order" : "What-if ranked candidate panel"}</h3>
               </div>
             </div>
             <div className={styles.rankSummary}>
               <strong>{workbenchMode === "evidence" ? "No auto-rank" : "Ranked panel · what-if"}</strong>
-              <span>{workbenchMode === "evidence" ? "current source behavior" : normalisation === "panel" ? "relative panel view" : "calibrated view"}</span>
+              <span>{workbenchMode === "evidence" ? "broker order preserved" : normalisation === "panel" ? "relative panel view" : "calibrated view"}</span>
             </div>
           </div>
           <p className={styles.resultStatus} aria-live="polite" aria-atomic="true">{resultStatus}</p>
 
           <div className={styles.columnLabels} aria-hidden="true">
-            <span>{workbenchMode === "evidence" ? "Order / market" : "Rank / market"}</span><span>{workbenchMode === "evidence" ? "Separate evidence" : "Evidence composite"}</span><span>{workbenchMode === "evidence" ? "AGGREGATE" : "SCORE"}</span><span>REVIEW</span>
+            <span>{workbenchMode === "evidence" ? "Order / market" : "Rank / market"}</span><span>{workbenchMode === "evidence" ? "Separate checks" : "Combined score"}</span><span>{workbenchMode === "evidence" ? "CHECKS" : "SCORE"}</span><span>REVIEW</span>
           </div>
 
           <div className={styles.rankList}>
@@ -789,7 +789,7 @@ export function InsuranceMatchingDemo() {
 
                   <div className={styles.compositeCell}>
                     {workbenchMode === "evidence" ? (
-                      <div role="group" className={styles.evidencePills} aria-label="Separate evidence signals">
+                      <div role="group" className={styles.evidencePills} aria-label="Separate checks">
                         {PILLARS.map((pillar) => <span key={pillar.key} style={{ borderColor: pillar.colour }}><small>{pillar.short}</small><strong>{candidate.normalised[pillar.key]?.toFixed(0) ?? "—"}</strong></span>)}
                       </div>
                     ) : (
@@ -799,8 +799,8 @@ export function InsuranceMatchingDemo() {
                   </div>
 
                   <div className={styles.scoreCell}>
-                    <strong>{workbenchMode === "evidence" ? "—" : candidate.score.toFixed(1)}</strong>
-                    <small>{workbenchMode === "evidence" ? "RETIRED" : "/ 100"}</small>
+                    <strong>{workbenchMode === "evidence" ? `${Object.values(candidate.normalised).filter((value) => value !== null).length}/3` : candidate.score.toFixed(1)}</strong>
+                    <small>{workbenchMode === "evidence" ? "assessed" : "/ 100"}</small>
                   </div>
 
                   <button
@@ -818,7 +818,7 @@ export function InsuranceMatchingDemo() {
             })}
           </div>
 
-          <div role="group" className={styles.legend} aria-label="Evidence legend">
+          <div role="group" className={styles.legend} aria-label="Comparison key">
             {PILLARS.map((pillar) => (
               <span key={pillar.key}><i style={{ backgroundColor: pillar.colour }} />{pillar.short}</span>
             ))}
@@ -837,8 +837,8 @@ export function InsuranceMatchingDemo() {
             </div>
           </div>
           <div className={styles.scoreStamp}>
-            <span>{workbenchMode === "evidence" ? "Aggregate retired" : "What-if composite"}</span>
-            <strong>{workbenchMode === "evidence" ? "—" : selected.score.toFixed(1)}</strong>
+            <span>{workbenchMode === "evidence" ? "Separate checks" : "What-if composite"}</span>
+            <strong>{workbenchMode === "evidence" ? `${Object.values(selected.normalised).filter((value) => value !== null).length}/3` : selected.score.toFixed(1)}</strong>
           </div>
         </div>
 
@@ -864,7 +864,7 @@ export function InsuranceMatchingDemo() {
               );
             })}
             <div className={styles.calculationLine}>
-              <span>{workbenchMode === "evidence" ? "Decision contract" : "Retired calculation"}</span>
+              <span>{workbenchMode === "evidence" ? "Review route" : "Retired calculation"}</span>
               {workbenchMode === "evidence" ? <code>TRADING ∥ LEAD SHARE ∥ WORDING → BROKER REVIEW</code> : <MathEquation tex={`${PILLARS.filter((pillar) => selected.normalised[pillar.key] !== null).map((pillar) => String.raw`${(selected.effectiveWeights[pillar.key] * 100).toFixed(1)}\%\times ${selected.normalised[pillar.key]?.toFixed(1)}`).join(" + ")} = ${selected.score.toFixed(1)}`} />}
             </div>
           </div>
@@ -873,7 +873,7 @@ export function InsuranceMatchingDemo() {
             <span className={styles.cardKicker}>Human override log</span>
             <h4 id="review-title">Review without rewriting the model</h4>
             <p>
-              A broker pin adds context to the {workbenchMode === "evidence" ? "received panel" : "what-if shortlist"} but never hides an evidence gate.
+              A broker pin adds context to the {workbenchMode === "evidence" ? "received panel" : "what-if shortlist"} while keeping missing checks visible.
             </p>
             <label>
               <span>Review reason</span>
@@ -896,7 +896,7 @@ export function InsuranceMatchingDemo() {
             {!selected.eligible ? (
               <div className={styles.holdNotice} role="status">
                 <strong>Review gate active</strong>
-                <span>{selected.holds.join("; ")}. Resolve the evidence gate before pinning.</span>
+                <span>{selected.holds.join("; ")}. Complete the missing checks before pinning.</span>
               </div>
             ) : pinned?.scenarioId === scenario.id ? (
               <div className={styles.pinNotice} role="status">
@@ -955,12 +955,12 @@ export function InsuranceMatchingDemo() {
 
       <section className={styles.modelCard}>
         <header>
-          <h3>Methodology & disclosure card</h3>
-          <p>What mirrors the research—and what is illustrative</p>
+          <h3>How the comparison works</h3>
+          <p>My approach and the example’s assumptions</p>
         </header>
         <div className={styles.modelCardGrid}>
           <section>
-            <h4 className={styles.groundedLabel}>Source-traced concepts</h4>
+            <h4 className={styles.groundedLabel}>My approach</h4>
             <ul>
               <li>A risk-layer candidate contract with broker-supplied market order and three separate evidence agents.</li>
               <li>Historical trading performance as a LightGBM/LambdaRank risk-to-market signal with temporal evidence discipline.</li>

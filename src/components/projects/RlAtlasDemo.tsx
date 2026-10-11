@@ -720,7 +720,7 @@ export function RlAtlasDemo() {
           </ClassicSelect>
         </label>
         <label>
-          <span>Evidence</span>
+          <span>Review status</span>
           <ClassicSelect
             value={evidenceFilter}
             onChange={(event) => setEvidenceFilter(event.target.value as EvidenceFilter)}

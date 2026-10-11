@@ -85,7 +85,7 @@ const CORPUS_SIZE = 1000;
 const VIEWS: readonly { id: StudioView; label: string; hint: string }[] = [
   { id: "decisions", label: "Decision desk", hint: "Inspect the OR gate" },
   { id: "tradeoff", label: "Coverage lab", hint: "Sweep selective risk" },
-  { id: "tail", label: "CVaR ledger", hint: "Audit the worst decile" },
+  { id: "tail", label: "Worst losses", hint: "Inspect the hardest cases" },
   { id: "method", label: "Research notes", hint: "Design and findings" },
 ];
 

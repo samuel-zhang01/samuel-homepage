@@ -63,11 +63,10 @@ check("Deep demo copy covers inactive views and alternative control states", () 
   for (const phrase of ["Import row decisions", "No pairs pass this configuration.", "PENNY-CLOSE CONTROL"]) assert.ok(finance.includes(phrase), phrase);
   assert.ok(document("en-GB", "desk-colour-studio").includes("Colour Studio holds 12 swatches. Remove one before saving another."));
 });
-check("Editorial case briefs and build logs are searchable", () => {
+check("Editorial case briefs are searchable", () => {
   assert.ok(records.find(({ project }) => project.slug === "ocean-depths-finance").provenance.some((path) => path.endsWith("/FinanceImportExperiment.tsx")));
   assert.ok(document("en-GB", "growmat").includes("Pfizer"));
   assert.ok(document("en-GB", "sequential-decisions-lab").includes("twelve paired synthetic runs"));
-  for (const { project } of records) for (const phase of project.phases) assert.ok(document("en-GB", project.slug).includes(phase.text), `${project.slug} ${phase.label}`);
 });
 check("Chinese and English aliases coexist without adding unrelated dictionaries", () => {
   assert.ok(document("zh-CN", "desk-note-pad").includes("插入日期"));

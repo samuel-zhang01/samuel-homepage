@@ -41,7 +41,6 @@ const add = (value) => {
 for (const project of projects) {
   for (const key of [project.title, project.shortTitle, project.summary].filter(Boolean)) assert.equal(JSON.stringify(projectMenuCopy[key]), JSON.stringify(projectNarrativeCopy[key]), `Desktop project translation drift: ${key}`);
   for (const field of ["title", "shortTitle", "eyebrow", "summary", "detail", "tools", "highlights", "privacyNote", "downloadLabel", "area", "status"]) add(project[field]);
-  project.phases.forEach(phase => { add(phase.label); add(phase.text); });
   project.artifacts?.forEach(artifact => add(artifact.label));
   if (project.preview) { add(project.preview.alt); add(project.preview.caption); }
 }

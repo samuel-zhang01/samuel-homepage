@@ -85,8 +85,8 @@ export const coverageShiftCopy = {
     "，其中 R 是校准半径。",
     "，其中 R 是校準半徑。"
   ],
-  "This deliberately constructed batch illustrates coverage sensitivity. The fixed coursework results above remain a separate evidence record.": [
-    "这批特意构造的数据说明覆盖率对偏移的敏感程度。上方课程研究的固定结果是独立的证据记录。",
-    "這批特意構造的資料說明覆蓋率對偏移的敏感程度。上方課程研究的固定結果是獨立的證據記錄。"
+  "This example shows how population change affects coverage. The saved coursework results above describe my separate model evaluation.": [
+    "这个示例说明总体变化如何影响覆盖率。上方保存的课程研究结果描述了我另一次模型评估。",
+    "這個範例說明母體變化如何影響涵蓋率。上方儲存的課程研究結果描述了我另一次模型評估。"
   ]
 } as const satisfies ProjectCopyTable;

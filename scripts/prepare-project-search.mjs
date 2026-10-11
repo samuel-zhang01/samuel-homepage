@@ -287,7 +287,7 @@ export async function buildProjectSearch() {
       // Include only archive detail chrome, not unrelated guided-start/menu copy.
       for (const language of new Set(["en-GB", locale])) {
         const copy = archive.getProjectArchiveCopy(language);
-        [...values(copy.detail), ...values(copy.phases)].forEach((value) => strings.add(normalise(value)));
+        values(copy.detail).forEach((value) => strings.add(normalise(value)));
         if (project.systemApp === "orbitals") values(orbital.orbitalCopies[language]).forEach((value) => strings.add(normalise(value)));
       }
       return { slug: project.slug, text: [...strings].filter(Boolean).join("\n") };

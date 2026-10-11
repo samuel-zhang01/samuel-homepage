@@ -1066,4 +1066,27 @@ export const insuranceMatchingDemoCopy = {
   "Choose what must be known": ["选择必须掌握的信息", "選擇必須掌握的資訊"]
 ,
   "ready to review ·": ["可供审查 ·", "可供審查 ·"]
+,
+  "CHECKS": ["检查", "檢查"],
+  "assessed": ["已评估", "已評估"],
+  "Separate checks": ["独立检查", "獨立檢查"],
+  "{0}/3": ["{0}/3", "{0}/3"]
+,
+  "Comparison inputs": ["比较输入条件", "比較輸入條件"],
+  "Three checks · broker order": ["三项检查 · 经纪人顺序", "三項檢查 · 經紀人順序"],
+  "Combined score": ["综合分数", "綜合分數"],
+  "Comparison key": ["比较图例", "比較圖例"],
+  "Historical comparison": ["历史比较", "歷史比較"],
+  "Three checks describe each insurer separately.": ["三项检查分别描述每家保险公司。", "三項檢查分別描述每家保險公司。"],
+  "I keep the broker’s order and show what is known about each insurer. A missing check stays missing.": ["我保留经纪人的顺序，并展示每家保险公司的已知信息。缺少的检查会保持缺失。", "我保留經紀人的順序，並展示每家保險公司的已知資訊。缺少的檢查會保持缺失。"],
+  "Require enough completed checks before pinning.": ["固定公司前要求完成足够的检查。", "固定公司前要求完成足夠的檢查。"],
+  "How the comparison works": ["这个比较如何工作", "這個比較如何運作"],
+  "My approach and the example’s assumptions": ["我的方法与示例假设", "我的方法與範例假設"],
+  "My approach": ["我的方法", "我的方法"],
+  "Not assessed: no policy-wording comparison is available for this insurer.": ["尚未评估：没有这家保险公司的保单条款比较。", "尚未評估：沒有這家保險公司的保單條款比較。"],
+  "broker order preserved": ["保留经纪人顺序", "保留經紀人順序"],
+  "Complete the missing checks before pinning.": ["先完成缺失检查再固定公司。", "先完成缺少的檢查再固定公司。"],
+  "Review route": ["审查流程", "審查流程"],
+  "while keeping missing checks visible.": ["同时保留缺失检查的显示。", "同時保留缺少檢查的顯示。"],
+  ". Complete the missing checks before pinning.": ["。先完成缺失检查再固定公司。", "。先完成缺少的檢查再固定公司。"]
 } satisfies ProjectCopyTable;

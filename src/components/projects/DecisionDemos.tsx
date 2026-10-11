@@ -143,7 +143,7 @@ export function AirQualityBudgetDemo() {
       title="Air-quality sensor budget"
       status="Coursework · hypothetical"
       purpose="I compared models that estimate carbon monoxide from other sensor readings, then asked which sensors are worth paying for in a compact air-quality monitor."
-      tryThis="Lower the sensor budget and see which configurations still fit. Then favour interpretability to compare a simpler model with a more accurate one."
+      tryThis="Lower Available sensor budget from £3,500 to £2,500. See which signal remains and how prediction error changes."
       watchFor="A smaller budget removes sensor choices. The recorded model scores come from my coursework; sensor prices and the recommendation are a hypothetical planning exercise."
       statusTone="safe"
       className={styles.window}
@@ -284,6 +284,7 @@ export function AirQualityBudgetDemo() {
               <strong>{selected.rmse.toFixed(4)}</strong>
               <span>{selected.metric}</span>
             </div>
+            <p>RMSE measures carbon-monoxide prediction error in mg/m³. Lower is closer to the measured concentration.</p>
             <dl className={styles.compactFacts}>
               <div>
                 <dt>Cost</dt>
@@ -443,7 +444,7 @@ export function CyberThresholdDemo() {
       title="Cyber-risk cost simulator"
       status="Synthetic scenario"
       purpose="I studied when a cyber classifier should raise an alert: missing an attack and interrupting legitimate traffic carry different costs."
-      tryThis="Increase the cost of a missed attack, then lower the alert threshold. Watch how missed attacks and false alarms change together."
+      tryThis="Raise Alert threshold to suppress more alerts. Compare the missed attacks and false alarms below."
       watchFor="A lower threshold catches more attacks and creates more false alarms. The displayed counts are a teaching scenario; my original dataset needs a cleaner split before I can claim detection performance."
       statusTone="working"
       className={styles.window}
@@ -621,9 +622,9 @@ export function RegularisationLabDemo() {
       appName="Shrinkage Lab"
       title="Ridge & LASSO coefficient paths"
       status="Concept explorer"
-      purpose="Make regularisation visible: Ridge continuously shrinks coefficients, while LASSO can remove them from the active model."
-      tryThis="Raise lambda and switch between Ridge and LASSO."
-      watchFor="Coefficient magnitudes and the active set change through real in-browser toy calculations, not a replay of the source notebook fit."
+      purpose="I made a small calculator to show how a model can rely less on noisy inputs. Ridge reduces every input's weight; LASSO can remove weak inputs completely."
+      tryThis="Select LASSO and move Penalty strength (λ) to the right. Watch coefficients reach zero as weak inputs disappear."
+      watchFor="A zero coefficient means an input is unused. These are exact calculations on a simple teaching example; my air-quality coursework fit is a separate result."
       statusTone="safe"
       className={styles.window}
       footer={
@@ -955,7 +956,7 @@ function OpeEstimatorWorkbench() {
       <section className={styles.opeResults} aria-labelledby="ope-workbench-results">
         <div className={styles.chartHeading}>
           <div>
-            <span>Estimator receipt</span>
+            <span>Policy estimates</span>
             <h3 id="ope-workbench-results">Same log, five estimators</h3>
           </div>
           <span className={essShare < 0.35 ? styles.essDanger : styles.essGood}>
@@ -1078,9 +1079,9 @@ export function CausalOpeDemo() {
       appName="Decision Lab"
       title="Causal adjustment & off-policy evaluation"
       status="Interactive examples"
-      purpose="Separate two often-confused questions: estimating an intervention effect and evaluating a new policy from logged decisions."
-      tryThis="Open a causal path, then switch to OPE and reduce overlap for the challenger policy."
-      watchFor="Invalid adjustment paths, effective sample size and estimator disagreement reveal when a decision claim loses support."
+      purpose="I built two worked examples: finding whether a treatment causes an outcome, and estimating how a new decision rule might perform using old decisions."
+      tryThis="Click Experience (Z) in the causal graph to account for a factor that affects both treatment and outcome."
+      watchFor="A valid comparison closes the shared-cause path without opening the response-flag path. The policy chapter separately tests whether old decisions cover a new rule."
       statusTone="safe"
       className={styles.window}
       footer={
@@ -1090,7 +1091,7 @@ export function CausalOpeDemo() {
         </>
       }
     >
-      <SourceNote title="Two questions that should not be collapsed">
+      <SourceNote title="Two ways to study decisions">
         The causal chapter asks whether an adjustment set blocks the displayed backdoor path. The OPE chapter asks what a counterfactual policy would have earned from logged bandit feedback. Both use synthetic browser fixtures and keep their assumptions visible.
       </SourceNote>
 

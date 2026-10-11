@@ -1224,4 +1224,14 @@ export const cvKeywordCopy = {
   "Fictional CV": ["虚构简历", "虛構履歷"],
   "Factual edits": ["基于事实的修改", "根據事實修改"],
   "Sample analysed. Inspect the matches or edit the inputs.": ["示例已分析。查看匹配项或修改输入。", "範例已分析。查看符合項目或修改輸入。"]
+,
+  "See which requirements the CV explains": ["查看简历说明了哪些要求", "查看履歷說明了哪些要求"],
+  "SENTENCE CLARITY": ["句子清晰度", "句子清楚程度"],
+  "EXPERIENCE MATCH": ["经历匹配", "經歷比對"],
+  "Match the job’s requirements with actual experience": ["把职位要求与实际经历匹配", "把職位要求與實際經歷比對"],
+  "✓ SENTENCE FOUND": ["✓ 找到句子", "✓ 找到句子"],
+  "— NO MATCHING SENTENCE": ["— 没有匹配句子", "— 沒有符合的句子"],
+  "JOB REQUIREMENT": ["职位要求", "職位要求"],
+  "CV SENTENCE": ["简历句子", "履歷句子"],
+  "MISSING EXPERIENCE": ["缺少相关经历", "缺少相關經歷"]
 } as const satisfies ProjectCopyTable;

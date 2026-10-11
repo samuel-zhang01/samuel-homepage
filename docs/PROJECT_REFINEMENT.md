@@ -12,8 +12,8 @@ A visitor should be able to explain what I built, why I built it and what a demo
 - [x] Product agent: read UltraConvert and VideoMate source documentation; build separate product experiences and accurate installation links.
 - [x] Research agent: inspect IX repositories, course material, reports and thesis; improve scientific demo starting states and interpretation.
 - [x] Coordinator: revise catalogue and stories, integrate products, update supporting documents and remove redundant presentation.
-- [ ] Independent visitor review: grade understanding, usefulness, navigation, authenticity and consistency; repair until each reviewed journey scores at least 9/10.
-- [ ] Run required checks, review desktop and mobile journeys, commit and push completed milestones.
+- [x] Independent visitor review: grade understanding, usefulness, navigation, authenticity and consistency; repair until each reviewed journey scores at least 9/10.
+- [x] Run required checks, review desktop and mobile journeys, commit and push completed milestones.
 
 ## Editorial contract
 
@@ -25,4 +25,8 @@ Remove generic development stages from the page, the duplicate RUN/HACK promotio
 
 Initial checkout: clean `main`, tracking `origin/main`. Development server uses `.next`; the final build will use an isolated directory so the preview stays available. Research notes and the final visitor review are recorded separately in this directory. Temporary browser captures go under ignored `.codex/reports/refinement/`.
 
-Completed implementation milestone: 42 project records, 29 routed demos and six reading documents. Original science images and report links replace decorative benchmark drawings; the innovation diagram is an untouched original PDF. Core profile, graph, catalogue, icon and artifact gates pass. Independent desktop/phone retests and the complete release gate are still in progress.
+Completed: 42 project records, 29 routed demos and six reading documents. Original science images and report links replace decorative benchmark drawings; the innovation diagram is an untouched original PDF. Ultra Convert and VideoMate have separate task-led previews and accurate download/source links. Selected work is the default; generic development stages, duplicate promotion and unused presentation metadata are removed.
+
+All 29 reviewed desktop/phone journeys meet the 9/10 target. The [first eight reviews](PROJECT_VISITOR_REVIEW.md), [15 additional reviews](PROJECT_VISITOR_REVIEW_ADDITIONAL.md) and [six decision/research reviews](PROJECT_VISITOR_REVIEW_DECISIONS.md) record actual actions, changed results and limits. These are scoped adversarial agent assessments, not a recruited user study or a score for every possible state.
+
+The complete release gate, compiled HTTP crawl and repository ownership inventory pass. Four-locale compiled product checks verify installation destinations, original artwork and a working batch preview at 320px. Removing 268 unused translation rows retains 705 current narrative strings while keeping the existing byte budgets. [Verification](VERIFICATION.md#project-explanation-pass--11-october-2026) records the final scope, failed rounds and hash-verified local archive. Implementation milestones were committed and pushed throughout the pass; the development preview remains available on port 3000.

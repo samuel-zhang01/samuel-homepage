@@ -5,7 +5,9 @@ import { gzipSync } from "node:zlib";
 const outputRoot = resolve(process.cwd(), process.argv[2] || process.env.NEXT_DIST_DIR?.trim() || ".next");
 const staticRoot = join(outputRoot, "static");
 const standaloneRoot = join(outputRoot, "standalone");
-const MAX_BROWSER_FILES = 120;
+// Ultra Convert adds one demand-loaded demo chunk and its CSS. Keep byte
+// and initial-load limits unchanged while allowing that additional experience.
+const MAX_BROWSER_FILES = 122;
 // Full CN/TW demo copy adds about 1 MiB across lazy project chunks. Budget that
 // requested content explicitly while separately preventing initial-load growth.
 const MAX_BROWSER_BYTES = 5 * 1024 * 1024;

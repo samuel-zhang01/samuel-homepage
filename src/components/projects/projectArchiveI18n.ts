@@ -3,13 +3,11 @@ import type {
   ProjectAccess,
   ProjectArea,
   ProjectArtifact,
-  ProjectPhase,
 } from "@/data/projects";
 import type { Locale } from "@/lib/i18n";
 import type { GuidedStartId, ProjectShelfId } from "./projectSuites";
 
 type ProjectStatus = Project["status"];
-type PhaseLabel = ProjectPhase["label"];
 type ArtifactKind = ProjectArtifact["kind"];
 export type ProjectArchiveCopy = {
   header: {
@@ -195,7 +193,6 @@ export type ProjectArchiveCopy = {
   access: Record<ProjectAccess, { label: string; short: string; description: string }>;
   areas: Record<ProjectArea, string>;
   statuses: Record<ProjectStatus, string>;
-  phases: Record<PhaseLabel, string>;
   artifactKinds: Record<ArtifactKind, string>;
   resourceKinds: Record<string, string>;
 };
@@ -454,7 +451,6 @@ const enGB: ProjectArchiveCopy = {
     Education: "Education",
   },
   statuses: { Shipped: "Shipped", Active: "Active", Research: "Research", Archive: "Archive" },
-  phases: { "Start small": "Start small", "Move forward": "Move forward", Polish: "Polish" },
   artifactKinds: { PDF: "PDF", NOTEBOOK: "NOTEBOOK", "CASE STUDY": "CASE STUDY", SOURCE: "SOURCE" },
   resourceKinds: {
     OPEN: "OPEN",
@@ -765,7 +761,6 @@ const zhCN: ProjectArchiveCopy = {
     Education: "教育",
   },
   statuses: { Shipped: "已交付", Active: "进行中", Research: "研究中", Archive: "已归档" },
-  phases: { "Start small": "从小开始", "Move forward": "继续推进", Polish: "完善打磨" },
   artifactKinds: { PDF: "PDF", NOTEBOOK: "笔记本", "CASE STUDY": "案例研究", SOURCE: "源代码" },
   resourceKinds: {
     OPEN: "打开",
@@ -1032,7 +1027,6 @@ const zhTW: ProjectArchiveCopy = {
     Education: "教育",
   },
   statuses: { Shipped: "已交付", Active: "進行中", Research: "研究中", Archive: "已歸檔" },
-  phases: { "Start small": "從小開始", "Move forward": "繼續推進", Polish: "完善打磨" },
   artifactKinds: { PDF: "PDF", NOTEBOOK: "筆記本", "CASE STUDY": "案例研究", SOURCE: "原始碼" },
   resourceKinds: {
     OPEN: "開啟",

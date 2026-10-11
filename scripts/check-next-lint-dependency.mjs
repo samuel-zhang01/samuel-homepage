@@ -16,7 +16,7 @@ const globPackage = pluginRequire("fast-glob/package.json");
 assert.equal(globPackage.name, "tinyglobby", "Review the scoped Next lint dependency replacement.");
 assert.equal(globPackage.version, "0.2.17", "Review and retest a new glob replacement version.");
 assert.equal(typeof pluginRequire("fast-glob").globSync, "function");
-assert.equal(require("@next/eslint-plugin-next/package.json").version, "15.5.25", "Review a new Next plugin's glob imports and rule behavior before retaining the override.");
+assert.equal(require("@next/eslint-plugin-next/package.json").version, "15.5.27", "Review a new Next plugin's glob imports and rule behavior before retaining the override.");
 assert.equal(require("@next/eslint-plugin-next/package.json").version, require("next/package.json").version);
 assert.equal(require("eslint-config-next/package.json").version, require("next/package.json").version);
 

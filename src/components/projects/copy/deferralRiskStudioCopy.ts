@@ -870,5 +870,7 @@ export const deferralRiskStudioCopy = {
   "Coverage and tail risk move in opposite directions; every output comes from deterministic fictional claims.": [
     "覆盖率与尾部风险呈相反变化趋势；所有输出来自确定性的虚构索赔。",
     "覆蓋率與尾部風險呈相反變化趨勢；所有輸出來自確定性的虛構索賠。"
-  ]
+  ],
+  "Worst losses": ["最严重的损失", "最嚴重的損失"],
+  "Inspect the hardest cases": ["查看最难处理的案例", "查看最難處理的案例"]
 } satisfies ProjectCopyTable;

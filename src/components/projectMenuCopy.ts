@@ -3,7 +3,6 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 /** Desktop project names and summaries only; long narratives stay in the lazy project document. */
 export const projectMenuCopy = {
   "VideoMate": ["VideoMate", "VideoMate"],
-  "Inspect damaged videos, recover readable material and re-encode mixed collections with qualified GPU acceleration.": ["检查受损视频、恢复可读内容，并以符合条件的 GPU 加速重新编码混合媒体集合。", "檢查受損影片、復原可讀內容，並以符合條件的 GPU 加速重新編碼混合媒體集合。"],
   "A personal finance workspace for net worth, connected bank accounts, two trading platforms and recurring-payment checks.": ["个人财务工作台：查看净资产、已连接银行账户和两个交易平台，并检查定期付款。","個人財務工作台：查看淨資產、已連接銀行帳戶和兩個交易平台，並檢查定期付款。"],
   "Orbital Lab": [
     "原子轨道实验室",
@@ -107,10 +106,6 @@ export const projectMenuCopy = {
     "Im I Broke?",
     "Im I Broke?"
   ],
-  "A local-first finance application that brings statements, spending patterns, transfers and investments into one reliable view.": [
-    "本地优先的财务应用，将账单、支出模式、转账和投资整合为可靠的统一视图。",
-    "本地優先的財務應用，將帳單、支出模式、轉帳和投資整合為可靠的統一視圖。"
-  ],
   "COVERD-YASA Scheduling": [
     "COVERD-YASA 排期",
     "COVERD-YASA 排期"
@@ -143,10 +138,6 @@ export const projectMenuCopy = {
     "课程推荐",
     "課程推薦"
   ],
-  "A course-discovery prototype that collects learner preferences, filters a small catalogue and explores how ranking choices affect the results.": [
-    "收集学习偏好、筛选小型课程目录，并探索排序方式如何影响结果的课程发现原型。",
-    "收集學習偏好、篩選小型課程目錄，並探索排序方式如何影響結果的課程發現原型。"
-  ],
   "STUDY-RL": [
     "STUDY-RL",
     "STUDY-RL"
@@ -171,10 +162,6 @@ export const projectMenuCopy = {
     "微型机器人姿态与深度",
     "微型機器人姿態與深度"
   ],
-  "Using grayscale microscope images to estimate a microrobot’s orientation and depth—essential information for tracking and control.": [
-    "利用灰度显微图像估计微型机器人的方向和深度，为跟踪与控制提供关键信息。",
-    "利用灰度顯微圖像估計微型機器人的方向和深度，為跟蹤與控制提供關鍵資訊。"
-  ],
   "Trustworthy MRI Reconstruction": [
     "可信 MRI 重建",
     "可信 MRI 重建"
@@ -183,10 +170,6 @@ export const projectMenuCopy = {
     "MRI 可信性实验室",
     "MRI 可信性實驗室"
   ],
-  "Reconstructing cardiac MRI from fewer measurements while checking anatomical fidelity, uncertainty and agreement with the acquired data.": [
-    "以较少测量数据重建心脏 MRI，并检查解剖结构保真度、不确定性与测量一致性。",
-    "以較少量測資料重建心臟 MRI，並檢查解剖結構保真度、不確定性與量測一致性。"
-  ],
   "Neural CFD Surrogates": [
     "神经网络 CFD 代理模型",
     "神經網路 CFD 代理模型"
@@ -194,10 +177,6 @@ export const projectMenuCopy = {
   "CFD × 3": [
     "CFD × 3",
     "CFD × 3"
-  ],
-  "Learning to approximate expensive fluid simulations with Fourier operators, mesh message passing and a grid-based U-Net.": [
-    "利用 Fourier 算子、网格消息传递与规则网格 U-Net，学习近似计算成本高的流体模拟。",
-    "利用 Fourier 算子、網格訊息傳遞與規則網格 U-Net，學習近似運算成本高的流體模擬。"
   ],
   "Air-Quality Sensor Optimisation": [
     "空气质量传感器优化",
@@ -275,22 +254,6 @@ export const projectMenuCopy = {
     "四种模式",
     "四種模式"
   ],
-  "Exploring how an established company can organise innovation through the Opportunist, Enabler, Advocate and Producer models.": [
-    "探索成熟企业如何通过机会主义者、赋能者、倡导者和生产者四种模式组织创新。",
-    "探索成熟企業如何透過機會主義者、賦能者、倡導者和生產者四種模式組織創新。"
-  ],
-  "Venture Proof & Capital Reasoning": [
-    "创业依据与资本推演",
-    "創業依據與資本推演"
-  ],
-  "Venture Reasoning": [
-    "创业推演",
-    "創業推演"
-  ],
-  "Testing whether a venture’s customer evidence, market arithmetic and funding request support a credible next step.": [
-    "检验创业项目的客户证据、市场计算和融资要求能否支撑可信的下一步。",
-    "檢驗創業專案的客戶證據、市場計算和融資要求能否支撐可信的下一步。"
-  ],
   "PC-SAFT Thermodynamics Workbench": [
     "PC-SAFT 热力学工作台",
     "PC-SAFT 熱力學工作臺"
@@ -299,10 +262,6 @@ export const projectMenuCopy = {
     "PC-SAFT 实验室",
     "PC-SAFT 實驗室"
   ],
-  "Using Julia and Clapeyron to connect molecular interactions with fluid pressure, phase equilibrium and critical behaviour.": [
-    "用 Julia 和 Clapeyron 将分子相互作用与流体压力、相平衡和临界行为联系起来。",
-    "用 Julia 和 Clapeyron 將分子相互作用與流體壓力、相平衡和臨界行為聯繫起來。"
-  ],
   "Solid–Liquid Solubility Workflow": [
     "固液溶解度工作流",
     "固液溶解度工作流"
@@ -310,10 +269,6 @@ export const projectMenuCopy = {
   "Solubility Workflow": [
     "溶解度工作流",
     "溶解度工作流"
-  ],
-  "Connecting fusion thermodynamics, liquid interactions and concentration units to model how much solid dissolves in a solvent.": [
-    "连接熔融热力学、液相相互作用和浓度单位，模拟固体在溶剂中的溶解量。",
-    "連接熔融熱力學、液相相互作用和濃度單位，模擬固體在溶劑中的溶解量。"
   ],
   "Molecular Recognition Pipeline": [
     "分子识别流程",
@@ -411,7 +366,6 @@ export const projectMenuCopy = {
   "Who gets to try a new idea, and who pays for it? My reflection on four ways companies organise innovation.": ["谁可以尝试新想法，又由谁提供资源？我对企业组织创新的四种方式的反思。","誰可以嘗試新想法，又由誰提供資源？我對企業組織創新的四種方式的反思。"],
   "Venture Planning": ["创业规划","創業規劃"],
   "Work out whether a business idea can reach its next milestone before its money runs out.": ["算一算商业想法能否在资金用完前达到下一个里程碑。","算一算商業想法能否在資金用完前達到下一個里程碑。"],
-  "My MATLAB app for finding spectral peaks and making clear figures from laboratory measurements.": ["我的 MATLAB 应用，用于查找光谱峰并把实验测量整理成清晰图表。","我的 MATLAB 應用程式，用於查找光譜峰並把實驗量測整理成清晰圖表。"],
   "Explore how molecular size and attraction change a fluid’s pressure and phase behaviour.": ["探索分子尺寸和吸引力如何改变流体的压力和相态。","探索分子尺寸和吸引力如何改變流體的壓力和相態。"],
   "Calculate how temperature and solvent interactions change the amount of a solid that dissolves.": ["计算温度和溶剂相互作用如何改变固体的溶解量。","計算溫度和溶劑交互作用如何改變固體的溶解量。"],
   "I trained three neural networks to predict how fluid moves around a cylinder, then compared their flow predictions.": ["我训练了三种神经网络，预测流体如何绕过圆柱，并比较它们的流场预测。","我訓練了三種神經網路，預測流體如何繞過圓柱，並比較它們的流場預測。"],
