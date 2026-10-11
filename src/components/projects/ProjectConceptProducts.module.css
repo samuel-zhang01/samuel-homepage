@@ -48,12 +48,12 @@
 .strip > span { flex: 1 1 auto; text-align: center; padding: 6px; border-right: 1px solid var(--s7-edge); }
 .strip > span:last-child { border-right: 0; }
 .strip > span[data-selected="true"] { background: var(--s7-accent); color: var(--s7-paper); }
-.notebook { min-height: 136px; padding: 13px 14px 13px 24px; border: 1px solid var(--s7-edge); border-left: 7px double var(--s7-edge); background: repeating-linear-gradient(to bottom,var(--s7-paper) 0 25px,#dddeda 25px 26px); }
+.notebook { min-height: 136px; padding: 13px 14px; border: 1px solid var(--s7-edge); background: repeating-linear-gradient(to bottom,var(--s7-paper) 0 25px,#dddeda 25px 26px); }
 .notebook small { display: block; }
 .notebook p { font-size: var(--s7-ui); line-height: 26px; }
 .caret { display: block; width: 1px; height: 18px; background: var(--s7-ink); }
 .drawing { border: 1px solid var(--s7-edge); background: var(--s7-paper); padding: 8px; }
-.drawing svg { display: block; width: 100%; height: auto; }
+.drawing svg { display: block; width: min(100%, 540px); height: auto; max-height: 240px; margin-inline: auto; }
 .drawInk, .drawBlue { stroke: var(--s7-ink); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .drawBlue { stroke: var(--s7-accent); stroke-width: 5; }
 .tasks { margin: 0; padding: 0; list-style: none; border: 1px solid var(--s7-edge); background: var(--s7-paper); }
@@ -90,6 +90,8 @@
 .swatches > i[data-saved="true"] { box-shadow: 2px 2px 0 var(--s7-edge); }
 .dimensions { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 5px; }
 .dimensions > div { border: 1px solid var(--s7-edge); padding: 7px; display: flex; justify-content: space-between; gap: 6px; background: var(--s7-paper); }
+.dimensions > div > span { min-width: 0; overflow-wrap: anywhere; }
+.dimensions > div > b { flex-shrink: 0; }
 .dimensions > div[data-selected="true"] { background: var(--s7-context-paper); }
 .capacityChart { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; padding: 10px 15px 0; }
 .capacityChart > div { display: grid; text-align: center; gap: 4px; }
@@ -148,6 +150,7 @@
 }
 @container productconcept (max-width: 260px) {
   .columns { grid-template-columns: 1fr; }
+  .dimensions { grid-template-columns: 1fr; }
   .keys { display: none; }
   .stream > i { height: 22px; }
   .appointmentGrid { grid-template-columns: 1fr; }

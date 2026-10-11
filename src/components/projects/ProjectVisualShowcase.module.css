@@ -1,4 +1,4 @@
-.showcase { container-type: inline-size; max-width: 1080px; margin: 0 auto; color: var(--s7-ink); font: var(--s7-text)/1.5 var(--s7-font-text); }
+.showcase { --s7-control-height: 44px; container-type: inline-size; max-width: 1080px; margin: 0 auto; color: var(--s7-ink); font: var(--s7-text)/1.5 var(--s7-font-text); }
 .tabs, .imageChoices, .imageActions, .controls { display: flex; flex-wrap: wrap; gap: 8px; }
 .showcase :is(button,a) { min-height: 44px; }
 .tabs { padding: 0 0 12px; }
@@ -18,7 +18,7 @@
 .concept h2 { margin: 0 0 16px; font: 700 var(--s7-heading)/1.35 var(--s7-font-text); }
 .scene { min-width: 0; padding: 16px; background: var(--s7-paper); border: 1px solid var(--s7-edge); box-shadow: var(--s7-relief-inset); }
 .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
-.steps button { display: flex; flex-direction: column; gap: 4px; justify-content: center; align-items: center; min-width: 0; min-height: 60px; padding: 8px 6px; white-space: normal; overflow-wrap: anywhere; font-size: var(--s7-ui); }
+.showcase .steps button { display: flex; flex-direction: column; gap: 4px; justify-content: center; align-items: center; min-width: 0; min-height: 60px; padding: 8px 6px; white-space: normal; overflow-wrap: anywhere; font-size: var(--s7-ui); }
 .steps span { font: 700 var(--s7-small)/1 var(--s7-font-ui); color: var(--s7-muted); }
 .caption { max-width: 76ch; min-height: 3em; margin: 16px 0; font-size: var(--s7-text); line-height: 1.55; }
 .controls button { flex: 0 1 auto; }

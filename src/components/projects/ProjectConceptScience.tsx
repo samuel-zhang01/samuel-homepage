@@ -112,6 +112,7 @@ export function ProjectConceptScience({ slug, step, locale }: { slug: string; st
   } else if (slug === "causal-ope-lab") {
     const cohort = confoundingCohort(35);
     scene = <>
+      <strong>{current === 1 ? "Experience mix" : "Synthetic success rate"}</strong>
       {current === 1 ? <div className={styles.composition}>{[85,15].map((percent,i)=><div key={i}><strong>{i===0?"Treated":"Control"}</strong><div className={styles.upperTrack} aria-hidden="true"><i style={{width:`${percent}%`}}/><i data-tone="amber" style={{width:`${100-percent}%`}}/></div><span>Less experienced</span><b>{percent}%</b></div>)}<div className={styles.legend}><i data-tone="blue"/>Less experienced<i data-tone="amber"/>More experienced</div></div> : current === 2 ? <div className={styles.withinGroups}>{cohort.groups.map(group=><div key={group.key}><strong>{group.key==="less"?"Less experienced":"More experienced"}</strong>{meter("Treated",group.treatedRate,1,`${group.treatedRate*100}%`)}{meter("Control",group.controlRate,1,`${group.controlRate*100}%`,"amber")}<b>+10</b></div>)}</div> : <div className={styles.groupBars}>{meter("Treated",current===3?.6:.39,1,current===3?"60%":"39%")}{meter("Control",current===3?.5:.71,1,current===3?"50%":"71%","amber")}</div>}
       <p className={styles.result}><span>{current>=2?"Adjusted difference":"Pooled difference"}</span><strong>{projectText(locale,copy,"{0} percentage points",{0:current>=2?"+10":"−32"})}</strong></p>
     </>;
@@ -126,7 +127,7 @@ export function ProjectConceptScience({ slug, step, locale }: { slug: string; st
     </>;
   } else if (slug === "insurance-lead-matching") {
     scene = <>
-      <div className={styles.checkCards}>{[["Trading",69],["Lead history",current>=1?64:null],["Policy wording",current>=2?72:null]].map(([label,value])=><div key={String(label)} data-complete={value!==null}><span>{label}</span><strong>{value===null?"—":value}</strong><small>{value===null?"Unassessed":"✓"}</small></div>)}</div>
+      <div className={styles.checkCards}>{[["Trading",true],["Lead history",current>=1],["Policy wording",current>=2]].map(([label,checked])=><div key={String(label)} data-complete={checked}><span>{label}</span><strong>{checked?"Checked":"Unassessed"}</strong><small aria-hidden="true">{checked?"✓":"—"}</small></div>)}</div>
       <div className={styles.authority}><span aria-hidden="true">{current===3?"☑":"□"}</span><span>{current===3?"Authority verified":"Authority unverified"}</span></div>
       <p className={styles.result} data-tone={current===3?"green":"amber"}><strong>{current===3?"Ready for broker review":"Review held"}</strong></p>
     </>;

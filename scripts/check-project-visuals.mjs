@@ -38,10 +38,12 @@ const { projectConceptProducts } = load("src/data/projectConceptProducts.ts");
 const { projectShowcaseImages } = load("src/data/projectShowcaseImages.ts");
 const { ProjectConceptScience } = load("src/components/projects/ProjectConceptScience.tsx");
 const { ProjectConceptProducts } = load("src/components/projects/ProjectConceptProducts.tsx");
+const { default: ProjectVisualShowcase } = load("src/components/projects/ProjectVisualShowcase.tsx");
 const { projectText } = load("src/lib/projectCopy.ts");
 const { projectConceptScienceCopy } = load("src/components/projects/copy/projectConceptScienceCopy.ts");
 const { projectConceptProductsCopy } = load("src/components/projects/copy/projectConceptProductsCopy.ts");
 const { projectShowcaseImagesCopy } = load("src/components/projects/copy/projectShowcaseImagesCopy.ts");
+const { projectVisualShowcaseCopy } = load("src/components/projects/copy/projectVisualShowcaseCopy.ts");
 const ids = new Set(projects.map(project => project.slug));
 const sceneIds = [...Object.keys(projectConceptScience), ...Object.keys(projectConceptProducts)];
 assert.equal(new Set(sceneIds).size, sceneIds.length, "Concept ownership must be disjoint");
@@ -97,4 +99,17 @@ for (const [slug, gallery] of Object.entries(projectShowcaseImages)) {
 }
 assert.deepEqual([...used].sort(), [...entries.keys()].sort(), "Every new published image has a visual consumer");
 assert.ok(bytes < 5_000_000, "The new overview images must stay below 5MB combined");
-console.log(`Project visuals: ${sceneIds.length} distinct project concepts, ${renderedStates} four-locale scene states, ${images} contextual images with exact dimensions/pixels; ${(bytes / 1024 / 1024).toFixed(2)} MiB combined image payload. Browser framing and visitor scores are reviewed separately.`);
+let overviewStates = 0;
+for (const project of projects) for (const locale of ["en-GB", "en-US", "zh-CN", "zh-TW"]) {
+  const html = renderToStaticMarkup(React.createElement(ProjectVisualShowcase, { project, locale }));
+  assert.ok(html.includes(projectText(locale, projectVisualShowcaseCopy, "See the project")), `${project.slug}: named overview region`);
+  assert.ok(!html.includes(projectText(locale, projectVisualShowcaseCopy, "Motion is reduced. Choose a step to explore.")), `${project.slug}: do not infer motion preference before hydration`);
+  if (project.preview || projectShowcaseImages[project.slug]?.length) {
+    assert.ok(html.includes(projectText(locale, projectVisualShowcaseCopy, "Inspect at full size")), `${project.slug}: even smaller pictures need original-pixel inspection on a phone`);
+    assert.ok(html.includes('role="tablist"') && html.includes('role="tabpanel"'), `${project.slug}: image and concept tab relationships`);
+  } else {
+    assert.ok(html.includes(projectText(locale, projectVisualShowcaseCopy, "Next step")), `${project.slug}: default concept can be explored manually`);
+  }
+  overviewStates++;
+}
+console.log(`Project visuals: ${sceneIds.length} distinct project concepts, ${renderedStates} four-locale scene states, ${overviewStates} initial overview/locale states, ${images} contextual images with exact dimensions/pixels; ${(bytes / 1024 / 1024).toFixed(2)} MiB combined image payload. Browser framing and visitor scores are reviewed separately.`);

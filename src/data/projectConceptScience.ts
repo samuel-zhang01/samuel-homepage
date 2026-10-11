@@ -226,7 +226,7 @@ export const projectConceptScience: Readonly<Record<string, ScienceConcept>> = {
     "steps": [
       {
         "name": "Pool both groups",
-        "caption": "The pooled comparison says treatment is worse by 32 percentage points."
+        "caption": "39 of 100 treated people succeed, compared with 71 of 100 controls: a pooled difference of −32 percentage points."
       },
       {
         "name": "Inspect who was treated",
@@ -285,7 +285,7 @@ export const projectConceptScience: Readonly<Record<string, ScienceConcept>> = {
         "caption": "Verified authority permits broker review. The checks do not automatically choose an insurer."
       }
     ],
-    "note": "Market 06 uses synthetic descriptors 69, 64 and 72; no composite recommendation is calculated."
+    "note": "Fictional Market 06; completed checks permit broker review, without a composite recommendation."
   },
   "cv-keyword-automator": {
     "title": "Match the job to work I can describe",

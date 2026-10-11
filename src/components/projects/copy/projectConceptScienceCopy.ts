@@ -409,9 +409,9 @@ export const projectConceptScienceCopy = {
     "合并两组",
     "合併兩組"
   ],
-  "The pooled comparison says treatment is worse by 32 percentage points.": [
-    "合并比较显示，处理组差 32 个百分点。",
-    "合併比較顯示，處理組差 32 個百分點。"
+  "39 of 100 treated people succeed, compared with 71 of 100 controls: a pooled difference of −32 percentage points.": [
+    "100 名处理组成员中有 39 人成功，100 名对照组成员中有 71 人成功：合并差异为 −32 个百分点。",
+    "100 名處理組成員中有 39 人成功，100 名對照組成員中有 71 人成功：合併差異為 −32 個百分點。"
   ],
   "Inspect who was treated": [
     "检查谁接受处理",
@@ -517,9 +517,9 @@ export const projectConceptScienceCopy = {
     "验证权限后可交由经纪人审核。这些检查不会自动选择保险公司。",
     "驗證權限後可交由經紀人審核。這些檢查不會自動選擇保險公司。"
   ],
-  "Market 06 uses synthetic descriptors 69, 64 and 72; no composite recommendation is calculated.": [
-    "市场 06 使用合成描述值 69、64 与 72；不计算综合推荐。",
-    "市場 06 使用合成描述值 69、64 與 72；不計算綜合推薦。"
+  "Fictional Market 06; completed checks permit broker review, without a composite recommendation.": [
+    "虚构的市场 06；完成核查后可供经纪人审阅，不生成综合推荐。",
+    "虛構的市場 06；完成核查後可供經紀人審閱，不產生綜合推薦。"
   ],
   "Match the job to work I can describe": [
     "将职位要求对应到可描述的经历",
@@ -1048,5 +1048,17 @@ export const projectConceptScienceCopy = {
   "Response hidden": [
     "响应暂隐藏",
     "反應暫隱藏"
+  ],
+  "Synthetic success rate": [
+    "合成示例成功率",
+    "合成範例成功率"
+  ],
+  "Experience mix": [
+    "经验构成",
+    "經驗構成"
+  ],
+  "Checked": [
+    "已核查",
+    "已核查"
   ]
 } satisfies ProjectCopyTable;
