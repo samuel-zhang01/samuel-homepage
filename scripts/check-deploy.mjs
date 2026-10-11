@@ -28,6 +28,7 @@ if (arguments_[0] === "--docker-context") {
       "public/Samuel-Zhang-Applied-AI-CV-zh-CN.pdf",
       "public/Samuel-Zhang-Applied-AI-CV-zh-TW.pdf",
       "public/GROWMAT Showcase External Highest Quality.pdf",
+      "public/projects/innovation/four-models.pdf",
       "public/projects/parliamo/practice-workbook.pdf",
       "public/projects/parliamo/reading-workbook.pdf",
       "public/projects/study-rl/syllabus.pdf",

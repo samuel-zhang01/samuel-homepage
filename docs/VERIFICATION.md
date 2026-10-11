@@ -2,6 +2,12 @@
 
 This guide records current verification scope, reproduction and known limits. It replaces the cumulative dated audit and repeated handoff history. The complete pre-cleanup narrative remains in [Git at effc55f](https://github.com/samuel-zhang01/samuel-homepage/blob/effc55f/docs/DEEP_AUDIT_2026-10-04.md); deleting it from the working tree does not delete that record.
 
+## Docker document packaging repair — 11 October 2026
+
+Deployment of `ff89d39` passed the host checks but the real pinned Node 24 Alpine build failed in `check:artifacts`: `.dockerignore` excluded the existing reviewed `public/projects/innovation/four-models.pdf`. Its SHA-256 remains `c69b6dd84f701c6b04d57a3657b5111ffd5b701befbe23806b1ca4b417a53fac`, matching the artifact review. The failed build left the previous production service healthy.
+
+Added that exact public PDF to the Docker allowlist and the context regression's required document set. The strengthened check reproduces the omission against the old allowlist, then passes after repair: **638 files**, three reviewed CV sources, one icon manifest and ten document/data inputs. Existing private-file exclusions remain enforced. All 27 deployment scenarios, targeted lint and whitespace checks pass. The initial deployment also passed dependency audits (zero vulnerabilities, 302 verified signatures and 55 attestations), full lint, profile, graph and locales. Application source, document bytes and profile records are unchanged; deployment/build/browser completion is recorded separately below.
+
 ## Secret applied nonsense laboratory — 11 October 2026
 
 The hidden universe now has **30 mathematical families** and **128 oracle answers**. Eleven new worlds add Hilbert and dragon curves, a Koch snowflake, a Rössler path, three-dimensional Lissajous loops, a helical ladder, orbital-inspired lobes, moiré crystal interference, a fivefold quasicrystal, Voronoi foam and splitting/merging Cassini ovals. Cached curve paths morph their actual vertices; shader calculations remain bounded. The distant corridor uses at most 40 ray steps, while morphing solid sculptures retain 64. The ladder and lobes are artistic mathematical forms, rather than DNA or quantum probability models. Continuous shuffled playback, random restart and the 2.8-second oracle ceremony remain intact.
