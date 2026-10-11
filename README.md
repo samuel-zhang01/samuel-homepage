@@ -49,12 +49,13 @@ uses display-timed animation, starts paused, and respects reduced-motion setting
 </details>
 
 The desktop, project archive and mobile Note Pad were recaptured on 5 October
-2026 from a production build of the current checkout. The orbital image and
+2026 from a production build of that day's checkout. The orbital image and
 animation remain earlier reference captures. The last recorded production deployment is
-`71e58c0`, verified on 6 October 2026 with container health, public HTTPS and
-four-locale desktop/phone About and document checks. It includes the call-booking,
-Contact, phone-layout and calculator follow-ups. Their broader verification and
-the earlier deployment scopes remain separate in the [verification guide](docs/VERIFICATION.md#6-october-production-redeployment).
+`cc3c03c`, verified on 11 October 2026 with container health, public HTTPS and
+four-locale desktop/phone innovation-PDF checks. It includes the current project,
+Secret, readability and navigation refinements, plus the Docker document and PDF
+reader repairs. Broader verification and earlier deployment scopes remain
+separate in the [verification guide](docs/VERIFICATION.md#docker-document-packaging-repair--11-october-2026).
 
 ## The desk apps
 

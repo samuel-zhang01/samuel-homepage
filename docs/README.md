@@ -4,7 +4,7 @@
 
 The current portfolio has 42 project records, 29 routed project demos, nine desk apps, four locales, six library documents and 18 capabilities. The profile graph contains 108 nodes and 392 edges. The October explanation pass leads with Selected work, adds Ultra Convert and updated VideoMate walkthroughs, and uses original reports and saved scientific results to explain each project.
 
-The last recorded production deployment is `71e58c0` on 6 October 2026. Its locale repair, healthy deployment, public HTTPS verification and focused four-locale desktop/phone checks are [recorded here](VERIFICATION.md#6-october-production-redeployment). The earlier Docker-context and maskable-icon repairs remain [recorded separately](VERIFICATION.md#5-october-docker-context-repair). Read each verification section's scope before treating it as evidence for a newer revision.
+The last recorded production deployment is `cc3c03c` on 11 October 2026. Its Docker document packaging and PDF reader repairs, healthy deployment, public HTTPS verification and focused four-locale desktop/phone checks are [recorded here](VERIFICATION.md#docker-document-packaging-repair--11-october-2026). The earlier [locale repair](VERIFICATION.md#6-october-production-redeployment) and [Docker-context/maskable-icon repairs](VERIFICATION.md#5-october-docker-context-repair) retain their separate scopes. Read each verification section's scope before treating it as evidence for a newer revision.
 
 | Document | Purpose |
 | --- | --- |
