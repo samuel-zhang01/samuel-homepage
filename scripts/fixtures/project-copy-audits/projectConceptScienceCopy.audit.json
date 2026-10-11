@@ -1,0 +1,16 @@
+{
+  "dictionary": "projectConceptScienceCopy.ts",
+  "exportName": "projectConceptScienceCopy",
+  "sources": [
+    "src/components/projects/ProjectConceptScience.tsx"
+  ],
+  "identities": {
+    "Python": "Programming language name in a deliberately fictional CV example.",
+    "SQL": "Established database query language acronym in the fictional CV example.",
+    "ResNet34": "Original model architecture identity in the source benchmark.",
+    "MobileNetV3": "Original model architecture identity in the source benchmark."
+  },
+  "dataSources": [
+    "src/data/projectConceptScience.ts"
+  ]
+}

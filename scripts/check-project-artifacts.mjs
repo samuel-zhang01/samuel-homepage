@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { scientificMedia } from "./fixtures/scientific-media.mjs";
+import { projectShowcaseMedia } from "./fixtures/project-showcase-media.mjs";
 import { lstat, readFile, readdir } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import ts from "typescript";
@@ -78,6 +79,7 @@ const allowlist = new Map([
     type: "png",
   }],
   ...scientificMedia,
+  ...projectShowcaseMedia,
 ]);
 
 const forbiddenPublicArtifacts = [

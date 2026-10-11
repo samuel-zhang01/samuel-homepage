@@ -8,7 +8,8 @@ const standaloneRoot = join(outputRoot, "standalone");
 // Ultra Convert adds one demand-loaded demo chunk and its CSS. Keep byte
 // and initial-load limits unchanged while allowing that additional experience.
 // COVERD adds a separately loaded workflow script and stylesheet.
-const MAX_BROWSER_FILES = 124;
+// The shared 42-project visual overview adds one lazy script/style pair.
+const MAX_BROWSER_FILES = 126;
 // Full CN/TW copy and the requested interactive product/ML tasks live in lazy
 // project chunks. Bound that content separately from the unchanged initial load.
 const MAX_BROWSER_BYTES = 5.5 * 1024 * 1024;

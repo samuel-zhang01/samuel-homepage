@@ -1,8 +1,0 @@
-{
-  "dictionary": "productPreviewMotionCopy.ts",
-  "exportName": "productPreviewMotionCopy",
-  "sources": [
-    "src/components/projects/ProductPreviewMotion.tsx"
-  ],
-  "identities": {}
-}

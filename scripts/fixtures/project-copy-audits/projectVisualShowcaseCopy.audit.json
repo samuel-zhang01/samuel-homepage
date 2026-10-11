@@ -1,0 +1,11 @@
+{
+  "dictionary": "projectVisualShowcaseCopy.ts",
+  "exportName": "projectVisualShowcaseCopy",
+  "sources": ["src/components/projects/ProjectVisualShowcase.tsx"],
+  "identities": {
+    "ArrowLeft": "Keyboard event.key identifier, never displayed as prose.",
+    "ArrowRight": "Keyboard event.key identifier, never displayed as prose.",
+    "Home": "Keyboard event.key identifier, never displayed as prose.",
+    "End": "Keyboard event.key identifier, never displayed as prose."
+  }
+}

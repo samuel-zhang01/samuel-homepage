@@ -27,7 +27,7 @@
     "check:locales": "node scripts/check-locales.mjs",
     "check:output": "node scripts/check-build-output.mjs",
     "audit:dependencies": "npm audit --audit-level=moderate && npm audit signatures",
-    "prebuild": "node scripts/check-next-lint-dependency.mjs && npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:icons && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:experiments && npm run check:catalogue && npm run check:profile && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
+    "prebuild": "node scripts/check-next-lint-dependency.mjs && npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:icons && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:visuals && npm run check:experiments && npm run check:catalogue && npm run check:profile && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
     "build": "next build",
     "postbuild": "npm run check:output",
     "build:isolated": "npm run prebuild && NEXT_DIST_DIR=.next-build next build && node scripts/check-build-output.mjs .next-build",
@@ -50,7 +50,8 @@
     "check:resize": "node scripts/check-project-window-resize.mjs",
     "check:phone-space": "node scripts/check-phone-space.mjs",
     "check:deep:recovery": "node scripts/check-deep-recovery.mjs",
-    "check:profile": "node scripts/check-profile.mjs"
+    "check:profile": "node scripts/check-profile.mjs",
+    "check:visuals": "node scripts/check-project-visuals.mjs"
   },
   "dependencies": {
     "katex": "0.18.7",

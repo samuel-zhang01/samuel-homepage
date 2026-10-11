@@ -2057,7 +2057,7 @@ function AppContent({
     case "coverd": return <CoverdApp locale={locale} />;
     case "experience": return <ExperienceApp locale={locale} />;
     case "projects": return <ProjectExplorer active={active} locale={locale} onOpenApp={openApp} />;
-    case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} /> : null;
+    case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} active={active} /> : null;
     case "projectActivity": return activity ? <ProjectActivity key={`${activity.slug}:${activity.kind}:${activity.artifactHref ?? ""}`} {...activity} locale={locale} active={active} onBack={onActivityBack} /> : null;
     case "sidequest": return <SideQuestCabinetApp locale={locale} />;
     case "skills": return <SkillsApp locale={locale} />;

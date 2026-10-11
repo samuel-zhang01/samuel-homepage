@@ -2,7 +2,7 @@
 
 import { getProjectText } from "@/lib/projectNarrative";
 
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useContext, useState } from "react";
 import { projects, type Project } from "@/data/projects";
 import { localeSlug, type Locale } from "@/lib/i18n";
@@ -11,11 +11,12 @@ import { ProjectLocaleProvider } from "./ProjectTranslationBoundary";
 import { ProjectCaseBrief } from "./ProjectCaseBrief";
 import { ProjectWindowContext } from "./ProjectWindowContext";
 import { ProjectArtwork } from "./ProjectArtwork";
-import { ProductPreviewMotion } from "./ProductPreviewMotion";
 import { ScheduleCallLink } from "../ScheduleCallLink";
 export { default as ProjectActivity } from "./ProjectActivity";
 
 import styles from "./ProjectDocument.module.css";
+
+const ProjectVisualShowcase = dynamic(() => import("./ProjectVisualShowcase"));
 
 const copy = {
   "Ongoing": ["持续进行", "持續進行"],
@@ -50,10 +51,11 @@ const copy = {
 } satisfies ProjectCopyTable;
 
 type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";
-export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGraph, embedded = false }: {
+export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGraph, embedded = false, active = true }: {
   slug: string; locale: Locale; onOpenApp: (id: SystemApp) => void;
   onBack: () => void; onGraph: (slug: string) => void;
   embedded?: boolean;
+  active?: boolean;
 }) {
   const project = projects.find((item) => item.slug === slug);
   const primaryPdf = !project?.demo ? project?.artifacts?.find(artifact => artifact.kind === "PDF") : undefined;
@@ -61,10 +63,6 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
   const openActivity = useContext(ProjectWindowContext);
   const [shareStatus, setShareStatus] = useState("");
   const [shareFallback, setShareFallback] = useState("");
-  const [previewIndex, setPreviewIndex] = useState(0);
-  const previewImages = project?.preview ? [project.preview, ...(project.preview.gallery ?? [])] : [];
-  const effectivePreviewIndex = Math.min(previewIndex, Math.max(0, previewImages.length - 1));
-  const preview = previewImages[effectivePreviewIndex];
   const t = (source: string) => projectText(locale, copy, source);
   const openDemo = () => openActivity?.({ slug, kind: "demo" });
   const share = async () => {
@@ -88,12 +86,7 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
       <div className={styles.titleRow}><ProjectArtwork project={project} /><h1>{getProjectText(locale, project.title)}</h1></div>
         <p className={styles.summary}>{getProjectText(locale, project.summary)}</p>
     </header>
-    {preview && <figure className={styles.preview}>
-      {previewImages.length > 1 && <div className={styles.previewTabs} role="group" aria-label={t("Explore the project")}>{previewImages.map((image, index) => <button key={image.src} type="button" className="s7-button" aria-pressed={effectivePreviewIndex === index} onClick={() => setPreviewIndex(index)}>{getProjectText(locale, image.label ?? image.alt)}</button>)}</div>}
-      <Image unoptimized src={preview.src} alt={getProjectText(locale, preview.alt)} width={preview.width ?? 543} height={preview.height ?? 172} style={{ maxWidth: preview.width ?? "100%" }} sizes="(max-width: 720px) 90vw, 640px" />
-      <figcaption>{getProjectText(locale, preview.caption)} <a href={preview.src} target="_blank" rel="noopener noreferrer">{t("View full screenshot")} ↗</a></figcaption>
-    </figure>}
-    {slug === "videomate" && <div className={styles.preview}><ProductPreviewMotion locale={locale} /></div>}
+    <div className={styles.preview}><ProjectVisualShowcase key={slug} project={project} locale={locale} active={active} /></div>
     <ProjectCaseBrief project={project} locale={locale} onExplore={openDemo} />
     {(hasReadingLinks || project.tools.length > 0) && <section className={styles.resources}>
       <h2>{t(hasReadingLinks ? "Read more" : "Built with")}</h2>

@@ -1,0 +1,40 @@
+.showcase { container-type: inline-size; max-width: 1080px; margin: 0 auto; color: var(--s7-ink); font: var(--s7-text)/1.5 var(--s7-font-text); }
+.tabs, .imageChoices, .imageActions, .controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.showcase :is(button,a) { min-height: 44px; }
+.tabs { padding: 0 0 12px; }
+.tabs [aria-selected="true"], .imageChoices [aria-pressed="true"], .steps [aria-pressed="true"] { background: var(--s7-selected-paper, #ebe8df); box-shadow: var(--s7-relief-inset); font-weight: 700; }
+.showcase :is(button,a):focus-visible, .imageStage:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+.imageChoices { margin-bottom: 12px; }
+.imageChoices button { flex: 0 1 auto; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.figure { margin: 0; }
+.imageStage { display: flex; justify-content: center; align-items: flex-start; width: fit-content; max-width: 100%; margin: 0 auto; background: var(--s7-paper); border: 1px solid var(--s7-edge); box-shadow: 2px 2px 0 var(--s7-shadow); }
+.image { display: block; width: auto; height: auto; max-width: 100%; max-height: min(60vh, 540px); object-fit: contain; }
+.imageStage[data-inspect="true"] { display: block; width: 100%; max-height: 65vh; overflow: auto; overscroll-behavior: contain; }
+.imageStage[data-inspect="true"] .image { max-width: none; max-height: none; }
+.figure figcaption { margin: 12px auto 0; max-width: 78ch; font-size: var(--s7-small); line-height: 1.55; }
+.imageActions { margin-top: 10px; }
+.imageActions a { font-size: var(--s7-ui); }
+.concept { padding: 18px; background: var(--s7-context-paper); border: 1px solid var(--s7-edge); box-shadow: var(--s7-relief-raised); }
+.concept h2 { margin: 0 0 16px; font: 700 var(--s7-heading)/1.35 var(--s7-font-text); }
+.scene { min-width: 0; padding: 16px; background: var(--s7-paper); border: 1px solid var(--s7-edge); box-shadow: var(--s7-relief-inset); }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+.steps button { display: flex; flex-direction: column; gap: 4px; justify-content: center; align-items: center; min-width: 0; min-height: 60px; padding: 8px 6px; white-space: normal; overflow-wrap: anywhere; font-size: var(--s7-ui); }
+.steps span { font: 700 var(--s7-small)/1 var(--s7-font-ui); color: var(--s7-muted); }
+.caption { max-width: 76ch; min-height: 3em; margin: 16px 0; font-size: var(--s7-text); line-height: 1.55; }
+.controls button { flex: 0 1 auto; }
+.note { margin: 12px 0 0; max-width: 90ch; font-size: var(--s7-small); line-height: 1.5; color: var(--s7-muted); }
+@container (max-width: 620px) {
+  .concept { padding: 12px; }
+  .scene { padding: 12px; }
+  .steps { gap: 6px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .image { max-height: 55vh; }
+  .caption { min-height: 0; }
+  .controls button { flex: 1 1 100px; }
+}
+@container (max-width: 360px) {
+  .concept, .scene { padding: 9px; }
+  .tabs > button { flex: 1; padding-inline: 8px; }
+  .imageActions > :is(button,a) { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .scene *, .scene *::before, .scene *::after { animation: none !important; transition: none !important; } }
+.showcase[data-reduced="true"] .scene * { animation: none !important; transition: none !important; }

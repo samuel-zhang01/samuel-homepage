@@ -1,0 +1,9 @@
+{
+  "dictionary": "projectShowcaseImagesCopy.ts",
+  "exportName": "projectShowcaseImagesCopy",
+  "sources": [],
+  "dataSources": [
+    "src/data/projectShowcaseImages.ts"
+  ],
+  "identities": {}
+}
