@@ -2,6 +2,85 @@
 
 This guide records current verification scope, reproduction and known limits. It replaces the cumulative dated audit and repeated handoff history. The complete pre-cleanup narrative remains in [Git at effc55f](https://github.com/samuel-zhang01/samuel-homepage/blob/effc55f/docs/DEEP_AUDIT_2026-10-04.md); deleting it from the working tree does not delete that record.
 
+## Prominent project launches — 11 October 2026
+
+Project overviews now put the runnable demo, native application or public website in the first toolbar, before the title and write-up. The primary launch uses a black face, white text, a double frame and a **52px** target; at narrow widths it occupies the full row. The nine browser-native app launches no longer sit in Read more. YASA distinguishes its interactive demonstration from its public scheduling website. Downloads, PDFs and repositories keep accurate destination labels; Home Lab, Experience and COVERD context windows are explicitly related applications rather than the project's live app. Both Mandarin editions cover the changed labels.
+
+Compiled layout inspection covers **all 42 overviews at 1466×858 and 320×568**: 29 demonstrations, nine applications, one website-only primary destination and three projects without a live launch. Each available live destination has one pronounced primary action; the three other pages do not invent one. All launch targets appear before the write-up, with no document or toolbar horizontal overflow. A further **48 profiles** cover six representative destination types across all four locales and both sizes. These are geometry/label checks, not 132 successful launches. The latter matrix retained the existing first-visit mobile guide; clean phone screenshots and functional checks dismiss it normally.
+
+An independent adversarial reviewer grades the requested prominence and reviewed journeys **9.3/10 desktop and 9.4/10 phone**, with no remaining launch defect found. Ten challenges include Space/Enter launches, native-app close/return focus, the embedded STUDY-RL list → detail → atlas → overview journey, Traditional Chinese YASA's fictional booking demo, separate Ultra Convert/VideoMate installation links, actual public COVERD website activation and GROWMAT's 24-page PDF reader. The focus indicator remains visible around the primary frame. These are scoped agent judgments, not recruited user research or an exhaustive audit of every demo state, browser engine or physical device. No external form or booking was submitted.
+
+Shared-checkout lint, all prebuild/content gates, build-time types and optimized Next compilation pass. Its final output gate stops at **128 browser files against the existing 126 limit**. The limit was not changed for this request. A frozen worktree of **`28a2a24` plus 24 project-wording/public-link/launch implementation files**, excluding concurrent Secret changes, passes the complete isolated build and output gate: **126 browser files / 5.68 MiB**, including the separately bounded **257.1 KiB** deferred math renderer, **260.4 KiB** initial JavaScript gzip and **5.22 MiB** application runtime. Dependencies are symlinked, so this does not establish standalone deployment readiness. The full 42-page matrix uses the compiled combined preview; the locale and independent journey review use the passing frozen preview. Both launch source files match the frozen snapshot. Two Italian implementation/copy files changed concurrently afterward and are outside its current-source claim; their work is preserved. No production deployment was performed.
+
+The archive preserves the combined output-gate failure, initial matrix-helper failure, source-recheck mismatch, onboarding captures, clean independent captures, exact frozen sources and all successful receipts. All **53 files / 2,093,691 bytes** were read back and SHA-256 verified in `~/.local/share/samuel-homepage/review-archive/launch-action-20261011.tar.gz`; archive SHA-256: `a244855faebe4951c1cc8a377233f91b712d93c4826a207048374e8bfd0dd02e`. The neighboring `launch-action-20261011.tar.manifest.json` lists every member. A clean phone proof remains as `launch-action-20261011-preview.jpg` in the same directory. Temporary compiled previews/worktree were removed, browser tabs closed and viewport reset; the existing development server on port 3000 remains available. To reproduce, restore the archive under ignored `.codex/reports/`, apply its exact source snapshot to the recorded base, run `npm run build:isolated`, and inspect the catalogue cases and recorded keyboard journeys on the compiled preview.
+
+## Project wording and public links — 11 October 2026
+
+This follow-up removes visitor-facing artifact/manifest language from the project archive, portfolio map, STUDY-RL, CV output files, Italian work samples, installer planner and RUN/HACK app chapter. Project descriptions remain in my voice; scientific evidence and actual evaluation limitations retain their meaning. Both Mandarin editions cover the changed copy.
+
+The repository audit inspected **71 local Git working directories / 65 unique remotes** beneath the GitHub and OneDrive Courses roots, and compared the relevant original projects with authenticated GitHub repository metadata. Public access is checked separately with anonymous HTTP requests. The catalogue declares source visibility separately from demo access: **20 entries link to 10 verified public repository pages**, while **22 keep their original source private or unpublished**. Those 22 statuses describe source availability, not a claim that every project has a hosted GitHub repository. The local safety-course parent remote returns 404 and stays unlinked; the separate private course repositories remain distinguishable. No employer, client or local course file becomes a public URL.
+
+STUDY-RL was made public at the user’s explicit request. GitHub confirms `private: false`, `visibility: public` and an MIT licence; anonymous access returns 200. The latest history-secret workflow passed at revision `04936cf1cb694873e2857aa9a316ae520ad2c43a`; the checked release tree contains 634 files and reports zero issues when run with its existing Python environment. Its current course has 26 weeks; the homepage atlas still maps the first 25 and labels that scope. A first attempt with the system Python lacked `nbformat`; the existing project environment resolved that check.
+
+The microrobot report link was removed because its repository is private. The public Parliamo repository, STUDY-RL and its bandit/OPE companions, and the homepage source for native desk apps are now linked. YASA also links its existing live scheduling website. Repository navigation opens the canonical repository page; immutable links used by scientific method/source references remain intact. The homepage’s custom non-commercial source-available licence stays distinct from MIT/open-source code and repositories with no declared licence.
+
+All **14 unique catalogue repository, release and website destinations** return HTTP 200 without authentication. None of the checked public repositories has a configured GitHub Pages deployment; no guessed Pages URL was added. Public repository pages and existing live websites are used instead.
+
+| Project | Original source availability | Public repository |
+| --- | --- | --- |
+| Ultra Convert | Public | [UltraConvert](https://github.com/samuel-zhang01/UltraConvert) |
+| VideoMate | Public | [VideoMate](https://github.com/samuel-zhang01/VideoMate) |
+| Orbital Lab | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Note Pad | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Sketch Pad | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Quick List | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Focus Clock | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Pocket Calendar | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Desk Calculator | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Unit Converter | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| Colour Studio | Public | [samuel-homepage](https://github.com/samuel-zhang01/samuel-homepage) |
+| coverd.ai | Private / unpublished | — |
+| GROWMAT | Private / unpublished | — |
+| Insurance Lead-Market Matching | Private / unpublished | — |
+| CV Keyword Automator | Private / unpublished | — |
+| Im I Broke? | Private / unpublished | — |
+| COVERD-YASA Scheduling | Private / unpublished | — |
+| Parliamo! Italian Learning Portal | Public | [Italian-Learning-Portal](https://github.com/samuel-zhang01/Italian-Learning-Portal) |
+| Course Recommendation Prototype | Public | [Demo-Course-Recommender](https://github.com/samuel-zhang01/Demo-Course-Recommender) |
+| STUDY-RL | Public | [STUDY-RL](https://github.com/samuel-zhang01/STUDY-RL) |
+| Sequential Decisions Lab | Public | [STUDY-RL](https://github.com/samuel-zhang01/STUDY-RL) |
+| Microrobot Pose & Depth | Private / unpublished | — |
+| Trustworthy MRI Reconstruction | Public | [IX-Medical-Imaging](https://github.com/samuel-zhang01/IX-Medical-Imaging) |
+| Neural CFD Surrogates | Private / unpublished | — |
+| Air-Quality Sensor Optimisation | Private / unpublished | — |
+| Cost-Sensitive Cyber Detection | Private / unpublished | — |
+| Regularisation Paths · Air-Quality Companion | Private / unpublished | — |
+| Safety-Critical AI Studies | Private / unpublished | — |
+| Safe Learning to Defer for Insurance Fraud Detection | Public | [IX-Safety-Latex](https://github.com/samuel-zhang01/IX-Safety-Latex) |
+| Causal Adjustment & OPE Lab | Public | [STUDY-RL](https://github.com/samuel-zhang01/STUDY-RL) |
+| Four Models of Corporate Innovation | Private / unpublished | — |
+| Venture Planning | Private / unpublished | — |
+| PC-SAFT Thermodynamics Workbench | Private / unpublished | — |
+| Solid–Liquid Solubility Workflow | Private / unpublished | — |
+| Molecular Recognition Pipeline | Private / unpublished | — |
+| CPROT Spectroscopy Plotter | Public | [CPROT-Spec-Fast-Plotter](https://github.com/samuel-zhang01/CPROT-Spec-Fast-Plotter) |
+| Accelerator Environment Planner | Private / unpublished | — |
+| WSL 2 + GROMACS GPU Setup Notes | Public | [WSL-GROMACS-Docker](https://github.com/samuel-zhang01/WSL-GROMACS-Docker) |
+| Home Lab Infrastructure & Recovery | Private / unpublished | — |
+| Stochastic Market Impact Simulator | Private / unpublished | — |
+| COVID-19 Decision Support | Private / unpublished | — |
+| Computational Chemistry Coding Labs | Private / unpublished | — |
+
+Verification uses an isolated checkout of `5dc2666` plus this follow-up, because unrelated product/showcase and Secret app work was in progress in the shared checkout. Lint and the optimized isolated build pass, including all prebuild profile, graph, catalogue, source-file, icon, numeric, locale and copy gates. The build output gate passes at **122 browser files / 5.22 MiB**, **260.7 KiB initial JavaScript gzip**, and **4.84 MiB application runtime**. A first full-copy attempt in the shared tree met the temporarily removed VideoMate component; it was preserved as concurrent work and was not restored or bypassed. This scoped verification does not certify the other in-progress changes or claim a production deployment.
+
+Connected Edge review of the compiled preview verifies the STUDY-RL materials panel on desktop and at **320×740** in English and both Mandarin editions. The English desktop and English/Traditional Chinese phone layouts were directly viewed; the final phone panels wrap without page overflow. Repository links have the correct translated label and destination in all four locales at 320px. The microrobot panel shows private source and has zero links into its private repository; YASA exposes the correct live website. Pressing Enter on Parliamo’s repository link opens its public GitHub page, with the Public badge visible. The phone onboarding dialog was dismissed through its normal control. Temporary viewport overrides and owned tabs were cleaned up. These are focused changed-state checks, not a full browser or interaction matrix.
+
+All 42 catalogue repository fields in the shared checkout match the verified snapshot. Concurrent additions to the project preview type and screenshot presentation are retained; they are outside this isolated build scope. The first exact whole-file hash comparison exposed those additions, rather than silently treating the combined checkout as the frozen build.
+
+The **39 files / 1214361 bytes** of metadata, anonymous-link receipts, failed attempts, scripts, browser observations, build/lint logs and scoped source snapshots are archived at `~/.local/share/samuel-homepage/review-archive/project-links-20261011.tar.gz`, with a neighboring manifest. Every archive member was read back and SHA-256 verified. Archive SHA-256: `ad45ff97124c867c3226b7b6fa54f07b05ab10d417f8d79991a64c18a290e481`. Screenshots were inspected directly through Computer Use; the archive’s browser receipt records those observations. The temporary isolated checkout and preview are removed. The existing development server and other in-progress work remain available.
+
+The final UK-English private-source description was aligned with the already compiled US-English first-person text. A focused check passes that alignment and all four result-label editions; the live catalogue and whitespace gates also pass. The subsequent combined locale gate encountered three missing translations and unused keys in the concurrently revised Secret app. That unrelated work is preserved and does not change the earlier isolated pass; the combined tree awaits its own completed verification. The final literal and failure observation are archived in `~/.local/share/samuel-homepage/review-archive/project-links-copy-followup-20261011.tar.gz` with verified members and SHA-256 `8daf9e531603455280ddbc6a6d4a7af40d9cf8ed5ae54c4cb6c26ea296482273`.
+
 ## Interactive products and ML/AI — 11 October 2026
 
 The completed follow-up covers **Ultra Convert, VideoMate and YASA, all 15 routed ML/decision demos, and the COVERD application**. Decorative vertical accent bars are removed. Short product openings use real app views or a playable workflow; research openings explain my question and direct the visitor to an experiment. All additions use first-person descriptions, reviewed four-locale copy and the existing System 7 controls. [The implementation record](INTERACTIVE_RESEARCH_ROOT.md) maps each task to its original repository material; [the product checkpoint](INTERACTIVE_PRODUCT_CHECKPOINT.md) records native capture and installation details.

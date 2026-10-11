@@ -262,7 +262,7 @@ const SCENARIOS: Scenario[] = [
         evidence: {
           trading: "A synthetic trading descriptor exists without corroborating evidence.",
           appetite: "Unassessed: the evidence contract is not satisfied.",
-          quality: "Unassessed: no market-conditional artifact is available.",
+          quality: "Unassessed: no market-specific result is available.",
         },
         reliability: 0.48,
         authorityVerified: false,
@@ -352,7 +352,7 @@ const SCENARIOS: Scenario[] = [
         evidence: {
           trading: "A synthetic trading descriptor exists without corroborating evidence.",
           appetite: "Unassessed: the evidence contract is not satisfied.",
-          quality: "Unassessed: no market-conditional artifact is available.",
+          quality: "Unassessed: no market-specific result is available.",
         },
         reliability: 0.46,
         authorityVerified: false,

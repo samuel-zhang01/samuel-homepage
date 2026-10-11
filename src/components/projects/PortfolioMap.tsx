@@ -121,7 +121,7 @@ function relationship(left: Project, right: Project): Relationship {
     ...(left.access === right.access ? [`Access · ${accessMeta[left.access].label}`] : []),
     ...(left.status === right.status ? [`Status · ${left.status}`] : []),
     ...(isInteractiveProject(left) && isInteractiveProject(right) ? ["Demo · both declare an interactive exhibit"] : []),
-    ...sharedArtifactKinds.map((kind) => `Artifact kind · ${kind}`),
+    ...sharedArtifactKinds.map((kind) => `File type · ${kind}`),
   ];
   return { sharedTools, sharedArtifactKinds, signals };
 }
@@ -452,7 +452,7 @@ function ProjectCompareCard({
         <div><dt>Status</dt><dd>{project.status}</dd></div>
         <div><dt>Access</dt><dd>{accessMeta[project.access].label}</dd></div>
         <div><dt>Demo</dt><dd>{isInteractiveProject(project) ? "Available" : "No"}</dd></div>
-        <div><dt>Artifacts</dt><dd>{project.artifacts?.length ?? 0}</dd></div>
+        <div><dt>Project files</dt><dd>{project.artifacts?.length ?? 0}</dd></div>
       </dl>
       <button type="button" onClick={onOpen}>Open {label}</button>
     </article></ProjectCopy>
@@ -628,7 +628,7 @@ export function PortfolioMap({
           <div><dt>Interactive</dt><dd>{TOTAL_DEMOS}</dd></div>
           <div><dt>Protected</dt><dd>{TOTAL_PROTECTED}</dd></div>
           <div><dt>Exact tools</dt><dd>{TOOL_ROWS.length}</dd></div>
-          <div><dt>Artifacts</dt><dd>{TOTAL_ARTIFACTS}</dd></div>
+          <div><dt>Project files</dt><dd>{TOTAL_ARTIFACTS}</dd></div>
         </dl>
       </header>
 

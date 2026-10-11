@@ -61,7 +61,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   },
   "rl-atlas": {
     problem: "An agent must learn from the consequences of its actions while balancing uncertain rewards, delayed outcomes and limited feedback.",
-    contribution: "I wrote 25 modules that turn reinforcement-learning equations into experiments you can run. The browser lets you train a cliff-walking agent, compare its route with another algorithm, and explore how fine-tuning changes a small language model’s answers.",
+    contribution: "I wrote a reinforcement-learning course that turns equations into experiments you can run. This atlas covers its first 25 modules. Train a cliff-walking agent, compare its route with another algorithm, and explore how fine-tuning changes a small language model’s answers.",
     pipeline: "bandits and value updates → policy and deep RL → offline and model-based learning → language-model post-training → applied decision problems",
     walkthrough: "Watch a cliff-walking agent learn, pause and compare its route. In the language-model lab, run LoRA updates or DPO preference steps and watch the loss change.",
   },

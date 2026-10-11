@@ -81,7 +81,7 @@ type CorePackage = {
 const VIEWS: Array<{ id: ViewId; label: string; hint: string }> = [
   { id: "resolver", label: "Resolve", hint: "platform route" },
   { id: "failure", label: "Failure lab", hint: "inject faults" },
-  { id: "manifest", label: "Manifest", hint: "targets + probes" },
+  { id: "manifest", label: "Package list", hint: "targets + probes" },
   { id: "audit", label: "Design & limits", hint: "decisions + scope" },
 ];
 
@@ -146,7 +146,7 @@ function platformResolution(profile: Profile, mode: PlannerMode) {
       return {
         label: "macOS · Intel",
         tone: "blocked" as const,
-        installer: "No source artifact — exits before installation",
+        installer: "No source installer — exits before installation",
         warning: "The source explicitly supports Apple silicon only.",
       };
     }
@@ -163,10 +163,10 @@ function platformResolution(profile: Profile, mode: PlannerMode) {
       return {
         label: "Linux · ARM64",
         tone: mode === "source" ? ("warning" as const) : ("blocked" as const),
-        installer: "Source still selects the Linux x86_64 artifact",
+        installer: "Source still selects the Linux x86_64 installer",
         warning:
           mode === "source"
-            ? "The header promises Linux x86_64, but the branch does not reject ARM64 before selecting that artifact."
+            ? "The header promises Linux x86_64, but the branch does not reject ARM64 before selecting that installer."
             : "The adapted planner blocks an architecture-mismatched installer before download.",
       };
     }
@@ -182,7 +182,7 @@ function platformResolution(profile: Profile, mode: PlannerMode) {
     return {
       label: "Windows shell · ARM64",
       tone: "blocked" as const,
-      installer: "No matching source artifact",
+      installer: "No matching source installer",
       warning: "The coded Windows path selects an x86_64 executable and is not advertised in the support header.",
     };
   }
@@ -204,7 +204,7 @@ function resolveTorch(profile: Profile, blocked: boolean, mode: PlannerMode): Fr
       fallbacks: [],
       verification: "Not reached",
       tone: "blocked",
-      note: "Resolve the platform artifact first.",
+      note: "Resolve the platform installer first.",
     };
   }
 
@@ -261,7 +261,7 @@ function resolveTensorFlow(profile: Profile, blocked: boolean, mode: PlannerMode
       fallbacks: [],
       verification: "Not reached",
       tone: "blocked",
-      note: "Resolve the platform artifact first.",
+      note: "Resolve the platform installer first.",
     };
   }
 
@@ -373,7 +373,7 @@ function resolvePlan(profile: Profile, mode: PlannerMode, locale: Locale): Resol
         id: "unpinned",
         tone: "warning",
         title: "Unpinned package layer",
-        detail: "The Anaconda artifact is versioned, but the pip package specifications and Hugging Face bootstrap are not locked to versions or hashes.",
+        detail: "The Anaconda installer is versioned, but the pip package specifications and Hugging Face bootstrap are not locked to versions or hashes.",
       },
       {
         id: "runtime-evidence",
@@ -409,8 +409,8 @@ function resolvePlan(profile: Profile, mode: PlannerMode, locale: Locale): Resol
     },
     {
       number: "02",
-      label: mode === "source" ? "Fetch Anaconda" : "Verify artifact",
-      detail: blocked ? "No compatible artifact" : platform.installer,
+      label: mode === "source" ? "Fetch Anaconda" : "Verify installer",
+      detail: blocked ? "No compatible installer" : platform.installer,
       tone: blocked ? "blocked" : mode === "source" ? "probe" : "warning",
       provenance: mode === "source" ? "SOURCE" : "ADAPTED",
     },
@@ -438,14 +438,14 @@ function resolvePlan(profile: Profile, mode: PlannerMode, locale: Locale): Resol
     {
       number: "06",
       label: mode === "source" ? "Bootstrap HF CLI" : "Gate remote bootstrap",
-      detail: blocked ? "Not reached" : mode === "source" ? "Remote curl-to-shell path" : "Require reviewed, pinned artifact",
+      detail: blocked ? "Not reached" : mode === "source" ? "Remote curl-to-shell path" : "Require reviewed, pinned installer",
       tone: blocked ? "blocked" : "warning",
       provenance: mode === "source" ? "SOURCE" : "ADAPTED",
     },
     {
       number: "07",
       label: "Verify runtime",
-      detail: blocked ? "Not reached" : mode === "source" ? "23 module imports + accelerator reports" : "Imports + non-empty device checks + manifest reconciliation",
+      detail: blocked ? "Not reached" : mode === "source" ? "23 module imports + accelerator reports" : "Imports + non-empty device checks + package checks",
       tone: blocked ? "blocked" : "probe",
       provenance: mode === "source" ? "SOURCE" : "ADAPTED",
     },
@@ -724,7 +724,7 @@ function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: 
         tone: "warning" as const,
         headline: "The selected wheel and observed device are reconciled separately",
         detail: "A fallback may import successfully yet provide no acceleration. The adapted check records actual CUDA/MPS capability alongside package availability.",
-        trace: ["artifact → resolved", "import → required", "accelerator probe → required"],
+        trace: ["installer → resolved", "import → required", "accelerator probe → required"],
       },
     };
   }
@@ -760,8 +760,8 @@ function failureNarrative(failure: FailureId, failedPackage: CorePackage, plan: 
       outcome: "SUPPLY-CHAIN GATE",
       tone: "blocked" as const,
       headline: "Unreviewed remote execution is blocked before launch",
-      detail: "The adaptation requires a versioned artifact that can be reviewed, plus integrity evidence. It intentionally does not generate or execute a replacement command.",
-      trace: ["artifact provenance → missing", "checksum → missing", "execution → blocked"],
+      detail: "The adaptation requires a versioned installer that can be reviewed, plus integrity evidence. It intentionally does not generate or execute a replacement command.",
+      trace: ["installer provenance → missing", "checksum → missing", "execution → blocked"],
     },
   };
 }
@@ -830,11 +830,11 @@ function FailureLab({ plan }: { plan: ResolvedPlan }) {
         </div>
         <div className={styles.checkpointHeader}><span>Checkpoint</span><span>Source</span><span>Guarded plan</span></div>
         {[
-          ["Artifact integrity", "Not checked", "Required before execution"],
+          ["Installer integrity", "Not checked", "Required before execution"],
           ["Package command", "Exit status", "Exit status + ledger"],
           ["Module import", "23 import attempts", "Import name reconciled"],
           ["GPU capability", "Reports availability; TF fallback test is weak", "Non-empty device assertion"],
-          ["Whole manifest", "No retained run manifest", "All 24 targets reconciled"],
+          ["Whole package list", "No saved package list", "All 24 targets reconciled"],
         ].map(([label, source, adapted]) => (
           <div className={styles.checkpointRow} key={label}><strong>{label}</strong><span>{source}</span><span>{adapted}</span></div>
         ))}
@@ -894,12 +894,12 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
         <section className={styles.commandPanel}>
           <div className={styles.panelHeading}>
             <span>&gt;_</span>
-            <strong>SELECTED ROUTE MANIFEST</strong>
+            <strong>SELECTED PACKAGES</strong>
             <em>READ ONLY</em>
           </div>
-          <div role="group" className={styles.commandLines} aria-label="Resolved dry-run manifest">
+          <div role="group" className={styles.commandLines} aria-label="Planned package list">
             <p><span>01</span><span className={styles.manifestLabel}>Platform</span><strong>{plan.platformLabel}</strong></p>
-            <p><span>02</span><span className={styles.manifestLabel}>Artifact</span><strong>{plan.installer}</strong></p>
+            <p><span>02</span><span className={styles.manifestLabel}>Installer</span><strong>{plan.installer}</strong></p>
             <p><span>03</span><span className={styles.manifestLabel}>Environment</span><strong>{plan.environmentAction}</strong></p>
             <p><span>04</span><span className={styles.manifestLabel}>PyTorch</span><strong>{plan.torch.target}</strong></p>
             <p><span>05</span><span className={styles.manifestLabel}>TensorFlow</span><strong>{plan.tensorflow.target}</strong></p>
@@ -907,7 +907,7 @@ function ManifestView({ plan }: { plan: ResolvedPlan }) {
           </div>
         </section>
         <section className={styles.reconciliationCard}>
-          <span>MANIFEST RECONCILIATION</span>
+          <span>PACKAGE CHECKS</span>
           <div className={styles.reconcileEquation}>
             <MathEquation tex={String.raw`19+4+1=24`} />
           </div>
@@ -934,7 +934,7 @@ function AuditView() {
         <section className={styles.auditCard}>
           <div className={styles.panelHeading}><span>✓</span><strong>WHAT THE PLANNER EXPLAINS</strong><em>INTERACTIVE MODEL</em></div>
           <ul>
-            <li><strong>Platform routing</strong><span>Follow the decision from operating system and architecture to a package artifact and accelerator route.</span></li>
+            <li><strong>Platform routing</strong><span>Follow the decision from operating system and architecture to a package installer and accelerator route.</span></li>
             <li><strong>Failure handling</strong><span>Compare early exit, fallback and incomplete device checks with an explicit planning ledger.</span></li>
             <li><strong>Verification design</strong><span>Separate a successful package command, a successful import and a usable accelerator.</span></li>
           </ul>
@@ -945,7 +945,7 @@ function AuditView() {
           <ul>
             <li><strong>Cross-platform success</strong><span>No CI matrix or retained installation logs prove every OS, wheel and CUDA branch.</span></li>
             <li><strong>Current compatibility</strong><span>CUDA and framework comments are a December 2025 source snapshot, not current vendor guidance.</span></li>
-            <li><strong>Reproducibility</strong><span>Pip targets are unpinned; remote artifacts are not accompanied by checksums or a resolved lockfile.</span></li>
+            <li><strong>Reproducibility</strong><span>Pip targets are unpinned; remote installers are not accompanied by checksums or a resolved lockfile.</span></li>
           </ul>
         </section>
       </div>
@@ -954,7 +954,7 @@ function AuditView() {
         <div className={styles.panelHeading}><span>Δ</span><strong>DESIGN COMPARISON</strong><em>ORIGINAL + EXTENSION</em></div>
         <div className={styles.diffHeader}><span>Concern</span><span>Implemented source</span><span>Browser adaptation</span></div>
         {[
-          ["Architecture", "macOS Intel exits; Linux always selects x86_64 artifact", "Blocks every artifact/architecture mismatch"],
+          ["Architecture", "macOS Intel exits; Linux always selects x86_64 installer", "Blocks every installer/architecture mismatch"],
           ["Package policy", "19 sequential unpinned installs", "Shows targets and requires a future lockfile"],
           ["Failure semantics", "Core helper returns 1 under set -e", "Records an unresolved target without pretending success"],
           ["TensorFlow GPU", "Process exit after listing devices", "Requires a non-empty device list"],
@@ -972,12 +972,12 @@ function AuditView() {
         </section>
         <section>
           <span>WHAT WOULD MAKE A REAL RELEASE</span>
-          <p>A production installer would need a tested platform matrix, pinned dependencies, artifact integrity checks and retained device-verification results.</p>
+          <p>A production installer would need a tested platform matrix, pinned dependencies, installer integrity checks and retained device-verification results.</p>
         </section>
         <section className={styles.sourceBoundary}>
           <span>PROJECT CONTRIBUTION</span>
           <strong>Make hidden installation decisions visible</strong>
-          <small>Explainable routes, failure traces and a reconciled package manifest</small>
+          <small>Explainable routes, failure traces and a checked package list</small>
         </section>
       </div>
     </div></ProjectCopy>

@@ -993,10 +993,7 @@ export const cvKeywordCopy = {
     "返回“背景”，说明你的经历和岗位要求，再运行分析以预览输出。",
     "返回「背景」，說明你的經歷和崗位要求，再執行分析以預覽輸出。"
   ],
-  "OUTPUT MANIFEST": [
-    "输出清单",
-    "輸出清單"
-  ],
+  "OUTPUT FILES": ["输出文件", "輸出檔案"],
   "YYYYMMDD": [
     "YYYYMMDD",
     "YYYYMMDD"
@@ -1073,10 +1070,7 @@ export const cvKeywordCopy = {
     "Keywords Placement.tex",
     "Keywords Placement.tex"
   ],
-  "legacy workspace artifact · no active template include": [
-    "旧版工作区文件 · 当前模板未引用",
-    "舊版工作區檔案 · 當前模板未引用"
-  ],
+  "supporting file · not included in the active template": ["辅助文件 · 当前模板未引用", "輔助檔案 · 目前範本未引用"],
   "UNEMBEDDED": [
     "未嵌入",
     "未嵌入"

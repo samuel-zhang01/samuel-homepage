@@ -17,7 +17,7 @@ export const environmentCopy = {
     "注入故障",
     "注入故障"
   ],
-  "Manifest": [
+  "Package list": [
     "清单",
     "清單"
   ],
@@ -165,7 +165,7 @@ export const environmentCopy = {
     "尚未规划",
     "尚未規劃"
   ],
-  "Resolve the platform artifact first.": [
+  "Resolve the platform installer first.": [
     "请先解决平台安装包的问题。",
     "請先解決平台安裝包的問題。"
   ],
@@ -293,7 +293,7 @@ export const environmentCopy = {
     "未固定版本的软件包层",
     "未固定版本的軟體包層"
   ],
-  "The Anaconda artifact is versioned, but the pip package specifications and Hugging Face bootstrap are not locked to versions or hashes.": [
+  "The Anaconda installer is versioned, but the pip package specifications and Hugging Face bootstrap are not locked to versions or hashes.": [
     "Anaconda 安装包带有版本，但 pip 软件包和 Hugging Face 引导程序没有锁定版本或哈希值。",
     "Anaconda 安裝包帶有版本，但 pip 軟體包和 Hugging Face 載入程式沒有鎖定版本或雜湊值。"
   ],
@@ -321,11 +321,11 @@ export const environmentCopy = {
     "获取 Anaconda",
     "獲取 Anaconda"
   ],
-  "Verify artifact": [
+  "Verify installer": [
     "验证安装包",
     "驗證安裝包"
   ],
-  "No compatible artifact": [
+  "No compatible installer": [
     "没有兼容的安装包",
     "沒有相容的安裝包"
   ],
@@ -361,7 +361,7 @@ export const environmentCopy = {
     "远程下载后交给 Shell 执行",
     "遠端下載後交給 Shell 執行"
   ],
-  "Require reviewed, pinned artifact": [
+  "Require reviewed, pinned installer": [
     "需要经过审核并固定版本的安装包",
     "需要經過稽核並固定版本的安裝包"
   ],
@@ -373,7 +373,7 @@ export const environmentCopy = {
     "23 次模块导入与加速器报告",
     "23 次模組匯入與加速器報告"
   ],
-  "Imports + non-empty device checks + manifest reconciliation": [
+  "Imports + non-empty device checks + package checks": [
     "导入检查、非空设备检查与清单核对",
     "匯入檢查、非空裝置檢查與清單核對"
   ],
@@ -629,7 +629,7 @@ export const environmentCopy = {
     "回退软件包可能成功导入，却不提供加速。扩展检查同时记录软件包可用性和实际 CUDA/MPS 能力。",
     "回退軟體包可能成功匯入，卻不提供加速。擴展檢查同時記錄軟體包可用性和實際 CUDA/MPS 能力。"
   ],
-  "artifact → resolved": [
+  "installer → resolved": [
     "安装包 → 已解析",
     "安裝包 → 已解析"
   ],
@@ -689,11 +689,11 @@ export const environmentCopy = {
     "验证 → 继续",
     "驗證 → 繼續"
   ],
-  "The adaptation requires a versioned artifact that can be reviewed, plus integrity evidence. It intentionally does not generate or execute a replacement command.": [
+  "The adaptation requires a versioned installer that can be reviewed, plus integrity evidence. It intentionally does not generate or execute a replacement command.": [
     "扩展要求可审核的带版本安装包和完整性证据，不生成或执行替代命令。",
     "擴展要求可稽核的帶版本安裝包和完整性證據，不生成或執行替代命令。"
   ],
-  "artifact provenance → missing": [
+  "installer provenance → missing": [
     "安装包来源 → 缺失",
     "安裝包來源 → 缺失"
   ],
@@ -789,7 +789,7 @@ export const environmentCopy = {
     "加强检查的规划",
     "加強檢查的規劃"
   ],
-  "Artifact integrity": [
+  "Installer integrity": [
     "安装包完整性",
     "安裝包完整性"
   ],
@@ -837,11 +837,11 @@ export const environmentCopy = {
     "断言设备列表非空",
     "斷言裝置列表非空"
   ],
-  "Whole manifest": [
+  "Whole package list": [
     "完整清单",
     "完整清單"
   ],
-  "No retained run manifest": [
+  "No saved package list": [
     "未保留运行清单",
     "未保留執行清單"
   ],
@@ -917,7 +917,7 @@ export const environmentCopy = {
     "不匹配",
     "不匹配"
   ],
-  "SELECTED ROUTE MANIFEST": [
+  "SELECTED PACKAGES": [
     "所选路径清单",
     "所選路徑清單"
   ],
@@ -925,7 +925,7 @@ export const environmentCopy = {
     "只读",
     "只讀"
   ],
-  "Resolved dry-run manifest": [
+  "Planned package list": [
     "解析后的模拟运行清单",
     "解析後的模擬執行清單"
   ],
@@ -933,7 +933,7 @@ export const environmentCopy = {
     "23 次导入与加速器能力检测",
     "23 次匯入與加速器能力檢測"
   ],
-  "MANIFEST RECONCILIATION": [
+  "PACKAGE CHECKS": [
     "核对清单",
     "核對清單"
   ],
@@ -997,7 +997,7 @@ export const environmentCopy = {
     "平台路径",
     "平台路徑"
   ],
-  "Follow the decision from operating system and architecture to a package artifact and accelerator route.": [
+  "Follow the decision from operating system and architecture to a package installer and accelerator route.": [
     "从操作系统和架构出发，追踪如何选择安装包与加速器路径。",
     "從作業系統和架構出發，追蹤如何選擇安裝包與加速器路徑。"
   ],
@@ -1045,7 +1045,7 @@ export const environmentCopy = {
     "可复现性",
     "可復現性"
   ],
-  "Pip targets are unpinned; remote artifacts are not accompanied by checksums or a resolved lockfile.": [
+  "Pip targets are unpinned; remote installers are not accompanied by checksums or a resolved lockfile.": [
     "pip 目标未固定版本；远程安装包没有配套校验和或解析后的锁定文件。",
     "pip 目標未固定版本；遠端安裝包沒有配套校驗和或解析後的鎖定檔案。"
   ],
@@ -1069,11 +1069,11 @@ export const environmentCopy = {
     "浏览器扩展",
     "瀏覽器擴展"
   ],
-  "macOS Intel exits; Linux always selects x86_64 artifact": [
+  "macOS Intel exits; Linux always selects x86_64 installer": [
     "macOS Intel 直接退出；Linux 始终选择 x86_64 安装包",
     "macOS Intel 直接退出；Linux 始終選擇 x86_64 安裝包"
   ],
-  "Blocks every artifact/architecture mismatch": [
+  "Blocks every installer/architecture mismatch": [
     "阻止所有安装包与架构不匹配的情况",
     "阻止所有安裝包與架構不匹配的情況"
   ],
@@ -1149,7 +1149,7 @@ export const environmentCopy = {
     "真实发布还需要什么",
     "真實發布還需要什麼"
   ],
-  "A production installer would need a tested platform matrix, pinned dependencies, artifact integrity checks and retained device-verification results.": [
+  "A production installer would need a tested platform matrix, pinned dependencies, installer integrity checks and retained device-verification results.": [
     "生产安装程序需要经过测试的平台矩阵、固定的依赖版本、安装包完整性检查，以及保留的设备验证结果。",
     "生產安裝程式需要經過測試的平台矩陣、固定的依賴版本、安裝包完整性檢查，以及保留的裝置驗證結果。"
   ],
@@ -1161,7 +1161,7 @@ export const environmentCopy = {
     "让隐藏的安装决策变得可见",
     "讓隱藏的安裝決策變得可見"
   ],
-  "Explainable routes, failure traces and a reconciled package manifest": [
+  "Explainable routes, failure traces and a checked package list": [
     "可解释的路径、故障流程和核对后的软件包清单",
     "可解釋的路徑、故障流程和核對後的軟體包清單"
   ],
@@ -1233,7 +1233,7 @@ export const environmentCopy = {
     "待检测",
     "待檢測"
   ],
-  "No source artifact — exits before installation": [
+  "No source installer — exits before installation": [
     "没有对应的原始安装包——安装前退出",
     "沒有對應的原始安裝包——安裝前退出"
   ],
@@ -1245,11 +1245,11 @@ export const environmentCopy = {
     "Anaconda3-2025.06-0-MacOSX-arm64.sh",
     "Anaconda3-2025.06-0-MacOSX-arm64.sh"
   ],
-  "Source still selects the Linux x86_64 artifact": [
+  "Source still selects the Linux x86_64 installer": [
     "原始程序仍选择 Linux x86_64 安装包",
     "原始程式仍選擇 Linux x86_64 安裝包"
   ],
-  "The header promises Linux x86_64, but the branch does not reject ARM64 before selecting that artifact.": [
+  "The header promises Linux x86_64, but the branch does not reject ARM64 before selecting that installer.": [
     "说明声明支持 Linux x86_64，但该分支在选择安装包前并未排除 ARM64。",
     "說明宣告支援 Linux x86_64，但該分支在選擇安裝包前並未排除 ARM64。"
   ],
@@ -1261,7 +1261,7 @@ export const environmentCopy = {
     "Anaconda3-2025.06-0-Linux-x86_64.sh",
     "Anaconda3-2025.06-0-Linux-x86_64.sh"
   ],
-  "No matching source artifact": [
+  "No matching source installer": [
     "没有匹配的原始安装包",
     "沒有匹配的原始安裝包"
   ],
@@ -1481,7 +1481,7 @@ export const environmentCopy = {
     "平台",
     "平台"
   ],
-  "Artifact": [
+  "Installer": [
     "安装包",
     "安裝包"
   ],

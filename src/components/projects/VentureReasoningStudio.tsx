@@ -120,7 +120,7 @@ const EVIDENCE_LEVELS: Array<{
   factor: number;
   description: string;
 }> = [
-  { id: 0, short: "CLAIM", label: "Assertion only", factor: 0, description: "A sentence exists, but no supporting artifact is attached." },
+  { id: 0, short: "CLAIM", label: "Assertion only", factor: 0, description: "A claim is written, but nothing supports it yet." },
   { id: 1, short: "SIGNAL", label: "Directional signal", factor: 0.35, description: "Qualitative or early evidence points in a direction without a stable denominator." },
   { id: 2, short: "MEASURE", label: "Measured", factor: 0.7, description: "A defined measure, sample and observation window are available for review." },
   { id: 3, short: "CHECKED", label: "Corroborated", factor: 1, description: "The measure is independently checkable or repeated outside the founding team." },
@@ -222,7 +222,7 @@ const SOURCE_LEDGER: Array<{
     state: "source",
     label: "Source structure",
     title: "Prompt, output and model disclosure",
-    detail: "The submission retains the instruction, generated response and model identification as distinct artifacts with clear authorship boundaries.",
+    detail: "The prompt, response and model name are recorded as separate parts of the exercise.",
   },
   {
     state: "source",

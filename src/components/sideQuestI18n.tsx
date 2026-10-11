@@ -107,7 +107,7 @@ const zhCN: Record<string, string> = {
 
   "CHAPTER 01 · ON THE TRACK": "第一章 · 跑道之上",
   "One very long Saturday": "一个格外漫长的星期六",
-  "The product is the artefact. The relay, the constraint and the people are the story.": "产品是留下的物件；接力、限制与人，才是这个故事。",
+  "The app is what we built. The relay, the constraint and the people tell its story.": "应用是我们的成果；接力、限制与人，讲述了它的故事。",
   "FIELD LOG": "现场日志",
   "Running Hackathon timeline": "跑步黑客松时间线",
   "Samuel smiling and making a peace sign while moving on the wet track beneath the ArcelorMittal Orbit.": "Samuel 在阿赛洛米塔尔轨道塔下湿滑的跑道上前进，微笑着比出胜利手势。",
@@ -191,7 +191,7 @@ const zhCN: Record<string, string> = {
   "TRACKSIDE CONNECTIONS": "跑道边结识的伙伴",
   "Anshul Yadav · Joseph Anthony · Samuel Klacman · Joakim Talling-Smith · Luke Balabanovic · Jack Rees · and many more": "Anshul Yadav · Joseph Anthony · Samuel Klacman · Joakim Talling-Smith · Luke Balabanovic · Jack Rees · 以及更多朋友",
 
-  "CHAPTER 04 · THE ARTEFACT": "第四章 · 留下的作品",
+  "CHAPTER 04 · THE APP": "第四章 · 应用",
   "SideQuest, built between laps": "SideQuest，在一次次跑圈之间完成",
   "A social running app that turns private activity evidence into measurable friend challenges and a privacy-aware live run.": "一款社交跑步应用，把私密活动证据转化为可测量的好友挑战与注重隐私的跑步直播。",
   "Read the evidence": "读取证据",

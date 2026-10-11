@@ -93,7 +93,7 @@ export const ventureReasoningStudioCopy = {
     "只有陈述",
     "只有陳述"
   ],
-  "A sentence exists, but no supporting artifact is attached.": ["已有一句陈述，但尚未附上支持材料。","已有一句陳述，但尚未附上支持材料。"],
+  "A claim is written, but nothing supports it yet.": ["已写出主张，但尚无依据支持。", "已寫出主張，但尚無依據支持。"],
   "SIGNAL": [
     "信号",
     "訊號"
@@ -186,7 +186,7 @@ export const ventureReasoningStudioCopy = {
     "提示词、输出与模型说明",
     "提示詞、輸出與模型說明"
   ],
-  "The submission retains the instruction, generated response and model identification as distinct artifacts with clear authorship boundaries.": ["原始作品分别保留指令、生成回答和模型标识，明确不同内容的作者。","原始作品分別保留指令、生成回答和模型標識，明確不同內容的作者。"],
+  "The prompt, response and model name are recorded as separate parts of the exercise.": ["练习分别记录提示词、回答和模型名称。", "練習分別記錄提示詞、回答與模型名稱。"],
   "Source themes": [
     "原始主题",
     "原始主題"

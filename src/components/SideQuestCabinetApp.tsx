@@ -105,7 +105,7 @@ function DayPanel({ locale }: { locale: Locale }) {
   const moment = dayMoments[dayMoment];
 
   return <>{localizeSideQuestTree(locale, <>
-    <ChapterHeading chapter="CHAPTER 01 · ON THE TRACK" title="One very long Saturday" intro="The product is the artefact. The relay, the constraint and the people are the story." />
+    <ChapterHeading chapter="CHAPTER 01 · ON THE TRACK" title="One very long Saturday" intro="The app is what we built. The relay, the constraint and the people tell its story." />
     <div className={styles.dayGrid}>
       <article className={styles.timelineCard}>
         <div className={styles.cardLabel}><span>FIELD LOG</span><strong>{moment[0]}</strong></div>
@@ -317,7 +317,7 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
   const runnerPoint = visibleRoute[visibleRoute.length - 1];
 
   return <>{localizeSideQuestTree(locale, <>
-    <ChapterHeading chapter="CHAPTER 04 · THE ARTEFACT" title="SideQuest, built between laps" intro="A social running app that turns private activity evidence into measurable friend challenges and a privacy-aware live run." />
+    <ChapterHeading chapter="CHAPTER 04 · THE APP" title="SideQuest, built between laps" intro="A social running app that turns private activity evidence into measurable friend challenges and a privacy-aware live run." />
     <div className={styles.buildSummary}>
       <article><span>01</span><div><strong>Read the evidence</strong><p>Owner-scoped Strava aggregates; raw routes never became portfolio assets.</p></div></article>
       <article><span>02</span><div><strong>Ask a better question</strong><p>Turn missing context into one bounded subsequent run—not a diagnosis.</p></div></article>

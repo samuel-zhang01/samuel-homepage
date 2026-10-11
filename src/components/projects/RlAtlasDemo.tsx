@@ -464,9 +464,9 @@ const TRACK_BY_ID = Object.fromEntries(TRACKS.map((track) => [track.id, track]))
 
 const DISCLOSURE_META: Record<Disclosure, { label: string; shortLabel: string; note: string }> = {
   public: {
-    label: "Public curriculum bundle",
+    label: "Course materials",
     shortLabel: "PUBLIC",
-    note: "Educational notes, toy environments and implementation evidence are safe to describe. No personal records are used here.",
+    note: "I wrote these notes and small coding exercises for learning. They use no personal records.",
   },
   synthetic: {
     label: "Public · synthetic data only",
@@ -474,7 +474,7 @@ const DISCLOSURE_META: Record<Disclosure, { label: string; shortLabel: string; n
     note: "The application thread is represented with generated examples. No insurance lead, applicant or production event data is exposed.",
   },
   restricted: {
-    label: "Restricted applied audit",
+    label: "Synthetic applied study",
     shortLabel: "RESTRICTED",
     note: "Only the learning objective, method classes and synthetic harness are shown. Production code, paths, records and operational details remain withheld.",
   },
@@ -498,33 +498,33 @@ function getArtifacts(week: Week): Artifact[] {
     {
       label: "Lecture notes",
       state: week.notesPdfIssue ? "attention" : "recorded",
-      value: week.notesPdfIssue ? "CHECK MARGINS" : "RECORDED OK",
+      value: week.notesPdfIssue ? "CHECK MARGINS" : "SAVED",
       detail: `${week.notesPages} pages${week.notesPdfIssue ? " · margin scan flagged" : " · PDF present"}`,
     },
     {
       label: "Extended reading",
       state: week.readingPdfIssue ? "attention" : "recorded",
-      value: week.readingPdfIssue ? "CHECK MARGINS" : "RECORDED OK",
-      detail: week.readingPdfIssue ?? "PDF present in QA snapshot",
+      value: week.readingPdfIssue ? "CHECK MARGINS" : "SAVED",
+      detail: week.readingPdfIssue ?? "Reading PDF included",
     },
     {
-      label: "Source workbook",
+      label: "Exercise notebook",
       state: "present",
       value: "PRESENT",
-      detail: "Graded Jupyter workbook is indexed",
+      detail: "Exercises and reference solutions included",
     },
     {
-      label: "Executed workbook",
+      label: "Notebook run",
       state: week.executed ? "recorded" : "missing",
-      value: week.executed ? "RECORDED OK" : "NOT FOUND",
+      value: week.executed ? "SAVED" : "NOT FOUND",
       detail: week.executed
-        ? "Execution artifact recorded by QA"
-        : "QA table contains “–”; source workbook still exists",
+        ? "I saved the notebook after running it"
+        : "No saved run in this review; the exercise notebook is included",
     },
     {
       label: "Test suite",
       state: week.testResult.includes("failed") ? "attention" : "recorded",
-      value: week.testResult.includes("failed") ? "REVIEW FAILURE" : "RECORDED OK",
+      value: week.testResult.includes("failed") ? "REVIEW FAILURE" : "SAVED",
       detail: week.testResult,
     },
     {
@@ -688,12 +688,7 @@ export function RlAtlasDemo() {
         <div className={styles.snapshotCaveat} role="note">
           <span aria-hidden="true">!</span>
           <p>
-            <strong>Source snapshot:</strong> the 6 September teaching review at revision 92e9b70 records
-            25 executed notebooks, 448 lecture pages, 64 worked examples and 75 self-checks.
-            It supersedes the older QA table’s missing Week 04 execution and lecture-margin flags.
-            The older extended-reading scan remains a separate record. Week 25 retains one empirical-ordering
-            test failure. These are recorded repository results, not a fresh training run or learner-completion
-            claim.
+            <strong>September course review:</strong> My September review covered 25 executed notebooks, 448 lecture pages, 64 worked examples and 75 self-checks. It included one failing empirical-ordering test in Week 25 and some extended-reading layout issues. These saved results describe that course revision; the training you run in this browser is a separate experiment.
           </p>
         </div>
       </section>
@@ -726,7 +721,7 @@ export function RlAtlasDemo() {
             aria-label={t("Review status")} value={evidenceFilter}
             onChange={(event) => setEvidenceFilter(event.target.value as EvidenceFilter)}
           >
-            <option value="all">{t("Any QA state")}</option>
+            <option value="all">{t("Any review status")}</option>
             <option value="attention">{t("Needs attention")}</option>
             <option value="clean">{t("No recorded flags")}</option>
           </ClassicSelect>
@@ -738,9 +733,9 @@ export function RlAtlasDemo() {
             onChange={(event) => setDisclosureFilter(event.target.value as DisclosureFilter)}
           >
             <option value="all">{t("All boundaries")}</option>
-            <option value="public">{t("Public curriculum")}</option>
+            <option value="public">{t("Course materials")}</option>
             <option value="synthetic">{t("Synthetic only")}</option>
-            <option value="restricted">{t("Restricted audit")}</option>
+            <option value="restricted">{t("Applied study")}</option>
           </ClassicSelect>
         </label>
         <button className={styles.resetButton} type="button" onClick={resetFilters}>
@@ -758,8 +753,8 @@ export function RlAtlasDemo() {
             <span>{filteredWeeks.length} shown</span>
           </header>
           <div role="group" className={styles.legend} aria-label="Map legend">
-            <span><i className={styles.legendRecorded} /> QA recorded</span>
-            <span><i className={styles.legendAttention} /> review evidence</span>
+            <span><i className={styles.legendRecorded} /> saved results</span>
+            <span><i className={styles.legendAttention} /> needs review</span>
             <span><i className={styles.legendRestricted} /> restricted boundary</span>
           </div>
 
@@ -794,7 +789,7 @@ export function RlAtlasDemo() {
                             aria-label={projectText(locale, rlAtlasDemoCopy, "Week {0}: {1}. {2} {3}.", {
                               0: week.number,
                               1: projectText(locale, rlAtlasDemoCopy, week.title),
-                              2: projectText(locale, rlAtlasDemoCopy, attention ? "QA evidence needs attention." : "No recorded QA flags."),
+                              2: projectText(locale, rlAtlasDemoCopy, attention ? "Some materials need review." : "No issues noted in this review."),
                               3: projectText(locale, rlAtlasDemoCopy, DISCLOSURE_META[week.disclosure].label),
                             })}
                           >
@@ -819,7 +814,7 @@ export function RlAtlasDemo() {
           )}
         </section>
 
-        <aside className={styles.detailPanel} aria-label="Selected week evidence">
+        <aside className={styles.detailPanel} aria-label="Selected week materials">
           {selectedWeek ? (
             <>
               <p className={styles.srOnly} aria-live="polite">
@@ -857,8 +852,8 @@ export function RlAtlasDemo() {
               <section className={styles.artifactPanel} aria-labelledby="artifact-heading">
                 <header>
                   <div>
-                    <span className={styles.kicker}>Artifact manifest</span>
-                    <h4 id="artifact-heading">What the snapshot records</h4>
+                    <span className={styles.kicker}>Module materials</span>
+                    <h4 id="artifact-heading">What I included in this week</h4>
                   </div>
                   <span className={styles.artifactCount}>7 ITEMS</span>
                 </header>
@@ -903,13 +898,13 @@ export function RlAtlasDemo() {
                   {selectedWeek.disclosure === "restricted" ? "×" : "✓"}
                 </span>
                 <div>
-                  <strong>Disclosure boundary</strong>
+                  <strong>About these examples</strong>
                   <p>{DISCLOSURE_META[selectedWeek.disclosure].note}</p>
                 </div>
               </div>
 
               <footer className={styles.detailFooter}>
-                <span>Source: curriculum + teaching validation + reading scan</span>
+                <span>My course notes, exercises and saved runs</span>
                 <a href="/projects/study-rl/syllabus.pdf" target="_blank" rel="noreferrer">
                   Syllabus PDF <span aria-hidden="true">↗</span>
                 </a>

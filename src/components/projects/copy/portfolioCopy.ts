@@ -337,10 +337,7 @@ export const portfolioCopy = {
     "无",
     "無"
   ],
-  "Artifacts": [
-    "支持材料",
-    "支援材料"
-  ],
+  "Project files": ["项目文件", "專案檔案"],
   "Open": [
     "打开",
     "開啟"
@@ -625,7 +622,7 @@ export const portfolioCopy = {
     "状态 · {0}",
     "狀態 · {0}"
   ],
-  "Artifact kind · {0}": [
+  "File type · {0}": [
     "材料类型 · {0}",
     "材料型別 · {0}"
   ],

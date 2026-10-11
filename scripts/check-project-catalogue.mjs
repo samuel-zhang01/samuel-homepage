@@ -120,10 +120,13 @@ for (const project of projects) {
   if (project.sourceLicence && !project.sourceUrl) {
     fail(project, "source licence status requires a source URL");
   }
+  if (!["public", "private"].includes(project.sourceVisibility)) fail(project, "declare original source visibility separately from demo access");
+  if (project.sourceVisibility === "private" && project.sourceUrl) fail(project, "private source cannot have a public repository link");
+  if (project.sourceVisibility === "public" && !project.sourceUrl) fail(project, "public source requires a repository link");
   if (project.sourceUrl) {
     if (!project.sourceUrl.startsWith("https://")) fail(project, "source URL must use HTTPS");
-    if (project.sourceUrl.startsWith("https://github.com/") && !/\/(?:tree|blob)\/[0-9a-f]{40}(?:\/|$)/i.test(project.sourceUrl)) {
-      fail(project, "GitHub source URL must pin an immutable 40-character commit");
+    if (project.sourceUrl.startsWith("https://github.com/") && !/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(project.sourceUrl) && !/\/(?:tree|blob)\/[0-9a-f]{40}(?:\/|$)/i.test(project.sourceUrl)) {
+      fail(project, "GitHub source URL must be a canonical repository page or an immutable source reference");
     }
     if (project.access === "proprietary") fail(project, "proprietary entries cannot publish a source URL");
     if (!project.sourceLicence) fail(project, "public source links require an explicit licence-status field");

@@ -633,10 +633,7 @@ export const italianCopy = {
     "验证 A1，逐步衔接 A2。",
     "驗證 A1，逐步銜接 A2。"
   ],
-  "Plan completion, practice accuracy and dated CEFR artifacts stay separate. No single number pretends to be a level.": [
-    "计划完成度、练习正确率与带日期的 CEFR 学习证据分别记录；任何一个数字都不能单独代表语言级别。",
-    "計劃完成度、練習正確率與帶日期的 CEFR 學習證據分別記錄；任何一個數字都不能單獨代表語言級別。"
-  ],
+  "Plan completion, practice accuracy and dated CEFR work samples stay separate. No single number pretends to be a level.": ["计划完成度、练习准确率和带日期的 CEFR 作品样本分开记录。一个数字不能代表语言等级。", "計畫完成度、練習準確率與附日期的 CEFR 作品樣本分開記錄。一個數字不能代表語言等級。"],
   "Piano, precisione e prove CEFR restano separati.": [
     "计划、正确率与 CEFR 学习证据分别记录。",
     "計劃、正確率與 CEFR 學習證據分別記錄。"
@@ -657,10 +654,7 @@ export const italianCopy = {
     "A1 阶段目标",
     "A1 階段目標"
   ],
-  "DATED ARTIFACTS · MAX": [
-    "带日期的学习成果 · 最多",
-    "帶日期的學習成果 · 最多"
-  ],
+  "DATED SAMPLES · MAX": ["带日期的样本 · 上限", "附日期的樣本 · 上限"],
   "SPACING": [
     "间隔",
     "間隔"
@@ -673,7 +667,7 @@ export const italianCopy = {
     "至少间隔 7 天",
     "至少間隔 7 天"
   ],
-  "{0} evidence artifacts spaced {1} days apart": [
+  "{0} work samples spaced {1} days apart": [
     "{0} 份学习成果，间隔 {1} 天",
     "{0} 份學習成果，間隔 {1} 天"
   ],
@@ -681,10 +675,7 @@ export const italianCopy = {
     "不看稿的样例",
     "不看稿的樣例"
   ],
-  "add second artifact": [
-    "添加第二份成果",
-    "新增第二份成果"
-  ],
+  "add second sample": ["添加第二个样本", "新增第二個樣本"],
   "{0} day gap": [
     "间隔 {0} 天",
     "間隔 {0} 天"
@@ -701,14 +692,8 @@ export const italianCopy = {
     "尚未满足独立完成条件",
     "尚未滿足獨立完成條件"
   ],
-  "Two artifacts are separated by at least seven days.": [
-    "两份成果至少相隔七天。",
-    "兩份成果至少相隔七天。"
-  ],
-  "Add a second dated artifact.": [
-    "添加第二份带日期的成果。",
-    "新增第二份帶日期的成果。"
-  ],
+  "Two samples are separated by at least seven days.": ["两个样本间隔至少七天。", "兩個樣本間隔至少七天。"],
+  "Add a second dated sample.": ["添加第二个带日期的样本。", "新增第二個附日期的樣本。"],
   "Additional spacing required (days): {0}.": [
     "还需增加 {0} 天间隔。",
     "還需增加 {0} 天間隔。"

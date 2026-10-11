@@ -86,7 +86,7 @@ async function sourceModule(path) {
 }
 
 const visibleAttributes = new Set(["title", "alt", "aria-label", "placeholder", "appName", "status", "purpose", "tryThis", "watchFor", "label"]);
-const hiddenProperties = new Set(["id", "slug", "href", "src", "className", "key", "type", "method", "target", "rel", "role", "path", "filename", "storageKey", "format", "mimeType", "demo", "systemApp", "visual", "sourceUrl", "websiteUrl", "sourceLicence", "access"]);
+const hiddenProperties = new Set(["id", "slug", "href", "src", "className", "key", "type", "method", "target", "rel", "role", "path", "filename", "storageKey", "format", "mimeType", "demo", "systemApp", "visual", "sourceUrl", "sourceVisibility", "websiteUrl", "sourceLicence", "access"]);
 const displayProperties = new Set(["label", "name", "title", "description", "caption", "summary", "detail", "unit", "heading", "help", "text", "message", "placeholder", "ariaLabel", "formula"]);
 function explicitDisplayContext(node) {
   let current = node;

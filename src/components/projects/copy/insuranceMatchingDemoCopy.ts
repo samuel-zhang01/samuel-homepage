@@ -935,7 +935,7 @@ export const insuranceMatchingDemoCopy = {
     "未评估：证据要求未满足。",
     "未評估：證據要求未滿足。"
   ],
-  "Unassessed: no market-conditional artifact is available.": ["未评估：没有与具体市场相关的材料。","未評估：沒有與具體市場相關的材料。"],
+  "Unassessed: no market-specific result is available.": ["尚未评估：没有针对该市场的结果。", "尚未評估：沒有針對該市場的結果。"],
   "Technology errors & omissions": [
     "科技错误与疏漏责任险",
     "科技錯誤與疏漏責任險"

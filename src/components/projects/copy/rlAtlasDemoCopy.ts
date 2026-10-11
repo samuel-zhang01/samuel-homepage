@@ -529,18 +529,11 @@ export const rlAtlasDemoCopy = {
     "继续／停止关卡",
     "繼續／停止關卡"
   ],
-  "Public curriculum bundle": [
-    "公开课程资料",
-    "公開課程資料"
-  ],
   "PUBLIC": [
     "公开",
     "公開"
   ],
-  "Educational notes, toy environments and implementation evidence are safe to describe. No personal records are used here.": [
-    "这里介绍教学笔记、简化环境和实现依据，不使用个人记录。",
-    "這裡介紹教學筆記、簡化環境和實現依據，不使用個人記錄。"
-  ],
+  "I wrote these notes and small coding exercises for learning. They use no personal records.": ["我编写这些讲义和小型编程练习用于学习。它们不使用个人记录。", "我編寫這些講義和小型程式練習用於學習。它們不使用個人紀錄。"],
   "Public · synthetic data only": [
     "公开 · 仅合成数据",
     "公開 · 僅合成資料"
@@ -553,10 +546,7 @@ export const rlAtlasDemoCopy = {
     "应用主题以生成的例子呈现，不包含保险线索、申请人或生产事件数据。",
     "應用主題以生成的例子呈現，不包含保險線索、申請人或生產事件資料。"
   ],
-  "Restricted applied audit": [
-    "受限应用审查",
-    "受限應用審查"
-  ],
+  "Synthetic applied study": ["合成应用研究", "合成應用研究"],
   "RESTRICTED": [
     "受限",
     "受限"
@@ -577,30 +567,12 @@ export const rlAtlasDemoCopy = {
     "扩展阅读",
     "擴展閱讀"
   ],
-  "PDF present in QA snapshot": [
-    "检查记录包含 PDF",
-    "檢查記錄包含 PDF"
-  ],
-  "Source workbook": [
-    "原始练习册",
-    "原始練習冊"
-  ],
-  "Graded Jupyter workbook is indexed": [
-    "已索引评分用 Jupyter 练习册",
-    "已索引評分用 Jupyter 練習冊"
-  ],
-  "Executed workbook": [
-    "已执行的练习册",
-    "已執行的練習冊"
-  ],
-  "Execution artifact recorded by QA": [
-    "教学检查中记录了执行结果",
-    "教學檢查中記錄了執行結果"
-  ],
-  "QA table contains “–”; source workbook still exists": [
-    "检查表记为“–”；原始练习册仍然存在",
-    "檢查表記為“–”；原始練習冊仍然存在"
-  ],
+  "Reading PDF included": ["附有阅读 PDF", "附有閱讀 PDF"],
+  "Exercise notebook": ["练习笔记本", "練習筆記本"],
+  "Exercises and reference solutions included": ["包含练习和参考解答", "包含練習與參考解答"],
+  "Notebook run": ["笔记本运行结果", "筆記本執行結果"],
+  "I saved the notebook after running it": ["我保存了运行后的笔记本", "我保存了執行後的筆記本"],
+  "No saved run in this review; the exercise notebook is included": ["本次检查没有保存的运行结果；练习笔记本已包含在内", "本次檢查沒有保存的執行結果；練習筆記本已包含在內"],
   "Test suite": [
     "测试套件",
     "測試套件"
@@ -737,10 +709,7 @@ export const rlAtlasDemoCopy = {
     "模板未追踪个人进度",
     "模板未追蹤個人進度"
   ],
-  "Source snapshot:": [
-    "资料记录：",
-    "資料記錄："
-  ],
+  "September course review:": ["九月课程检查：", "九月課程檢查："],
   "the 6 September teaching review at revision 92e9b70 records 25 executed notebooks, 448 lecture pages, 64 worked examples and 75 self-checks. It supersedes the older QA table’s missing Week 04 execution and lecture-margin flags. The older extended-reading scan remains a separate record. Week 25 retains one empirical-ordering test failure. These are recorded repository results, not a fresh training run or learner-completion claim; the repository credits agent-authored teaching bundles.": [
     "9 月 6 日的教学复核（修订 92e9b70）记录了 25 本已执行笔记本、448 页讲义、64 个例题和 75 项自测。该记录更新了旧检查表中第 04 周执行缺失和讲义页边距的问题。旧扩展阅读扫描仍为独立记录。第 25 周保留一项经验排序测试失败。这些是仓库中的既有结果，不代表新训练或个人学习完成情况；仓库说明教学资料由智能体辅助编写。",
     "9 月 6 日的教學複核（修訂 92e9b70）記錄了 25 本已執行筆記本、448 頁講義、64 個例題和 75 項自測。該記錄更新了舊檢查表中第 04 周執行缺失和講義頁邊距的問題。舊擴展閱讀掃描仍為獨立記錄。第 25 周保留一項經驗排序測試失敗。這些是倉庫中的既有結果，不代表新訓練或個人學習完成情況；倉庫說明教學資料由智慧代理輔助編寫。"
@@ -765,10 +734,7 @@ export const rlAtlasDemoCopy = {
     "全部 11 个方向",
     "全部 11 個方向"
   ],
-  "Any QA state": [
-    "任意检查状态",
-    "任意檢查狀態"
-  ],
+  "Any review status": ["所有检查状态", "所有檢查狀態"],
   "Needs attention": [
     "需要查看",
     "需要查看"
@@ -785,18 +751,12 @@ export const rlAtlasDemoCopy = {
     "全部范围",
     "全部範圍"
   ],
-  "Public curriculum": [
-    "公开课程",
-    "公開課程"
-  ],
+  "Course materials": ["课程材料", "課程資料"],
   "Synthetic only": [
     "仅合成数据",
     "僅合成資料"
   ],
-  "Restricted audit": [
-    "受限审查",
-    "受限審查"
-  ],
+  "Applied study": ["应用研究", "應用研究"],
   "Curriculum topology": [
     "课程结构",
     "課程結構"
@@ -813,14 +773,8 @@ export const rlAtlasDemoCopy = {
     "地图图例",
     "地圖圖例"
   ],
-  "QA recorded": [
-    "已记录检查",
-    "已記錄檢查"
-  ],
-  "review evidence": [
-    "复核依据",
-    "複核依據"
-  ],
+  "saved results": ["已保存的结果", "已儲存的結果"],
+  "needs review": ["需要检查", "需要檢查"],
   "restricted boundary": [
     "受限范围",
     "受限範圍"
@@ -845,10 +799,7 @@ export const rlAtlasDemoCopy = {
     "显示全部 25 周",
     "顯示全部 25 周"
   ],
-  "Selected week evidence": [
-    "所选周的材料依据",
-    "所選周的材料依據"
-  ],
+  "Selected week materials": ["所选周的材料", "所選週的資料"],
   "Selected Week": [
     "所选周次",
     "所選周次"
@@ -865,14 +816,8 @@ export const rlAtlasDemoCopy = {
     "实践项目",
     "實踐項目"
   ],
-  "Artifact manifest": [
-    "材料目录",
-    "材料目錄"
-  ],
-  "What the snapshot records": [
-    "资料记录中的内容",
-    "資料記錄中的內容"
-  ],
+  "Module materials": ["模块材料", "模組資料"],
+  "What I included in this week": ["这一周包含什么", "這一週包含什麼"],
   "7 ITEMS": [
     "7 项",
     "7 項"
@@ -901,14 +846,8 @@ export const rlAtlasDemoCopy = {
     "自动几何检查可能产生误报，请查看实际渲染页面。",
     "自動幾何檢查可能產生誤報，請查看實際渲染頁面。"
   ],
-  "Disclosure boundary": [
-    "公开范围",
-    "公開範圍"
-  ],
-  "Source: curriculum + teaching validation + reading scan": [
-    "来源：课程、教学验证与阅读扫描",
-    "來源：課程、教學驗證與閱讀掃描"
-  ],
+  "About these examples": ["关于这些示例", "關於這些示例"],
+  "My course notes, exercises and saved runs": ["我的讲义、练习和已保存的运行结果", "我的講義、練習與已儲存的執行結果"],
   "Syllabus PDF": [
     "教学大纲 PDF",
     "教學大綱 PDF"
@@ -1149,10 +1088,7 @@ export const rlAtlasDemoCopy = {
     "检查页边距",
     "檢查頁邊距"
   ],
-  "RECORDED OK": [
-    "记录正常",
-    "記錄正常"
-  ],
+  "SAVED": ["已保存", "已儲存"],
   "· margin scan flagged": [
     "· 页边距扫描已标记",
     "· 頁邊距掃描已標記"
@@ -1173,14 +1109,8 @@ export const rlAtlasDemoCopy = {
     "第 {0} 周",
     "第 {0} 周"
   ],
-  "QA evidence needs attention.": [
-    "检查证据需要复核。",
-    "檢查證據需要複核。"
-  ],
-  "No recorded QA flags.": [
-    "没有记录的检查问题。",
-    "沒有記錄的檢查問題。"
-  ],
+  "Some materials need review.": ["部分材料需要检查。", "部分資料需要檢查。"],
+  "No issues noted in this review.": ["本次检查没有标注问题。", "本次檢查沒有標註問題。"],
   "{0} passed in {1}s": [
     "通过 {0} 项，耗时 {1} 秒",
     "通過 {0} 項，耗時 {1} 秒"
@@ -1254,7 +1184,7 @@ export const rlAtlasDemoCopy = {
     "已收錄"
   ]
 ,
-  "the 6 September teaching review at revision 92e9b70 records 25 executed notebooks, 448 lecture pages, 64 worked examples and 75 self-checks. It supersedes the older QA table’s missing Week 04 execution and lecture-margin flags. The older extended-reading scan remains a separate record. Week 25 retains one empirical-ordering test failure. These are recorded repository results, not a fresh training run or learner-completion claim.": ["9 月 6 日在修订版本 92e9b70 的教学审查记录了 25 个已执行笔记本、448 页讲义、64 个例题与 75 项自检。它取代了旧 QA 表中第 04 周执行与讲义页边距标记。旧延伸阅读扫描仍为独立记录。第 25 周保留一项经验排序测试失败。这些是仓库记录，并非本次重新训练或学习者完成课程的声明。", "9 月 6 日在修訂版本 92e9b70 的教學審查記錄了 25 個已執行筆記本、448 頁講義、64 個例題與 75 項自我檢查。它取代了舊 QA 表中第 04 週執行與講義頁邊距標記。舊延伸閱讀掃描仍為獨立記錄。第 25 週保留一項經驗排序測試失敗。這些是儲存庫記錄，並非本次重新訓練或學習者完成課程的聲明。"],
+  "My September review covered 25 executed notebooks, 448 lecture pages, 64 worked examples and 75 self-checks. It included one failing empirical-ordering test in Week 25 and some extended-reading layout issues. These saved results describe that course revision; the training you run in this browser is a separate experiment.": ["我在九月检查了 25 个已运行的笔记本、448 页讲义、64 个例题和 75 项自检。其中第 25 周有一项经验排序测试失败，部分延伸阅读存在排版问题。这些保存的结果对应当时的课程版本；在浏览器中运行的训练是另一个实验。", "我在九月檢查了 25 個已執行的筆記本、448 頁講義、64 個例題和 75 項自我檢查。其中第 25 週有一項經驗排序測試失敗，部分延伸閱讀存在排版問題。這些儲存的結果對應當時的課程版本；在瀏覽器中執行的訓練是另一個實驗。"],
   "I built a reinforcement-learning curriculum to understand how an agent learns from the consequences of its actions. Try that idea in this small grid world.": ["我构建了强化学习课程，理解智能体怎样从行动的后果中学习。在这个小型网格世界里体验这个想法。", "我建置了強化學習課程，理解代理如何從行動的後果中學習。在這個小型網格世界裡體驗這個想法。"],
   "Press Train 100 episodes, then Test greedy route. Compare Q-learning with SARSA to see which route the agent learns beside the cliff.": ["点击 Train 100 episodes，再点击 Test greedy route，比较 Q-learning 与 SARSA 在悬崖边学出的路径。", "點選 Train 100 episodes，再點選 Test greedy route，比較 Q-learning 與 SARSA 在懸崖邊學出的路徑。"],
   "The route and Q values change with experience. A cliff fall costs 100 points, so the shortest route and the safer learning behaviour can differ.": ["路径与 Q 值会随经验改变。掉下悬崖损失 100 分，因此最短路径与较安全的学习行为可能不同。", "路徑與 Q 值會隨經驗改變。掉下懸崖損失 100 分，因此最短路徑與較安全的學習行為可能不同。"],

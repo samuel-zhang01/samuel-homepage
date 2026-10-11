@@ -1103,7 +1103,7 @@ export function CvKeywordStudio() {
 
             <article className={`${styles.panel} ${styles.manifest}`}>
               <div className={styles.panelTitle}>
-                <div><span>OUTPUT MANIFEST</span><strong translate="no">YYYYMMDD {analysed.role || "Role"} from {analysed.company || "Company"}/</strong></div>
+                <div><span>OUTPUT FILES</span><strong translate="no">YYYYMMDD {analysed.role || "Role"} from {analysed.company || "Company"}/</strong></div>
                 <small>{buildReady ? `${includeCoverLetter ? 4 : 2} dated outputs · 1 workspace file` : "Run analysis to prepare the preview"}</small>
               </div>
               <div className={styles.fileGrid}>
@@ -1111,7 +1111,7 @@ export function CvKeywordStudio() {
                 <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><p><strong>Job Description.txt</strong><small>source snapshot</small></p><b>{buildReady ? "READY" : "WAITING"}</b></div>
                 {includeCoverLetter ? <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="pdf" miniature /></span><p><strong>Cover Letter.pdf</strong><small>optional compiled route</small></p><b>{buildReady ? "SIMULATED" : "WAITING"}</b></div> : null}
                 {includeCoverLetter ? <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><p><strong>Cover Letter Main.tex</strong><small>escaped source body</small></p><b>{buildReady ? "SIMULATED" : "WAITING"}</b></div> : null}
-                <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><p><strong>Keywords Placement.tex</strong><small>legacy workspace artifact · no active template include</small></p><b>{buildReady ? "UNEMBEDDED" : "WAITING"}</b></div>
+                <div><span className={styles.fileIcon} aria-hidden="true"><System7Icon kind="document" miniature /></span><p><strong>Keywords Placement.tex</strong><small>supporting file · not included in the active template</small></p><b>{buildReady ? "UNEMBEDDED" : "WAITING"}</b></div>
               </div>
             </article>
           </section>

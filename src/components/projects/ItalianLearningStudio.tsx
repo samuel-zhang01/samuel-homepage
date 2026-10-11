@@ -690,7 +690,7 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
         <div>
           <span className={styles.kicker}>PROVE, NON SOLO PERCENTUALI · FIVE SEPARATE LANES</span>
           <h3>A1 dimostrato; A2 solo come ponte.</h3>
-          <p>{bilingual ? "Plan completion, practice accuracy and dated CEFR artifacts stay separate. No single number pretends to be a level." : "Piano, precisione e prove CEFR restano separati."}</p>
+          <p>{bilingual ? "Plan completion, practice accuracy and dated CEFR work samples stay separate. No single number pretends to be a level." : "Piano, precisione e prove CEFR restano separati."}</p>
         </div>
         <div className={styles.meanBadge}><span>PRACTICE MEAN</span><strong>{meanAccuracy}%</strong><small>not a CEFR score</small></div>
       </header>
@@ -715,7 +715,7 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
 
           <div className={styles.artifactControls}>
             <fieldset>
-              <legend>DATED ARTIFACTS · MAX {MAX_DEMO_EVIDENCE_ARTIFACTS}</legend>
+              <legend>DATED SAMPLES · MAX {MAX_DEMO_EVIDENCE_ARTIFACTS}</legend>
               {Array.from({ length: MAX_DEMO_EVIDENCE_ARTIFACTS + 1 }, (_, count) => count).map((count) => <button type="button" key={count} aria-pressed={artifacts === count} className={artifacts === count ? styles.selected : ""} onClick={() => setArtifacts(count)}>{count}</button>)}
             </fieldset>
             <label>
@@ -725,9 +725,9 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
             </label>
           </div>
 
-          <div role="group" className={styles.evidenceTimeline} aria-label={`${artifacts} evidence artifacts spaced ${gap} days apart`}>
+          <div role="group" className={styles.evidenceTimeline} aria-label={`${artifacts} work samples spaced ${gap} days apart`}>
             <span className={artifacts >= 1 ? styles.timelineActive : ""}><b>01</b><i /><small>Unscripted sample</small></span>
-            <div><i style={{ width: `${artifacts >= 2 ? Math.min(100, (gap / 7) * 100) : 0}%` }} /><strong>{artifacts < 2 ? "add second artifact" : `${gap} day gap`}</strong></div>
+            <div><i style={{ width: `${artifacts >= 2 ? Math.min(100, (gap / 7) * 100) : 0}%` }} /><strong>{artifacts < 2 ? "add second sample" : `${gap} day gap`}</strong></div>
             <span className={artifacts >= 2 ? styles.timelineActive : ""}><b>02</b><i /><small>Delayed evidence</small></span>
           </div>
 
@@ -735,7 +735,7 @@ function EvidenceLab({ bilingual, mastery }: { bilingual: boolean; mastery: Mast
             <span aria-hidden="true">{independentReady ? "✓" : "⌛"}</span>
             <div>
               <strong>{independentReady ? "Independent unlocked" : "Independent remains locked"}</strong>
-              <p>{independentReady ? "Two artifacts are separated by at least seven days." : artifacts < 2 ? "Add a second dated artifact." : `Additional spacing required (days): ${7 - gap}.`}</p>
+              <p>{independentReady ? "Two samples are separated by at least seven days." : artifacts < 2 ? "Add a second dated sample." : `Additional spacing required (days): ${7 - gap}.`}</p>
             </div>
           </div>
         </article>
