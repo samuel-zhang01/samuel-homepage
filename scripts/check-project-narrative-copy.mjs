@@ -42,7 +42,9 @@ for (const project of projects) {
   for (const key of [project.title, project.shortTitle, project.summary].filter(Boolean)) assert.equal(JSON.stringify(projectMenuCopy[key]), JSON.stringify(projectNarrativeCopy[key]), `Desktop project translation drift: ${key}`);
   for (const field of ["title", "shortTitle", "eyebrow", "summary", "detail", "tools", "highlights", "privacyNote", "downloadLabel", "area", "status"]) add(project[field]);
   project.artifacts?.forEach(artifact => add(artifact.label));
-  if (project.preview) { add(project.preview.alt); add(project.preview.caption); }
+  if (project.preview) {
+    for (const image of [project.preview, ...(project.preview.gallery ?? [])]) { add(image.alt); add(image.caption); add(image.label); }
+  }
 }
 for (const story of [...Object.values(projectStories), ...Object.values(projectCaseStudies)]) Object.values(story).forEach(add);
 for (const origin of projectOrigins) { add(origin.label); add(origin.period); add(origin.context); }

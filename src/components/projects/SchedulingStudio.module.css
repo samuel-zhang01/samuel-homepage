@@ -312,3 +312,126 @@
   .hostGrid .hostSelected { border: 2px solid Highlight; padding: 9px; }
   .calendarRow button[data-state="conflict"] { border-style: dashed; }
 }
+
+/* Public booking journey: neutral paper and native controls, with live calendar state. */
+.experienceTabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.guestApp { border: 1px solid var(--s7-ink); background: var(--s7-paper); box-shadow: var(--s7-relief-inset); }
+.guestTop { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--s7-shadow); background: var(--s7-chrome); font-size: var(--s7-small); }
+.guestSteps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 12px; gap: 8px; list-style: none; border-bottom: 1px solid var(--s7-shadow); }
+.guestSteps li { display: flex; align-items: center; gap: 7px; color: var(--s7-muted); font-size: var(--s7-ui); }
+.guestSteps li > span { display: grid; width: 24px; height: 24px; flex-shrink: 0; place-items: center; border: 1px solid var(--s7-shadow); background: var(--s7-chrome); font-weight: 700; }
+.guestSteps li[aria-current="step"] { color: var(--s7-ink); }
+.guestSteps li[aria-current="step"] > span { border-color: var(--s7-ink); background: var(--s7-ink); color: var(--s7-paper); }
+.guestLayout { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1.6fr); }
+.meetingDeck { min-width: 0; padding: 14px; border-right: 1px solid var(--s7-shadow); background: var(--s7-chrome); }
+.meetingDeck h3, .guestStage h3 { margin: 0; font: 700 var(--s7-heading)/1.3 var(--s7-font-text); }
+.meetingDeck h3 { margin-bottom: 10px; font-size: var(--s7-ui); }
+.meetingChoices { display: grid; gap: 6px; margin-bottom: 14px; }
+.meetingChoices button, .datePicker button, .timePicker button, .attendance button, .recentBookings button { min-width: 0; border: 1px solid var(--s7-shadow); border-radius: var(--s7-control-radius); background: var(--s7-paper); color: var(--s7-ink); box-shadow: var(--s7-relief-raised); cursor: pointer; font: 400 var(--s7-ui)/1.4 var(--s7-font-ui); }
+.meetingChoices button { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; min-height: 44px; padding: 8px; text-align: left; }
+.meetingChoices button strong { overflow-wrap: anywhere; }
+.meetingChoices button span { flex-shrink: 0; font-size: var(--s7-small); }
+.meetingChoices button[aria-pressed="true"], .datePicker button[aria-pressed="true"] { border-color: var(--s7-ink); background: var(--s7-ink); color: var(--s7-paper); box-shadow: var(--s7-relief-inset); }
+.meetingChoices button:disabled { cursor: default; opacity: .65; }
+.meetingChoices button[aria-pressed="true"]:disabled { opacity: 1; }
+.meetingDeck > label { display: grid; gap: 5px; font-size: var(--s7-small); font-weight: 700; }
+.allocationHint, .localNotice { margin: 8px 0 0; color: var(--s7-muted); font: 400 var(--s7-small)/1.5 var(--s7-font-text); }
+.attendance { display: grid; gap: 6px; margin: 12px 0 0; padding: 10px; border: 1px solid var(--s7-shadow); }
+.attendance legend { padding: 0 4px; font-size: var(--s7-small); font-weight: 700; }
+.attendance label { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--s7-ui); }
+.attendance button { min-height: 34px; padding: 5px 10px; }
+.attendance button[aria-pressed="true"] { border-color: var(--s7-ink); box-shadow: var(--s7-relief-inset); background: var(--s7-chrome); }
+.attendance button:disabled { cursor: default; }
+.attendance small { font-size: var(--s7-small); line-height: 1.45; color: var(--s7-muted); }
+.meetingFacts { display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 12px 0; font-size: var(--s7-small); }
+.guestStage { min-width: 0; position: relative; padding: 16px; }
+.guestStage:focus { outline: none; }
+.guestStageHeading { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+.guestStageHeading > div { min-width: 0; }
+.guestStageHeading > div > span { display: block; margin-top: 4px; color: var(--s7-muted); font-size: var(--s7-small); line-height: 1.45; }
+.guestStageHeading > label { display: grid; gap: 4px; max-width: 145px; font-size: var(--s7-small); }
+.datePicker { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; }
+.datePicker button { display: grid; min-height: 72px; padding: 6px 4px; text-align: center; }
+.datePicker button strong { font-size: var(--s7-heading); }
+.datePicker button small { font-size: var(--s7-small); }
+.dayHeading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px; margin: 14px 0 8px; font: 700 var(--s7-ui)/1.4 var(--s7-font-text); }
+.dayHeading > span { font-weight: 400; color: var(--s7-muted); font-size: var(--s7-small); }
+.suggestionHint { margin: 0 0 10px; color: var(--s7-muted); font-size: var(--s7-small); line-height: 1.45; }
+.timePicker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+.timePicker button { display: grid; gap: 3px; min-height: 62px; padding: 9px 6px; text-align: center; }
+.timePicker button > strong { white-space: nowrap; font-size: var(--s7-ui); }
+.timePicker button > span, .timePicker button > small { font-size: var(--s7-small); }
+.timePicker button[data-suggested="true"] { border-color: var(--s7-ink); box-shadow: inset 0 0 0 1px var(--s7-ink), var(--s7-relief-raised); }
+.timePicker button:disabled { opacity: .45; background: var(--s7-chrome); box-shadow: var(--s7-relief-inset); cursor: default; }
+.meetingChoices button:not(:disabled):hover, .datePicker button:not(:disabled):hover, .timePicker button:not(:disabled):hover { outline: 1px solid var(--s7-ink); outline-offset: 1px; }
+.meetingChoices button:focus-visible, .datePicker button:focus-visible, .timePicker button:focus-visible, .attendance button:focus-visible, .recentBookings button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+.guestNotice { margin: 0 0 12px; padding: 10px; border: 1px solid var(--s7-ink); background: var(--s7-chrome); font-size: var(--s7-ui); line-height: 1.45; }
+.reservationBadge { flex-shrink: 0; padding: 5px 7px; border: 1px solid var(--s7-shadow); font-size: var(--s7-small); font-variant-numeric: tabular-nums; }
+.guestHostSummary { font-size: var(--s7-small); margin: 0 0 14px; line-height: 1.45; }
+.guestForm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.guestForm > label { display: grid; min-width: 0; gap: 5px; font-size: var(--s7-ui); }
+.guestForm input:not([type="checkbox"]), .guestForm textarea { width: 100%; min-width: 0; min-height: 36px; padding: 7px; border: 1px solid var(--s7-ink); border-radius: 0; background: var(--s7-paper); color: var(--s7-ink); box-shadow: var(--s7-relief-inset); font: 400 var(--s7-ui)/1.4 var(--s7-font-text); }
+.guestForm textarea { resize: vertical; }
+.guestForm input:focus-visible, .guestForm textarea:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
+.guestForm small { text-align: right; font-size: var(--s7-small); color: var(--s7-muted); }
+.wideField, .guestForm .guestActions, .reminderField { grid-column: 1 / -1; }
+.guestForm .reminderField { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; }
+.reminderField input { flex-shrink: 0; width: 18px; height: 18px; margin: 1px 0 0; }
+.guestActions { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.guestActions button { min-height: 36px; }
+.clashControl, .recentBookings { margin-top: 16px; font-size: var(--s7-small); }
+.clashControl summary, .recentBookings summary { cursor: pointer; padding: 6px 0; }
+.clashControl button { margin-top: 6px; }
+.recentBookings button { display: block; width: 100%; padding: 8px; margin-top: 6px; text-align: left; }
+.confirmationCard { min-width: 0; }
+.confirmationMark { display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: 10px; border: 2px solid var(--s7-ink); background: var(--s7-chrome); font: 700 28px/1 var(--s7-font-ui); }
+.deliveryState { margin: 6px 0 14px; color: var(--s7-muted); font-size: var(--s7-small); }
+.invitePreview { margin: 0 0 16px; padding: 12px; border: 1px solid var(--s7-shadow); background: var(--s7-chrome); }
+.invitePreview > div { display: grid; grid-template-columns: minmax(75px, .5fr) minmax(0, 1fr); gap: 12px; padding: 7px 0; font-size: var(--s7-ui); }
+.invitePreview dt { color: var(--s7-muted); font-size: var(--s7-small); }
+.invitePreview dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.invitePreview small { display: block; margin-top: 3px; font-size: var(--s7-small); }
+.replacedTime, .calendarFileHint { margin: 10px 0; color: var(--s7-muted); font-size: var(--s7-small); line-height: 1.5; }
+.checkingLayer { position: absolute; z-index: 3; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; background: var(--s7-paper); font-size: var(--s7-ui); }
+.checkingLayer > span { font-size: var(--s7-small); color: var(--s7-muted); }
+.checkingTrack { overflow: hidden; width: min(220px, 75%); height: 12px; border: 1px solid var(--s7-ink); background: var(--s7-chrome); box-shadow: var(--s7-relief-inset); }
+.checkingTrack i { display: block; width: 35%; height: 100%; background: repeating-linear-gradient(90deg, var(--s7-ink) 0 2px, var(--s7-paper) 2px 4px); animation: availabilityCheck .5s ease-in-out forwards; }
+.stageEnter { animation: bookingStage .18s ease-out; }
+@keyframes availabilityCheck { from { transform: translateX(-100%); } to { transform: translateX(285%); } }
+@keyframes bookingStage { from { opacity: .4; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) {
+  .guestLayout { grid-template-columns: 1fr; }
+  .meetingDeck { border-right: 0; border-bottom: 1px solid var(--s7-shadow); padding: 12px; }
+  .meetingChoices { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin-bottom: 10px; }
+  .meetingChoices button { display: grid; justify-content: stretch; gap: 3px; min-height: 58px; padding: 6px; text-align: center; }
+  .meetingDeck > label { grid-template-columns: 1fr 1.5fr; align-items: center; }
+  .meetingFacts { margin: 8px 0; }
+  .attendance { margin: 8px 0 0; }
+  .guestStage { padding: 12px; }
+  .timePicker { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .guestSteps { padding: 10px; gap: 6px; }
+  .guestSteps li { gap: 5px; font-size: var(--s7-small); }
+  .guestSteps li > span { width: 21px; height: 21px; }
+  .guestStageHeading { gap: 8px; }
+  .guestStageHeading > label { max-width: 120px; }
+  .datePicker { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3px; }
+  .datePicker button { min-height: 65px; padding: 5px 2px; font-size: var(--s7-small); }
+  .timePicker button > strong { font-size: var(--s7-small); }
+  .guestForm { grid-template-columns: 1fr; }
+  .reservationBadge { font-size: var(--s7-small); }
+  .guestTop { padding: 8px; align-items: flex-start; }
+}
+@media (max-width: 360px) {
+  .guestSteps li { flex-direction: column; align-items: flex-start; }
+  .timePicker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guestStageHeading { flex-wrap: wrap; }
+  .guestStageHeading > label { max-width: none; width: 100%; grid-template-columns: 1fr 1.5fr; align-items: center; }
+  .datePicker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .invitePreview > div { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .checkingTrack i, .stageEnter { animation: none; }
+  .checkingTrack i { width: 100%; }
+}
+.meetingDetails { margin: 10px 0 0; font-size: var(--s7-small); }
+.meetingDetails summary { cursor: pointer; padding: 4px 0; }

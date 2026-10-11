@@ -21,6 +21,10 @@
 .preview { margin: 0 32px 24px; }
 .preview img { display: block; max-width: 100%; height: auto; border: 1px solid var(--s7-ink); box-shadow: 2px 2px 0 var(--s7-shadow); }
 .preview figcaption { margin-top: 8px; font-size: var(--s7-small); }
+.preview img { width: 100%; max-height: 330px; object-fit: contain; background: var(--s7-chrome); }
+.preview figcaption a { display: inline-block; padding-block: 5px; color: inherit; text-underline-offset: 3px; }
+.previewTabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.previewTabs button { min-height: 44px; }
 .boundary { margin: 0 32px; padding: 18px 0 24px; border-top: 1px solid var(--s7-shadow); font-size: var(--s7-text); line-height: 1.6; }
 .boundary h2 { margin: 0 0 10px; font: 700 var(--s7-heading)/1.35 var(--s7-font-text); }
 .boundary p { margin: 0; max-width: 90ch; }

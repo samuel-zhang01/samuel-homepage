@@ -1,6 +1,19 @@
 {
   "dictionary": "ultraConvertCopy.ts",
   "exportName": "ultraConvertCopy",
-  "sources": ["src/components/projects/UltraConvertStudio.tsx"],
-  "identities": {}
+  "sources": [
+    "src/components/projects/UltraConvertStudio.tsx"
+  ],
+  "identities": {
+    "existing": "Internal event-state identifier; the visitor sees its separately translated status label.",
+    "queued": "Internal event-state identifier; the visitor sees its separately translated status label.",
+    "paused": "Internal event-state identifier; the visitor sees its separately translated status label.",
+    "ArrowDown": "Standard DOM keyboard-event key used by accessible menu navigation, not visitor prose.",
+    "ArrowUp": "Standard DOM keyboard-event key used by accessible menu navigation, not visitor prose.",
+    "Home": "Standard DOM keyboard-event key used by accessible menu navigation, not visitor prose.",
+    "End": "Standard DOM keyboard-event key used by accessible menu navigation, not visitor prose.",
+    "WebP": "Standard image format name retained in all four locales.",
+    "PNG": "Standard image format name retained in all four locales.",
+    "JPEG": "Standard image format name retained in all four locales."
+  }
 }

@@ -1,6 +1,7 @@
 "use client";
 import { PlotPanHint } from "./PlotPanHint";
 import { SchedulingDstExperiment } from "./SourceExperiments";
+import { SchedulingBookingFlow } from "./SchedulingBookingFlow";
 
 import ClassicSelect from "../ClassicSelect";
 
@@ -203,6 +204,7 @@ export function SchedulingStudio() {
   const active = useProjectDemoActive();
   const locale = useProjectLocale();
   const [mode, setMode] = useState<Mode>("round-robin");
+  const [view, setView] = useState<"booking" | "rules">("booking");
   const [selectedHostIds, setSelectedHostIds] = useState<string[]>(HOSTS.map((host) => host.id));
   const [duration, setDuration] = useState(60);
   const [buffer, setBuffer] = useState(15);
@@ -518,19 +520,25 @@ export function SchedulingStudio() {
   return (
     <ProjectCopy copy={schedulingCopy}><DemoWindow
       appName="YASA scheduling"
-      title="Multi-host Scheduling Lab"
-      status="Booking simulation"
-      purpose="I built a booking app that finds a meeting time for one host, any available host or a whole team."
-      tryThis="Switch from Round Robin to Collective. Compare the available times when one person is enough and when everyone must be free."
-      watchFor="Collective meetings have fewer possible times because every host must be available. Reservations and a final check protect a selected time from double-booking."
+      title="Book a meeting"
+      status="Browser example"
+      purpose="I built YASA to turn shared availability into a confirmed meeting."
+      tryThis="Pick a time, add guest details and confirm. Then change or cancel the booking."
+      watchFor="Team review needs every required host. Optional hosts suggest better times without blocking a booking."
       statusTone="safe"
       footer={
         <>
-          <span>{availabilityCount} bookable of {candidateSlots} evaluated slots</span>
-          <span>All records synthetic · no Graph, email or database connection</span>
+          <span>Fictional calendars · changes stay in this browser</span>
+          <span>No invitation sent</span>
         </>
       }
     >
+      <nav className={styles.experienceTabs} aria-label="YASA experience">
+        <MacButton primary={view === "booking"} aria-pressed={view === "booking"} onClick={() => setView("booking")}>Guest booking page</MacButton>
+        <MacButton primary={view === "rules"} aria-pressed={view === "rules"} onClick={() => setView("rules")}>Explore scheduling rules</MacButton>
+      </nav>
+      <div hidden={view !== "booking"}><SchedulingBookingFlow active={active && view === "booking"} /></div>
+      {view === "rules" ? <div>
       <div className={styles.disclosure} role="note">
         <span aria-hidden="true">i</span>
         <p><strong>Real scheduling rules, fictional calendars.</strong> This browser port mirrors the repository’s four scheduling modes, buffered working-window constraints, weighted allocation, IANA timezone display, temporary reservations and final revalidation.</p>
@@ -723,6 +731,7 @@ export function SchedulingStudio() {
           <li><span>05</span><strong>Delivery</strong><small>Graph event · email · ICS</small></li>
         </ol>
       </section>
+      </div> : null}
     </DemoWindow></ProjectCopy>
   );
 }

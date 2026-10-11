@@ -1,81 +1,687 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
-/** Source-derived product guide with a file-free browser preview. */
+/** Native workflow, executable sample rules and local browser image conversion. */
 export const ultraConvertCopy = {
-  "A mixed selection": ["混合文件选择", "混合檔案選取"],
-  "A photo, a recording and a note need different output formats. I can review them in one batch instead of opening three separate converters.": ["照片、录音和笔记需要不同的输出格式。我可以在同一批次审阅，而无需打开三个转换工具。", "照片、錄音與筆記需要不同的輸出格式。我可以在同一批次檢視，而無需開啟三個轉換工具。"],
-  "Images for a website": ["网站需要的图片", "網站需要的圖片"],
-  "I can turn a collection of images into WebP for a website, while keeping the original images for editing.": ["我可以将一组图片转换为网站使用的 WebP，同时保留原图用于编辑。", "我可以將一組圖片轉換為網站使用的 WebP，同時保留原圖用於編輯。"],
-  "Audio from a video": ["提取视频声音", "擷取影片聲音"],
-  "I can extract a video's audio as MP3, then prepare it alongside a WAV recording in the same batch.": ["我可以将视频中的声音提取为 MP3，并与 WAV 录音放在同一批次准备。", "我可以將影片中的聲音擷取為 MP3，並與 WAV 錄音放在同一批次準備。"],
-  "Image": ["图片", "圖片"],
-  "Audio": ["音频", "音訊"],
-  "Document": ["文档", "文件"],
-  "Video → audio": ["视频 → 音频", "影片 → 音訊"],
-  "WebP · web images": ["WebP · 网页图片", "WebP · 網頁圖片"],
-  "WebP is useful for web images. A lossy conversion changes pixels; the original stays available.": ["WebP 适合网页图片。有损转换会改变像素；原图仍然保留。", "WebP 適合網頁圖片。有損轉換會改變像素；原圖仍然保留。"],
-  "PNG · lossless image": ["PNG · 无损图片", "PNG · 無損圖片"],
-  "PNG avoids lossy image compression. It can be larger than a web-oriented format.": ["PNG 避免有损图片压缩，但可能比面向网页的格式更大。", "PNG 避免有損圖片壓縮，但可能比面向網頁的格式更大。"],
-  "JPEG · shared photos": ["JPEG · 便于分享的照片", "JPEG · 便於分享的照片"],
-  "JPEG is widely readable for photos, but uses lossy compression and cannot retain transparency.": ["JPEG 照片兼容性广，但使用有损压缩，无法保留透明区域。", "JPEG 照片相容性廣，但使用有損壓縮，無法保留透明區域。"],
-  "MP3 · compatible audio": ["MP3 · 兼容性广的音频", "MP3 · 相容性廣的音訊"],
-  "MP3 is widely compatible compressed audio. It changes the sound representation and keeps the source recording.": ["MP3 是兼容性广的压缩音频。转换会改变声音的表示方式，同时保留原录音。", "MP3 是相容性廣的壓縮音訊。轉換會改變聲音的表示方式，同時保留原錄音。"],
-  "FLAC · lossless audio": ["FLAC · 无损音频", "FLAC · 無損音訊"],
-  "FLAC is lossless audio compression. Converting a lossy source to FLAC does not restore detail that is already missing.": ["FLAC 使用无损音频压缩。将有损源文件转为 FLAC，不能恢复已经缺失的细节。", "FLAC 使用無損音訊壓縮。將有損來源檔案轉為 FLAC，不能復原已經缺失的細節。"],
-  "Opus · compact audio": ["Opus · 紧凑音频", "Opus · 精簡音訊"],
-  "Opus is useful for compact audio, including speech. Check that the receiving app supports it.": ["Opus 适合体积较小的音频，包括语音。请确认接收应用支持此格式。", "Opus 適合體積較小的音訊，包括語音。請確認接收應用程式支援此格式。"],
-  "DOCX · editable document": ["DOCX · 可编辑文档", "DOCX · 可編輯文件"],
-  "DOCX makes the note editable in a word processor. Document conversion preserves structure rather than exact page layout.": ["DOCX 让笔记可以在文字处理软件中编辑。文档转换保留结构，而不是精确的页面排版。", "DOCX 讓筆記可以在文書處理軟體中編輯。文件轉換保留結構，而不是精確的頁面排版。"],
-  "EPUB · reflowable ebook": ["EPUB · 可重排电子书", "EPUB · 可重排電子書"],
-  "EPUB turns the note into a reflowable ebook. Exact page layout is not preserved.": ["EPUB 将笔记转换为可重排的电子书，不保留精确的页面排版。", "EPUB 將筆記轉換為可重排的電子書，不保留精確的頁面排版。"],
-  "HTML · browser document": ["HTML · 浏览器文档", "HTML · 瀏覽器文件"],
-  "HTML makes the note readable in a browser. Supporting image resources are bundled with the result where needed.": ["HTML 让笔记可以在浏览器阅读。需要时，配套图片资源会与结果一起打包。", "HTML 讓筆記可以在瀏覽器閱讀。需要時，配套圖片資源會與結果一起打包。"],
-  "UltraConvert product walkthrough": ["UltraConvert 产品体验", "UltraConvert 產品體驗"],
-  "UltraConvert · native Mac app": ["UltraConvert · 原生 Mac 应用", "UltraConvert · 原生 Mac 應用程式"],
-  "Convert a mixed batch on my Mac.": ["在我的 Mac 上转换混合文件批次。", "在我的 Mac 上轉換混合檔案批次。"],
-  "I built UltraConvert to bring everyday file conversion into one Mac app: choose files, review useful output formats, and decide exactly where the new copies go.": ["我开发 UltraConvert，将日常文件转换集中到一个 Mac 应用：选择文件、审阅合适的输出格式，并明确新副本保存在哪里。", "我開發 UltraConvert，將日常檔案轉換集中到一個 Mac 應用程式：選取檔案、檢視合適的輸出格式，並明確新副本儲存在哪裡。"],
-  "Download the Mac preview": ["下载 Mac 预览版", "下載 Mac 預覽版"],
-  "Installation guide": ["安装指南", "安裝指南"],
-  "Read my user guide": ["阅读我的使用指南", "閱讀我的使用指南"],
-  "v1.6.0 preview · Apple Silicon installer · conversion engines installed separately": ["v1.6.0 预览 · Apple Silicon 安装包 · 转换引擎另行安装", "v1.6.0 預覽 · Apple Silicon 安裝套件 · 轉換引擎另行安裝"],
-  "Try a conversion before installing": ["安装前体验转换流程", "安裝前體驗轉換流程"],
-  "Pick a task, choose the formats, then preview the new files.": ["选择任务和格式，再预览新的文件。", "選擇工作與格式，再預覽新的檔案。"],
-  "Choose a conversion example": ["选择转换示例", "選擇轉換範例"],
-  "1. Add files": ["1. 添加文件", "1. 加入檔案"],
-  "Manual conversion always keeps my originals.": ["手动转换始终保留我的原件。", "手動轉換始終保留我的原件。"],
-  "2. Choose formats": ["2. 选择格式", "2. 選擇格式"],
-  "Images": ["图片", "圖片"],
-  "Documents": ["文档", "文件"],
-  "3. Save to": ["3. 保存位置", "3. 儲存位置"],
-  "Beside source files": ["原文件旁边", "原檔案旁邊"],
-  "One new batch folder": ["一个新的批次文件夹", "一個新的批次資料夾"],
-  "Preview converted batch": ["预览转换后的批次", "預覽轉換後的批次"],
-  "Example results ready": ["示例结果已就绪", "範例結果已就緒"],
-  "Use the defaults or change formats and destination below": ["使用默认设置，或在下方更改格式和保存位置", "使用預設設定，或在下方變更格式與儲存位置"],
-  "My new copies": ["我的新副本", "我的新副本"],
-  "Each result is saved beside its own original. Existing files are kept; a name collision gets a new name.": ["每个结果保存在各自原件旁边。已有文件会保留；重名的结果会使用新名称。", "每個結果儲存在各自原件旁邊。已有檔案會保留；同名的結果會使用新名稱。"],
-  "All results go into one fresh batch folder in my chosen destination, with a result folder for each conversion. The original files stay where they are.": ["所有结果放入所选目标位置的一个新批次文件夹，每项转换各有结果文件夹。原文件留在原处。", "所有結果放入所選目的地的一個新批次資料夾，每項轉換各有結果資料夾。原檔案留在原處。"],
-  "These sample filenames illustrate the workflow. This browser preview does not convert files; the Mac app processes them locally.": ["这些示例文件名说明操作流程。此浏览器预览不转换文件；Mac 应用会在本机处理。", "這些範例檔名說明操作流程。此瀏覽器預覽不轉換檔案；Mac 應用程式會在本機處理。"],
-  "Use it straight from Finder": ["直接从 Finder 使用", "直接從 Finder 使用"],
-  "Select one file or a mixed batch, right-click, and choose Convert Here or Convert to Destination. My app opens the same review flow with the destination selected.": ["选择一个文件或混合批次，右键选择就地转换或转换到目标位置。我的应用会打开同样的审阅流程，并选好保存位置。", "選取一個檔案或混合批次，按右鍵選擇就地轉換或轉換到目的地。我的應用程式會開啟同樣的檢視流程，並選好儲存位置。"],
-  "Format shortcuts such as WebP or MP3 also prepare a batch for review. I still choose compatible formats and click Convert before anything runs.": ["WebP 或 MP3 等格式快捷操作也会先准备批次供审阅。我仍需选择兼容格式并点击转换，任务才会运行。", "WebP 或 MP3 等格式捷徑也會先準備批次供檢視。我仍需選擇相容格式並點選轉換，工作才會執行。"],
-  "Enable Finder actions": ["启用 Finder 操作", "啟用 Finder 操作"],
-  "Let folder rules handle repeated work": ["让文件夹规则处理重复任务", "讓資料夾規則處理重複工作"],
-  "For a recurring task, I can watch a small inbox, match new files, convert or rename them, and save results to a chosen folder. Rules run while the app is open, including when its main window is closed.": ["对于重复任务，我可以监视一个小型收件文件夹，匹配新文件、转换或重命名，再将结果保存到指定文件夹。应用打开时规则会运行，即使主窗口关闭也是如此。", "對於重複工作，我可以監看一個小型收件資料夾，匹配新檔案、轉換或重新命名，再將結果儲存到指定資料夾。應用程式開啟時規則會執行，即使主視窗關閉也是如此。"],
-  "When": ["当", "當"],
-  "a stable new image arrives in my chosen inbox": ["新的图片在所选收件文件夹中稳定写入后", "新的圖片在所選收件資料夾中穩定寫入後"],
-  "Then": ["就", "就"],
-  "convert it to WebP": ["转换为 WebP", "轉換為 WebP"],
-  "Save": ["保存", "儲存"],
-  "the result to my chosen output folder": ["结果到所选输出文件夹", "結果到所選輸出資料夾"],
-  "After success": ["成功后", "成功後"],
-  "keep the original by default": ["默认保留原件", "預設保留原件"],
-  "I can test a rule without changing files, then explicitly enable it. Optional Archive or Trash actions require a deliberate choice.": ["我可以先测试规则而不改变文件，再明确启用它。可选的归档或移入废纸篓操作需要主动选择。", "我可以先測試規則而不改變檔案，再明確啟用它。可選的封存或移入垃圾桶操作需要主動選擇。"],
-  "Read about folder rules": ["阅读文件夹规则说明", "閱讀資料夾規則說明"],
-  "Formats, setup and how it works": ["格式、安装和运行方式", "格式、安裝與執行方式"],
-  "My app supports images, audio, video, documents, ebooks, geospatial datasets and structured data. It recognises file contents where possible and offers compatible targets for each category.": ["我的应用支持图片、音频、视频、文档、电子书、地理空间数据集和结构化数据。它尽可能识别文件内容，并为各类别提供兼容的输出格式。", "我的應用程式支援圖片、音訊、影片、文件、電子書、地理空間資料集與結構化資料。它盡可能辨識檔案內容，並為各類別提供相容的輸出格式。"],
-  "The native interface is built with Swift and AppKit. A local Python coordinator runs the conversion tools. There is no account, upload service or telemetry.": ["原生界面使用 Swift 和 AppKit 构建。本地 Python 协调程序运行转换工具，无需账号，也没有上传服务或遥测。", "原生介面使用 Swift 和 AppKit 建構。本機 Python 協調程式執行轉換工具，無需帳號，也沒有上傳服務或遙測。"],
-  "The public v1.6.0 preview is signed and Apple-notarized. Install Homebrew, download the installer ZIP, keep its folder together, and run the installer described in my guide. The app alone does not include the conversion engines.": ["公开的 v1.6.0 预览版已签名并通过 Apple 公证。安装 Homebrew，下载安装 ZIP，保留完整文件夹，再按我的指南运行安装程序。应用本身不包含转换引擎。", "公開的 v1.6.0 預覽版已簽署並通過 Apple 公證。安裝 Homebrew，下載安裝 ZIP，保留完整資料夾，再按我的指南執行安裝程式。應用程式本身不包含轉換引擎。"],
-  "Format conversion involves tradeoffs: a document can change layout, lossy formats can change image or sound detail, and some metadata or extra media tracks may not be retained. My guide explains the limits.": ["格式转换有取舍：文档可能改变排版，有损格式可能改变画面或声音细节，部分元数据或附加媒体轨道可能无法保留。我的指南说明这些限制。", "格式轉換有取捨：文件可能改變排版，有損格式可能改變畫面或聲音細節，部分中繼資料或附加媒體軌道可能無法保留。我的指南說明這些限制。"],
-  "Browse formats and preservation limits": ["查看格式和保留限制", "查看格式與保留限制"],
+  "Reset example": ["重置示例", "重設範例"],
+  "Documents need a Convert block to preserve companion resources.": ["文档需要转换块，才能保留配套资源。", "文件需要轉換塊，才能保留配套資源。"],
+  "Folder rules": [
+    "文件夹规则",
+    "資料夾規則"
+  ],
+  "Finder actions": [
+    "Finder 操作",
+    "Finder 操作"
+  ],
+  "Convert an image": [
+    "转换图片",
+    "轉換圖片"
+  ],
+  "Convert Here": [
+    "就地转换",
+    "就地轉換"
+  ],
+  "Convert to Destination": [
+    "转换到目标位置",
+    "轉換到目的地"
+  ],
+  "Choose Format…": [
+    "选择格式…",
+    "選擇格式…"
+  ],
+  "Convert to WebP": [
+    "转换为 WebP",
+    "轉換為 WebP"
+  ],
+  "Convert to MP3": [
+    "转换为 MP3",
+    "轉換為 MP3"
+  ],
+  "UltraConvert interactive product demo": [
+    "UltraConvert 交互产品演示",
+    "UltraConvert 互動產品示範"
+  ],
+  "UltraConvert · native Mac app": [
+    "UltraConvert · 原生 Mac 应用",
+    "UltraConvert · 原生 Mac 應用程式"
+  ],
+  "Make file conversion a small, repeatable task.": [
+    "让文件转换成为简单、可重复的任务。",
+    "讓檔案轉換成為簡單、可重複的工作。"
+  ],
+  "I built UltraConvert so I can convert a batch from Finder, or let a folder rule handle the next file for me.": [
+    "我开发 UltraConvert，让我能直接从 Finder 转换一批文件，或用文件夹规则自动处理下一个文件。",
+    "我開發 UltraConvert，讓我能直接從 Finder 轉換一批檔案，或用資料夾規則自動處理下一個檔案。"
+  ],
+  "Get UltraConvert": [
+    "获取 UltraConvert",
+    "取得 UltraConvert"
+  ],
+  "Download the Mac preview": [
+    "下载 Mac 预览版",
+    "下載 Mac 預覽版"
+  ],
+  "Install and start": [
+    "安装并开始使用",
+    "安裝並開始使用"
+  ],
+  "v1.6.0 · Apple Silicon · engines installed separately": [
+    "v1.6.0 · Apple Silicon · 转换引擎另行安装",
+    "v1.6.0 · Apple Silicon · 轉換引擎另行安裝"
+  ],
+  "Explore UltraConvert": [
+    "体验 UltraConvert",
+    "體驗 UltraConvert"
+  ],
+  "Build a rule. Drop in a file. Watch it run.": [
+    "拼好规则，放入文件，看它运行。",
+    "拼好規則，放入檔案，看它執行。"
+  ],
+  "Try moving Rename above Convert: the format token uses the format at that step.": [
+    "试着把重命名移到转换之前：格式变量会使用该步骤当时的格式。",
+    "試著把重新命名移到轉換之前：格式變數會使用該步驟當時的格式。"
+  ],
+  "Save and add example files": [
+    "保存并添加示例文件",
+    "儲存並加入範例檔案"
+  ],
+  "Save rule": [
+    "保存规则",
+    "儲存規則"
+  ],
+  "Unsaved changes · watcher uses the saved rule": [
+    "更改未保存 · 监视器使用已保存的规则",
+    "變更尚未儲存 · 監看器使用已儲存的規則"
+  ],
+  "Saved rule · watching new arrivals": [
+    "规则已保存 · 监视新文件",
+    "規則已儲存 · 監看新檔案"
+  ],
+  "Puzzle rule composer": [
+    "拼块规则编辑器",
+    "拼塊規則編輯器"
+  ],
+  "Start from a rule": [
+    "从模板开始",
+    "從範本開始"
+  ],
+  "Start with": [
+    "起始模板",
+    "起始範本"
+  ],
+  "WHEN": [
+    "当",
+    "當"
+  ],
+  "A new file arrives": [
+    "新文件到达",
+    "新檔案到達"
+  ],
+  "Watch folder": [
+    "监视文件夹",
+    "監看資料夾"
+  ],
+  "Image inbox": [
+    "图片收件文件夹",
+    "圖片收件資料夾"
+  ],
+  "Media inbox": [
+    "媒体收件文件夹",
+    "媒體收件資料夾"
+  ],
+  "Include subfolders": [
+    "包含子文件夹",
+    "包含子資料夾"
+  ],
+  "Stable for": [
+    "稳定等待",
+    "穩定等待"
+  ],
+  "{seconds} seconds": [
+    "{seconds} 秒",
+    "{seconds} 秒"
+  ],
+  "IF": [
+    "如果",
+    "如果"
+  ],
+  "Match these conditions": [
+    "匹配这些条件",
+    "符合這些條件"
+  ],
+  "Condition mode": [
+    "条件组合方式",
+    "條件組合方式"
+  ],
+  "ALL conditions": [
+    "全部条件",
+    "全部條件"
+  ],
+  "ANY condition": [
+    "任一条件",
+    "任一條件"
+  ],
+  "Condition {number}": [
+    "条件 {number}",
+    "條件 {number}"
+  ],
+  "Category for condition {number}": [
+    "条件 {number} 的类别",
+    "條件 {number} 的類別"
+  ],
+  "Value for condition {number}": [
+    "条件 {number} 的值",
+    "條件 {number} 的值"
+  ],
+  "Match": [
+    "匹配",
+    "符合"
+  ],
+  "No match": [
+    "不匹配",
+    "不符合"
+  ],
+  "Remove condition {number}": [
+    "移除条件 {number}",
+    "移除條件 {number}"
+  ],
+  "Add condition": [
+    "添加条件",
+    "新增條件"
+  ],
+  "Ordered actions": [
+    "按顺序执行的操作",
+    "依序執行的操作"
+  ],
+  "Convert": [
+    "转换",
+    "轉換"
+  ],
+  "Rename": [
+    "重命名",
+    "重新命名"
+  ],
+  "Drag action {number}; use the move buttons with a keyboard": [
+    "拖动操作 {number}；键盘用户可使用移动按钮",
+    "拖曳操作 {number}；鍵盤使用者可使用移動按鈕"
+  ],
+  "Move action {number} up": [
+    "上移操作 {number}",
+    "上移操作 {number}"
+  ],
+  "Move action {number} down": [
+    "下移操作 {number}",
+    "下移操作 {number}"
+  ],
+  "Remove action {number}": [
+    "移除操作 {number}",
+    "移除操作 {number}"
+  ],
+  "Output format for action {number}": [
+    "操作 {number} 的输出格式",
+    "操作 {number} 的輸出格式"
+  ],
+  "Name template for action {number}": [
+    "操作 {number} 的命名模板",
+    "操作 {number} 的命名範本"
+  ],
+  "Tokens": [
+    "可用变量",
+    "可用變數"
+  ],
+  "After this step": [
+    "此步骤之后",
+    "此步驟之後"
+  ],
+  "Add Convert": [
+    "添加转换",
+    "新增轉換"
+  ],
+  "Add Rename": [
+    "添加重命名",
+    "新增重新命名"
+  ],
+  "SAVE": [
+    "保存",
+    "儲存"
+  ],
+  "A new copy": [
+    "一个新副本",
+    "一個新副本"
+  ],
+  "Output folder": [
+    "输出文件夹",
+    "輸出資料夾"
+  ],
+  "Web output · outside the inbox": [
+    "网页输出 · 位于收件文件夹外",
+    "網頁輸出 · 位於收件資料夾外"
+  ],
+  "Exports · outside the inbox": [
+    "导出目录 · 位于收件文件夹外",
+    "匯出目錄 · 位於收件資料夾外"
+  ],
+  "Watched inbox · blocked": [
+    "监视的收件文件夹 · 已阻止",
+    "監看的收件資料夾 · 已阻止"
+  ],
+  "Keep the original · never overwrite an existing output": [
+    "保留原件 · 不覆盖已有输出",
+    "保留原件 · 不覆寫既有輸出"
+  ],
+  "Rule preview and activity": [
+    "规则预览和运行记录",
+    "規則預覽與執行紀錄"
+  ],
+  "Live rule preview": [
+    "实时规则预览",
+    "即時規則預覽"
+  ],
+  "Test with": [
+    "测试文件",
+    "測試檔案"
+  ],
+  "Preview file": [
+    "预览文件",
+    "預覽檔案"
+  ],
+  "Rule needs a change": [
+    "规则需要修改",
+    "規則需要修改"
+  ],
+  "Match → new copy": [
+    "匹配 → 新副本",
+    "符合 → 新副本"
+  ],
+  "No match → leave unchanged": [
+    "不匹配 → 保持原样",
+    "不符合 → 保持原樣"
+  ],
+  "Filename conditions ignore case and include the extension. Example date: 2026-10-11.": [
+    "文件名条件不区分大小写，包含扩展名。示例日期：2026-10-11。",
+    "檔名條件不區分大小寫，包含副檔名。範例日期：2026-10-11。"
+  ],
+  "Watched inbox": [
+    "监视的收件文件夹",
+    "監看的收件資料夾"
+  ],
+  "Watching": [
+    "监视中",
+    "監看中"
+  ],
+  "Paused": [
+    "已暂停",
+    "已暫停"
+  ],
+  "New example file": [
+    "新的示例文件",
+    "新的範例檔案"
+  ],
+  "Add file": [
+    "添加文件",
+    "加入檔案"
+  ],
+  "Pause watching": [
+    "暂停监视",
+    "暫停監看"
+  ],
+  "Resume watching": [
+    "恢复监视",
+    "恢復監看"
+  ],
+  "Run existing files": [
+    "运行已有文件",
+    "執行既有檔案"
+  ],
+  "Arrival": [
+    "到达",
+    "到達"
+  ],
+  "Stable": [
+    "稳定",
+    "穩定"
+  ],
+  "Actions": [
+    "操作",
+    "操作"
+  ],
+  "Save": [
+    "保存",
+    "儲存"
+  ],
+  "Original kept in the inbox": [
+    "原件保留在收件文件夹",
+    "原件保留在收件資料夾"
+  ],
+  "No new copies yet.": [
+    "尚无新副本。",
+    "尚無新副本。"
+  ],
+  "Sample files and a shortened clock. Matching, naming and routing run here; the Mac app runs the conversion engines.": [
+    "使用示例文件和缩短的等待时间。匹配、命名和保存路径在这里计算；转换引擎由 Mac 应用运行。",
+    "使用範例檔案與縮短的等待時間。匹配、命名與儲存路徑在這裡計算；轉換引擎由 Mac 應用程式執行。"
+  ],
+  "Start with files already selected in Finder.": [
+    "从 Finder 中选好的文件开始。",
+    "從 Finder 中選好的檔案開始。"
+  ],
+  "Select a few examples, open the actions, then review the prepared batch.": [
+    "选择几个示例，打开操作菜单，再审阅准备好的批次。",
+    "選擇幾個範例，開啟操作選單，再檢視準備好的批次。"
+  ],
+  "Example Finder selection": [
+    "示例 Finder 文件选择",
+    "範例 Finder 檔案選取"
+  ],
+  "Example files": [
+    "示例文件",
+    "範例檔案"
+  ],
+  "Open Finder actions": [
+    "打开 Finder 操作",
+    "開啟 Finder 操作"
+  ],
+  "UltraConvert Finder actions": [
+    "UltraConvert 的 Finder 操作",
+    "UltraConvert 的 Finder 操作"
+  ],
+  "Quick Actions / Services": [
+    "快速操作 / 服务",
+    "快速動作 / 服務"
+  ],
+  "Close menu": [
+    "关闭菜单",
+    "關閉選單"
+  ],
+  "Right-click also opens this menu. On a Mac, these are Quick Actions and Services.": [
+    "右键也可打开此菜单。在 Mac 上，这些操作属于快速操作和服务。",
+    "按右鍵也可開啟此選單。在 Mac 上，這些操作屬於快速動作與服務。"
+  ],
+  "Prepared conversion batch": [
+    "准备好的转换批次",
+    "準備好的轉換批次"
+  ],
+  "Review before converting": [
+    "转换前先审阅",
+    "轉換前先檢視"
+  ],
+  "{count} files prepared · originals stay where they are": [
+    "已准备 {count} 个文件 · 原件留在原处",
+    "已準備 {count} 個檔案 · 原件留在原處"
+  ],
+  "That preset does not fit the whole selection. Choose a format for each category.": [
+    "该预设不适合全部所选文件。请为每个类别选择格式。",
+    "該預設不適合全部所選檔案。請為每個類別選擇格式。"
+  ],
+  "{category} output": [
+    "{category}输出",
+    "{category}輸出"
+  ],
+  "Save to": [
+    "保存位置",
+    "儲存位置"
+  ],
+  "Beside source files": [
+    "原文件旁边",
+    "原檔案旁邊"
+  ],
+  "One new batch folder": [
+    "一个新的批次文件夹",
+    "一個新的批次資料夾"
+  ],
+  "Preparing example outputs…": [
+    "正在准备示例输出…",
+    "正在準備範例輸出…"
+  ],
+  "Convert example batch": [
+    "转换示例批次",
+    "轉換範例批次"
+  ],
+  "New copies · originals kept": [
+    "新副本 · 原件已保留",
+    "新副本 · 原件已保留"
+  ],
+  "Choose an action to prepare the selected files. Nothing starts automatically.": [
+    "选择操作以准备所选文件。转换不会自动开始。",
+    "選擇操作以準備所選檔案。轉換不會自動開始。"
+  ],
+  "This batch uses sample files. Conversion runs in the Mac app; the image tab can convert a real image in this browser.": [
+    "此批次使用示例文件，转换由 Mac 应用执行。图片选项卡可以在此浏览器转换真实图片。",
+    "此批次使用範例檔案，轉換由 Mac 應用程式執行。圖片分頁可以在此瀏覽器轉換真實圖片。"
+  ],
+  "Enable these Finder actions on my Mac": [
+    "在我的 Mac 上启用这些 Finder 操作",
+    "在我的 Mac 上啟用這些 Finder 操作"
+  ],
+  "Convert an image here, for real.": [
+    "在这里实际转换一张图片。",
+    "在這裡實際轉換一張圖片。"
+  ],
+  "Use my generated sample or choose an image. The browser creates the new file locally; the image is never uploaded.": [
+    "使用我生成的示例或选择图片。浏览器在本机生成新文件；图片不会上传。",
+    "使用我產生的範例或選擇圖片。瀏覽器在本機產生新檔案；圖片不會上傳。"
+  ],
+  "Image to convert": [
+    "待转换图片",
+    "待轉換圖片"
+  ],
+  "{size} KB · original unchanged": [
+    "{size} KB · 原件不变",
+    "{size} KB · 原件不變"
+  ],
+  "Local image conversion": [
+    "本机图片转换",
+    "本機圖片轉換"
+  ],
+  "Choose a local image": [
+    "选择本机图片",
+    "選擇本機圖片"
+  ],
+  "Output format": [
+    "输出格式",
+    "輸出格式"
+  ],
+  "Image output format": [
+    "图片输出格式",
+    "圖片輸出格式"
+  ],
+  "Quality · {quality}%": [
+    "质量 · {quality}%",
+    "品質 · {quality}%"
+  ],
+  "Image quality": [
+    "图片质量",
+    "圖片品質"
+  ],
+  "PNG is lossless; quality does not apply.": [
+    "PNG 是无损格式，不使用质量设置。",
+    "PNG 是無損格式，不使用品質設定。"
+  ],
+  "JPEG is lossy and does not keep transparency. Transparent areas use white.": [
+    "JPEG 使用有损压缩，不保留透明度。透明区域会填为白色。",
+    "JPEG 使用有損壓縮，不保留透明度。透明區域會填為白色。"
+  ],
+  "WebP uses lossy compression here. The original is kept.": [
+    "这里的 WebP 使用有损压缩，原件会保留。",
+    "這裡的 WebP 使用有損壓縮，原件會保留。"
+  ],
+  "Converting…": [
+    "正在转换…",
+    "正在轉換…"
+  ],
+  "Convert image": [
+    "转换图片",
+    "轉換圖片"
+  ],
+  "Image converted locally": [
+    "图片已在本机转换",
+    "圖片已在本機轉換"
+  ],
+  "{size} KB · output {format}": [
+    "{size} KB · 输出 {format}",
+    "{size} KB · 輸出 {format}"
+  ],
+  "Download converted image": [
+    "下载转换后的图片",
+    "下載轉換後的圖片"
+  ],
+  "This browser tool supports PNG, JPEG and WebP. My Mac app also handles audio, video, documents and data with its installed engines.": [
+    "此浏览器工具支持 PNG、JPEG 和 WebP。我的 Mac 应用还使用已安装的引擎处理音频、视频、文档和数据。",
+    "此瀏覽器工具支援 PNG、JPEG 與 WebP。我的 Mac 應用程式還使用已安裝的引擎處理音訊、影片、文件與資料。"
+  ],
+  "How this relates to my Mac app": [
+    "与我的 Mac 应用的关系",
+    "與我的 Mac 應用程式的關係"
+  ],
+  "The puzzle blocks follow my native rule editor: match the original file, run actions from top to bottom, save outside watched folders, and keep originals by default.": [
+    "拼块沿用我原生规则编辑器的流程：匹配原文件，从上到下执行操作，将结果保存到监视文件夹外，默认保留原件。",
+    "拼塊沿用我原生規則編輯器的流程：匹配原檔案，從上到下執行操作，將結果儲存到監看資料夾外，預設保留原件。"
+  ],
+  "Saving or resuming starts a fresh baseline. Existing files only run when I explicitly choose Run Existing Files. The app watches while open, including with its main window closed.": [
+    "保存或恢复会建立新的基线。已有文件只有在我明确选择运行已有文件时才会处理。应用打开时持续监视，即使主窗口关闭也一样。",
+    "儲存或恢復會建立新的基準。既有檔案只有在我明確選擇執行既有檔案時才會處理。應用程式開啟時持續監看，即使主視窗關閉也一樣。"
+  ],
+  "Read my rule guide": [
+    "阅读我的规则指南",
+    "閱讀我的規則指南"
+  ],
+  "Formats and conversion limits": [
+    "格式与转换限制",
+    "格式與轉換限制"
+  ],
+  "Images": [
+    "图片",
+    "圖片"
+  ],
+  "Audio": [
+    "音频",
+    "音訊"
+  ],
+  "Video": [
+    "视频",
+    "影片"
+  ],
+  "Documents": [
+    "文档",
+    "文件"
+  ],
+  "Structured data": [
+    "结构化数据",
+    "結構化資料"
+  ],
+  "Detected category": [
+    "检测到的类别",
+    "偵測到的類別"
+  ],
+  "Detected format": [
+    "检测到的格式",
+    "偵測到的格式"
+  ],
+  "Filename contains": [
+    "文件名包含",
+    "檔名包含"
+  ],
+  "Filename starts with": [
+    "文件名开头为",
+    "檔名開頭為"
+  ],
+  "Filename ends with": [
+    "文件名结尾为",
+    "檔名結尾為"
+  ],
+  "Existing · not queued": [
+    "已有文件 · 未排队",
+    "既有檔案 · 未排入佇列"
+  ],
+  "Waiting in queue": [
+    "等待队列",
+    "等待佇列"
+  ],
+  "Waiting for a stable file": [
+    "等待文件稳定",
+    "等待檔案穩定"
+  ],
+  "Checking conditions": [
+    "检查条件",
+    "檢查條件"
+  ],
+  "Running actions": [
+    "执行操作",
+    "執行操作"
+  ],
+  "Saved · original kept": [
+    "已保存 · 原件已保留",
+    "已儲存 · 原件已保留"
+  ],
+  "No match · unchanged": [
+    "不匹配 · 保持原样",
+    "不符合 · 保持原樣"
+  ],
+  "Stopped · original kept": [
+    "已停止 · 原件已保留",
+    "已停止 · 原件已保留"
+  ],
+  "Arrived while paused · ignored": [
+    "暂停时到达 · 已忽略",
+    "暫停時到達 · 已忽略"
+  ],
+  "Give every condition a value.": [
+    "请为每个条件填写值。",
+    "請為每個條件填寫值。"
+  ],
+  "Use a valid name and only the supported tokens.": [
+    "请使用有效名称和受支持的变量。",
+    "請使用有效名稱與支援的變數。"
+  ],
+  "This output format does not fit this file category.": [
+    "此输出格式不适合该文件类别。",
+    "此輸出格式不適合該檔案類別。"
+  ],
+  "Save outside the watched inbox to prevent a loop.": [
+    "请保存到监视的收件文件夹外，避免循环。",
+    "請儲存到監看的收件資料夾外，避免循環。"
+  ],
+  "Save the rule and add files to see it run.": [
+    "保存规则并添加文件，看它运行。",
+    "儲存規則並加入檔案，看它執行。"
+  ],
+  "New files queued. Originals stay in the inbox.": [
+    "新文件已排队。原件留在收件文件夹。",
+    "新檔案已排入佇列。原件留在收件資料夾。"
+  ],
+  "Paused arrivals are ignored. Resume, then run existing files explicitly.": [
+    "暂停期间到达的文件会忽略。恢复后，可明确运行已有文件。",
+    "暫停期間到達的檔案會忽略。恢復後，可明確執行既有檔案。"
+  ],
+  "Rule saved. Existing files form the baseline.": [
+    "规则已保存。已有文件成为基线。",
+    "規則已儲存。既有檔案成為基準。"
+  ],
+  "Watching paused. New arrivals will be ignored.": [
+    "监视已暂停。新到达文件会忽略。",
+    "監看已暫停。新到達檔案會忽略。"
+  ],
+  "Watching resumed. Existing files form a new baseline.": [
+    "监视已恢复。已有文件成为新的基线。",
+    "監看已恢復。既有檔案成為新的基準。"
+  ],
+  "Existing files explicitly queued with the saved rule.": [
+    "已有文件已按保存的规则明确加入队列。",
+    "既有檔案已依儲存的規則明確排入佇列。"
+  ],
+  "Choose an image smaller than 16 MB.": [
+    "请选择小于 16 MB 的图片。",
+    "請選擇小於 16 MB 的圖片。"
+  ],
+  "Choose an image under 24 megapixels.": [
+    "请选择小于 2400 万像素的图片。",
+    "請選擇小於 2400 萬像素的圖片。"
+  ],
+  "This browser could not open that image. Try PNG, JPEG or WebP.": [
+    "此浏览器无法打开该图片。请尝试 PNG、JPEG 或 WebP。",
+    "此瀏覽器無法開啟該圖片。請嘗試 PNG、JPEG 或 WebP。"
+  ],
+  "This browser cannot export that format. Choose another.": [
+    "此浏览器无法导出该格式。请选择其他格式。",
+    "此瀏覽器無法匯出該格式。請選擇其他格式。"
+  ]
 } satisfies ProjectCopyTable;

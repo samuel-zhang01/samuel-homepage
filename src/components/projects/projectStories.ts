@@ -15,13 +15,13 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   "problem": "Converting a photo, a recording and a document usually sends me through three different apps. I wanted one place to review the whole batch before creating the new files.",
   "contribution": "I built a Mac app that turns a Finder selection into one conversion queue. It recognises each file category, explains the available output formats and shows where the new files will be saved. Try the example batch to see a photo, recording and document prepared together.",
   "pipeline": "Finder selection → recognise file categories → choose formats → review destinations → create separate converted files",
-  "walkthrough": "Open the mixed batch, choose an image format and switch the destination. Preview the results to see each new filename beside its original. The real Mac app performs the conversions; this walkthrough shows the choices first."
+  "walkthrough": "Change the puzzle rule, save it and drop a new example file into the watched folder. Reorder Convert and Rename to see why action order matters. Try Finder actions, or convert and download an image in the image tab."
 },
   "videomate": {
     problem: "A video can look like a normal file and still stop partway through. I wanted to find out what was readable, recover it where possible and keep uncertain results out of a finished collection.",
     contribution: "I built VideoMate to answer three questions about a video collection: what still plays, what can be recovered, and what should go into a new collection. It creates checked copies and leaves originals in place. The walkthrough lets you compare those choices on five example files.",
     pipeline: "local selection → full software decode → copy, remux or qualified encode → independent output verification → published result or review",
-    walkthrough: "Choose Repair and select Broken MP4 index, then show the recovery outcomes. Compare it with Missing end of recording: fixing an index can restore access to existing content, while absent recording data cannot be recreated.",
+    walkthrough: "Select Broken MP4 index and play the repair. Step through inspection, the candidate and verification: the new collection stays empty until the copy passes. Try damaged frames with remux, or adjust the shortening limit for an incomplete recording.",
   },
   "insurance-matching": {
     problem: "Brokers must match a risk to suitable markets using placement history, market appetite and policy wording that can be incomplete or out of date.",
@@ -45,7 +45,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     problem: "A valid meeting time must work across time zones, busy calendars and allocation rules, even when two visitors try to book it together.",
     contribution: "I implemented individual, weighted round-robin, collective and first-available scheduling, with local working hours, buffers, UTC reservations and final conflict checks. The product also connects calendar events, email and booking-management links.",
     pipeline: "working hours and busy calendars → host allocation → UTC reservation with ten-minute expiry → database conflict check → calendar, email and ICS",
-    walkthrough: "Change the allocation mode, inspect why a slot is unavailable, then reserve an available time and try a competing booking.",
+    walkthrough: "Choose a meeting time and guest time zone, answer the booking questions and confirm. Download the calendar invitation, then reschedule or cancel. Try a competing booking to see the final conflict check protect the time.",
   },
   "italian-learning": {
     problem: "Daily lessons, vocabulary review and writing practice become hard to sustain when they are scattered across separate materials.",

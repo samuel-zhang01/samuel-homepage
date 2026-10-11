@@ -2,11 +2,15 @@
   "dictionary": "schedulingCopy.ts",
   "exportName": "schedulingCopy",
   "sources": [
-    "src/components/projects/SchedulingStudio.tsx"
+    "src/components/projects/SchedulingStudio.tsx",
+    "src/components/projects/SchedulingBookingFlow.tsx"
   ],
   "identities": {
     "Alex": "Fictional host proper name, preserved across locales.",
     "Morgan": "Fictional host proper name, preserved across locales.",
-    "Riley": "Fictional host proper name, preserved across locales."
+    "Riley": "Fictional host proper name, preserved across locales.",
+    "Jamie Taylor": "Fictional example guest proper name, preserved across locales.",
+    "confirmed": "Internal booking status identifier; the displayed status uses separately translated sentences.",
+    "cancelled": "Internal booking status identifier; the displayed status uses separately translated sentences."
   }
 }

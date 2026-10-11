@@ -8,16 +8,16 @@ const standaloneRoot = join(outputRoot, "standalone");
 // Ultra Convert adds one demand-loaded demo chunk and its CSS. Keep byte
 // and initial-load limits unchanged while allowing that additional experience.
 const MAX_BROWSER_FILES = 122;
-// Full CN/TW demo copy adds about 1 MiB across lazy project chunks. Budget that
-// requested content explicitly while separately preventing initial-load growth.
-const MAX_BROWSER_BYTES = 5 * 1024 * 1024;
+// Full CN/TW copy and the requested interactive product/ML tasks live in lazy
+// project chunks. Bound that content separately from the unchanged initial load.
+const MAX_BROWSER_BYTES = 5.5 * 1024 * 1024;
 const MAX_INITIAL_JS_GZIP_BYTES = 270 * 1024;
 // LaTeX is an explicitly requested, demand-loaded feature. Keep the existing
 // aggregate application budget, and bound its single third-party parser independently.
 const MAX_MATH_RENDERER_BYTES = 300 * 1024;
 const MAX_RUNTIME_FILES = 2_500;
 // Server-rendered project copy shares the same bilingual content allowance.
-const MAX_APPLICATION_RUNTIME_BYTES = 5 * 1024 * 1024;
+const MAX_APPLICATION_RUNTIME_BYTES = 5.5 * 1024 * 1024;
 const formatMiB = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MiB`;
 
 const credentialMarkers = [

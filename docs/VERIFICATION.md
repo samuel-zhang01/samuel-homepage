@@ -2,6 +2,10 @@
 
 This guide records current verification scope, reproduction and known limits. It replaces the cumulative dated audit and repeated handoff history. The complete pre-cleanup narrative remains in [Git at effc55f](https://github.com/samuel-zhang01/samuel-homepage/blob/effc55f/docs/DEEP_AUDIT_2026-10-04.md); deleting it from the working tree does not delete that record.
 
+## Interactive product checkpoint — 11 October 2026
+
+Rule automation, Finder review, actual browser image conversion, VideoMate queue/verification animation and YASA guest booking now have meaningful state changes. Authentic native Ultra Convert screenshots, a live public YASA capture and a playable VideoMate explanation lead the shorter overviews. [The checkpoint receipt](INTERACTIVE_PRODUCT_CHECKPOINT.md) records precise source, review, fixture and native-capture limits. The expanded ML/AI batch and final release verification remain in progress.
+
 ## Project explanation pass — 11 October 2026
 
 The portfolio now opens with Selected work and explains each project through what I built, why, a purposeful action and an interpretable result. Optional methods follow the task. The catalogue has **42 projects / 29 routed demos**, six library documents and a **108-node / 392-edge** graph. Ultra Convert and VideoMate have separate product walkthroughs with accurate preview/source installation links. Original IX repositories, course presentations, reports and thesis material informed the first-person copy; saved flow/MRI/microscope results replace decorative benchmark drawings. The innovation reading document uses the untouched original four-model diagram. Private raw research and operator data were not published.

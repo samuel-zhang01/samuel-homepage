@@ -72,7 +72,7 @@ export type Project = {
   downloadUrl?: string;
   downloadLabel?: string;
   artifacts?: ProjectArtifact[];
-  preview?: { src: string; alt: string; caption: string };
+  preview?: { src: string; alt: string; caption: string; width?: number; height?: number; label?: string; gallery?: { src: string; alt: string; caption: string; width: number; height: number; label: string }[] };
   systemApp?: "coverd" | "documents" | "lab" | "experience" | "orbitals" | "notepad" | "sketch" | "tasks" | "focus" | "calendar" | "calculator" | "converter" | "palette";
   privacyNote?: string;
   visual: "agents" | "grid" | "flow" | "vision" | "chart" | "terminal" | "network" | "book";
@@ -94,23 +94,31 @@ export const projects: Project[] = [
     featured: true,
     eyebrow: "CONVERT FILES FROM FINDER",
     summary: "My Mac app for converting images, audio, video, documents and data in one reviewed batch.",
-    detail: "I built Ultra Convert to stop switching between separate tools for everyday file conversions. I can select a mixed batch in Finder, choose an output format for each category and review where the new files will go. It preserves originals, avoids overwriting existing outputs and remembers my format choices. The current Apple Silicon preview is installed with the release ZIP and its installer; the README explains the setup.",
+    detail: "I built Ultra Convert so I can select different file types in Finder and convert them together. I can also build rules from matching and action blocks: convert an image, rename it and run the same sequence whenever a new file arrives in a watched folder. Originals stay in place; outputs get separate, collision-safe names.",
     tools: ["Swift", "AppKit", "Python", "Finder Quick Actions"],
     concepts: [
       "products",
       "local-first"
     ],
     highlights: [
-      "One batch for images, audio, video, documents and data",
-      "Finder actions and per-category output formats",
-      "Separate results while preserving original files"
+      "Convert a mixed Finder selection in one batch",
+      "Build puzzle-style rules: match → convert → rename",
+      "Watch folders for new arrivals; keep originals and avoid overwrites"
     ],
+    preview: {
+      src: "/projects/product-showcases/ultraconvert-batch.webp", width: 1760, height: 1564,
+      label: "Batch converter", alt: "Ultra Convert’s real Mac window with a photo, recording and document ready to convert",
+      caption: "The real Mac app, using three generated example files. Choose formats and review the destination before converting.",
+      gallery: [{ src: "/projects/product-showcases/ultraconvert-rules.webp", width: 2080, height: 1504,
+        label: "Folder rules", alt: "Ultra Convert’s real puzzle rule editor with Convert and Rename action blocks",
+        caption: "The real folder-rule editor: match images, convert to WebP, then rename. This sample rule is disabled and uses a temporary folder." }],
+    },
     demo: "ultra-convert",
     sourceUrl: "https://github.com/samuel-zhang01/UltraConvert/tree/53c7e55f3c7ff995a1d88637fa57c12e0237d0e3",
     sourceLicence: "explicit-open-source",
     downloadUrl: "https://github.com/samuel-zhang01/UltraConvert/releases/tag/v1.6.0",
     downloadLabel: "Get the Mac preview",
-    privacyNote: "The browser walkthrough uses example filenames and shows the conversion choices. To convert your files, install the separate Mac app.",
+    privacyNote: "Rules and Finder actions use example files. The image tab really converts PNG, JPEG and WebP in your browser; your image stays on this device. Install the Mac app for other formats and folder automation.",
     visual: "flow"
   },
 
@@ -124,12 +132,12 @@ export const projects: Project[] = [
     featured: true,
     eyebrow: "LOCAL VIDEO REPAIR AND RE-ENCODING",
     summary: "My offline app for checking damaged videos, making playable copies and moving a collection into a new folder.",
-    detail: "VideoMate is a native, offline GUI and CLI for inspecting damaged video, recovering readable material and building verified mixed-folder migrations. It preserves originals, checks integrity with software decoding and publishes candidates only after independent verification. Eligible repairs and HEVC migration use qualified GPU encoders with software fallback. The browser companion models these choices with fictional inputs; no visitor media is uploaded or processed.",
+    detail: "I built VideoMate to recover readable video and organise a checked collection. It can repair a broken container without re-encoding, preserve recoverable frames in FFV1/PCM, or make a portable MP4. For migrations I can copy supporting files, exclude unwanted ones and send uncertain videos to review. A new copy joins the collection only after it passes verification; the original stays untouched.",
     tools: ["Python", "Tkinter", "FFmpeg / FFprobe", "Hardware encoding", "Offline desktop app"],
     concepts: ["products", "recovery", "local-first"],
-    highlights: ["Software-decoded inspection and independent output verification", "GPU-qualified HEVC migration with software fallback", "Original-preserving recovery, migration and private resume", "Native GUI and CLI; platform qualification is still in progress"],
+    highlights: ["Inspect the whole video; verify each new copy before publishing", "Repair a broken index or recover readable frames", "Move a collection with copy, exclude and review decisions", "Pause and resume local work while preserving originals"],
     demo: "videomate",
-    privacyNote: "This browser walkthrough uses five invented files. The separate desktop app processes files locally; its public release is currently a source preview.",
+    privacyNote: "The playground animates five example files and their checks; it does not run FFmpeg or process your videos. The desktop app works locally and is available as a source preview.",
     visual: "flow",
     downloadLabel: "Get the source preview",
     downloadUrl: "https://github.com/samuel-zhang01/VideoMate#install-and-start",
@@ -302,7 +310,12 @@ export const projects: Project[] = [
     summary: "A self-hosted scheduling platform with four allocation modes, timezone-safe availability, calendar sync and race-resistant booking.",
     detail: "I built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The browser uses fictional calendars to make those scheduling decisions explorable. The reservation uses a canonical UTC key with a ten-minute expiry; a database overlap constraint provides a second safeguard against simultaneous bookings.",
     tools: ["FastAPI", "PostgreSQL", "React", "Microsoft Graph", "Redis", "Docker"],
-    highlights: ["Four host-allocation modes", "Time-zone, daylight-saving and buffer-aware availability", "Reservations and final overlap checks", "Calendar events, invitations and booking-management links"],
+    highlights: ["Individual, round-robin, collective and first-available meetings", "Show the same meeting in each guest’s time zone", "Reserve a time, answer booking questions and recheck conflicts", "Download an ICS invitation, reschedule or cancel"],
+    preview: {
+      src: "/projects/product-showcases/yasa-booking.webp", width: 800, height: 705,
+      alt: "YASA’s live booking page showing a meeting calendar and available times",
+      caption: "My live YASA booking page, captured on 11 October 2026. The playground below lets you explore the booking flow without sending a real booking.",
+    },
     demo: "scheduling",
     privacyNote: "The interactive example uses fictional people and calendars and sends no bookings or messages.",
     visual: "grid",

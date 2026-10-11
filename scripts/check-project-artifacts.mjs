@@ -7,6 +7,21 @@ import ts from "typescript";
 const publicRoot = join(process.cwd(), "public");
 const projectRoot = join(publicRoot, "projects");
 const allowlist = new Map([
+  ["projects/product-showcases/ultraconvert-batch.webp", {
+    maximumBytes: 300_000,
+    sha256: "16aa89c64f19a4db52377a4163fbaa78b3329102b16f653be46e47a7835234de",
+    type: "webp",
+  }],
+  ["projects/product-showcases/ultraconvert-rules.webp", {
+    maximumBytes: 550_000,
+    sha256: "ab135401bbfef7ae1d3a2e7b43a694dfe5e03de8100135b926ece523d8b5f7af",
+    type: "webp",
+  }],
+  ["projects/product-showcases/yasa-booking.webp", {
+    maximumBytes: 100_000,
+    sha256: "891a4737b3b96fedd44ab5966ee0648f34646330c5dc4c8c24caa5aa06c39c52",
+    type: "webp",
+  }],
   ["projects/innovation/four-models.pdf", {
     maximumBytes: 100_000,
     sha256: "c69b6dd84f701c6b04d57a3657b5111ffd5b701befbe23806b1ca4b417a53fac",

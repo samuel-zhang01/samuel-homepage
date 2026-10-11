@@ -1,0 +1,25 @@
+.preview { padding: 16px; border: 1px solid var(--s7-edge); background: var(--s7-chrome); box-shadow: var(--s7-relief-raised); font: var(--s7-ui)/1.5 var(--s7-font-text); }
+.preview h2 { margin: 0 0 12px; font-size: var(--s7-heading); }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+.steps button { min-height: 44px; border: 1px solid var(--s7-edge); padding: 6px; background: var(--s7-paper); color: var(--s7-ink); font: inherit; cursor: pointer; }
+.steps button[aria-pressed="true"] { box-shadow: var(--s7-relief-inset); background: var(--s7-context-paper); font-weight: bold; }
+.steps span { display: block; font-size: var(--s7-small); }
+.files { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px; align-items: center; margin-top: 16px; }
+.files > div { min-width: 0; border: 1px solid var(--s7-edge); padding: 10px; background: var(--s7-paper); }
+.arrow { color: var(--s7-muted); }
+.files strong, .files code { display: block; overflow-wrap: anywhere; font-size: var(--s7-small); }
+.files code { margin: 5px 0; font-family: var(--s7-font-text); }
+.film { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2px; }
+.film i { height: 22px; background: #6d8790; border: 1px solid var(--s7-edge); }
+.film i[data-index="broken"] { background: repeating-linear-gradient(45deg, #c49c68 0 3px, #f3e7d7 3px 6px); }
+.film i[data-index="checked"] { background: #688673; }
+.film i[data-index="waiting"] { background: var(--s7-chrome); }
+.output { animation: appear 300ms ease-out; }
+.preview > p { min-height: 3em; margin: 12px 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.controls button { min-height: 44px; }
+.preview small { display: block; margin-top: 10px; color: var(--s7-muted); font-size: var(--s7-small); }
+.preview button:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
+@keyframes appear { from { opacity: .5; transform: translateX(-5px); } to { opacity: 1; transform: none; } }
+@container (max-width: 380px) { .preview { padding: 10px; } .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .files { gap: 5px; } .files > div { padding: 7px; } }
+@media (prefers-reduced-motion: reduce) { .output { animation: none; } }

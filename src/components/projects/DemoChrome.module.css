@@ -123,7 +123,11 @@
 }
 
 .demoContract > h3 { margin: 0; font: 700 var(--s7-heading)/1.35 var(--s7-font-text); letter-spacing: normal; text-transform: none; }
-.contractPurpose { max-width: 90ch; margin: 10px 0 0; font-size: var(--s7-text); line-height: 1.6; }
+.contractPurpose { max-width: 90ch; margin: 0; font-size: var(--s7-text); line-height: 1.55; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.notice { min-width: 0; }
+.notice summary { min-height: 44px; align-content: center; cursor: pointer; font-weight: bold; }
+.notice summary:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 3px; }
 .contractGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--s7-shadow); gap: 12px 24px; margin-top: 12px; }
 .contractGrid > div { min-width: 0; padding: 8px 0; }
 .contractGrid h4 { margin: 0; color: var(--demo-ink); font: 700 var(--s7-text)/1.4 var(--s7-font-text); letter-spacing: normal; text-transform: none; }

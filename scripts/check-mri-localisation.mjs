@@ -42,6 +42,7 @@ const { SchedulingDstExperiment, BackupFailureExperiment } = load("src/component
 const identity = new Set([
   ...Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/mriCopy.audit.json"), "utf8")).identities),
   "MSE", "MAE", "dB", "Alex", "Morgan", "Riley", "dB，ε=", "PSNR（dB）", "PGD-7 PSNR", "FGSM PSNR",
+  "Europe/London", "America/New_York", "Asia/Tokyo", // IANA timezone identifiers are stable technical names.
 ]);
 let strings = [];
 function inspect(node) {
@@ -107,7 +108,7 @@ let productCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
   for (const mode of ["individual", "round-robin", "collective", "first-available"]) {
     for (const timezone of ["Europe/London", "America/New_York", "Asia/Tokyo"]) {
-      states = { SchedulingStudio: [mode, ["host-a", "host-b", "host-c"], 60, 15, timezone] };
+      states = { SchedulingStudio: [mode, "rules", ["host-a", "host-b", "host-c"], 60, 15, timezone] };
       assertMandarin(SchedulingStudio, `${locale}/scheduling/${mode}/${timezone}`);
       productCases += 1;
     }

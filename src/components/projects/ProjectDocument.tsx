@@ -11,6 +11,7 @@ import { ProjectLocaleProvider } from "./ProjectTranslationBoundary";
 import { ProjectCaseBrief } from "./ProjectCaseBrief";
 import { ProjectWindowContext } from "./ProjectWindowContext";
 import { ProjectArtwork } from "./ProjectArtwork";
+import { ProductPreviewMotion } from "./ProductPreviewMotion";
 import { ScheduleCallLink } from "../ScheduleCallLink";
 export { default as ProjectActivity } from "./ProjectActivity";
 
@@ -45,6 +46,7 @@ const copy = {
   "Closing clears this demo’s unsaved changes.": ["关闭后，此演示中未保存的更改将被清除。", "關閉後，此示範中未儲存的變更將被清除。"],
   "Close demo and return to overview": ["关闭演示并返回概览", "關閉示範並返回概覽"],
   "Return to demo": ["前往交互演示", "前往互動示範"],
+  "View full screenshot": ["查看完整截图", "檢視完整截圖"],
 } satisfies ProjectCopyTable;
 
 type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";
@@ -59,6 +61,10 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
   const openActivity = useContext(ProjectWindowContext);
   const [shareStatus, setShareStatus] = useState("");
   const [shareFallback, setShareFallback] = useState("");
+  const [previewIndex, setPreviewIndex] = useState(0);
+  const previewImages = project?.preview ? [project.preview, ...(project.preview.gallery ?? [])] : [];
+  const effectivePreviewIndex = Math.min(previewIndex, Math.max(0, previewImages.length - 1));
+  const preview = previewImages[effectivePreviewIndex];
   const t = (source: string) => projectText(locale, copy, source);
   const openDemo = () => openActivity?.({ slug, kind: "demo" });
   const share = async () => {
@@ -82,10 +88,12 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
       <div className={styles.titleRow}><ProjectArtwork project={project} /><h1>{getProjectText(locale, project.title)}</h1></div>
         <p className={styles.summary}>{getProjectText(locale, project.summary)}</p>
     </header>
-    {project.preview && <figure className={styles.preview}>
-      <Image src={project.preview.src} alt={getProjectText(locale, project.preview.alt)} width={543} height={172} sizes="(max-width: 720px) 90vw, 640px" />
-      <figcaption>{getProjectText(locale, project.preview.caption)}</figcaption>
+    {preview && <figure className={styles.preview}>
+      {previewImages.length > 1 && <div className={styles.previewTabs} role="group" aria-label={t("Explore the project")}>{previewImages.map((image, index) => <button key={image.src} type="button" className="s7-button" aria-pressed={effectivePreviewIndex === index} onClick={() => setPreviewIndex(index)}>{getProjectText(locale, image.label ?? image.alt)}</button>)}</div>}
+      <Image unoptimized src={preview.src} alt={getProjectText(locale, preview.alt)} width={preview.width ?? 543} height={preview.height ?? 172} sizes="(max-width: 720px) 90vw, 640px" />
+      <figcaption>{getProjectText(locale, preview.caption)} <a href={preview.src} target="_blank" rel="noopener noreferrer">{t("View full screenshot")} ↗</a></figcaption>
     </figure>}
+    {slug === "videomate" && <div className={styles.preview}><ProductPreviewMotion locale={locale} /></div>}
     <ProjectCaseBrief project={project} locale={locale} onExplore={openDemo} />
     {(hasReadingLinks || project.tools.length > 0) && <section className={styles.resources}>
       <h2>{t(hasReadingLinks ? "Read more" : "Built with")}</h2>

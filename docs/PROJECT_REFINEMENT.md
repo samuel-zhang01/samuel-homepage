@@ -30,3 +30,19 @@ Completed: 42 project records, 29 routed demos and six reading documents. Origin
 All 29 reviewed desktop/phone journeys meet the 9/10 target. The [first eight reviews](PROJECT_VISITOR_REVIEW.md), [15 additional reviews](PROJECT_VISITOR_REVIEW_ADDITIONAL.md) and [six decision/research reviews](PROJECT_VISITOR_REVIEW_DECISIONS.md) record actual actions, changed results and limits. These are scoped adversarial agent assessments, not a recruited user study or a score for every possible state.
 
 The complete release gate, compiled HTTP crawl and repository ownership inventory pass. Four-locale compiled product checks verify installation destinations, original artwork and a working batch preview at 320px. Removing 268 unused translation rows retains 705 current narrative strings while keeping the existing byte budgets. [Verification](VERIFICATION.md#project-explanation-pass--11-october-2026) records the final scope, failed rounds and hash-verified local archive. Implementation milestones were committed and pushed throughout the pass; the development preview remains available on port 3000.
+
+
+## Interactive showcase follow-up
+
+Goal: remove decorative vertical accent bars, shorten product openings, show the actual apps and let a visitor perform meaningful tasks. Extend the same treatment to every ML/AI demo: useful controls should change an understandable result, with clear recorded-result versus browser-computation boundaries.
+
+- [x] Keep the existing development preview on port 3000.
+- [x] Ultra Convert: rule blocks, watched-folder arrivals, Finder review and genuine local browser image conversion.
+- [x] VideoMate: selected queues, inspection coverage, repair options, animated verification and migration policy.
+- [x] YASA: real guest flow, host/timezone/question choices and local booking lifecycle.
+- [x] Product showcases: authentic UI screenshots or explanatory animations, concise core features.
+- [ ] ML/AI batches: inspect source code, enrich purposeful experiments and review changed states.
+- [ ] Independent adversarial desktop/phone review at 9/10 or better; retain rejected rounds.
+- [ ] Commit and push validated checkpoints, then complete release verification and handoff.
+
+Agents own separate product components initially. The coordinator owns shared presentation, screenshots, integration and release checks. Later batches are assigned after product code freezes, with cross-agent review separated from implementation. Native/source repositories are read-only inputs; generated fixtures supply screenshots without operator data. All visible additions cover the four locales and keep the System 7 theme, genuine icons and reduced-motion support.

@@ -54,17 +54,17 @@ export function DemoWindow({
         </span>
       </header>
       <section className={styles.demoContract} lang={locale} aria-labelledby={guidanceId}>
-        <h3 id={guidanceId}>{t("What this shows")}</h3>
+        <h3 id={guidanceId} className={styles.srOnly}>{t("What this shows")}</h3>
         <p className={styles.contractPurpose}>{t(purpose)}</p>
         <div className={styles.contractGrid}>
           <div>
             <h4>{t("Try this")}</h4>
             <p>{t(tryThis)}</p>
           </div>
-          <div>
-            <h4>{t("What to notice")}</h4>
+          <details className={styles.notice}>
+            <summary>{t("What to notice")}</summary>
             <p>{t(watchFor)}</p>
-          </div>
+          </details>
         </div>
       </section>
       <div className={styles.demoBody}>{children}</div>

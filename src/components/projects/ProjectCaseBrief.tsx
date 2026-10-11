@@ -14,6 +14,8 @@ const copy = {
   "About this demo": ["关于这个演示", "關於這個示範"],
   "Open interactive demo": ["打开交互演示", "開啟互動示範"],
   "Try it": ["动手试试", "動手試試"],
+  "Core features": ["核心功能", "核心功能"],
+  "Try the playground": ["打开体验区", "開啟體驗區"],
 } satisfies ProjectCopyTable;
 
 export function ProjectCaseBrief({ project, locale, onExplore }: {
@@ -21,6 +23,24 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
 }) {
   const story = getProjectStory(project);
   const t = (source: string) => projectText(locale, copy, source);
+  if (["ultra-convert", "videomate", "coverd-yasa"].includes(project.slug)) return <div className={`${styles.brief} ${styles.productBrief}`}>
+    <section className={styles.productFeatures}>
+      <h2>{t("Core features")}</h2>
+      <ul>{project.highlights.map(highlight => <li key={highlight}>{getProjectText(locale, highlight)}</li>)}</ul>
+    </section>
+    {story && <section className={styles.productTry}>
+      {onExplore && <button type="button" className="s7-button is-primary" onClick={onExplore}>{t("Try the playground")} ↗</button>}
+      <p>{getProjectText(locale, story.walkthrough)}</p>
+    </section>}
+    {story && <details className={styles.method}>
+      <summary><h2>{t("How it works")}</h2></summary>
+      <p>{getProjectText(locale, story.pipeline)}</p>
+      <p>{getProjectText(locale, project.detail)}</p>
+      <h2 className={styles.productWhy}>{t("Why I built it")}</h2>
+      <p>{getProjectText(locale, story.problem)}</p>
+    </details>}
+    {project.privacyNote && <p className={styles.productNote}>{getProjectText(locale, project.privacyNote)}</p>}
+  </div>;
   return <div className={styles.brief}>
     <section className={styles.narrative} aria-label={t("What I built")}>
       <h2>{t("What I built")}</h2>
