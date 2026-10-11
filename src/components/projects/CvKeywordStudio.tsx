@@ -268,7 +268,7 @@ const SAFE_REWRITES = [
 const TABS: readonly { id: StudioTab; step: string; label: string; detail: string }[] = [
   { id: "inputs", step: "01", label: "Brief", detail: "Role + CV" },
   { id: "analysis", step: "02", label: "Match", detail: "Weighted signals" },
-  { id: "evidence", step: "03", label: "Refine", detail: "Proof + rewrites" },
+  { id: "evidence", step: "03", label: "Refine", detail: "Factual edits" },
   { id: "output", step: "04", label: "Build", detail: "Template bundle" },
 ] as const;
 
@@ -535,14 +535,14 @@ export function CvKeywordStudio() {
     role: "Applied Machine Learning Engineer",
     company: "Northstar Systems · fictional",
   });
-  const [activeTab, setActiveTab] = useState<StudioTab>("inputs");
+  const [activeTab, setActiveTab] = useState<StudioTab>("analysis");
   const [template, setTemplate] = useState<TemplateId>("ai");
   const [lens, setLens] = useState<PriorityLens>("all");
   const [stagedRewrites, setStagedRewrites] = useState<Set<string>>(() => new Set());
   const [includeCoverLetter, setIncludeCoverLetter] = useState(false);
   const [selectedSignal, setSelectedSignal] = useState<string>("python");
   const [runNumber, setRunNumber] = useState(1);
-  const [announcement, setAnnouncement] = useState("Fictional sample loaded. Ready to analyse.");
+  const [announcement, setAnnouncement] = useState("Sample analysed. Inspect the matches or edit the inputs.");
 
   const report = useMemo(
     () => analyse(analysed.cv, analysed.job, lens),
@@ -640,11 +640,11 @@ export function CvKeywordStudio() {
   return (
     <ProjectCopy copy={cvKeywordCopy}><DemoWindow
       appName="CV Keyword Studio"
-      title="Role-tailored CV build lab"
+      title="Tailor a CV to a role"
       status={isDirty ? "Editing · run to update" : "Analysis current"}
-      purpose="Connect job requirements to the sentences that support them, then compare factual edits and document templates."
-      tryThis="Edit a sentence, run the analysis and stage a factual rewrite; inspect missing signals separately."
-      watchFor="Signal coverage and the output manifest change only after review; the demo never fabricates experience."
+      purpose="I built a CV workflow that connects a job’s requirements to experience already described in a CV."
+      tryThis="The sample is already analysed. Open Refine to review one suggested edit, or change a sentence in Brief and run the analysis again."
+      watchFor="Matched requirements show the supporting CV sentence. Missing requirements remain gaps; edits should explain existing experience more clearly."
       statusTone={isDirty ? "working" : "safe"}
       className={styles.studio}
       footer={
@@ -677,8 +677,8 @@ export function CvKeywordStudio() {
         <aside className={styles.privacyBanner} aria-label="How this demonstration works">
           <span className={styles.shield} aria-hidden="true">✓</span>
           <div>
-            <strong>From job language to visible evidence.</strong>
-            <p>The original workflow combined model-assisted extraction with LaTeX templates. This local edition uses 18 explicit English signal rules, so you can inspect each match, weight and evidence check. The sample documents remain in English to show exactly what the matcher reads.</p>
+            <strong>Find the experience behind each requirement.</strong>
+            <p>My original workflow extracted requirements and prepared LaTeX CV templates. This browser version matches 18 English terms so you can inspect the sentences it finds. The fictional sample stays in English because that is what the matcher reads.</p>
           </div>
           <span className={styles.memoryBadge}>SESSION MEMORY ONLY</span>
         </aside>
@@ -705,7 +705,7 @@ export function CvKeywordStudio() {
             <div className={styles.sectionHeading}>
               <div>
                 <span>INPUT SNAPSHOT</span>
-                <h3>Start with role context and supporting evidence</h3>
+                <h3>Describe the role and your experience</h3>
               </div>
               <p>Edits remain local until “Run analysis” snapshots them.</p>
             </div>
@@ -724,7 +724,7 @@ export function CvKeywordStudio() {
             <div className={styles.editorGrid}>
               <label className={styles.editorPanel}>
                 <span className={styles.editorHeading}>
-                  <span><b>01</b> Sanitised CV evidence</span>
+                  <span><b>01</b> Fictional CV</span>
                   <small>{cvText.length.toLocaleString(locale)} chars</small>
                 </span>
                 <textarea

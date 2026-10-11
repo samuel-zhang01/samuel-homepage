@@ -2,6 +2,34 @@
   min-width: 0;
 }
 
+.projectPurpose {
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--s7-ink);
+  background: var(--s7-paper);
+  color: var(--s7-ink);
+}
+
+.projectPurpose > span {
+  font-size: var(--s7-small);
+  color: var(--s7-muted);
+}
+
+.projectPurpose h3 {
+  margin: 5px 0 9px;
+  font-family: var(--s7-font-ui);
+  font-size: var(--s7-heading);
+  line-height: 1.3;
+}
+
+.projectPurpose p {
+  max-width: 76ch;
+  margin: 8px 0 0;
+  font-family: var(--s7-font-text);
+  font-size: var(--s7-ui);
+  line-height: 1.55;
+}
+
 .viewSwitch {
   display: grid;
   grid-template-columns: minmax(150px, 1fr) repeat(2, minmax(140px, auto));

@@ -773,4 +773,8 @@ export const stockMarketCopy = {
     "固定种子的模拟",
     "固定種子的模擬"
   ]
+,
+  "I wrote a small Julia model to explore how buying, selling and trade size can move a fictional stock price.": ["我编写了一个小型 Julia 模型，探索买入、卖出与交易量怎样推动虚构股票价格。", "我編寫了一個小型 Julia 模型，探索買入、賣出與交易量如何推動虛構股票價格。"],
+  "Choose Floor stress. Follow the price trace and the FLOOR entries where a sell event hits the model’s minimum price.": ["选择 Floor stress，沿价格曲线查看，并留意卖出事件触及模型最低价格时的 FLOOR 记录。", "選擇 Floor stress，沿價格曲線查看，並留意賣出事件觸及模型最低價格時的 FLOOR 紀錄。"],
+  "The price stops falling at $0.01 because I imposed a floor. This exposes a modelling choice, not a prediction about real markets.": ["价格不会低于 0.01 美元，因为我设定了下限。这展示的是建模选择，而不是真实市场预测。", "價格不會低於 0.01 美元，因為我設定了下限。這展示的是建模選擇，而非真實市場預測。"]
 } as const satisfies ProjectCopyTable;

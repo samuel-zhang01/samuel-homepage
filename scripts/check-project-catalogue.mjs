@@ -195,8 +195,8 @@ for (const demo of Object.keys(projectStories)) {
 const experienceIds = new Set(
   projects.filter(isInteractiveProject).map(({ slug }) => suiteMembership.has(slug) ? `suite:${suiteMembership.get(slug)}` : `project:${slug}`),
 );
-if (experienceIds.size !== 17) {
-  errors.push(`<catalogue>: expected 17 curated experiences, found ${experienceIds.size}`);
+if (experienceIds.size !== 18) {
+  errors.push(`<catalogue>: expected 18 curated experiences, found ${experienceIds.size}`);
 }
 
 const guidedShelfIds = new Set();
@@ -264,7 +264,7 @@ const sameMembers = (left, right) => (
 );
 
 if (guidedShelfIds.size !== 6) errors.push(`<guided>: expected 6 shelves, found ${guidedShelfIds.size}`);
-if (guidedExperienceCount !== 17) errors.push(`<guided>: expected 17 experiences, found ${guidedExperienceCount}`);
+if (guidedExperienceCount !== 18) errors.push(`<guided>: expected 18 experiences, found ${guidedExperienceCount}`);
 if (!sameMembers(guidedSuiteIds, projectSuites.map((suite) => suite.id))) {
   errors.push("<guided>: every editorial suite must appear exactly once");
 }

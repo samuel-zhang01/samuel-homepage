@@ -653,9 +653,9 @@ export function HomeLabTopologyStudio() {
       appName="Home lab topology"
       title="Infrastructure explorer"
       status="Simulated hosts · local"
-      purpose="Explore how six containerised services connect, how a fault changes their dependency paths and how backup assumptions affect capacity."
-      tryThis="Trace a dependency path, fail PostgreSQL and size a backup-retention scenario."
-      watchFor="Blast paths and capacity change, while absent health checks and unverified restore evidence remain explicit."
+      purpose="I host my own applications. This example shows why a broken database can stop several services at once."
+      tryThis="Open Failure lab with PostgreSQL selected. Press Inject fault, then Review graph to highlight its dependent services and backup jobs."
+      watchFor="The highlighted paths show which services lose a dependency. The diagram uses example hosts, so it does not change my live home lab."
       statusTone="safe"
       className={styles.studio}
       footer={

@@ -101,31 +101,31 @@ const PORTFOLIO_PRESETS: PortfolioPreset[] = [
 const SOURCE_LEDGER = [
   {
     state: "source",
-    label: "SOURCE",
+    label: "My reflection",
     title: "Four-model topology",
-    detail: "The Draw.io artifact places Opportunist, Enabler, Advocate and Producer against organisational ownership and resource authority.",
+    detail: "My diagram compares who takes responsibility for an idea and whether it has a standing budget. Those two questions locate the four models.",
   },
   {
     state: "source",
-    label: "SOURCE",
+    label: "My reflection",
     title: "Exploration / exploitation tension",
-    detail: "The reflection connects incumbent disruption, organisational ambidexterity and different routes for supporting corporate entrepreneurship.",
+    detail: "I asked how an established company can keep its current work running while giving new ideas room to develop.",
   },
   {
     state: "source",
-    label: "SOURCE",
+    label: "My reflection",
     title: "Framework critique",
-    detail: "The assessment argues that static structure omits support horizon, transition timing, politics and discoveries outside formal pathways.",
+    detail: "My critique is that a static matrix misses time: an idea may need months of support and a different home as it develops. My placement experience made that question concrete.",
   },
   {
     state: "adapted",
-    label: "ADAPTED",
+    label: "Browser example",
     title: "Portfolio calculator",
     detail: "Normalised experiment tokens, concentration and effective-model calculations are new browser mechanics with visible formulas. They are not claims from the paper.",
   },
   {
     state: "adapted",
-    label: "ADAPTED",
+    label: "Browser example",
     title: "Transition question generator",
     detail: "The readiness and pressure equations operationalise the critique for discussion; their equal weights and thresholds are illustrative.",
   },
@@ -147,7 +147,7 @@ function setModelCoordinates(model: ModelId) {
 
 function MatrixView() {
   const [ownership, setOwnership] = useState(32);
-  const [authority, setAuthority] = useState(68);
+  const [authority, setAuthority] = useState(32);
   const [horizon, setHorizon] = useState(18);
   const selectedId = resolveModel(ownership, authority);
   const selected = MODELS[selectedId];
@@ -164,7 +164,7 @@ function MatrixView() {
         <div>
           <span>Synthetic organisation</span>
           <strong>Aster Works · initiative pathway</strong>
-          <p>Move the structural axes; support horizon is displayed separately because it is a critique of the original two-axis model.</p>
+          <p>Ownership: 0 means any team can start an idea; 100 means a named team owns it. Budget: 0 means negotiating for each project; 100 means a standing fund.</p>
         </div>
         <label><span>Organisational ownership <b>{ownership < 50 ? "Diffuse" : "Focused"} · {ownership}</b></span>
           <input type="range" min="0" max="100" value={ownership} aria-valuetext={`${ownership}; ${ownership < 50 ? "Diffuse" : "Focused"} ownership`} onChange={(event) => setOwnership(Number(event.target.value))} />
@@ -212,7 +212,7 @@ function MatrixView() {
           <div className={styles.horizonStrip}>
             <span>Added question · support horizon</span>
             <div><i style={{ width: `${(horizon / 36) * 100}%` }} /><b style={{ left: `${(horizon / 36) * 100}%` }}>{horizon}m</b></div>
-            <p>The source critiques the matrix for omitting how long an organisation will protect an initiative. Horizon does not alter the source quadrant.</p>
+            <p>In my reflection, I argued that an idea also needs enough time to become useful. This support period is separate from who owns the work and budget.</p>
           </div>
         </section>
 
@@ -234,7 +234,7 @@ function MatrixView() {
             <div><dt>Support horizon</dt><dd>{horizon} months</dd></div>
             <div><dt>Model score</dt><dd>not defined</dd></div>
           </dl>
-          <small>{selected.evidence}</small>
+
         </aside>
       </div>
 
@@ -424,13 +424,9 @@ function EvidenceView() {
   return (
     <ProjectCopy copy={innovationModelsStudioCopy}><div className={styles.evidenceView}>
       <section className={styles.artifactPanel}>
-        <div className={styles.panelHeading}><span>Development</span><strong>What I produced</strong></div>
-        <div className={styles.artifactRows}>
-          <div><span>Text</span><strong>1,251-word reflection</strong><small>TeX word count · 3 sections · 7 subsections</small></div>
-          <div><span>Diagram</span><strong>Four governance models</strong><small>Editable Draw.io matrix and its PDF export</small></div>
-          <div><span>References</span><strong>10 bibliography entries</strong><small>8 reference keys cited in the analysis</small></div>
-          <div><span>Iteration</span><strong>12 revisions · 12–17 October 2025</strong><small>Written analysis, references and diagram developed together</small></div>
-        </div>
+        <div className={styles.panelHeading}><span>My reflection</span><strong>My original diagram and reflection</strong></div>
+        <p>I used the four-model framework to examine how a company gives new ideas responsibility, funding and time. The matrix is my original diagram; the sliders let you try its two central questions.</p>
+        <a className="s7-button" href="/projects/innovation/four-models.pdf" target="_blank" rel="noopener noreferrer">Read my original four-model diagram <span aria-hidden="true">↗</span></a>
       </section>
       <section className={styles.claimLedger}>
         <div className={styles.panelHeading}><span>Method</span><strong>Framework and interactive assumptions</strong></div>
@@ -450,11 +446,11 @@ export function InnovationModelsStudio() {
   return (
     <ProjectCopy copy={innovationModelsStudioCopy}><DemoWindow
       appName="Innovation Models"
-      title="Innovation Governance Workbench"
+      title="Who owns a new idea, and who funds it?"
       status="Fictional scenarios"
-      purpose="Make ownership and resource authority concrete when deciding how exploratory ventures should sit inside an incumbent."
-      tryThis="Choose a governance model, rebalance the portfolio and stress the transition-readiness inputs."
-      watchFor="Concentration and readiness heuristics move with visible weights; they structure a discussion rather than prescribe an answer."
+      purpose="I studied how companies support new ideas. These four models differ in who owns the work and who controls its budget."
+      tryThis="Raise Resource authority above 50 to give the idea a standing budget. Then raise Organisational ownership above 50 to put a named team in charge."
+      watchFor="The selected model moves from Opportunist to Enabler to Producer. The matrix describes different arrangements; more structure is not always better."
       statusTone="safe"
       className={styles.studio}
       footer={<><span>Fictional organisations and initiatives</span><span>4 models · 2 structural axes · illustrative calculations</span></>}

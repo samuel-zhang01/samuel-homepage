@@ -1,20 +1,20 @@
 {
   "mode": "Recovered unchanged native built-in image_gen outputs; no new generation or editing.",
-  "updated": "2026-10-05",
+  "updated": "2026-10-11",
   "styleReference": {
     "asset": "public/system7-icons/folder.png",
     "sha256": "8fa5ed299fff05df19d1173b9ccfefcb3b78b02da007b2955920f004515279ce",
     "retired128pxGenerationInputSha256": "f5865b1629702d03305001a62c703395da80a8dfa693549da4a5feacf0d863aa"
   },
   "delivery": {
-    "subjects": 42,
+    "subjects": 43,
     "newGenerations": 0,
     "recoveredNativeGenerations": 41,
     "preferredOriginalsRecovered": 11,
-    "totalBytes": 14964330,
-    "format": "41 authentic transparent 1254px generated originals and one original 512px COVERD brand; one canonical image per subject",
+    "totalBytes": 15588521,
+    "format": "41 authentic transparent 1254px generated originals, the original 512px COVERD brand and the original 1024px Ultra Convert app icon; one canonical image per subject",
     "nativeSourcePreparation": "Unchanged source PNG bytes copied directly; no crop, resize, alpha rewrite, palette reduction, blur, smoothing or upscaling",
-    "originalBrandMarks": 1,
+    "originalBrandMarks": 2,
     "presentation": "Alpha >=16/255 measures optical bounds for 90% proportional CSS framing only; original PNG/RGBA pixels remain intact. Generated icons use pixelated rendering; the original brand retains white backing and its native logo.",
     "historicalPreparation": {
       "newSubjects": 30,
@@ -900,6 +900,18 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
+      "sourcePixelsPreserved": true
+    },
+    {
+      "kind": "ultraconvert",
+      "origin": "Samuel’s original UltraConvert app icon, unchanged PNG bytes from UltraConvert/assets/icon.png",
+      "prompt": "No new image generation or image editing. Reuse the app’s owned native icon for its portfolio identity.",
+      "sourceSha256": "76f8c848c39349b285fe359138d0b5772f818a50e59d4937c017bde17e281239",
+      "delivered": "public/system7-icons/ultraconvert.png",
+      "deliveredSha256": "76f8c848c39349b285fe359138d0b5772f818a50e59d4937c017bde17e281239",
+      "bytes": 624191,
+      "nativeWidth": 1024,
+      "nativeHeight": 1024,
       "sourcePixelsPreserved": true
     }
   ]

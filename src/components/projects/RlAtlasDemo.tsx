@@ -566,7 +566,7 @@ function formatWeek(number: number) {
 
 export function RlAtlasDemo() {
   const locale = useProjectLocale();
-  const [workspace, setWorkspace] = useState<"control" | "lab" | "atlas">("atlas");
+  const [workspace, setWorkspace] = useState<"control" | "lab" | "atlas">("control");
   const [query, setQuery] = useState("");
   const [trackFilter, setTrackFilter] = useState<TrackFilter>("all");
   const [evidenceFilter, setEvidenceFilter] = useState<EvidenceFilter>("all");
@@ -607,10 +607,10 @@ export function RlAtlasDemo() {
     <ProjectCopy copy={rlAtlasDemoCopy}><DemoWindow
       appName="RL Atlas 2.0"
       title="STUDY-RL Learning Atlas"
-      status="Source snapshot · 6 sep 2026"
-      purpose="Explore 24 core reinforcement-learning weeks and an applied audit, then try the control and language-model learning labs."
-      tryThis="Filter by track or method, then select a week to explore its methods, projects and learning materials."
-      watchFor="The atlas preserves recorded source evidence; the separate learning labs expose training steps and calculated objectives."
+      status="Learning by consequences"
+      purpose="I built a reinforcement-learning curriculum to understand how an agent learns from the consequences of its actions. Try that idea in this small grid world."
+      tryThis="Press Train 100 episodes, then Test greedy route. Compare Q-learning with SARSA to see which route the agent learns beside the cliff."
+      watchFor="The route and Q values change with experience. A cliff fall costs 100 points, so the shortest route and the safer learning behaviour can differ."
       statusTone="working"
       className={styles.atlasWindow}
       footer={
@@ -621,7 +621,7 @@ export function RlAtlasDemo() {
       }
     >
       <div className={styles.workspaceTabs} role="group" aria-label="RL workspaces">
-        <button type="button" aria-pressed={workspace === "atlas"} onClick={() => setWorkspace("atlas")}>25-module curriculum &amp; evidence</button>
+        <button type="button" aria-pressed={workspace === "atlas"} onClick={() => setWorkspace("atlas")}>25-module curriculum</button>
         <button type="button" aria-pressed={workspace === "control"} onClick={() => setWorkspace("control")}>Train an RL agent</button>
         <button type="button" aria-pressed={workspace === "lab"} onClick={() => setWorkspace("lab")}>Post-training lab</button>
       </div>
@@ -653,7 +653,7 @@ export function RlAtlasDemo() {
         <div className={styles.snapshotHeading}>
           <span className={styles.sectionIcon} aria-hidden="true">✓</span>
           <div>
-            <span className={styles.kicker}>Repository evidence</span>
+            <span className={styles.kicker}>Curriculum materials</span>
             <h3 id="snapshot-heading">Learning materials at a glance</h3>
           </div>
         </div>
@@ -692,7 +692,7 @@ export function RlAtlasDemo() {
             It supersedes the older QA table’s missing Week 04 execution and lecture-margin flags.
             The older extended-reading scan remains a separate record. Week 25 retains one empirical-ordering
             test failure. These are recorded repository results, not a fresh training run or learner-completion
-            claim; the repository credits agent-authored teaching bundles.
+            claim.
           </p>
         </div>
       </section>

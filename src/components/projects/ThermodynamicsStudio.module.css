@@ -957,3 +957,14 @@
 .plotScroll { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
 .plotScroll:focus-visible { outline: 2px dotted var(--s7-ink); outline-offset: 2px; }
 .plotScroll > svg { min-width: 700px; }
+.livePressure {
+  display: grid;
+  gap: 4px;
+  margin: 10px 0 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--s7-edge);
+  background: var(--s7-paper);
+  color: var(--s7-ink);
+}
+.livePressure strong { font-size: var(--s7-heading); }
+.livePressure small { font-size: var(--s7-small); }

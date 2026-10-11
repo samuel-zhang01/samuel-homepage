@@ -1213,4 +1213,15 @@ export const cvKeywordCopy = {
     "分析已更新",
     "分析已更新"
   ]
+,
+  "Tailor a CV to a role": ["针对职位修改简历", "針對職位修改履歷"],
+  "I built a CV workflow that connects a job’s requirements to experience already described in a CV.": ["我构建了一个简历流程，把职位要求与简历中已有的经历联系起来。", "我建置了一個履歷流程，把職位要求與履歷中已有的經歷連結起來。"],
+  "The sample is already analysed. Open Refine to review one suggested edit, or change a sentence in Brief and run the analysis again.": ["示例已完成分析。打开 Refine 查看一项建议修改，或在 Brief 修改一句话后重新分析。", "範例已完成分析。開啟 Refine 查看一項建議修改，或在 Brief 修改一句話後重新分析。"],
+  "Matched requirements show the supporting CV sentence. Missing requirements remain gaps; edits should explain existing experience more clearly.": ["匹配的要求会显示对应的简历句子。缺失要求仍是缺口；修改应更清楚地说明已有经历。", "符合的要求會顯示對應的履歷句子。缺少的要求仍是缺口；修改應更清楚地說明已有經歷。"],
+  "Find the experience behind each requirement.": ["找到每项要求对应的经历。", "找出每項要求對應的經歷。"],
+  "My original workflow extracted requirements and prepared LaTeX CV templates. This browser version matches 18 English terms so you can inspect the sentences it finds. The fictional sample stays in English because that is what the matcher reads.": ["我的原始流程提取职位要求并准备 LaTeX 简历模板。浏览器版本匹配 18 个英文术语，方便查看找到的句子。虚构示例保留英文，因为匹配器读取的就是英文。", "我的原始流程擷取職位要求並準備 LaTeX 履歷模板。瀏覽器版本比對 18 個英文詞語，方便查看找到的句子。虛構範例保留英文，因為比對器讀取的就是英文。"],
+  "Describe the role and your experience": ["描述职位与自己的经历", "描述職位與自己的經歷"],
+  "Fictional CV": ["虚构简历", "虛構履歷"],
+  "Factual edits": ["基于事实的修改", "根據事實修改"],
+  "Sample analysed. Inspect the matches or edit the inputs.": ["示例已分析。查看匹配项或修改输入。", "範例已分析。查看符合項目或修改輸入。"]
 } as const satisfies ProjectCopyTable;

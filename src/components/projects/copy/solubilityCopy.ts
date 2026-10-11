@@ -615,4 +615,8 @@ export const solubilityCopy = {
     "xQ = r/(1 + r)，其中 r = m × 0.001 × ML/MQ",
     "xQ = r/(1 + r)，其中 r = m × 0.001 × ML/MQ"
   ]
+,
+  "I built calculations for how much solid dissolves at different temperatures and how to report that amount in laboratory units.": ["我构建了计算流程，求出不同温度下能溶解多少固体，并把数量转换为实验室报告单位。", "我建置了計算流程，求出不同溫度下能溶解多少固體，並把數量轉換為實驗室報告單位。"],
+  "Raise Temperature T and watch the amount in mg per gram of solvent. Switch the chart to the same units to compare temperatures.": ["提高 Temperature T，观察每克溶剂中溶解的毫克数。把图表切换到相同单位来比较不同温度。", "提高 Temperature T，觀察每克溶劑中溶解的毫克數。把圖表切換到相同單位來比較不同溫度。"],
+  "Warmer solvent dissolves more of this invented compound. The gap between the two curves shows how the liquid’s interactions change the ideal prediction.": ["较暖的溶剂能溶解更多这种虚构化合物。两条曲线的差距说明液体相互作用怎样改变理想预测。", "較暖的溶劑能溶解更多這種虛構化合物。兩條曲線的差距說明液體交互作用如何改變理想預測。"]
 } satisfies ProjectCopyTable;

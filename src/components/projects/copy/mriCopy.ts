@@ -2,6 +2,15 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Authored Simplified Mandarin with reviewed Taiwan wording; loaded with the MRI demo. */
 export const mriCopy = {
+  "Saved study results": ["已保存的研究结果", "已儲存的研究結果"],
+  "Compare the full reference with my reconstructed image, then inspect the error map below. Open Reconstruct to compare 4× and 8× undersampling.": ["比较完整参考图像与我的重建图像，再观察下方误差图。打开重建，比较 4 倍与 8 倍欠采样。", "比較完整參考影像與我的重建影像，再觀察下方誤差圖。開啟重建，比較 4 倍與 8 倍欠取樣。"],
+  "Keeping fewer measurements can lose heart detail. Compare the reconstruction with the full reference, especially around tissue boundaries.": ["保留更少测量可能丢失心脏细节。比较重建结果与完整参考图像，特别关注组织边界。", "保留更少測量可能遺失心臟細節。比較重建結果與完整參考影像，特別關注組織邊界。"],
+  "What I recovered from fewer MRI measurements": ["我从更少的 MRI 测量中恢复了什么", "我從更少的 MRI 測量中恢復了什麼"],
+  "Read left to right: the full reference, the image made from retained measurements alone, then my reconstructed image. At 4× and 8× undersampling, the lower row shows where each result differs from the reference.": ["从左到右阅读：完整参考图像、仅用保留测量得到的图像，以及我的重建图像。在 4 倍和 8 倍欠采样条件下，下排显示各结果与参考图像的差异位置。", "從左到右閱讀：完整參考影像、僅用保留測量得到的影像，以及我的重建影像。在 4 倍和 8 倍欠取樣條件下，下排顯示各結果與參考影像的差異位置。"],
+  "Read my MRI report ↗": ["阅读我的 MRI 报告 ↗", "閱讀我的 MRI 報告 ↗"],
+  "I built a model that reconstructs cardiac MRI from fewer measurements, then tested whether it preserves heart structures and recognises when it may be wrong.": ["我建立了一个用更少测量重建心脏 MRI 的模型，并测试它是否保留心脏结构，以及能否识别可能出错的位置。", "我建立了一個用更少測量重建心臟 MRI 的模型，並測試它是否保留心臟結構，以及能否識別可能出錯的位置。"],
+  "Start with my saved reconstruction figure: compare the undersampled image, reconstruction and reference. Then open Reconstruct and switch from 4× to 8× acceleration.": ["先查看我保存的重建图，比较欠采样图像、重建结果和参考图像。然后打开重建，将加速倍数从 4 倍切换到 8 倍。", "先查看我儲存的重建圖，比較欠取樣影像、重建結果和參考影像。然後開啟重建，將加速倍數從 4 倍切換到 8 倍。"],
+  "Fewer measurements make scans faster in principle, but can lose detail. My 4× reconstruction reached 31.90 dB PSNR; the later controls explain quality and uncertainty using study results and synthetic examples.": ["减少测量原则上能缩短扫描时间，但可能丢失细节。我的 4 倍重建达到 31.90 dB PSNR；后续控件用研究结果和合成示例解释质量与不确定性。", "減少測量原則上能縮短掃描時間，但可能遺失細節。我的 4 倍重建達到 31.90 dB PSNR；後續控制項用研究結果和合成範例解釋品質與不確定性。"],
   "Recorded images": ["已保存图像", "已儲存影像"],
   "Saved study figure": ["已保存的研究图", "已儲存的研究圖"],
   "From source slices to reconstructed images": ["从原始切片到重建图像", "從原始切片到重建影像"],

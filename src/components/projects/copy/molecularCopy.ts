@@ -818,4 +818,10 @@ export const molecularCopy = {
     "试调频率偏移、匹配容差及候选选择。光谱与几何结构均为合成数据，用于解释方法。",
     "試調頻率偏移、匹配容差及候選選擇。光譜與幾何結構均為合成資料，用於解釋方法。"
   ]
+,
+  "I analysed flexible fragrance molecules using microwave spectroscopy at King’s. Explore how I compared possible shapes with an invented spectrum.": ["我在国王学院使用微波光谱分析柔性香料分子。通过虚构光谱，探索我怎样比较可能的分子形状。", "我在國王學院使用微波光譜分析柔性香料分子。透過虛構光譜，探索我如何比較可能的分子形狀。"],
+  "In my spectroscopy work at King’s, I analysed the shapes flexible fragrance molecules can adopt by comparing predicted and measured microwave spectra.": ["在国王学院的光谱研究中，我通过比较预测与实测微波光谱，分析柔性香料分子可以采取的形状。", "在國王學院的光譜研究中，我透過比較預測與實測微波光譜，分析柔性香料分子可以採取的形狀。"],
+  "Choose E-02 and Run comparison. Then return to E-01 and compare how many lines match this invented spectrum.": ["选择 E-02 并点击 Run comparison，再返回 E-01，比较它们与虚构光谱匹配的谱线数量。", "選擇 E-02 並點選 Run comparison，再返回 E-01，比較它們與虛構光譜符合的譜線數量。"],
+  "A plausible shape needs several matching lines with small frequency differences. One nearby peak is not enough to identify it.": ["可信的分子形状需要多条匹配谱线且频率差较小。仅有一个相近峰不能完成识别。", "可信的分子形狀需要多條符合的譜線且頻率差較小。只有一個相近的峰還無法完成辨識。"],
+  "In my spectroscopy work at King’s, I compared molecular shapes and their rotational signatures. The presentation describes:": ["在国王学院的光谱研究中，我比较了分子形状及其转动光谱特征。演示文稿介绍了：", "在國王學院的光譜研究中，我比較了分子形狀及其轉動光譜特徵。簡報介紹了："]
 } satisfies ProjectCopyTable;

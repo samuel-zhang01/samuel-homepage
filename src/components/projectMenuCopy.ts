@@ -406,5 +406,21 @@ export const projectMenuCopy = {
   "Computational chemistry exercises and extensions that turn sampling, polymer shape, molecular motion and quantum-energy ideas into working experiments.": [
     "将采样、高分子形状、分子运动与量子能量思想变为可运行实验的计算化学习题及扩展。",
     "將取樣、高分子形狀、分子運動與量子能量思想變為可執行實驗的計算化學習題及擴展。"
-  ]
+  ],
+  "Choose what you want to learn and see how course filters and ranking change your shortlist.": ["选择你想学的内容，看看课程筛选和排序如何改变候选清单。","選擇你想學的內容，看看課程篩選和排序如何改變候選清單。"],
+  "Who gets to try a new idea, and who pays for it? My reflection on four ways companies organise innovation.": ["谁可以尝试新想法，又由谁提供资源？我对企业组织创新的四种方式的反思。","誰可以嘗試新想法，又由誰提供資源？我對企業組織創新的四種方式的反思。"],
+  "Venture Planning": ["创业规划","創業規劃"],
+  "Work out whether a business idea can reach its next milestone before its money runs out.": ["算一算商业想法能否在资金用完前达到下一个里程碑。","算一算商業想法能否在資金用完前達到下一個里程碑。"],
+  "My MATLAB app for finding spectral peaks and making clear figures from laboratory measurements.": ["我的 MATLAB 应用，用于查找光谱峰并把实验测量整理成清晰图表。","我的 MATLAB 應用程式，用於查找光譜峰並把實驗量測整理成清晰圖表。"],
+  "Explore how molecular size and attraction change a fluid’s pressure and phase behaviour.": ["探索分子尺寸和吸引力如何改变流体的压力和相态。","探索分子尺寸和吸引力如何改變流體的壓力和相態。"],
+  "Calculate how temperature and solvent interactions change the amount of a solid that dissolves.": ["计算温度和溶剂相互作用如何改变固体的溶解量。","計算溫度和溶劑交互作用如何改變固體的溶解量。"],
+  "I trained three neural networks to predict how fluid moves around a cylinder, then compared their flow predictions.": ["我训练了三种神经网络，预测流体如何绕过圆柱，并比较它们的流场预测。","我訓練了三種神經網路，預測流體如何繞過圓柱，並比較它們的流場預測。"],
+  "I reconstructed heart MRI from fewer measurements and checked whether the important structures survived.": ["我用更少的测量重建心脏 MRI，并检查重要结构是否保留下来。","我用更少的量測重建心臟 MRI，並檢查重要結構是否保留下來。"],
+  "I used microscope images to estimate a tiny robot’s tilt and depth, so its position can be tracked.": ["我用显微镜图像估计微型机器人的倾斜角度和深度，以便追踪位置。","我用顯微鏡影像估計微型機器人的傾斜角度和深度，以便追蹤位置。"],
+  "Ultra Convert": ["Ultra Convert","Ultra Convert"],
+  "My Mac app for converting images, audio, video, documents and data in one reviewed batch.": ["我的 Mac 应用，把图片、音频、视频、文档和数据放在同一批次中检查并转换。","我的 Mac 應用程式，把圖片、音訊、影片、文件和資料放在同一批次中檢查並轉換。"],
+  "Get the Mac preview": ["获取 Mac 预览版","取得 Mac 預覽版"],
+  "Get the source preview": ["获取源码预览版","取得原始碼預覽版"],
+  "My offline app for checking damaged videos, making playable copies and moving a collection into a new folder.": ["我的离线应用，用于检查受损视频、制作可播放副本，并把视频集合迁移到新文件夹。","我的離線應用程式，用於檢查受損影片、製作可播放副本，並把影片集合遷移到新資料夾。"],
+  "My MATLAB app for inspecting spectral peaks and making clear figures from laboratory measurements.": ["我用 MATLAB 开发的应用，用于查看光谱峰并将实验室测量绘制成清晰的图表。","我用 MATLAB 開發的應用，用於檢視光譜峰並將實驗室量測繪製成清楚的圖表。"],
 } satisfies ProjectCopyTable;

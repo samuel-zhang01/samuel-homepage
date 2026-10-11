@@ -1,0 +1,6 @@
+{
+  "dictionary": "ultraConvertCopy.ts",
+  "exportName": "ultraConvertCopy",
+  "sources": ["src/components/projects/UltraConvertStudio.tsx"],
+  "identities": {}
+}

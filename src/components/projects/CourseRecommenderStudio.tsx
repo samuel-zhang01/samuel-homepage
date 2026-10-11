@@ -703,8 +703,8 @@ export function CourseRecommenderStudio() {
       appName="Course recommender"
       title="Explore learning preferences"
       status="Fictional course catalogue"
-      purpose="Compare category and difficulty filtering followed by random ordering with an explicit weighted score for course preferences."
-      tryThis="Replay the source baseline with another seed, inspect its reasons, then compare the adapted rubric."
+      purpose="I built a course finder to turn interests, skill level, time and budget into a manageable shortlist."
+      tryThis="Untick AI/ML and see which course moves to the top. Open Explain to see why the selected course earned its points."
       watchFor="Watch how changing weights alters the ranking and how each active preference contributes to the final score."
       statusTone="safe"
       className={styles.courseStudio}

@@ -1,6 +1,16 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const deferralRiskStudioCopy = {
+  "Design and findings": ["设计与发现", "設計與發現"],
+  "I designed a fraud-screening policy that can ask a human for help when the classifier is unsure, while keeping an eye on its worst mistakes.": ["我设计了一种欺诈筛查策略：分类器不确定时可以请人协助，同时关注最严重的错误。", "我設計了一種詐欺篩查策略：分類器不確定時可以請人協助，同時關注最嚴重的錯誤。"],
+  "Raise the minimum classifier confidence. More uncertain claims should move from automatic decisions to human review.": ["提高分类器的最低置信度，让更多不确定的理赔从自动决策转交人工复核。", "提高分類器的最低信心門檻，讓更多不確定的理賠從自動決策轉交人工複核。"],
+  "Review volume rises as automation coverage falls. Compare the remaining mistakes and worst-case risk; the adjustable desk uses fictional claims and a simulated investigator.": ["自动化覆盖率下降时，人工复核量会上升。比较剩余错误和最坏情况风险；这个可调工作台采用虚构理赔与模拟调查员。", "自動化涵蓋率下降時，人工複核量會上升。比較剩餘錯誤和最壞情況風險；這個可調工作臺採用虛構理賠與模擬調查員。"],
+  "Why I let the model ask for help": ["我为什么让模型请求协助", "我為什麼讓模型請求協助"],
+  "A missed fraudulent claim and a false accusation both have consequences. My study reached 89.5% system accuracy at 64% automation coverage with a simulated investigator. This desk lets you explore that trade-off; the research notes compare it with a simpler confidence-only policy.": ["漏掉欺诈理赔和错误指控都会带来后果。我的研究在使用模拟调查员、自动化覆盖率为 64% 时，达到 89.5% 的系统准确率。工作台让你探索这一取舍；研究笔记将其与更简单的仅置信度策略比较。", "漏掉詐欺理賠和錯誤指控都會帶來後果。我的研究在使用模擬調查員、自動化涵蓋率為 64% 時，達到 89.5% 的系統準確率。工作臺讓你探索這一取捨；研究筆記將其與更簡單的僅信心值策略比較。"],
+  "Feature-by-feature update": ["逐特征更新", "逐特徵更新"],
+  "Model and data": ["模型与数据", "模型與資料"],
+  "How I set up the experiment": ["我如何设置实验", "我如何設定實驗"],
+  "What I would test before real use": ["实际使用前我会测试什么", "實際使用前我會測試什麼"],
   "Decision desk": [
     "决策工作台",
     "決策工作臺"

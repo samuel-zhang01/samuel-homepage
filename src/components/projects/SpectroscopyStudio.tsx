@@ -364,9 +364,9 @@ export function SpectroscopyStudio() {
       appName="CPROT · Spectroscopy plotter"
       title="Fast Spectroscopy Plotter"
       status={loaded ? "Synthetic trace loaded" : "Waiting for trace"}
-      purpose="Recreate a small lab utility for turning a two-column spectrum into a navigable, consistently exportable figure."
-      tryThis="Load the synthetic trace, choose a centre frequency, pan the window and change export settings."
-      watchFor="The viewport and pixel dimensions update from the same plotting arithmetic; no experimental trace is bundled."
+      purpose="I built this plotting app to inspect narrow spectral features and prepare consistent laboratory figures."
+      tryThis="Use −0.1 and +0.1 to pan the frequency window, then open Export preview and change DPI."
+      watchFor="The frequency window moves across the same spectrum. DPI changes the exported image size. This example trace was generated for the demo."
       statusTone={loaded ? "safe" : "working"}
       className={styles.studio}
       footer={
@@ -445,12 +445,12 @@ export function SpectroscopyStudio() {
 
           <div role="group" className={styles.panRow} aria-label="Frequency pan controls">
             {[
-              [-100, "<<<"],
-              [-10, "<<"],
-              [-0.1, "<"],
-              [0.1, ">"],
-              [10, ">>"],
-              [100, ">>>"],
+              [-100, "−100"],
+              [-10, "−10"],
+              [-0.1, "−0.1"],
+              [0.1, "+0.1"],
+              [10, "+10"],
+              [100, "+100"],
             ].map(([delta, label]) => (
               <button key={delta} type="button" onClick={() => pan(Number(delta))} aria-label={`Pan ${Number(delta) > 0 ? "right" : "left"} by ${Math.abs(Number(delta))} megahertz`} title={`${Number(delta) > 0 ? "+" : "−"}${Math.abs(Number(delta))} MHz`}>
                 {label}

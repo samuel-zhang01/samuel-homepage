@@ -394,9 +394,9 @@ export function DrugSolubilityStudio() {
       appName="Solid–liquid equilibrium"
       title="Solid–Liquid Solubility Workflow"
       status="Synthetic · not validated"
-      purpose="Expose the full solid–liquid equilibrium workflow from fusion inputs to a solved composition and laboratory reporting basis."
-      tryThis="Move temperature, inspect the root residual, then switch reporting basis or fit the synthetic calibration rows."
-      watchFor="The log-space root and unit conversion update while calibration and untouched holdout rows stay visibly separate."
+      purpose="I built calculations for how much solid dissolves at different temperatures and how to report that amount in laboratory units."
+      tryThis="Raise Temperature T and watch the amount in mg per gram of solvent. Switch the chart to the same units to compare temperatures."
+      watchFor="Warmer solvent dissolves more of this invented compound. The gap between the two curves shows how the liquid’s interactions change the ideal prediction."
       statusTone="safe"
       className={styles.studio}
       footer={<><span>Solubility modelling workflow</span><span>Illustrative Q/L system</span></>}

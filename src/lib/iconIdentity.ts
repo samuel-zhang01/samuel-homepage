@@ -16,6 +16,7 @@ export const applicationIconKinds = {
 // or an unrelated scientific icon through a slug/discipline heuristic.
 export const projectIconKinds = {
   videomate: "videomate",
+  "ultra-convert": "ultraconvert",
   "orbital-lab": applicationIconKinds.orbitals,
   "desk-note-pad": applicationIconKinds.notepad,
   "desk-sketch-pad": applicationIconKinds.sketch,

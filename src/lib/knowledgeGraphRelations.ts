@@ -4,7 +4,7 @@ import type { KnowledgeEdge, KnowledgeNode } from "../data/knowledgeGraph";
  * never presented as proof of employment or proficiency. */
 export function knowledgeRelationLabel(selected: KnowledgeNode, node: KnowledgeNode, relation: KnowledgeEdge["relation"]): string {
   if (relation === "related-context") return selected.kind === "skill" || node.kind === "skill" ? "Related subject context" : "Related research context";
-  if (relation === "evidenced-by") return selected.kind === "skill" ? "Evidence for this skill" : selected.kind === "document" ? "Skill supported by this document" : "Skill demonstrated in this project";
+  if (relation === "evidenced-by") return selected.kind === "skill" ? "Where I used this skill" : selected.kind === "document" ? "Skill supported by this document" : "Skill demonstrated in this project";
   if (relation === "practised-in") return selected.kind === "skill" ? "Practised in this record" : "Skill practised in this record";
   if (relation === "documents") return selected.kind === "document" ? "Project documented here" : "Document for this project";
   if (relation === "supports-record") return selected.kind === "document" ? "Record supported by this document" : "Document supporting this record";
@@ -18,7 +18,7 @@ export function knowledgeRelationLabel(selected: KnowledgeNode, node: KnowledgeN
 
 export const knowledgeGraphExtensionCopy: Record<string, readonly [string, string]> = {
   "Knowledge graph": ["知识关系图", "知識關係圖"],
-  "Start with a subject, experience, skill or document. Follow its evidence to the work.": ["从主题、经历、技能或文档出发，沿着依据探索相关工作。", "從主題、經歷、技能或文件出發，沿著依據探索相關工作。"],
+  "Start with a subject, experience, skill or document. Follow the connections to see how my work fits together.": ["从主题、经历、技能或文档出发，沿着关联了解我的工作如何联系起来。", "從主題、經歷、技能或文件出發，沿著關聯了解我的工作如何連結起來。"],
   "Find a subject, project, experience, skill or document": ["查找主题、项目、经历、技能或文档", "尋找主題、專案、經歷、技能或文件"],
   "Work experience": ["工作经历", "工作經歷"],
   "Skill": ["技能", "技能"],
@@ -27,17 +27,17 @@ export const knowledgeGraphExtensionCopy: Record<string, readonly [string, strin
   "Documents": ["文档", "文件"],
   "Skills shown here": ["相关技能", "相關技能"],
   "Documents to read": ["相关文档", "相關文件"],
-  "Open skill evidence": ["打开技能与依据", "開啟技能與依據"],
+  "See where I used this skill": ["查看我在哪里运用了这项技能", "查看我在哪裡運用了這項技能"],
   "Open document record": ["打开文档记录", "開啟文件記錄"],
   "Open PDF": ["打开 PDF", "開啟 PDF"],
-  "Evidence sources": ["依据来源", "依據來源"],
+  "Read more": ["进一步阅读", "進一步閱讀"],
   "skills": ["项技能", "項技能"],
   "documents": ["份文档", "份文件"],
-  "Trace a skill to its evidence": ["查看技能的依据", "查看技能的依據"],
+  "See a skill in my projects": ["查看项目中运用的技能", "查看專案中運用的技能"],
   "Projects, professional records and source documents": ["项目、职业记录与原始文档", "專案、職業記錄與原始文件"],
   "Select a node to read about it and follow its connections.": ["选择一个节点，阅读介绍并沿着关联探索。", "選擇一個節點，閱讀介紹並沿著關聯探索。"],
-  "Shared subjects connect ideas. Skills and documents link to named evidence.": ["共同主题连接不同想法；技能和文档关联到明确的依据。", "共同主題連結不同想法；技能與文件關聯到明確的依據。"],
-  "Evidence for this skill": ["此技能的依据", "此技能的依據"],
+  "Follow shared subjects to explore how my projects, skills and studies connect.": ["沿着共同主题，探索我的项目、技能和学习如何相互关联。", "沿著共同主題，探索我的專案、技能與學習如何彼此連結。"],
+  "Where I used this skill": ["运用这项技能的工作", "運用這項技能的工作"],
   "Related subject context": ["相关学科背景", "相關學科背景"],
   "Skill supported by this document": ["此文档支持的技能", "此文件支持的技能"],
   "Skill demonstrated in this project": ["此项目展示的技能", "此專案展示的技能"],

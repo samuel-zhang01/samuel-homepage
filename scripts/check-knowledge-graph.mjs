@@ -342,7 +342,7 @@ check('Extension relation labels express both traversal directions and have CN/T
     const a = byId.get(edge.source), b = byId.get(edge.target);
     for (const label of [knowledgeRelationLabel(a, b, edge.relation), knowledgeRelationLabel(b, a, edge.relation)]) assert.ok(knowledgeGraphExtensionCopy[label], `${edge.id}: ${label}`);
   }
-  assert.equal(knowledgeRelationLabel(byId.get('skill:data-modelling'), byId.get('project:growmat'), 'evidenced-by'), 'Evidence for this skill');
+  assert.equal(knowledgeRelationLabel(byId.get('skill:data-modelling'), byId.get('project:growmat'), 'evidenced-by'), 'Where I used this skill');
   assert.equal(knowledgeRelationLabel(byId.get('project:growmat'), byId.get('skill:data-modelling'), 'evidenced-by'), 'Skill demonstrated in this project');
 });
 check('Adding an experience once updates direct and related project provenance without a duplicate origin', () => {

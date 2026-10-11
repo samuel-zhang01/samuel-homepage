@@ -762,9 +762,9 @@ export function MolecularRecognitionStudio() {
       appName="Molecular recognition lab"
       title="Macrocycle Assignment Workbench"
       status="Synthetic assignment experiment"
-      purpose="Demonstrate how rotational spectroscopists distinguish plausible molecular conformers by matching several predicted and observed transitions."
-      tryThis="Offset the synthetic spectrum, compare a candidate with the decoy, then focus a matched transition."
-      watchFor="Residuals and assignment confidence change across multiple lines; a single nearby peak is not treated as proof."
+      purpose="In my spectroscopy work at King’s, I analysed the shapes flexible fragrance molecules can adopt by comparing predicted and measured microwave spectra."
+      tryThis="Choose E-02 and Run comparison. Then return to E-01 and compare how many lines match this invented spectrum."
+      watchFor="A plausible shape needs several matching lines with small frequency differences. One nearby peak is not enough to identify it."
       statusTone="safe"
       className={styles.studio}
       footer={
@@ -779,8 +779,7 @@ export function MolecularRecognitionStudio() {
           <span>Molecular shape → rotational signature</span>
           <h2 id="recognition-studio-title">Compare theoretical predictions with the observed spectrum.</h2>
           <p>
-            I contributed to the King’s College London research on flexible macrocyclic musks, presented at ISMS 2025.
-            Explore its assignment logic with synthetic spectra and molecular shapes.
+            I analysed flexible fragrance molecules using microwave spectroscopy at King’s. Explore how I compared possible shapes with an invented spectrum.
           </p>
         </div>
         <div className={styles.heroInstrument} aria-hidden="true">
@@ -1174,7 +1173,7 @@ export function MolecularRecognitionStudio() {
               <section className={styles.publicRecord} aria-labelledby="public-record-title">
                 <div className={styles.cardCap}><span>Conference presentation</span><strong>ISMS · 2025</strong></div>
                 <h4 id="public-record-title">Macrocyclic musk conformational landscape</h4>
-                <p>I am a co-author of the King’s College London presentation, which describes:</p>
+                <p>In my spectroscopy work at King’s, I compared molecular shapes and their rotational signatures. The presentation describes:</p>
                 <ul>
                   <li>Muscone ({molecules.muscone.formula}) and Exaltenone ({molecules.exaltenone.formula}) as 15-membered macrocyclic ketones.</li>
                   <li>CP-FTMW spectroscopy across 2–8 GHz, supported by conformational searches and theoretical predictions.</li>

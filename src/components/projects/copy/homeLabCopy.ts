@@ -1100,5 +1100,9 @@ export const homeLabCopy = {
   "Simulated hosts · local": [
     "模拟主机 · 本地运行",
     "模擬主機 · 本地執行"
-  ]
+  ],
+"I host my own applications. This example shows why a broken database can stop several services at once.": ["我自己托管应用。这个示例说明数据库故障为什么能让多个服务同时停止。","我自己託管應用程式。這個範例說明資料庫故障為什麼能讓多個服務同時停止。"],
+  "Select PostgreSQL and simulate a failure. Follow the highlighted connections to the applications that depend on it.": ["选择 PostgreSQL 并模拟故障，沿着高亮连接查看依赖它的应用。","選擇 PostgreSQL 並模擬故障，沿著醒目連線查看依賴它的應用程式。"],
+  "The highlighted paths show which services lose a dependency. The diagram uses example hosts, so it does not change my live home lab.": ["高亮路径显示哪些服务失去了依赖。图表使用示例设备，不会改变我的真实家庭实验室。","醒目路徑顯示哪些服務失去了相依項目。圖表使用範例設備，不會改變我的真實家庭實驗室。"],
+  "Open Failure lab with PostgreSQL selected. Press Inject fault, then Review graph to highlight its dependent services and backup jobs.": ["选中 PostgreSQL 后打开 Failure lab，点击 Inject fault，再点击 Review graph，突出显示依赖它的服务与备份任务。", "選取 PostgreSQL 後開啟 Failure lab，點選 Inject fault，再點選 Review graph，醒目顯示依賴它的服務與備份工作。"]
 } as const satisfies ProjectCopyTable;

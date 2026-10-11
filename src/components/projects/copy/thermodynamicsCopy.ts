@@ -1,6 +1,7 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const thermodynamicsCopy = {
+  "At the current temperature and density": ["在当前温度和密度下", "在目前溫度和密度下"],
   "Scrollable plot": ["可横向滚动的图表", "可橫向捲動的圖表"],
   "Synthetic PC-SAFT pressure-density isotherm": [
     "合成 PC-SAFT 压力–密度等温线",
@@ -361,5 +362,8 @@ export const thermodynamicsCopy = {
   "Licence ↗": [
     "许可证 ↗",
     "許可證 ↗"
-  ]
+  ],
+  "Molecules occupy space and attract one another. I studied how these interactions change a fluid’s pressure.": ["分子占据空间，也相互吸引。我研究这些相互作用如何改变流体压力。","分子佔據空間，也相互吸引。我研究這些交互作用如何改變流體壓力。"],
+  "Raise Binary kAB one step. This weakens the attraction between the example A and B molecules.": ["把二元 kAB 提高一步。这会减弱示例 A 和 B 分子之间的吸引力。","把二元 kAB 提高一步。這會減弱範例 A 和 B 分子之間的吸引力。"],
+  "Pressure rises while the other settings stay fixed. The curves use example fluids so you can explore the calculation.": ["其他设置不变时，压力会上升。曲线使用示例流体，便于探索计算过程。","其他設定不變時，壓力會上升。曲線使用範例流體，便於探索計算過程。"],
 } satisfies ProjectCopyTable;

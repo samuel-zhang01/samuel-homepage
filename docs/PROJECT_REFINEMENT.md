@@ -8,10 +8,10 @@ A visitor should be able to explain what I built, why I built it and what a demo
 
 - [x] Start a live development server at http://127.0.0.1:3000 and open a browser preview.
 - [x] Lead with Selected work; keep the knowledge graph available as a secondary view.
-- [ ] Design/editor agent: simplify shared introductions and make technical detail optional.
-- [ ] Product agent: read UltraConvert and VideoMate source documentation; build separate product experiences and accurate installation links.
-- [ ] Research agent: inspect IX repositories, course material, reports and thesis; improve scientific demo starting states and interpretation.
-- [ ] Coordinator: revise catalogue and stories, integrate products, update supporting documents and remove redundant presentation.
+- [x] Design/editor agent: simplify shared introductions and make technical detail optional.
+- [x] Product agent: read UltraConvert and VideoMate source documentation; build separate product experiences and accurate installation links.
+- [x] Research agent: inspect IX repositories, course material, reports and thesis; improve scientific demo starting states and interpretation.
+- [x] Coordinator: revise catalogue and stories, integrate products, update supporting documents and remove redundant presentation.
 - [ ] Independent visitor review: grade understanding, usefulness, navigation, authenticity and consistency; repair until each reviewed journey scores at least 9/10.
 - [ ] Run required checks, review desktop and mobile journeys, commit and push completed milestones.
 
@@ -24,3 +24,5 @@ Remove generic development stages from the page, the duplicate RUN/HACK promotio
 ## Validation log
 
 Initial checkout: clean `main`, tracking `origin/main`. Development server uses `.next`; the final build will use an isolated directory so the preview stays available. Research notes and the final visitor review are recorded separately in this directory. Temporary browser captures go under ignored `.codex/reports/refinement/`.
+
+Completed implementation milestone: 42 project records, 29 routed demos and six reading documents. Original science images and report links replace decorative benchmark drawings; the innovation diagram is an untouched original PDF. Core profile, graph, catalogue, icon and artifact gates pass. Independent desktop/phone retests and the complete release gate are still in progress.

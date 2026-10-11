@@ -167,11 +167,16 @@ const VideoMateStudio = dynamic(
   () => import("./VideoMateStudio").then((module) => module.VideoMateStudio),
   { loading: DemoLoading },
 );
+const UltraConvertStudio = dynamic(
+  () => import("./UltraConvertStudio").then((module) => module.UltraConvertStudio),
+  { loading: DemoLoading },
+);
 
 // Keep selection declarative and exhaustive while preserving each lazy import.
 // Search indexing reads this same registry, so routing and search cannot drift.
 const demoComponents: Record<ProjectDemoId, ComponentType<{ locale?: Locale }>> = {
   "videomate": VideoMateStudio,
+  "ultra-convert": UltraConvertStudio,
   "bandits": BanditStudio,
   "finance": FinanceStudio,
   "cv-keywords": CvKeywordStudio,

@@ -43,6 +43,7 @@ export const SYSTEM7_ICONS = {
   flow: "/system7-icons/flow.png?v=9403069e8bdc",
   coverd: "/coverd-logo-black-on-transparent.png",
   videomate: "/system7-icons/videomate.png?v=4dad02e4fca1",
+  ultraconvert: "/system7-icons/ultraconvert.png?v=76f8c848c393",
   finder: "/system7-icons/finder.png?v=f7f8b24774aa",
 } as const;
 

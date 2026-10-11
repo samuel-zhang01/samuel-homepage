@@ -529,4 +529,8 @@ export const schedulingCopy = {
     "预约流程模拟",
     "預約流程模擬"
   ]
+,
+  "I built a booking app that finds a meeting time for one host, any available host or a whole team.": ["我构建了一个预约应用，为一位主持人、任意可用主持人或整个团队寻找会议时间。", "我建置了一個預約應用程式，為一位主持人、任意有空的主持人或整個團隊尋找會議時間。"],
+  "Switch from Round Robin to Collective. Compare the available times when one person is enough and when everyone must be free.": ["从 Round Robin 切换到 Collective，比较只需一人有空和全员必须有空时的可预约时间。", "從 Round Robin 切換到 Collective，比較只需一人有空和全員必須有空時的可預約時間。"],
+  "Collective meetings have fewer possible times because every host must be available. Reservations and a final check protect a selected time from double-booking.": ["集体会议的可选时间更少，因为每位主持人都必须有空。预留与最终检查可以避免重复预约。", "集體會議的可選時間更少，因為每位主持人都必須有空。保留與最後檢查可以避免重複預約。"]
 } as const satisfies ProjectCopyTable;

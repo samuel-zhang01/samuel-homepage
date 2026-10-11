@@ -1270,8 +1270,8 @@ function RecordedImagesView() {
   return <ProjectCopy copy={mriCopy}><section className={styles.workspace} aria-labelledby="mri-recorded-heading">
     <div className={styles.sectionLead}><div>
       <span className={styles.kicker}>Saved study figure</span>
-      <h3 id="mri-recorded-heading">From source slices to reconstructed images</h3>
-      <p>This exported figure compares the reference image, zero-filled inputs and U-Net reconstructions at R=4 and R=8, with absolute-error maps underneath.</p>
+      <h3 id="mri-recorded-heading">What I recovered from fewer MRI measurements</h3>
+      <p>Read left to right: the full reference, the image made from retained measurements alone, then my reconstructed image. At 4× and 8× undersampling, the lower row shows where each result differs from the reference.</p>
     </div></div>
     <figure className={styles.recordedFigure}>
       <div className={styles.recordedScroll} role="region" tabIndex={0} aria-label="Recorded MRI reconstruction comparison">
@@ -1282,22 +1282,23 @@ function RecordedImagesView() {
     <div className={styles.recordedActions}>
       <a className="s7-button" href="/projects/mri/media/recorded-reconstruction.webp" target="_blank" rel="noopener noreferrer">Open full-size figure ↗</a>
       <a className="s7-button" href={`${REPOSITORY_URL.replace("/tree/", "/blob/")}/latex/figures/fig4_reconstruction_comparison.png`} target="_blank" rel="noopener noreferrer">View original source ↗</a>
+      <a className="s7-button" href={`${REPOSITORY_URL.replace("/tree/", "/blob/")}/latex/main.pdf`} target="_blank" rel="noopener noreferrer">Read my MRI report ↗</a>
     </div>
     <p>The browser displays the saved figure without rerunning inference. The interactive reconstruction and uncertainty views remain teaching tools, with separately identified synthetic phantoms.</p>
   </section></ProjectCopy>;
 }
 
 export function MriTrustStudio() {
-  const [view, setView] = useState<View>("reconstruction");
+  const [view, setView] = useState<View>("images");
 
   return (
     <ProjectCopy copy={mriCopy}><DemoWindow
       appName="MRI reconstruction lab"
       title="Trustworthy MRI Reconstruction"
-      status="Study results · recorded images · interactive phantoms"
-      purpose="Test whether an accelerated MRI reconstruction is not only visually plausible but also data-consistent and useful for downstream evaluation."
-      tryThis="Change acceleration and uncertainty settings, then inspect the trust gate and architecture path."
-      watchFor="Quality, consistency, uncertainty and downstream checks can disagree. Recorded images show saved study outputs; interactive phantoms are synthetic."
+      status="Saved study results"
+      purpose="I built a model that reconstructs cardiac MRI from fewer measurements, then tested whether it preserves heart structures and recognises when it may be wrong."
+      tryThis="Compare the full reference with my reconstructed image, then inspect the error map below. Open Reconstruct to compare 4× and 8× undersampling."
+      watchFor="Keeping fewer measurements can lose heart detail. Compare the reconstruction with the full reference, especially around tissue boundaries."
       statusTone="safe"
       className={styles.studio}
       footer={
@@ -1307,14 +1308,6 @@ export function MriTrustStudio() {
         </>
       }
     >
-      <div className={styles.disclaimer} role="note">
-        <span>RESEARCH SHOWCASE</span>
-        <p>
-          Compare the study’s reported results and explore the calculations behind them. The Recorded images tab contains a saved source figure; the interactive phantoms are synthetic. This page does not run a trained MRI model.
-        </p>
-        <strong>NOT FOR CLINICAL USE</strong>
-      </div>
-
       <nav className={styles.tabs} aria-label="Trust analysis views">
         {viewLabels.map((item) => (
           <button key={item.id} type="button" aria-current={view === item.id ? "page" : undefined} onClick={() => setView(item.id)}>

@@ -288,8 +288,8 @@ function PracticeLab({
 }) {
   const locale = useProjectLocale();
   const [mode, setMode] = useState<PracticeMode>("daily");
-  const [seed, setSeed] = useState(0);
-  const [sessionIds, setSessionIds] = useState(() => buildSession("daily", INITIAL_MASTERY, 0));
+  const [seed, setSeed] = useState(1);
+  const [sessionIds, setSessionIds] = useState(() => buildSession("daily", INITIAL_MASTERY, 1));
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [tiles, setTiles] = useState<string[]>([]);
@@ -448,7 +448,7 @@ function PracticeLab({
             <span aria-hidden="true">▶</span> Ascolta lentamente {bilingual ? "· Listen slowly" : ""}
           </button>
         ) : null}
-        {item.type === "listen" && !speechAvailable ? <p id="parliamo-speech-unavailable" className={styles.speechUnavailable} role="status">Sintesi vocale non disponibile in questo browser. <span lang="en-GB">Speech synthesis is unavailable; type from the visible learning context or skip to another exercise.</span></p> : null}
+        {item.type === "listen" && !speechAvailable ? <p id="parliamo-speech-unavailable" className={styles.speechUnavailable} role="status">Sintesi vocale non disponibile in questo browser. <span lang="en-GB">Speech synthesis is unavailable. Use Next exercise to continue with a text question.</span><MacButton onClick={next}>Next exercise</MacButton></p> : null}
 
         {item.type === "mcq" || item.type === "reading" ? (
           <div className={styles.options} role="group" aria-label={item.promptEn}>
@@ -864,9 +864,9 @@ export function ItalianLearningStudio() {
       appName="Parliamo! 7"
       title="Italian practice studio"
       status="Practice profile · local"
-      purpose="Connect a 56-day beginner curriculum to daily practice, spaced recall and durable progress evidence."
-      tryThis="Answer a Today prompt, grade a Recall card, then open the sync-conflict exercise."
-      watchFor="Mastery and the next-review schedule change locally while revision handling protects progress across devices."
+      purpose="I built Parliamo to put beginner Italian lessons, daily practice and vocabulary review in one place."
+      tryThis="Choose italiana for Maria and press Check. Then open Recall, reveal a vocabulary card and rate how well you remembered it."
+      watchFor="Each answer updates practice progress. Remembered vocabulary waits longer before review; a missed card returns sooner."
       statusTone="safe"
       className={styles.studioWindow}
       footer={
@@ -887,11 +887,20 @@ export function ItalianLearningStudio() {
             <button type="button" className={styles.resetButton} onClick={resetDemo}>↺ Reset</button>
           </div>
         </div>
+
+        <AppMenu active={view} setActive={setView} bilingual={bilingual} />
+        <div className={styles.viewPanel} key={resetVersion}>
+          {view === "practice" ? <PracticeLab bilingual={bilingual} mastery={mastery} setMastery={setMastery} xp={xp} setXp={setXp} /> : null}
+          {view === "recall" ? <RecallLab bilingual={bilingual} xp={xp} setXp={setXp} /> : null}
+          {view === "rubric" ? <RubricLab bilingual={bilingual} /> : null}
+          {view === "evidence" ? <EvidenceLab bilingual={bilingual} mastery={mastery} /> : null}
+          {view === "system" ? <SystemLab bilingual={bilingual} /> : null}
+        </div>
         <section className={styles.productMap} aria-labelledby="parliamo-product-map-title" lang="en-GB">
           <div>
             <span>PRODUCT MAP / START HERE</span>
             <h3 id="parliamo-product-map-title">56 days of planned practice and progress checks</h3>
-            <p>Today selects work from the learner’s dated plan and weaker skills. Recall, writing and CEFR evidence then update separate progress records; the System chapter exposes the local-first persistence contract.</p>
+            <p>My portal combines a 56-day plan with practice, writing feedback and vocabulary review. The System page shows how saved progress survives a sync conflict.</p>
             <button type="button" onClick={() => setView("system")}>Inspect curriculum & sync architecture →</button>
           </div>
           <dl>
@@ -901,14 +910,6 @@ export function ItalianLearningStudio() {
             <div><dt>Content seed</dt><dd>753 rows</dd></div>
           </dl>
         </section>
-        <AppMenu active={view} setActive={setView} bilingual={bilingual} />
-        <div className={styles.viewPanel} key={resetVersion}>
-          {view === "practice" ? <PracticeLab bilingual={bilingual} mastery={mastery} setMastery={setMastery} xp={xp} setXp={setXp} /> : null}
-          {view === "recall" ? <RecallLab bilingual={bilingual} xp={xp} setXp={setXp} /> : null}
-          {view === "rubric" ? <RubricLab bilingual={bilingual} /> : null}
-          {view === "evidence" ? <EvidenceLab bilingual={bilingual} mastery={mastery} /> : null}
-          {view === "system" ? <SystemLab bilingual={bilingual} /> : null}
-        </div>
       </div>
     </DemoWindow></ProjectCopy>
   );

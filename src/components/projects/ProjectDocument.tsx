@@ -32,7 +32,8 @@ const copy = {
   "Link copied": ["链接已复制", "連結已複製"],
   "Copy this address": ["复制此地址", "複製此位址"],
   "Project navigation": ["项目导航", "專案導覽"],
-  "Project materials": ["项目资料", "專案資料"],
+  "Read more": ["了解更多", "瞭解更多"],
+  "Built with": ["使用的工具", "使用的工具"],
   "Open application": ["打开应用", "開啟應用程式"],
   "Visit website": ["访问网站", "瀏覽網站"],
   "View repository": ["查看代码库", "查看程式碼儲存庫"],
@@ -40,6 +41,7 @@ const copy = {
   "Back to list": ["返回列表", "返回清單"],
   "Open in new tab": ["在新标签页打开", "在新分頁開啟"],
   "Open interactive demo": ["打开交互演示", "開啟互動示範"],
+  "Download app": ["下载应用", "下載應用程式"],
   "Closing clears this demo’s unsaved changes.": ["关闭后，此演示中未保存的更改将被清除。", "關閉後，此示範中未儲存的變更將被清除。"],
   "Close demo and return to overview": ["关闭演示并返回概览", "關閉示範並返回概覽"],
   "Return to demo": ["前往交互演示", "前往互動示範"],
@@ -53,6 +55,7 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
 }) {
   const project = projects.find((item) => item.slug === slug);
   const primaryPdf = !project?.demo ? project?.artifacts?.find(artifact => artifact.kind === "PDF") : undefined;
+  const hasReadingLinks = Boolean(project && (project.websiteUrl || project.artifacts?.some(artifact => artifact !== primaryPdf) || (project.sourceUrl && project.access !== "proprietary") || project.systemApp));
   const openActivity = useContext(ProjectWindowContext);
   const [shareStatus, setShareStatus] = useState("");
   const [shareFallback, setShareFallback] = useState("");
@@ -67,37 +70,41 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
   return <ProjectLocaleProvider locale={locale}><article className={`system7-project ${styles.document}`} data-embedded={embedded} lang={locale}>
     <nav className={`s7-toolbar ${styles.toolbar}`} aria-label={t("Project navigation")}>
       {project.demo && <button className="s7-button is-primary" onClick={openDemo} title={t("Opens in a desktop window")}>{t("Open interactive demo")} ↗</button>}
+      {project.downloadUrl && <a className={`s7-button ${project.demo ? "" : "is-primary"}`} href={project.downloadUrl} target="_blank" rel="noopener noreferrer">{project.downloadLabel ? getProjectText(locale, project.downloadLabel) : t("Download app")} ↗</a>}
       {primaryPdf && <button className="s7-button is-primary" onClick={() => openActivity?.({ slug, kind: "pdf", artifactHref: primaryPdf.href })} title={getProjectText(locale, primaryPdf.label)}>{t(slug === "growmat" ? "Open showcase PDF" : "Open PDF")} ↗</button>}
       <button className={`s7-button ${embedded ? styles.backToList : ""}`} onClick={onBack}>← {t(embedded ? "Back to list" : "All projects")}</button>
       {project.slug === "coverd-yasa" && <ScheduleCallLink locale={locale} className={styles.scheduleButton} />}
       {shareStatus && <span role="status">{t(shareStatus)}</span>}
     </nav>
-    <details className={styles.secondaryActions}>
-      <summary>{t("More actions")}</summary>
-      <div>
-      {embedded && <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer">{t("Open in new tab")} ↗</a>}
-      <button className="s7-button" onClick={() => onGraph(slug)}>{t("Connections")} ↗</button>
-      <button className="s7-button is-share" onClick={share} title={t("Copy a link to share this project")}>{t("Share project")}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1" /><path d="M15 8V4H4v11h4" /></svg></button>
-      </div>
-    </details>
     {shareFallback && <label className={styles.shareFallback}>{t("Project link")}<input readOnly value={shareFallback} onFocus={event => event.target.select()} /></label>}
     <header className={styles.header}>
       <p className={styles.context}>{getProjectText(locale, project.area)} · {project.year === "ONGOING" ? t("Ongoing") : project.year}</p>
       <div className={styles.titleRow}><ProjectArtwork project={project} /><h1>{getProjectText(locale, project.title)}</h1></div>
         <p className={styles.summary}>{getProjectText(locale, project.summary)}</p>
-        <p className={styles.tools}>{project.tools.map(tool => getProjectText(locale, tool)).join(" · ")}</p>
     </header>
-    {(project.websiteUrl || project.artifacts?.some(artifact => artifact !== primaryPdf) || project.sourceUrl || project.systemApp) && <nav className={styles.materials} aria-label={t("Project materials")}>
-      {project.systemApp && <button className="s7-button is-primary" onClick={() => onOpenApp(project.systemApp!)}>{t("Open application")} ↗</button>}
-      {project.websiteUrl && <a className="s7-button" href={project.websiteUrl} target="_blank" rel="noopener noreferrer">{t("Visit website")} ↗</a>}
-      {project.artifacts?.filter(artifact => artifact !== primaryPdf).map((artifact) => artifact.kind === "PDF" ? <button className={`s7-button ${project.demo ? "" : "is-primary"}`} key={artifact.href} onClick={() => openActivity?.({ slug, kind: "pdf", artifactHref: artifact.href })} title={t("Opens in a desktop window")}>{getProjectText(locale, artifact.label)} ↗</button> : <a className="s7-button" key={artifact.href} href={artifact.href} target="_blank" rel="noopener noreferrer">{getProjectText(locale, artifact.label)} ↗</a>)}
-      {project.sourceUrl && project.access !== "proprietary" && <a className="s7-button" href={project.sourceUrl} target="_blank" rel="noopener noreferrer">{t("View repository")} ↗</a>}
-    </nav>}
-    <ProjectCaseBrief project={project} locale={locale} onExplore={openDemo} />
     {project.preview && <figure className={styles.preview}>
       <Image src={project.preview.src} alt={getProjectText(locale, project.preview.alt)} width={543} height={172} sizes="(max-width: 720px) 90vw, 640px" />
       <figcaption>{getProjectText(locale, project.preview.caption)}</figcaption>
     </figure>}
+    <ProjectCaseBrief project={project} locale={locale} onExplore={openDemo} />
+    {(hasReadingLinks || project.tools.length > 0) && <section className={styles.resources}>
+      <h2>{t(hasReadingLinks ? "Read more" : "Built with")}</h2>
+      {hasReadingLinks && <nav className={styles.materials} aria-label={t("Read more")}>
+        {project.systemApp && <button className="s7-button is-primary" onClick={() => onOpenApp(project.systemApp!)}>{t("Open application")} ↗</button>}
+        {project.websiteUrl && <a className="s7-button" href={project.websiteUrl} target="_blank" rel="noopener noreferrer">{t("Visit website")} ↗</a>}
+        {project.artifacts?.filter(artifact => artifact !== primaryPdf).map((artifact) => artifact.kind === "PDF" ? <button className={`s7-button ${project.demo ? "" : "is-primary"}`} key={artifact.href} onClick={() => openActivity?.({ slug, kind: "pdf", artifactHref: artifact.href })} title={t("Opens in a desktop window")}>{getProjectText(locale, artifact.label)} ↗</button> : <a className="s7-button" key={artifact.href} href={artifact.href} target="_blank" rel="noopener noreferrer">{getProjectText(locale, artifact.label)} ↗</a>)}
+        {project.sourceUrl && project.access !== "proprietary" && <a className="s7-button" href={project.sourceUrl} target="_blank" rel="noopener noreferrer">{t("View repository")} ↗</a>}
+      </nav>}
+      {project.tools.length > 0 && <p className={styles.tools}>{hasReadingLinks && <strong>{t("Built with")}</strong>} {project.tools.map(tool => getProjectText(locale, tool)).join(" · ")}</p>}
+    </section>}
     {project.privacyNote && !project.demo && <section className={styles.boundary}><h2>{t("About the demonstration")}</h2><p>{getProjectText(locale, project.privacyNote)}</p></section>}
+    <details className={styles.secondaryActions}>
+      <summary>{t("More actions")}</summary>
+      <div>
+        {embedded && <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer">{t("Open in new tab")} ↗</a>}
+        <button className="s7-button" onClick={() => onGraph(slug)}>{t("Connections")} ↗</button>
+        <button className="s7-button is-share" onClick={share} title={t("Copy a link to share this project")}>{t("Share project")}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1" /><path d="M15 8V4H4v11h4" /></svg></button>
+      </div>
+    </details>
   </article></ProjectLocaleProvider>;
 }

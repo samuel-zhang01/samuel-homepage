@@ -998,4 +998,8 @@ export const chemistryCopy = {
     "科学计算实验",
     "科學計算實驗"
   ]
+,
+  "I completed and extended chemistry coding exercises to see how simple physical rules produce molecular arrangements and motion.": ["我完成并扩展了化学编程练习，观察简单物理规则怎样产生分子排列与运动。", "我完成並擴充了化學程式設計練習，觀察簡單物理規則如何產生分子排列與運動。"],
+  "Press Run 50 in the sampler. Watch the particles rearrange, then raise temperature and run another 50 moves.": ["在采样器中点击 Run 50，观察粒子重新排列，再提高温度并运行另外 50 次移动。", "在取樣器中點選 Run 50，觀察粒子重新排列，再提高溫度並執行另外 50 次移動。"],
+  "Lower-energy moves are accepted; higher-energy moves get a temperature-dependent chance. The other tabs explore polymer shape, molecular motion and recorded quantum calculations.": ["降低能量的移动会被接受；增加能量的移动则按温度决定概率。其他页面展示聚合物形状、分子运动与已记录的量子计算。", "降低能量的移動會被接受；增加能量的移動則由溫度決定機率。其他頁籤展示聚合物形狀、分子運動與已記錄的量子計算。"]
 } satisfies ProjectCopyTable;

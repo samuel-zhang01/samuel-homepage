@@ -868,5 +868,11 @@ export const ventureReasoningStudioCopy = {
   "{0} Ask and milestone": [
     "{0} 融资与里程碑",
     "{0} 融資與里程碑"
-  ]
+  ],
+  "Can this business reach its next milestone?": ["这家企业能达到下一个里程碑吗？","這家企業能達到下一個里程碑嗎？"],
+  "I built this planner to connect a business idea with customers, monthly spending and the money needed to reach a milestone.": ["我制作这个规划工具，把商业想法与客户、月开支和实现目标所需资金联系起来。","我製作這個規劃工具，把商業想法與客戶、月開支和實現目標所需資金聯繫起來。"],
+  "Increase monthly spending in Ask planner. Watch how many months the available cash will last.": ["在融资规划中提高月开支，看看现有资金可以支撑多少个月。","在融資規劃中提高月開支，看看現有資金可以支撐多少個月。"],
+  "Less time remains to reach the milestone. Changing the funding request shows how much extra time it would buy in this example.": ["达到目标的时间会减少。改变融资额，可以看到在这个示例中能多争取多少时间。","達到目標的時間會減少。改變融資額，可以看到在這個範例中能多爭取多少時間。"],
+  "Notes": ["说明","說明"],
+  "original exercise and example assumptions": ["原始练习和示例假设","原始練習和範例假設"],
 } satisfies ProjectCopyTable;

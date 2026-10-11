@@ -5,6 +5,7 @@ import type { System7IconKind } from "./system7Icons";
 // every source PNG byte and its full alpha channel remain untouched.
 // Values are left, top, right, bottom and native square canvas pixels.
 export const SYSTEM7_ICON_BOUNDS = {
+  ultraconvert: [64, 64, 959, 959, 1024],
   accessories: [230, 429, 1020, 903, 1254],
   book: [164, 319, 1110, 949, 1254],
   brickbreaker: [178, 316, 1076, 1036, 1254],

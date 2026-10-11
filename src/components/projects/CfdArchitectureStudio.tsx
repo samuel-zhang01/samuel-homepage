@@ -626,7 +626,7 @@ export function CfdArchitectureStudio() {
     >
       <aside className={styles.boundaryBanner} role="note">
         <div><span className={styles.questionIcon} aria-hidden="true"><System7Icon kind="flow" miniature /></span><strong>The engineering question</strong></div>
-        <p>How should a model represent a flow field? This work completed and adapted three course models, built the field-processing and training pipelines, and explored residual and multi-scale Fourier designs. Compare the paths below to see the trade-offs.</p>
+        <p>How should a model represent a flow field? I completed and adapted three course models, built the field-processing and training pipelines, and explored residual and multi-scale Fourier designs. Compare the paths below to see the trade-offs.</p>
         <Badge badge={{ label: "Learned flow models", tone: "boundary" }} />
       </aside>
 

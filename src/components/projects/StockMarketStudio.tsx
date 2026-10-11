@@ -432,9 +432,9 @@ export function StockMarketStudio() {
       appName="Market impact simulator"
       title="Stochastic Market Impact Lab"
       status="Seeded simulation"
-      purpose="Explore how order quantity, sentiment and a random impact coefficient change the simulated price of one stock."
-      tryThis="Run a seeded day, trigger the price floor and switch between legacy and corrected metric windows."
-      watchFor="The event tape and summary arithmetic change together, exposing the original daily-window bug over a fictional process."
+      purpose="I wrote a small Julia model to explore how buying, selling and trade size can move a fictional stock price."
+      tryThis="Choose Floor stress. Follow the price trace and the FLOOR entries where a sell event hits the model’s minimum price."
+      watchFor="The price stops falling at $0.01 because I imposed a floor. This exposes a modelling choice, not a prediction about real markets."
       statusTone="safe"
       className={styles.studio}
       footer={

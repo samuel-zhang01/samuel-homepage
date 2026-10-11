@@ -10,7 +10,7 @@ import { System7Icon, type System7IconKind } from "../System7Icon";
 
 import { useId, useState } from "react";
 
-import { DemoWindow, MacButton } from "./DemoChrome";
+import { DemoWindow } from "./DemoChrome";
 import { ProjectTranslationBoundary } from "./ProjectTranslationBoundary";
 import styles from "./ScientificDemos.module.css";
 
@@ -72,8 +72,6 @@ function EvidenceNote({
 }
 
 type CfdModelId = "fno" | "gnn" | "unet";
-type CfdField = "truth" | "prediction" | "error";
-type CfdTopology = "grid" | "mesh";
 
 const CFD_MODELS: Record<CfdModelId, {
   name: string;
@@ -117,230 +115,53 @@ const CFD_MODELS: Record<CfdModelId, {
   },
 };
 
-const CFD_FIELD_TABS: readonly TabOption<CfdField>[] = [
-  { id: "truth", label: "Ground truth" },
-  { id: "prediction", label: "Prediction" },
-  { id: "error", label: "Absolute error" },
-];
-
-const CFD_FRAMES = ["Snapshot 01", "Snapshot 02", "Snapshot 03"] as const;
-
-function FlowField({
-  field,
-  model,
-  topology,
-  frame,
-}: {
-  field: CfdField;
-  model: CfdModelId;
-  topology: CfdTopology;
-  frame: number;
-}) {
-  const id = useId().replace(/:/g, "");
-  const fieldGradient = `${id}-field`;
-  const wakeGradient = `${id}-wake`;
-  const errorGradient = `${id}-error`;
-  const overlayPattern = `${id}-${topology}`;
-  const phase = frame * 5;
-  const modelWarp = field === "truth" ? 0 : model === "unet" ? 13 : model === "gnn" ? 2 : 0;
-  const isError = field === "error";
-  const viewLabel = field === "truth" ? "ground-truth" : field;
-
-  return (
-    <ProjectCopy copy={scientificCopy}><svg
-      className={`${styles.flowField} ${field === "error" ? styles.flow_error : ""} ${model === "unet" && field !== "truth" ? styles.flowModel_unet : ""}`}
-      viewBox="0 0 560 270"
-      role="img"
-      aria-label={`${CFD_MODELS[model].name} ${viewLabel} flow-field illustration with ${topology} overlay`}
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <defs>
-        <linearGradient id={fieldGradient} x1="0" x2="1" y1="0" y2="0.8">
-          <stop offset="0" stopColor={isError ? "#10133c" : "#122a7a"} />
-          <stop offset="0.35" stopColor={isError ? "#282b68" : "#1c77aa"} />
-          <stop offset="0.66" stopColor={isError ? "#151a4d" : "#e0c756"} />
-          <stop offset="1" stopColor={isError ? "#0b0e2c" : "#c43a3d"} />
-        </linearGradient>
-        <radialGradient id={wakeGradient} cx="0.25" cy="0.5" r="0.78">
-          <stop offset="0" stopColor={isError ? "#ffdf70" : "#f9f6d7"} stopOpacity={isError ? "0.9" : "0.96"} />
-          <stop offset="0.27" stopColor={isError ? "#d65d4d" : "#4ac0c0"} stopOpacity="0.86" />
-          <stop offset="0.72" stopColor={isError ? "#20245a" : "#18205b"} stopOpacity="0.38" />
-          <stop offset="1" stopColor="#11153f" stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id={errorGradient} cx="0.42" cy="0.5" r="0.58">
-          <stop offset="0" stopColor="#fff3a6" stopOpacity={model === "unet" ? "1" : "0.75"} />
-          <stop offset="0.34" stopColor="#e64e46" stopOpacity={model === "unet" ? "0.94" : "0.48"} />
-          <stop offset="1" stopColor="#5b2b72" stopOpacity="0" />
-        </radialGradient>
-        <pattern id={`${id}-grid`} width="22" height="22" patternUnits="userSpaceOnUse">
-          <path d="M 22 0 L 0 0 0 22" fill="none" stroke="#fff" strokeOpacity="0.27" strokeWidth="0.75" />
-        </pattern>
-        <pattern id={`${id}-mesh`} width="28" height="24" patternUnits="userSpaceOnUse">
-          <path d="M0 24 14 0 28 24ZM0 0 14 24 28 0" fill="none" stroke="#fff" strokeOpacity="0.29" strokeWidth="0.7" />
-          <circle cx="14" cy="12" r="1" fill="#fff" fillOpacity="0.44" />
-        </pattern>
-      </defs>
-
-      <rect width="560" height="270" fill={`url(#${fieldGradient})`} />
-      {!isError && <ellipse cx={252 + phase} cy={137} rx="250" ry="116" fill={`url(#${wakeGradient})`} opacity="0.88" />}
-      {isError && (
-        <>
-          <ellipse cx={240 + phase} cy={134} rx={model === "unet" ? 238 : 116} ry={model === "unet" ? 112 : 62} fill={`url(#${errorGradient})`} />
-          <ellipse cx="402" cy={82 + modelWarp} rx={model === "unet" ? 112 : 34} ry={model === "unet" ? 58 : 22} fill={`url(#${errorGradient})`} opacity="0.72" />
-        </>
-      )}
-
-      <g className={styles.streamLines} fill="none" strokeLinecap="round">
-        <path d={`M-5 46 C130 42 151 ${52 + phase} 194 70 S302 ${18 + modelWarp} 570 49`} />
-        <path d={`M-5 83 C119 82 151 ${78 + phase} 192 95 S323 ${64 + modelWarp} 570 82`} />
-        <path d={`M-5 116 C119 116 135 ${102 + phase} 189 106 C268 112 288 ${167 - modelWarp} 570 119`} />
-        <path d={`M-5 153 C121 153 139 ${176 - phase} 191 163 C266 145 302 ${101 + modelWarp} 570 151`} />
-        <path d={`M-5 191 C127 194 152 ${218 - phase} 203 201 S346 ${235 - modelWarp} 570 190`} />
-        <path d={`M-5 228 C148 229 175 ${246 - phase} 240 231 S401 ${205 + modelWarp} 570 225`} />
-      </g>
-
-      <g className={styles.vortices} fill="none">
-        <path d={`M225 100 C278 ${61 + modelWarp} 329 80 310 119 C291 157 242 119 274 100 C310 79 369 107 349 143`} />
-        <path d={`M225 174 C270 ${215 - modelWarp} 331 197 312 158 C296 126 251 150 274 171 C309 200 381 169 357 132`} />
-      </g>
-
-      <rect width="560" height="270" fill={`url(#${overlayPattern})`} />
-      <g className={styles.cylinder}>
-        <circle cx="194" cy="135" r="34" />
-        <circle cx="194" cy="135" r="25" />
-        <path d="M194 100 V170M159 135H229" />
-      </g>
-      <g className={styles.fieldScale} aria-hidden="true">
-        <rect x="493" y="20" width="13" height="84" rx="1" />
-        <text x="515" y="28">MAX</text>
-        <text x="515" y="103">MIN</text>
-      </g>
-      <g className={styles.axisMark} aria-hidden="true">
-        <path d="M30 236h44M30 236v-34" />
-        <text x="77" y="240">x</text>
-        <text x="25" y="197">y</text>
-      </g>
-    </svg></ProjectCopy>
-  );
-}
-
 export function CfdSurrogateDemo() {
   const [model, setModel] = useState<CfdModelId>("fno");
-  const [field, setField] = useState<CfdField>("prediction");
-  const [topology, setTopology] = useState<CfdTopology>("grid");
-  const [frame, setFrame] = useState(0);
   const activeModel = CFD_MODELS[model];
 
-  return (
-    <ProjectCopy copy={scientificCopy}><DemoWindow
-      appName="FlowBench 7"
-      title="CFD Surrogate Model Workbench"
-      status="Illustrative result view"
-      purpose="Explore the recorded prediction errors and the flow representations used by three neural models."
-      tryThis="Switch model, field view, frame and grid-or-mesh overlay."
-      watchFor="The selected model changes the recorded metric and illustrative field view. The next tab contains actual saved flow frames."
-      statusTone="safe"
-      className={styles.scientificWindow}
-      footer={
-        <>
-          <span>Recorded relative L2 · evaluation splits differ</span>
-          <span>Interactive display · no browser inference</span>
-        </>
-      }
-    >
-      <EvidenceNote icon="chart" title="Recorded benchmark values">
-        The field drawing illustrates the view controls. The numerical results below are recorded evaluations; use flow playback to inspect the actual saved fields.
-      </EvidenceNote>
-
-      <EvidenceNote tone="amber" icon="!" title="Separate runs and evaluation splits">
-        FNO and MeshGraphNet report sets that were also checked during training. U-Net uses a separate 20-file set with different flow statistics. Read each score in those conditions rather than as a common ranking.
-      </EvidenceNote>
-
-      <div className={styles.cfdLayout}>
-        <nav className={styles.modelRail} aria-label="Surrogate model">
-          <div className={styles.railHeading}>
-            <span>Model family</span>
-            <strong>03 candidates</strong>
-          </div>
-          {(Object.entries(CFD_MODELS) as [CfdModelId, (typeof CFD_MODELS)[CfdModelId]][]).map(([id, item], index) => (
-            <button
-              type="button"
-              className={`${styles.modelCard} ${model === id ? styles.modelCardActive : ""} ${id === "unet" ? styles.modelCardWarning : ""}`}
-              aria-pressed={model === id}
-              key={id}
-              onClick={() => setModel(id)}
-            >
-              <span className={styles.modelIndex}>0{index + 1}</span>
-              <span className={styles.modelCopy}>
-                <strong>{item.short}</strong>
-                <small>{item.name}</small>
-              </span>
-              <span className={styles.modelScore}>{item.relativeL2}</span>
-            </button>
-          ))}
-        </nav>
-
-        <section className={styles.fieldWorkspace} aria-live="polite">
-          <div className={styles.workspaceToolbar}>
-            <TabStrip label="Flow-field channel" options={CFD_FIELD_TABS} value={field} onChange={setField} />
-            <div role="group" className={styles.topologyToggle} aria-label="Topology overlay">
-              <button type="button" aria-pressed={topology === "grid"} className={topology === "grid" ? styles.toggleActive : ""} onClick={() => setTopology("grid")}>▦ Grid</button>
-              <button type="button" aria-pressed={topology === "mesh"} className={topology === "mesh" ? styles.toggleActive : ""} onClick={() => setTopology("mesh")}>△ Mesh</button>
-            </div>
-          </div>
-
-          <figure className={styles.fieldFigure}>
-            <div className={styles.figureChrome}>
-              <span>{activeModel.short} / {CFD_FIELD_TABS.find((item) => item.id === field)?.label}</span>
-              <span>{CFD_FRAMES[frame]} · t+1</span>
-            </div>
-            <FlowField field={field} model={model} topology={topology} frame={frame} />
-            <figcaption>
-              <span>Illustrative field view</span>
-              <p>The illustration explores the comparison controls; numbers come from the recorded project evaluation.</p>
-            </figcaption>
-          </figure>
-
-          <div className={styles.snapshotBar}>
-            <div>
-              <span>Illustration step</span>
-              <strong>{CFD_FRAMES[frame]} of 03</strong>
-            </div>
-            <MacButton onClick={() => setFrame((current) => (current + 1) % CFD_FRAMES.length)}>
-              Next snapshot →
-            </MacButton>
-          </div>
-        </section>
+  return <ProjectCopy copy={scientificCopy}><DemoWindow
+    appName="FlowBench 7"
+    title="What my flow models achieved"
+    status="Recorded model results"
+    purpose="I tested three ways to predict fluid motion: Fourier features on a grid, messages on a mesh and a U-Net image model."
+    tryThis="Select a model to read its error, size and evaluation conditions. Use See the flow for the saved predictions."
+    watchFor="Lower relative L2 means a closer numerical match. These runs use different evaluation conditions, so their errors do not form a fair league table."
+    statusTone="safe"
+    className={styles.scientificWindow}
+    footer={<><span>Recorded relative L2 · evaluation splits differ</span><span>My training and evaluation results</span></>}
+  >
+    <div className={styles.resultsIntro}>
+      <h3>What does the error number mean?</h3>
+      <p>Relative L2 compares the size of a prediction error with the size of the reference flow field. A value of 0 means a perfect match; a value above 1 means the error is larger than the reference field itself.</p>
+    </div>
+    <nav className={styles.resultChoices} aria-label="Surrogate model">
+      {(Object.entries(CFD_MODELS) as [CfdModelId, (typeof CFD_MODELS)[CfdModelId]][]).map(([id, item], index) => (
+        <button type="button" className={`${styles.modelCard} ${model === id ? styles.modelCardActive : ""}`} aria-pressed={model === id} key={id} onClick={() => setModel(id)}>
+          <span className={styles.modelIndex}>0{index + 1}</span>
+          <span className={styles.modelCopy}><strong>{item.short}</strong><small>{item.name}</small></span>
+          <span className={styles.modelScore}>{item.relativeL2}</span>
+        </button>
+      ))}
+    </nav>
+    <section className={styles.evidencePanel} aria-label={`${activeModel.name} evaluation summary`} aria-live="polite">
+      <div className={`${styles.heroMetric} ${model === "unet" ? styles.heroMetricWarning : ""}`}>
+        <span>Recorded relative L2</span><strong>{activeModel.relativeL2}</strong><small>{activeModel.evaluation}</small>
       </div>
-
-      <section className={styles.evidencePanel} aria-label={`${activeModel.name} evaluation summary`}>
-        <div className={`${styles.heroMetric} ${model === "unet" ? styles.heroMetricWarning : ""}`}>
-          <span>Recorded relative L2</span>
-          <strong>{activeModel.relativeL2}</strong>
-          <small>{activeModel.evaluation}</small>
-        </div>
-        <dl className={styles.modelDetails}>
-          <div><dt>Architecture</dt><dd>{activeModel.architecture}</dd></div>
-          <div><dt>Representation</dt><dd>{activeModel.representation}</dd></div>
-          <div><dt>Parameters</dt><dd>{activeModel.parameters}</dd></div>
-          <div><dt>Readout</dt><dd>{activeModel.note}</dd></div>
-        </dl>
-        <div role="group" className={styles.rankStrip} aria-label="Recorded relative L2 values and their separate evaluation runs">
-          {(Object.entries(CFD_MODELS) as [CfdModelId, (typeof CFD_MODELS)[CfdModelId]][]).map(([id, item]) => (
-            <div className={model === id ? styles.rankActive : ""} key={id}>
-              <span><b>{item.short}</b><em>{item.relativeL2}</em></span>
-              <small>{item.evaluation}</small>
-            </div>
-          ))}
-        </div>
-      </section>
-    </DemoWindow></ProjectCopy>
-  );
+      <dl className={styles.modelDetails}>
+        <div><dt>Architecture</dt><dd>{activeModel.architecture}</dd></div>
+        <div><dt>Representation</dt><dd>{activeModel.representation}</dd></div>
+        <div><dt>Parameters</dt><dd>{activeModel.parameters}</dd></div>
+        <div><dt>Readout</dt><dd>{activeModel.note}</dd></div>
+      </dl>
+    </section>
+    <EvidenceNote icon="chart" title="What I learned">
+      FNO and MeshGraphNet learned close matches on sets checked during training. My U-Net struggled on a separate 20-file set with different flow statistics. A small training error is not enough: I need to test the conditions where a surrogate will actually be used.
+    </EvidenceNote>
+  </DemoWindow></ProjectCopy>;
 }
 
 type VisionModelId = "simple" | "resnet18" | "resnet34" | "mobile" | "vit";
 type VisionBenchmark = "pose" | "depth";
-type VisionView = "pose" | "depth" | "attention";
 
 const VISION_MODELS: Record<VisionModelId, {
   name: string;
@@ -356,219 +177,58 @@ const VISION_MODELS: Record<VisionModelId, {
   vit: { name: "ViT-B/16", poseAccuracy: "98.25%", depthRmse: "0.0265", parameters: "85.4M", pretraining: "ImageNet" },
 };
 
-const VISION_VIEW_TABS: readonly TabOption<VisionView>[] = [
-  { id: "pose", label: "Pose" },
-  { id: "depth", label: "Depth" },
-  { id: "attention", label: "Grad-CAM style" },
-];
-
-const MICRO_FRAMES = [
-  { id: "frame-a", label: "Frame A", pitch: "+15°", roll: "−30°", depth: "0.64", rotation: -17 },
-  { id: "frame-b", label: "Frame B", pitch: "+30°", roll: "+15°", depth: "0.42", rotation: 9 },
-  { id: "frame-c", label: "Frame C", pitch: "−15°", roll: "+30°", depth: "0.78", rotation: 24 },
-] as const;
-
-function MicrorobotScene({ view, frameIndex }: { view: VisionView; frameIndex: number }) {
-  const id = useId().replace(/:/g, "");
-  const frame = MICRO_FRAMES[frameIndex];
-  const heat = `${id}-heat`;
-  const glass = `${id}-glass`;
-  const grain = `${id}-grain`;
-
-  return (
-    <ProjectCopy copy={scientificCopy}><svg
-      className={styles.robotScene}
-      viewBox="0 0 520 310"
-      role="img"
-      aria-label={`Illustrative microrobot ${view === "attention" ? "Grad-CAM-style attention" : view} view for ${frame.label}`}
-    >
-      <defs>
-        <radialGradient id={glass} cx="48%" cy="47%" r="68%">
-          <stop offset="0" stopColor="#f6f8e9" />
-          <stop offset="0.55" stopColor="#b8c8c4" />
-          <stop offset="1" stopColor="#47576d" />
-        </radialGradient>
-        <radialGradient id={heat} cx="50%" cy="50%" r="50%">
-          <stop offset="0" stopColor="#fff57c" stopOpacity="0.96" />
-          <stop offset="0.34" stopColor="#ef6c38" stopOpacity="0.88" />
-          <stop offset="0.7" stopColor="#c52958" stopOpacity="0.48" />
-          <stop offset="1" stopColor="#612982" stopOpacity="0" />
-        </radialGradient>
-        <pattern id={grain} width="13" height="13" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="3" r="0.7" fill="#0e1a25" opacity="0.16" />
-          <circle cx="10" cy="8" r="0.55" fill="#fff" opacity="0.32" />
-          <path d="M5 12h2" stroke="#17232c" strokeOpacity="0.12" />
-        </pattern>
-      </defs>
-
-      <rect width="520" height="310" fill={`url(#${glass})`} />
-      <rect width="520" height="310" fill={`url(#${grain})`} />
-      <g className={styles.scopeRings} fill="none">
-        <ellipse cx="258" cy="154" rx="178" ry="116" />
-        <ellipse cx="258" cy="154" rx="152" ry="97" />
-        <ellipse cx="258" cy="154" rx="126" ry="79" />
-        {view === "depth" && <ellipse cx="258" cy="154" rx="102" ry="64" />}
-        {view === "depth" && <ellipse cx="258" cy="154" rx="84" ry="51" />}
-      </g>
-
-      <g transform={`rotate(${frame.rotation} 258 154)`} className={styles.robotBody}>
-        <path d="M177 137 C196 111 225 104 258 118 C294 101 327 111 342 137 L330 168 C307 181 282 183 258 169 C234 184 207 181 185 168 Z" />
-        <rect x="218" y="126" width="80" height="55" rx="18" />
-        <path d="M194 131 159 103M190 161l-42 20M326 129l38-27M330 161l43 20" />
-        <circle cx="157" cy="102" r="8" />
-        <circle cx="146" cy="182" r="8" />
-        <circle cx="365" cy="101" r="8" />
-        <circle cx="375" cy="182" r="8" />
-        <path d="M235 137h46M231 153h55M239 168h38" />
-      </g>
-
-      {view === "attention" && (
-        <g className={styles.attentionLayer}>
-          <ellipse cx="215" cy="137" rx="92" ry="74" fill={`url(#${heat})`} />
-          <ellipse cx="319" cy="169" rx="78" ry="62" fill={`url(#${heat})`} />
-          <circle cx="258" cy="153" r="56" fill={`url(#${heat})`} />
-        </g>
-      )}
-
-      {view === "pose" && (
-        <g className={styles.poseAxes}>
-          <path d="M258 154 417 154M258 154 258 42" />
-          <path d="M388 154a130 130 0 0 0-36-90" />
-          <circle cx="258" cy="154" r="5" />
-          <text x="422" y="159">roll</text>
-          <text x="265" y="41">pitch</text>
-        </g>
-      )}
-
-      {view === "depth" && (
-        <g className={styles.depthGauge}>
-          <path d="M464 57v190" />
-          <path d="M455 57h18M455 152h18M455 247h18" />
-          <circle cx="464" cy={247 - Number(frame.depth) * 190} r="8" />
-          <text x="478" y="61">1.0</text>
-          <text x="478" y="156">0.5</text>
-          <text x="478" y="251">0.0</text>
-        </g>
-      )}
-
-      <g className={styles.microscopeHud}>
-        <path d="M20 47V20h27M473 20h27v27M20 263v27h27M473 290h27v-27" />
-        <text x="25" y="280">Illustrative view</text>
-        <text x="391" y="280">50 μm</text>
-        <path d="M390 265h87" />
-      </g>
-    </svg></ProjectCopy>
-  );
-}
-
 export function MicrorobotVisionDemo({ locale = "en-GB" }: { locale?: import("@/lib/i18n").Locale }) {
   const [model, setModel] = useState<VisionModelId>("resnet34");
   const [benchmark, setBenchmark] = useState<VisionBenchmark>("pose");
-  const [view, setView] = useState<VisionView>("pose");
-  const [frameIndex, setFrameIndex] = useState(0);
   const activeModel = VISION_MODELS[model];
   const primaryMetric = benchmark === "pose" ? activeModel.poseAccuracy : activeModel.depthRmse;
   const primaryLabel = benchmark === "pose" ? "Pose accuracy" : "Depth RMSE";
 
-  return (
-    <ProjectCopy copy={scientificCopy} locale={locale}><ProjectTranslationBoundary locale={locale}>
-    <DemoWindow
-      appName="MicroVision Lab"
-      title="Microrobot Pose & Depth Bench"
-      status="Model comparison"
-      purpose="Compare how five image models estimate a microrobot’s orientation and depth."
-      tryThis="Switch task and model, then move through the illustrative views to inspect the type of prediction."
-      watchFor="The metric, error treatment and output overlay change by task; the images are illustrative and no model runs in the browser."
-      statusTone="safe"
-      className={styles.scientificWindow}
-      footer={
-        <>
-          <span>2,002 microscopy frames · 40 orientation classes</span>
-          <span>Illustrative comparison · recorded images in the microscopy tab</span>
-        </>
-      }
-    >
-      <EvidenceNote tone="amber" icon="!" title="Important split limitation">
-        Related frames may appear in both training and testing, and the final run used test performance to select its training epoch. New recordings and microscope setups are still needed to check generalisation.
-      </EvidenceNote>
-
-      <div className={styles.visionControls}>
-        <label>
-          <span>Model</span>
-          <ClassicSelect value={model} onChange={(event) => setModel(event.target.value as VisionModelId)}>
-            {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => (
-              <option value={id} key={id}>{item.name}</option>
-            ))}
-          </ClassicSelect>
-        </label>
-        <fieldset>
-          <legend>Benchmark</legend>
-          <div className={styles.binaryToggle}>
-            <button type="button" aria-pressed={benchmark === "pose"} className={benchmark === "pose" ? styles.toggleActive : ""} onClick={() => setBenchmark("pose")}>Pose classification</button>
-            <button type="button" aria-pressed={benchmark === "depth"} className={benchmark === "depth" ? styles.toggleActive : ""} onClick={() => setBenchmark("depth")}>Depth regression</button>
-          </div>
-        </fieldset>
-        <label>
-          <span>Illustrative sample</span>
-          <ClassicSelect value={frameIndex} onChange={(event) => setFrameIndex(Number(event.target.value))}>
-            {MICRO_FRAMES.map((frame, index) => <option value={index} key={frame.id}>{frame.label}</option>)}
-          </ClassicSelect>
-        </label>
-      </div>
-
-      <div className={styles.visionLayout}>
-        <section className={styles.visionViewer}>
-          <div className={styles.viewerHeader}>
-            <TabStrip label="Microrobot analysis view" options={VISION_VIEW_TABS} value={view} onChange={setView} />
-            <span>Robot 8 / {MICRO_FRAMES[frameIndex].label}</span>
-          </div>
-          <MicrorobotScene view={view} frameIndex={frameIndex} />
-          <div className={styles.viewerReadout} aria-live="polite">
-            {view === "pose" && (
-              <><span>Pose label</span><strong>Pitch {MICRO_FRAMES[frameIndex].pitch} · Roll {MICRO_FRAMES[frameIndex].roll}</strong><small>Illustrative class overlay</small></>
-            )}
-            {view === "depth" && (
-              <><span>Normalised depth</span><strong>{MICRO_FRAMES[frameIndex].depth}</strong><small>Illustrative depth overlay</small></>
-            )}
-            {view === "attention" && (
-              <><span>Interpretability view</span><strong>Body contours + edge fringes</strong><small>Grad-CAM-style illustration—not a computed activation map</small></>
-            )}
-          </div>
-        </section>
-
-        <aside className={styles.benchmarkPanel} aria-live="polite">
-          <div className={styles.benchmarkHeading}>
-            <span>Model results</span>
-            <strong>{activeModel.name}</strong>
-          </div>
-          <div className={styles.benchmarkPrimary}>
-            <span>{primaryLabel}</span>
-            <strong>{primaryMetric}</strong>
-            <small>{benchmark === "pose" ? "reported comparison result" : "normalised held-out error"}</small>
-          </div>
-          <dl className={styles.benchmarkFacts}>
-            <div><dt>Pose accuracy</dt><dd>{activeModel.poseAccuracy}</dd></div>
-            <div><dt>Depth RMSE</dt><dd>{activeModel.depthRmse}</dd></div>
-            <div><dt>Parameters</dt><dd>{activeModel.parameters}</dd></div>
-            <div><dt>Initialisation</dt><dd>{activeModel.pretraining}</dd></div>
-          </dl>
-          {model === "resnet34" && <p className={styles.hundredCallout}>The five-model comparison is shown here. A later final run reused test results for model selection, so it does not establish performance on new recordings.</p>}
-        </aside>
-      </div>
-
-      <section className={styles.modelMatrix} aria-label="Five-model benchmark comparison">
-        <div className={styles.matrixHeader}>
-          <span>Architecture</span><span>Pose</span><span>Depth RMSE</span><span>Params</span>
-        </div>
-        {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => (
-          <button type="button" aria-pressed={model === id} className={model === id ? styles.matrixActive : ""} key={id} onClick={() => setModel(id)}>
-            <strong>{item.name}</strong><span>{item.poseAccuracy}</span><span>{item.depthRmse}</span><span>{item.parameters}</span>
-          </button>
-        ))}
-      </section>
-    </DemoWindow>
-    </ProjectTranslationBoundary></ProjectCopy>
-  );
+  return <ProjectCopy copy={scientificCopy} locale={locale}><ProjectTranslationBoundary locale={locale}><DemoWindow
+    appName="MicroVision Lab"
+    title="Which microrobot model would I choose?"
+    status="Five-model comparison"
+    purpose="I compared prediction quality with model size, because tracking a tiny robot needs both useful estimates and practical computing requirements."
+    tryThis="Switch between pose and depth, then choose a model from the table. Compare its error with the number of learned parameters."
+    watchFor="Higher pose accuracy is better; lower depth RMSE is better. MobileNetV3 is much smaller than ResNet34 or ViT, while the best model depends on the task."
+    statusTone="safe"
+    className={styles.scientificWindow}
+    footer={<><span>Five models · 40 orientation classes</span><span>Recorded comparison · microscope images in the first tab</span></>}
+  >
+    <div className={styles.resultsIntro}>
+      <h3>Two tasks, two ways to read the result</h3>
+      <p>Pose accuracy is the percentage of images assigned the correct pitch-roll class. Depth RMSE is the typical size of an error on the normalised depth scale; it is not a distance in millimetres.</p>
+    </div>
+    <div className={styles.visionControls}>
+      <label><span>Model</span><ClassicSelect value={model} onChange={(event) => setModel(event.target.value as VisionModelId)}>
+        {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => <option value={id} key={id}>{item.name}</option>)}
+      </ClassicSelect></label>
+      <fieldset><legend>Benchmark</legend><div className={styles.binaryToggle}>
+        <button type="button" aria-pressed={benchmark === "pose"} className={benchmark === "pose" ? styles.toggleActive : ""} onClick={() => setBenchmark("pose")}>Pose classification</button>
+        <button type="button" aria-pressed={benchmark === "depth"} className={benchmark === "depth" ? styles.toggleActive : ""} onClick={() => setBenchmark("depth")}>Depth regression</button>
+      </div></fieldset>
+    </div>
+    <section className={styles.resultSummary} aria-live="polite">
+      <div className={styles.benchmarkPrimary}><span>{primaryLabel}</span><strong>{primaryMetric}</strong><small>{activeModel.name}</small></div>
+      <dl className={styles.benchmarkFacts}>
+        <div><dt>Pose accuracy</dt><dd>{activeModel.poseAccuracy}</dd></div>
+        <div><dt>Depth RMSE</dt><dd>{activeModel.depthRmse}</dd></div>
+        <div><dt>Parameters</dt><dd>{activeModel.parameters}</dd></div>
+        <div><dt>Initialisation</dt><dd>{activeModel.pretraining}</dd></div>
+      </dl>
+    </section>
+    <section className={styles.modelMatrix} aria-label="Five-model benchmark comparison">
+      <div className={styles.matrixHeader}><span>Architecture</span><span>Pose</span><span>Depth RMSE</span><span>Params</span></div>
+      {(Object.entries(VISION_MODELS) as [VisionModelId, (typeof VISION_MODELS)[VisionModelId]][]).map(([id, item]) => (
+        <button type="button" aria-pressed={model === id} className={model === id ? styles.matrixActive : ""} key={id} onClick={() => setModel(id)}>
+          <strong>{item.name}</strong><span>{item.poseAccuracy}</span><span>{item.depthRmse}</span><span>{item.parameters}</span>
+        </button>
+      ))}
+    </section>
+    <EvidenceNote icon="microscope" title="What I learned">
+      My custom CNN with skip connections came close to the larger models for pose classification. Depth estimation benefited more from pretrained networks. These image-level tests still need a follow-up on complete unseen recordings, where neighbouring frames cannot cross between training and testing.
+    </EvidenceNote>
+  </DemoWindow></ProjectTranslationBoundary></ProjectCopy>;
 }
 
 type CalibrationView = "before" | "after";

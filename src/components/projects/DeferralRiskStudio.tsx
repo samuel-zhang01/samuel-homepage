@@ -86,7 +86,7 @@ const VIEWS: readonly { id: StudioView; label: string; hint: string }[] = [
   { id: "decisions", label: "Decision desk", hint: "Inspect the OR gate" },
   { id: "tradeoff", label: "Coverage lab", hint: "Sweep selective risk" },
   { id: "tail", label: "CVaR ledger", hint: "Audit the worst decile" },
-  { id: "method", label: "Research notes", hint: "Evidence and limits" },
+  { id: "method", label: "Research notes", hint: "Design and findings" },
 ];
 
 const INCIDENT_TYPES = [
@@ -387,9 +387,9 @@ export function DeferralRiskStudio() {
       appName="SAFE-L2D LAB"
       title="Fraud-risk deferral workbench"
       status={isReportedSettings ? "Paper point loaded" : "Synthetic policy active"}
-      purpose="Explore when an automated fraud classifier should hand a case to a human instead of forcing a prediction."
-      tryThis="Move the score and uncertainty deferral thresholds, then compare system accuracy, retained risk and review volume."
-      watchFor="Coverage and tail risk move in opposite directions; every output comes from deterministic fictional claims."
+      purpose="I designed a fraud-screening policy that can ask a human for help when the classifier is unsure, while keeping an eye on its worst mistakes."
+      tryThis="Raise the minimum classifier confidence. More uncertain claims should move from automatic decisions to human review."
+      watchFor="Review volume rises as automation coverage falls. Compare the remaining mistakes and worst-case risk; the adjustable desk uses fictional claims and a simulated investigator."
       statusTone="safe"
       className={styles.studio}
       footer={(
@@ -401,7 +401,7 @@ export function DeferralRiskStudio() {
     >
       <section className={styles.researchBanner} aria-label="Simulation assumptions">
         <div className={styles.researchIcon} aria-hidden="true"><System7Icon kind="book" /></div>
-        <div><strong>A synthetic test of selective prediction</strong><p>The 200-row test bench illustrates the reported aggregate arithmetic. Its fictional records and investigator model do not independently validate real claim decisions.</p></div>
+        <div><strong>Why I let the model ask for help</strong><p>A missed fraudulent claim and a false accusation both have consequences. My study reached 89.5% system accuracy at 64% automation coverage with a simulated investigator. This desk lets you explore that trade-off; the research notes compare it with a simpler confidence-only policy.</p></div>
         <a href={SOURCE_URL} target="_blank" rel="noreferrer">Read the research ↗</a>
       </section>
 
@@ -605,7 +605,7 @@ function DecisionDesk({
     <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.viewStack}>
       <section className={styles.pipeline} aria-label="Safe L2D decision pipeline">
         <article>
-          <span>01</span><strong>KDE evidence</strong><small>Four paper features → likelihood ratios</small>
+          <span>01</span><strong>Feature-by-feature update</strong><small>Four paper features → likelihood ratios</small>
         </article>
         <i aria-hidden="true">›</i>
         <article>
@@ -959,7 +959,7 @@ function ResearchNotes() {
   return (
     <ProjectCopy copy={deferralRiskStudioCopy}><div className={styles.viewStack}>
       <section className={styles.provenancePanel}>
-        <div className={styles.sectionHeading}><div><span>Source fidelity</span><h3>What this exhibit reproduces—and what it does not</h3></div></div>
+        <div className={styles.sectionHeading}><div><span>Model and data</span><h3>How I set up the experiment</h3></div></div>
         <div className={styles.provenanceGrid}>
           <article><span>Benchmark shape</span><strong>{CORPUS_SIZE.toLocaleString("en-GB")} claims / {TEST_SIZE} test</strong><p>{SYNTHETIC_FRAUD_COUNT} of {CORPUS_SIZE} fictional labels are fraud: exactly 24.7%. The paper warns that this prevalence is inflated relative to production.</p></article>
           <article><span>Investigator model</span><strong>85% base accuracy</strong><p>The source uses a seeded synthetic expert with a slight bonus on high-entropy claims. It does not measure a real investigation team.</p></article>
@@ -987,7 +987,7 @@ function ResearchNotes() {
         </article>
         <article>
           <span className={styles.kicker}>Interpretation guardrails</span>
-          <h3>Why this is not deployment evidence</h3>
+          <h3>What I would test before real use</h3>
           <ul>
             <li>The 200-claim test set has only about 49 fraud cases; confidence intervals are wide and overlap.</li>
             <li>The naive-Bayes conditional-independence assumption can understate uncertainty for correlated features.</li>

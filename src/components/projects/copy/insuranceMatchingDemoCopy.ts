@@ -1049,4 +1049,21 @@ export const insuranceMatchingDemoCopy = {
     "权限／承保能力核查；三项信号中仅评估 {0} 项",
     "權限／承保能力核查；三項訊號中僅評估 {0} 項"
   ]
+,
+  "Compare matching approaches": ["比较匹配方法", "比較配對方法"],
+  "Information for {0}": ["{0} 的信息", "{0} 的資訊"],
+  "{0} markets ready to review; {1} gated. Broker order preserved.": ["{0} 家公司可供审查；{1} 家待核实。保留经纪人顺序。", "{0} 家公司可供審查；{1} 家待確認。保留經紀人順序。"],
+  "{0} ready to review · {1} gated": ["{0} 家可供审查 · {1} 家待核实", "{0} 家可供審查 · {1} 家待確認"],
+  "Compare insurers for a lead role": ["比较主承保保险公司", "比較主承保保險公司"],
+  "I built a comparison workflow for brokers choosing an insurer to lead an insurance placement. It puts trading history, past lead roles and policy wording side by side.": ["我构建了一个比较流程，帮助经纪人选择保险安排的主承保公司，把交易历史、过往主承保角色与保单条款并列展示。", "我建置了一個比較流程，協助經紀人選擇保險安排的主承保公司，把交易歷史、過往主承保角色與保單條款並列展示。"],
+  "Inspect Market 06. See which information is missing and why it cannot yet be pinned for broker review.": ["查看 Market 06，了解缺少哪些信息，以及为什么它还不能固定到经纪人审查列表。", "查看 Market 06，了解缺少哪些資訊，以及為何還不能將它固定到經紀人審查清單。"],
+  "Missing information stays visible rather than becoming a low score. The broker can compare suitable candidates before making the final choice.": ["缺失信息会明确显示，而不是变成低分。经纪人可以比较合适的候选公司，再作最终选择。", "缺少的資訊會明確顯示，而不會變成低分。經紀人可以比較合適的候選公司，再作最後選擇。"],
+  "Try the workflow with fictional insurers.": ["用虚构保险公司体验这个流程。", "用虛構保險公司體驗這個流程。"],
+  "Broker comparison": ["经纪人比较视图", "經紀人比較檢視"],
+  "Three checks": ["三项检查", "三項檢查"],
+  "Insurer information": ["保险公司信息", "保險公司資訊"],
+  "Required information": ["所需信息", "所需資訊"],
+  "Choose what must be known": ["选择必须掌握的信息", "選擇必須掌握的資訊"]
+,
+  "ready to review ·": ["可供审查 ·", "可供審查 ·"]
 } satisfies ProjectCopyTable;

@@ -1607,3 +1607,16 @@
 .chartViewport { scrollbar-width: auto; scrollbar-color: var(--s7-shadow) var(--s7-chrome); }
 .chartViewport::-webkit-scrollbar { height: 16px; background: var(--s7-chrome); }
 .chartViewport::-webkit-scrollbar-thumb { border: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }
+.resultsIntro {
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--s7-ink);
+  background: var(--s7-paper);
+  line-height: 1.55;
+}
+
+.resultsIntro h3 { margin: 0 0 6px; font-size: var(--s7-heading); }
+.resultsIntro p { margin: 0; max-width: 76ch; }
+.resultChoices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
+.resultSummary { display: grid; grid-template-columns: minmax(150px, 1fr) minmax(0, 2fr); gap: 12px; padding: 12px; border: 1px solid var(--s7-ink); background: var(--s7-paper); margin-bottom: 12px; }
+@container (max-width: 560px) { .resultChoices, .resultSummary { grid-template-columns: minmax(0, 1fr); } }

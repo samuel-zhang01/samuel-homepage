@@ -472,9 +472,9 @@ export function ThermodynamicsStudio() {
       appName="PC-SAFT workbench"
       title="How molecular interactions change pressure"
       status="Illustrative binary mixture"
-      purpose="Open a PC-SAFT state calculation so the effect of molecular parameters, mixing and density is visible term by term."
-      tryThis="Change density, composition or the binary interaction parameter, then open the equation tape."
-      watchFor="Compressibility, pressure and the isotherm are recalculated in the browser using invented fluids—not validated property data."
+      purpose="Molecules occupy space and attract one another. I studied how these interactions change a fluid’s pressure."
+      tryThis="Raise Binary kAB one step. This weakens the attraction between the example A and B molecules."
+      watchFor="Pressure rises while the other settings stay fixed. The curves use example fluids so you can explore the calculation."
       statusTone="safe"
       className={styles.studio}
       footer={
@@ -493,6 +493,7 @@ export function ThermodynamicsStudio() {
           <ParameterSlider label="Molar density" unit="mol m⁻³" value={density} min={100} max={9000} step={100} onChange={setDensity} />
           <ParameterSlider label="Mole fraction xA" unit="" value={xA} min={0.05} max={0.95} step={0.01} onChange={setXA} />
           <ParameterSlider label="Binary kAB" unit="" value={interaction} min={-0.1} max={0.15} step={0.01} onChange={setInteraction} />
+          <output className={styles.livePressure} aria-live="polite"><span>Pressure</span><strong>{formatPressure(current.pressureMPa)} MPa</strong><small>At the current temperature and density</small></output>
 
           <div role="group" className={styles.componentTabs} aria-label="Synthetic component parameter editor">
             <button type="button" aria-pressed={selectedComponent === "A"} onClick={() => setSelectedComponent("A")}>Fluid A</button>

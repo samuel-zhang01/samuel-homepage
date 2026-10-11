@@ -14,6 +14,7 @@ export type ProjectArea =
 
 export type ProjectDemoId =
   | "videomate"
+  | "ultra-convert"
   | "cv-keywords"
   | "finance"
   | "bandits"
@@ -74,6 +75,8 @@ export type Project = {
   sourceUrl?: string;
   sourceLicence?: "explicit-open-source" | "none-declared";
   websiteUrl?: string;
+  downloadUrl?: string;
+  downloadLabel?: string;
   artifacts?: ProjectArtifact[];
   preview?: { src: string; alt: string; caption: string };
   systemApp?: "coverd" | "documents" | "lab" | "experience" | "orbitals" | "notepad" | "sketch" | "tasks" | "focus" | "calendar" | "calculator" | "converter" | "palette";
@@ -98,15 +101,59 @@ const phases = (
 
 export const projects: Project[] = [
   {
+    slug: "ultra-convert",
+    title: "Ultra Convert",
+    year: "2026",
+    area: "Products",
+    access: "open-source",
+    status: "Active",
+    featured: true,
+    eyebrow: "CONVERT FILES FROM FINDER",
+    summary: "My Mac app for converting images, audio, video, documents and data in one reviewed batch.",
+    detail: "I built Ultra Convert to stop switching between separate tools for everyday file conversions. I can select a mixed batch in Finder, choose an output format for each category and review where the new files will go. It preserves originals, avoids overwriting existing outputs and remembers my format choices. The current Apple Silicon preview is installed with the release ZIP and its installer; the README explains the setup.",
+    tools: ["Swift", "AppKit", "Python", "Finder Quick Actions"],
+    concepts: [
+      "products",
+      "local-first"
+    ],
+    highlights: [
+      "One batch for images, audio, video, documents and data",
+      "Finder actions and per-category output formats",
+      "Separate results while preserving original files"
+    ],
+    phases: [
+      {
+        label: "Start small",
+        text: "Build local conversion with a reviewed output format."
+      },
+      {
+        label: "Move forward",
+        text: "Add mixed batches and Finder actions."
+      },
+      {
+        label: "Polish",
+        text: "Refine saved formats, conversion rules and installation."
+      }
+    ],
+    demo: "ultra-convert",
+    sourceUrl: "https://github.com/samuel-zhang01/UltraConvert/tree/53c7e55f3c7ff995a1d88637fa57c12e0237d0e3",
+    sourceLicence: "explicit-open-source",
+    downloadUrl: "https://github.com/samuel-zhang01/UltraConvert/releases/tag/v1.6.0",
+    downloadLabel: "Get the Mac preview",
+    privacyNote: "The browser walkthrough uses example filenames and shows the conversion choices. To convert your files, install the separate Mac app.",
+    visual: "flow"
+  },
+
+  {
     slug: "videomate",
     title: "VideoMate",
     year: "2026",
     area: "Products",
-    access: "public-demo",
+    access: "open-source",
     status: "Active",
     featured: true,
     eyebrow: "LOCAL VIDEO REPAIR AND RE-ENCODING",
-    summary: "Inspect damaged videos, recover readable material and re-encode mixed collections with qualified GPU acceleration.",
+    summary: "My offline app for checking damaged videos, making playable copies and moving a collection into a new folder.",
     detail: "VideoMate is a native, offline GUI and CLI for inspecting damaged video, recovering readable material and building verified mixed-folder migrations. It preserves originals, checks integrity with software decoding and publishes candidates only after independent verification. Eligible repairs and HEVC migration use qualified GPU encoders with software fallback. The browser companion models these choices with fictional inputs; no visitor media is uploaded or processed.",
     tools: ["Python", "Tkinter", "FFmpeg / FFprobe", "Hardware encoding", "Offline desktop app"],
     concepts: ["products", "recovery", "local-first"],
@@ -117,8 +164,12 @@ export const projects: Project[] = [
       "Develop native packages, interruption recovery and privacy-conscious diagnostics.",
     ),
     demo: "videomate",
-    privacyNote: "This browser demo is a deterministic simulation with invented sample items. It does not accept uploads, inspect media, run FFmpeg or promise that missing source bytes can be reconstructed. VideoMate is a separate native application; public distribution is planned for the future.",
+    privacyNote: "This browser walkthrough uses five invented files. The separate desktop app processes files locally; its public release is currently a source preview.",
     visual: "flow",
+    downloadLabel: "Get the source preview",
+    downloadUrl: "https://github.com/samuel-zhang01/VideoMate#install-and-start",
+    sourceUrl: "https://github.com/samuel-zhang01/VideoMate/tree/c671443c4cbdea5f47be488517956077d54dfaad",
+    sourceLicence: "explicit-open-source",
   },
   {
     slug: "orbital-lab", title: "Orbital Lab", year: "2026", area: "Education", access: "public-demo", status: "Active", featured: true,
@@ -276,7 +327,7 @@ export const projects: Project[] = [
     featured: true,
     eyebrow: "APPLIED AI FOR INSURANCE PLACEMENT",
     summary: "Decision support for brokers comparing candidate markets through risk ranking, historical placement patterns and policy-wording analysis.",
-    detail: "I developed a prototype that brings three complementary views into an insurance-placement decision. Temporal LightGBM/LambdaRank models compare candidate markets for a risk; historical lead-share analysis adds context for established and unfamiliar markets; wording analysis presents relevant clauses and disagreements. Confidence and missing information remain visible, and brokers retain the final ordering. A combined recommendation has not been validated. The public experiment uses fictional risks and markets. Checks included feature ablations and evaluation using information available at the decision time. Historical evidence records availability and recency, while wording results retain clause citations, disagreements and market-specific quality gates.",
+    detail: "For my MSc thesis, I studied how an insurance broker could narrow a large set of possible insurers to a useful shortlist. I built models that learn from past placements, a view of historical lead shares, and tools for comparing policy wording. I tested what changes when the model can only use information available before a placement. The prototype keeps these views separate so the broker can understand their different purposes; its historical ranking results describe past lead selections, not a guarantee of future suitability.",
     tools: ["LightGBM / LambdaRank", "Python + FastAPI", "React + TypeScript", "Node / Express", "Temporal validation", "Empirical Bayes"],
     highlights: ["Temporal learning-to-rank for risk and market pairs", "Historical placement context and cold-start fallbacks", "Market-specific wording comparison", "Confidence, missing information and broker review"],
     phases: phases(
@@ -390,8 +441,8 @@ export const projects: Project[] = [
     access: "public-demo",
     status: "Archive",
     eyebrow: "PREFERENCE-BASED COURSE DISCOVERY",
-    summary: "A course-discovery prototype that collects learner preferences, filters a small catalogue and explores how ranking choices affect the results.",
-    detail: "I built a four-step React preference flow with FastAPI and supporting data services. The initial browser prototype filters six example courses but orders them randomly, so it does not provide a learned recommendation. The interactive companion makes that behaviour visible and adds an illustrative weighted rubric with explanations and one-factor comparisons. Visitors can examine what a useful personalised ordering would need; neither version has been validated against learning outcomes. The source map also exposes a disconnected path: the browser ranks six example courses, but the separate API returns two fixed recommendations and does not query the seeded PostgreSQL catalogue. The weighted comparison reconciles each score from visible weights and per-course evidence.",
+    summary: "Choose what you want to learn and see how course filters and ranking change your shortlist.",
+    detail: "I built a four-step course finder with React and FastAPI to turn a learner’s preferences into a shortlist. The early prototype filtered courses but shuffled their order at random. This demo puts that behaviour beside a simple weighted ranking: change the importance of cost, time or subject fit and see why a course moves. It explains the design question I was working on: what makes a recommendation useful to the person receiving it?",
     tools: ["React", "FastAPI", "PostgreSQL", "Redis / RQ", "Docker Compose", "Explainable scoring"],
     highlights: ["Four-step learner-preference flow", "Six example courses with preference filters", "Repeatable random and weighted comparisons", "Visible score contributions and sensitivity to one changed preference"],
     phases: phases(
@@ -415,7 +466,7 @@ export const projects: Project[] = [
     featured: true,
     eyebrow: "REINFORCEMENT LEARNING + LLM POST-TRAINING",
     summary: "A practical curriculum connecting reinforcement-learning mathematics, working algorithms and language-model post-training.",
-    detail: "I developed and reviewed 25 modules with AI-assisted authorship, combining executed notebooks, teaching guides, 64 worked examples, 75 self-checks and 448 lecture pages. The route moves from bandits and Bellman updates through deep, offline and model-based RL to language-model post-training and applied decision problems. The browser adds live Q-learning, SARSA, LoRA and DPO exercises. A recorded SmolLM2-135M-Instruct experiment improves strict answer matching from 0 to 19 of 32 held-out synthetic prompts after supervised fine-tuning; generated-answer quality after DPO remains unevaluated. One final-module empirical-ordering check also remains unresolved.",
+    detail: "I wrote a 25-module reinforcement-learning curriculum with runnable notebooks and worked examples. It starts with learning which option to choose, then moves to agents that plan ahead and language models that learn from preferences. Here you can train an agent to cross a cliff-side grid and see why two algorithms learn different routes. My small-model fine-tuning experiment answered 19 of 32 held-out synthetic prompts correctly, compared with 0 before training; that measures exact answers on this exercise.",
     tools: ["PyTorch", "Jupyter", "Gymnasium", "LaTeX", "LoRA", "SFT", "DPO", "pytest"],
     highlights: ["25 modules with executable notebooks and teaching guides", "64 worked examples and 75 self-checks", "Live Q-learning, SARSA, LoRA and DPO exercises", "32 recorded before-and-after fine-tuning answers"],
     phases: phases(
@@ -458,7 +509,7 @@ export const projects: Project[] = [
     status: "Research",
     featured: true,
     eyebrow: "COMPUTER VISION MODEL STUDY",
-    summary: "Using grayscale microscope images to estimate a microrobot’s orientation and depth—essential information for tracking and control.",
+    summary: "I used microscope images to estimate a tiny robot’s tilt and depth, so its position can be tracked.",
     detail: "I built a custom CNN and adapted ResNet18, ResNet34, MobileNetV3 and ViT to predict 40 pitch–roll classes or a continuous depth value from 224×224 images. The developed residual CNN has 4,154,856 pose-classification parameters. The interactive architecture view follows features through each model and changes the output head between tasks. Saved microscopy, pose predictions and Grad-CAM maps help explain the results. The original image-level split can mix related frames between training and testing; a fictional sequence exercise shows why unseen recordings provide a stronger evaluation. The model atlas distinguishes partially pretrained and newly initialised layers, and compares declared tensor shapes and parameter counts with older saved checkpoints.",
     tools: ["PyTorch", "ResNet", "MobileNet", "ViT", "Grad-CAM"],
     highlights: ["Custom residual CNN and four pretrained-model adaptations", "40 orientation classes and continuous depth estimation", "Interactive model stages, shapes and parameter counts", "Same-image pose/depth Grad-CAM comparison"],
@@ -470,6 +521,7 @@ export const projects: Project[] = [
     demo: "microrobot-vision",
     privacyNote: "Selected recorded microscopy and response maps are shown alongside illustrative diagrams. Full datasets and trained weights remain private.",
     visual: "vision",
+    artifacts: [{"label":"Read my microrobot vision report","href":"https://github.com/samuel-zhang01/IX-DeepLearning/blob/19dacbe70dedb5700a30a51084f5c7e8fb91205a/Course%20Work/Report/DeepLearning_Report.pdf","kind":"SOURCE"}],
   },
   {
     slug: "trustworthy-mri-reconstruction",
@@ -481,7 +533,7 @@ export const projects: Project[] = [
     status: "Research",
     featured: true,
     eyebrow: "UNCERTAINTY-AWARE MEDICAL IMAGING",
-    summary: "Reconstructing cardiac MRI from fewer measurements while checking anatomical fidelity, uncertainty and agreement with the acquired data.",
+    summary: "I reconstructed heart MRI from fewer measurements and checked whether the important structures survived.",
     detail: "I designed a four-level residual U-Net with three learnable soft data-consistency steps for retrospectively undersampled cardiac MRI. The study compares MC-dropout and deep ensembles, tests adversarial perturbations and MR-to-CT shift, and measures the effect on eight-class segmentation. At R=4×, the reported reconstruction reaches 31.90 dB PSNR and 0.889 SSIM. Synthetic browser experiments connect acquisition budget, error distribution and uncertainty ranking to the resulting measures. Training used Optuna-selected loss and dropout settings; robustness tests include single-step FGSM and iterative PGD attacks, measured against the zero-filled baseline.",
     tools: ["PyTorch", "U-Net", "FFT / k-space", "MC Dropout", "Deep Ensembles", "Optuna"],
     highlights: ["7,756,580-parameter residual U-Net + three soft-DC scalars", "31.90 dB PSNR and 0.889 SSIM at R=4×", "Soft-DC ablation causes an 8.1 dB collapse", "Ensemble ECE 0.017; MC Dropout error correlation r=0.590", "92% downstream Dice preservation at R=4×"],
@@ -506,7 +558,7 @@ export const projects: Project[] = [
     status: "Research",
     featured: true,
     eyebrow: "FNO × MESHGRAPHNET × U-NET",
-    summary: "Learning to approximate expensive fluid simulations with Fourier operators, mesh message passing and a grid-based U-Net.",
+    summary: "I trained three neural networks to predict how fluid moves around a cylinder, then compared their flow predictions.",
     detail: "I completed and trained three neural approaches to predicting velocity and pressure. The Fourier operator maps ten input frames to ten future frames, MeshGraphNet predicts repeatedly on the original mesh, and U-Net predicts the next rasterised field. The browser explains their representations with an animated Fourier walkthrough, graph processors and selectable skip connections. Saved GNN sequences include 20 rollout frames and 30 simulation frames showing horizontal velocity, vertical velocity and pressure. Runs use different evaluation conditions, including a shifted U-Net result, so they do not form a common accuracy ranking. The architecture atlas also reconciles tensor shapes and checkpoint compatibility, keeping saved results attached to the implementation and evaluation conditions that produced them.",
     tools: ["PyTorch", "FNO", "MeshGraphNet", "U-Net", "CFD"],
     highlights: ["Baseline FNO: 3.99M parameters, relative L2 0.0163", "MeshGraphNet: 8,323 parameters, relative L2 0.0165", "U-Net: 50.54M parameters and a separate shifted evaluation", "Vertical-velocity playback and same-sequence frame comparison", "Residual and multi-scale Fourier design experiments"],
@@ -665,8 +717,8 @@ export const projects: Project[] = [
     access: "case-study",
     status: "Archive",
     eyebrow: "INNOVATION MANAGEMENT REFLECTION",
-    summary: "Exploring how an established company can organise innovation through the Opportunist, Enabler, Advocate and Producer models.",
-    detail: "My innovation-management reflection connects disruption and organisational ambidexterity with two practical questions: who owns exploratory work, and who controls its resources? A two-axis diagram compares the four corporate-entrepreneurship structures. The browser adds a fictional 100-token portfolio and transition questions about evidence, integration and runway. Its concentration measures describe the chosen allocation; the scenarios are discussion aids rather than validated strategic advice. The original work includes a LaTeX reflection, a Draw.io ownership/authority diagram, a structural-selection table and a ten-entry bibliography. The portfolio view reconciles the Herfindahl–Hirschman concentration index with the effective number of models.",
+    summary: "Who gets to try a new idea, and who pays for it? My reflection on four ways companies organise innovation.",
+    detail: "I wrote this Imperial reflection to understand why useful ideas sometimes stall inside large companies. I compared four arrangements for ownership and funding, then related them to my experience developing automation at Pfizer. My main argument is that time matters too: an idea needs support long enough to become something people can use. The interactive matrix lets you explore the four arrangements before reading my original diagram.",
     tools: ["Innovation strategy", "Organisational ambidexterity", "Corporate entrepreneurship", "Portfolio concentration", "Scenario modelling"],
     highlights: ["Interactive ownership and resource-authority matrix", "Four organisational models", "100-token innovation portfolio", "Transition questions about evidence, integration and runway"],
     phases: phases(
@@ -677,22 +729,23 @@ export const projects: Project[] = [
     demo: "innovation-models",
     privacyNote: "The interactive organisations and projects are fictional. Original assessed prose remains private.",
     visual: "book",
+    artifacts: [{"label":"Read my original four-model diagram","href":"/projects/innovation/four-models.pdf","kind":"PDF"}],
   },
   {
     slug: "ai-venture-reasoning",
-    title: "Venture Proof & Capital Reasoning",
-    shortTitle: "Venture Reasoning",
+    title: "Venture Planning",
+    shortTitle: "Venture Planning",
     year: "2026",
     area: "Research",
     access: "case-study",
     status: "Archive",
     eyebrow: "VENTURE DESIGN, CRITIQUE AND FUNDING",
-    summary: "Testing whether a venture’s customer evidence, market arithmetic and funding request support a credible next step.",
-    detail: "My venture-writing exercises distinguish AI-generated pitch drafts from human critique, examining specificity, traction and investor relevance. The browser carries those questions into three fictional businesses. Visitors can strengthen or weaken supporting evidence, calculate a market from its segments and customer pipeline, and connect a funding ask with the runway needed for a milestone. All numeric assumptions are illustrative.",
-    tools: ["Venture critique", "Human–LLM authorship", "Evidence design", "Bottom-up market sizing", "Runway modelling"],
+    summary: "Work out whether a business idea can reach its next milestone before its money runs out.",
+    detail: "I wrote and critiqued venture proposals to understand how customer demand, a route to market and a funding request fit together. This companion makes the arithmetic tangible: choose an example business, change its customer conversion and spending, and see how many months it has to reach a milestone. The example businesses are invented so you can explore the reasoning without needing a finance background.",
+    tools: ["Venture critique","Market sizing","Runway modelling"],
     highlights: ["Six venture claims with adjustable supporting evidence", "Bottom-up market and customer-pipeline calculations", "Funding, runway and milestone comparison", "Three fictional business scenarios"],
     phases: phases(
-      "Separate AI-generated pitch material from human critique.",
+      "Challenge the proposal’s customer, cost and funding assumptions.",
       "Test the proposal’s demand, traction, specificity and investor relevance.",
       "Build fictional scenarios that connect customer assumptions and funding to a milestone.",
     ),
@@ -709,8 +762,8 @@ export const projects: Project[] = [
     access: "case-study",
     status: "Research",
     eyebrow: "EQUATION-OF-STATE SCIENTIFIC COMPUTING",
-    summary: "Using Julia and Clapeyron to connect molecular interactions with fluid pressure, phase equilibrium and critical behaviour.",
-    detail: "I developed notebooks for bulk and energy properties, saturation, bubble/dew calculations and pure and mixture critical behaviour using PC-SAFT and other SAFT and cubic equations of state. The browser focuses on the non-associating PC-SAFT calculation: temperature, density, composition and segment parameters feed effective diameters, mixing rules, hard-chain and dispersion energies, then compressibility and pressure. The invented Fluid A/B example supports sensitivity exploration rather than validated compound predictions. The equation view names the Lorentz–Berthelot mixing rules and separates hard-chain and dispersion contributions to Helmholtz energy. The resulting pressure curve is an equation evaluation rather than a flash calculation.",
+    summary: "Explore how molecular size and attraction change a fluid’s pressure and phase behaviour.",
+    detail: "I used Julia and Clapeyron to calculate fluid properties and phase equilibrium from a molecular model called PC-SAFT. The question is simple: how do the size of molecules and their attraction to each other change a liquid or gas? Here you can change those assumptions and see the pressure curve respond. The example fluids illustrate the equations; the original Julia work also explores mixtures and critical points.",
     tools: ["Julia", "Clapeyron.jl", "PC-SAFT", "Jupyter", "PyPlot", "Numerical thermodynamics"],
     highlights: ["Julia workflows for bulk properties and phase equilibrium", "Hard-chain and dispersion energy contributions", "Interactive binary-mixture sensitivity", "Pressure–density curves with typeset equations"],
     phases: phases(
@@ -731,8 +784,8 @@ export const projects: Project[] = [
     access: "case-study",
     status: "Research",
     eyebrow: "SOLID–LIQUID EQUILIBRIUM",
-    summary: "Connecting fusion thermodynamics, liquid interactions and concentration units to model how much solid dissolves in a solvent.",
-    detail: "I built Julia and Clapeyron workflows that combine a solid fusion model with a liquid-phase model, solve solid–liquid equilibrium and compare concentrations with observations. Converting mole fraction into milligrams per gram of solvent makes the calculation useful on the laboratory reporting basis. The browser uses invented Compound Q and Solvent L values to expose a log-space equilibrium solver, activity corrections and separate calibration and holdout rows.",
+    summary: "Calculate how temperature and solvent interactions change the amount of a solid that dissolves.",
+    detail: "I built Julia calculations for solid–liquid equilibrium: how much of a solid can dissolve in a solvent at a given temperature. The workflow combines melting properties with liquid interactions, then converts the answer into units a laboratory can use. In this demo, warm an example mixture and watch both the dissolved fraction and mg per gram of solvent change. You can also fit a few example measurements and check whether the model predicts the remaining ones.",
     tools: ["Julia", "Clapeyron.jl", "SolidHfus", "Margules activity model", "Numerical root finding", "TypeScript / React"],
     highlights: ["Activity-corrected equilibrium calculation", "Visible root-finding convergence", "Mole fraction and mg per gram of solvent conversion", "Fictional calibration and holdout experiment"],
     phases: phases(
@@ -754,7 +807,7 @@ export const projects: Project[] = [
     status: "Research",
     eyebrow: "CP-FTMW · MACROCYCLIC MUSKS",
     summary: "Combining rotational spectroscopy and molecular modelling to distinguish flexible Exaltenone and Muscone conformations.",
-    detail: "I contributed to the King’s College London study and am named as a co-author in the 2025 ISMS conference programme. The work combines conformational search, theoretical spectroscopic predictions and 2–8 GHz CP-FTMW measurements to identify candidate structures. The group reported more than 20 Exaltenone and more than 30 Muscone conformations. Synthetic spectra and structures in the browser let visitors explore line matching, rotational constants and conformer comparisons.",
+    detail: "I analysed molecular shapes by combining conformational searches, theoretical spectra and 2–8 GHz microwave measurements. The study considered more than 20 Exaltenone and more than 30 Muscone conformations. In this browser I use example spectra and structures to explain how matching spectral lines helps distinguish candidate shapes.",
     tools: ["CP-FTMW spectroscopy", "MATLAB", "Conformer search", "Spectral assignment"],
     highlights: ["Co-authored research presented at ISMS 2025", "Conformer search and 2–8 GHz rotational spectroscopy", "20+ Exaltenone and 30+ Muscone conformations reported by the group", "Interactive spectral matching and conformer views"],
     phases: phases(
@@ -780,8 +833,8 @@ export const projects: Project[] = [
     access: "case-study",
     status: "Archive",
     eyebrow: "MATLAB SCIENTIFIC PLOTTING UTILITY",
-    summary: "A compact MATLAB App Designer tool for turning two-column spectroscopy exports into presentation-ready plots with precise frequency navigation and high-resolution export.",
-    detail: "I built a MATLAB App Designer utility that loads frequency and intensity columns, adds titles and axis labels, and provides grid, legend and colour controls. Direct or centred frequency windows and exact 0.1, 10 and 100 MHz pans make it easier to inspect spectral lines. High-resolution export supports figures for reports and presentations. The browser uses a generated trace to reproduce these plotting mechanics. The original controls include seven plot colours and upper-Y-limit nudges, with export handled by MATLAB exportgraphics.",
+    summary: "My MATLAB app for inspecting spectral peaks and making clear figures from laboratory measurements.",
+    detail: "I built a small MATLAB App Designer utility because preparing spectroscopy figures meant repeating the same plotting steps. It lets me set labels and colours, move to an exact frequency window and export a high-resolution figure. The browser reproduces those controls with a generated spectrum. Try panning across it to understand how I inspect a dense measurement without redrawing the whole plot.",
     tools: ["MATLAB App Designer", "MATLAB exportgraphics", "Scientific visualisation", "Desktop GUI"],
     highlights: ["Single two-column numeric trace workflow", "Fine/coarse centring plus ±0.1/10/100 MHz pan", "PNG/JPG/TIF/PDF/EPS export with 600-DPI default", "Responsive two-panel desktop layout"],
     phases: phases(
@@ -851,7 +904,7 @@ export const projects: Project[] = [
     featured: true,
     eyebrow: "SELF-HOSTED SERVICES AND RECOVERY",
     summary: "Building and maintaining a containerised home lab with connected services, scheduled database backups and recovery tooling.",
-    detail: "My home lab combines application, data, access and operations services through Docker Compose. The browser models a six-service portion with one network, three volumes and two direct service dependencies, using fictional identifiers. Visitors can trace connections, simulate a failure and estimate storage for daily database backups. Backup and restore scripts are part of the system, but recovery time and successful restoration have not been verified by a retained drill. That Compose slice declares twelve mount entries and seven published-port entries, with no health checks. Declared dependencies express startup ordering, not proof of readiness or recovery.",
+    detail: "I run a containerised home lab for my applications, databases, automation and backups. I built it to keep services under my control and to understand what happens when one dependency fails. This demo shows a small example of that setup: stop its database, follow the services that lose their connection, then explore how backup size and retention affect storage. The example explains the design without exposing my live machines or configuration.",
     tools: ["Docker Compose", "PostgreSQL", "Ofelia", "Shell", "Dependency graphs"],
     highlights: ["Six-service interactive topology", "Dependency tracing and simulated failures", "Scheduled database backups and restore tooling", "Backup-capacity and retention experiments"],
     phases: phases(

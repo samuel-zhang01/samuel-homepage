@@ -1,9 +1,16 @@
 "use client";
 
 import { useId, type ReactNode } from "react";
-import { translateText } from "@/lib/i18n";
+import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
 import { useProjectLocale } from "./ProjectTranslationBoundary";
 import styles from "./DemoChrome.module.css";
+
+const copy = {
+  "interactive demo": ["交互演示", "互動示範"],
+  "What this shows": ["这个演示展示什么", "這個示範呈現什麼"],
+  "Try this": ["试试这样操作", "試試這樣操作"],
+  "What to notice": ["留意这些变化", "留意這些變化"],
+} satisfies ProjectCopyTable;
 
 type DemoWindowProps = {
   appName: string;
@@ -32,13 +39,13 @@ export function DemoWindow({
 }: DemoWindowProps) {
   const locale = useProjectLocale();
   const guidanceId = useId();
-  const t = (source: string) => translateText(locale, source);
+  const t = (source: string) => projectText(locale, copy, source);
 
   return (
     <section className={`system7-project ${styles.demoWindow} ${className}`} data-locale={locale} aria-label={`${t(title)} — ${t("interactive demo")}`}>
       <header className={styles.demoHeader}>
         <div>
-          <span className={styles.eyebrow}>{t(appName)}<span className={styles.fileContext}> · {locale.startsWith("en") ? "Interactive project file" : t("INTERACTIVE PROJECT FILE")}</span></span>
+          <span className={styles.eyebrow}>{t(appName)}</span>
           <h2>{t(title)}</h2>
         </div>
         <span className={`${styles.statusBadge} ${styles[statusTone]}`}>
@@ -47,15 +54,15 @@ export function DemoWindow({
         </span>
       </header>
       <section className={styles.demoContract} lang={locale} aria-labelledby={guidanceId}>
-        <h3 id={guidanceId}>{t("How to use this interactive demo")}</h3>
+        <h3 id={guidanceId}>{t("What this shows")}</h3>
         <p className={styles.contractPurpose}>{t(purpose)}</p>
         <div className={styles.contractGrid}>
           <div>
-            <h4>{locale.startsWith("en") ? "Try this" : t("TRY THIS")}</h4>
+            <h4>{t("Try this")}</h4>
             <p>{t(tryThis)}</p>
           </div>
           <div>
-            <h4>{locale.startsWith("en") ? "Watch" : t("WATCH")}</h4>
+            <h4>{t("What to notice")}</h4>
             <p>{t(watchFor)}</p>
           </div>
         </div>

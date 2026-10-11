@@ -481,5 +481,9 @@ export const spectroscopyCopy = {
   "Illustrative spectrum loaded. Adjust the frequency window to inspect a feature.": [
     "示意光谱已载入。调整频率视窗可查看局部谱线。",
     "示意光譜已載入。調整頻率視窗可查看局部譜線。"
-  ]
+  ],
+  "I built this plotting app to inspect narrow spectral features and prepare consistent laboratory figures.": ["我制作这个绘图应用来检查细窄的光谱特征，并整理一致的实验图表。","我製作這個繪圖應用程式來檢查細窄的光譜特徵，並整理一致的實驗圖表。"],
+  "Use the small left and right arrows to pan by 0.1 MHz. Then open Export preview and change the DPI.": ["用小型左右箭头以 0.1 MHz 平移。再打开导出预览，改变 DPI。","用小型左右箭頭以 0.1 MHz 平移。再開啟匯出預覽，改變 DPI。"],
+  "The frequency window moves across the same spectrum. DPI changes the exported image size. This example trace was generated for the demo.": ["频率窗口在同一条光谱上移动。DPI 改变导出图像的大小。这条示例光谱专为演示生成。","頻率視窗在同一條光譜上移動。DPI 改變匯出影像的大小。這條範例光譜專為示範產生。"],
+  "Use −0.1 and +0.1 to pan the frequency window, then open Export preview and change DPI.": ["使用 −0.1 和 +0.1 平移频率窗口，然后打开“导出预览”并调整 DPI。","使用 −0.1 和 +0.1 平移頻率視窗，然後開啟「匯出預覽」並調整 DPI。"],
 } satisfies ProjectCopyTable;

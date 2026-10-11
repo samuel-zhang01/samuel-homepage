@@ -1253,4 +1253,12 @@ export const rlAtlasDemoCopy = {
     "已收录",
     "已收錄"
   ]
+,
+  "the 6 September teaching review at revision 92e9b70 records 25 executed notebooks, 448 lecture pages, 64 worked examples and 75 self-checks. It supersedes the older QA table’s missing Week 04 execution and lecture-margin flags. The older extended-reading scan remains a separate record. Week 25 retains one empirical-ordering test failure. These are recorded repository results, not a fresh training run or learner-completion claim.": ["9 月 6 日在修订版本 92e9b70 的教学审查记录了 25 个已执行笔记本、448 页讲义、64 个例题与 75 项自检。它取代了旧 QA 表中第 04 周执行与讲义页边距标记。旧延伸阅读扫描仍为独立记录。第 25 周保留一项经验排序测试失败。这些是仓库记录，并非本次重新训练或学习者完成课程的声明。", "9 月 6 日在修訂版本 92e9b70 的教學審查記錄了 25 個已執行筆記本、448 頁講義、64 個例題與 75 項自我檢查。它取代了舊 QA 表中第 04 週執行與講義頁邊距標記。舊延伸閱讀掃描仍為獨立記錄。第 25 週保留一項經驗排序測試失敗。這些是儲存庫記錄，並非本次重新訓練或學習者完成課程的聲明。"],
+  "I built a reinforcement-learning curriculum to understand how an agent learns from the consequences of its actions. Try that idea in this small grid world.": ["我构建了强化学习课程，理解智能体怎样从行动的后果中学习。在这个小型网格世界里体验这个想法。", "我建置了強化學習課程，理解代理如何從行動的後果中學習。在這個小型網格世界裡體驗這個想法。"],
+  "Press Train 100 episodes, then Test greedy route. Compare Q-learning with SARSA to see which route the agent learns beside the cliff.": ["点击 Train 100 episodes，再点击 Test greedy route，比较 Q-learning 与 SARSA 在悬崖边学出的路径。", "點選 Train 100 episodes，再點選 Test greedy route，比較 Q-learning 與 SARSA 在懸崖邊學出的路徑。"],
+  "The route and Q values change with experience. A cliff fall costs 100 points, so the shortest route and the safer learning behaviour can differ.": ["路径与 Q 值会随经验改变。掉下悬崖损失 100 分，因此最短路径与较安全的学习行为可能不同。", "路徑與 Q 值會隨經驗改變。掉下懸崖損失 100 分，因此最短路徑與較安全的學習行為可能不同。"],
+  "25-module curriculum": ["25 个模块课程", "25 個模組課程"],
+  "Curriculum materials": ["课程材料", "課程材料"],
+  "Learning by consequences": ["从后果中学习", "從後果中學習"]
 } satisfies ProjectCopyTable;

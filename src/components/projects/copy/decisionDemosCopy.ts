@@ -1,6 +1,19 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const decisionDemosCopy = {
+  "What I compared": ["我比较了什么", "我比較了什麼"],
+  "I cleaned 7,674 historical observations and compared five regression families for estimating carbon monoxide. The planner connects those model results with a hypothetical sensor budget, so you can explore the cost of a simpler or more accurate monitor.": ["我清理了 7,674 条历史观测记录，并比较五类估计一氧化碳的回归模型。规划器把模型结果与假设的传感器预算结合，让你探索更简单或更准确的监测器需要付出多少成本。", "我清理了 7,674 筆歷史觀測記錄，並比較五類估計一氧化碳的迴歸模型。規劃器把模型結果與假設的感測器預算結合，讓你探索更簡單或更準確的監測器需要付出多少成本。"],
+  "Original coursework · 10,000 labelled rows": ["原始课程作业 · 10,000 条带标签记录", "原始課程作業 · 10,000 筆含標籤記錄"],
+  "Why this demo uses a scenario": ["这个演示为什么采用示例情境", "這個展示為什麼採用範例情境"],
+  "I found 4,904 duplicate rows in the original dataset, with 1,084 of 2,000 test rows also appearing in training. I need an independent evaluation before reporting detection accuracy. Here you can still explore the useful decision: how much a missed attack is worth compared with a false alarm.": ["我在原始数据集中发现 4,904 条重复记录，2,000 条测试记录中有 1,084 条也出现在训练集中。在报告检测准确率前，我需要独立评估。这里仍可探索实际有用的决策：漏掉攻击相对于一次误报的代价是多少。", "我在原始資料集中發現 4,904 筆重複記錄，2,000 筆測試記錄中有 1,084 筆也出現在訓練集中。在報告偵測準確率前，我需要獨立評估。這裡仍可探索實際有用的決策：漏掉攻擊相對於一次誤報的代價是多少。"],
+  "I compared models that estimate carbon monoxide from other sensor readings, then asked which sensors are worth paying for in a compact air-quality monitor.": ["我比较了利用其他传感器读数估计一氧化碳的模型，再研究紧凑型空气质量监测器值得购买哪些传感器。", "我比較了利用其他感測器讀數估計一氧化碳的模型，再研究精巧型空氣品質監測器值得購買哪些感測器。"],
+  "Lower the sensor budget and see which configurations still fit. Then favour interpretability to compare a simpler model with a more accurate one.": ["降低传感器预算，查看哪些配置仍可选择。再提高可解释性偏好，比较简单模型与更准确的模型。", "降低感測器預算，查看哪些設定仍可選擇。再提高可解釋性偏好，比較簡單模型與更準確的模型。"],
+  "A smaller budget removes sensor choices. The recorded model scores come from my coursework; sensor prices and the recommendation are a hypothetical planning exercise.": ["预算越小，可选传感器越少。记录的模型分数来自我的课程作业；传感器价格和建议属于假设规划练习。", "預算越小，可選感測器越少。記錄的模型分數來自我的課程作業；感測器價格和建議屬於假設規劃練習。"],
+  "I studied when a cyber classifier should raise an alert: missing an attack and interrupting legitimate traffic carry different costs.": ["我研究网络分类器何时应该发出警报：漏掉攻击与干扰正常流量的代价不同。", "我研究網路分類器何時應該發出警報：漏掉攻擊與干擾正常流量的代價不同。"],
+  "Increase the cost of a missed attack, then lower the alert threshold. Watch how missed attacks and false alarms change together.": ["提高漏报攻击的代价，再降低警报阈值，观察漏报攻击与误报如何一起变化。", "提高漏報攻擊的代價，再降低警報門檻，觀察漏報攻擊與誤報如何一起變化。"],
+  "A lower threshold catches more attacks and creates more false alarms. The displayed counts are a teaching scenario; my original dataset needs a cleaner split before I can claim detection performance.": ["较低阈值能捕获更多攻击，也会带来更多误报。显示的数量用于教学情境；我的原始数据集需要更严格的数据划分后，才能报告检测性能。", "較低門檻能捕捉更多攻擊，也會帶來更多誤報。顯示的數量用於教學情境；我的原始資料集需要更嚴格的資料劃分後，才能報告偵測效能。"],
+  "Scrollable synthetic decision log": ["可滚动的合成决策日志", "可捲動的合成決策記錄"],
+  "Decision lab chapter": ["决策实验章节", "決策實驗章節"],
   "Lean monitor": [
     "精简监测方案",
     "精簡監測方案"

@@ -2182,7 +2182,7 @@ export default function SystemSevenDesktop({
   const mobileGuideButtonRef = useRef<HTMLButtonElement | null>(null);
   const returnFocusByApp = useRef<Partial<Record<AppId, HTMLElement>>>({});
   const routeStateByApp = useRef<Partial<Record<AppId, { search: string; hash: string }>>>({
-    projects: { search: "?view=map", hash: "" },
+    projects: { search: "?view=guided", hash: "" },
     project: { search: initialProject ? `?project=${encodeURIComponent(initialProject.slug)}` : "", hash: "" },
     projectActivity: { search: initialActivity ? projectActivitySearch(initialActivity) : "", hash: "" },
   });
@@ -2445,8 +2445,7 @@ export default function SystemSevenDesktop({
       const requestedView = nextUrl.searchParams.get("view");
       const requestedSlug = nextUrl.searchParams.get("project");
       const selectedSlug = nextUrl.searchParams.get("selected");
-      const graphView = requestedView === "map"
-        || (!requestedSlug && !["guided", "list", "files"].includes(requestedView ?? ""));
+      const graphView = requestedView === "map" || nextUrl.searchParams.has("node");
       const requestedProject = (id === "project" || id === "projectActivity" || id === "projects") && !graphView
         ? projects.find((project) => project.slug === requestedSlug)
           ?? projects.find((project) => project.slug === selectedSlug)

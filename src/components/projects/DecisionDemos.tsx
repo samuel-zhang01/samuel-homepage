@@ -142,9 +142,9 @@ export function AirQualityBudgetDemo() {
       appName="Monitor Planner"
       title="Air-quality sensor budget"
       status="Coursework · hypothetical"
-      purpose="Turn source data quality and model evidence into an explicit trade-off between sensor cost, predictive value and interpretability."
-      tryThis="Change the sensor budget and interpretability preference, then compare the feasible choices."
-      watchFor="The browser-only recommendation moves along a constrained frontier; it is not a live procurement or deployment decision."
+      purpose="I compared models that estimate carbon monoxide from other sensor readings, then asked which sensors are worth paying for in a compact air-quality monitor."
+      tryThis="Lower the sensor budget and see which configurations still fit. Then favour interpretability to compare a simpler model with a more accurate one."
+      watchFor="A smaller budget removes sensor choices. The recorded model scores come from my coursework; sensor prices and the recommendation are a hypothetical planning exercise."
       statusTone="safe"
       className={styles.window}
       footer={
@@ -154,10 +154,10 @@ export function AirQualityBudgetDemo() {
         </>
       }
     >
-      <SourceNote title="Historical coursework explorer">
-        The source contains 7,674 air-quality observations, train-only KNN imputation and scaling,
-        five regression families, regularisation paths and a hypothetical sensor-cost exercise. This
-        browser chapter exposes those stages without shipping the dataset or claiming procurement validation.
+      <SourceNote title="What I compared">
+        I cleaned 7,674 historical observations and compared five regression families for estimating
+        carbon monoxide. The planner connects those model results with a hypothetical sensor budget,
+        so you can explore the cost of a simpler or more accurate monitor.
       </SourceNote>
 
       <div className={styles.surfaceTabs} role="group" aria-label="Air-quality decision lab chapter">
@@ -442,24 +442,22 @@ export function CyberThresholdDemo() {
       appName="Threshold Workbench"
       title="Cyber-risk cost simulator"
       status="Synthetic scenario"
-      purpose="Show how false-positive and false-negative costs change a classifier threshold—and why leaked historical evidence cannot validate it."
-      tryThis="Change the cost assumptions and threshold, then inspect the audit and rerun requirements."
-      watchFor="The hypothetical cost balance changes, while the performance claim remains withheld until a leakage-safe evaluation exists."
+      purpose="I studied when a cyber classifier should raise an alert: missing an attack and interrupting legitimate traffic carry different costs."
+      tryThis="Increase the cost of a missed attack, then lower the alert threshold. Watch how missed attacks and false alarms change together."
+      watchFor="A lower threshold catches more attacks and creates more false alarms. The displayed counts are a teaching scenario; my original dataset needs a cleaner split before I can claim detection performance."
       statusTone="working"
       className={styles.window}
       footer={
         <>
-          <span>Source audit: 10,000 labelled rows</span>
+          <span>Original coursework · 10,000 labelled rows</span>
           <span>Historical metric withheld pending leakage-safe rerun</span>
         </>
       }
     >
-      <SourceNote title="Do not read this as validation" tone="amber">
-        The adjustable confusion matrix is a deterministic teaching scenario, not a replay of held-out
-        predictions. The coursework data include 4,904 duplicate rows beyond the first; 1,084 of 2,000
-        seeded test rows exactly recur in training. Its transform also fits during use and the threshold
-        was selected on the test set. A grouped or deduplicated rerun with train-only preprocessing,
-        validation selection and an untouched final test is required before reporting performance.
+      <SourceNote title="Why this demo uses a scenario" tone="amber">
+        I found 4,904 duplicate rows in the original dataset, with 1,084 of 2,000 test rows also appearing
+        in training. I need an independent evaluation before reporting detection accuracy. Here you can
+        still explore the useful decision: how much a missed attack is worth compared with a false alarm.
       </SourceNote>
 
       <div className={styles.cyberLayout}>
@@ -995,7 +993,7 @@ function OpeEstimatorWorkbench() {
         </div>
 
         <PlotPanHint />
-        <div className={styles.logTableWrap} role="region" tabIndex={0} aria-label="Scrollable synthetic logged-policy evidence table">
+        <div className={styles.logTableWrap} role="region" tabIndex={0} aria-label="Scrollable synthetic decision log">
           <table className={styles.logTable}>
             <thead>
               <tr><th>Log</th><th>Seg.</th><th>a</th><th>r</th><th>πb(a|x)</th><th>π(a|x)</th><th>w</th></tr>
@@ -1096,7 +1094,7 @@ export function CausalOpeDemo() {
         The causal chapter asks whether an adjustment set blocks the displayed backdoor path. The OPE chapter asks what a counterfactual policy would have earned from logged bandit feedback. Both use synthetic browser fixtures and keep their assumptions visible.
       </SourceNote>
 
-      <div className={styles.surfaceTabs} role="group" aria-label="Decision evidence lab chapter">
+      <div className={styles.surfaceTabs} role="group" aria-label="Decision lab chapter">
         <button type="button" aria-pressed={surface === "causal"} onClick={() => setSurface("causal")}>01 · Causal adjustment</button>
         <button type="button" aria-pressed={surface === "ope"} onClick={() => setSurface("ope")}>02 · Off-policy evaluation</button>
       </div>

@@ -1501,4 +1501,8 @@ export const environmentCopy = {
     "安装流程模拟",
     "安裝流程模擬"
   ]
+,
+  "I wrote an installer to set up my scientific Python and deep-learning tools on different computers. This planner explains the choices it makes.": ["我编写了安装脚本，在不同电脑上配置科学 Python 与深度学习工具。这个规划器解释脚本作出的选择。", "我編寫了安裝指令碼，在不同電腦上設定科學 Python 與深度學習工具。這個規劃器解釋指令碼作出的選擇。"],
+  "Choose macOS to see the Apple Silicon route. Compare it with Linux and NVIDIA, then use Failure lab to test a fallback.": ["选择 macOS 查看 Apple Silicon 路径，与 Linux 和 NVIDIA 比较，再在 Failure lab 测试后备方案。", "選擇 macOS 查看 Apple Silicon 路徑，與 Linux 和 NVIDIA 比較，再在 Failure lab 測試備用方案。"],
+  "The packages and GPU checks change with the computer. A successful install still needs a working-device check; this browser example installs nothing.": ["软件包与 GPU 检查会随电脑改变。安装成功后仍需检查设备能否工作；浏览器示例不会安装任何东西。", "套件與 GPU 檢查會隨電腦改變。安裝成功後仍需檢查裝置能否工作；瀏覽器範例不會安裝任何東西。"]
 } as const satisfies ProjectCopyTable;

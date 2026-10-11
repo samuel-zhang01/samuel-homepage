@@ -544,7 +544,7 @@ export function InsuranceMatchingDemo() {
   const heldCount = displayedCandidates.length - rankedCount;
   const topWhatIfCandidate = ranked.find((candidate) => candidate.rank === 1);
   const resultStatus = workbenchMode === "evidence"
-    ? `${rankedCount} markets evidence-ready; ${heldCount} gated. Broker order preserved.`
+    ? `${rankedCount} markets ready to review; ${heldCount} gated. Broker order preserved.`
     : `${rankedCount} markets ranked; ${heldCount} gated. Top what-if result: ${topWhatIfCandidate?.name ?? "none"}.`;
 
   const activePreset = WEIGHT_PRESETS.find((preset) =>
@@ -576,24 +576,24 @@ export function InsuranceMatchingDemo() {
   return (
     <ProjectCopy copy={insuranceMatchingDemoCopy}><DemoWindow
       appName="Lead Match Workbench"
-      title="Insurance lead-market evidence lab"
+      title="Compare insurers for a lead role"
       status={workbenchMode === "evidence" ? "Current design · broker order" : "Retired composite · what-if"}
-      purpose="Help a broker compare candidate insurance markets without hiding missing evidence inside one unexplained score."
-      tryThis="Select a market, raise the evidence gate and inspect why a candidate becomes ready, review-only or unavailable."
-      watchFor="Independent evidence pillars and review gates change; the broker—not the ranking—retains the final decision."
+      purpose="I built a comparison workflow for brokers choosing an insurer to lead an insurance placement. It puts trading history, past lead roles and policy wording side by side."
+      tryThis="Inspect Market 06. See which information is missing and why it cannot yet be pinned for broker review."
+      watchFor="Missing information stays visible rather than becoming a low score. The broker can compare suitable candidates before making the final choice."
       statusTone="safe"
       className={styles.window}
       footer={
         <>
           <span>Deterministic browser calculation · no API calls</span>
-          <span>{rankedCount} evidence-ready · {heldCount} gated</span>
+          <span>{rankedCount} ready to review · {heldCount} gated</span>
         </>
       }
     >
       <aside className={styles.disclosure} role="note" aria-label="Synthetic demonstration">
         <span className={styles.disclosureIcon} aria-hidden="true">SYN</span>
         <div>
-          <strong>Real workflow shape. Entirely fictional demonstration data.</strong>
+          <strong>Try the workflow with fictional insurers.</strong>
           <p>
             Market names, risks, values, thresholds, weights and explanations below are synthetic. The what-if
             composite illustrates sensitivity to weights; it is separate from the evidence view, which preserves broker order.
@@ -601,23 +601,8 @@ export function InsuranceMatchingDemo() {
         </div>
       </aside>
 
-      <section className={styles.sourceRecord} aria-label="Source-recorded evaluation contracts">
-        <div className={styles.sourceRecordIntro}>
-          <span>Source-recorded evidence / two separate contracts</span>
-          <p>These aggregate study results are context for the workbench, not values used by its fictional markets. They measure different targets and must not be combined into one headline score.</p>
-        </div>
-        <article>
-          <span>Risk-to-market ranking</span>
-          <strong>148,140 rows · 37,844 UMRs · 46 features</strong>
-          <p>Temporal Hit@1 <b>0.758</b> versus random <b>0.596</b>; Hit@3 <b>0.945</b>. The final record also notes incumbency-dominated behaviour, so this is not a generic recommendation claim.</p>
-        </article>
-        <article>
-          <span>Placement-outcome evaluation</span>
-          <strong>70,598 labelled rows</strong>
-          <p>Holdout Hit@1 <b>0.569</b> versus random <b>0.231</b>. This is a separate placement contract, not a validation of the synthetic browser scenarios or the retired composite.</p>
-        </article>
-      </section>
-
+      <details>
+        <summary>Compare matching approaches</summary>
       <section className={styles.modeChooser} aria-labelledby="workbench-mode-title">
         <div>
           <span>Source-fidelity switch</span>
@@ -626,7 +611,7 @@ export function InsuranceMatchingDemo() {
         </div>
         <div className={styles.modeButtons}>
           <button type="button" className={workbenchMode === "evidence" ? styles.modeActive : ""} aria-pressed={workbenchMode === "evidence"} onClick={() => setWorkbenchMode("evidence")}>
-            <span>CURRENT</span><strong>Evidence view</strong><small>Preserve broker order</small>
+            <span>CURRENT</span><strong>Broker comparison</strong><small>Preserve broker order</small>
           </button>
           <button type="button" className={workbenchMode === "retired-composite" ? styles.modeRetiredActive : ""} aria-pressed={workbenchMode === "retired-composite"} onClick={() => setWorkbenchMode("retired-composite")}>
             <span>⚠ RETIRED</span><strong>Composite sandbox</strong><small>Explore sensitivity only</small>
@@ -636,11 +621,13 @@ export function InsuranceMatchingDemo() {
 
       <ol className={styles.pipeline} aria-label="Matching workflow">
         <li><span>01</span><strong>Risk + panel</strong><small>scenario contract</small></li>
-        <li><span>02</span><strong>Evidence agents</strong><small>LambdaRank · Bayes · wording</small></li>
-        <li><span>03</span><strong>{workbenchMode === "evidence" ? "Evidence packets" : "What-if score"}</strong><small>{workbenchMode === "evidence" ? "pillars stay separate" : "weights re-normalise"}</small></li>
+        <li><span>02</span><strong>Three checks</strong><small>LambdaRank · Bayes · wording</small></li>
+        <li><span>03</span><strong>{workbenchMode === "evidence" ? "Insurer information" : "What-if score"}</strong><small>{workbenchMode === "evidence" ? "pillars stay separate" : "weights re-normalise"}</small></li>
         <li><span>04</span><strong>Guardrails</strong><small>authority & coverage</small></li>
         <li><span>05</span><strong>Broker review</strong><small>decision stays human</small></li>
       </ol>
+      </details>
+
 
       <section className={styles.scenarioSection} aria-labelledby="scenario-title">
         <div className={styles.sectionHeading}>
@@ -683,8 +670,8 @@ export function InsuranceMatchingDemo() {
           <div className={styles.sectionHeading}>
             <span>02</span>
             <div>
-              <p>{workbenchMode === "evidence" ? "Evidence contract" : "Retired model lab"}</p>
-              <h3 id="controls-title">{workbenchMode === "evidence" ? "Inspect the abstention gates" : "Tune the what-if ranking lens"}</h3>
+              <p>{workbenchMode === "evidence" ? "Required information" : "Retired model lab"}</p>
+              <h3 id="controls-title">{workbenchMode === "evidence" ? "Choose what must be known" : "Tune the what-if ranking lens"}</h3>
             </div>
           </div>
 
@@ -846,7 +833,7 @@ export function InsuranceMatchingDemo() {
             <span>04</span>
             <div>
               <p>INSPECTOR</p>
-              <h3 id="explain-title">{workbenchMode === "evidence" ? `Evidence packet for ${selected.name}` : `Why ${selected.name} is ${selected.rank ? `#${selected.rank}` : "held"}`}</h3>
+              <h3 id="explain-title">{workbenchMode === "evidence" ? `Information for ${selected.name}` : `Why ${selected.name} is ${selected.rank ? `#${selected.rank}` : "held"}`}</h3>
             </div>
           </div>
           <div className={styles.scoreStamp}>

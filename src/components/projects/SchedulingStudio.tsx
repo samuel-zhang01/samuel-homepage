@@ -520,9 +520,9 @@ export function SchedulingStudio() {
       appName="YASA scheduling"
       title="Multi-host Scheduling Lab"
       status="Booking simulation"
-      purpose="Explain how multi-host availability, time zones, buffers and collision protection become bookable slots."
-      tryThis="Switch allocation policy, inspect a blocked slot, then reserve a free time and replay a collision."
-      watchFor="Host assignment and slot state update while final revalidation prevents a stale choice from becoming a double-booking."
+      purpose="I built a booking app that finds a meeting time for one host, any available host or a whole team."
+      tryThis="Switch from Round Robin to Collective. Compare the available times when one person is enough and when everyone must be free."
+      watchFor="Collective meetings have fewer possible times because every host must be available. Reservations and a final check protect a selected time from double-booking."
       statusTone="safe"
       footer={
         <>
@@ -536,20 +536,7 @@ export function SchedulingStudio() {
         <p><strong>Real scheduling rules, fictional calendars.</strong> This browser port mirrors the repository’s four scheduling modes, buffered working-window constraints, weighted allocation, IANA timezone display, temporary reservations and final revalidation.</p>
       </div>
 
-      <section className={styles.bookingJourney} aria-labelledby="booking-journey-title">
-        <div>
-          <span>BOOKING JOURNEY</span>
-          <h3 id="booking-journey-title">From public page to managed calendar event</h3>
-          <p>The complete application connects a public booking page to calendar events and notifications. Explore its scheduling decisions here, using fictional calendars and local reservations.</p>
-        </div>
-        <ol>
-          <li><span>01</span><strong>Public page</strong><small>event + attendee input</small></li>
-          <li><span>02</span><strong>Availability</strong><small>windows − Graph busy − bookings</small></li>
-          <li><span>03</span><strong>Reservation</strong><small>UTC host/slot key · 10 min</small></li>
-          <li><span>04</span><strong>Revalidation</strong><small>host free + database exclusion</small></li>
-          <li><span>05</span><strong>Delivery</strong><small>Graph event · email · ICS</small></li>
-        </ol>
-      </section>
+
 
       <div role="group" className={styles.modeTabs} aria-label="Scheduling mode">
         {(Object.keys(MODE_COPY) as Mode[]).map((item) => (
@@ -722,6 +709,20 @@ export function SchedulingStudio() {
         </aside>
       </div>
       <section className={styles.dstChapter}><h3>Explore daylight-saving gaps and repeated times</h3><SchedulingDstExperiment /></section>
+      <section className={styles.bookingJourney} aria-labelledby="booking-journey-title">
+        <div>
+          <span>BOOKING JOURNEY</span>
+          <h3 id="booking-journey-title">From public page to managed calendar event</h3>
+          <p>The complete application connects a public booking page to calendar events and notifications. Explore its scheduling decisions here, using fictional calendars and local reservations.</p>
+        </div>
+        <ol>
+          <li><span>01</span><strong>Public page</strong><small>event + attendee input</small></li>
+          <li><span>02</span><strong>Availability</strong><small>windows − Graph busy − bookings</small></li>
+          <li><span>03</span><strong>Reservation</strong><small>UTC host/slot key · 10 min</small></li>
+          <li><span>04</span><strong>Revalidation</strong><small>host free + database exclusion</small></li>
+          <li><span>05</span><strong>Delivery</strong><small>Graph event · email · ICS</small></li>
+        </ol>
+      </section>
     </DemoWindow></ProjectCopy>
   );
 }

@@ -541,34 +541,28 @@ test("Mandarin lineage views translate development filters, design context and m
     }
   }
 });
-test("Mandarin recorded CFD and microscopy benchmarks translate model, field and sample states", () => {
+test("Mandarin recorded benchmarks translate model changes and task interpretation", () => {
   for (const locale of ["zh-CN", "zh-TW"]) {
     const cfd = harness("CfdSurrogateDemo", benchmarkBody, locale, true); let tree = cfd.render();
     for (const [name, result] of [["FNO", "0.0163"], ["GNN", "0.0165"], ["U-Net", "1.2823"]]) {
       const chosen = descendants(tree).find(node => node.type === "button" && descendants(node).some(child => child.type === "strong" && text(child) === name));
       assert.ok(chosen, name); chosen.props.onClick(); tree = cfd.render();
-      for (const field of ["Ground truth", "Prediction", "Absolute error"]) {
-        click(tree, translate(locale, field)); tree = cfd.render();
-        for (let snapshot = 0; snapshot < 3; snapshot++) {
-          click(tree, translate(locale, "Next snapshot →")); tree = cfd.render();
-          assertLocalised(tree, ["Recorded baseline evaluation", "Recorded 500-file evaluation", "Shifted 20-file", "Spectral operator", "Message passing", "Rasterised", "TRUTH", "PREDICTION", "ERROR"], `${locale}/${name}/${field}`);
-          assert.ok(text(tree).includes(result));
-        }
-      }
+      assertLocalised(tree, ["Recorded baseline evaluation", "Recorded 500-file evaluation", "Shifted 20-file", "Spectral operator", "Message passing", "Rasterised", "What does the error", "What I learned"], `${locale}/${name}`);
+      const resultPanel = descendants(tree).find(node => node.type === "section" && node.props["aria-live"] === "polite");
+      assert.ok(text(resultPanel).includes(result), `${locale}/${name}: active result`);
+      assert.equal(descendants(tree).filter(node => node.type === "svg").length, 0, "Recorded results must not acquire an invented field drawing");
     }
     const robot = harness("MicrorobotVisionDemo", benchmarkBody, locale, true); tree = robot.render({ locale });
-    for (const model of ["simple", "resnet18", "resnet34", "mobile", "vit"]) {
+    for (const [model, pose, depth] of [["simple", "98.25%", "0.0478"], ["resnet18", "97.50%", "0.0256"], ["resnet34", "98.50%", "0.0256"], ["mobile", "97.50%", "0.0325"], ["vit", "98.25%", "0.0265"]]) {
       descendants(tree).find(node => node.type === "select" && descendants(node).some(child => child.type === "option" && child.props.value === "resnet34")).props.onChange({ target: { value: model } });
       tree = robot.render({ locale });
-      for (const task of ["Pose classification", "Depth regression"]) {
+      for (const [task, result] of [["Pose classification", pose], ["Depth regression", depth]]) {
         click(tree, translate(locale, task)); tree = robot.render({ locale });
-        for (const view of ["Pose", "Depth", "Grad-CAM style"]) {
-          click(tree, translate(locale, view)); tree = robot.render({ locale });
-          for (const frame of [0, 1, 2]) {
-            descendants(tree).find(node => node.type === "select" && typeof node.props.value === "number").props.onChange({ target: { value: String(frame) } }); tree = robot.render({ locale });
-            assertLocalised(tree, ["Frame A", "Frame B", "Frame C", "From scratch", "normalised held-out error", "POSE ACCURACY", "recorded pose"], `${locale}/${model}/${task}/${view}/${frame}`);
-          }
-        }
+        assertLocalised(tree, ["From scratch", "Two tasks", "Pose accuracy is", "What I learned"], `${locale}/${model}/${task}`);
+        const resultPanel = descendants(tree).find(node => node.type === "section" && node.props["aria-live"] === "polite");
+        const primary = descendants(resultPanel).find(node => node.type === "strong");
+        assert.equal(text(primary), result, `${locale}/${model}/${task}: active metric`);
+        assert.equal(descendants(tree).filter(node => node.type === "svg").length, 0, "Benchmark must not invent a microscope image or attribution map");
       }
     }
   }

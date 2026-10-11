@@ -1053,4 +1053,11 @@ export const italianCopy = {
     "练习档案 · 本地运行",
     "練習檔案 · 本地執行"
   ]
+,
+  "Next exercise": ["下一题", "下一題"],
+  "I built Parliamo to put beginner Italian lessons, daily practice and vocabulary review in one place.": ["我构建 Parliamo，把意大利语入门课程、每日练习与词汇复习放在同一个地方。", "我建置 Parliamo，把義大利語入門課程、每日練習與詞彙複習放在同一個地方。"],
+  "Choose italiana for Maria and press Check. Then open Recall, reveal a vocabulary card and rate how well you remembered it.": ["为 Maria 选择 italiana 并点击 Check，再打开 Recall，翻开词汇卡并评价自己记得怎样。", "為 Maria 選擇 italiana 並點選 Check，再開啟 Recall，翻開詞彙卡並評價自己記得如何。"],
+  "Each answer updates practice progress. Remembered vocabulary waits longer before review; a missed card returns sooner.": ["每次回答都会更新练习进度。记住的词汇会延后复习，忘记的词汇会更早回来。", "每次回答都會更新練習進度。記住的詞彙會延後複習，忘記的詞彙會更早回來。"],
+  "My portal combines a 56-day plan with practice, writing feedback and vocabulary review. The System page shows how saved progress survives a sync conflict.": ["我的学习门户把 56 天计划与练习、写作反馈及词汇复习结合起来。System 页面展示保存的进度怎样在同步冲突中保留下来。", "我的學習入口把 56 天計畫與練習、寫作回饋及詞彙複習結合起來。System 頁面展示保存的進度如何在同步衝突中保留下來。"],
+  "Speech synthesis is unavailable. Use Next exercise to continue with a text question.": ["语音合成不可用。点击 Next exercise 继续文字题。", "語音合成無法使用。點選 Next exercise 繼續文字題。"]
 } as const satisfies ProjectCopyTable;

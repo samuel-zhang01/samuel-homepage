@@ -52,7 +52,7 @@ const VIEWS: Array<{ id: ViewId; label: string; hint: string }> = [
   { id: "claims", label: "Claim desk", hint: "assertion → proof" },
   { id: "market", label: "Market math", hint: "bottom-up arithmetic" },
   { id: "ask", label: "Ask planner", hint: "capital → evidence gate" },
-  { id: "ledger", label: "Source ledger", hint: "what this proves" },
+  { id: "ledger", label: "Notes", hint: "original exercise and example assumptions" },
 ];
 
 const CLAIMS: Array<{
@@ -632,7 +632,7 @@ function SourceLedger() {
 }
 
 export function VentureReasoningStudio() {
-  const [view, setView] = useState<ViewId>("claims");
+  const [view, setView] = useState<ViewId>("ask");
   const [scenarioId, setScenarioId] = useState<ScenarioId>(SCENARIOS[0].id);
   const [claimLevels, setClaimLevels] = useState<Record<ClaimId, EvidenceLevel>>({ ...SCENARIOS[0].levels });
   const [selectedClaimId, setSelectedClaimId] = useState<ClaimId>("traction");
@@ -663,11 +663,11 @@ export function VentureReasoningStudio() {
   return (
     <ProjectCopy copy={ventureReasoningStudioCopy}><DemoWindow
       appName="Venture Reasoning Desk"
-      title="Venture Proof Workbench"
+      title="Can this business reach its next milestone?"
       status="Synthetic reconstruction"
-      purpose="Connect a venture claim, its evidence, bottom-up market arithmetic and the capital needed to reach the next milestone."
-      tryThis="Strengthen one traction claim, stress the qualified pipeline and change the funding ask."
-      watchFor="Evidence coverage, market sizing and runway gates update together so polished prose cannot hide a broken chain."
+      purpose="I built this planner to connect a business idea with customers, monthly spending and the money needed to reach a milestone."
+      tryThis="Increase monthly spending in Ask planner. Watch how many months the available cash will last."
+      watchFor="Less time remains to reach the milestone. Changing the funding request shows how much extra time it would buy in this example."
       statusTone="safe"
       className={styles.studio}
       footer={<><span>{scenario.name} · {VIEWS.find((item) => item.id === view)?.label}</span><span>Fictional ventures · visible assumptions</span></>}

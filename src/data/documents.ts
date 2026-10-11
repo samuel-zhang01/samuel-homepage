@@ -15,6 +15,12 @@ export type ProfileDocument = {
 /** Public PDFs only; the library and graph share one record per document. */
 export const supportingDocuments: ProfileDocument[] = [
   {
+    id: "innovation-four-models", title: "My Four Models of Corporate Innovation", meta: "Innovation reflection · English diagram",
+    src: "/projects/innovation/four-models.pdf",
+    description: "My original diagram compares who owns a new idea with who controls its resources. It accompanies my Imperial innovation-management reflection.",
+    projectSlug: "innovation-models-reflection", originIds: ["imperial"], sourceIds: ["archive:innovation-models-reflection"],
+  },
+  {
     id: "growmat-showcase", title: "GROWMAT — External Showcase", meta: "Enterprise product · English PDF",
     src: "/GROWMAT%20Showcase%20External%20Highest%20Quality.pdf",
     description: "The original external showcase explains GROWMAT’s seven-component architecture, governed data, workload modelling and capacity views.",

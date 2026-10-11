@@ -1005,4 +1005,7 @@ export const courseCopy = {
     "虚构课程目录",
     "虛構課程目錄"
   ]
+,
+  "I built a course finder to turn interests, skill level, time and budget into a manageable shortlist.": ["我构建了课程查找器，把兴趣、技能水平、时间与预算转成便于比较的候选清单。", "我建置了課程搜尋器，把興趣、技能程度、時間與預算轉成便於比較的候選清單。"],
+  "Untick AI/ML and see which course moves to the top. Open Explain to see why the selected course earned its points.": ["取消选择 AI/ML，查看哪门课程升到首位，再打开 Explain 了解所选课程为何得到这些分数。", "取消選擇 AI/ML，查看哪門課程升到首位，再開啟 Explain 了解所選課程為何得到這些分數。"]
 } as const satisfies ProjectCopyTable;

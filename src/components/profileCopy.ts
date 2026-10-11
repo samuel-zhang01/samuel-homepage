@@ -2,6 +2,9 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Profile copy is kept beside its evidence-backed records, away from legacy text. */
 export const profileCopy = {
+  "My Four Models of Corporate Innovation": ["我的企业创新四模型图", "我的企業創新四模型圖"],
+  "Innovation reflection · English diagram": ["创新管理反思 · 英文图表", "創新管理反思 · 英文圖表"],
+  "My original diagram compares who owns a new idea with who controls its resources. It accompanies my Imperial innovation-management reflection.": ["我的原始图表比较了新想法的责任归属与资源控制。这是我在帝国理工的创新管理反思的配图。", "我的原始圖表比較了新想法的責任歸屬與資源控制。這是我在帝國理工的創新管理反思的配圖。"],
   "Career records from the CV, connected to public work and original showcases.": ["简历中的经历记录，关联公开作品与原始展示资料。", "履歷中的經歷紀錄，連結公開作品與原始展示資料。"],
   "Related subject context": ["相关学科背景", "相關學科背景"],
   "Record sources": ["记录来源", "紀錄來源"],

@@ -1296,9 +1296,9 @@ export function ChemistryCodingStudio() {
       appName="Chemistry Lab"
       title="Chemistry coding workbench"
       status="Four interactive labs"
-      purpose="Explore how sampling, molecular shape, numerical motion and quantum-energy calculations turn physical ideas into computational experiments."
-      tryThis="Run the sampler, change polymer generation, step molecular dynamics or recompute a quantum-energy comparison."
-      watchFor="Temperature changes which moves are accepted, polymer rules change shape, and time steps change energy drift. Quantum tables retain recorded calculations."
+      purpose="I completed and extended chemistry coding exercises to see how simple physical rules produce molecular arrangements and motion."
+      tryThis="Press Run 50 in the sampler. Watch the particles rearrange, then raise temperature and run another 50 moves."
+      watchFor="Lower-energy moves are accepted; higher-energy moves get a temperature-dependent chance. The other tabs explore polymer shape, molecular motion and recorded quantum calculations."
       statusTone="safe"
       className={styles.window}
       footer={

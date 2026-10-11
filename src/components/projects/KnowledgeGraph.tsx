@@ -661,7 +661,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
 
   return <section ref={graphRef} className={`system7-project ${styles.graph}`} aria-label={t("Knowledge graph")} lang={locale}>
     <header className={styles.header}>
-      <div><p>{t("Start with a subject, experience, skill or document. Follow its evidence to the work.")}</p><button type="button" className={`s7-button ${styles.phoneJump}`} onClick={() => { stageRef.current?.scrollIntoView({ block: "start" }); stageRef.current?.focus({ preventScroll: true }); }}>{t("View in graph")} ↓</button></div>
+      <div><p>{t("Start with a subject, experience, skill or document. Follow the connections to see how my work fits together.")}</p><button type="button" className={`s7-button ${styles.phoneJump}`} onClick={() => { stageRef.current?.scrollIntoView({ block: "start" }); stageRef.current?.focus({ preventScroll: true }); }}>{t("View in graph")} ↓</button></div>
       <div className={styles.searchContainer}><label className={styles.search}><span>{t("Find a subject, project, experience, skill or document")}</span><input type="search" value={query} placeholder={t("Try Fourier, chemistry, Pfizer…")} onChange={(event) => { setQuery(event.target.value); setResultLimit(12); }} onKeyDown={(event) => { if (event.key === "Escape") setQuery(""); if (event.key === "Enter" && searchResults[0]) { event.preventDefault(); select(searchResults[0].id, true, true); } }} /></label>
         {query.trim() && <div role="group" className={styles.searchResults} aria-label={t("Search results")}><span aria-live="polite">{searchResults.length} {t("matches")}</span>{searchResults.slice(0, 8).map((result) => <button key={result.id} onClick={() => select(result.id, true, true)}><strong>{t(result.label)}</strong><small>{t(kindLabels[result.kind])}</small></button>)}{searchResults.length === 0 && <p>{t("Try a broader subject such as chemistry, learning or computing.")}</p>}{searchResults.length > 8 && <button onClick={browseConnections}>{t("Browse all connections")} ↓</button>}</div>}
       </div>
@@ -714,13 +714,13 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
             {showcasePdf && <button className={styles.textAction} onClick={() => onOpenProject(selectedProject.slug, false, selectedId)}>{t("Open project")} →</button>}
           </>}
           {(selected.kind === "experience" || selected.kind === "education") && <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t(selected.section === "education" ? "Open education record" : "Open experience record")} <span aria-hidden="true">↗</span></a>}
-          {selected.kind === "skill" && <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t("Open skill evidence")} <span aria-hidden="true">↗</span></a>}
+          {selected.kind === "skill" && <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t("See where I used this skill")} <span aria-hidden="true">↗</span></a>}
           {selected.kind === "document" && <>
             {documentActivity && openActivity
               ? <button className={`s7-button is-primary ${styles.primaryAction}`} onClick={() => openActivity(documentActivity)}>{t("Open PDF")} <span aria-hidden="true">↗</span></button>
               : <a className={`s7-button is-primary ${styles.primaryAction}`} href={graphNodeHref(selected, localeSlug)}>{t("Open document record")} <span aria-hidden="true">↗</span></a>}
           </>}
-          {!!selected.sources?.length && <section className={styles.sourceNotes}><h3>{t("Evidence sources")}</h3>{selected.sources.map(source => {
+          {!!selected.sources?.length && <section className={styles.sourceNotes}><h3>{t("Read more")}</h3>{selected.sources.map(source => {
             const href = getProfileSourceHref(source.id, locale) ?? source.href;
             return <a key={source.id} href={href} {...(href.startsWith("https://") ? { target: "_blank", rel: "noreferrer" } : {})}>{t(source.title)} <span aria-hidden="true">↗</span></a>;
           })}</section>}
@@ -743,7 +743,7 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
             <button onClick={() => select("experience:imperial", true, true)}><strong>{t("Follow the Imperial work")}</strong><span>{t("Coursework, research and experiments")} →</span></button>
             <button onClick={() => select("experience:pfizer", true, true)}><strong>{t("Start from experience")}</strong><span>{t("Pfizer → GROWMAT → workload planning")} →</span></button>
           </div>
-          {!!graph.nodes.find(node => node.kind === "skill") && <div className={styles.startRoutes}><button onClick={() => select(graph.nodes.find(node => node.kind === "skill")!.id, true, true)}><strong>{t("Trace a skill to its evidence")}</strong><span>{t("Projects, professional records and source documents")} →</span></button></div>}
+          {!!graph.nodes.find(node => node.kind === "skill") && <div className={styles.startRoutes}><button onClick={() => select(graph.nodes.find(node => node.kind === "skill")!.id, true, true)}><strong>{t("See a skill in my projects")}</strong><span>{t("Projects, professional records and source documents")} →</span></button></div>}
           <p className={styles.smallNote}>{graph.nodes.filter(node => node.kind === "skill").length} {t("skills")} · {graph.nodes.filter(node => node.kind === "document").length} {t("documents")}</p>
           <p className={styles.smallNote}>{projects.length} {t("projects")} · {knowledgeTopics.length} {t("subjects")} · {timeline.length} {t("contexts")}</p>
         </>}
@@ -769,6 +769,6 @@ export function KnowledgeGraph({ active, locale, initialNode, onSelectionChange,
       <summary><strong>{t("Compare projects")}</strong><span>{t("Explore dates, tools and model families")}</span></summary>
       {analysisOpen && <CatalogueAnalysis onSelectProject={(slug) => onOpenProject(slug, false, selectedId)} initialSlug={selectedProject?.slug} locale={locale} />}
     </details>
-    <footer className={styles.footer}><span>{t("Shared subjects connect ideas. Skills and documents link to named evidence.")}</span><button className="mac-button" onClick={exportGraph}>{t("Export graph data")} ↓</button></footer>
+    <footer className={styles.footer}><span>{t("Follow shared subjects to explore how my projects, skills and studies connect.")}</span><button className="mac-button" onClick={exportGraph}>{t("Export graph data")} ↓</button></footer>
   </section>;
 }
