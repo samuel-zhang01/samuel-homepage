@@ -69,12 +69,15 @@ function flatten(value, prefix = "", result = {}) {
 const desktopCopyPath = resolve(projectRoot, "src/components/desktopCopy.ts");
 const profileCopyPath = resolve(projectRoot, "src/components/profileCopy.ts");
 const homepageCopyPath = resolve(projectRoot, "src/components/homepageCopy.ts");
-const [desktopModule, profileCopyModule, homepageCopyModule] = await Promise.all([
+const secretCopyPath = resolve(projectRoot, "src/components/secretCopy.ts");
+const secretAppPath = resolve(projectRoot, "src/components/SecretApp.tsx");
+const [desktopModule, profileCopyModule, homepageCopyModule, secretCopyModule] = await Promise.all([
   readFile(desktopCopyPath, "utf8").then(source => compileModule(source, desktopCopyPath)),
   readFile(profileCopyPath, "utf8").then(source => compileModule(source, profileCopyPath)),
   readFile(homepageCopyPath, "utf8").then(source => compileModule(source, homepageCopyPath)),
+  readFile(secretCopyPath, "utf8").then(source => compileModule(source, secretCopyPath)),
 ]);
-const desktopCopy = { ...desktopModule.desktopCopy, ...profileCopyModule.profileCopy, ...homepageCopyModule.homepageCopy };
+const desktopCopy = { ...desktopModule.desktopCopy, ...profileCopyModule.profileCopy, ...homepageCopyModule.homepageCopy, ...secretCopyModule.secretCopy };
 const desktopCopyErrors = [];
 const settingsCopyPath = resolve(projectRoot, "src/components/desktopSettingsCopy.ts");
 const { settingsCopy } = await compileModule(await readFile(settingsCopyPath, "utf8"), settingsCopyPath);
@@ -584,6 +587,25 @@ function visitSystem(node, sourceFile, sourcePath, renderedExpression = false) {
   ts.forEachChild(node, (child) => visitSystem(child, sourceFile, sourcePath, renderedExpression));
 }
 
+// Include all secret-app source literals, including data-driven oracle answers.
+// Runtime controls and accessible scene descriptions use this local dictionary.
+const secretAppSource = await readFile(secretAppPath, "utf8");
+const secretAppFile = ts.createSourceFile(secretAppPath, secretAppSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+visitSystem(secretAppFile, secretAppFile, secretAppPath);
+for (const statement of secretAppFile.statements) {
+  if (!ts.isVariableStatement(statement)) continue;
+  for (const declaration of statement.declarationList.declarations) {
+    if (ts.isIdentifier(declaration.name) && declaration.name.text === "thoughts" && declaration.initializer) visitSystem(declaration.initializer, secretAppFile, secretAppPath, true);
+  }
+}
+for (const [source, location] of visibleStrings) {
+  if (location.path === secretAppPath && !Object.hasOwn(secretCopyModule.secretCopy, source)) desktopCopyErrors.push(`Missing secret translation: ${source}`);
+}
+for (const [source, translations] of Object.entries(secretCopyModule.secretCopy)) {
+  if (!Object.hasOwn(secretCopyModule.secretAdvice, source) && !secretAppSource.includes(JSON.stringify(source))) desktopCopyErrors.push(`Unused secret translation: ${source}`);
+  if (translations.some(value => !/\p{Script=Han}/u.test(value))) desktopCopyErrors.push(`Secret prose needs Mandarin copy: ${source}`);
+}
+
 const productivityFile = ts.createSourceFile(
   productivityPath,
   productivitySource,
@@ -715,7 +737,8 @@ const validTraditionalVariants = new Set(["吃", "台", "峰", "秘", "群"]);
 function isContextuallyTraditional(value, character, index) {
   if (validTraditionalVariants.has(character)) return true;
   const context = value.slice(Math.max(0, index - 2), index + 3);
-  if (character === "里" && /(?:(?:公|英)里|里程)/.test(context)) return true;
+  // 里 is also the correct character in the proper name 歐幾里得 (Euclid).
+  if (character === "里" && /(?:(?:公|英|千)里|里程|歐幾里得)/.test(context)) return true;
   if (character === "干" && /干(?:預|擾|涉|係)/.test(context)) return true;
   if (character === "准" && /(?:獲准|批准|准許)/.test(context)) return true;
   if (character === "游" && /(?:上游|中游|下游|游離)/.test(context)) return true;
@@ -783,7 +806,7 @@ for (const [key, value] of Object.entries(archiveCopies["zh-TW"])) {
 }
 
 const missingCoreKeys = [...visibleStrings]
-  .filter(([value, location]) => !zhKeys.has(value) && !((location.path === systemPath || profileDataPaths.includes(location.path)) && value in desktopCopy))
+  .filter(([value, location]) => !zhKeys.has(value) && !((location.path === systemPath || location.path === secretAppPath || profileDataPaths.includes(location.path)) && value in desktopCopy))
   .map(([value, location]) => `${location.path}:${location.line}: ${value}`);
 for (const [key, value] of Object.entries(orbitalModule.orbitalCopies["zh-TW"])) {
   const residual = findTraditionalResidue(value);
@@ -845,3 +868,4 @@ if (errors.length) {
 console.log(
   `Locale gate: ${archiveKeys.length} archive keys and ${orbitalKeys.length} orbital keys match across 4 locales, with 118 names in each Mandarin element catalogue; ${visibleStrings.size} core System 7 strings, ${projectTranslationSources.size} project metadata/suite strings, ${graphDescriptions.length} graph descriptions and ${sideQuestSourceStrings.size} RUN/HACK source strings have Mandarin coverage; ${sideQuestZhValues.length} RUN/HACK translations are free of Simplified-character residue.`,
 );
+console.log(`Secret universe locale gate: ${secretCopyModule.secretThoughts.length} oracle answers and all controls/descriptions have explicit Simplified and Traditional Mandarin copy.`);

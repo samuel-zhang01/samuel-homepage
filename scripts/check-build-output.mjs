@@ -5,11 +5,10 @@ import { gzipSync } from "node:zlib";
 const outputRoot = resolve(process.cwd(), process.argv[2] || process.env.NEXT_DIST_DIR?.trim() || ".next");
 const staticRoot = join(outputRoot, "static");
 const standaloneRoot = join(outputRoot, "standalone");
-// Ultra Convert adds one demand-loaded demo chunk and its CSS. Keep byte
-// and initial-load limits unchanged while allowing that additional experience.
-// COVERD adds a separately loaded workflow script and stylesheet.
+// Ultra Convert, COVERD and the secret universe each add a lazy script/style pair.
 // The shared 42-project visual overview adds one lazy script/style pair.
-const MAX_BROWSER_FILES = 126;
+// The secret's two files load only on discovery; byte/initial-load limits stay fixed.
+const MAX_BROWSER_FILES = 128;
 // Full CN/TW copy and the requested interactive product/ML tasks live in lazy
 // project chunks. Bound that content separately from the unchanged initial load.
 const MAX_BROWSER_BYTES = 5.5 * 1024 * 1024;

@@ -3932,118 +3932,6 @@ html:lang(zh-TW) .career-record {
   border-left: 0;
 }
 
-/* Secret About Box */
-
-.secret-app {
-  position: relative;
-  min-height: 100%;
-  overflow: hidden;
-  padding: 32px 42px;
-  color: #fff;
-  background:
-    radial-gradient(circle at 1px 1px,#fff 1px,transparent 1.5px) 0 0/29px 29px,
-    #090b26;
-  text-align: center;
-}
-
-.secret-app > .pixel-icon {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 4px;
-}
-
-.secret-app .eyebrow {
-  display: block;
-  color: #f2c95f;
-}
-
-.secret-app h3 {
-  margin: 8px 0;
-  font-family: var(--system-font);
-  font-size: 27px;
-}
-
-.secret-app p,
-.secret-app blockquote {
-  position: relative;
-  z-index: 2;
-}
-
-.secret-app p {
-  margin: 0 auto 15px;
-  max-width: 42ch;
-  color: #d7daf2;
-  font-size: 11px;
-  line-height: 1.5;
-}
-
-.secret-app blockquote {
-  margin: 0 auto 16px;
-  max-width: 38ch;
-  color: #fff;
-  font-family: Georgia, serif;
-  font-size: 13px;
-  font-style: italic;
-}
-
-.secret-app small {
-  color: #969cc8;
-  font-family: "Courier New", monospace;
-  font-size: 8px;
-}
-
-.flying-toaster {
-  position: absolute;
-  top: 42px;
-  left: -70px;
-  width: 45px;
-  height: 33px;
-  animation: toaster-flight 7s linear infinite;
-}
-
-.flying-toaster span {
-  position: absolute;
-  inset: 6px 3px 2px;
-  border: 3px solid #fff;
-  border-radius: 8px 8px 3px 3px;
-  background: #9298bc;
-}
-
-.flying-toaster span::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  right: 7px;
-  left: 7px;
-  height: 3px;
-  background: #111;
-}
-
-.flying-toaster i,
-.flying-toaster b {
-  position: absolute;
-  top: 2px;
-  width: 25px;
-  height: 14px;
-  border-top: 3px solid #fff;
-}
-
-.flying-toaster i {
-  left: -19px;
-  transform: rotate(24deg);
-}
-
-.flying-toaster b {
-  right: -19px;
-  transform: rotate(-24deg);
-}
-
-@keyframes toaster-flight {
-  0% { transform: translate(-10px,80px) rotate(-8deg); }
-  45% { transform: translate(560px,-20px) rotate(7deg); }
-  100% { transform: translate(720px,160px) rotate(-4deg); }
-}
-
 .system-toast {
   position: fixed;
   z-index: 7000;
@@ -5038,10 +4926,6 @@ html:lang(zh-TW) .career-record {
     background: #e5e5df;
     box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
     font-weight: 700;
-  }
-
-  .secret-app {
-    padding: 26px 18px;
   }
 
   .system-toast {

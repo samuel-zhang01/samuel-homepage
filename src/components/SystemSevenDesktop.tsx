@@ -115,6 +115,8 @@ const OrbitalLab = dynamic(() => import("./OrbitalLab"), { loading: ClassicModul
 
 const CoverdWorkflow = dynamic(() => import("./projects/CoverdWorkflow"), { loading: ClassicModuleLoading });
 
+const SecretApp = dynamic(() => import("./SecretApp"), { loading: ClassicModuleLoading, ssr: false });
+
 const ProjectExplorer = dynamic(() => import("@/components/projects/ProjectExplorer"), {
   loading: function ProjectExplorerLoading() {
     const locale = useSystemLocale();
@@ -528,10 +530,10 @@ const INITIAL_WINDOWS: WindowState[] = [
   {
     id: "secret",
     title: "The Secret About Box",
-    x: 294,
-    y: 134,
-    width: 500,
-    height: 350,
+    x: 236,
+    y: 62,
+    width: 780,
+    height: 880,
     z: 16,
     open: false,
     maximized: false,
@@ -1847,21 +1849,6 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
   );
 }
 
-function SecretApp({ locale }: { locale: Locale }) {
-  return (
-    <TranslationBoundary locale={locale}><div className="secret-app">
-      <div className="secret-stars" aria-hidden="true"><i /><i /><i /><i /><i /></div>
-      <div className="flying-toaster" aria-hidden="true"><span /><i /><b /></div>
-      <PixelIcon kind={getApplicationIcon("secret")} />
-      <span className="eyebrow">UNREASONABLE CORNER DETECTED</span>
-      <h3>Welcome, power user.</h3>
-      <p>You found the part of the portfolio that contributes nothing to conversion metrics.</p>
-      <blockquote>“The best interface is one with at least one completely unnecessary secret.”</blockquote>
-      <small>System note: OpenClaw did not, in fact, complete my entire life. Results remain inconclusive.</small>
-    </div></TranslationBoundary>
-  );
-}
-
 // Service names retain their text identity; pictograms describe their function.
 function ServiceIcon({ code }: { code: keyof typeof serviceIconKinds }) {
   return <span className="service-pixel-icon" aria-hidden="true"><System7Icon kind={serviceIconKinds[code]} /></span>;
@@ -2077,7 +2064,7 @@ function AppContent({
     case "contact": return <ContactApp openApp={openApp} locale={locale} />;
     case "lab": return <LabApp locale={locale} />;
     case "scrapbook": return <ScrapbookApp locale={locale} />;
-    case "secret": return <SecretApp locale={locale} />;
+    case "secret": return <SecretApp locale={locale} active={active} />;
   }
 }
 
