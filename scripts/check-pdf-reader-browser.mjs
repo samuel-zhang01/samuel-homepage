@@ -103,7 +103,10 @@ async function heldRequest(page, pattern) {
 
 let failed = false;
 for (const engine of engines) {
-  const browser = await playwright[engine].launch({ headless: true });
+  const browser = await playwright[engine].launch({ headless: true,
+    ...(engine === "chromium" ? { ignoreDefaultArgs: ["--hide-scrollbars"] } : {}),
+    ...(engine === "chromium" && process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {}),
+  });
   async function check(name, run) {
     if (process.env.PDF_READER_GROUP && !new RegExp(process.env.PDF_READER_GROUP).test(name)) return;
     const test = { engine, version: browser.version(), name, pageErrors: [], consoleErrors: [] };
@@ -122,6 +125,26 @@ for (const engine of engines) {
     }
   }
   try {
+    await check("landscape document keeps a stable fitted width", async (page, test) => {
+      await page.setViewportSize({ width: 1440, height: 1000 });
+      await page.goto(`${origin}/zh-cn/documents`);
+      await page.waitForFunction(() => document.documentElement.dataset.reduceEffects !== undefined);
+      const app = page.locator('[data-app-id="documents"]');
+      await app.locator("#innovation-four-models").focus();
+      await page.keyboard.press("Enter");
+      await app.locator('[data-pdf-page="1"][aria-busy="false"] canvas').waitFor({ state: "visible" });
+      test.pixels = await rendered(page, "innovation-four-models");
+      test.widths = await app.locator("canvas").first().evaluate(async canvas => {
+        const widths = [];
+        for (let frame = 0; frame < 30; frame++) {
+          await new Promise(resolveFrame => requestAnimationFrame(resolveFrame));
+          widths.push(canvas.width);
+        }
+        return [...new Set(widths)];
+      });
+      assert.equal(test.widths.length, 1, "Scrollbar appearance cannot restart the PDF fit/render cycle");
+      assert.deepEqual(test.pageErrors, []);
+    });
     for (const [name, pattern] of [["held PDF cancellation", "**/Samuel-Zhang-Applied-AI-CV.pdf?*"], ["held worker-module cancellation", "**/_vendor/pdfjs/pdf.worker.min.mjs*"]]) {
       await check(name, async (page, test) => {
         const pending = await heldRequest(page, pattern);

@@ -2377,6 +2377,8 @@ html:lang(zh-TW) .career-record {
   min-height: 0;
   flex: 1;
   overflow: auto;
+  /* Keep fitted PDF widths stable when a page toggles vertical overflow. */
+  scrollbar-gutter: stable;
   padding: 14px;
   background: #777;
   overscroll-behavior: contain;
