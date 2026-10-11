@@ -1010,6 +1010,7 @@ export const courseCopy = {
   "Untick AI/ML and see which course moves to the top. Open Explain to see why the selected course earned its points.": ["取消选择 AI/ML，查看哪门课程升到首位，再打开 Explain 了解所选课程为何得到这些分数。", "取消選擇 AI/ML，查看哪門課程升到首位，再開啟 Explain 了解所選課程為何得到這些分數。"],
   "Save this ranking, then untick AI/ML. Compare which courses moved and open Explain to see the points behind a result.": ["保存当前排名，再取消勾选人工智能 / 机器学习。比较课程名次变化，并打开「解释」查看得分来源。", "儲存目前排名，再取消勾選人工智慧 / 機器學習。比較課程名次變化，並開啟「解釋」查看得分來源。"],
   "Keep a course ranking": ["保留课程排名", "保留課程排名"],
+  "Course recommender workspace": ["课程推荐操作区", "課程推薦操作區"],
   "Save this ranking": ["保存当前排名", "儲存目前排名"],
   "Restore saved preferences": ["恢复保存的偏好", "還原儲存的偏好"],
   "Clear comparison": ["清除比较", "清除比較"],

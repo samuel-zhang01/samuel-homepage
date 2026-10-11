@@ -14,6 +14,7 @@ import styles from "./DesktopFinder.module.css";
 export type FinderApplication = {
   id: AppId;
   title: string;
+  label?: string;
   description: string;
 };
 
@@ -94,10 +95,11 @@ export default function DesktopFinder({
     ...applications.map((app) => {
       const title = projectText(locale, desktopCopy, app.title);
       const description = projectText(locale, desktopCopy, app.description);
+      const label = app.label ? projectText(locale, desktopCopy, app.label) : "";
       return {
         key: `app-${app.id}`, kind: "application" as const,
         appId: app.id, title, description, icon: getApplicationIcon(app.id),
-        search: foldSearch(`${app.title} ${title} ${app.description} ${description}`),
+        search: foldSearch(`${app.title} ${title} ${app.label ?? ""} ${label} ${app.description} ${description}`),
       };
     }),
     ...projects.map((project) => ({

@@ -602,6 +602,7 @@ const FINDER_APPLICATIONS: FinderApplication[] = INITIAL_WINDOWS
     return {
       id: item.id,
       title: item.title,
+      label: desktopItem?.label,
       description: desktopItem?.description ?? (item.id === "settings" ? "Desktop appearance, language and comfort settings." : item.id === "sidequest" ? "Latest field note · RUN/HACK" : item.id === "orbitals" ? "Explore atomic orbitals in a fast, browser-local ASCII laboratory." : "Desk Accessories"),
     };
   });
@@ -686,7 +687,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
         <p className="portrait-caption">SAMUEL.ZHANG</p>
         <dl className="quick-facts">
           <div><dt>Location</dt><dd>London, UK</dd></div>
-          <div><dt>Current</dt><dd>Stealth Startup</dd></div>
+          <div><dt>Work</dt><dd>Applied AI &amp; product</dd></div>
           <div><dt>Venture</dt><dd>coverd.ai</dd></div>
           <div><dt>Direction</dt><dd>Product leadership</dd></div>
         </dl>
@@ -792,8 +793,8 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
         <fieldset className="about-panel about-evidence">
           <legend>Selected work</legend>
           <dl>
-            <div><dt><a href={`/${localeSlug(locale)}/projects?project=coverd-ai`}>COVERD</a></dt><dd>Public product covers ATS-connected review, six specialist dimensions, voice enrichment and reasoned shortlists.</dd></div>
-            <div><dt><a href={`/${localeSlug(locale)}/projects?project=growmat`}>GROWMAT</a></dt><dd>External showcase covers architecture and outcomes; live data and source remain private.</dd></div>
+            <div><dt><a href={`/${localeSlug(locale)}/projects?project=coverd-ai`}>COVERD</a></dt><dd>Reviews job applications and gives recruiters a shortlist with supporting reasons. Recruiters make the final decision.</dd></div>
+            <div><dt><a href={`/${localeSlug(locale)}/projects?project=growmat`}>GROWMAT</a></dt><dd>A laboratory planning tool that replaces spreadsheet workflows with workload and capacity views. Read the public showcase.</dd></div>
             <div><dt><a href={`/${localeSlug(locale)}/projects?project=trustworthy-mri-reconstruction`}>Scientific AI</a></dt><dd>MRI reconstruction, fluid-flow surrogates and microrobot vision, with experiments you can inspect.</dd></div>
             <div><dt><a href={`/${localeSlug(locale)}/experience#kcl-teaching`}>People</a></dt><dd>20+ teaching sessions for 80+ students and a careers panel for more than 100.</dd></div>
           </dl>
@@ -867,12 +868,12 @@ function CareerProjectLinks({ originId, locale }: { originId: string; locale: Lo
       </a> : null;
     });
   return <nav className="career-projects" aria-label={`${t("Explore the work")} · ${t(origin.label)}`} lang={locale}>
-    <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`experience:${originId}`)}`}><span>{t("Related ideas and projects")}</span><strong>{t("Explore connections")} →</strong></a>
     {projectLinks.slice(0, 4)}
     {projectLinks.length > 4 ? <details className="career-projects-more">
       <summary>{t("More related projects")} ({projectLinks.length - 4})</summary>
       <div className="career-projects">{projectLinks.slice(4)}</div>
     </details> : null}
+    <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`experience:${originId}`)}`}><span>{t("Related ideas and projects")}</span><strong>{t("View relationship map")} →</strong></a>
   </nav>;
 }
 
@@ -880,7 +881,7 @@ function CvNavigation({ locale }: { locale: Locale }) {
   return <nav className="button-row" aria-label={translateText(locale, "Explore the CV")}>
     <a className="mac-button" href={`/${localeSlug(locale)}/experience`}>{translateText(locale, "Experience & career")}</a>
     <a className="mac-button" href={`/${localeSlug(locale)}/education`}>{translateText(locale, "Education & awards")}</a>
-    <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map`}>{translateText(locale, "Explore connections")}</a>
+    <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map`}>{translateText(locale, "View relationship map")}</a>
   </nav>;
 }
 
@@ -908,7 +909,7 @@ function ProfileSkillEvidence({ skill, locale }: { skill: (typeof profileSkills)
           if (openProject && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) { event.preventDefault(); openProject(slug); }
         }}>{t(project.shortTitle ?? project.title)} →</a>;
       })}
-      <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`skill:${skill.id}`)}`}>{t("Explore connections")} →</a>
+      <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`skill:${skill.id}`)}`}>{t("View relationship map")} →</a>
     </div>
     {skill.relatedProjectSlugs?.length ? <div className="button-row" role="group" aria-label={t("Related subject context")}>
       <span>{t("Related subject context")}: </span>
@@ -1130,7 +1131,7 @@ function ContactApp({ openApp, locale }: { openApp: (id: AppId) => void; locale:
       <section className="contact-destinations" aria-label="Contact services">
         <div className="contact-destination">
           <PixelIcon kind={contactIconKinds.call} />
-          <div className="contact-destination-copy"><h4>30-minute call</h4><p>YASA booking</p></div>
+          <div className="contact-destination-copy"><h4>30-minute call</h4><p>Book time with Samuel</p><p>Opens the booking page in a new tab.</p></div>
           <div className="contact-actions"><ScheduleCallLink locale={locale} className="is-primary" compact /></div>
         </div>
         <div className="contact-destination">
@@ -1212,7 +1213,7 @@ function DocumentsApp({ locale }: { locale: Locale }) {
         <div className="documents-context">
           {activeDocument.id === "ai-cv" ? <CvNavigation locale={locale} /> : <nav className="button-row" aria-label={translateText(locale, "Explore the work")}>
             {activeDocument.projectSlug ? <a className="mac-button" href={`/${localeSlug(locale)}/projects?project=${activeDocument.projectSlug}`}>{translateText(locale, "Open related project")} →</a> : null}
-            <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`document:${activeDocument.id}`)}`}>{translateText(locale, "Explore connections")} →</a>
+            <a className="mac-button" href={`/${localeSlug(locale)}/projects?view=map&node=${encodeURIComponent(`document:${activeDocument.id}`)}`}>{translateText(locale, "View relationship map")} →</a>
           </nav>}
           <p className="document-description">{activeDocument.description}</p>
         </div>
@@ -2406,7 +2407,7 @@ export default function SystemSevenDesktop({
       const requestedView = nextUrl.searchParams.get("view");
       const requestedSlug = nextUrl.searchParams.get("project");
       const selectedSlug = nextUrl.searchParams.get("selected");
-      const graphView = requestedView === "map" || nextUrl.searchParams.has("node");
+      const graphView = requestedView === "map" || (!requestedView && nextUrl.searchParams.has("node"));
       const requestedProject = (id === "project" || id === "projectActivity" || id === "projects") && !graphView
         ? projects.find((project) => project.slug === requestedSlug)
           ?? projects.find((project) => project.slug === selectedSlug)
@@ -2544,6 +2545,11 @@ export default function SystemSevenDesktop({
 
   const returnFromActivity = () => {
     if (!activity) return;
+    const archiveSelection = new URLSearchParams(routeStateByApp.current.projects?.search).get("selected");
+    if (activityOrigin.current === "projects" && archiveSelection === activity.slug && windows.some(item => item.id === "projects" && item.open)) {
+      closeApp("projectActivity");
+      return;
+    }
     setWindows(current => current.map(item => item.id === "projectActivity" ? { ...item, open: false } : item));
     openProjectDocument(activity.slug);
   };
@@ -2716,7 +2722,7 @@ export default function SystemSevenDesktop({
     restoreMenuTriggerFocus("view");
   };
 
-  const hideAllWindows = () => {
+  const closeAllWindows = () => {
     setWindows((current) => current.map((item) => ({ ...item, open: false })));
     setOpenMenu(null);
     restoreMenuTriggerFocus("special");
@@ -2993,7 +2999,7 @@ export default function SystemSevenDesktop({
           </div>
           <div className="menu-root menu-optional">
             <button ref={(element) => { menuButtonRefs.current.special = element; }} type="button" className={openMenu === "special" ? "is-open" : ""} onClick={() => toggleSystemMenu("special")} onKeyDown={(event) => handleMenuButtonKeyDown(event, "special")} aria-haspopup="menu" aria-controls={openMenu === "special" ? SYSTEM_MENU_ELEMENT_IDS.special : undefined} aria-expanded={openMenu === "special"}>Special</button>
-            {openMenu === "special" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.special} role="menu" aria-label="Special" onKeyDown={(event) => handleSystemMenuKeyDown(event, "special")}><button type="button" role="menuitem" onClick={() => openApp("games")}>Desk Arcade</button><hr /><button type="button" role="menuitem" onClick={hideAllWindows}>Hide All Windows</button><button type="button" role="menuitem" onClick={() => openApp("secret")}>About This Secret…</button><button type="button" role="menuitem" onClick={restart}>Restart</button></div>}
+            {openMenu === "special" && <div className="menu-dropdown" id={SYSTEM_MENU_ELEMENT_IDS.special} role="menu" aria-label="Special" onKeyDown={(event) => handleSystemMenuKeyDown(event, "special")}><button type="button" role="menuitem" onClick={() => openApp("games")}>Desk Arcade</button><hr /><button type="button" role="menuitem" onClick={closeAllWindows}>Close All Windows</button><button type="button" role="menuitem" onClick={() => openApp("secret")}>About This Secret…</button><button type="button" role="menuitem" onClick={restart}>Restart</button></div>}
           </div>
         </div>
         <div className="menu-status">

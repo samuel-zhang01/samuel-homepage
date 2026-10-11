@@ -423,7 +423,7 @@ function PracticeLab({
           <button type="button" aria-pressed={mode === "daily"} className={mode === "daily" ? styles.selected : ""} onClick={() => selectMode("daily")}>Mix quotidiano {bilingual ? "· Daily" : ""}</button>
           <button type="button" aria-pressed={mode === "weak"} className={mode === "weak" ? styles.selected : ""} onClick={() => selectMode("weak")}>Punti deboli {bilingual ? "· Weak areas" : ""}</button>
         </div>
-        <span>{mode === "weak" ? `${labelFor(weakest, bilingual, locale)} first` : "7 skills balanced"}</span>
+        <span>{mode === "weak" ? `${labelFor(weakest, bilingual, locale)} first` : "5 exercises from 7 skills"}</span>
       </div>
 
       <div role="group" className={styles.sessionProgress} aria-label={`Question ${index + 1} of ${session.length}`}>
@@ -558,16 +558,16 @@ function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; s
     <ProjectCopy copy={italianCopy}><section className={styles.recallLab}>
       <header className={styles.sectionIntro}>
         <div>
-          <span className={styles.kicker}>RICHIAMO DISTANZIATO · DUE QUEUE</span>
+          <span className={styles.kicker}>RICHIAMO DISTANZIATO · INTERVAL CALCULATOR</span>
           <h3>Richiama prima di girare.</h3>
-          <p>{bilingual ? "Ratings schedule the next review; misses return immediately and successful cards wait longer." : "La valutazione calcola la prossima scadenza."}</p>
+          <p>{bilingual ? "Rate a card to see its next review interval. This demo cycles through four cards; it does not wait for their due dates." : "Valuta una carta per calcolare l’intervallo del prossimo ripasso. La demo passa tra quattro carte senza attendere le scadenze."}</p>
         </div>
         <div className={styles.deckCount}><strong>{CARDS.length}</strong><span>{bilingual ? "synthetic cards" : "carte sintetiche"}</span></div>
       </header>
 
       <div className={styles.recallGrid}>
         <aside className={styles.deckStats}>
-          <div><span>{bilingual ? "QUEUE" : "CODA"}</span><strong>{cardIndex + 1}/{CARDS.length}</strong></div>
+          <div><span>{bilingual ? "CARD" : "CARTA"}</span><strong>{cardIndex + 1}/{CARDS.length}</strong></div>
           <div><span>{bilingual ? "INTERVAL" : "INTERVALLO"}</span><strong>{state.interval}d</strong></div>
           <div><span>EASE</span><strong>{state.ease.toFixed(2)}</strong></div>
           <div><span>{bilingual ? "REVIEWS" : "RIPASSI"}</span><strong>{state.reviews}</strong></div>
@@ -602,7 +602,7 @@ function RecallLab({ bilingual, xp, setXp }: { bilingual: boolean; xp: number; s
             <MathEquation tex={String.raw`I(q)=\begin{cases}0&q=0\\1&q=1\\\max(3,\operatorname{round}(1.8i))&q=2\\\max(7,\operatorname{round}(2.5i))&q=3\end{cases}`} label="Next review interval in days, by recall quality q and previous interval i" />
           </div>
         ) : (
-          <div><span>SCHEDULER READY</span><strong>{bilingual ? "Reveal the answer, then rate how well you recalled it." : "Gira la carta, poi valuta il richiamo."}</strong><MathEquation tex={String.raw`e'=\max\bigl(1.3,\,e+(q-1.5)\times 0.1\bigr)`} label="Ease update from recall quality q" /></div>
+          <div><span>INTERVAL RULE</span><strong>{bilingual ? "Reveal the answer, then rate how well you recalled it." : "Gira la carta, poi valuta il richiamo."}</strong><MathEquation tex={String.raw`e'=\max\bigl(1.3,\,e+(q-1.5)\times 0.1\bigr)`} label="Ease update from recall quality q" /></div>
         )}
         <span className={styles.traceXp}>{xp} XP</span>
       </div>
@@ -866,7 +866,7 @@ export function ItalianLearningStudio() {
       status="Practice profile · local"
       purpose="I built Parliamo to put beginner Italian lessons, daily practice and vocabulary review in one place."
       tryThis="Choose italiana for Maria and press Check. Then open Recall, reveal a vocabulary card and rate how well you remembered it."
-      watchFor="Each answer updates practice progress. Remembered vocabulary waits longer before review; a missed card returns sooner."
+      watchFor="Each answer updates practice progress. In Recall, compare the calculated review intervals for Again, Hard, Good and Easy."
       statusTone="safe"
       className={styles.studioWindow}
       footer={

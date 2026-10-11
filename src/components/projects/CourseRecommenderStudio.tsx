@@ -4,7 +4,7 @@ import { MathEquation } from "./MathEquation";
 
 import ClassicSelect from "../ClassicSelect";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 
 import { DemoWindow } from "./DemoChrome";
 import styles from "./CourseRecommenderStudio.module.css";
@@ -398,7 +398,7 @@ function ResultCard({ result, rank, mode, selected, onSelect }: {
           aria-valuenow={Math.round(result.score)}
           style={{ "--score": `${result.score}%` } as React.CSSProperties}
         ><strong>{result.score.toFixed(1)}</strong><small>{mode === "source" ? "RANDOM" : "POINTS"}</small></div>
-        <button type="button" onClick={onSelect} aria-pressed={selected}>{selected ? "Selected" : "Inspect"}</button>
+        <button type="button" onClick={onSelect}>Inspect</button>
       </div>
     </article></ProjectCopy>
   );
@@ -501,7 +501,7 @@ function ExplainView({
         </div>
       </section>
 
-      <section className={`${styles.panel} ${styles.formulaPanel}`} aria-labelledby="score-formula-title">
+      <section className={`${styles.panel} ${styles.formulaPanel}`} aria-labelledby="score-formula-title" tabIndex={-1}>
         <div className={styles.panelHeading}><div><span>ADAPTED MODEL · FULL TRACE</span><h3 id="score-formula-title">{course.title}</h3></div><span className={styles.formulaScore}>{adapted.score.toFixed(1)}</span></div>
         <div className={styles.equation}>
           <span>FINAL SCORE</span>
@@ -513,7 +513,7 @@ function ExplainView({
             <article className={!component.active ? styles.inactiveComponent : ""} key={component.id}>
               <div><span>{component.label}</span><strong>{component.active ? `${component.points.toFixed(1)} pts` : "OMITTED"}</strong></div>
               <div className={styles.componentTrack}><i style={{ width: `${component.active ? component.value * 100 : 0}%` }} /></div>
-              <p><MathEquation display={false} tex={`w=${component.weight}`} /><MathEquation display={false} tex={`v=${component.value.toFixed(2)}`} />{component.evidence}</p>
+              <p><MathEquation display={false} tex={`w=${component.weight}`} />{" · "}<MathEquation display={false} tex={`v=${component.value.toFixed(2)}`} />{" — "}{component.evidence}</p>
             </article>
           ))}
         </div>
@@ -700,10 +700,20 @@ export function CourseRecommenderStudio() {
   const [weights, setWeights] = useState<Weights>(DEFAULT_WEIGHTS);
   const [seed, setSeed] = useState(4);
   const [selectedId, setSelectedId] = useState(2);
+  const canvasRef = useRef<HTMLDivElement>(null);
   const [saved, setSaved] = useState<{ mode: ModelMode; preferences: Preferences; weights: Weights; seed: number; ranking: ScoredCourse[] } | null>(null);
   const ranking = useMemo(() => rankCourses(mode, preferences, weights, seed), [mode, preferences, seed, weights]);
   const allRanking = useMemo(() => mode === "source" ? sourceReplayPool(preferences, seed) : rankAllAdapted(preferences, weights), [mode, preferences, seed, weights]);
   const effectiveSelected = ranking.some((result) => result.course.id === selectedId) ? selectedId : (ranking[0]?.course.id ?? selectedId);
+  function inspectCourse(courseId = effectiveSelected) {
+    setSelectedId(courseId);
+    setView("explain");
+    window.requestAnimationFrame(() => {
+      const explanation = canvasRef.current?.querySelector<HTMLElement>('[aria-labelledby="score-formula-title"]') ?? canvasRef.current;
+      explanation?.focus({ preventScroll: true });
+      explanation?.scrollIntoView({ block: "start" });
+    });
+  }
   const comparison = saved ? <section className={styles.rankingComparison} aria-labelledby="ranking-comparison-title">
         <h3 id="ranking-comparison-title">What moved since you saved?</h3>
         <p>Positions cover all six sample courses. The first four form the shortlist; the original model can filter courses out.</p>
@@ -749,10 +759,10 @@ export function CourseRecommenderStudio() {
       </div>
 
 
-      <div className={styles.canvas}>
-        {view === "recommend" && <RecommendView preferences={preferences} setPreferences={setPreferences} mode={mode} seed={seed} setSeed={setSeed} weights={weights} setWeights={setWeights} ranking={ranking} selectedId={effectiveSelected} setSelectedId={setSelectedId} openExplain={() => setView("explain")} comparison={comparison} />}
-        {view === "explain" && <ExplainView preferences={preferences} weights={weights} mode={mode} seed={seed} selectedId={effectiveSelected} setSelectedId={setSelectedId} />}
-        {view === "counterfactual" && <CounterfactualView preferences={preferences} weights={weights} selectedId={effectiveSelected} setSelectedId={setSelectedId} />}
+      <div className={styles.canvas} ref={canvasRef} tabIndex={-1} aria-label="Course recommender workspace">
+        {view === "recommend" && <RecommendView preferences={preferences} setPreferences={setPreferences} mode={mode} seed={seed} setSeed={setSeed} weights={weights} setWeights={setWeights} ranking={ranking} selectedId={effectiveSelected} setSelectedId={inspectCourse} openExplain={() => inspectCourse()} comparison={comparison} />}
+        {view === "explain" && <ExplainView preferences={preferences} weights={weights} mode={mode} seed={seed} selectedId={selectedId} setSelectedId={setSelectedId} />}
+        {view === "counterfactual" && <CounterfactualView preferences={preferences} weights={weights} selectedId={selectedId} setSelectedId={setSelectedId} />}
         {view === "source" && <SourceMapView />}
       </div>
     </DemoWindow></ProjectCopy>

@@ -9,6 +9,7 @@ The last recorded production deployment is `71e58c0` on 6 October 2026. Its loca
 | Document | Purpose |
 | --- | --- |
 | [Explanation pass](PROJECT_REFINEMENT.md) | Goals, ownership and completion tracking for the October project refinement |
+| [Readability and navigation review](READABILITY_NAVIGATION_REVIEW.md) | Seventeen confusing points, repairs, real UI experiments and remaining navigation boundaries |
 | [Visitor comprehension review](PROJECT_VISITOR_REVIEW.md) | Adversarial desktop/phone grades, initial failures and repairs |
 | [Additional project review](PROJECT_VISITOR_REVIEW_ADDITIONAL.md) | Purposeful demo journeys for the remaining research and utility projects |
 | [Decision and research review](PROJECT_VISITOR_REVIEW_DECISIONS.md) | Six further desktop/phone journeys, changed outcomes and interpretation repairs |

@@ -154,7 +154,8 @@ const zhCN: Record<string, string> = {
   "Schedule a call with Samuel": "预约与 Samuel 通话",
   "Schedule a call": "预约通话",
   "30-minute call": "30 分钟通话",
-  "YASA booking": "YASA 预约",
+  "Book time with Samuel": "预约与 Samuel 交流",
+  "Opens the booking page in a new tab.": "在新标签页打开预约页面。",
   "Email": "电子邮件",
   "Profiles and work": "个人主页与作品",
   "Let’s talk about applied AI, responsible technology, product leadership or early-stage ventures.": "聊聊应用人工智能、负责任的技术、产品领导力或早期创业。",
@@ -207,7 +208,7 @@ const zhCN: Record<string, string> = {
   "Use arrow keys to resize.": "使用方向键调整大小。",
   "Classic Pattern": "经典图案",
   "Blue Pattern": "蓝色图案",
-  "Hide All Windows": "隐藏所有窗口",
+  "Close All Windows": "关闭所有窗口",
   "About This Secret…": "关于这个秘密…",
   "Restart": "重新启动",
   "Restart…": "重新启动…",
@@ -1587,11 +1588,13 @@ const zhCN: Record<string, string> = {
 };
 
 const zhTWOverrides: Record<string, string> = {
+  "Close All Windows": "關閉所有視窗",
   "Stealth Startup": "尚未公開的新創公司",
   "Schedule a call with Samuel": "預約與 Samuel 通話",
   "Schedule a call": "預約通話",
   "30-minute call": "30 分鐘通話",
-  "YASA booking": "YASA 預約",
+  "Book time with Samuel": "預約與 Samuel 交流",
+  "Opens the booking page in a new tab.": "在新分頁開啟預約頁面。",
   "Email": "電子郵件",
   "Profiles and work": "個人主頁與作品",
   "Let’s talk about applied AI, responsible technology, product leadership or early-stage ventures.": "聊聊應用人工智慧、負責任的科技、產品領導力或早期創業。",

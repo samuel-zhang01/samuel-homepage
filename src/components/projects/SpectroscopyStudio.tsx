@@ -18,6 +18,7 @@ type PlotColour = "red" | "green" | "blue" | "cyan" | "magenta" | "yellow" | "bl
 const SOURCE_URL =
   "https://github.com/samuel-zhang01/CPROT-Spec-Fast-Plotter/tree/9c6496d7b3c9f67dad163bf6f289de5e22ed3fd0";
 const TRACE_START = 2000;
+const TRACE_SPACING = 5;
 
 const colourOptions: Array<{ value: PlotColour; label: string; stroke: string }> = [
   { value: "red", label: "Red", stroke: "#c32d3c" },
@@ -34,7 +35,7 @@ function gaussian(x: number, centre: number, width: number, amplitude: number) {
 }
 
 const syntheticTrace: TracePoint[] = Array.from({ length: 1201 }, (_, index) => {
-  const x = TRACE_START + index * 5;
+  const x = TRACE_START + index * TRACE_SPACING;
   const floor = 0.00028 + 0.00008 * Math.sin(index * 0.73) + 0.000045 * Math.cos(index * 0.19);
   const y =
     floor +
@@ -300,7 +301,9 @@ export function SpectroscopyStudio() {
     setUpperDraft(String(nextRange[1]));
     const nextVisible = syntheticTrace.filter((point) => point.x >= nextRange[0] && point.x <= nextRange[1]);
     setYRange(autoYRange(nextVisible));
-    setMessage("New centre applied with a ±1 MHz window. The intensity scale now fits the visible samples.");
+    setMessage(nextVisible.length
+      ? "New centre applied with a ±1 MHz window. The intensity scale now fits the visible samples."
+      : "New centre applied with a ±1 MHz window. No sampled points fall inside it; widen the range or centre on a sampled frequency.");
   }
 
   function applySymmetricRange(value: number, kind: "fine" | "coarse") {
@@ -343,15 +346,18 @@ export function SpectroscopyStudio() {
 
   function resetView() {
     setLoaded(true);
-    setCentre(5175);
-    setCentreDraft("5175");
+    const lower = syntheticTrace[0].x;
+    const upper = syntheticTrace.at(-1)!.x;
+    const midpoint = (lower + upper) / 2;
+    setCentre(midpoint);
+    setCentreDraft(String(midpoint));
     setFineRange(0.01);
     setCoarseRange(10);
-    setLowerDraft("5140");
-    setUpperDraft("5210");
-    setXRange([5140, 5210]);
-    setYRange(autoYRange(syntheticTrace.filter((point) => point.x >= 5140 && point.x <= 5210)));
-    setMessage("Restored the 5,175 MHz feature and its original plotting range.");
+    setLowerDraft(String(lower));
+    setUpperDraft(String(upper));
+    setXRange([lower, upper]);
+    setYRange(initialYRange);
+    setMessage("Showing the full synthetic trace from 2,000 to 8,000 MHz.");
   }
 
   function prepareExport() {
@@ -555,6 +561,8 @@ export function SpectroscopyStudio() {
             </table>
           </div>
           <p>The table makes the plotted values available without relying on the chart. Changing the viewport changes these summaries; the underlying samples remain the same.</p>
+          <p>Samples are 5 MHz apart. Lines join neighbouring samples; zooming does not add spectral detail.</p>
+          {loaded && !visiblePoints.length ? <p role="status">No sampled point falls inside this window. Widen the range or centre on a sampled frequency (every 5 MHz from 2,000 to 8,000 MHz). Any visible line joins surrounding samples.</p> : null}
         </div>
 
         <div className={styles.sourceLedger}>

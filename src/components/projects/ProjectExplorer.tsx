@@ -45,8 +45,10 @@ const copy = {
 
 const fold = (text: string) => text.normalize("NFKD").replace(/\p{M}/gu, "").toLocaleLowerCase();
 function viewFromAddress(): View {
-  const view = new URL(window.location.href).searchParams.get("view");
-  return view === "map" || new URL(window.location.href).searchParams.has("node") ? "map" : view === "files" || view === "list" ? "files" : "guided";
+  const params = new URL(window.location.href).searchParams;
+  const view = params.get("view");
+  if (view) return view === "map" ? "map" : view === "files" || view === "list" ? "files" : "guided";
+  return params.has("node") ? "map" : "guided";
 }
 
 function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
@@ -125,10 +127,12 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
   }, []);
   const chooseView = (next: View) => {
     setView(next);
+    const nextNode = next === "map" ? node : null;
+    setNode(nextNode);
     const keepSelection = next !== "guided" || projects.some(project => project.slug === selectedSlug && project.featured);
     if (!keepSelection) setSelectedSlug(null);
     if (next === "map") setMapVisited(true);
-    updateAddress({ view: next, ...(!keepSelection ? { selected: null } : {}) });
+    updateAddress({ view: next, node: nextNode, ...(!keepSelection ? { selected: null } : {}) });
   };
   useEffect(() => {
     const shortcut = (event: globalThis.KeyboardEvent) => {
@@ -136,9 +140,9 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
       const target = event.target;
       if (target instanceof HTMLElement && (target.matches("input,textarea,select") || target.isContentEditable)) return;
       if (!rootRef.current?.closest(".mac-window")?.classList.contains("is-active")) return;
-      event.preventDefault(); setView("files"); setSelectedSlug(null);
+      event.preventDefault(); setView("files"); setNode(null); setSelectedSlug(null);
       const url = new URL(window.location.href);
-      url.searchParams.delete("project"); url.searchParams.delete("selected"); url.searchParams.set("view", "files");
+      url.searchParams.delete("project"); url.searchParams.delete("selected"); url.searchParams.delete("node"); url.searchParams.set("view", "files");
       window.history.pushState(window.history.state, "", `${url.pathname}${url.search}`);
       window.dispatchEvent(new Event("samuel-project-route-change"));
       requestAnimationFrame(() => searchRef.current?.focus());
@@ -182,7 +186,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
     const nextNode = `project:${slug}`;
     setNode(nextNode); setView("map"); setMapVisited(true); setSelectedSlug(null);
     updateAddress({ view: "map", node: nextNode, selected: null });
-    requestAnimationFrame(() => tabsRef.current[0]?.focus());
+    requestAnimationFrame(() => tabsRef.current[tabs.indexOf("map")]?.focus());
   };
   const changeFilters = (nextQuery: string, nextArea: string) => {
     setQuery(nextQuery); setArea(nextArea); setSelectedSlug(null);

@@ -285,9 +285,9 @@ export const italianCopy = {
     "优先练习{0}",
     "優先練習{0}"
   ],
-  "7 skills balanced": [
-    "平衡七项技能",
-    "平衡七項技能"
+  "5 exercises from 7 skills": [
+    "从七项技能中选取五道练习",
+    "從七項技能中選取五道練習"
   ],
   "Question {0} of {1}": [
     "第 {0} / {1} 题",
@@ -413,21 +413,21 @@ export const italianCopy = {
     "容易",
     "容易"
   ],
-  "RICHIAMO DISTANZIATO · DUE QUEUE": [
-    "间隔复习 · 到期队列",
-    "間隔複習 · 到期佇列"
+  "RICHIAMO DISTANZIATO · INTERVAL CALCULATOR": [
+    "间隔复习 · 间隔计算器",
+    "間隔複習 · 間隔計算器"
   ],
   "Richiama prima di girare.": [
     "翻面前，先尝试回忆。",
     "翻面前，先嚐試回憶。"
   ],
-  "Ratings schedule the next review; misses return immediately and successful cards wait longer.": [
-    "根据评分安排下次复习；答错的卡片立即返回，成功回忆的卡片间隔更久。",
-    "根據評分安排下次複習；答錯的卡片立即返回，成功回憶的卡片間隔更久。"
+  "Rate a card to see its next review interval. This demo cycles through four cards; it does not wait for their due dates.": [
+    "为卡片评分，查看下次复习间隔。此演示轮流展示四张卡片，不等待它们到期。",
+    "為卡片評分，查看下次複習間隔。此示範輪流展示四張卡片，不等待它們到期。"
   ],
-  "La valutazione calcola la prossima scadenza.": [
-    "评分会计算下次复习日期。",
-    "評分會計算下次複習日期。"
+  "Valuta una carta per calcolare l’intervallo del prossimo ripasso. La demo passa tra quattro carte senza attendere le scadenze.": [
+    "为卡片评分，计算下次复习间隔。此演示轮流展示四张卡片，不等待它们到期。",
+    "為卡片評分，計算下次複習間隔。此示範輪流展示四張卡片，不等待它們到期。"
   ],
   "synthetic cards": [
     "张示例卡片",
@@ -437,13 +437,13 @@ export const italianCopy = {
     "张合成卡片",
     "張合成卡片"
   ],
-  "QUEUE": [
-    "队列",
-    "佇列"
+  "CARD": [
+    "卡片",
+    "卡片"
   ],
-  "CODA": [
-    "队列",
-    "佇列"
+  "CARTA": [
+    "卡片",
+    "卡片"
   ],
   "INTERVAL": [
     "间隔",
@@ -501,9 +501,9 @@ export const italianCopy = {
     "根据回忆质量 q 与上次间隔 i，计算以天计的下次复习间隔",
     "根據回憶品質 q 與上次間隔 i，計算以天計的下次複習間隔"
   ],
-  "SCHEDULER READY": [
-    "调度器已就绪",
-    "排程器已就緒"
+  "INTERVAL RULE": [
+    "复习间隔规则",
+    "複習間隔規則"
   ],
   "Reveal the answer, then rate how well you recalled it.": [
     "先查看答案，再评价自己的回忆程度。",
@@ -1042,7 +1042,7 @@ export const italianCopy = {
   "Next exercise": ["下一题", "下一題"],
   "I built Parliamo to put beginner Italian lessons, daily practice and vocabulary review in one place.": ["我构建 Parliamo，把意大利语入门课程、每日练习与词汇复习放在同一个地方。", "我建置 Parliamo，把義大利語入門課程、每日練習與詞彙複習放在同一個地方。"],
   "Choose italiana for Maria and press Check. Then open Recall, reveal a vocabulary card and rate how well you remembered it.": ["为 Maria 选择 italiana 并点击 Check，再打开 Recall，翻开词汇卡并评价自己记得怎样。", "為 Maria 選擇 italiana 並點選 Check，再開啟 Recall，翻開詞彙卡並評價自己記得如何。"],
-  "Each answer updates practice progress. Remembered vocabulary waits longer before review; a missed card returns sooner.": ["每次回答都会更新练习进度。记住的词汇会延后复习，忘记的词汇会更早回来。", "每次回答都會更新練習進度。記住的詞彙會延後複習，忘記的詞彙會更早回來。"],
+  "Each answer updates practice progress. In Recall, compare the calculated review intervals for Again, Hard, Good and Easy.": ["每次回答都会更新练习进度。在回忆页中，比较“再来一次”“困难”“良好”和“容易”四种评分所计算的复习间隔。", "每次回答都會更新練習進度。在回憶頁中，比較「再來一次」「困難」「良好」和「容易」四種評分所計算的複習間隔。"],
   "My portal combines a 56-day plan with practice, writing feedback and vocabulary review. The System page shows how saved progress survives a sync conflict.": ["我的学习门户把 56 天计划与练习、写作反馈及词汇复习结合起来。System 页面展示保存的进度怎样在同步冲突中保留下来。", "我的學習入口把 56 天計畫與練習、寫作回饋及詞彙複習結合起來。System 頁面展示保存的進度如何在同步衝突中保留下來。"],
   "Speech synthesis is unavailable. Use Next exercise to continue with a text question.": ["语音合成不可用。点击 Next exercise 继续文字题。", "語音合成無法使用。點選 Next exercise 繼續文字題。"]
 } as const satisfies ProjectCopyTable;

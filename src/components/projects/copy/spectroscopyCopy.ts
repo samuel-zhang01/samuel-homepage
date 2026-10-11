@@ -98,9 +98,9 @@ export const spectroscopyCopy = {
     "已采用频率范围：{0} 至 {1} MHz。",
     "已採用頻率範圍：{0} 至 {1} MHz。"
   ],
-  "Restored the 5,175 MHz feature and its original plotting range.": [
-    "已恢复 5,175 MHz 谱线及原始绘图范围。",
-    "已恢復 5,175 MHz 譜線及原始繪圖範圍。"
+  "Showing the full synthetic trace from 2,000 to 8,000 MHz.": [
+    "显示 2,000 至 8,000 MHz 的完整合成光谱。",
+    "顯示 2,000 至 8,000 MHz 的完整合成光譜。"
   ],
   "Export preview prepared as {0} at {1} DPI. No file was written.": [
     "已准备 {0} 格式、{1} DPI 的导出预览。尚未写入文件。",
@@ -365,6 +365,18 @@ export const spectroscopyCopy = {
   "The table makes the plotted values available without relying on the chart. Changing the viewport changes these summaries; the underlying samples remain the same.": [
     "表格提供图中的数值，方便不依赖图形的阅读。改变视窗会更新这些摘要，原始采样数据保持不变。",
     "表格提供圖中的數值，方便不依賴圖形的閱讀。改變視窗會更新這些摘要，原始取樣資料保持不變。"
+  ],
+  "Samples are 5 MHz apart. Lines join neighbouring samples; zooming does not add spectral detail.": [
+    "采样点间隔为 5 MHz。线条连接相邻采样点；放大不会增加光谱细节。",
+    "取樣點間隔為 5 MHz。線條連接相鄰取樣點；放大不會增加光譜細節。"
+  ],
+  "No sampled point falls inside this window. Widen the range or centre on a sampled frequency (every 5 MHz from 2,000 to 8,000 MHz). Any visible line joins surrounding samples.": [
+    "此视窗内没有采样点。请扩大范围，或将中心设为一个采样频率（从 2,000 至 8,000 MHz，每隔 5 MHz 一个点）。可见线条连接的是视窗周围的采样点。",
+    "此視窗內沒有取樣點。請擴大範圍，或將中心設為一個取樣頻率（從 2,000 至 8,000 MHz，每隔 5 MHz 一個點）。可見線條連接的是視窗周圍的取樣點。"
+  ],
+  "New centre applied with a ±1 MHz window. No sampled points fall inside it; widen the range or centre on a sampled frequency.": [
+    "已应用新的中心与 ±1 MHz 视窗。视窗内没有采样点；请扩大范围，或将中心设为一个采样频率。",
+    "已套用新的中心與 ±1 MHz 視窗。視窗內沒有取樣點；請擴大範圍，或將中心設為一個取樣頻率。"
   ],
   "Why these controls?": [
     "为何设计这些控制？",
