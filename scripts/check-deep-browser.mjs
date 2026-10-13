@@ -162,8 +162,16 @@ async function documentChecks(p, job, visit) {
   assert.equal(await document.getAttribute("lang"), job.option.locale);
   await document.getByRole("heading", { level: 1, name: getProjectText(job.option.locale, job.project.title), exact: true }).waitFor();
   assert.equal(await document.getByText(getProjectText(job.option.locale, job.project.summary), { exact: true }).isVisible(), true);
+  const productBrief = ["ultra-convert", "videomate", "coverd-yasa"].includes(job.project.slug);
   const notes = document.getByRole("region", { name: labels[job.option.slug].notes, exact: true });
-  if (getProjectStory(job.project) || job.project.highlights.length) {
+  if (productBrief) {
+    const features = document.locator('section').filter({ has: p.getByRole("heading", { name: job.option.locale.startsWith("en") ? "Core features" : "核心功能", exact: true }) });
+    await features.waitFor();
+    for (const highlight of job.project.highlights) assert.equal(await features.getByText(getProjectText(job.option.locale, highlight), { exact: true }).isVisible(), true, "Every declared product feature is visible");
+    const method = document.locator("details").filter({ has: p.getByRole("heading", { name: job.option.locale.startsWith("en") ? "How it works" : job.option.locale === "zh-CN" ? "工作流程" : "運作流程", exact: true }) });
+    await method.locator("summary").focus(); await p.keyboard.press("Enter");
+    assert.equal(await method.getByText(getProjectText(job.option.locale, getProjectStory(job.project).pipeline), { exact: true }).isVisible(), true, "Optional product method opens with the keyboard");
+  } else if (getProjectStory(job.project) || job.project.highlights.length) {
     await notes.waitFor(); assert.equal(await notes.locator("details, summary").count(), 0);
     for (const block of await notes.locator("p, dd, ol, ul").all()) assert.equal(await block.isVisible(), true, "Project explanation is visible without disclosure");
   }
@@ -184,11 +192,11 @@ async function exerciseState(p, demo) {
   for (const [choices, attribute, value] of candidates) {
     for (const choice of await choices.all()) {
       if (!await choice.isVisible()) continue;
-      const index = await choice.evaluate(button => [...button.closest("[data-locale]").querySelectorAll("button")].indexOf(button));
+      const index = await choice.evaluate(button => [...button.closest('[class*="ProjectActivity_demo"]').querySelectorAll("button")].indexOf(button));
       const label = (await choice.innerText()).trim(); await choice.scrollIntoViewIfNeeded(); await choice.focus(); await p.keyboard.press("Enter");
       // The copy boundary can replace a button node while updating a view.
       // Inspect the current rendered button instead of retaining a detached node.
-      await p.waitForFunction(({ index, attribute, value }) => document.querySelector('[data-app-id="projectActivity"] [data-locale]')?.querySelectorAll("button")[index]?.getAttribute(attribute) === value, { index, attribute, value });
+      await p.waitForFunction(({ index, attribute, value }) => document.querySelector('[data-app-id="projectActivity"] [class*="ProjectActivity_demo"]')?.querySelectorAll("button")[index]?.getAttribute(attribute) === value, { index, attribute, value });
       const after = await demo.innerText();
       assert.notEqual(after, before, `Demo action changes displayed content: ${label}`);
       return { kind: attribute, label, displayedContentChanged: true };
@@ -208,8 +216,9 @@ async function demoChecks(p, job, visit) {
   const document = app(p, "project");
   const launch = document.getByRole("button", { name: labels[job.option.slug].launch, exact: false }).first();
   await launch.waitFor(); await launch.scrollIntoViewIfNeeded(); await launch.focus(); await p.keyboard.press("Enter");
-  const activity = app(p, "projectActivity"); const demo = activity.locator("[data-locale]").first();
-  await demo.waitFor(); assert.equal(await demo.getAttribute("data-locale"), job.option.locale);
+  const activity = app(p, "projectActivity"); const demo = activity.locator('[class*="ProjectActivity_demo"] > *').first();
+  await demo.waitFor(); assert.equal(await activity.locator('[data-kind="demo"]').getAttribute("lang"), job.option.locale);
+  for (const boundary of await demo.locator("[data-locale]").all()) assert.equal(await boundary.getAttribute("data-locale"), job.option.locale);
   assert.equal(new URL(p.url()).searchParams.get("project"), job.project.slug); assert.equal(new URL(p.url()).searchParams.get("view"), "demo");
   assert.equal(await activity.locator('[data-kind="demo"]').count(), 1);
   const toolbar = activity.locator('[class*="ProjectActivity_toolbar"]'); const pane = activity.locator(".mac-window__content");
@@ -369,7 +378,8 @@ async function gameChecks(p, job, visit) {
   visit.checks.push("source-derived game and native keyboard selection", "actual bounded game action/result/reset", "pause sample for realtime games", "semantics/resources/width", "keyboard game-window close");
 }
 async function systemAppChecks(p, job, visit) {
-  const document = app(p, "project"); const launchName = job.option.locale.startsWith("en") ? "Open application" : job.option.locale === "zh-CN" ? "打开应用" : "開啟應用程式";
+  const related = job.project.access !== "public-demo";
+  const document = app(p, "project"); const launchName = job.option.locale.startsWith("en") ? (related ? "Open related application" : "Open application") : job.option.locale === "zh-CN" ? (related ? "打开相关应用" : "打开应用") : (related ? "開啟相關應用程式" : "開啟應用程式");
   const launch = document.getByRole("button", { name: launchName, exact: false }); await keyboardActivate(p, launch);
   const window = app(p, job.appId); await window.waitFor();
   const t = text => translateText(job.option.locale, text);

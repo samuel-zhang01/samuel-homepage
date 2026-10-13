@@ -58,7 +58,7 @@ try {
       assert.ok(test.pane.height>=300 || height<568,'Phone retains at least300px of scrollable window content at tested portrait heights.');
       const stem=`${engine}-${locale.slug}-${width}x${height}-${item.id}`;
       if(item.group==='demos') {
-        await window.locator('[data-locale]').first().waitFor();
+        await window.locator('[class*="ProjectActivity_demo"] > *').first().waitFor();
         await window.locator('[class*="ProjectDemoRouter_loading"]').waitFor({state:'hidden'});
         const toolbar=window.locator('[class*="ProjectActivity_toolbar"]');test.toolbar=await bounds(toolbar);
         assert.ok(test.toolbar.height <= (item.id==='coverd-yasa'?118:68), 'Navigation leaves working room instead of repeating a long title.');
@@ -66,7 +66,7 @@ try {
         assert.ok(controls.every(control=>control.w>=44 && control.h>=44),'Demo navigation keeps44px targets.');
         test.controls=controls;test.checks.push('compact navigation','44px navigation targets');
         await page.screenshot({path:resolve(output,stem+'-top.png')});
-        const surface=window.locator('[data-locale]').first();
+        const surface=window.locator('[class*="ProjectActivity_demo"] > *').first();
         // Reach the real largest visible instrument without treating decorative icons as charts.
         const instrument=await surface.locator('canvas,svg[role="img"],svg[viewBox]').evaluateAll(nodes=>nodes.map((node,index)=>({index,area:node.getBoundingClientRect().width*node.getBoundingClientRect().height})).filter(node=>node.area>12000).sort((a,b)=>b.area-a.area)[0]);
         if(instrument){const target=surface.locator('canvas,svg[role="img"],svg[viewBox]').nth(instrument.index);await target.scrollIntoViewIfNeeded();test.instrument=await bounds(target);await page.screenshot({path:resolve(output,stem+'-instrument.png')});test.checks.push('primary instrument reachable');}
