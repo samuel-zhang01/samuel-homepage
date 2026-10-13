@@ -50,6 +50,8 @@ const { projects } = load("src/data/projects.ts");
 const { localeOptions, localeCvAssets, translateText } = load("src/lib/i18n.ts");
 const { getProjectText } = load("src/lib/projectNarrative.ts");
 const { getProjectStory } = load("src/components/projects/projectStories.ts");
+const { projectText } = load("src/lib/projectCopy.ts");
+const { coverdWorkflowCopy } = load("src/components/projects/copy/coverdWorkflowCopy.ts");
 const sections = { "": "about", projects: "projects", ...objectFromSource("src/app/[locale]/[section]/page.tsx", "sections") };
 const demoRegistry = objectFromSource("src/components/projects/ProjectDemoRouter.tsx", "demoComponents");
 const gameIds = arrayIdsFromSource("src/components/SystemSevenDesktop.tsx", "ARCADE_GAMES");
@@ -463,7 +465,34 @@ async function systemAppChecks(p, job, visit) {
     const disclosure = window.locator(".career-projects-more").first(); await keyboardActivate(p, disclosure.locator("summary")); assert.equal(await disclosure.getAttribute("open") !== null, true);
     for (const link of await disclosure.locator("a").all()) assert.equal(await link.isVisible(), true); visit.state = "keyboard career disclosure exposes additional project links";
   } else if (job.appId === "coverd") {
-    assert.equal(await window.locator(".coverd-pipeline article").count(), 5); assert.equal(await window.locator('a[href="https://coverd.ai/"]').count(), 1); visit.state = "informational application: five actual pipeline steps and exact external product link; no local mutable state";
+    const copy = text => projectText(job.option.locale, coverdWorkflowCopy, text);
+    const application = window.locator("#coverd-example-cv");
+    const statement = "I built a Python API and maintained its tests. I deployed a recruitment dashboard.";
+    await application.fill(statement);
+    const step = window.getByRole("button", { name: copy("Step one stage"), exact: true });
+    await keyboardActivate(p, step);
+    const dimensions = window.getByRole("group", { name: copy("Specialist review"), exact: true });
+    await dimensions.waitFor(); assert.equal(await dimensions.getByRole("button").count(), 6);
+    assert.deepEqual(await dimensions.locator("strong").allTextContents(), ["Skills", "Experience", "Domain knowledge", "Trajectory", "Communication", "Working preferences"].map(copy));
+    assert.equal(await window.locator("blockquote").innerText(), "I built a Python API and maintained its tests.");
+    await keyboardActivate(p, step); await keyboardActivate(p, step);
+    assert.equal(await step.isDisabled(), true);
+    await keyboardActivate(p, dimensions.getByRole("button").last());
+    const followUp = "A clear written brief and time to investigate help me work effectively.";
+    await window.locator("#coverd-example-answer").fill(followUp);
+    await keyboardActivate(p, window.getByRole("button", { name: copy("Add to this review"), exact: true }));
+    assert.equal(await window.locator("blockquote").innerText(), followUp);
+    const downloaded = p.waitForEvent("download");
+    await keyboardActivate(p, window.getByRole("button", { name: copy("Download example review"), exact: true }));
+    const download = await downloaded; assert.equal(download.suggestedFilename(), "coverd-example-review.json");
+    const stream = await download.createReadStream(); const chunks = []; for await (const chunk of stream) chunks.push(chunk);
+    const review = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+    assert.equal(review.example, true); assert.equal(review.application, statement); assert.equal(review.findings.length, 6);
+    assert.deepEqual(review.findings[5], { dimension: "Working preferences", statement: followUp, question: null });
+    assert.equal(await window.locator('a[href="https://coverd.ai/"]').count(), 1);
+    await keyboardActivate(p, window.getByRole("button", { name: copy("Reset example"), exact: true }));
+    assert.equal(await dimensions.count(), 0); assert.ok((await application.inputValue()).includes("Python API"));
+    visit.state = "keyboard six-dimension review, literal evidence, stage progression, follow-up persistence, exact JSON download and reset; no provider calls";
   } else throw new Error(`No meaningful application fixture for ${job.appId}`);
   visit.links = await inspectLinks(window); visit.images = await inspectImages(p, window.locator(".mac-window__content")); visit.geometry = await geometry(p, job.appId);
   if (job.appId === "orbitals") await sampleScreenshot(p, job, visit, "orbital-tool");
@@ -496,7 +525,10 @@ let next = 0; let failedScreenshots = 0;
 async function worker() {
   while (next < selectedJobs.length) {
     const job = selectedJobs[next++];
-    const visit = { group: job.group, slug: job.project?.slug, demoId: job.project?.demo, artifact: job.artifact?.href, gameId: job.gameId, appId: job.appId, section: job.section, locale: job.option.slug, width: job.width, pattern: job.pattern, javaScriptEnabled: job.javaScriptEnabled ?? job.group !== "nojs", route: job.route, result: "PASS", checks: [], pageErrors: [], assetFailures: [], requestFailures: [] };
+    const infrastructureAttempts = [];
+    for (let attempt = 1; attempt <= 2; attempt++) {
+    let retryNetworkChange = false;
+    const visit = { attempt, group: job.group, slug: job.project?.slug, demoId: job.project?.demo, artifact: job.artifact?.href, gameId: job.gameId, appId: job.appId, section: job.section, locale: job.option.slug, width: job.width, pattern: job.pattern, javaScriptEnabled: job.javaScriptEnabled ?? job.group !== "nojs", route: job.route, result: "PASS", checks: [], pageErrors: [], assetFailures: [], requestFailures: [] };
     const context = await browser.newContext({ viewport: { width: job.width, height: job.width === 320 ? 568 : 1000 }, javaScriptEnabled: visit.javaScriptEnabled });
     if (job.group !== "nojs") await context.addInitScript(() => sessionStorage.setItem("samuel-system7-boot", "seen"));
     const p = await context.newPage(); p.setDefaultTimeout(25000);
@@ -531,13 +563,29 @@ async function worker() {
       assert.deepEqual(visit.pageErrors, [], "No unhandled page errors"); assert.deepEqual(visit.assetFailures, [], "No missing/failing requested same-origin resources"); assert.deepEqual(visit.requestFailures, [], "No unexpected failed requests");
     } catch (error) {
       visit.result = "FAIL"; visit.error = error.stack;
+      // A host bridge change can interrupt an otherwise owned loopback request.
+      // Retry once in a fresh context only for a pure transport failure; retain
+      // the complete failed attempt. Assertions, HTTP failures and page errors
+      // cannot become retry-eligible, and the final full journey must pass.
+      retryNetworkChange = attempt === 1 && visit.requestFailures.length > 0 &&
+        visit.requestFailures.every(failure => failure.error === "net::ERR_NETWORK_CHANGED") &&
+        visit.pageErrors.length === 0 && visit.assetFailures.length === 0 &&
+        (error.name === "TimeoutError" || error.message.includes("No unexpected failed requests") || error.message.includes("net::ERR_NETWORK_CHANGED"));
       console.log(`FAIL ${engine} ${job.group} ${job.project?.slug ?? job.gameId ?? job.section ?? job.pattern ?? job.route} ${job.option.slug} ${job.width}: ${error.message}`);
       if (failedScreenshots++ < 12) { const file = `${engine}-failure-${job.group}-${job.project?.slug ?? job.gameId ?? job.section ?? job.pattern ?? "home"}-${job.option.slug}-${job.width}.png`; await p.screenshot({ path: `${screenshots}/${file}` }).catch(() => {}); visit.screenshot = file; }
     } finally {
-      report.visits.push(visit);
-      const completed = report.visits.length;
-      if (completed % 20 === 0) console.log(`Progress ${engine}: ${completed}/${selectedJobs.length}; failures=${report.visits.filter(visit => visit.result === "FAIL").length}`);
       await context.close();
+    }
+    if (retryNetworkChange) {
+      infrastructureAttempts.push(visit);
+      console.log(`RETRY ${engine} ${job.group} ${job.project?.slug ?? job.route}: owned-loopback network change; failed attempt retained`);
+      continue;
+    }
+    if (infrastructureAttempts.length) visit.infrastructureAttempts = infrastructureAttempts;
+    report.visits.push(visit);
+    const completed = report.visits.length;
+    if (completed % 20 === 0) console.log(`Progress ${engine}: ${completed}/${selectedJobs.length}; failures=${report.visits.filter(visit => visit.result === "FAIL").length}`);
+    break;
     }
   }
 }
@@ -546,6 +594,7 @@ try {
   await Promise.all(Array.from({ length: concurrency }, worker));
 } finally {
   await browser.close(); report.finished = new Date().toISOString();
+  report.networkChangeRetries = report.visits.filter(visit => visit.infrastructureAttempts?.length).length;
   report.summary = Object.fromEntries(Object.keys(report.planned).map(group => { const visits = report.visits.filter(visit => visit.group === group); return [group, { visited: visits.length, passed: visits.filter(visit => visit.result === "PASS").length, failed: visits.filter(visit => visit.result === "FAIL").length }]; }));
   const suffix = process.env.DEEP_REPORT_NAME ?? `${engine}-crawl`;
   await writeFile(`${output}/${suffix}.json`, JSON.stringify(report, null, 2));
