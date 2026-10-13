@@ -3,6 +3,8 @@ name: Deploy portfolio to VPS
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -13,8 +15,55 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify-main:
+    if: github.ref == 'refs/heads/main' && github.repository == 'samuel-zhang01/samuel-homepage' && github.event_name != 'pull_request'
+    runs-on: [deploy-vps, portfolio]
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.21.0
+      - name: Locked application dependencies and external browser tools
+        run: |
+          npm ci
+          qa_dir=$(mktemp -d "$RUNNER_TEMP/portfolio-qa.XXXXXX")
+          npm install --prefix "$qa_dir" --no-save playwright@1.64.0 esbuild@0.28.2
+          "$qa_dir/node_modules/.bin/playwright" install chromium
+          printf 'PLAYWRIGHT_CORE_PATH=%s/node_modules/playwright\nESBUILD_PATH=%s/node_modules/esbuild\nPORTFOLIO_QA_DIR=%s\n' "$qa_dir" "$qa_dir" "$qa_dir" >> "$GITHUB_ENV"
+      - name: All maintained check families on owned loopback preview
+        run: python3 scripts/ci-verify.py
+      - name: Remove this job's external browser tools
+        if: always()
+        run: if [ -n "${PORTFOLIO_QA_DIR:-}" ]; then rm -rf "$PORTFOLIO_QA_DIR"; fi
+  verify-public-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.21.0
+      - name: Locked application dependencies and external browser tools
+        run: |
+          npm ci
+          qa_dir=$(mktemp -d "$RUNNER_TEMP/portfolio-qa.XXXXXX")
+          npm install --prefix "$qa_dir" --no-save playwright@1.64.0 esbuild@0.28.2
+          "$qa_dir/node_modules/.bin/playwright" install --with-deps chromium
+          printf 'PLAYWRIGHT_CORE_PATH=%s/node_modules/playwright\nESBUILD_PATH=%s/node_modules/esbuild\nPORTFOLIO_QA_DIR=%s\n' "$qa_dir" "$qa_dir" "$qa_dir" >> "$GITHUB_ENV"
+      - name: All maintained check families on owned loopback preview
+        run: python3 scripts/ci-verify.py
+      - name: Remove this job's external browser tools
+        if: always()
+        run: if [ -n "${PORTFOLIO_QA_DIR:-}" ]; then rm -rf "$PORTFOLIO_QA_DIR"; fi
   deploy:
-    if: github.ref == 'refs/heads/main' && github.repository == 'samuel-zhang01/samuel-homepage'
+    needs: verify-main
+    if: github.ref == 'refs/heads/main' && github.repository == 'samuel-zhang01/samuel-homepage' && github.event_name != 'pull_request'
     environment: vps-production
     runs-on: [deploy-vps, portfolio]
     timeout-minutes: 45

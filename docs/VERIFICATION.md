@@ -1,5 +1,14 @@
 # Verification and maintenance
 
+## Local CI check routing — 13 October 2026
+
+Trusted pushes to `main` and explicit `main` dispatch run on the dedicated `[deploy-vps, portfolio]` runner. The protected VPS deployment depends on successful verification. Public pull request checks use GitHub-hosted Linux; they receive no VPS deployment environment or transport secret. Runner labels route work and do not isolate repositories that share the runner Unix account and Docker daemon.
+
+`python3 scripts/ci-verify.py` executes the maintained strict release gate (deployment fixtures, request security, dependency audit/signatures, lint, all prebuild source checks and isolated optimized build/output), repository inventory, nine VPS helper fixtures, deep HTTP, deep browser, recovery, window resize and phone working-area scripts. Browser checks use Chromium and their default project/locale/size matrices with inherited coverage filters cleared. This does not claim a fresh Firefox/WebKit matrix, manual screenshot grading, external-provider writes or public production testing. An optional `--engines chromium,firefox,webkit` replay runs the same browser families in all three engines when their external tools are installed.
+
+CI pins Node 24.21.0 and installs Playwright 1.64.0/esbuild 0.28.2 outside application dependencies. The compiled preview binds a temporary loopback port and is stopped after checks. Passing and failed logs, JSON and screenshots are archived under the runner user's `~/.local/share/samuel-homepage/review-archive/` with archive/member SHA-256 verification before temporary report removal. The exact-main first run and any repairs are recorded in the separate publication receipt; adding the workflow alone is not a passing result.
+
+
 This guide records current verification scope, reproduction and known limits. It replaces the cumulative dated audit and repeated handoff history. The complete pre-cleanup narrative remains in [Git at effc55f](https://github.com/samuel-zhang01/samuel-homepage/blob/effc55f/docs/DEEP_AUDIT_2026-10-04.md); deleting it from the working tree does not delete that record.
 
 ## VPS migration candidate 13 October 2026
