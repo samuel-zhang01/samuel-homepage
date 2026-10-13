@@ -54,6 +54,11 @@ docker-compose.yml
 .dockerignore
 deploy.sh
 deploy.env.example
+# VPS host activation and CI packaging never belong to the application builder.
+/deploy/
+/scripts/deploy-vps-release.py
+/scripts/package-vps-release.py
+/scripts/test-vps-release.py
 
 # Documentation
 README.md

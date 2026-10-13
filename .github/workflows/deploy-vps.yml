@@ -1,0 +1,41 @@
+name: Deploy portfolio to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-vps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.repository == 'samuel-zhang01/samuel-homepage'
+    environment: vps-production
+    runs-on: [deploy-vps, portfolio]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify and package exact revision
+        run: |
+          python3 scripts/test-vps-release.py
+          python3 scripts/package-vps-release.py --revision "$GITHUB_SHA" --output "$RUNNER_TEMP/portfolio-release.tar"
+      - name: Deploy through portfolio-only forced command
+        env:
+          VPS_DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+          VPS_DEPLOY_KNOWN_HOSTS: ${{ secrets.VPS_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          transport_dir=$(mktemp -d "$RUNNER_TEMP/portfolio-ssh.XXXXXX")
+          trap 'rm -rf "$transport_dir" "$RUNNER_TEMP/portfolio-release.tar"' EXIT
+          chmod 700 "$transport_dir"
+          printf '%s\n' "$VPS_DEPLOY_KEY" > "$transport_dir/key"
+          printf '%s\n' "$VPS_DEPLOY_KNOWN_HOSTS" > "$transport_dir/known_hosts"
+          chmod 600 "$transport_dir/key" "$transport_dir/known_hosts"
+          ssh -i "$transport_dir/key" -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$transport_dir/known_hosts" root@72.61.200.39 "deploy $GITHUB_SHA" < "$RUNNER_TEMP/portfolio-release.tar"
