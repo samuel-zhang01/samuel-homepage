@@ -179,6 +179,13 @@ try {
     assert.deepEqual(productionConfig.images.qualities, [75]);
     assert.ok(productionConfig.images.localPatterns.length > 0);
     assert.ok(productionConfig.images.localPatterns.every(pattern => !pattern.pathname.includes("*")));
+    const { hasLocalMatch } = require("next/dist/shared/lib/match-local-pattern");
+    for (const pattern of productionConfig.images.localPatterns) {
+      assert.equal(pattern.search, "");
+      assert.equal(hasLocalMatch(productionConfig.images.localPatterns, pattern.pathname), true);
+      assert.equal(hasLocalMatch(productionConfig.images.localPatterns, `${pattern.pathname}?security_probe=1`), false);
+      assert.equal(hasLocalMatch(productionConfig.images.localPatterns, `${pattern.pathname}?v=1`), false);
+    }
   });
   process.env.NODE_ENV = "development";
   check("development allows local test hostnames without transport headers", () => {

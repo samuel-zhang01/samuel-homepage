@@ -36,15 +36,16 @@ const nextConfig: NextConfig = {
   images: {
     // Only reviewed local assets use next/image. Constraining both the
     // source path and quality prevents the optimiser becoming an open cache or
-    // CPU-amplification surface on the LAN-facing container.
+    // CPU-amplification surface on the LAN-facing container. Empty search
+    // rejects arbitrary query variants that create separate optimizer keys.
     localPatterns: [
-      { pathname: "/coverd-logo-black-on-transparent.png" },
-      { pathname: "/headshot.jpg" },
-      { pathname: "/projects/neural-cfd-surrogates/cylinder-wake.png" },
-      { pathname: "/hackathons/runhack/building-in-motion.jpg" },
-      { pathname: "/hackathons/runhack/community-track-group.jpg" },
-      { pathname: "/hackathons/runhack/samuel-rain-lap.jpg" },
-      { pathname: "/hackathons/runhack/sidequest-live.jpg" },
+      { pathname: "/coverd-logo-black-on-transparent.png", search: "" },
+      { pathname: "/headshot.jpg", search: "" },
+      { pathname: "/projects/neural-cfd-surrogates/cylinder-wake.png", search: "" },
+      { pathname: "/hackathons/runhack/building-in-motion.jpg", search: "" },
+      { pathname: "/hackathons/runhack/community-track-group.jpg", search: "" },
+      { pathname: "/hackathons/runhack/samuel-rain-lap.jpg", search: "" },
+      { pathname: "/hackathons/runhack/sidequest-live.jpg", search: "" },
     ],
     remotePatterns: [],
     qualities: [75],
