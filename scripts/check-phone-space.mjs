@@ -71,10 +71,17 @@ try {
         const instrument=await surface.locator('canvas,svg[role="img"],svg[viewBox]').evaluateAll(nodes=>nodes.map((node,index)=>({index,area:node.getBoundingClientRect().width*node.getBoundingClientRect().height})).filter(node=>node.area>12000).sort((a,b)=>b.area-a.area)[0]);
         if(instrument){const target=surface.locator('canvas,svg[role="img"],svg[viewBox]').nth(instrument.index);await target.scrollIntoViewIfNeeded();test.instrument=await bounds(target);await page.screenshot({path:resolve(output,stem+'-instrument.png')});test.checks.push('primary instrument reachable');}
         if(item.id==='study-rl') {
+          // The live RL-agent workspace opens first. The curriculum filters
+          // belong to the separate atlas; reach it through its real control.
+          const workspaces=surface.locator('[class*="RlAtlasDemo_workspaceTabs"] button');
+          assert.equal(await workspaces.count(),3);
+          const curriculum=workspaces.first();await curriculum.scrollIntoViewIfNeeded();await curriculum.focus();await page.keyboard.press('Enter');
+          assert.equal(await curriculum.getAttribute('aria-pressed'),'true');
           const filters=surface.locator('[class*="RlAtlasDemo_filterBar"]');
+          await filters.scrollIntoViewIfNeeded();
           const geometry=await filters.evaluate(element=>({width:element.clientWidth,scrollWidth:element.scrollWidth,controls:[...element.querySelectorAll('button,[role="combobox"],input')].map(node=>{const r=node.getBoundingClientRect();return {x:r.x,right:r.right,height:r.height};})}));
           assert.ok(geometry.scrollWidth<=geometry.width+1 && geometry.controls.every(control=>control.x>=test.pane.x && control.right<=test.pane.x+test.pane.width && control.height>=44),'Every full Study RL filter remains in the phone pane with a44px target.');
-          test.filters=geometry;test.checks.push('all Study RL filters reachable without horizontal clipping');
+          test.filters=geometry;test.checks.push('keyboard curriculum workspace selection','all Study RL filters reachable without horizontal clipping');
         }
         if(item.id==='safety-critical-ai') {
           const experiment=surface.locator('[class*="LlmPostTrainingLab_coveragePlot"]');
