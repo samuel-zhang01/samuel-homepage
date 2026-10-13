@@ -525,10 +525,7 @@ let next = 0; let failedScreenshots = 0;
 async function worker() {
   while (next < selectedJobs.length) {
     const job = selectedJobs[next++];
-    const infrastructureAttempts = [];
-    for (let attempt = 1; attempt <= 2; attempt++) {
-    let retryNetworkChange = false;
-    const visit = { attempt, group: job.group, slug: job.project?.slug, demoId: job.project?.demo, artifact: job.artifact?.href, gameId: job.gameId, appId: job.appId, section: job.section, locale: job.option.slug, width: job.width, pattern: job.pattern, javaScriptEnabled: job.javaScriptEnabled ?? job.group !== "nojs", route: job.route, result: "PASS", checks: [], pageErrors: [], assetFailures: [], requestFailures: [] };
+    const visit = { group: job.group, slug: job.project?.slug, demoId: job.project?.demo, artifact: job.artifact?.href, gameId: job.gameId, appId: job.appId, section: job.section, locale: job.option.slug, width: job.width, pattern: job.pattern, javaScriptEnabled: job.javaScriptEnabled ?? job.group !== "nojs", route: job.route, result: "PASS", checks: [], pageErrors: [], assetFailures: [], requestFailures: [] };
     const context = await browser.newContext({ viewport: { width: job.width, height: job.width === 320 ? 568 : 1000 }, javaScriptEnabled: visit.javaScriptEnabled });
     if (job.group !== "nojs") await context.addInitScript(() => sessionStorage.setItem("samuel-system7-boot", "seen"));
     const p = await context.newPage(); p.setDefaultTimeout(25000);
@@ -563,30 +560,14 @@ async function worker() {
       assert.deepEqual(visit.pageErrors, [], "No unhandled page errors"); assert.deepEqual(visit.assetFailures, [], "No missing/failing requested same-origin resources"); assert.deepEqual(visit.requestFailures, [], "No unexpected failed requests");
     } catch (error) {
       visit.result = "FAIL"; visit.error = error.stack;
-      // A host bridge change can interrupt an otherwise owned loopback request.
-      // Retry once in a fresh context only for a pure transport failure; retain
-      // the complete failed attempt. Assertions, HTTP failures and page errors
-      // cannot become retry-eligible, and the final full journey must pass.
-      retryNetworkChange = attempt === 1 && visit.requestFailures.length > 0 &&
-        visit.requestFailures.every(failure => failure.error === "net::ERR_NETWORK_CHANGED") &&
-        visit.pageErrors.length === 0 && visit.assetFailures.length === 0 &&
-        (error.name === "TimeoutError" || error.message.includes("No unexpected failed requests") || error.message.includes("net::ERR_NETWORK_CHANGED"));
       console.log(`FAIL ${engine} ${job.group} ${job.project?.slug ?? job.gameId ?? job.section ?? job.pattern ?? job.route} ${job.option.slug} ${job.width}: ${error.message}`);
       if (failedScreenshots++ < 12) { const file = `${engine}-failure-${job.group}-${job.project?.slug ?? job.gameId ?? job.section ?? job.pattern ?? "home"}-${job.option.slug}-${job.width}.png`; await p.screenshot({ path: `${screenshots}/${file}` }).catch(() => {}); visit.screenshot = file; }
     } finally {
       await context.close();
     }
-    if (retryNetworkChange) {
-      infrastructureAttempts.push(visit);
-      console.log(`RETRY ${engine} ${job.group} ${job.project?.slug ?? job.route}: owned-loopback network change; failed attempt retained`);
-      continue;
-    }
-    if (infrastructureAttempts.length) visit.infrastructureAttempts = infrastructureAttempts;
     report.visits.push(visit);
     const completed = report.visits.length;
     if (completed % 20 === 0) console.log(`Progress ${engine}: ${completed}/${selectedJobs.length}; failures=${report.visits.filter(visit => visit.result === "FAIL").length}`);
-    break;
-    }
   }
 }
 try {
@@ -594,7 +575,6 @@ try {
   await Promise.all(Array.from({ length: concurrency }, worker));
 } finally {
   await browser.close(); report.finished = new Date().toISOString();
-  report.networkChangeRetries = report.visits.filter(visit => visit.infrastructureAttempts?.length).length;
   report.summary = Object.fromEntries(Object.keys(report.planned).map(group => { const visits = report.visits.filter(visit => visit.group === group); return [group, { visited: visits.length, passed: visits.filter(visit => visit.result === "PASS").length, failed: visits.filter(visit => visit.result === "FAIL").length }]; }));
   const suffix = process.env.DEEP_REPORT_NAME ?? `${engine}-crawl`;
   await writeFile(`${output}/${suffix}.json`, JSON.stringify(report, null, 2));
