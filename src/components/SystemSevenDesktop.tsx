@@ -713,7 +713,7 @@ function AboutApp({ openApp, locale, openSelectedProjects }: { openApp: (id: App
             <PixelIcon kind={getProjectIcon("ocean-depths-finance")} />
           </div>
           <div className="finance-update-card__copy">
-            <span>JUST UPDATED · IM I BROKE?</span>
+            <span>JUST UPDATED · AM I BROKE?</span>
             <h2 id="finance-update-title">The finance app I&apos;ve been building.</h2>
             <p>Net worth, five bank and credit accounts, two trading platforms, and a recurring-payment checker.</p>
             <a className="s7-button" href={`/${localeSlug(locale)}/projects?project=ocean-depths-finance&view=demo`}>Explore the finance demo →</a>

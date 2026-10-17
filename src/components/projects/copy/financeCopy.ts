@@ -1201,9 +1201,9 @@ export const financeCopy = {
     "账户间转移",
     "帳戶間轉移"
   ],
-  "Im I Broke?": [
-    "Im I Broke?",
-    "Im I Broke?"
+  "Am I Broke?": [
+    "Am I Broke?",
+    "Am I Broke?"
   ],
   "Explore the household ledger": [
     "探索家庭账本",

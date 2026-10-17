@@ -1,5 +1,7 @@
 # Continue here
 
+The [17 October Am I Broke? update](docs/VERIFICATION.md#am-i-broke-public-repository--17-october-2026) adds the newly public GitHub repository, open-source status and AGPL-3.0/setup-guide note to the existing finance project, and matches its published name across the portfolio. Full prebuild/lint/optimized build/output checks and eight compiled Chromium desktop/320px locale profiles pass. Passing and failed evidence is hash-verified outside the checkout. The protected main-branch VPS deployment and public acceptance remain the publication step.
+
 The [13 October local CI routing](docs/VERIFICATION.md#local-ci-check-routing--13-october-2026) runs every maintained npm check family on the dedicated portfolio runner for trusted main pushes/manual dispatch, before the protected VPS deployment. Public pull requests retain hosted checks without deployment secrets. CI uses a disposable loopback preview and Chromium's maintained default matrices; it does not imply a fresh three-engine or manual visual review. Passing and failed evidence is hash-verified outside the checkout. The first complete browser crawl exposed stale fixtures on 80 journeys; the fixtures are aligned with current product features, activity surfaces and related-app controls without narrowing coverage or changing application behavior. The failed archive remains preserved. See the exact-main publication receipt for the completed run status.
 
 

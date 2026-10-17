@@ -45,7 +45,7 @@ const usOverrides: Record<string, string> = {
 };
 
 const zhCN: Record<string, string> = {
-  "JUST UPDATED · IM I BROKE?": "刚刚更新 · Im I Broke?",
+  "JUST UPDATED · AM I BROKE?": "刚刚更新 · Am I Broke?",
   "The finance app I've been building.": "我正在做的理财应用。",
   "Net worth, five bank and credit accounts, two trading platforms, and a recurring-payment checker.": "净资产、五个银行及信用卡账户、两个交易平台，以及定期付款检查。",
   "Explore the finance demo →": "体验财务演示 →",

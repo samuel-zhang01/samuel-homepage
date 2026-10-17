@@ -602,9 +602,9 @@ export const projectNarrativeCopy = {
     "演示使用虚构文本，不包含原始简历、申请材料或个人文件。",
     "示範使用虛構文字，不包含原始履歷、申請材料或個人檔案。"
   ],
-  "Im I Broke?": [
-    "Im I Broke?",
-    "Im I Broke?"
+  "Am I Broke?": [
+    "Am I Broke?",
+    "Am I Broke?"
   ],
   "FastAPI": [
     "FastAPI",
@@ -630,9 +630,9 @@ export const projectNarrativeCopy = {
     "转账匹配",
     "轉帳匹配"
   ],
-  "The demo uses fictional transactions and account labels. No personal statements or bank identifiers are published.": [
-    "演示使用虚构交易和账户名称，不发布个人账单或银行标识。",
-    "演示使用虛構交易和帳戶名稱，不發佈個人帳單或銀行標識。"
+  "The full app is open source under AGPL-3.0, with setup and self-hosting guides on GitHub. The demo uses fictional transactions and account labels. No personal statements or bank identifiers are published.": [
+    "完整应用以 AGPL-3.0 许可证开源，GitHub 提供安装与自托管指南。演示使用虚构交易和账户名称，不发布个人账单或银行标识。",
+    "完整應用程式以 AGPL-3.0 授權條款開源，GitHub 提供安裝與自行架設指南。示範使用虛構交易和帳戶名稱，不發佈個人帳單或銀行識別資訊。"
   ],
   "COVERD-YASA Scheduling": [
     "COVERD-YASA 排期",

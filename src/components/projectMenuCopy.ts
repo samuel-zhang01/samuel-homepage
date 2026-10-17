@@ -102,9 +102,9 @@ export const projectMenuCopy = {
     "履歷關鍵詞自動化"
   ],
   "Review how a CV supports a job’s requirements before preparing an application.": ["准备求职申请前，检查简历中的经历如何支持岗位要求。", "準備求職申請前，檢查履歷中的經歷如何支持職位要求。"],
-  "Im I Broke?": [
-    "Im I Broke?",
-    "Im I Broke?"
+  "Am I Broke?": [
+    "Am I Broke?",
+    "Am I Broke?"
   ],
   "COVERD-YASA Scheduling": [
     "COVERD-YASA 排期",

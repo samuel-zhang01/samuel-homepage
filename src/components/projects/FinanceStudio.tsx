@@ -992,7 +992,7 @@ export function FinanceStudio() {
 
   return (
     <ProjectCopy copy={financeCopy}><DemoWindow
-      appName="Im I Broke?"
+      appName="Am I Broke?"
       title="Your money, connected"
       status="Fictional ledger · local"
       purpose="Bring bank balances, investments, debt and recurring payments into one financial picture."
