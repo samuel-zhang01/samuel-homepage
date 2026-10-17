@@ -1,6 +1,17 @@
 # Original showcase image sources
 
-## Scope and handling
+## Parliamo interface additions — 17 October 2026
+
+Two direct Chromium screenshots show the published [Italian Learning Portal at `61625e2`](https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/61625e27bab3d44d0ce4ae97edef1acf2a7f3b3d): its daily study notebook and lesson library. The app ran in an isolated temporary checkout with a fresh local database; only disposable browser-check progress was used. Existing learner history, recordings and course archive files were not accessed for these screenshots.
+
+Both captures are 1440×1050 CSS pixels at device scale 1. The uncropped PNG pixels were encoded as lossless WebP with Sharp; no upscaling, illustration or retouching was applied. The existing System 7 gallery retains full-size inspection and the separate interactive recall example. Six reviewed caption, label and alt-text pairs cover simplified and traditional Chinese; both English locales use the source copy. Exact output hashes and byte limits are in `scripts/fixtures/project-showcase-media.mjs`.
+
+| Output | Bytes |
+| --- | --- |
+| `parliamo-daily-notebook.webp` | 90,178 |
+| `parliamo-lesson-library.webp` | 88,200 |
+
+## Original image pass: scope and handling
 
 This pass adds 18 actual source images for 13 project entries in `src/data/projectShowcaseImages.ts`: air quality, regularisation, cyber detection, safety/reliability, Safe-L2D, causal/OPE, sequential decisions, STUDY-RL, thermodynamics, CPROT, coding practice, GROWMAT and innovation reflection. Their translated labels, captions and alt text are in `projectShowcaseImagesCopy.ts` (54 CN/TW pairs; en-GB/en-US retain normal locale spelling). Source figure lettering remains unchanged. The common gallery offers full-size inspection when reduced-size labels need it.
 

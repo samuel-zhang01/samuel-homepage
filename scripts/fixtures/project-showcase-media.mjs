@@ -1,6 +1,22 @@
 /** Exact original-image outputs reviewed in docs/VISUAL_SHOWCASE_SOURCES.md. */
 export const projectShowcaseMedia = [
   [
+    "projects/project-showcases/parliamo-daily-notebook.webp",
+    {
+      "maximumBytes": 91136,
+      "sha256": "089c19a3cf033183b46a7e8ab03310a96698a4a97ba8c89482fb00298034a3e9",
+      "type": "webp"
+    }
+  ],
+  [
+    "projects/project-showcases/parliamo-lesson-library.webp",
+    {
+      "maximumBytes": 89088,
+      "sha256": "5c205bb208474a6cac6ec7da9db5662ce6cf67c01e00fb413fb88d4034189078",
+      "type": "webp"
+    }
+  ],
+  [
     "projects/project-showcases/air-quality-cost-frontier.webp",
     {
       "maximumBytes": 24576,

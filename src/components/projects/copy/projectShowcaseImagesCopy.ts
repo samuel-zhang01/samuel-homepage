@@ -1,6 +1,30 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectShowcaseImagesCopy = {
+  "Daily study notebook": [
+    "每日学习手册",
+    "每日學習手冊"
+  ],
+  "Lesson library": [
+    "课程库",
+    "課程庫"
+  ],
+  "Parliamo dashboard with four timed study steps, bilingual actions and a green progress strip.": [
+    "Parliamo 首页展示四个带预计用时的学习步骤、双语按钮和绿色进度栏。",
+    "Parliamo 首頁展示四個附預計用時的學習步驟、雙語按鈕和綠色進度欄。"
+  ],
+  "Parliamo lesson library with topic search, course filters and cards showing unmeasured skills.": [
+    "Parliamo 课程库提供主题搜索、课程筛选，以及标示尚未测评技能的课程卡片。",
+    "Parliamo 課程庫提供主題搜尋、課程篩選，以及標示尚未評量技能的課程卡片。"
+  ],
+  "The daily notebook turns the eight-week plan into four timed study blocks. This screenshot uses disposable demo progress from a local installation.": [
+    "每日学习手册将八周计划分成四个带预计用时的学习环节。截图来自本地安装，使用可丢弃的演示学习记录。",
+    "每日學習手冊將八週計畫分成四個附預計用時的學習環節。截圖來自本機安裝，使用可捨棄的示範學習紀錄。"
+  ],
+  "The library groups 28 lesson hubs by course and topic. Skills stay unmeasured until practice provides evidence; this is a local demo installation.": [
+    "课程库按课程和主题整理 28 个单元。技能需经练习验证才会显示测评结果；截图来自本地演示安装。",
+    "課程庫按課程和主題整理 28 個單元。技能須經練習驗證才會顯示評量結果；截圖來自本機示範安裝。"
+  ],
   "Sensor cost vs error": [
     "传感器成本与误差",
     "感測器成本與誤差"
