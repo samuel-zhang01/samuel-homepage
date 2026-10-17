@@ -742,7 +742,7 @@ export const projectNarrativeCopy = {
     "离线练习与冲突恢复",
     "離線練習與衝突恢復"
   ],
-  "The example uses disposable learner state. My study history and recordings stay local. The public code has no explicit licence.": ["演示使用临时学习状态。我的学习记录和录音保存在本地。公开代码未声明明确的许可证。", "示範使用暫時的學習狀態。我的學習紀錄與錄音保存在本機。公開程式碼未聲明明確的授權條款。"],
+  "The full app, setup instructions and original practice workbooks are available on GitHub. The example uses disposable learner state; study history, recordings and course archives stay local. The public code has no explicit licence.": ["完整应用、安装说明和原创练习册已在 GitHub 公开。演示使用临时学习状态；学习记录、录音和课程档案保存在本地。公开代码未声明明确的许可证。", "完整應用、安裝說明和原創練習冊已在 GitHub 公開。示範使用暫時的學習狀態；學習紀錄、錄音和課程檔案保存在本機。公開程式碼未聲明明確的授權條款。"],
   "Open the Italian practice workbook": [
     "打开意大利语练习册",
     "打開意大利語練習冊"

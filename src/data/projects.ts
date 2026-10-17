@@ -373,7 +373,7 @@ export const projects: Project[] = [
       { label: "Open the Italian practice workbook", href: "/projects/parliamo/practice-workbook.pdf", kind: "PDF" },
       { label: "Open the bilingual reading workbook", href: "/projects/parliamo/reading-workbook.pdf", kind: "PDF" },
     ],
-    privacyNote: "The example uses disposable learner state. My study history and recordings stay local. The public code has no explicit licence.",
+    privacyNote: "The full app, setup instructions and original practice workbooks are available on GitHub. The example uses disposable learner state; study history, recordings and course archives stay local. The public code has no explicit licence.",
     visual: "book",
   },
   {

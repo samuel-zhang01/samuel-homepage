@@ -1,5 +1,13 @@
 # Verification and maintenance
 
+## Parliamo public source refresh — 17 October 2026
+
+The existing Parliamo repository link points to the refreshed [Italian Learning Portal](https://github.com/samuel-zhang01/Italian-Learning-Portal). Its public `main` history was preserved while the extracted local checkout was reconnected and cleaned. Revision `82674f331a9d3d2bb82067618341aab5e4ea4a40` passes [the repository's maintained CI](https://github.com/samuel-zhang01/Italian-Learning-Portal/actions/runs/39028093396), including lint, type checking, build and three curriculum contracts. The reviewed 51-file source snapshot passes a redacted secret scan and excludes local learner databases, backups, course extracts and incoming materials. The full app remains a single-learner local application, not a newly hosted public service. No explicit source licence is declared.
+
+The portfolio's existing repository URL, project ID, artwork and demo are retained. Reviewed copy in all four locales now explains that the full app, setup instructions and original practice workbooks are available on GitHub. The full prebuild checks, profile, graph, locales, project-copy, lint, optimized build and output gate pass. Eight compiled Chromium profiles cover all four locales at 1440px and 320px: repository destination and keyboard focus, contained page width, translated source notice, rendered practice-workbook canvas and demo launch. Both English profiles activate the repository link with Enter and verify the GitHub tab. Desktop and Traditional Chinese phone screenshots were directly reviewed. This is focused Chromium coverage, not a cross-engine or physical-device audit.
+
+All 14 local evidence files were read back and SHA-256 verified in `~/.local/share/samuel-homepage/review-archive/parliamo-local-20261017.tar.gz` (SHA-256 `1aab3f35de18ee84ca4accf91798c507c0a600ec75ac57ecc6940709b361606c`), with an adjacent member manifest. Production publication and public-page verification are pending for this portfolio revision.
+
 ## Am I Broke? public repository — 17 October 2026
 
 The existing `ocean-depths-finance` project now links to the anonymously accessible [Am I Broke? repository](https://github.com/samuel-zhang01/im-i-broke), marks its source as public and explicitly open source, and mentions its AGPL-3.0 licence and setup/self-hosting guides. The repository README, public metadata and licence were read before updating the catalogue. Its published name is consistent across the project, finance demo, menus and home-page teaser, with reviewed copy in all four locales. Existing project/graph IDs, artwork and demo behavior are preserved. No GitHub Pages website is claimed; the published destination is the repository.
