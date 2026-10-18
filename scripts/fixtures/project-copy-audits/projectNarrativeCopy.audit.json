@@ -97,6 +97,7 @@
     "Ultra Convert": "Owned product name preserved in both language editions.",
     "SwiftUI": "Apple framework name preserved in both language editions.",
     "Swift": "Programming language name retained in both Mandarin editions.",
-    "AppKit": "Apple framework name retained in both Mandarin editions."
+    "AppKit": "Apple framework name retained in both Mandarin editions.",
+    "Vite": "Established build-tool name retained across all locales."
   }
 }

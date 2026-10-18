@@ -156,9 +156,9 @@ function renderScene(slug: string, step: number, locale: Locale): ReactNode {
   </>;
 
   if (slug === "parliamo-italian-learning") return <>
-    {strip(["Recall","Reveal","Good","Review later"],step)}
-    <div className={styles.flashcard}><small>{t("Italian")}</small><strong lang="it" translate="no">la prenotazione</strong>{step>0 ? <><b>{t("the booking")}</b><p lang="it" translate="no">Vorrei confermare la prenotazione.</p></> : <p>{t("Think of the meaning first.")}</p>}</div>
-    <div className={styles.metrics}>{pair("Next review",t(step>1 ? "In 3 days" : "Now"),step>1)}{pair("Practice XP",step>1 ? "+4" : "0")}</div>
+    {strip(["Notice","Recall","Use it","Review tomorrow"],step)}
+    <div className={styles.flashcard}><small>{t("Italian")}</small><strong lang="it" translate="no">{step===0 ? "Mi chiamo Ada." : step===1 ? "Mi ___ Nora." : step===2 ? "Come ti chiami?" : "Come ___ chiama?"}</strong><p>{t(step===2 ? "Write your own introduction." : "Think of the meaning first.")}</p></div>
+    <div className={styles.metrics}>{pair("Next review",t(step===3 ? "Next day" : "After completion"),step===3)}{pair("Self-check",t("A name and a question"))}</div>
   </>;
 
   if (slug === "innovation-models-reflection") {

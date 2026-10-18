@@ -332,27 +332,27 @@ export const projectConceptProducts: Readonly<Record<string, ProductConceptMetad
     "note": "Example availability; this scene sends no invitation."
   },
   "parliamo-italian-learning": {
-    "title": "Remember first, then choose when to practise again",
+    "title": "Learn today, remember another day",
     "steps": [
-      {
-        "name": "Recall",
-        "caption": "Try to recall the meaning before revealing the card."
-      },
-      {
-        "name": "Reveal",
-        "caption": "The translation and example sentence make the answer clear."
-      },
-      {
-        "name": "Rate Good",
-        "caption": "Good schedules a new card for three days later and awards four XP."
-      },
-      {
-        "name": "Review later",
-        "caption": "Successful recall waits longer; a miss would return immediately."
-      }
+        {
+            "name": "Notice",
+            "caption": "Read an original example and notice how mi chiamo introduces a name."
+        },
+        {
+            "name": "Recall",
+            "caption": "Hide the example and try the gap before seeing feedback."
+        },
+        {
+            "name": "Use it",
+            "caption": "Write your own introduction and check it against two prompts."
+        },
+        {
+            "name": "Review tomorrow",
+            "caption": "Completion schedules a next-day check. Later successful reviews wait 3, 7 and 14 days."
+        }
     ],
-    "note": "Example recall follows the portal’s four-way interval rule."
-  },
+    "note": "Selected learning goals complement the PDFs. Completion is practice evidence, not a proficiency certificate."
+},
   "innovation-models-reflection": {
     "title": "Who owns the idea, and who can fund it?",
     "steps": [

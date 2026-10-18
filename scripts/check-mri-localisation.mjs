@@ -191,15 +191,16 @@ const { ItalianLearningStudio } = load("src/components/projects/ItalianLearningS
 for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/italianCopy.audit.json"), "utf8")).identities)) identity.add(name);
 let italianCases = 0;
 for (locale of ["zh-CN", "zh-TW"]) {
-  for (const view of ["practice", "recall", "rubric", "evidence", "system"]) {
-    for (const variant of [0, 1, 2]) {
-      states = { ItalianLearningStudio: [view, variant !== 2], PracticeLab: ["daily", 0, ["listen-train", "grammar-nationality", "vocab-reservation", "reorder-hotel", "reading-cafe"], variant === 2 ? 5 : variant, "", [], variant === 1 ? false : null, false, 0, 1200], RecallLab: [variant, variant !== 0], EvidenceLab: [variant, 2, variant === 1 ? 8 : 4], SystemLab: [true, variant === 1 ? "conflict" : variant === 2 ? "synced" : "idle", variant === 2 ? 14 : 12, variant === 2 ? 14 : variant === 1 ? 13 : 12] };
-      assertMandarin(ItalianLearningStudio, `${locale}/italian/${view}/${variant}`);
-      italianCases += 1;
-    }
+  for (const step of [0, 1, 2]) for (const variant of [0, 1, 2]) {
+    const attempt = { answers: ["chiamo", "ti"], checked: [variant > 0, variant > 0], first: variant ? [false, true] : [null, null], output: "Ciao, mi chiamo Ada.", rubric: [variant > 0, variant > 0], completed: step === 2 && variant > 0 };
+    states = { ItalianLearningStudio: [variant === 0 ? 5 : 10, variant !== 2, step, attempt, { day: 2, due: variant === 1 ? 5 : 3, interval: variant === 1 ? 3 : 1, answer: "si", result: variant === 0 ? null : variant === 1, count: variant ? 1 : 0 }] };
+    assertMandarin(ItalianLearningStudio, `${locale}/italian/daily/${step}/${variant}`);
+    italianCases += 1;
   }
+  states = { ItalianLearningStudio: [15, true, 2, { answers: ["chiamo", "ti"], checked: [true, true], first: [true, true], output: "Mi chiamo Ada.", rubric: [true, true], completed: true }, { day: 2, due: 2, interval: 1, answer: "", result: null, count: 0 }] };
+  assertMandarin(ItalianLearningStudio, `${locale}/italian/due-review`); italianCases++;
 }
-console.log(`Italian localization: ${italianCases} rendered practice/recall/rubric/evidence/sync/locale cases passed; Italian exercise material remains explicitly source-marked.`);
+console.log(`Italian localization: ${italianCases} rendered daily-plan/rest-day/notice/recall/retry/output/completion/review states passed; Italian examples remain source-marked.`);
 
 const { EnvironmentPlannerStudio } = load("src/components/projects/EnvironmentPlannerStudio.tsx");
 for (const name of Object.keys(JSON.parse(readFileSync(resolve(root, "scripts/fixtures/project-copy-audits/environmentCopy.audit.json"), "utf8")).identities)) identity.add(name);

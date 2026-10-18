@@ -1,6 +1,13 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectShowcaseImagesCopy = {
+  "A five-minute next step": ["五分钟的下一步", "五分鐘的下一步"],
+  "A plan that fits your week": ["适合这一周的计划", "適合這一週的計畫"],
+  "Parliamo’s published home page with a five-minute greeting lesson, daily goal and rest-day message.": ["Parliamo 正式网站首页，展示五分钟问候任务、每日目标和休息日提示。", "Parliamo 正式網站首頁，展示五分鐘問候任務、每日目標和休息日提示。"],
+  "Parliamo’s weekly planner with 5-, 10- and 15-minute budgets, study weekdays and scheduled lessons.": ["Parliamo 每周计划，包含 5、10、15 分钟的时间预算、学习日选择和课程安排。", "Parliamo 每週計畫，包含 5、10、15 分鐘的時間預算、學習日選擇和課程安排。"],
+  "The live portal offers a small next step and keeps estimated practice separate from a running timer. Captured with fresh, disposable browser state.": ["正式网站提供一个小小的下一步，并将预计练习用时与计时器区分开。截图使用全新的临时浏览器状态。", "正式網站提供一個小小的下一步，並將預計練習用時與計時器區分開。截圖使用全新的暫存瀏覽器狀態。"],
+  "Choose study days and a daily budget. Rest days leave the next lesson waiting; the calendar shows the remaining plan. Captured from the live portal.": ["选择学习日和每天可用时间。休息日会保留下一个任务；日历显示剩余安排。截图来自正式网站。", "選擇學習日和每天可用時間。休息日會保留下一個任務；行事曆顯示剩餘安排。截圖來自正式網站。"],
+
   "Daily study notebook": [
     "每日学习手册",
     "每日學習手冊"

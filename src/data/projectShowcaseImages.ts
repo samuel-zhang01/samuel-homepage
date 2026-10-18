@@ -12,24 +12,24 @@ export type ProjectShowcaseImage = Readonly<{
 export const projectShowcaseImages: Partial<Record<string, readonly ProjectShowcaseImage[]>> = {
   "parliamo-italian-learning": [
     {
-      "src": "/projects/project-showcases/parliamo-daily-notebook.webp",
-      "alt": "Parliamo dashboard with four timed study steps, bilingual actions and a green progress strip.",
-      "caption": "The daily notebook turns the eight-week plan into four timed study blocks. This screenshot uses disposable demo progress from a local installation.",
-      "width": 1440,
-      "height": 1050,
-      "label": "Daily study notebook",
-      "source": "https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/61625e27bab3d44d0ce4ae97edef1acf2a7f3b3d"
+        "src": "/projects/project-showcases/parliamo-daily-goals-20261018.webp",
+        "alt": "Parliamo’s published home page with a five-minute greeting lesson, daily goal and rest-day message.",
+        "caption": "The live portal offers a small next step and keeps estimated practice separate from a running timer. Captured with fresh, disposable browser state.",
+        "label": "A five-minute next step",
+        "width": 1440,
+        "height": 1050,
+        "source": "https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb"
     },
     {
-      "src": "/projects/project-showcases/parliamo-lesson-library.webp",
-      "alt": "Parliamo lesson library with topic search, course filters and cards showing unmeasured skills.",
-      "caption": "The library groups 28 lesson hubs by course and topic. Skills stay unmeasured until practice provides evidence; this is a local demo installation.",
-      "width": 1440,
-      "height": 1050,
-      "label": "Lesson library",
-      "source": "https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/61625e27bab3d44d0ce4ae97edef1acf2a7f3b3d"
+        "src": "/projects/project-showcases/parliamo-flexible-plan-20261018.webp",
+        "alt": "Parliamo’s weekly planner with 5-, 10- and 15-minute budgets, study weekdays and scheduled lessons.",
+        "caption": "Choose study days and a daily budget. Rest days leave the next lesson waiting; the calendar shows the remaining plan. Captured from the live portal.",
+        "label": "A plan that fits your week",
+        "width": 1440,
+        "height": 1050,
+        "source": "https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb"
     }
-  ],
+],
   "air-quality-sensor-optimisation": [
     {
       "src": "/projects/project-showcases/air-quality-cost-frontier.webp",

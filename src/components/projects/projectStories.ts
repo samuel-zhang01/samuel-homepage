@@ -49,9 +49,9 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   },
   "italian-learning": {
     problem: "Daily lessons, vocabulary review and writing practice become hard to sustain when they are scattered across separate materials.",
-    contribution: "I organised 56 daily agendas and 28 lesson hubs, built adaptive practice and spaced repetition, and added progress tracking across five language-skill areas. Local caching and revision checks preserve learner work when synchronisation conflicts occur.",
-    pipeline: "daily plan → adaptive practice and four-way recall → mastery and five language-skill evidence lanes → revision-safe synchronisation",
-    walkthrough: "Answer a practice question, inspect the progress update, grade a vocabulary card and explore how the app recovers a conflicting saved revision.",
+    contribution: "I turned a review of 47 lesson files into 36 original bilingual missions, a flexible daily planner and delayed recall. Stable lesson IDs preserve progress as new PDFs are added; a repository-scoped new-material workflow guides future updates.",
+    pipeline: "lesson pages → original five-minute mission → first-attempt recall and personal output → browser progress and delayed review",
+    walkthrough: "Change the daily time budget, try a greeting mission and deliberately retry one answer. Complete the self-check, then advance the simulated review day to see the interval change.",
   },
   "course-recommender": {
     problem: "A course catalogue can offer many options without making it clear which ones suit a learner’s interests and constraints.",

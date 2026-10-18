@@ -2,6 +2,8 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Desktop project names and summaries only; long narratives stay in the lazy project document. */
 export const projectMenuCopy = {
+  "An English–Italian learning companion with 36 five-minute missions, flexible daily plans and browser-saved progress.": ["英意双语学习助手，提供 36 个五分钟任务、灵活的每日计划和浏览器内保存的进度。", "英義雙語學習助手，提供 36 個五分鐘任務、彈性的每日計畫和瀏覽器內儲存的進度。"],
+
   "VideoMate": ["VideoMate", "VideoMate"],
   "A personal finance workspace for net worth, connected bank accounts, two trading platforms and recurring-payment checks.": ["个人财务工作台：查看净资产、已连接银行账户和两个交易平台，并检查定期付款。","個人財務工作台：查看淨資產、已連接銀行帳戶和兩個交易平台，並檢查定期付款。"],
   "Orbital Lab": [

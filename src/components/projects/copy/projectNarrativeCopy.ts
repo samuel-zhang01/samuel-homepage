@@ -2,6 +2,19 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Reviewed project descriptions and career context; names and scientific quantities stay intact. */
 export const projectNarrativeCopy = {
+  "An English–Italian learning companion with 36 five-minute missions, flexible daily plans and browser-saved progress.": ["英意双语学习助手，提供 36 个五分钟任务、灵活的每日计划和浏览器内保存的进度。", "英義雙語學習助手，提供 36 個五分鐘任務、彈性的每日計畫和瀏覽器內儲存的進度。"],
+  "I reread 47 supplied lesson PDFs and presentations and built 36 original missions around selected learning outcomes. Each mission moves from noticing a pattern to two recall checks and a short personal response, with references to the source pages. Learners choose a 5-, 10- or 15-minute budget and their study days; reviews take priority and missed days carry forward. First-attempt results stay visible after retries. Progress, drafts and plans stay in the browser, with validated backup import and export. The public portal runs as a static site on my VPS. Its English and Italian interfaces include the teaching content. It complements the materials; writing is self-assessed and the path does not certify language proficiency.": ["我重新阅读了 47 份课程 PDF 和演示文稿，围绕选定的学习目标设计了 36 个原创任务。每项任务从观察规律开始，接着完成两道回忆题和简短的个人表达，并注明教材页码。学习者可以选择每天 5、10 或 15 分钟及学习日；优先安排复习，错过的任务顺延。重试后仍保留首次作答的结果。进度、草稿和计划保存在浏览器中，支持经过格式校验的备份导入和导出。公开网站以静态站点运行在我的 VPS 上，界面和教学内容均提供英语与意大利语。它用于配合教材学习；写作由学习者自评，学习路径不提供语言能力认证。", "我重新閱讀了 47 份課程 PDF 和簡報，圍繞選定的學習目標設計了 36 個原創任務。每項任務從觀察規律開始，接著完成兩道回想題和簡短的個人表達，並註明教材頁碼。學習者可以選擇每天 5、10 或 15 分鐘及學習日；優先安排複習，錯過的任務順延。重試後仍保留首次作答的結果。進度、草稿和計畫儲存在瀏覽器中，支援經過格式驗證的備份匯入和匯出。公開網站以靜態站點運行在我的 VPS 上，介面和教學內容均提供英語與義大利語。它用於配合教材學習；寫作由學習者自評，學習路徑不提供語言能力認證。"],
+  "The live portal stores learning progress on your device. Local PDFs are opened in your browser and are not uploaded. The portfolio demo uses temporary state. Public source has no explicit licence; the earlier workbooks are supplementary practice.": ["正式网站将学习进度保存在你的设备上。本地 PDF 仅在浏览器中打开，不会上传。作品集演示使用临时状态。公开代码未声明明确的许可证；此前的练习册可用作补充练习。", "正式網站將學習進度儲存在你的裝置上。本機 PDF 僅在瀏覽器中開啟，不會上傳。作品集示範使用暫存狀態。公開程式碼未聲明明確的授權條款；先前的練習冊可用作補充練習。"],
+  "I turned a review of 47 lesson files into 36 original bilingual missions, a flexible daily planner and delayed recall. Stable lesson IDs preserve progress as new PDFs are added; a repository-scoped new-material workflow guides future updates.": ["我审阅了 47 份课程文件，并据此设计了 36 个原创双语任务、灵活的每日计划和延后复习。固定的课程编号让新增 PDF 时仍能保留进度；仓库内的 new-material 工作流指导后续更新。", "我審閱了 47 份課程檔案，並據此設計了 36 個原創雙語任務、彈性的每日計畫和延後複習。固定的課程編號讓新增 PDF 時仍能保留進度；儲存庫內的 new-material 工作流程指導後續更新。"],
+  "lesson pages → original five-minute mission → first-attempt recall and personal output → browser progress and delayed review": ["教材页码 → 原创五分钟任务 → 首次回忆与个人表达 → 浏览器进度与延后复习", "教材頁碼 → 原創五分鐘任務 → 首次回想與個人表達 → 瀏覽器進度與延後複習"],
+  "Change the daily time budget, try a greeting mission and deliberately retry one answer. Complete the self-check, then advance the simulated review day to see the interval change.": ["调整每天的时间预算，试做问候任务，并故意答错一次再重试。完成自评后，前进到模拟复习日，观察复习间隔的变化。", "調整每天的時間預算，試做問候任務，並故意答錯一次再重試。完成自評後，前進到模擬複習日，觀察複習間隔的變化。"],
+  "36 original five-minute missions": ["36 个原创五分钟任务", "36 個原創五分鐘任務"],
+  "Flexible 5-, 10- or 15-minute daily plans": ["每天灵活安排 5、10 或 15 分钟", "每天彈性安排 5、10 或 15 分鐘"],
+  "First-attempt recall and delayed review": ["首次回忆记录与延后复习", "首次回想紀錄與延後複習"],
+  "Browser progress with backup and restore": ["浏览器进度、备份与恢复", "瀏覽器進度、備份與還原"],
+  "Browser storage": ["浏览器存储", "瀏覽器儲存"],
+  "Vite": ["Vite", "Vite"],
+
   "Compare a spending increase with the next milestone": ["比较支出增加对下一里程碑的影响", "比較支出增加對下一里程碑的影響"],
   "Save a funding plan and replay monthly cash": ["保存融资计划并播放每月现金", "儲存融資計畫並播放每月現金"],
   "Test venture assumptions against customers and costs": ["用客户与成本检验创业假设", "用客戶與成本檢驗創業假設"],

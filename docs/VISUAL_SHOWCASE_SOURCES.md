@@ -1,5 +1,18 @@
 # Original showcase image sources
 
+## Parliamo daily learning refresh — 18 October 2026
+
+Two direct Chromium captures replace the prior interface images with the published [daily portal at `5fd6fdf`](https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb), served at https://italian.samuelzhang.co.uk. A fresh isolated browser context has no learner history, local PDFs or account data. The source UI is this repository’s own app; course PDFs and presentation images are not republished.
+
+Both uncropped 1440×1050 captures at device scale 1 were inspected and converted to lossless WebP with Sharp. No pixel resizing, retouching or generated imagery. Dated filenames refresh caches. Captions, labels and alt text have reviewed CN/TW translations; the English editions follow normal locale spelling. Exact hashes and file-specific byte ceilings are maintained in `scripts/fixtures/project-showcase-media.mjs`.
+
+| Output | Bytes | SHA-256 |
+| --- | --- | --- |
+| `parliamo-daily-goals-20261018.webp` | 86,640 | `05e537148d34c20008489bd476847db3c001be2a1ad28821b70d9e80d306a413` |
+| `parliamo-flexible-plan-20261018.webp` | 56,188 | `e88d8066d717a8b7e91bf8c391e7f29a8d269d89b1428027e9305cc7174ae873` |
+
+The following 17 October record is historical; its two assets have been superseded.
+
 ## Parliamo interface additions — 17 October 2026
 
 Two direct Chromium screenshots show the published [Italian Learning Portal at `61625e2`](https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/61625e27bab3d44d0ce4ae97edef1acf2a7f3b3d): its daily study notebook and lesson library. The app ran in an isolated temporary checkout with a fresh local database; only disposable browser-check progress was used. Existing learner history, recordings and course archive files were not accessed for these screenshots.

@@ -1,8 +1,12 @@
 {
   "dictionary": "projectConceptProductsCopy.ts",
   "exportName": "projectConceptProductsCopy",
-  "sources": ["src/components/projects/ProjectConceptProducts.tsx"],
-  "dataSources": ["src/data/projectConceptProducts.ts"],
+  "sources": [
+    "src/components/projects/ProjectConceptProducts.tsx"
+  ],
+  "dataSources": [
+    "src/data/projectConceptProducts.ts"
+  ],
   "identities": {
     "PNG": "Established image format acronym.",
     "PNG → WebP": "Source/destination image format names in a rule.",
@@ -10,6 +14,10 @@
     "09:15 · Europe/London": "Example time and IANA time-zone identifier.",
     "la prenotazione": "Original Italian recall prompt from the generated exercise, deliberately retained in the target language.",
     "Vorrei confermare la prenotazione.": "Original Italian example sentence from the generated recall exercise.",
-    "{0}{1} kHz": "Signed numerical frequency residual and scientific unit, with no explanatory prose."
+    "{0}{1} kHz": "Signed numerical frequency residual and scientific unit, with no explanatory prose.",
+    "Mi chiamo Ada.": "Italian practice prompt retained in its target language; surrounding guidance is translated.",
+    "Mi ___ Nora.": "Italian practice prompt retained in its target language; surrounding guidance is translated.",
+    "Come ti chiami?": "Italian practice prompt retained in its target language; surrounding guidance is translated.",
+    "Come ___ chiama?": "Italian practice prompt retained in its target language; surrounding guidance is translated."
   }
 }

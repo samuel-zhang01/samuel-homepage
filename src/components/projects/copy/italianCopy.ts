@@ -1,1048 +1,244 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const italianCopy = {
-  "Grammar": [
-    "语法",
-    "語法"
+  "A small Italian learning day": [
+    "一天一点意大利语",
+    "一天一點義大利語"
   ],
-  "Vocabulary": [
-    "词汇",
-    "詞彙"
+  "Disposable practice": [
+    "临时练习",
+    "暫存練習"
   ],
-  "Reading": [
-    "阅读",
-    "閱讀"
+  "Parliamo!": [
+    "Parliamo!",
+    "Parliamo!"
   ],
-  "Listening": [
-    "听力",
-    "聽力"
+  "Turn a lesson PDF into a small task: notice a pattern, recall it, then use it in your own sentence.": [
+    "把课程 PDF 变成一个小任务：观察规律、尝试回忆，再用它写自己的句子。",
+    "把課程 PDF 變成一個小任務：觀察規律、嘗試回想，再用它寫自己的句子。"
   ],
-  "Writing": [
-    "写作",
-    "寫作"
+  "Compare a 5-minute and a 10-minute day. Then try the greeting mission and its next-day review.": [
+    "比较每天学习 5 分钟和 10 分钟的安排，再试试问候任务及次日复习。",
+    "比較每天學習 5 分鐘和 10 分鐘的安排，再試試問候任務及隔日複習。"
   ],
-  "Speaking": [
-    "口语",
-    "口語"
+  "Reviews use two minutes and missions use five. A retry helps you learn, but never replaces your first-attempt score.": [
+    "每次复习用两分钟，新任务用五分钟。重试帮助学习，但不会覆盖首次作答的成绩。",
+    "每次複習用兩分鐘，新任務用五分鐘。重試幫助學習，但不會覆蓋首次作答的成績。"
   ],
-  "Interaction": [
-    "互动",
-    "互動"
+  "36 original missions · English and Italian in the live portal": [
+    "36 个原创任务 · 正式网站提供英语和意大利语",
+    "36 個原創任務 · 正式網站提供英語和義大利語"
   ],
-  "Listen and transcribe the sentence.": [
-    "听句子并写下来。",
-    "聽句子並寫下來。"
+  "Open the learning portal": [
+    "打开学习网站",
+    "開啟學習網站"
   ],
-  "Il treno parte alle otto e mezza.": [
-    "Il treno parte alle otto e mezza.",
-    "Il treno parte alle otto e mezza."
+  "Reset demo": [
+    "重置演示",
+    "重設示範"
   ],
-  "Ora + mezza means thirty minutes past the hour.": [
-    "Ora + mezza 表示整点之后三十分钟。",
-    "Ora + mezza 表示整點之後三十分鐘。"
+  "This demo keeps temporary practice in this window. The live portal saves your plan, drafts and progress in your browser, with a downloadable backup.": [
+    "此演示仅在当前窗口暂存练习。正式网站将计划、草稿和进度保存在浏览器中，并提供备份下载。",
+    "此示範僅在目前視窗暫存練習。正式網站將計畫、草稿和進度儲存在瀏覽器中，並提供備份下載。"
   ],
-  "Complete the sentence: Maria is…": [
-    "补全句子：Maria 是…",
-    "補全句子：Maria 是…"
+  "1. Make room for learning": [
+    "1. 留一点时间学习",
+    "1. 留一點時間學習"
   ],
-  "The nationality adjective agrees with the person described.": [
-    "国籍形容词的形式与所描述的人保持一致。",
-    "國籍形容詞的形式與所描述的人保持一致。"
+  "Example queue: two reviews are due. Review first, then fit in new five-minute missions.": [
+    "示例待办中有两项到期复习。先复习，再安排五分钟的新任务。",
+    "範例待辦中有兩項到期複習。先複習，再安排五分鐘的新任務。"
   ],
-  "Write the Italian word for reservation / booking.": [
-    "用意大利语写出“预订”一词。",
-    "用義大利語寫出“預訂”一詞。"
+  "Daily budget": [
+    "每天可用时间",
+    "每天可用時間"
   ],
-  "La prenotazione is the noun; prenotare is the verb.": [
-    "La prenotazione 是名词，prenotare 是动词。",
-    "La prenotazione 是名詞，prenotare 是動詞。"
+  "{minutes} minutes": [
+    "{minutes} 分钟",
+    "{minutes} 分鐘"
   ],
-  "Build a polite request for a hotel.": [
-    "组成一句用于酒店的礼貌请求。",
-    "組成一句用於酒店的禮貌請求。"
+  "{minutes} min": [
+    "{minutes} 分钟",
+    "{minutes} 分鐘"
   ],
-  "Vorrei": [
-    "Vorrei",
-    "Vorrei"
+  "Study on this day": [
+    "这天安排学习",
+    "這天安排學習"
   ],
-  "Vorrei + infinitive makes the request polite and natural.": [
-    "Vorrei 加动词不定式，使请求礼貌而自然。",
-    "Vorrei 加動詞不定式，使請求禮貌而自然。"
+  "Reviews": [
+    "复习",
+    "複習"
   ],
-  "When is the café closed?": [
-    "咖啡馆什么时候不营业？",
-    "咖啡館什麼時候不營業？"
+  "New missions": [
+    "新任务",
+    "新任務"
   ],
-  "Alle sette": [
-    "Alle sette",
-    "Alle sette"
+  "Planned time": [
+    "计划用时",
+    "計畫用時"
   ],
-  "La domenica": [
-    "La domenica",
-    "La domenica"
+  "Rest day: both reviews wait for your next study day. No penalty.": [
+    "休息日：两项复习都会留到下一个学习日，不会扣分。",
+    "休息日：兩項複習都會留到下一個學習日，不會扣分。"
   ],
-  "Dopo colazione": [
-    "Dopo colazione",
-    "Dopo colazione"
+  "The reviews fit. The next mission waits until a five-minute slot is available.": [
+    "时间够复习。下一个任务会等到有完整的五分钟再安排。",
+    "時間夠複習。下一個任務會等到有完整的五分鐘再安排。"
   ],
-  "The final sentence contains the requested information.": [
-    "最后一句包含题目要求的信息。",
-    "最後一句包含題目要求的資訊。"
+  "A small gap is fine. The plan never squeezes a five-minute mission into less time.": [
+    "留一点空余时间也没关系。计划不会把五分钟任务挤进更短的时间。",
+    "留一點空餘時間也沒關係。計畫不會把五分鐘任務擠進更短的時間。"
   ],
-  "Produce the verb form: noi · andare.": [
-    "写出相应动词形式：noi · andare。",
-    "寫出相應動詞形式：noi · andare。"
+  "2. A first conversation": [
+    "2. 第一次交谈",
+    "2. 第一次交談"
   ],
-  "noi andiamo": [
-    "noi andiamo",
-    "noi andiamo"
+  "Practice one mission independently of the example queue above.": [
+    "单独试做一个任务，不受上面示例待办的限制。",
+    "單獨試做一個任務，不受上面範例待辦的限制。"
   ],
-  "Andare is irregular: vado, vai, va, andiamo, andate, vanno.": [
-    "Andare 是不规则动词：vado、vai、va、andiamo、andate、vanno。",
-    "Andare 是不規則動詞：vado、vai、va、andiamo、andate、vanno。"
+  "Mission steps": [
+    "任务步骤",
+    "任務步驟"
   ],
-  "Complete the sentence: I am going to the cinema.": [
-    "补全句子：我正要去电影院。",
-    "補全句子：我正要去電影院。"
-  ],
-  "A + il contract to form al.": [
-    "A 与 il 缩合为 al。",
-    "A 與 il 縮合為 al。"
-  ],
-  "the booking": [
-    "预订",
-    "預訂"
-  ],
-  "I would like to confirm the booking.": [
-    "我想确认这次预订。",
-    "我想確認這次預訂。"
-  ],
-  "to wake up": [
-    "醒来",
-    "醒來"
-  ],
-  "I wake up at seven.": [
-    "我七点醒来。",
-    "我七點醒來。"
-  ],
-  "the ticket": [
-    "票",
-    "票"
-  ],
-  "A ticket to Florence, please.": [
-    "请给我一张去佛罗伦萨的票。",
-    "請給我一張去佛羅倫薩的票。"
-  ],
-  "near / nearby": [
-    "附近 / 邻近",
-    "附近 / 鄰近"
-  ],
-  "The station is near the museum.": [
-    "车站在博物馆附近。",
-    "車站在博物館附近。"
-  ],
-  "Gist + 3/4 details in two clear clips": [
-    "听懂两段清晰音频的主旨，并识别四项细节中的三项",
-    "聽懂兩段清晰音訊的主旨，並識別四項細節中的三項"
-  ],
-  "Find 4/5 facts in a menu, timetable or notice": [
-    "在菜单、时刻表或通知中找到五项事实中的四项",
-    "在選單、時刻表或通知中找到五項事實中的四項"
-  ],
-  "Spoken interaction": [
-    "口语互动",
-    "口語互動"
-  ],
-  "Sustain a guided three-minute exchange": [
-    "在引导下维持三分钟的对话",
-    "在引導下維持三分鐘的對話"
-  ],
-  "Spoken production": [
-    "口头表达",
-    "口頭表達"
-  ],
-  "Speak for 60–90 seconds without a script": [
-    "不看稿连续表达 60–90 秒",
-    "不看稿連續表達 60–90 秒"
-  ],
-  "Write one clear message of 40–60 words": [
-    "写一条清晰的 40–60 词短消息",
-    "寫一條清晰的 40–60 詞短訊息"
-  ],
-  "Today": [
-    "今日",
-    "今日"
+  "Notice": [
+    "观察",
+    "觀察"
   ],
   "Recall": [
     "回忆",
-    "回憶"
-  ],
-  "Rubric": [
-    "评分规则",
-    "評分規則"
-  ],
-  "Evidence": [
-    "学习证据",
-    "學習證據"
-  ],
-  "System": [
-    "系统",
-    "系統"
-  ],
-  "Parliamo demonstration sections": [
-    "Parliamo 演示章节",
-    "Parliamo 演示章節"
-  ],
-  "SESSIONE COMPLETATA": [
-    "练习已完成",
-    "練習已完成"
-  ],
-  "· SESSION COMPLETE": [
-    "· 练习完成",
-    "· 練習完成"
-  ],
-  "Ottimo lavoro.": [
-    "做得好。",
-    "做得好。"
-  ],
-  "Gli errori preparano il prossimo ripasso.": [
-    "错误会帮助安排下一次复习。",
-    "錯誤會幫助安排下一次複習。"
-  ],
-  "Strong work—the learner map has been updated.": [
-    "表现不错，学习者能力图已更新。",
-    "表現不錯，學習者能力圖已更新。"
-  ],
-  "Mistakes now shape the next adaptive review.": [
-    "本次错误将影响下一轮自适应复习。",
-    "本次錯誤將影響下一輪自適應複習。"
-  ],
-  "NEXT ADAPTIVE SIGNAL": [
-    "下一步自适应信号",
-    "下一步自適應訊號"
-  ],
-  "PROSSIMO SEGNALE": [
-    "下一步信号",
-    "下一步訊號"
-  ],
-  "Nuova sessione adattiva": [
-    "新建自适应练习",
-    "新建自適應練習"
-  ],
-  "· New adaptive session": [
-    "· 新建自适应练习",
-    "· 新建自適應練習"
-  ],
-  "OGGI / ADAPTIVE PRACTICE ·": [
-    "今日 / 自适应练习 ·",
-    "今日 / 自適應練習 ·"
-  ],
-  "REPRESENTATIVE VARIATIONS / 211 SOURCE EXERCISES": [
-    "种代表性题型 / 原项目共 211 道练习",
-    "種代表性題型 / 原專案共 211 道練習"
-  ],
-  "Misura con una prova, non con una sensazione.": [
-    "用实际表现衡量，而非凭感觉判断。",
-    "用實際表現衡量，而非憑感覺判斷。"
-  ],
-  "Misura con una prova.": [
-    "用一次练习衡量。",
-    "用一次練習衡量。"
-  ],
-  "Each answer updates skill accuracy, response time and the next weak-area queue.": [
-    "每次作答都会更新技能正确率、响应时间与下一轮薄弱项队列。",
-    "每次作答都會更新技能正確率、響應時間與下一輪薄弱項佇列。"
-  ],
-  "Ogni risposta aggiorna abilità, tempo e prossima coda.": [
-    "每次作答都会更新技能、用时与下一轮队列。",
-    "每次作答都會更新技能、用時與下一輪佇列。"
-  ],
-  "XP": [
-    "经验值",
-    "經驗值"
-  ],
-  "Session selection": [
-    "练习选择",
-    "練習選擇"
-  ],
-  "Mix quotidiano": [
-    "每日混合练习",
-    "每日混合練習"
-  ],
-  "· Daily": [
-    "· 每日",
-    "· 每日"
-  ],
-  "Punti deboli": [
-    "薄弱项",
-    "薄弱項"
-  ],
-  "· Weak areas": [
-    "· 薄弱项",
-    "· 薄弱項"
-  ],
-  "{0} first": [
-    "优先练习{0}",
-    "優先練習{0}"
-  ],
-  "5 exercises from 7 skills": [
-    "从七项技能中选取五道练习",
-    "從七項技能中選取五道練習"
-  ],
-  "Question {0} of {1}": [
-    "第 {0} / {1} 题",
-    "第 {0} / {1} 題"
-  ],
-  "correct": [
-    "题正确",
-    "題正確"
-  ],
-  "corrette": [
-    "题正确",
-    "題正確"
-  ],
-  "attempts ·": [
-    "次尝试 ·",
-    "次嘗試 ·"
-  ],
-  "CONSEGNA": [
-    "任务",
-    "任務"
-  ],
-  "· TASK": [
-    "· 任务",
-    "· 任務"
-  ],
-  "Ascolta lentamente": [
-    "慢速播放",
-    "慢速播放"
-  ],
-  "· Listen slowly": [
-    "· 慢速播放",
-    "· 慢速播放"
-  ],
-  "Sintesi vocale non disponibile in questo browser.": [
-    "此浏览器不支持语音合成。",
-    "此瀏覽器不支援語音合成。"
-  ],
-  "Speech synthesis is unavailable; type from the visible learning context or skip to another exercise.": [
-    "无法使用语音合成；可根据可见学习内容输入答案，或跳至另一道练习。",
-    "無法使用語音合成；可根據可見學習內容輸入答案，或跳至另一道練習。"
-  ],
-  "Your answer": [
-    "你的答案",
-    "你的答案"
-  ],
-  "Scrivi qui · Type here": [
-    "在此输入",
-    "在此輸入"
-  ],
-  "Scrivi qui…": [
-    "在此输入…",
-    "在此輸入…"
-  ],
-  "Constructed sentence": [
-    "已组成的句子",
-    "已組成的句子"
-  ],
-  "Tap the tiles to build the sentence.": [
-    "点击词块组成句子。",
-    "點選詞塊組成句子。"
-  ],
-  "Tocca le tessere per costruire la frase.": [
-    "点击词块组成句子。",
-    "點選詞塊組成句子。"
-  ],
-  "Controlla": [
-    "检查",
-    "檢查"
-  ],
-  "· Check": [
-    "· 检查",
-    "· 檢查"
-  ],
-  "✓ Correct": [
-    "✓ 正确",
-    "✓ 正確"
-  ],
-  "× Not yet": [
-    "× 尚未答对",
-    "× 尚未答對"
-  ],
-  "✓ Esatto{0}": [
-    "✓ 正确{0}",
-    "✓ 正確{0}"
-  ],
-  "× Non ancora{0}": [
-    "× 尚未答对{0}",
-    "× 尚未答對{0}"
-  ],
-  "XP ·": [
-    "经验值 ·",
-    "經驗值 ·"
-  ],
-  "Risultato · Result": [
-    "查看结果",
-    "檢視結果"
-  ],
-  "Risultato": [
-    "结果",
-    "結果"
-  ],
-  "Prossimo · Next": [
-    "下一题",
-    "下一題"
-  ],
-  "Prossimo": [
-    "下一题",
-    "下一題"
-  ],
-  "Again": [
-    "再来一次",
-    "再來一次"
-  ],
-  "Hard": [
-    "困难",
-    "困難"
-  ],
-  "Good": [
-    "良好",
-    "良好"
-  ],
-  "Easy": [
-    "容易",
-    "容易"
-  ],
-  "RICHIAMO DISTANZIATO · INTERVAL CALCULATOR": [
-    "间隔复习 · 间隔计算器",
-    "間隔複習 · 間隔計算器"
-  ],
-  "Richiama prima di girare.": [
-    "翻面前，先尝试回忆。",
-    "翻面前，先嚐試回憶。"
-  ],
-  "Rate a card to see its next review interval. This demo cycles through four cards; it does not wait for their due dates.": [
-    "为卡片评分，查看下次复习间隔。此演示轮流展示四张卡片，不等待它们到期。",
-    "為卡片評分，查看下次複習間隔。此示範輪流展示四張卡片，不等待它們到期。"
-  ],
-  "Valuta una carta per calcolare l’intervallo del prossimo ripasso. La demo passa tra quattro carte senza attendere le scadenze.": [
-    "为卡片评分，计算下次复习间隔。此演示轮流展示四张卡片，不等待它们到期。",
-    "為卡片評分，計算下次複習間隔。此示範輪流展示四張卡片，不等待它們到期。"
-  ],
-  "synthetic cards": [
-    "张示例卡片",
-    "張示例卡片"
-  ],
-  "carte sintetiche": [
-    "张合成卡片",
-    "張合成卡片"
-  ],
-  "CARD": [
-    "卡片",
-    "卡片"
-  ],
-  "CARTA": [
-    "卡片",
-    "卡片"
-  ],
-  "INTERVAL": [
-    "间隔",
-    "間隔"
-  ],
-  "INTERVALLO": [
-    "间隔",
-    "間隔"
-  ],
-  "EASE": [
-    "难易系数",
-    "難易係數"
-  ],
-  "REVIEWS": [
-    "复习次数",
-    "複習次數"
-  ],
-  "RIPASSI": [
-    "复习次数",
-    "複習次數"
-  ],
-  "The demo uses the source project’s exact four-way interval update.": [
-    "演示沿用原项目的四档间隔更新规则。",
-    "演示沿用原專案的四檔間隔更新規則。"
-  ],
-  "Il demo usa l’algoritmo originale a quattro esiti.": [
-    "演示使用原始的四档结果算法。",
-    "演示使用原始的四檔結果演算法。"
-  ],
-  "ITALIANO": [
-    "意大利语",
-    "義大利語"
-  ],
-  "Click to reveal · Clicca per girare": [
-    "点击查看释义",
-    "點選檢視釋義"
-  ],
-  "Clicca per girare": [
-    "点击翻面",
-    "點選翻面"
-  ],
-  "ENGLISH": [
-    "中文释义",
-    "中文釋義"
-  ],
-  "LAST SCHEDULER TRACE ·": [
-    "最近一次复习调度 ·",
-    "最近一次複習排程 ·"
-  ],
-  "ease": [
-    "难易系数",
-    "難易係數"
-  ],
-  "Next review interval in days, by recall quality q and previous interval i": [
-    "根据回忆质量 q 与上次间隔 i，计算以天计的下次复习间隔",
-    "根據回憶品質 q 與上次間隔 i，計算以天計的下次複習間隔"
-  ],
-  "INTERVAL RULE": [
-    "复习间隔规则",
-    "複習間隔規則"
-  ],
-  "Reveal the answer, then rate how well you recalled it.": [
-    "先查看答案，再评价自己的回忆程度。",
-    "先檢視答案，再評價自己的回憶程度。"
-  ],
-  "Gira la carta, poi valuta il richiamo.": [
-    "翻面后，评价回忆程度。",
-    "翻面後，評價回憶程度。"
-  ],
-  "Ease update from recall quality q": [
-    "根据回忆质量 q 更新难易系数",
-    "根據回憶品質 q 更新難易係數"
-  ],
-  "RUBRICA LOCALE · ZERO API CALLS": [
-    "本地评分规则 · 不调用 API",
-    "本地評分規則 · 不呼叫 API"
-  ],
-  "Feedback spiegabile, parola per parola.": [
-    "逐词解释反馈。",
-    "逐詞解釋回饋。"
-  ],
-  "This scoring rule counts distinct useful words, one contribution per task signal and sentence completion, so repeating the same text does not increase the score.": [
-    "此规则计算不同的有效词汇、每项任务线索的一次贡献与句子完整度；重复相同文本不会增加分数。",
-    "此規則計算不同的有效詞彙、每項任務線索的一次貢獻與句子完整度；重複相同文本不會增加分數。"
-  ],
-  "Questa versione sicura della rubrica conta parole distinte, ogni segnale una sola volta e il completamento: le ripetizioni non alzano il risultato.": [
-    "此评分规则计算不同词汇、每项线索的一次贡献和完整表达，重复内容不会提高分数。",
-    "此評分規則計算不同詞彙、每項線索的一次貢獻和完整表達，重複內容不會提高分數。"
-  ],
-  "● LOCAL-ONLY": [
-    "● 仅本地运行",
-    "● 僅本地執行"
-  ],
-  "COMPITO": [
-    "任务",
-    "任務"
-  ],
-  "Presentati in almeno due frasi. Spiega dove vivi, cosa studi e perché impari l’italiano.": [
-    "Presentati in almeno due frasi. Spiega dove vivi, cosa studi e perché impari l’italiano.",
-    "Presentati in almeno due frasi. Spiega dove vivi, cosa studi e perché impari l’italiano."
-  ],
-  "Introduce yourself in at least two sentences. Say where you live, what you study and why you learn Italian.": [
-    "至少用两句话介绍自己，说明住在哪里、学习什么，以及为何学习意大利语。",
-    "至少用兩句話介紹自己，說明住在哪裡、學習什麼，以及為何學習義大利語。"
-  ],
-  "RISPOSTA": [
-    "回答",
-    "回答"
-  ],
-  "words ·": [
-    "个词 ·",
-    "個詞 ·"
-  ],
-  "chars": [
-    "个字符",
-    "個字元"
-  ],
-  "Short sample": [
-    "简短示例",
-    "簡短示例"
-  ],
-  "Strong sample": [
-    "较完整示例",
-    "較完整示例"
-  ],
-  "Valuta localmente": [
-    "本地评分",
-    "本地評分"
-  ],
-  "· Review": [
-    "· 评阅",
-    "· 評閱"
-  ],
-  "Local rubric score": [
-    "本地规则分数",
-    "本地規則分數"
-  ],
-  "Distinct useful words": [
-    "不同的有效词汇",
-    "不同的有效詞彙"
-  ],
-  "Distinct task overlap": [
-    "不同的任务线索",
-    "不同的任務線索"
-  ],
-  "Completion": [
-    "完整度",
-    "完整度"
-  ],
-  "Terminal punctuation found": [
-    "已找到句末标点",
-    "已找到句末標點"
-  ],
-  "Add a finished sentence": [
-    "请补全一个句子",
-    "請補全一個句子"
-  ],
-  "FEEDBACK RUBRICA LOCALE": [
-    "本地规则反馈",
-    "本地規則回饋"
-  ],
-  "This heuristic found distinct task signals; it does not judge grammar, clarity or language level.": [
-    "此启发式规则找到了不同的任务线索，但不会判断语法、清晰度或语言水平。",
-    "此啟發式規則找到了不同的任務線索，但不會判斷語法、清晰度或語言水平。"
-  ],
-  "Add distinct task signals, then revise for grammar and clarity separately.": [
-    "补充不同的任务线索，再单独修改语法与表达清晰度。",
-    "補充不同的任務線索，再單獨修改語法與表達清晰度。"
-  ],
-  "Next: riscrivi una volta senza guardare, poi leggila ad alta voce.": [
-    "下一步：不看原文重写一遍，然后大声朗读。",
-    "下一步：不看原文重寫一遍，然後大聲朗讀。"
-  ],
-  "How to read this score.": [
-    "如何理解这个分数。",
-    "如何理解這個分數。"
-  ],
-  "Each word and task signal contributes at most once to the local heuristic. The production portal can optionally request richer feedback, while local mode works without a key or metered service. The score is not a language certificate.": [
-    "每个词和每项任务线索最多贡献一次。正式学习门户可选择请求更丰富的反馈，本地模式则无需密钥或按量计费的服务。该分数不是语言证书。",
-    "每個詞和每項任務線索最多貢獻一次。正式學習門戶可選擇請求更豐富的回饋，本地模式則無需金鑰或按量計費的服務。該分數不是語言證書。"
-  ],
-  "PROVE, NON SOLO PERCENTUALI · FIVE SEPARATE LANES": [
-    "学习证据，而非只有百分比 · 五个独立维度",
-    "學習證據，而非只有百分比 · 五個獨立維度"
-  ],
-  "A1 dimostrato; A2 solo come ponte.": [
-    "验证 A1，逐步衔接 A2。",
-    "驗證 A1，逐步銜接 A2。"
-  ],
-  "Plan completion, practice accuracy and dated CEFR work samples stay separate. No single number pretends to be a level.": ["计划完成度、练习准确率和带日期的 CEFR 作品样本分开记录。一个数字不能代表语言等级。", "計畫完成度、練習準確率與附日期的 CEFR 作品樣本分開記錄。一個數字不能代表語言等級。"],
-  "Piano, precisione e prove CEFR restano separati.": [
-    "计划、正确率与 CEFR 学习证据分别记录。",
-    "計劃、正確率與 CEFR 學習證據分別記錄。"
-  ],
-  "PRACTICE MEAN": [
-    "练习平均值",
-    "練習平均值"
-  ],
-  "not a CEFR score": [
-    "并非 CEFR 分数",
-    "並非 CEFR 分數"
-  ],
-  "CEFR evidence lanes": [
-    "CEFR 学习证据维度",
-    "CEFR 學習證據維度"
-  ],
-  "A1 EXIT TARGET": [
-    "A1 阶段目标",
-    "A1 階段目標"
-  ],
-  "DATED SAMPLES · MAX": ["带日期的样本 · 上限", "附日期的樣本 · 上限"],
-  "SPACING": [
-    "间隔",
-    "間隔"
-  ],
-  "days": [
-    "天",
-    "天"
-  ],
-  "required ≥ 7 days": [
-    "至少间隔 7 天",
-    "至少間隔 7 天"
-  ],
-  "{0} work samples spaced {1} days apart": [
-    "{0} 份学习成果，间隔 {1} 天",
-    "{0} 份學習成果，間隔 {1} 天"
-  ],
-  "Unscripted sample": [
-    "不看稿的样例",
-    "不看稿的樣例"
-  ],
-  "add second sample": ["添加第二个样本", "新增第二個樣本"],
-  "{0} day gap": [
-    "间隔 {0} 天",
-    "間隔 {0} 天"
-  ],
-  "Delayed evidence": [
-    "延后再次验证",
-    "延後再次驗證"
-  ],
-  "Independent unlocked": [
-    "已满足独立完成条件",
-    "已滿足獨立完成條件"
-  ],
-  "Independent remains locked": [
-    "尚未满足独立完成条件",
-    "尚未滿足獨立完成條件"
-  ],
-  "Two samples are separated by at least seven days.": ["两个样本间隔至少七天。", "兩個樣本間隔至少七天。"],
-  "Add a second dated sample.": ["添加第二个带日期的样本。", "新增第二個附日期的樣本。"],
-  "Additional spacing required (days): {0}.": [
-    "还需增加 {0} 天间隔。",
-    "還需增加 {0} 天間隔。"
-  ],
-  "checks": [
-    "次检查",
-    "次檢查"
-  ],
-  "Offline cache hydrated · revision 12": [
-    "已加载离线缓存 · 版本 12",
-    "已載入離線快取 · 版本 12"
-  ],
-  "D1 snapshot received · revision 12": [
-    "已收到 D1 快照 · 版本 12",
-    "已收到 D1 快照 · 版本 12"
-  ],
-  "PUT expected=12 → 409 revision_conflict": [
-    "PUT 预期版本=12 → 409 版本冲突",
-    "PUT 預期版本=12 → 409 版本衝突"
-  ],
-  "Server state returned · revision 13": [
-    "已返回服务器状态 · 版本 13",
-    "已返回伺服器狀態 · 版本 13"
-  ],
-  "PUT expected=12 → 200": [
-    "PUT 预期版本=12 → 200",
-    "PUT 預期版本=12 → 200"
-  ],
-  "Snapshot committed · revision 13": [
-    "快照已提交 · 版本 13",
-    "快照已提交 · 版本 13"
-  ],
-  "Rebase local mutation onto revision 13": [
-    "将本地修改重新应用到版本 13",
-    "將本地修改重新應用到版本 13"
-  ],
-  "Retry expected=13 → 200 · revision 14": [
-    "以预期版本=13 重试 → 200 · 版本 14",
-    "以預期版本=13 重試 → 200 · 版本 14"
-  ],
-  "LOCAL-FIRST APPLICATION · OPTIMISTIC REVISION CONTROL": [
-    "本地优先应用 · 乐观版本控制",
-    "本地優先應用 · 樂觀版本控制"
-  ],
-  "How practice becomes lasting progress.": [
-    "练习如何转化为持续进步。",
-    "練習如何轉化為持續進步。"
-  ],
-  "The source application keeps structured content, learner state, practice events and rubric submissions in Cloudflare D1, with a browser cache for offline continuity.": [
-    "原应用将结构化内容、学习者状态、练习事件与评分提交保存在 Cloudflare D1，并通过浏览器缓存支持离线继续学习。",
-    "原應用將結構化內容、學習者狀態、練習事件與評分提交儲存在 Cloudflare D1，並通過瀏覽器快取支援離線繼續學習。"
-  ],
-  "Contenuti, stato, eventi e feedback sono strutturati in D1 con cache locale.": [
-    "内容、状态、事件与反馈存于 D1，并配有本地缓存。",
-    "內容、狀態、事件與回饋存於 D1，並配有本地快取。"
-  ],
-  "753 SEEDED ROWS": [
-    "753 条初始内容记录",
-    "753 條初始內容記錄"
-  ],
-  "Application architecture": [
-    "应用架构",
-    "應用架構"
-  ],
-  "React 19 client": [
-    "React 19 客户端",
-    "React 19 客戶端"
-  ],
-  "tour · practice · analytics": [
-    "导览 · 练习 · 分析",
-    "導覽 · 練習 · 分析"
-  ],
-  "Vinext worker": [
-    "Vinext 工作进程",
-    "Vinext 工作程序"
-  ],
-  "RSC · API routes · assets": [
-    "RSC · API 路由 · 资源",
-    "RSC · API 路由 · 資源"
-  ],
-  "Cloudflare D1": [
-    "Cloudflare D1",
-    "Cloudflare D1"
-  ],
-  "4 relational tables": [
-    "4 张关系表",
-    "4 張關係表"
-  ],
-  "Offline cache": [
-    "离线缓存",
-    "離線快取"
-  ],
-  "dirty flag · local snapshot": [
-    "待同步标记 · 本地快照",
-    "待同步標記 · 本地快照"
-  ],
-  "dated plan days": [
-    "个有日期的计划日",
-    "個有日期的計劃日"
-  ],
-  "lesson hubs": [
-    "个课程单元",
-    "個課程單元"
-  ],
-  "seed exercises": [
-    "道初始练习",
-    "道初始練習"
-  ],
-  "vocabulary records": [
-    "条词汇记录",
-    "條詞彙記錄"
-  ],
-  "planned minutes": [
-    "分钟计划学习量",
-    "分鐘計劃學習量"
-  ],
-  "LOCAL": [
-    "本地",
-    "本地"
-  ],
-  "mutation waiting": [
-    "修改正在等待",
-    "修改正在等待"
-  ],
-  "confirmed": [
-    "已确认",
-    "已確認"
-  ],
-  "one mutation queued": [
-    "一项修改已排队",
-    "一項修改已排隊"
-  ],
-  "PUT": [
-    "PUT",
-    "PUT"
-  ],
-  "SERVER": [
-    "服务器",
-    "伺服器"
-  ],
-  "D1 learner_state": [
-    "D1 学习者状态",
-    "D1 學習者狀態"
-  ],
-  "Inject concurrent write": [
-    "注入并发写入",
-    "注入併發寫入"
-  ],
-  "Simulate another tab reaching revision 13 first": [
-    "模拟另一个标签页先达到版本 13",
-    "模擬另一個標籤頁先達到版本 13"
-  ],
-  "Rebase & retry": [
-    "重新应用并重试",
-    "重新應用並重試"
-  ],
-  "Synchronised": [
-    "已同步",
-    "已同步"
-  ],
-  "Run offline sync": [
-    "执行离线同步",
-    "執行離線同步"
-  ],
-  "Reset trace": [
-    "重置过程",
-    "重置過程"
-  ],
-  "Local learning state": [
-    "本地学习状态",
-    "本地學習狀態"
-  ],
-  "These example answers and progress records let you inspect the learning workflow. Practice, review and sync changes remain in this demo session.": [
-    "这些示例答案与进度记录用于展示学习流程。练习、复习与同步修改仅在本次演示会话中生效。",
-    "這些示例答案與進度記錄用於展示學習流程。練習、複習與同步修改僅在本次演示會話中生效。"
-  ],
-  "Parliamo! 7": [
-    "Parliamo! 7",
-    "Parliamo! 7"
-  ],
-  "Local-first Italian Learning Studio": [
-    "本地优先意大利语学习工作室",
-    "本地優先義大利語學習工作室"
-  ],
-  "SYNTHETIC LEARNER · LOCAL": [
-    "示例学习者 · 本地运行",
-    "示例學習者 · 本地執行"
-  ],
-  "Connect a 56-day beginner curriculum to daily practice, spaced recall and durable progress evidence.": [
-    "将 56 天初级课程连接到每日练习、间隔回忆与可持续保存的学习成果。",
-    "將 56 天初級課程連線到每日練習、間隔回憶與可持續儲存的學習成果。"
-  ],
-  "Answer a Today prompt, grade a Recall card, then open the sync-conflict exercise.": [
-    "回答一道今日练习，为一张回忆卡片评分，再打开同步冲突实验。",
-    "回答一道今日練習，為一張回憶卡片評分，再開啟同步衝突實驗。"
-  ],
-  "Mastery and the next-review schedule change locally while revision handling protects progress across devices.": [
-    "掌握程度与下次复习计划在本地变化；版本处理展示了跨设备保护进度的方式。",
-    "掌握程度與下次複習計劃在本地變化；版本處理展示了跨裝置保護進度的方式。"
-  ],
-  "56 DAYS · 28 HUBS · 7 SKILLS · 753 CONTENT ROWS": [
-    "56 天 · 28 个单元 · 7 项技能 · 753 条内容记录",
-    "56 天 · 28 個單元 · 7 項技能 · 753 條內容記錄"
-  ],
-  "PRACTICE · RECALL · FEEDBACK · PROGRESS · OFFLINE SYNC": [
-    "练习 · 回忆 · 反馈 · 进度 · 离线同步",
-    "練習 · 回憶 · 回饋 · 進度 · 離線同步"
-  ],
-  "PARLIAMO!": [
-    "PARLIAMO!",
-    "PARLIAMO!"
-  ],
-  "A1 CONSOLIDATION ENGINE": [
-    "A1 巩固练习引擎",
-    "A1 鞏固練習引擎"
-  ],
-  "IT + EN": [
-    "意大利语 + 中文",
-    "義大利語 + 中文"
-  ],
-  "IT": [
-    "意大利语",
-    "義大利語"
-  ],
-  "Bilingual": [
-    "双语辅助",
-    "雙語輔助"
-  ],
-  "Immersion": [
-    "沉浸模式",
-    "沉浸模式"
-  ],
-  "↺ Reset": [
-    "↺ 重置",
-    "↺ 重置"
-  ],
-  "PRODUCT MAP / START HERE": [
-    "产品导览 / 从这里开始",
-    "產品導覽 / 從這裡開始"
-  ],
-  "56 days of planned practice and progress checks": [
-    "56 天有计划的练习与进度检查",
-    "56 天有計劃的練習與進度檢查"
-  ],
-  "Today selects work from the learner’s dated plan and weaker skills. Recall, writing and CEFR evidence then update separate progress records; the System chapter exposes the local-first persistence contract.": [
-    "今日练习依据学习者的日期计划和薄弱技能选择内容。回忆、写作与 CEFR 学习证据分别更新进度；系统章节展示本地优先的保存与同步机制。",
-    "今日練習依據學習者的日期計劃和薄弱技能選擇內容。回憶、寫作與 CEFR 學習證據分別更新進度；系統章節展示本地優先的儲存與同步機制。"
-  ],
-  "Inspect curriculum & sync architecture →": [
-    "查看课程与同步架构 →",
-    "檢視課程與同步架構 →"
-  ],
-  "Plan": [
-    "计划",
-    "計劃"
-  ],
-  "56 days": [
-    "56 天",
-    "56 天"
-  ],
-  "Study time": [
-    "学习时长",
-    "學習時長"
-  ],
-  "5,070 min": [
-    "5,070 分钟",
-    "5,070 分鐘"
-  ],
-  "Lesson hubs": [
-    "课程单元",
-    "課程單元"
-  ],
-  "Content seed": [
-    "初始内容",
-    "初始內容"
-  ],
-  "753 rows": [
-    "753 条记录",
-    "753 條記錄"
-  ],
-  "ALBERGO": [
-    "酒店",
-    "酒店"
-  ],
-  "ROUTINE": [
-    "日常习惯",
-    "日常習慣"
-  ],
-  "VIAGGIO": [
-    "旅行",
-    "旅行"
-  ],
-  "CITTÀ": [
-    "城市",
-    "城市"
-  ],
-  "MCQ": [
-    "选择题",
-    "選擇題"
-  ],
-  "INPUT": [
-    "输入题",
-    "輸入題"
-  ],
-  "REORDER": [
-    "词序题",
-    "詞序題"
-  ],
-  "LISTEN": [
-    "听写",
-    "聽寫"
-  ],
-  "READING": [
-    "阅读题",
-    "閱讀題"
-  ],
-  "NOT YET": [
-    "尚未达成",
-    "尚未達成"
-  ],
-  "INDEPENDENT": [
-    "独立完成",
-    "獨立完成"
-  ],
-  "SUPPORTED": [
-    "辅助完成",
-    "輔助完成"
-  ],
-  "Buona copertura del compito: sono presenti più segnali distinti.": [
-    "任务覆盖较好：已包含多项不同的任务线索。",
-    "任務覆蓋較好：已包含多項不同的任務線索。"
-  ],
-  "Hai iniziato bene; aggiungi più segnali distinti del compito.": [
-    "开头不错；请补充更多不同的任务线索。",
-    "開頭不錯；請補充更多不同的任務線索。"
-  ],
-  "Italian practice studio": [
-    "意大利语练习工作室",
-    "義大利語練習工作室"
-  ],
-  "Practice profile · local": [
-    "练习档案 · 本地运行",
-    "練習檔案 · 本地執行"
+    "回想"
+  ],
+  "Use it": [
+    "运用",
+    "運用"
+  ],
+  "Use mi chiamo to give your name. Use ti with an informal tu question and si with formal Lei.": [
+    "用 mi chiamo 介绍姓名。非正式的 tu 问句用 ti，正式的 Lei 问句用 si。",
+    "用 mi chiamo 介紹姓名。非正式的 tu 問句用 ti，正式的 Lei 問句用 si。"
+  ],
+  "Hello, my name is Elena. And you? / Good morning, what is your name?": [
+    "你好，我叫 Elena。你呢？／早上好，请问您叫什么名字？",
+    "你好，我叫 Elena。你呢？／早安，請問您叫什麼名字？"
+  ],
+  "Try without the example": [
+    "不看例句试一试",
+    "不看例句試一試"
+  ],
+  "Fill each gap. Capitalisation and final punctuation are accepted; Italian accents still matter.": [
+    "填入空缺。大小写和句末标点不影响判断；意大利语重音符号仍须正确。",
+    "填入空缺。大小寫和句末標點不影響判斷；義大利語重音符號仍須正確。"
+  ],
+  "Give your name.": [
+    "介绍自己的名字。",
+    "介紹自己的名字。"
+  ],
+  "Ask a friend’s name.": [
+    "问朋友的名字。",
+    "問朋友的名字。"
+  ],
+  "Check answer": [
+    "检查答案",
+    "檢查答案"
+  ],
+  "Correct. Your first attempt is kept.": [
+    "答对了。首次作答的记录仍会保留。",
+    "答對了。首次作答的紀錄仍會保留。"
+  ],
+  "Try chiamo: mi chiamo gives your name.": [
+    "试试 chiamo：mi chiamo 用于介绍姓名。",
+    "試試 chiamo：mi chiamo 用於介紹姓名。"
+  ],
+  "Try ti: use tu when speaking to a friend.": [
+    "试试 ti：和朋友交谈时用 tu。",
+    "試試 ti：和朋友交談時用 tu。"
+  ],
+  "Try before looking at feedback.": [
+    "先试着回答，再看反馈。",
+    "先試著回答，再看回饋。"
+  ],
+  "Use it yourself": [
+    "自己运用",
+    "自己運用"
+  ],
+  "Introduce an invented person in two sentences, then ask my name.": [
+    "用两句话介绍一个虚构身份，再问我的名字。",
+    "用兩句話介紹一個虛構身分，再問我的名字。"
+  ],
+  "Check your own work. This checklist does not grade the meaning or grammar of your writing.": [
+    "自己检查作答。这份清单不会评判文章的语义或语法。",
+    "自己檢查作答。這份清單不會評判文章的語意或文法。"
+  ],
+  "I gave a name using mi chiamo.": [
+    "我用 mi chiamo 介绍了姓名。",
+    "我用 mi chiamo 介紹了姓名。"
+  ],
+  "I used a consistent formal or informal question.": [
+    "我的问句统一使用正式或非正式语体。",
+    "我的問句統一使用正式或非正式語體。"
+  ],
+  "Write at least three words and check both points to complete the mission.": [
+    "至少写三个词，并确认两项检查后即可完成任务。",
+    "至少寫三個詞，並確認兩項檢查後即可完成任務。"
+  ],
+  "Mission completed": [
+    "任务已完成",
+    "任務已完成"
+  ],
+  "Complete mission": [
+    "完成任务",
+    "完成任務"
+  ],
+  "First attempts: {correct} / 2": [
+    "首次作答：{correct} / 2",
+    "首次作答：{correct} / 2"
+  ],
+  "3. Remember it another day": [
+    "3. 改天再回忆",
+    "3. 改天再回想"
+  ],
+  "Simulated day {day}. Next review: day {due}.": [
+    "模拟第 {day} 天。下次复习：第 {due} 天。",
+    "模擬第 {day} 天。下次複習：第 {due} 天。"
+  ],
+  "Go to the next review day": [
+    "前往下一个复习日",
+    "前往下一個複習日"
+  ],
+  "Ask someone’s name formally.": [
+    "正式地询问对方的姓名。",
+    "正式地詢問對方的姓名。"
+  ],
+  "Check review": [
+    "检查复习答案",
+    "檢查複習答案"
+  ],
+  "The first review is due one day after completion.": [
+    "完成任务一天后进行首次复习。",
+    "完成任務一天後進行首次複習。"
+  ],
+  "Correct. Successful reviews wait 3, then 7, then 14 days.": [
+    "答对了。成功回忆后的间隔依次为 3、7、14 天。",
+    "答對了。成功回想後的間隔依序為 3、7、14 天。"
+  ],
+  "The answer is si. A missed review returns the next day.": [
+    "答案是 si。答错的内容会在次日再复习。",
+    "答案是 si。答錯的內容會在隔日再複習。"
+  ],
+  "One credited review per day. Extra practice never adds duplicate credit.": [
+    "每天只计入一次复习。额外练习不会重复记分。",
+    "每天只計入一次複習。額外練習不會重複記分。"
+  ],
+  "Practice alongside your materials": [
+    "配合教材练习",
+    "配合教材練習"
+  ],
+  "The live path has 36 original missions based on a review of 47 lesson PDFs and presentations. Each mission points back to physical pages or slides. Your local PDF stays on your device.": [
+    "正式网站根据对 47 份课程 PDF 和演示文稿的审阅设计了 36 个原创任务。每项任务都注明文件中的实际页码或幻灯片编号。本地 PDF 始终留在你的设备上。",
+    "正式網站根據對 47 份課程 PDF 和簡報的審閱設計了 36 個原創任務。每項任務都註明檔案中的實際頁碼或投影片編號。本機 PDF 始終留在你的裝置上。"
+  ],
+  "These are selected learning outcomes, not a complete course or a language certificate. The earlier downloadable workbooks remain supplementary practice.": [
+    "任务涵盖选定的学习目标，并非完整课程或语言认证。此前提供的练习册仍可作为补充练习下载。",
+    "任務涵蓋選定的學習目標，並非完整課程或語言認證。先前提供的練習冊仍可作為補充練習下載。"
   ]
-,
-  "Next exercise": ["下一题", "下一題"],
-  "I built Parliamo to put beginner Italian lessons, daily practice and vocabulary review in one place.": ["我构建 Parliamo，把意大利语入门课程、每日练习与词汇复习放在同一个地方。", "我建置 Parliamo，把義大利語入門課程、每日練習與詞彙複習放在同一個地方。"],
-  "Choose italiana for Maria and press Check. Then open Recall, reveal a vocabulary card and rate how well you remembered it.": ["为 Maria 选择 italiana 并点击 Check，再打开 Recall，翻开词汇卡并评价自己记得怎样。", "為 Maria 選擇 italiana 並點選 Check，再開啟 Recall，翻開詞彙卡並評價自己記得如何。"],
-  "Each answer updates practice progress. In Recall, compare the calculated review intervals for Again, Hard, Good and Easy.": ["每次回答都会更新练习进度。在回忆页中，比较“再来一次”“困难”“良好”和“容易”四种评分所计算的复习间隔。", "每次回答都會更新練習進度。在回憶頁中，比較「再來一次」「困難」「良好」和「容易」四種評分所計算的複習間隔。"],
-  "My portal combines a 56-day plan with practice, writing feedback and vocabulary review. The System page shows how saved progress survives a sync conflict.": ["我的学习门户把 56 天计划与练习、写作反馈及词汇复习结合起来。System 页面展示保存的进度怎样在同步冲突中保留下来。", "我的學習入口把 56 天計畫與練習、寫作回饋及詞彙複習結合起來。System 頁面展示保存的進度如何在同步衝突中保留下來。"],
-  "Speech synthesis is unavailable. Use Next exercise to continue with a text question.": ["语音合成不可用。点击 Next exercise 继续文字题。", "語音合成無法使用。點選 Next exercise 繼續文字題。"]
-} as const satisfies ProjectCopyTable;
+} satisfies ProjectCopyTable;

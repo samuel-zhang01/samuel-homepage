@@ -1,6 +1,21 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectConceptProductsCopy = {
+  "Learn today, remember another day": ["今天学习，改天回忆", "今天學習，改天回想"],
+  "Read an original example and notice how mi chiamo introduces a name.": ["阅读原创例句，观察 mi chiamo 如何介绍姓名。", "閱讀原創例句，觀察 mi chiamo 如何介紹姓名。"],
+  "Hide the example and try the gap before seeing feedback.": ["隐藏例句，先填空再看反馈。", "隱藏例句，先填空再看回饋。"],
+  "Write your own introduction and check it against two prompts.": ["写自己的介绍，并按两条提示自查。", "寫自己的介紹，並按兩條提示自查。"],
+  "Completion schedules a next-day check. Later successful reviews wait 3, 7 and 14 days.": ["完成后安排次日复习。后续成功回忆的间隔为 3、7、14 天。", "完成後安排隔日複習。後續成功回想的間隔為 3、7、14 天。"],
+  "Selected learning goals complement the PDFs. Completion is practice evidence, not a proficiency certificate.": ["选定的学习目标用于配合 PDF。完成记录说明练习经历，不代表语言能力认证。", "選定的學習目標用於配合 PDF。完成紀錄說明練習經歷，不代表語言能力認證。"],
+  "Use it": ["运用", "運用"],
+  "Notice": ["观察", "觀察"],
+  "Review tomorrow": ["明天复习", "明天複習"],
+  "A name and a question": ["姓名与问句", "姓名與問句"],
+  "Next day": ["次日", "隔日"],
+  "After completion": ["完成之后", "完成之後"],
+  "Self-check": ["自评", "自評"],
+  "Write your own introduction.": ["写自己的介绍。", "寫自己的介紹。"],
+
   "Files in, useful formats out": [
     "把文件变成需要的格式",
     "把檔案變成需要的格式"
