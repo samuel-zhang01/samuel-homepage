@@ -52,6 +52,7 @@ const { getProjectText } = load("src/lib/projectNarrative.ts");
 const { getProjectStory } = load("src/components/projects/projectStories.ts");
 const { projectText } = load("src/lib/projectCopy.ts");
 const { coverdWorkflowCopy } = load("src/components/projects/copy/coverdWorkflowCopy.ts");
+const { italianCopy } = load("src/components/projects/copy/italianCopy.ts");
 const sections = { "": "about", projects: "projects", ...objectFromSource("src/app/[locale]/[section]/page.tsx", "sections") };
 const demoRegistry = objectFromSource("src/components/projects/ProjectDemoRouter.tsx", "demoComponents");
 const gameIds = arrayIdsFromSource("src/components/SystemSevenDesktop.tsx", "ARCADE_GAMES");
@@ -184,7 +185,46 @@ async function documentChecks(p, job, visit) {
   if (job.project.demo === "mri-trust") await sampleScreenshot(p, job, visit, "mri-document");
   visit.checks.push("translated title/summary/privacy", "visible explanation bodies", "exact catalogue links", "image decode/alternatives", "document and pane width");
 }
-async function exerciseState(p, demo) {
+async function exerciseParliamo(p, demo, locale) {
+  const t = (text, values) => projectText(locale, italianCopy, text, values);
+  const button = text => demo.getByRole("button", { name: t(text), exact: true });
+  const budget = demo.getByRole("radio", { name: t("{minutes} minutes", { minutes: 5 }), exact: true });
+  await budget.focus(); await p.keyboard.press("Space");
+  assert.ok(await budget.isChecked());
+  assert.ok((await demo.locator('[aria-live="polite"]').innerText()).includes(t("{minutes} min", { minutes: 4 })), "Two reviews fit a five-minute day; a mission waits");
+  const studyDay = demo.getByLabel(t("Study on this day"), { exact: true });
+  await studyDay.focus(); await p.keyboard.press("Space");
+  await demo.getByText(t("Rest day: both reviews wait for your next study day. No penalty."), { exact: true }).waitFor();
+  await p.keyboard.press("Space");
+  await keyboardActivate(p, button("Try without the example"));
+  const check = index => demo.getByRole("button", { name: t("Check answer"), exact: true }).nth(index);
+  assert.ok(await check(0).isDisabled(), "Empty answers cannot be scored");
+  await demo.locator("#daily-answer-0").fill("sono"); await keyboardActivate(p, check(0));
+  await demo.getByText(t("Try chiamo: mi chiamo gives your name."), { exact: true }).waitFor();
+  await demo.locator("#daily-answer-0").fill(" CHIAMO! "); await keyboardActivate(p, check(0));
+  await demo.locator("#daily-answer-1").fill("ti"); await keyboardActivate(p, check(1));
+  await keyboardActivate(p, button("Use it yourself"));
+  assert.ok(await button("Complete mission").isDisabled(), "Recall alone does not complete a mission");
+  await demo.locator("#daily-output").fill("Ciao, mi chiamo Ada. Sono studentessa. Come ti chiami?");
+  for (const text of ["I gave a name using mi chiamo.", "I used a consistent formal or informal question."]) {
+    await demo.getByLabel(t(text), { exact: true }).focus(); await p.keyboard.press("Space");
+  }
+  await keyboardActivate(p, button("Complete mission"));
+  assert.ok(await button("Mission completed").isDisabled(), "Completion cannot be credited twice");
+  await demo.getByText(t("First attempts: {correct} / 2", { correct: 1 }), { exact: true }).waitFor();
+  await keyboardActivate(p, button("Go to the next review day"));
+  await demo.locator("#daily-review").fill("ti"); await keyboardActivate(p, button("Check review"));
+  await demo.getByText(t("The answer is si. A missed review returns the next day."), { exact: true }).waitFor();
+  await keyboardActivate(p, button("Go to the next review day"));
+  await demo.locator("#daily-review").fill("si"); await keyboardActivate(p, button("Check review"));
+  await demo.getByText(t("Simulated day {day}. Next review: day {due}.", { day: 3, due: 6 }), { exact: true }).waitFor();
+  await keyboardActivate(p, button("Reset demo"));
+  await button("Try without the example").waitFor();
+  assert.equal(await demo.locator("#daily-output").count(), 0);
+  return { kind: "parliamo-daily-journey", displayedContentChanged: true, firstCorrect: 1, total: 2, reviewDay: 3, nextDue: 6, reset: true };
+}
+async function exerciseState(p, demo, job) {
+  if (job.project.demo === "italian-learning") return exerciseParliamo(p, demo, job.option.locale);
   const before = await demo.innerText();
   const candidates = [
     [demo.locator('button[role="tab"][aria-selected="false"]:not(:disabled)'), "aria-selected", "true"],
@@ -228,7 +268,7 @@ async function demoChecks(p, job, visit) {
   assert.ok(position.y >= bounds.y - 1 && position.y + position.height <= bounds.y + bounds.height + 1, "Demo launch jumps to reachable activity navigation");
   assert.ok((await demo.getByRole("heading").first().innerText()).trim().length > 0, "Demo exposes a semantic title");
   visit.initialGeometry = await geometry(p, "projectActivity");
-  visit.state = await exerciseState(p, demo);
+  visit.state = await exerciseState(p, demo, job);
   visit.images = await inspectImages(p, demo);
   visit.geometry = await geometry(p, "projectActivity");
   visit.links = await inspectLinks(demo);
