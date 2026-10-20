@@ -14,7 +14,11 @@ Eight additional local Chromium profiles pass all three gallery images, full-siz
 
 The final Mandarin wording polish passed the complete build and eight fresh compiled demo profiles.
 
-Release status: the reviewed candidate is awaiting publication through the existing protected main workflow. The exact application revision and public result will be added after the release finishes.
+[Protected VPS workflow `39414136282`](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/39414136282) passed full verification and production deployment for exact application revision `61a29961bec1b0c90bd3e96eb02531947f9aea00` on 20 October. Local and remote Git trees match `cac7e14c7c5032744015ec195d813806aadd00b4`. The public [project page](https://me.samuelzhang.co.uk/en-gb/projects?project=parliamo-italian-learning) and [interactive demo](https://me.samuelzhang.co.uk/en-gb/projects?project=parliamo-italian-learning&view=demo) serve the academy refresh.
+
+Public HTTPS Chromium checks cover all 32 scoped journeys. The first run passed eight project pages, eight demos and fifteen of sixteen workbook journeys; one Simplified Chinese 320px workbook journey received HTTP 502 for a stylesheet. Both workbook journeys in that locale/width pass on the targeted recheck, and the recovered stylesheet matches the compiled asset byte for byte. The original failure remains in the evidence. Eight further gallery/concept profiles, two actual 320×240 demo windows and the graph/workbook/history/export journey pass. All four project routes return 200, and all three public screenshots match their reviewed bytes and SHA-256 hashes. Public desktop, Traditional Chinese phone, resized-window and workbook screenshots were directly inspected. Browser coverage has the same limits stated above.
+
+All 102 task evidence files, including initial failures, source parity checks, local/public screenshots, asset comparisons and the exact successful release metadata, are read-back/hash verified in `~/.local/share/samuel-homepage/review-archive/parliamo-academy-complete-20261020.tar.gz` (SHA-256 `ea0cf410fa539cb0a6961e430f88f02878c9db57d751f2fa01a509216d77b3fb`), with an adjacent member manifest. Owned temporary previews and review files are removed after archival. The final documentation-only commit changes no application or build inputs.
 
 ## Parliamo daily-learning portal — 18 October 2026
 
