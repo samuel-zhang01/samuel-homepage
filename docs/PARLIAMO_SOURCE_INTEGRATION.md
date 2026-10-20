@@ -4,9 +4,11 @@ Reviewed 20 October 2026. Source: [Italian Learning Portal](https://github.com/s
 
 Target starting revision: `797f9f8efcb4aef625785e19adbcc514aedd70ad`. Scope: refresh the existing portfolio project and publish through its protected VPS workflow. The independently hosted [learning portal](https://italian.samuelzhang.co.uk) was already deployed and verified before this homepage integration.
 
+Current presentation, 20 October 2026: the owner's subsequent live-website policy makes the [complete learning portal](https://italian.samuelzhang.co.uk) the sole public demo destination, with one prominent black launch button. Legacy `view=demo` addresses open the project overview; screenshots, source links, graph identities and supplementary PDFs remain available. Application revision `5762f506adabb489ea9a11185319d2bdd2c81f2b` deployed this change through [workflow `39419253862`](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/39419253862). The [live-website verification record](VERIFICATION.md#live-websites-as-the-sole-demo-destination--20-october-2026) records public acceptance and retained failures. Adaptation details below describe the earlier implementation and retained source code, not an additional current visitor action.
+
 ## Contribution and evidence
 
-Parliamo turns supplied Italian class topics into original English–Italian practice for a learner around mid-A1. The academy adds explicit grammar teaching, worked examples, vocabulary and guided study plans around the existing 36 short missions. It distinguishes help used during practice from unassisted recall, while retaining browser-local drafts and progress. The portfolio explains these choices through a small interactive adaptation and original interface screenshots.
+Parliamo turns supplied Italian class topics into original English–Italian practice for a learner around mid-A1. The academy adds explicit grammar teaching, worked examples, vocabulary and guided study plans around the existing 36 short missions. It distinguishes help used during practice from unassisted recall, while retaining browser-local drafts and progress. The portfolio explains these choices through original interface screenshots and a direct launch of the complete learning portal.
 
 | Public claim | Source implementation or observed evidence | Qualification |
 | --- | --- | --- |
@@ -36,7 +38,7 @@ Internal student, lecturer and interface acceptance reviews met the requested th
 
 Deployed course JavaScript: `index-CY15MBCK.js`, SHA-256 `41018cd67ab57f4405915e3de0d0d71b5679ab046934e90267441ac051f969c7`. The complete source-file hash manifest is retained with private task evidence, not shipped as application content.
 
-## Portfolio adaptation
+## Historical portfolio adaptation
 
 `ItalianLearningStudio.tsx` keeps the existing greeting mission and simulated daily review. Its added academy controls compare 30/45/60-minute recipes for the three programme samples using a compact adaptation of the source planner. A bounded grammar exercise exposes the difference between a first attempt, a correction with help and independent recall on a later simulated day. Practice lives only in this demo window; it neither imports nor modifies a learner's real portal history. The full course, word bank and page companions are reached through the separately labelled live-site link.
 
