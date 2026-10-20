@@ -66,7 +66,7 @@ for (const [slug, tokens] of [
   ["trustworthy-mri-reconstruction", ["31.90", "0.889", "R=4"]],
   ["safe-learning-to-defer", ["89.5%", "64%"]],
   ["cost-sensitive-cyber-detection", ["10,000", "4,904", "54.2%"]],
-  ["study-rl", ["25", "32", "19"]],
+  ["study-rl", ["26", "32", "19"]],
 ]) {
   const project = projects.find(item => item.slug === slug);
   for (const locale of ["zh-CN", "zh-TW"]) for (const token of tokens) assert.ok(getProjectText(locale, project.detail).includes(token), `${slug}: ${locale} lost ${token}`);

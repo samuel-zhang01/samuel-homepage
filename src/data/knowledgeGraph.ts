@@ -99,7 +99,7 @@ export const projectConcepts: Record<string, string[]> = {
   "coverd-yasa": ["products", "scheduling", "recovery"],
   "parliamo-italian-learning": ["products", "learning-tools", "local-first"],
   "course-recommender-audit": ["data-science", "learning-tools", "evaluation"],
-  "study-rl": ["reinforcement-learning", "value-and-policy", "bandits", "language-models"],
+  "study-rl": ["reinforcement-learning", "value-and-policy", "bandits", "language-models", "learning-tools", "causal-inference"],
   "sequential-decisions-lab": ["reinforcement-learning", "bandits", "evaluation"],
   "microrobot-vision": ["scientific-ml", "robotics", "inverse-problems", "evaluation"],
   "trustworthy-mri-reconstruction": ["scientific-ml", "inverse-problems", "uncertainty", "evaluation"],

@@ -152,6 +152,14 @@ check('Application and text-processing links stay distinct from language-model t
   assert.ok(!targets('cv-keyword-automator').has('method:language-models'));
   assert.ok(targets('study-rl').has('method:language-models'));
 });
+check('STUDY-RL curriculum evidence retains independent provenance', () => {
+  const related = graph.edges.filter(edge => edge.source === 'project:study-rl');
+  assert.ok(related.some(edge => edge.target === 'method:learning-tools' && edge.relation === 'uses'));
+  assert.ok(related.some(edge => edge.target === 'method:causal-inference' && edge.relation === 'uses'));
+  assert.ok(related.some(edge => edge.target === 'experience:personal-projects' && edge.relation === 'developed-in'));
+  assert.ok(!related.some(edge => edge.target === 'experience:kcl-teaching' && edge.relation === 'developed-in'));
+  assert.ok(graph.edges.some(edge => edge.source === 'skill:teaching' && edge.target === 'project:study-rl' && edge.relation === 'evidenced-by'));
+});
 check('New projects work with area fallback and optional explicit concepts', () => {
   const added = { ...projects[0], slug: 'new-project-fixture', area: 'Systems' };
   delete added.concepts;

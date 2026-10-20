@@ -263,8 +263,8 @@ export const profileSkills: ProfileSkill[] = [
   },
   {
     id: "teaching", group: "product", title: "Teaching, curriculum design & mentoring",
-    description: "Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, and organised a careers panel for 100+ students. The linked chemistry archive supplies related subject context.",
-    projectSlugs: [], relatedProjectSlugs: ["coding-series"], originIds: ["kcl-teaching"], conceptIds: ["learning-tools"], sourceIds: ["cv"],
+    description: "Designed and delivered 20+ programming, data-analysis and introductory ML sessions for 80+ chemistry students, and organised a careers panel for 100+ students. Independently developed STUDY-RL, a 26-week course with detailed lessons, visual experiments and Jupyter exercises. The chemistry archive supplies related subject context.",
+    projectSlugs: ["study-rl"], relatedProjectSlugs: ["coding-series"], originIds: ["kcl-teaching", "personal-projects"], conceptIds: ["learning-tools"], sourceIds: ["cv", "archive:study-rl"],
   },
   {
     id: "operational-decisions", group: "product", title: "Decision support under pressure",

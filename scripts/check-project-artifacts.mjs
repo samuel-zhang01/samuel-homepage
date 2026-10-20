@@ -69,8 +69,8 @@ const allowlist = new Map([
     type: "pdf",
   }],
   ["projects/study-rl/syllabus.pdf", {
-    maximumBytes: 222734,
-    sha256: "547619235e20ed7befaa7e868793b46cff7796b0b483e3e065626252f83d244e",
+    maximumBytes: 225241,
+    sha256: "c4c0f59ccf965f3058dd32274cea1f80e83ad5b74f2a1d61a30d9300bba7e456",
     type: "pdf",
   }],
   ["system7-icons/secret.png", {

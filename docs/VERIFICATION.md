@@ -1,5 +1,18 @@
 # Verification and maintenance
 
+## STUDY-RL teaching portal — 20 October 2026
+
+The existing [STUDY-RL project](https://me.samuelzhang.co.uk/en-gb/projects?project=study-rl) now points to the complete [teaching portal](https://study-rl.samuelzhang.co.uk), with the public GitHub repository and current syllabus alongside it. The [source record](PROJECT_SOURCE_RECORD.md#study-rl-teaching-portal-refresh--20-october-2026) pins public revision `382be343e6b3a656cffe6712b7671e535f58c73e`, contribution limits, graph provenance and PDF hash. All four homepage locales describe the 26-week English course, visual experiments, local Jupyter workflow and causal-learning extension. Existing project, source and graph identities remain stable.
+
+The integration preserves the concurrent sole-live-website policy and its native-section fixture repair through `5762f50`. The course has one prominent live-site launch; old demo links return to that overview. The new teaching-capability evidence remains independent of KCL employment provenance. Exploratory native-atlas enhancements were discarded once the owner's live-site preference was established; their earlier test results are retained as development evidence and are not claimed as the released visitor experience.
+
+Lint and the complete isolated production build pass with all maintained prebuild families. Output remains within unchanged limits: 128 browser files / 5.68 MiB, including 257.1 KiB demand-loaded mathematics; 260.6 KiB initial JavaScript gzip and 5.32 MiB application runtime. Graph checks pass with the explicit independent-course relationship assertion. The dependency audit reports zero vulnerabilities, 302 verified registry signatures and 55 attestations; 27 deployment scenarios and 72 request-security cases pass.
+
+Compiled Chromium checks pass all 24 scoped journeys: eight project documents, eight live-site/legacy-address launches and eight actual syllabus readers, across four locales at 1440px and 320px. Four further graph journeys traverse the course and teaching capability, retain the stable shared address and export the causal-inference relationship. The launch checks verify the black 52px control, exact keyboard/new-tab destination and absence of duplicate demos. Their external response is intercepted; separate public-course checks establish actual service behavior. Responsive Chromium coverage does not claim physical devices, native zoom, Firefox or WebKit.
+
+Homepage publication status: the reviewed candidate is ready for the protected main workflow. The exact successful revision, public checks and evidence archive will be recorded after deployment.
+
+
 ## Live websites as the sole demo destination — 20 October 2026
 
 Projects with a declared public website now use one prominent black “Open live website” button with white text, the existing double frame and a minimum 52px height. It is first in the toolbar and spans the narrow layout. Their reduced demo and duplicate playground actions are removed from the project page. Old shared `view=demo` URLs open the project overview and its live-site action; supporting PDFs, source links, screenshots and stable project/graph IDs remain available. Projects without a website retain their embedded demos. The shared policy also applies to future catalogue entries with a website URL.
