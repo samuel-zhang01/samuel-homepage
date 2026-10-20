@@ -1,18 +1,26 @@
 /** Exact original-image outputs reviewed in docs/VISUAL_SHOWCASE_SOURCES.md. */
 export const projectShowcaseMedia = [
   [
-  "projects/project-showcases/parliamo-daily-goals-20261018.webp",
+  "projects/project-showcases/parliamo-programmes-20261020.webp",
   {
-    "maximumBytes": 87040,
-    "sha256": "05e537148d34c20008489bd476847db3c001be2a1ad28821b70d9e80d306a413",
+    "maximumBytes": 86016,
+    "sha256": "94482048bb830f37702c79e54f2a3b9811f574d7e6784d0e681df7fdb4b87d90",
     "type": "webp"
   }
 ],
   [
-  "projects/project-showcases/parliamo-flexible-plan-20261018.webp",
+  "projects/project-showcases/parliamo-grammar-support-20261020.webp",
   {
-    "maximumBytes": 56320,
-    "sha256": "e88d8066d717a8b7e91bf8c391e7f29a8d269d89b1428027e9305cc7174ae873",
+    "maximumBytes": 51200,
+    "sha256": "d606c5b5415bc07109440cfd8361148871ef15ae65a524f0d99d931a6532fbbc",
+    "type": "webp"
+  }
+],
+  [
+  "projects/project-showcases/parliamo-page-companion-20261020.webp",
+  {
+    "maximumBytes": 59392,
+    "sha256": "272ec239b5b6dbf2fba465b8cec2fef9b59cefc6353e64c4c34d51fdb25223e5",
     "type": "webp"
   }
 ],

@@ -27,4 +27,15 @@
 .stages [aria-current] { background: var(--s7-selection); color: var(--s7-selection-text); font-weight: bold; }
 .question { margin: 16px 0; padding: 12px; border: 1px solid var(--s7-shadow); background: var(--s7-paper); }
 .question > label { font-weight: bold; }
+.recipe { margin: 16px 0; padding: 12px; border: 1px solid var(--s7-edge); background: var(--s7-paper); box-shadow: var(--s7-relief-inset); }
+.recipe ol { list-style: none; padding: 0; margin: 12px 0 0; }
+.recipe li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-top: 1px solid var(--s7-shadow); }
+.recipe li > span { overflow-wrap: anywhere; }
+.recipe li > strong { white-space: nowrap; flex-shrink: 0; }
+.feedback { border-left: 2px solid var(--s7-edge); padding: 4px 12px; margin: 16px 0; background: var(--s7-paper); }
+.attemptLedger { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-top: 12px; border-top: 1px solid var(--s7-shadow); }
+.attemptLedger dt { font-size: var(--s7-small); color: var(--s7-muted); }
+.attemptLedger dd { margin: 5px 0 0; font-weight: bold; overflow-wrap: anywhere; }
+.paper form > label { font-weight: bold; }
 @media (max-width: 480px) { .paper { padding: 12px; } .question { padding: 8px; } .actions > * { max-width: 100%; } }
+@media (max-width: 360px) { .recipe { padding: 8px; } .attemptLedger { grid-template-columns: 1fr; } }

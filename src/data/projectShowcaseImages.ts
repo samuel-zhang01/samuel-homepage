@@ -12,22 +12,31 @@ export type ProjectShowcaseImage = Readonly<{
 export const projectShowcaseImages: Partial<Record<string, readonly ProjectShowcaseImage[]>> = {
   "parliamo-italian-learning": [
     {
-        "src": "/projects/project-showcases/parliamo-daily-goals-20261018.webp",
-        "alt": "Parliamo’s published home page with a five-minute greeting lesson, daily goal and rest-day message.",
-        "caption": "The live portal offers a small next step and keeps estimated practice separate from a running timer. Captured with fresh, disposable browser state.",
-        "label": "A five-minute next step",
+        "src": "/projects/project-showcases/parliamo-programmes-20261020.webp",
+        "alt": "Parliamo’s published programmes page with a 60-minute daily budget and the intensive, supported and grammar repair routes.",
+        "caption": "The live academy offers 14-, 28- and 10-study-day routes. This disposable session selects intensive A1 revision with a 60-minute budget; days can span several sittings.",
+        "label": "Choose a study route",
         "width": 1440,
         "height": 1050,
-        "source": "https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb"
+        "source": "https://italian.samuelzhang.co.uk/#programmes"
     },
     {
-        "src": "/projects/project-showcases/parliamo-flexible-plan-20261018.webp",
-        "alt": "Parliamo’s weekly planner with 5-, 10- and 15-minute budgets, study weekdays and scheduled lessons.",
-        "caption": "Choose study days and a daily budget. Rest days leave the next lesson waiting; the calendar shows the remaining plan. Captured from the live portal.",
-        "label": "A plan that fits your week",
+        "src": "/projects/project-showcases/parliamo-grammar-support-20261020.webp",
+        "alt": "Parliamo’s grammar workshop showing an incorrect article choice, a hint, a possible answer and the unchanged first-attempt record.",
+        "caption": "An intentionally wrong sample answer is shown with a hint and an explanation. Supported practice earns credit while the first attempt remains visible.",
+        "label": "Repair a grammar mistake",
         "width": 1440,
         "height": 1050,
-        "source": "https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb"
+        "source": "https://italian.samuelzhang.co.uk/#grammar/noun-gender"
+    },
+    {
+        "src": "/projects/project-showcases/parliamo-page-companion-20261020.webp",
+        "alt": "Parliamo’s companion for grammar slide 10, with an original article task, a synthetic response, a model and self-checks.",
+        "caption": "Page companions connect class material to original practice. This synthetic article response is compared with a model and self-checks; the class slide itself is not displayed.",
+        "label": "Try a page companion",
+        "width": 1440,
+        "height": 1050,
+        "source": "https://italian.samuelzhang.co.uk/#companion/src-2c59b3929a33-p10"
     }
 ],
   "air-quality-sensor-optimisation": [

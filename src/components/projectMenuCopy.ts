@@ -2,6 +2,7 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Desktop project names and summaries only; long narratives stay in the lazy project document. */
 export const projectMenuCopy = {
+  "An English–Italian A1 study studio with 28 grammar units, guided courses and daily practice from 5 to 60 minutes.": ["英意双语 A1 学习工作室，提供 28 个语法单元、引导课程和每天 5 至 60 分钟的练习。", "英義雙語 A1 學習工作室，提供 28 個文法單元、引導課程和每天 5 至 60 分鐘的練習。"],
   "An English–Italian learning companion with 36 five-minute missions, flexible daily plans and browser-saved progress.": ["英意双语学习助手，提供 36 个五分钟任务、灵活的每日计划和浏览器内保存的进度。", "英義雙語學習助手，提供 36 個五分鐘任務、彈性的每日計畫和瀏覽器內儲存的進度。"],
 
   "VideoMate": ["VideoMate", "VideoMate"],

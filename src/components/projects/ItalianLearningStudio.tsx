@@ -4,9 +4,21 @@ import { useState } from "react";
 import { DemoWindow, MacButton } from "./DemoChrome";
 import { ProjectCopy, useProjectLocale } from "./ProjectTranslationBoundary";
 import { projectText } from "@/lib/projectCopy";
-import { checkDailyAnswer, finishDailyMission, matchesItalian, newDailyAttempt, nextDailyInterval, planDailySample } from "@/lib/parliamoDaily";
+import {
+  checkDailyAnswer, checkGrammarSample, finishDailyMission, hintGrammarSample,
+  matchesItalian, newDailyAttempt, newGrammarSample, nextDailyInterval,
+  nextGrammarSample, planAcademySample, planDailySample,
+  type AcademyBudget, type SampleProgramme,
+} from "@/lib/parliamoDaily";
 import { italianCopy } from "./copy/italianCopy";
 import styles from "./ItalianLearningStudio.module.css";
+
+// First study days in the reviewed 20 October grammar.json programmes.
+const ACADEMY_PROGRAMMES = [
+  { id: "supported", label: "Supported A1", days: 28, units: ["Noun gender"] },
+  { id: "intensive", label: "Intensive A1 preparation", days: 14, units: ["Noun gender", "Noun plurals"] },
+  { id: "repair", label: "Grammar repair", days: 10, units: ["Noun gender", "Definite articles"] },
+] as const;
 
 export function ItalianLearningStudio() {
   const locale = useProjectLocale();
@@ -16,11 +28,23 @@ export function ItalianLearningStudio() {
   const [step, setStep] = useState(0);
   const [attempt, setAttempt] = useState(newDailyAttempt);
   const [review, setReview] = useState({ day: 1, due: 2, interval: 1, answer: "", result: null as boolean | null, count: 0 });
+  const [programme, setProgramme] = useState<SampleProgramme>("supported");
+  const [academyBudget, setAcademyBudget] = useState<AcademyBudget>(30);
+  const [grammar, setGrammar] = useState(newGrammarSample);
   const plan = planDailySample(budget, 2, active);
+  const selectedProgramme = ACADEMY_PROGRAMMES.find(item => item.id === programme)!;
+  const recipe = planAcademySample(academyBudget, programme);
+  const firstGrammar = grammar.attempts[0];
+  const latestGrammar = grammar.attempts.at(-1);
+  const currentGrammar = latestGrammar?.day === grammar.day ? latestGrammar : null;
+  const grammarStatus = (entry: typeof latestGrammar) => !entry
+    ? "Not yet tried"
+    : !entry.correct ? "Needs a correction" : entry.assisted ? "Correct with support" : "Correct independently";
   const ready = attempt.checked.every(Boolean) && attempt.rubric.every(Boolean) && attempt.output.trim().split(/\s+/).length >= 3;
   function reset() {
     setBudget(10); setActive(true); setStep(0); setAttempt(newDailyAttempt());
     setReview({ day: 1, due: 2, interval: 1, answer: "", result: null, count: 0 });
+    setProgramme("supported"); setAcademyBudget(30); setGrammar(newGrammarSample());
   }
   function checkReview() {
     if (!review.answer.trim() || review.result !== null || review.day < review.due) return;
@@ -32,17 +56,82 @@ export function ItalianLearningStudio() {
     appName="Parliamo!"
     title="A small Italian learning day"
     status="Disposable practice"
-    purpose="Turn a lesson PDF into a small task: notice a pattern, recall it, then use it in your own sentence."
-    tryThis="Compare a 5-minute and a 10-minute day. Then try the greeting mission and its next-day review."
-    watchFor="Reviews use two minutes and missions use five. A retry helps you learn, but never replaces your first-attempt score."
-    footer={<span>36 original missions · English and Italian in the live portal</span>}
+    purpose="Turn class material into a daily route: guided lessons, grammar practice and later recall."
+    tryThis="Compare a supported and an intensive day at 30, 45 or 60 minutes. Then try the grammar gap with and without a hint."
+    watchFor="Time blocks follow the selected programme. A supported correction counts as practice while the first attempt stays intact."
+    footer={<span>48 sources · 36 missions · 28 grammar units · 224 exercises · 3 programmes</span>}
   >
     <div className={styles.studio}>
       <div className={styles.actions}>
         <a className="s7-button is-primary" href="https://italian.samuelzhang.co.uk" target="_blank" rel="noreferrer">Open the learning portal</a>
         <MacButton onClick={reset}>Reset demo</MacButton>
       </div>
-      <p className={styles.note}>This demo keeps temporary practice in this window. The live portal saves your plan, drafts and progress in your browser, with a downloadable backup.</p>
+      <p className={styles.note}>These are temporary illustrative samples of the live portal. This window does not save progress. The full app saves plans, drafts, vocabulary and practice in your browser, with a downloadable backup.</p>
+      <section className={styles.paper} aria-labelledby="academy-plan-title">
+        <h3 id="academy-plan-title">Choose a longer study day</h3>
+        <p>Explore the first study day of each programme. The same budget makes different room for grammar when the day has one or two units.</p>
+        <fieldset className={styles.choices}>
+          <legend>Study programme</legend>
+          {ACADEMY_PROGRAMMES.map(item => <label key={item.id}>
+            <input type="radio" name="parliamo-programme" value={item.id} checked={programme === item.id} onChange={() => setProgramme(item.id)} />
+            {t(item.label)}
+          </label>)}
+        </fieldset>
+        <fieldset className={styles.choices}>
+          <legend>Longer daily budget</legend>
+          {([30, 45, 60] as const).map(minutes => <label key={minutes}>
+            <input type="radio" name="parliamo-academy-budget" checked={academyBudget === minutes} onChange={() => setAcademyBudget(minutes)} />
+            {t("{minutes} minutes", { minutes })}
+          </label>)}
+        </fieldset>
+        <div className={styles.recipe} role="status" data-academy-recipe>
+          <p><strong>{t("{days} study days · {minutes} minutes in this sample", { days: selectedProgramme.days, minutes: recipe.total })}</strong></p>
+          <ol>
+            <li><span>Guided session</span><strong>{t("{minutes} min", { minutes: recipe.guided })}</strong></li>
+            {recipe.workshops.map((minutes, index) => <li key={index}>
+              <span>{t("Grammar workshop")} · {t(selectedProgramme.units[index] ?? selectedProgramme.units[0])}</span>
+              <strong>{t("{minutes} min", { minutes })}</strong>
+            </li>)}
+            {recipe.tense > 0 ? <li><span>Tense check</span><strong>{t("{minutes} min", { minutes: recipe.tense })}</strong></li> : null}
+            {recipe.companion > 0 ? <li><span>Page companion</span><strong>{t("{minutes} min", { minutes: recipe.companion })}</strong></li> : null}
+          </ol>
+          {recipe.waitingUnits > 0 ? <p>{t("{count} grammar unit waits for another session.", { count: recipe.waitingUnits })}</p> : null}
+        </div>
+        <p className={styles.note}>These are estimated time allocations. A study day can span several sessions; finishing a programme does not certify A2 proficiency.</p>
+      </section>
+      <section className={styles.paper} aria-labelledby="academy-grammar-title">
+        <h3 id="academy-grammar-title">Try one grammar workshop</h3>
+        <p>Complete an original A1 past-tense task from the portal. Compare a first answer, an answer after help and a later recall.</p>
+        <p className={styles.note}>{t("Grammar sample · simulated day {day}", { day: grammar.day })}</p>
+        <form onSubmit={event => { event.preventDefault(); setGrammar(checkGrammarSample(grammar)); }}>
+          <label htmlFor="academy-grammar-answer" lang="it" translate="no">Noi ___ lavorato ieri.</label>
+          <p>We worked yesterday. Write only the missing auxiliary verb.</p>
+          <div className={styles.actions}>
+            <input id="academy-grammar-answer" lang="it" aria-label="Missing Italian auxiliary" maxLength={500} value={grammar.answer} autoComplete="off" onChange={event => setGrammar({ ...grammar, answer: event.target.value })} />
+            <MacButton type="submit" primary disabled={!grammar.answer.trim()}>Check grammar</MacButton>
+            <MacButton aria-expanded={grammar.hintDay === grammar.day} aria-controls="academy-grammar-hint" onClick={() => setGrammar(hintGrammarSample(grammar))}>Show a grammar hint</MacButton>
+          </div>
+        </form>
+        {grammar.hintDay === grammar.day ? <p id="academy-grammar-hint" className={styles.feedback}>Use the present-tense form of avere for noi. Keep lavorato unchanged. This attempt will be recorded as supported.</p> : null}
+        <div className={styles.feedback} role="status">
+          <p>{!currentGrammar
+            ? "Try once, or use the hint. Both count as practice."
+            : !currentGrammar.correct
+              ? "Use abbiamo: noi takes this form of avere; lavorato stays unchanged. A correction will be recorded as supported."
+              : currentGrammar.assisted
+                ? "Correct with support. Your first attempt stays unchanged."
+                : "Correct independently on this attempt."}</p>
+          <dl className={styles.attemptLedger}>
+            <div><dt>First answer</dt><dd>{t(grammarStatus(firstGrammar))}</dd></div>
+            <div><dt>Latest checked answer</dt><dd>{t(grammarStatus(latestGrammar))}</dd></div>
+          </dl>
+        </div>
+        <div className={styles.actions}>
+          <MacButton disabled={!currentGrammar} onClick={() => setGrammar(nextGrammarSample(grammar))}>Recall on a later simulated day</MacButton>
+          <MacButton onClick={() => setGrammar(newGrammarSample())}>Restart grammar sample</MacButton>
+        </div>
+        <p className={styles.note}>A supported or incorrect answer returns after one simulated day; an independent success returns after three. The new recall hides the previous answer and hint. This small sample gives no proficiency grade.</p>
+      </section>
       <section className={styles.paper} aria-labelledby="daily-plan-title">
         <h3 id="daily-plan-title">1. Make room for learning</h3>
         <p>Example queue: two reviews are due. Review first, then fit in new five-minute missions.</p>
@@ -106,8 +195,9 @@ export function ItalianLearningStudio() {
       </section> : null}
       <aside className={styles.paper}>
         <h3>Practice alongside your materials</h3>
-        <p>The live path has 36 original missions based on a review of 47 lesson PDFs and presentations. Each mission points back to physical pages or slides. Your local PDF stays on your device.</p>
-        <p>These are selected learning outcomes, not a complete course or a language certificate. The earlier downloadable workbooks remain supplementary practice.</p>
+        <p>The live portal links 48 source PDFs and presentations to 36 missions, 28 grammar units and 224 varied exercises. Three study programmes offer supported A1, intensive preparation and grammar repair.</p>
+        <p>It also offers personal word banks, tense checks and 936 page or slide companions. Some companions are reference guidance rather than exercises. Personal writing is self-checked; the preparation check is not a language certificate.</p>
+        <p>Class files and learner data stay private. These portfolio samples use a few original tasks; the full portal contains the complete practice paths. Earlier downloadable workbooks remain supplementary practice.</p>
       </aside>
     </div>
   </DemoWindow></ProjectCopy>;

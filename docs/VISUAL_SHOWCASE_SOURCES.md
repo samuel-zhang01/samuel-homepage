@@ -1,5 +1,21 @@
 # Original showcase image sources
 
+## Parliamo academy refresh — 20 October 2026
+
+Three direct Chromium captures show the expanded [live Parliamo academy](https://italian.samuelzhang.co.uk), release `20261020T105743Z-academy`. The deployed academy is a reviewed working-tree build on source base `5fd6fdf259ee00fda07f8fc6501759d6695f19fb`; that base commit alone does not contain these additions. The gallery therefore links to the corresponding live routes. Capture-time public asset checks matched the deployment receipt: JavaScript `41018cd67ab57f4405915e3de0d0d71b5679ab046934e90267441ac051f969c7` and CSS `6d9148b4bc6db4d7f949db2254be77fad0c2657e4d9b34519f543ef7c52c4d0b`.
+
+The browser used a fresh isolated profile with synthetic, disposable progress. The programme image shows the intensive route selected with a 60-minute budget. The grammar image shows an intentionally incorrect article answer, its hint and explanation, and a preserved first-attempt record. The companion image shows original practice for grammar slide 10, a synthetic response, a model and self-checks. No existing learner storage, private class pages, original presentation images or independent homework answers were used.
+
+All three captures are uncropped 1440×1050 viewport screenshots at device scale 1. The programme is at the top of its page; grammar and companion views are naturally scrolled to their relevant controls. Sharp converted the PNGs to lossless WebP, and decoded RGBA buffers were compared for exact pixel equality. No resizing, retouching, DOM restyling or generated imagery was applied. The original screenshots were visually inspected; the shared gallery preserves full-size inspection and source appearance.
+
+| Output under `public/projects/project-showcases/` | Bytes | File ceiling | SHA-256 |
+| --- | --- | --- | --- |
+| `parliamo-programmes-20261020.webp` | 85,904 | 86,016 | `94482048bb830f37702c79e54f2a3b9811f574d7e6784d0e681df7fdb4b87d90` |
+| `parliamo-grammar-support-20261020.webp` | 50,404 | 51,200 | `d606c5b5415bc07109440cfd8361148871ef15ae65a524f0d99d931a6532fbbc` |
+| `parliamo-page-companion-20261020.webp` | 58,436 | 59,392 | `272ec239b5b6dbf2fba465b8cec2fef9b59cefc6353e64c4c34d51fdb25223e5` |
+
+The three outputs total 194,744 bytes. Each file ceiling is rounded up to the next KiB; no global media budget changed. Reviewed captions, labels and alt text cover both English locales and simplified/traditional Chinese. The existing project identity and gallery remain in place; dated image URLs replace the two obsolete 18 October assets and add the companion view. Those two unused assets were removed after checking consumers. The 18 and 17 October records below remain historical provenance.
+
 ## Parliamo daily learning refresh — 18 October 2026
 
 Two direct Chromium captures replace the prior interface images with the published [daily portal at `5fd6fdf`](https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb), served at https://italian.samuelzhang.co.uk. A fresh isolated browser context has no learner history, local PDFs or account data. The source UI is this repository’s own app; course PDFs and presentation images are not republished.

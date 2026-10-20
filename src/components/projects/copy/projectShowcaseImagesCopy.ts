@@ -1,36 +1,32 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectShowcaseImagesCopy = {
-  "A five-minute next step": ["五分钟的下一步", "五分鐘的下一步"],
-  "A plan that fits your week": ["适合这一周的计划", "適合這一週的計畫"],
-  "Parliamo’s published home page with a five-minute greeting lesson, daily goal and rest-day message.": ["Parliamo 正式网站首页，展示五分钟问候任务、每日目标和休息日提示。", "Parliamo 正式網站首頁，展示五分鐘問候任務、每日目標和休息日提示。"],
-  "Parliamo’s weekly planner with 5-, 10- and 15-minute budgets, study weekdays and scheduled lessons.": ["Parliamo 每周计划，包含 5、10、15 分钟的时间预算、学习日选择和课程安排。", "Parliamo 每週計畫，包含 5、10、15 分鐘的時間預算、學習日選擇和課程安排。"],
-  "The live portal offers a small next step and keeps estimated practice separate from a running timer. Captured with fresh, disposable browser state.": ["正式网站提供一个小小的下一步，并将预计练习用时与计时器区分开。截图使用全新的临时浏览器状态。", "正式網站提供一個小小的下一步，並將預計練習用時與計時器區分開。截圖使用全新的暫存瀏覽器狀態。"],
-  "Choose study days and a daily budget. Rest days leave the next lesson waiting; the calendar shows the remaining plan. Captured from the live portal.": ["选择学习日和每天可用时间。休息日会保留下一个任务；日历显示剩余安排。截图来自正式网站。", "選擇學習日和每天可用時間。休息日會保留下一個任務；行事曆顯示剩餘安排。截圖來自正式網站。"],
-
-  "Daily study notebook": [
-    "每日学习手册",
-    "每日學習手冊"
+  "Choose a study route": ["选一条学习路线", "選一條學習路線"],
+  "Repair a grammar mistake": ["修正一个语法错误", "修正一個文法錯誤"],
+  "Try a page companion": ["试做逐页配套练习", "試做逐頁配套練習"],
+  "Parliamo’s published programmes page with a 60-minute daily budget and the intensive, supported and grammar repair routes.": [
+    "Parliamo 正式网站的学习路线页面：每天安排 60 分钟，可选密集复习、循序巩固和语法补强路线。",
+    "Parliamo 正式網站的學習路線頁面：每天安排 60 分鐘，可選密集複習、循序鞏固和文法補強路線。"
   ],
-  "Lesson library": [
-    "课程库",
-    "課程庫"
+  "Parliamo’s grammar workshop showing an incorrect article choice, a hint, a possible answer and the unchanged first-attempt record.": [
+    "Parliamo 语法练习展示选错冠词后的提示、参考答案，以及保留原样的首次作答记录。",
+    "Parliamo 文法練習展示選錯冠詞後的提示、參考答案，以及保留原樣的首次作答紀錄。"
   ],
-  "Parliamo dashboard with four timed study steps, bilingual actions and a green progress strip.": [
-    "Parliamo 首页展示四个带预计用时的学习步骤、双语按钮和绿色进度栏。",
-    "Parliamo 首頁展示四個附預計用時的學習步驟、雙語按鈕和綠色進度欄。"
+  "Parliamo’s companion for grammar slide 10, with an original article task, a synthetic response, a model and self-checks.": [
+    "Parliamo 为语法课件第 10 页配套的原创冠词练习，展示演示作答、参考答案和自查要点。",
+    "Parliamo 為文法投影片第 10 頁搭配的原創冠詞練習，展示示範作答、參考答案和自查要點。"
   ],
-  "Parliamo lesson library with topic search, course filters and cards showing unmeasured skills.": [
-    "Parliamo 课程库提供主题搜索、课程筛选，以及标示尚未测评技能的课程卡片。",
-    "Parliamo 課程庫提供主題搜尋、課程篩選，以及標示尚未評量技能的課程卡片。"
+  "The live academy offers 14-, 28- and 10-study-day routes. This disposable session selects intensive A1 revision with a 60-minute budget; days can span several sittings.": [
+    "正式网站提供 14、28 和 10 个学习日的路线。这个临时演示选择 A1 密集复习，每天安排 60 分钟；一个学习日的任务可以分几次完成。",
+    "正式網站提供 14、28 和 10 個學習日的路線。這個暫存示範選擇 A1 密集複習，每天安排 60 分鐘；一個學習日的任務可以分幾次完成。"
   ],
-  "The daily notebook turns the eight-week plan into four timed study blocks. This screenshot uses disposable demo progress from a local installation.": [
-    "每日学习手册将八周计划分成四个带预计用时的学习环节。截图来自本地安装，使用可丢弃的演示学习记录。",
-    "每日學習手冊將八週計畫分成四個附預計用時的學習環節。截圖來自本機安裝，使用可捨棄的示範學習紀錄。"
+  "An intentionally wrong sample answer is shown with a hint and an explanation. Supported practice earns credit while the first attempt remains visible.": [
+    "示例中故意选错的答案与提示、解释一同展示。有提示的练习仍可获得练习积分，同时保留首次作答记录。",
+    "範例中刻意選錯的答案與提示、解釋一同展示。有提示的練習仍可獲得練習積分，同時保留首次作答紀錄。"
   ],
-  "The library groups 28 lesson hubs by course and topic. Skills stay unmeasured until practice provides evidence; this is a local demo installation.": [
-    "课程库按课程和主题整理 28 个单元。技能需经练习验证才会显示测评结果；截图来自本地演示安装。",
-    "課程庫按課程和主題整理 28 個單元。技能須經練習驗證才會顯示評量結果；截圖來自本機示範安裝。"
+  "Page companions connect class material to original practice. This synthetic article response is compared with a model and self-checks; the class slide itself is not displayed.": [
+    "逐页配套练习把课堂教材与原创任务连接起来。这份演示冠词作答可以对照参考答案和自查要点；截图未展示原课件页面。",
+    "逐頁配套練習把課堂教材與原創任務連接起來。這份示範冠詞作答可以對照參考答案和自查要點；截圖未展示原投影片。"
   ],
   "Sensor cost vs error": [
     "传感器成本与误差",

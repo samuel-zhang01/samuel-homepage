@@ -13,22 +13,6 @@ export const italianCopy = {
     "Parliamo!",
     "Parliamo!"
   ],
-  "Turn a lesson PDF into a small task: notice a pattern, recall it, then use it in your own sentence.": [
-    "把课程 PDF 变成一个小任务：观察规律、尝试回忆，再用它写自己的句子。",
-    "把課程 PDF 變成一個小任務：觀察規律、嘗試回想，再用它寫自己的句子。"
-  ],
-  "Compare a 5-minute and a 10-minute day. Then try the greeting mission and its next-day review.": [
-    "比较每天学习 5 分钟和 10 分钟的安排，再试试问候任务及次日复习。",
-    "比較每天學習 5 分鐘和 10 分鐘的安排，再試試問候任務及隔日複習。"
-  ],
-  "Reviews use two minutes and missions use five. A retry helps you learn, but never replaces your first-attempt score.": [
-    "每次复习用两分钟，新任务用五分钟。重试帮助学习，但不会覆盖首次作答的成绩。",
-    "每次複習用兩分鐘，新任務用五分鐘。重試幫助學習，但不會覆蓋首次作答的成績。"
-  ],
-  "36 original missions · English and Italian in the live portal": [
-    "36 个原创任务 · 正式网站提供英语和意大利语",
-    "36 個原創任務 · 正式網站提供英語和義大利語"
-  ],
   "Open the learning portal": [
     "打开学习网站",
     "開啟學習網站"
@@ -36,10 +20,6 @@ export const italianCopy = {
   "Reset demo": [
     "重置演示",
     "重設示範"
-  ],
-  "This demo keeps temporary practice in this window. The live portal saves your plan, drafts and progress in your browser, with a downloadable backup.": [
-    "此演示仅在当前窗口暂存练习。正式网站将计划、草稿和进度保存在浏览器中，并提供备份下载。",
-    "此示範僅在目前視窗暫存練習。正式網站將計畫、草稿和進度儲存在瀏覽器中，並提供備份下載。"
   ],
   "1. Make room for learning": [
     "1. 留一点时间学习",
@@ -233,12 +213,188 @@ export const italianCopy = {
     "配合教材练习",
     "配合教材練習"
   ],
-  "The live path has 36 original missions based on a review of 47 lesson PDFs and presentations. Each mission points back to physical pages or slides. Your local PDF stays on your device.": [
-    "正式网站根据对 47 份课程 PDF 和演示文稿的审阅设计了 36 个原创任务。每项任务都注明文件中的实际页码或幻灯片编号。本地 PDF 始终留在你的设备上。",
-    "正式網站根據對 47 份課程 PDF 和簡報的審閱設計了 36 個原創任務。每項任務都註明檔案中的實際頁碼或投影片編號。本機 PDF 始終留在你的裝置上。"
+  "Turn class material into a daily route: guided lessons, grammar practice and later recall.": [
+    "把课堂材料安排成每天的学习路线：引导式课程、语法练习和间隔回忆。",
+    "把課堂材料安排成每天的學習路線：引導式課程、文法練習和間隔回想。"
   ],
-  "These are selected learning outcomes, not a complete course or a language certificate. The earlier downloadable workbooks remain supplementary practice.": [
-    "任务涵盖选定的学习目标，并非完整课程或语言认证。此前提供的练习册仍可作为补充练习下载。",
-    "任務涵蓋選定的學習目標，並非完整課程或語言認證。先前提供的練習冊仍可作為補充練習下載。"
+  "Compare a supported and an intensive day at 30, 45 or 60 minutes. Then try the grammar gap with and without a hint.": [
+    "比较巩固与强化方案在 30、45 或 60 分钟内的安排，再分别使用提示和独立完成语法填空。",
+    "比較鞏固與密集方案在 30、45 或 60 分鐘內的安排，再分別使用提示與獨立完成文法填空。"
+  ],
+  "Time blocks follow the selected programme. A supported correction counts as practice while the first attempt stays intact.": [
+    "时间分配随所选方案改变。借助提示完成的订正计入练习，首次作答记录仍会保留。",
+    "時間分配隨所選方案改變。藉助提示完成的訂正計入練習，首次作答紀錄仍會保留。"
+  ],
+  "48 sources · 36 missions · 28 grammar units · 224 exercises · 3 programmes": [
+    "48 份材料 · 36 个任务 · 28 个语法单元 · 224 道练习 · 3 套方案",
+    "48 份材料 · 36 個任務 · 28 個文法單元 · 224 道練習 · 3 套方案"
+  ],
+  "These are temporary illustrative samples of the live portal. This window does not save progress. The full app saves plans, drafts, vocabulary and practice in your browser, with a downloadable backup.": [
+    "这些是正式学习网站的临时示例，本窗口不会保存进度。完整版会在浏览器中保存计划、草稿、词汇及练习记录，并提供备份下载。",
+    "這些是正式學習網站的暫存範例，本視窗不會儲存進度。完整版會在瀏覽器中儲存計畫、草稿、詞彙及練習紀錄，並提供備份下載。"
+  ],
+  "Choose a longer study day": [
+    "安排较长的学习时段",
+    "安排較長的學習時段"
+  ],
+  "Explore the first study day of each programme. The same budget makes different room for grammar when the day has one or two units.": [
+    "探索每套方案的首个学习日。同样的时间预算，会根据当天有一个还是两个单元来分配语法练习。",
+    "探索每套方案的第一個學習日。同樣的時間預算，會依據當天有一個還是兩個單元來分配文法練習。"
+  ],
+  "Study programme": [
+    "学习方案",
+    "學習方案"
+  ],
+  "Supported A1": [
+    "A1 引导巩固",
+    "A1 引導鞏固"
+  ],
+  "Intensive A1 preparation": [
+    "A1 强化准备",
+    "A1 密集準備"
+  ],
+  "Grammar repair": [
+    "语法查漏补缺",
+    "文法補強"
+  ],
+  "Noun gender": [
+    "名词性别",
+    "名詞性別"
+  ],
+  "Noun plurals": [
+    "名词复数",
+    "名詞複數"
+  ],
+  "Definite articles": [
+    "定冠词",
+    "定冠詞"
+  ],
+  "Longer daily budget": [
+    "较长的每日时间预算",
+    "較長的每日時間預算"
+  ],
+  "{days} study days · {minutes} minutes in this sample": [
+    "{days} 个学习日 · 本示例安排 {minutes} 分钟",
+    "{days} 個學習日 · 本範例安排 {minutes} 分鐘"
+  ],
+  "Guided session": [
+    "引导式学习",
+    "引導式學習"
+  ],
+  "Grammar workshop": [
+    "语法练习",
+    "文法練習"
+  ],
+  "Tense check": [
+    "时态检查",
+    "時態檢查"
+  ],
+  "Page companion": [
+    "逐页辅助练习",
+    "逐頁輔助練習"
+  ],
+  "{count} grammar unit waits for another session.": [
+    "还有 {count} 个语法单元留到下一次学习。",
+    "還有 {count} 個文法單元留到下一次學習。"
+  ],
+  "These are estimated time allocations. A study day can span several sessions; finishing a programme does not certify A2 proficiency.": [
+    "这些是预计的时间分配。一个学习日可分多次完成；完成方案不代表获得 A2 语言能力认证。",
+    "這些是預估的時間分配。一個學習日可分多次完成；完成方案不代表取得 A2 語言能力認證。"
+  ],
+  "Try one grammar workshop": [
+    "试做一个语法练习",
+    "試做一個文法練習"
+  ],
+  "Complete an original A1 past-tense task from the portal. Compare a first answer, an answer after help and a later recall.": [
+    "完成网站内一道原创 A1 过去时练习，比较首次作答、获得帮助后的作答和稍后的回忆。",
+    "完成網站內一道原創 A1 過去式練習，比較首次作答、獲得協助後的作答和稍後的回想。"
+  ],
+  "Grammar sample · simulated day {day}": [
+    "语法示例 · 模拟第 {day} 天",
+    "文法範例 · 模擬第 {day} 天"
+  ],
+  "We worked yesterday. Write only the missing auxiliary verb.": [
+    "我们昨天工作了。只填写缺少的助动词。",
+    "我們昨天工作了。只填寫缺少的助動詞。"
+  ],
+  "Missing Italian auxiliary": [
+    "缺少的意大利语助动词",
+    "缺少的義大利語助動詞"
+  ],
+  "Check grammar": [
+    "检查语法答案",
+    "檢查文法答案"
+  ],
+  "Show a grammar hint": [
+    "显示语法提示",
+    "顯示文法提示"
+  ],
+  "Use the present-tense form of avere for noi. Keep lavorato unchanged. This attempt will be recorded as supported.": [
+    "使用 avere 与 noi 对应的现在时形式，lavorato 保持不变。本次作答会记录为借助提示完成。",
+    "使用 avere 與 noi 對應的現在式形式，lavorato 保持不變。本次作答會記錄為藉助提示完成。"
+  ],
+  "Try once, or use the hint. Both count as practice.": [
+    "先试一次，也可以使用提示。两种方式都算练习。",
+    "先試一次，也可以使用提示。兩種方式都算練習。"
+  ],
+  "Use abbiamo: noi takes this form of avere; lavorato stays unchanged. A correction will be recorded as supported.": [
+    "使用 abbiamo：这是 avere 与 noi 对应的形式，lavorato 保持不变。接下来的订正会记录为在帮助下完成。",
+    "使用 abbiamo：這是 avere 與 noi 對應的形式，lavorato 保持不變。接下來的訂正會記錄為在協助下完成。"
+  ],
+  "Correct with support. Your first attempt stays unchanged.": [
+    "在帮助下答对了。首次作答记录保持不变。",
+    "在協助下答對了。首次作答紀錄保持不變。"
+  ],
+  "Correct independently on this attempt.": [
+    "本次独立答对。",
+    "本次獨立答對。"
+  ],
+  "First answer": [
+    "首次作答",
+    "首次作答"
+  ],
+  "Latest checked answer": [
+    "最近一次已检查的作答",
+    "最近一次已檢查的作答"
+  ],
+  "Not yet tried": [
+    "尚未作答",
+    "尚未作答"
+  ],
+  "Needs a correction": [
+    "需要订正",
+    "需要訂正"
+  ],
+  "Correct with support": [
+    "在帮助下答对",
+    "在協助下答對"
+  ],
+  "Correct independently": [
+    "独立答对",
+    "獨立答對"
+  ],
+  "Recall on a later simulated day": [
+    "前往稍后的模拟日回忆",
+    "前往稍後的模擬日回想"
+  ],
+  "Restart grammar sample": [
+    "重启语法示例",
+    "重新開始文法範例"
+  ],
+  "A supported or incorrect answer returns after one simulated day; an independent success returns after three. The new recall hides the previous answer and hint. This small sample gives no proficiency grade.": [
+    "在帮助下完成或答错的内容在一个模拟日后返回，独立答对的内容在三个模拟日后返回。新一轮回忆会隐藏先前的答案和提示。本示例不评定语言能力等级。",
+    "在協助下完成或答錯的內容在一個模擬日後返回，獨立答對的內容在三個模擬日後返回。新一輪回想會隱藏先前的答案和提示。本範例不評定語言能力等級。"
+  ],
+  "The live portal links 48 source PDFs and presentations to 36 missions, 28 grammar units and 224 varied exercises. Three study programmes offer supported A1, intensive preparation and grammar repair.": [
+    "正式网站把 48 份 PDF 和演示文稿与 36 个任务、28 个语法单元及 224 道多样化练习相连接。三套学习方案分别用于 A1 引导巩固、强化准备和语法补强。",
+    "正式網站把 48 份 PDF 和簡報與 36 個任務、28 個文法單元及 224 道多樣化練習相連結。三套學習方案分別用於 A1 引導鞏固、密集準備和文法補強。"
+  ],
+  "It also offers personal word banks, tense checks and 936 page or slide companions. Some companions are reference guidance rather than exercises. Personal writing is self-checked; the preparation check is not a language certificate.": [
+    "网站还提供个人词汇库、时态检查，以及 936 张对应页面或幻灯片的辅助卡。部分卡片提供参考指引，并非练习。个人写作由学习者自行检查；准备度检查不等于语言认证。",
+    "網站還提供個人詞彙庫、時態檢查，以及 936 張對應頁面或投影片的輔助卡。部分卡片提供參考指引，並非練習。個人寫作由學習者自行檢查；準備度檢查不等於語言認證。"
+  ],
+  "Class files and learner data stay private. These portfolio samples use a few original tasks; the full portal contains the complete practice paths. Earlier downloadable workbooks remain supplementary practice.": [
+    "课堂文件与学习者资料保持私密。此作品集仅展示少量原创任务，完整练习路径位于正式网站。此前可下载的练习册仍作为补充材料。",
+    "課堂檔案與學習者資料保持私密。此作品集僅展示少量原創任務，完整練習路徑位於正式網站。先前可下載的練習冊仍作為補充材料。"
   ]
 } satisfies ProjectCopyTable;

@@ -1,6 +1,22 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectConceptProductsCopy = {
+  "Understand a pattern, use it, recall it": ["理解句型，运用，再回忆", "理解句型，運用，再回想"],
+  "Read a worked example, then identify the subject and the auxiliary verb.": ["先读例题，再找出主语和助动词。", "先讀例題，再找出主詞和助動詞。"],
+  "Check": ["检查", "檢查"],
+  "Produce": ["表达", "表達"],
+  "Revisit": ["再复习", "再複習"],
+  "Try the gap with a hint if needed. First answers and supported corrections remain distinct.": ["试着填空，需要时可用提示。首次作答与提示辅助订正分别记录。", "試著填空，需要時可用提示。首次作答與提示輔助訂正分別記錄。"],
+  "Write about your own day, then check the verb and meaning against the lesson.": ["写自己的日常经历，再对照课程检查动词和含义。", "寫自己的日常經歷，再對照課程檢查動詞和意思。"],
+  "Grammar errors and supported answers return after one day; an independent correct recall waits three days.": ["语法错误和提示辅助回答在一天后复习；独立回忆正确的项目间隔三天。", "文法錯誤和提示輔助回答在一天後複習；獨立回想正確的項目間隔三天。"],
+  "Illustrated grammar loop. Personal writing is self-assessed; the A2 preparation check is a grammar snapshot.": ["语法练习流程示意。个人写作由学习者自评；A2 准备检查只反映一次语法表现。", "文法練習流程示意。個人寫作由學習者自評；A2 準備檢查只反映一次文法表現。"],
+  "Write one completed event from your day.": ["写下当天已经完成的一件事。", "寫下當天已完成的一件事。"],
+  "Use a hint, then try the auxiliary.": ["使用提示，再试着填写助动词。", "使用提示，再試著填寫助動詞。"],
+  "Think of the subject and time.": ["想一想主语和时间。", "想一想主詞和時間。"],
+  "Next day after support": ["使用提示后次日复习", "使用提示後隔日複習"],
+  "After an answer": ["作答之后", "作答之後"],
+  "First attempt": ["首次作答", "首次作答"],
+  "Kept after corrections": ["订正后仍保留", "訂正後仍保留"],
   "Learn today, remember another day": ["今天学习，改天回忆", "今天學習，改天回想"],
   "Read an original example and notice how mi chiamo introduces a name.": ["阅读原创例句，观察 mi chiamo 如何介绍姓名。", "閱讀原創例句，觀察 mi chiamo 如何介紹姓名。"],
   "Hide the example and try the gap before seeing feedback.": ["隐藏例句，先填空再看反馈。", "隱藏例句，先填空再看回饋。"],

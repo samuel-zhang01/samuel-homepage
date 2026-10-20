@@ -39,9 +39,9 @@ function load(file) {
   } }, { filename: absolute });
   return evaluated.exports;
 }
-const names = ["BanditStudio", "RlAtlasDemo", "DecisionDemos", "DeferralRiskStudio", "InsuranceMatchingDemo", "InnovationModelsStudio", "VentureReasoningStudio", "CliffLearningLab", "LlmPostTrainingLab"];
+const names = ["BanditStudio", "RlAtlasDemo", "DecisionDemos", "DeferralRiskStudio", "InsuranceMatchingDemo", "InnovationModelsStudio", "VentureReasoningStudio", "CliffLearningLab", "LlmPostTrainingLab", "ItalianLearningStudio"];
 const modules = Object.fromEntries(names.map((name) => [name, load(`src/components/projects/${name}.tsx`)]));
-const identity = new Set(names.flatMap((stem) => Object.keys(JSON.parse(readFileSync(resolve(root, `scripts/fixtures/project-copy-audits/${stem[0].toLowerCase()}${stem.slice(1)}Copy.audit.json`), "utf8")).identities)));
+const identity = new Set(names.flatMap((stem) => Object.keys(JSON.parse(readFileSync(resolve(root, `scripts/fixtures/project-copy-audits/${stem === "ItalianLearningStudio" ? "italianCopy" : `${stem[0].toLowerCase()}${stem.slice(1)}Copy`}.audit.json`), "utf8")).identities)));
 let strings = [];
 function inspect(node) {
   if (Array.isArray(node)) { node.forEach(inspect); return; }
@@ -68,7 +68,28 @@ function check(component, overrides, context) {
 }
 const decision = modules.DecisionDemos;
 const cliff = load('src/lib/cliffLearning.ts');
+const parliamo = load('src/lib/parliamoDaily.ts');
+const initialGrammar = parliamo.newGrammarSample();
+const hintedGrammar = parliamo.hintGrammarSample(initialGrammar);
+const independentGrammar = parliamo.checkGrammarSample({ ...initialGrammar, answer: "abbiamo" });
+const wrongGrammar = parliamo.checkGrammarSample({ ...initialGrammar, answer: "hanno" });
+const repairedGrammar = parliamo.checkGrammarSample({ ...wrongGrammar, answer: "abbiamo" });
+const helpedGrammar = parliamo.checkGrammarSample({ ...hintedGrammar, answer: "abbiamo" });
+const recallGrammar = parliamo.nextGrammarSample(helpedGrammar);
+const recalledGrammar = parliamo.checkGrammarSample({ ...recallGrammar, answer: "abbiamo" });
+const grammarCases = [initialGrammar, hintedGrammar, independentGrammar, wrongGrammar, repairedGrammar, helpedGrammar, recallGrammar, recalledGrammar];
 for (locale of ["zh-CN", "zh-TW"]) {
+  for (const programme of ["supported", "intensive", "repair"]) for (const minutes of [30, 45, 60]) for (const grammar of grammarCases) {
+    check(modules.ItalianLearningStudio.ItalianLearningStudio, {
+      ItalianLearningStudio: [10, true, 0, undefined, undefined, programme, minutes, grammar],
+    }, `${locale}/Italian/academy/${programme}/${minutes}/${grammar.day}/${grammar.attempts.length}/${grammar.hintDay}`);
+  }
+  const greeting = { ...parliamo.newDailyAttempt(), answers: ["chiamo", "ti"], checked: [true, true], first: [false, true], output: "Mi chiamo Ada.", rubric: [true, true] };
+  for (const step of [1, 2]) for (const completed of [false, true]) for (const result of [null, false, true]) {
+    check(modules.ItalianLearningStudio.ItalianLearningStudio, {
+      ItalianLearningStudio: [5, false, step, { ...greeting, completed }, { day: 2, due: result === null ? 2 : 3, interval: 1, answer: "", result, count: 1 }],
+    }, `${locale}/Italian/greeting/${step}/${completed}/${result}`);
+  }
   for(const view of ['policy','regret','method']) for(const scenario of ['wide','close','gaussian']) for(const rounds of [0,100]) check(modules.BanditStudio.BanditStudio,{BanditStudio:[view,scenario,10,23,rounds,true]},`${locale}/Bandit/${view}/${scenario}/${rounds}`);
   for (const policy of ['ucb1','thompson']) for (const scenario of ['wide','close']) for (const rounds of [0,4,100]) check(modules.BanditStudio.BanditStudio, {BanditStudio:['policy',scenario,10,23,rounds,true,undefined,policy,rounds === 4,100]}, `${locale}/Bandit/new/${policy}/${scenario}/${rounds}`);
   check(modules.BanditStudio.BanditStudio, {BanditStudio:['policy','gaussian',10,23,100,true,undefined,'ucb1']}, `${locale}/Bandit/new/gaussian-ucb`);
@@ -88,6 +109,14 @@ for (locale of ["zh-CN", "zh-TW"]) {
   for(const policy of [.3,.5,.8]) check(modules.LlmPostTrainingLab.LlmPostTrainingLab,{LlmPostTrainingLab:['dpo','all','add-00-08',policy,.5]},`${locale}/LLM/preference/${policy}`);
   for(const chapter of ['answers','lora','dpo']) for(const outcome of ['all','correct','incorrect','cutoff']) check(modules.LlmPostTrainingLab.LlmPostTrainingLab,{LlmPostTrainingLab:[chapter,outcome]},`${locale}/LLM/${chapter}/${outcome}`);
 }
+for (locale of ["en-GB", "en-US"]) {
+  states = { ItalianLearningStudio: [10, true, 0, undefined, undefined, "supported", 60, helpedGrammar] };
+  strings = [];
+  inspect(React.createElement(modules.ItalianLearningStudio.ItalianLearningStudio)); cases++;
+  assert.ok(strings.includes("Correct with support"), `${locale}: explicit assistance state remains readable`);
+  assert.ok(strings.includes("28 study days · 60 minutes in this sample"), `${locale}: interpolated programme/time copy`);
+  assert.ok(!strings.some(value => /[\u3400-\u9fff]/.test(value)), `${locale}: English editions do not leak Mandarin`);
+}
 const report=Object.fromEntries([...failures].map(([name,values])=>[name,[...values]]));
 assert.equal(failures.size,0,`Unexpected untranslated UI text: ${JSON.stringify(report,null,2)}`);
-console.log(`Learning/decision localization: ${cases} rendered view/state/locale cases passed, covering nine source components and their helper trees. Recorded model inputs and outputs remain source-marked.`);
+console.log(`Learning/decision localization: ${cases} rendered view/state/locale cases passed, covering ten source components and their helper trees, including all four Parliamo locales. Recorded model inputs and outputs remain source-marked.`);

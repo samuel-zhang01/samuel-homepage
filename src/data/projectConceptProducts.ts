@@ -332,26 +332,26 @@ export const projectConceptProducts: Readonly<Record<string, ProductConceptMetad
     "note": "Example availability; this scene sends no invitation."
   },
   "parliamo-italian-learning": {
-    "title": "Learn today, remember another day",
+    "title": "Understand a pattern, use it, recall it",
     "steps": [
         {
             "name": "Notice",
-            "caption": "Read an original example and notice how mi chiamo introduces a name."
+            "caption": "Read a worked example, then identify the subject and the auxiliary verb."
         },
         {
-            "name": "Recall",
-            "caption": "Hide the example and try the gap before seeing feedback."
+            "name": "Check",
+            "caption": "Try the gap with a hint if needed. First answers and supported corrections remain distinct."
         },
         {
-            "name": "Use it",
-            "caption": "Write your own introduction and check it against two prompts."
+            "name": "Produce",
+            "caption": "Write about your own day, then check the verb and meaning against the lesson."
         },
         {
-            "name": "Review tomorrow",
-            "caption": "Completion schedules a next-day check. Later successful reviews wait 3, 7 and 14 days."
+            "name": "Revisit",
+            "caption": "Grammar errors and supported answers return after one day; an independent correct recall waits three days."
         }
     ],
-    "note": "Selected learning goals complement the PDFs. Completion is practice evidence, not a proficiency certificate."
+    "note": "Illustrated grammar loop. Personal writing is self-assessed; the A2 preparation check is a grammar snapshot."
 },
   "innovation-models-reflection": {
     "title": "Who owns the idea, and who can fund it?",

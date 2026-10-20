@@ -156,9 +156,9 @@ function renderScene(slug: string, step: number, locale: Locale): ReactNode {
   </>;
 
   if (slug === "parliamo-italian-learning") return <>
-    {strip(["Notice","Recall","Use it","Review tomorrow"],step)}
-    <div className={styles.flashcard}><small>{t("Italian")}</small><strong lang="it" translate="no">{step===0 ? "Mi chiamo Ada." : step===1 ? "Mi ___ Nora." : step===2 ? "Come ti chiami?" : "Come ___ chiama?"}</strong><p>{t(step===2 ? "Write your own introduction." : "Think of the meaning first.")}</p></div>
-    <div className={styles.metrics}>{pair("Next review",t(step===3 ? "Next day" : "After completion"),step===3)}{pair("Self-check",t("A name and a question"))}</div>
+    {strip(["Notice","Check","Produce","Revisit"],step)}
+    <div className={styles.flashcard}><small>{t("Italian")}</small><strong lang="it" translate="no">{step===0 ? "Noi abbiamo lavorato ieri." : step===1 ? "Noi ___ lavorato ieri." : step===2 ? "Ieri ho…" : "Loro ___ lavorato ieri."}</strong><p>{t(step===2 ? "Write one completed event from your day." : step===1 ? "Use a hint, then try the auxiliary." : "Think of the subject and time.")}</p></div>
+    <div className={styles.metrics}>{pair("Next review",t(step===3 ? "Next day after support" : "After an answer"),step===3)}{pair("First attempt",t("Kept after corrections"))}</div>
   </>;
 
   if (slug === "innovation-models-reflection") {

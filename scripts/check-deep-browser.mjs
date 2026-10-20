@@ -218,10 +218,61 @@ async function exerciseParliamo(p, demo, locale) {
   await keyboardActivate(p, button("Go to the next review day"));
   await demo.locator("#daily-review").fill("si"); await keyboardActivate(p, button("Check review"));
   await demo.getByText(t("Simulated day {day}. Next review: day {due}.", { day: 3, due: 6 }), { exact: true }).waitFor();
+
+  const recipe = demo.locator("[data-academy-recipe]");
+  const choose = async text => {
+    const radio = demo.getByRole("radio", { name: t(text), exact: true });
+    await radio.focus(); await p.keyboard.press("Space"); assert.ok(await radio.isChecked());
+  };
+  const longBudget = async minutes => {
+    const radio = demo.getByRole("radio", { name: t("{minutes} minutes", { minutes }), exact: true });
+    await radio.focus(); await p.keyboard.press("Space"); assert.ok(await radio.isChecked());
+  };
+  await choose("Intensive A1 preparation");
+  await recipe.getByText(t("{count} grammar unit waits for another session.", { count: 1 }), { exact: true }).waitFor();
+  await longBudget(45);
+  assert.equal(await recipe.locator("li").count(), 3, "Intensive 45 minutes contains one guided block and two workshops");
+  assert.ok((await recipe.locator("li").first().innerText()).includes(t("{minutes} min", { minutes: 15 })));
+  await longBudget(60);
+  assert.ok((await recipe.locator("li").first().innerText()).includes(t("{minutes} min", { minutes: 30 })));
+  await choose("Supported A1");
+  assert.equal(await recipe.locator("li").count(), 4, "Supported 60 minutes includes tense and companion blocks");
+  await recipe.getByText(t("Tense check"), { exact: true }).waitFor();
+  await recipe.getByText(t("Page companion"), { exact: true }).waitFor();
+  await choose("Grammar repair");
+  assert.ok((await recipe.innerText()).includes(t("Definite articles")), "Repair programme uses its actual first-day article unit");
+
+  const grammarInput = demo.locator("#academy-grammar-answer");
+  assert.ok(await button("Check grammar").isDisabled(), "Empty grammar inputs are not scored");
+  await keyboardActivate(p, button("Show a grammar hint"));
+  await demo.locator("#academy-grammar-hint").waitFor();
+  await grammarInput.fill("abbiamo"); await keyboardActivate(p, button("Check grammar"));
+  await demo.getByText(t("Correct with support. Your first attempt stays unchanged."), { exact: true }).waitFor();
+  await keyboardActivate(p, button("Recall on a later simulated day"));
+  assert.equal(await grammarInput.inputValue(), "", "Later grammar recall starts blank");
+  assert.equal(await demo.locator("#academy-grammar-hint").count(), 0, "Later recall hides the old hint");
+  await demo.getByText(t("Grammar sample · simulated day {day}", { day: 2 }), { exact: true }).waitFor();
+  await grammarInput.fill("hanno"); await keyboardActivate(p, button("Check grammar"));
+  await demo.getByText(t("Use abbiamo: noi takes this form of avere; lavorato stays unchanged. A correction will be recorded as supported."), { exact: true }).waitFor();
+  await grammarInput.fill("abbiamo"); await keyboardActivate(p, button("Check grammar"));
+  await demo.getByText(t("Correct with support. Your first attempt stays unchanged."), { exact: true }).waitFor();
+  await keyboardActivate(p, button("Recall on a later simulated day"));
+  await grammarInput.fill("abbiamo"); await keyboardActivate(p, button("Check grammar"));
+  await demo.getByText(t("Correct independently on this attempt."), { exact: true }).waitFor();
+  const ledger = demo.locator("#academy-grammar-title").locator("..").locator("dl");
+  assert.equal(await ledger.locator("dd").first().innerText(), t("Correct with support"), "Independent recall never rewrites the first supported answer");
+  await keyboardActivate(p, button("Recall on a later simulated day"));
+  await demo.getByText(t("Grammar sample · simulated day {day}", { day: 6 }), { exact: true }).waitFor();
+  await keyboardActivate(p, button("Restart grammar sample"));
+  assert.equal(await grammarInput.inputValue(), "");
+  assert.equal(await ledger.locator("dd").first().innerText(), t("Not yet tried"));
+
   await keyboardActivate(p, button("Reset demo"));
   await button("Try without the example").waitFor();
   assert.equal(await demo.locator("#daily-output").count(), 0);
-  return { kind: "parliamo-daily-journey", displayedContentChanged: true, firstCorrect: 1, total: 2, reviewDay: 3, nextDue: 6, reset: true };
+  assert.ok(await demo.getByRole("radio", { name: t("Supported A1"), exact: true }).isChecked());
+  assert.ok(await demo.getByRole("radio", { name: t("{minutes} minutes", { minutes: 30 }), exact: true }).isChecked());
+  return { kind: "parliamo-daily-and-academy-journey", displayedContentChanged: true, firstCorrect: 1, total: 2, reviewDay: 3, nextDue: 6, programmeRecipes: true, hintedFirstAnswerPreserved: true, laterIndependentRecall: true, reset: true };
 }
 async function exerciseState(p, demo, job) {
   if (job.project.demo === "italian-learning") return exerciseParliamo(p, demo, job.option.locale);

@@ -48,10 +48,10 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     walkthrough: "Choose a meeting time and guest time zone, answer the booking questions and confirm. Download the calendar invitation, then reschedule or cancel. Try a competing booking to see the final conflict check protect the time.",
   },
   "italian-learning": {
-    problem: "Daily lessons, vocabulary review and writing practice become hard to sustain when they are scattered across separate materials.",
-    contribution: "I turned a review of 47 lesson files into 36 original bilingual missions, a flexible daily planner and delayed recall. Stable lesson IDs preserve progress as new PDFs are added; a repository-scoped new-material workflow guides future updates.",
-    pipeline: "lesson pages → original five-minute mission → first-attempt recall and personal output → browser progress and delayed review",
-    walkthrough: "Change the daily time budget, try a greeting mission and deliberately retry one answer. Complete the self-check, then advance the simulated review day to see the interval change.",
+    problem: "At mid-A1, a grammar slide often needs a simpler explanation, a worked example and several chances to use the pattern. Learners also need a realistic route through their materials when daily study time changes.",
+    contribution: "I built source-linked grammar lessons with six exercise formats, three paced study programmes and a personal word bank. The practice engine keeps first answers, hints and later corrections distinct, saves unfinished work, and schedules recall. Page companions connect original tasks to the class materials. Stable lesson IDs and validated backups carry existing progress into the expanded course.",
+    pipeline: "reviewed page or slide → bilingual explanation and original practice → first-attempt or supported answer → personal use and delayed recall",
+    walkthrough: "Compare programme recipes at 30, 45 and 60 minutes. Try the grammar sample with a hint or a wrong answer, then inspect the supported correction and later recall. In the greeting mission, write a personal response and complete its self-check.",
   },
   "course-recommender": {
     problem: "A course catalogue can offer many options without making it clear which ones suit a learner’s interests and constraints.",

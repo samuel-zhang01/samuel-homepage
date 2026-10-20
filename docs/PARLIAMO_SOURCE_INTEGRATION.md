@@ -1,36 +1,57 @@
-# Parliamo daily-learning companion
+# Parliamo academy and daily-learning companion
 
-Reviewed 18 October 2026. Source: [Italian Learning Portal, `5fd6fdf259ee00fda07f8fc6501759d6695f19fb`](https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb). Target starting revision: `6ec54a0265f3b7f42918f7d7ca76c598885a635f`. The user requested a full portfolio refresh and VPS publication. Public code has no declared licence; this update does not change licensing or repository visibility.
+Reviewed 20 October 2026. Source: [Italian Learning Portal](https://github.com/samuel-zhang01/Italian-Learning-Portal), deployed academy working snapshot over public base [`5fd6fdf259ee00fda07f8fc6501759d6695f19fb`](https://github.com/samuel-zhang01/Italian-Learning-Portal/tree/5fd6fdf259ee00fda07f8fc6501759d6695f19fb). The academy additions were uncommitted in the source checkout when reviewed: that base revision alone does **not** identify the expanded course. The exact principal source hashes below and the deployed JavaScript hash identify the reviewed snapshot. This homepage update does not publish source changes, alter repository visibility or add a licence. The repository remains public with no declared source licence.
 
-The portal helps a learner practise the supplied lessons through original tasks. A review of 47 PDFs/presentations (858 physical pages/slides, with OCR for sparse pages) corrected the legacy plan’s textbook edition and several topic assumptions. The 36 missions select useful outcomes; they do not reproduce every exercise, supply a complete A2 course, complete independent homework, or certify proficiency. Course 3 currently covers supplied revision material. Later syllabus topics await their source lessons. The private source documents are not deployed.
+Target starting revision: `797f9f8efcb4aef625785e19adbcc514aedd70ad`. Scope: refresh the existing portfolio project and publish through its protected VPS workflow. The independently hosted [learning portal](https://italian.samuelzhang.co.uk) was already deployed and verified before this homepage integration.
 
-| Claim | Pinned source evidence | Qualification |
+## Contribution and evidence
+
+Parliamo turns supplied Italian class topics into original English–Italian practice for a learner around mid-A1. The academy adds explicit grammar teaching, worked examples, vocabulary and guided study plans around the existing 36 short missions. It distinguishes help used during practice from unassisted recall, while retaining browser-local drafts and progress. The portfolio explains these choices through a small interactive adaptation and original interface screenshots.
+
+| Public claim | Source implementation or observed evidence | Qualification |
 | --- | --- | --- |
-| 36 original bilingual missions | `app/learning/curriculum.json`, `docs/material-review.json` | 20 foundation, 10 everyday, 6 Course 3 revision; page/slide references retained |
-| Daily time and weekday planning | `app/learning/engine.ts` — `schedule`, `dailyMinutes` | Estimated five-minute missions and two-minute reviews; rest-day/overdue carry, remaining budget |
-| Recall without inflated scores | `engine.ts`, `portal.tsx` | First attempts survive retries; completion and daily reviews are idempotent |
-| Delayed recall | `recordReview` | First review after one day; successes extend to 3, 7, 14 days; miss returns after one day |
-| Durable browser progress | `parseProgress`, persistence in `portal.tsx` | Local storage, saved drafts, validated backup import/export, explicit storage failure; no account sync |
-| Material additions | `.agents/skills/new-material/SKILL.md`, `scripts/review_materials.py` | Scoped source-review workflow; stable mission IDs; new original EN/IT instruction and checks |
-| Public static portal | `vite.static.config.ts`, `main.tsx`, `README.md` | HTTPS on the existing VPS; private archives and legacy database APIs excluded |
-| Adversarial student audit | `docs/student-audit.json`, browser scripts, source tests | Simulated student scenarios, not a human user study |
+| 36 stable core missions | `app/learning/curriculum.json`, `engine.ts` | Existing mission IDs and version-1 progress are retained |
+| 28 grammar units and 224 controlled exercises | `grammar.json`, `academy.tsx` | 25 core A1 units and 3 marked stretch units; each has 4 teaching sections, 3 worked examples, 6 vocabulary entries and 8 exercises |
+| Three programmes: intensive 14, supported 28, repair 10 study days | `grammar.json`, `selectProgramme`, `programmeDayReady` | A study day can span sittings; required units and core mission must be complete; changing programme restarts its checklist while preserving learning records |
+| Daily choices from 5 to 60 minutes | `study.ts` — `sessionLayout`, `dailyRecipe` | Estimated time blocks, not measured time-to-proficiency; active sessions retain their original duration |
+| Hints and corrections remain assisted | `academy-engine.ts` — `checkGrammarAnswer`, `grammarScore` | First-attempt evidence is immutable; a later blind recall can become independent; exact matching uses authored alternatives |
+| Page companions for 48 sources / 936 physical pages | `companion.json`, `docs/source-coverage.json` | 730 practice cards and 206 reference cards; repeated sources reuse 113 original practice patterns, not 936 unique exercises |
+| Personal word bank and review | `practice-tools.tsx`, `saveWord`, `reviewWord` | Search, saved examples and self-rated recall with 1/3/7-day intervals; ratings do not certify mastery |
+| Selected grammar and tense diagnostics | `assessmentItems`, `answerAssessment` | Two 12-question checks preserve first submitted answers; they are preparation guidance, not an A2 certificate or a speaking/listening placement test |
+| Gentle gamification | `study.ts` — `learningRewards`; `academyXP` | Idempotent activity credit, levels and badges; no penalty for needing help or missing a day |
+| Browser-local learning records and backup | `portal.tsx`, `parseProgress`, `validateAcademy` | No account sync; validated import preview accepts up to 8 MB; open writing and companion responses are self-assessed |
+| Public course deployment | Source `docs/deployment-2026-10-20.json` and eight public browser check groups | Only compiled static assets are published; source materials, learner databases and legacy APIs remain private |
+
+Internal student, lecturer and interface acceptance reviews met the requested threshold, but they are not human learner studies or external certification. The source's detailed audit records limitations rather than asserting measured learning gains. Private class PDFs, slide images and completed independent homework are not portfolio assets.
+
+## Snapshot identity
+
+| Source file | SHA-256 |
+| --- | --- |
+| `app/learning/grammar.json` | `610582f95ede24f2cc6d3da63fb4f2159dc57ec706f7d83487ac16981f78edf8` |
+| `app/learning/companion.json` | `fc1c02b727321f68e1ce24b5161e7c2ce8be9c9e4e6b49d81d475feb01875e2b` |
+| `app/learning/enrichment.json` | `cc344c5745e6b40bae1cc513cabe968abd09f946129818e6820a6bfde9f13be7` |
+| `app/learning/study.ts` | `fe21620db3a5df04879c356f974ff9b99d099eed8fdab24e9c1e9a4d3988c2c3` |
+| `app/learning/academy-engine.ts` | `181247ca19b2a28c9495aef874a99de74756580248ad9002c2b789f0e0573569` |
+
+Deployed course JavaScript: `index-CY15MBCK.js`, SHA-256 `41018cd67ab57f4405915e3de0d0d71b5679ab046934e90267441ac051f969c7`. The complete source-file hash manifest is retained with private task evidence, not shipped as application content.
 
 ## Portfolio adaptation
 
-`ItalianLearningStudio.tsx` now presents a disposable, deterministic daily-learning example. It uses the first source mission (`say-hello`) and a compact adaptation in `src/lib/parliamoDaily.ts`: compare time budgets with two due reviews, try two greeting recall checks, write a personal introduction, self-check it, and advance simulated review days. It retains the first mistake after correction and requires output before completion. It does not save or import real learner progress, grade open-ended grammar, open private PDFs, or implement the full calendar. The direct website link opens the complete portal.
+`ItalianLearningStudio.tsx` keeps the existing greeting mission and simulated daily review. Its added academy controls compare 30/45/60-minute recipes for the three programme samples using a compact adaptation of the source planner. A bounded grammar exercise exposes the difference between a first attempt, a correction with help and independent recall on a later simulated day. Practice lives only in this demo window; it neither imports nor modifies a learner's real portal history. The full course, word bank and page companions are reached through the separately labelled live-site link.
 
-The concept gallery has four manually navigable stages: notice, recall, use, next-day review. It no longer claims XP or the legacy four-way rating system. Two actual screenshots preserve the source app’s green/cream design; the interactive example uses the host’s existing System 7 controls and typography. Exact media provenance is in `VISUAL_SHOWCASE_SOURCES.md`. English UK/US and reviewed simplified/traditional Mandarin cover the portfolio copy, dynamic states, captions and accessible labels. Italian exercise prompts intentionally remain Italian.
+The portfolio does not embed the full 224-exercise catalogue or copy the private course materials. Original screenshots retain Parliamo's green/cream interface; the interactive adaptation retains the homepage's System 7 controls, typography, keyboard semantics and window navigation. Captures use synthetic learner state. Exact media hashes, sizes and transforms are recorded in [the media provenance record](VISUAL_SHOWCASE_SOURCES.md). English UK/US and reviewed simplified/traditional Mandarin cover narrative, dynamic states, gallery descriptions and accessible labels. Italian exercise prompts remain in the target language.
 
-## Stable identities and connections
+## Stable identities and relationships
 
-- Catalogue slug: `parliamo-italian-learning`; graph node: `project:parliamo-italian-learning`; source: `archive:parliamo-italian-learning`; demo: `italian-learning`.
-- Existing `products`, `learning-tools`, `local-first` associations remain accurate. The existing independent-project provenance and elementary Italian profile link remain; no employment, education or proficiency claim is added.
-- Existing supplementary workbook/document IDs and exact PDF activity URLs remain. They are earlier practice resources, not the new mission curriculum or the private class PDFs.
-- Reuse the existing book icon, suite membership, shared graph resolver, lazy demo route and gallery. No duplicate project or graph catalogue.
-- Runtime owners: `projects.ts`, `projectStories.ts`, `projectConceptProducts.ts`, `ProjectConceptProducts.tsx`, `ItalianLearningStudio.tsx`, `parliamoDaily.ts`, `projectShowcaseImages.ts`, and their registered copy tables/audit fixtures.
+- Catalogue: `parliamo-italian-learning`; graph: `project:parliamo-italian-learning`; source: `archive:parliamo-italian-learning`; demo: `italian-learning`.
+- Keep the existing `products`, `learning-tools` and `local-first` associations, independent `personal-projects` provenance and elementary Italian profile link. No new employment, qualification or proficiency claim is introduced.
+- Keep `italian-practice` and `italian-reading`, with their exact PDF activity URLs. These earlier downloadable workbooks are supplementary practice, separate from the expanded curriculum and private lesson files.
+- Reuse the canonical book icon, suite membership, shared graph builder, lazy demo route, source links and gallery. No duplicate project, graph data model or runtime registry is added.
+- Owning files: `src/data/projects.ts`, `src/components/projects/projectStories.ts`, `src/data/projectConceptProducts.ts`, `src/components/projects/ProjectConceptProducts.tsx`, `ItalianLearningStudio.tsx`, its CSS module, `src/lib/parliamoDaily.ts`, `src/data/projectShowcaseImages.ts`, registered copy tables and their maintained audit/media fixtures.
 
-## Verification and next update
+## Verification and later updates
 
-Pure checks cover budget boundaries, rest-day carry, Italian accent/apostrophe handling, empty attempts, retained first mistakes, output completion and repeated completion, and the interval sequence. Mandarin render checks include plan, rest day, teaching, retries, output, completion and both review outcomes. Browser checks and actual deployment results belong in the dated `VERIFICATION.md` entry.
+Meaningful checks cover programme allocation totals and capacity limits, grammar hints/corrections/first-attempt retention, later recall, reset, and the retained greeting/delayed-review journey. Browser acceptance covers the compiled visitor flow, gallery and image inspection, keyboard actions, all four locales, desktop and narrow windows, source/workbook opening and the stable graph route. Actual scope and the exact released homepage revision belong in [VERIFICATION.md](VERIFICATION.md); do not infer successful deployment from this integration record alone.
 
-Future source additions should use the portal’s repository-scoped `new-material` skill, preserve mission IDs, and rerun source and browser tests before publication. Refresh this entry only when the implemented learning journey or public screenshots change. Deploy the homepage through its existing protected `.github/workflows/deploy-vps.yml`; source-product static publishing is a separate release on the same VPS.
+Future source additions should use the portal's repository-scoped `new-material` workflow, preserve stable mission IDs and progress, and verify the original app before refreshing affected portfolio examples and media. Compare against the source hashes above until the academy snapshot receives its own source commit. Deploy the homepage through `.github/workflows/deploy-vps.yml`; publishing the original learning app remains a separate release.

@@ -18,6 +18,10 @@
     "Mi chiamo Ada.": "Italian practice prompt retained in its target language; surrounding guidance is translated.",
     "Mi ___ Nora.": "Italian practice prompt retained in its target language; surrounding guidance is translated.",
     "Come ti chiami?": "Italian practice prompt retained in its target language; surrounding guidance is translated.",
-    "Come ___ chiama?": "Italian practice prompt retained in its target language; surrounding guidance is translated."
+    "Come ___ chiama?": "Italian practice prompt retained in its target language; surrounding guidance is translated.",
+    "Noi abbiamo lavorato ieri.": "Original Italian grammar example retained as target-language material; surrounding instructions are translated.",
+    "Noi ___ lavorato ieri.": "Original Italian grammar example retained as target-language material; surrounding instructions are translated.",
+    "Ieri ho…": "Original Italian grammar example retained as target-language material; surrounding instructions are translated.",
+    "Loro ___ lavorato ieri.": "Original Italian grammar example retained as target-language material; surrounding instructions are translated."
   }
 }

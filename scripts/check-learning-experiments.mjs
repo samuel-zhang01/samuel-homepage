@@ -88,3 +88,62 @@ assert.equal(daily.finishDailyMission(attempt),attempt,"Completion is idempotent
 assert.deepEqual([1,3,7,14].map(i=>daily.nextDailyInterval(i,true)),[3,7,14,14]);
 assert.ok([1,3,7,14].every(i=>daily.nextDailyInterval(i,false)===1));
 console.log("Parliamo: budget boundaries, rest-day carry, accent handling, first-attempt preservation, output gate, duplicate completion and review intervals passed.");
+
+// Literal expected allocations traced from study.ts dailyRecipe for each programme's first day.
+const academyExpected = [
+  ["supported", 30, { guided: 15, workshops: [15], tense: 0, companion: 0, waitingUnits: 0, total: 30 }],
+  ["supported", 45, { guided: 30, workshops: [15], tense: 0, companion: 0, waitingUnits: 0, total: 45 }],
+  ["supported", 60, { guided: 30, workshops: [15], tense: 10, companion: 5, waitingUnits: 0, total: 60 }],
+  ["intensive", 30, { guided: 15, workshops: [15], tense: 0, companion: 0, waitingUnits: 1, total: 30 }],
+  ["intensive", 45, { guided: 15, workshops: [15, 15], tense: 0, companion: 0, waitingUnits: 0, total: 45 }],
+  ["intensive", 60, { guided: 30, workshops: [15, 15], tense: 0, companion: 0, waitingUnits: 0, total: 60 }],
+  ["repair", 30, { guided: 15, workshops: [15], tense: 0, companion: 0, waitingUnits: 1, total: 30 }],
+  ["repair", 45, { guided: 15, workshops: [15, 15], tense: 0, companion: 0, waitingUnits: 0, total: 45 }],
+  ["repair", 60, { guided: 30, workshops: [15, 15], tense: 0, companion: 0, waitingUnits: 0, total: 60 }],
+];
+for (const [programme, minutes, expected] of academyExpected) {
+  const actual = daily.planAcademySample(minutes, programme);
+  assert.deepEqual(actual, expected);
+  assert.equal(actual.guided + actual.workshops.reduce((a, b) => a + b, 0) + actual.tense + actual.companion, minutes);
+}
+let grammar = daily.newGrammarSample();
+assert.equal(daily.checkGrammarSample(grammar), grammar, "Empty grammar answers are not scored");
+assert.equal(daily.nextGrammarSample(grammar), grammar, "A review day cannot be advanced before an attempt");
+const initialGrammar = structuredClone(grammar);
+grammar = daily.checkGrammarSample({ ...grammar, answer: "hanno" });
+assert.deepEqual(initialGrammar, daily.newGrammarSample(), "Checking does not mutate the previous state");
+assert.deepEqual(grammar.attempts[0], { day: 1, answer: "hanno", correct: false, assisted: false });
+grammar = daily.checkGrammarSample({ ...grammar, answer: " ABBIAMO! " });
+assert.equal(grammar.attempts[0].correct, false, "Correcting must not overwrite the first miss");
+assert.equal(grammar.attempts[1].assisted, true, "Feedback exposes the answer, so same-day correction is supported");
+assert.equal(daily.checkGrammarSample(grammar), grammar, "Identical checks do not add duplicate attempts");
+grammar = daily.nextGrammarSample(grammar);
+assert.equal(grammar.day, 2); assert.equal(grammar.answer, "");
+grammar = daily.checkGrammarSample({ ...grammar, answer: "abbiamo" });
+assert.equal(grammar.attempts.at(-1).assisted, false, "A later blank recall can be independent");
+assert.equal(daily.nextGrammarSample(grammar).day, 5, "Independent grammar success returns three days later");
+let helped = daily.hintGrammarSample(daily.newGrammarSample());
+helped = daily.checkGrammarSample({ ...helped, answer: "abbiamo" });
+assert.equal(helped.attempts[0].correct, true);
+assert.equal(helped.attempts[0].assisted, true, "Hint before first submission is preserved");
+helped = daily.nextGrammarSample(helped);
+assert.equal(helped.day, 2); assert.notEqual(helped.hintDay, helped.day);
+helped = daily.checkGrammarSample({ ...helped, answer: "hanno" });
+helped = daily.checkGrammarSample({ ...helped, answer: "abbiamo" });
+assert.equal(helped.attempts.at(-1).assisted, true, "A later recall's same-day correction is still supported");
+assert.equal(helped.attempts[0].assisted, true, "Later attempts never erase first-answer assistance");
+const overlong = { ...daily.newGrammarSample(), answer: "x".repeat(501) };
+assert.equal(daily.checkGrammarSample(overlong), overlong);
+let boundedGrammar = daily.checkGrammarSample({ ...daily.newGrammarSample(), answer: "abbiamo" });
+boundedGrammar = daily.hintGrammarSample(daily.nextGrammarSample(boundedGrammar));
+boundedGrammar = daily.checkGrammarSample({ ...boundedGrammar, answer: "abbiamo" });
+for (let index = 0; index < 12; index++) {
+  boundedGrammar = daily.nextGrammarSample(boundedGrammar);
+  boundedGrammar = daily.checkGrammarSample({ ...boundedGrammar, answer: "abbiamo" });
+}
+assert.equal(boundedGrammar.attempts.length, 12);
+assert.equal(boundedGrammar.attempts[0].day, 1, "History bounding retains the original first attempt");
+assert.ok(boundedGrammar.attempts.every(entry => !entry.assisted), "The earlier supported row has left the bounded history");
+boundedGrammar = daily.checkGrammarSample({ ...boundedGrammar, answer: "ABBIAMO" });
+assert.equal(boundedGrammar.attempts.at(-1).assisted, true, "Persistent hint evidence survives bounded history, matching the source");
+console.log("Parliamo academy: nine expected programme/time recipes, bounded answers, hint-first scoring, honest correction, immutable first attempts, duplicate guards and later independent recall passed.");
