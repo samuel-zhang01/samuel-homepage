@@ -71,7 +71,7 @@ const jobs = [];
 for (const option of selectedLocales) for (const width of widths) {
   for (const project of selectedProjects) jobs.push({ group: "documents", project, option, width, route: `/${option.slug}/projects?project=${project.slug}` });
   for (const [section, appId] of Object.entries(sections)) jobs.push({ group: "sections", option, width, appId, section, route: `/${option.slug}/${section}` });
-  for (const project of selectedProjects.filter(project => project.demo)) jobs.push({ group: "demos", project, option, width, route: `/${option.slug}/projects?project=${project.slug}` });
+  for (const project of selectedProjects.filter(project => project.demo || project.websiteUrl)) jobs.push({ group: "demos", project, option, width, route: `/${option.slug}/projects?project=${project.slug}` });
   for (const project of selectedProjects) for (const artifact of project.artifacts?.filter(artifact => artifact.kind === "PDF") ?? []) jobs.push({ group: "pdfs", project, artifact, option, width, route: `/${option.slug}/projects?project=${project.slug}` });
   for (const gameId of gameIds) jobs.push({ group: "games", gameId, option, width, appId: "games", route: `/${option.slug}/games` });
   for (const project of systemProjects.filter(project => !slugFilter || slugFilter.includes(project.slug))) jobs.push({ group: "systemApps", project, option, width, appId: project.systemApp, route: `/${option.slug}/projects?project=${project.slug}` });
@@ -178,7 +178,7 @@ async function documentChecks(p, job, visit) {
     await notes.waitFor(); assert.equal(await notes.locator("details, summary").count(), 0);
     for (const block of await notes.locator("p, dd, ol, ul").all()) assert.equal(await block.isVisible(), true, "Project explanation is visible without disclosure");
   }
-  if (job.project.privacyNote) assert.equal(await document.getByText(getProjectText(job.option.locale, job.project.privacyNote), { exact: true }).isVisible(), true);
+  if (job.project.privacyNote && !(job.project.websiteUrl && job.project.demo)) assert.equal(await document.getByText(getProjectText(job.option.locale, job.project.privacyNote), { exact: true }).isVisible(), true);
   visit.links = await inspectLinks(document, job.project);
   visit.images = await inspectImages(p, document);
   visit.geometry = await geometry(p, "project");
@@ -306,6 +306,7 @@ async function exerciseState(p, demo, job) {
   throw new Error("No supported meaningful state action discovered; requires an explicit fixture, not a blanket pass");
 }
 async function demoChecks(p, job, visit) {
+  if (job.project.websiteUrl) return liveWebsiteChecks(p, job, visit);
   const document = app(p, "project");
   const launch = document.getByRole("button", { name: labels[job.option.slug].launch, exact: false }).first();
   await launch.waitFor(); await launch.scrollIntoViewIfNeeded(); await launch.focus(); await p.keyboard.press("Enter");
@@ -330,6 +331,46 @@ async function demoChecks(p, job, visit) {
   assert.equal(new URL(p.url()).searchParams.get("project"), job.project.slug); assert.notEqual(new URL(p.url()).searchParams.get("view"), "demo");
   assert.equal(await launch.evaluate(button => button === document.activeElement), true, "Close restores the originating keyboard launch control");
   visit.checks.push("keyboard launch and shared route", "reachable jump/navigation", "meaningful selected state plus changed content", "image/link/pane checks", "keyboard close and originating focus");
+}
+
+async function liveWebsiteChecks(p, job, visit) {
+  // Old shared demo addresses retain the overview and its live destination.
+  await p.goto(`${origin}/${job.option.slug}/projects?project=${job.project.slug}&view=demo`);
+  await p.waitForFunction(() => document.documentElement.dataset.reduceEffects !== undefined);
+  const document = app(p, "project");
+  await document.waitFor();
+  await document.locator(".classic-module-loading").waitFor({ state: "hidden" });
+  const label = job.option.locale === "zh-CN" ? "打开在线网站" : job.option.locale === "zh-TW" ? "開啟線上網站" : "Open live website";
+  const launch = document.getByRole("link", { name: label, exact: false });
+  await launch.waitFor();
+  assert.equal(await launch.count(), 1, "One live-site launch replaces duplicate demo actions");
+  assert.equal(await launch.getAttribute("href"), job.project.websiteUrl);
+  assert.equal(await launch.getAttribute("target"), "_blank");
+  assert.equal(await document.getByRole("button", { name: labels[job.option.slug].launch, exact: false }).count(), 0);
+  assert.equal(await document.getByRole("button", { name: /Try the playground|打开体验区|開啟體驗區/ }).count(), 0);
+  assert.equal(await app(p, "projectActivity").count(), 0, "Legacy demo links do not open a reduced copy");
+  assert.ok((await launch.getAttribute("class")).includes("is-primary"));
+  const treatment = await launch.evaluate(element => {
+    const style = getComputedStyle(element);
+    return { background: style.backgroundColor, text: style.color, height: element.getBoundingClientRect().height };
+  });
+  assert.equal(treatment.background, "rgb(0, 0, 0)", "The real website keeps the distinctive black launch button");
+  assert.equal(treatment.text, "rgb(255, 255, 255)");
+  assert.ok(treatment.height >= 52, "The primary launch keeps its large touch target");
+  visit.geometry = await geometry(p, "project");
+  // Verify keyboard/new-tab navigation without making CI depend on another host.
+  const destination = new URL(job.project.websiteUrl).href;
+  await p.context().route(destination, route => route.fulfill({ contentType: "text/html", body: "<title>External navigation fixture</title>" }));
+  await launch.focus();
+  const opened = p.waitForEvent("popup");
+  await p.keyboard.press("Enter");
+  const popup = await opened;
+  await popup.waitForLoadState("domcontentloaded");
+  assert.equal(popup.url(), destination);
+  await popup.close();
+  assert.equal(await launch.evaluate(element => element === document.activeElement), true);
+  visit.checks.push("one primary live-site link", "no duplicate demo or playground", "legacy demo route opens overview", "keyboard opens exact destination in a new tab");
+  await sampleScreenshot(p, job, visit, `live-site-${job.project.slug}`);
 }
 async function sectionChecks(p, job, visit) {
   const window = app(p, job.appId); await window.waitFor();

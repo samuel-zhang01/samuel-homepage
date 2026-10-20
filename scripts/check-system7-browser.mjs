@@ -58,7 +58,7 @@ function documentCopyPair(key) {
   assert.ok(pair?.length === 2 && pair.every(ts.isStringLiteral), `ProjectDocument owns its localized ${key} label`);
   return pair.map(item => item.text);
 }
-const { projects } = load("src/data/projects.ts");
+const { projects, hasEmbeddedProjectDemo } = load("src/data/projects.ts");
 const { localeOptions, translateText } = load("src/lib/i18n.ts");
 const { getProjectText } = load("src/lib/projectNarrative.ts");
 const { SYSTEM7_ICONS } = load("src/lib/system7Icons.ts");
@@ -75,7 +75,7 @@ const navigationDelayMs = Number(process.env.ICON_NAVIGATION_DELAY_MS ?? 250);
 assert.ok(locales.length > 0 && widths.length > 0 && widths.every(width => [1440, 320].includes(width)));
 assert.ok(Number.isFinite(navigationDelayMs) && navigationDelayMs >= 0, "Navigation pacing must be a nonnegative duration in milliseconds");
 const browser = await playwright[engine].launch({ headless: true, ...(engine === "chromium" ? { args: ["--no-sandbox"], ignoreDefaultArgs: ["--hide-scrollbars"] } : {}) });
-const report = { engine, browserVersion: browser.version(), origin, started: new Date().toISOString(), inventory: { iconCount: Object.keys(SYSTEM7_ICONS).length, applications: finderIds, projectCount: projects.length, demoCount: projects.filter(project => project.demo).length, locales: locales.map(option => option.slug), widths, navigationDelayMs }, assetResponses: [], profiles: [] };
+const report = { engine, browserVersion: browser.version(), origin, started: new Date().toISOString(), inventory: { iconCount: Object.keys(SYSTEM7_ICONS).length, applications: finderIds, projectCount: projects.length, demoCount: projects.filter(hasEmbeddedProjectDemo).length, locales: locales.map(option => option.slug), widths, navigationDelayMs }, assetResponses: [], profiles: [] };
 console.log(`System 7 browser audit ${engine} ${report.browserVersion}: ${Object.keys(SYSTEM7_ICONS).length} exact production assets; ${locales.length * widths.length} locale/viewport profiles.`);
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
 let screenshots = 0;
@@ -224,7 +224,7 @@ try {
         profile.checks.push({ group: "applications", id, kind: applicationIconKinds[id], overflow });
         await closeWindow(page, id);
       }
-      console.log(`${engine} ${option.slug} ${width}: all ${finderIds.length} Find applications checked; opening ${projects.length} project documents and ${projects.filter(project => project.demo).length} demos.`);
+      console.log(`${engine} ${option.slug} ${width}: all ${finderIds.length} Find applications checked; opening ${projects.length} project documents and ${projects.filter(hasEmbeddedProjectDemo).length} demos.`);
       for (const project of projects) {
         await openFound(page, `project-${project.slug}`);
         const window = page.locator('[data-app-id="project"]');
@@ -234,7 +234,7 @@ try {
         await inspectIcons(page, profile); const overflow = await geometry(page, "project");
         profile.checks.push({ group: "documents", slug: project.slug, kind: projectIconKinds[project.slug], overflow });
         if (project.slug === "orbital-lab") await snapshot(page, profile, "orbital-document");
-        if (project.demo) {
+        if (hasEmbeddedProjectDemo(project)) {
           const demoLaunchLabel = option.locale === "zh-CN" ? demoLaunchCopy[0] : option.locale === "zh-TW" ? demoLaunchCopy[1] : translateText(option.locale, "Open interactive demo");
           await window.getByRole("button", { name: demoLaunchLabel, exact: false }).first().click();
           const activity = await windowIdentity(page, "projectActivity", projectIconKinds[project.slug]);

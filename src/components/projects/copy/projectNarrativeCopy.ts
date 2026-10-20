@@ -72,7 +72,7 @@ export const projectNarrativeCopy = {
   "Ultra Convert’s real puzzle rule editor with Convert and Rename action blocks": ["Ultra Convert 的真实积木规则编辑器，包含转换与重命名操作", "Ultra Convert 的真實積木規則編輯器，包含轉換與重新命名操作"],
   "The real folder-rule editor: match images, convert to WebP, then rename. This sample rule is disabled and uses a temporary folder.": ["真实文件夹规则编辑器：匹配图片、转换为 WebP，再重命名。此示例规则已停用，并使用临时文件夹。", "真實資料夾規則編輯器：匹配圖片、轉換為 WebP，再重新命名。此範例規則已停用，並使用暫存資料夾。"],
   "YASA’s live booking page showing a meeting calendar and available times": ["YASA 在线预约页面，显示会议日历和可用时间", "YASA 線上預約頁面，顯示會議行事曆與可用時段"],
-  "My live YASA booking page, captured on 11 October 2026. The playground below lets you explore the booking flow without sending a real booking.": ["我的在线 YASA 预约页面，截图于 2026 年 10 月 11 日。下方演示可探索预约流程，不会发送真实预约。", "我的線上 YASA 預約頁面，截圖於 2026 年 10 月 11 日。下方示範可探索預約流程，不會傳送真實預約。"],
+  "My live YASA booking page, captured on 11 October 2026.": ["我的在线 YASA 预约页面，截图于 2026 年 10 月 11 日。", "我的線上 YASA 預約頁面，截圖於 2026 年 10 月 11 日。"],
 
   "VideoMate": ["VideoMate", "VideoMate"],
   "LOCAL VIDEO REPAIR AND RE-ENCODING": ["本地视频修复与重新编码", "本機影片修復與重新編碼"],
@@ -673,9 +673,9 @@ export const projectNarrativeCopy = {
     "自托管预约平台，提供四种分配方式、正确换算时区的可用时间、日历同步与并发预约防护。",
     "自架預約平台，提供四種分配方式、正確換算時區的可預約時間、行事曆同步與併發預約防護。"
   ],
-  "I built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The browser uses fictional calendars to make those scheduling decisions explorable. The reservation uses a canonical UTC key with a ten-minute expiry; a database overlap constraint provides a second safeguard against simultaneous bookings.": [
-    "我构建了自托管预约产品，支持个人、加权轮询、集体和首位可用四种分配方式。主持人的本地工作时段、日历冲突、缓冲时间、提前通知和每日上限共同决定可选时间。UTC 预留和最终数据库冲突检查避免竞争预订。Microsoft Graph 与 Teams、电子邮件、ICS 邀请和签名管理链接支持完整预约流程。浏览器使用虚构日历，让排期决策可以交互探索。预留使用统一的 UTC 键，十分钟后到期；数据库的时间重叠约束提供第二层保护，防止并发预约冲突。",
-    "我建置了自代管預約產品，支持個人、加權輪詢、集體和首位可用四種分配方式。主持人的本地工作時段、日曆衝突、緩衝時間、提前通知和每日上限共同決定可選時間。UTC 預留和最終資料庫衝突檢查避免競爭預約。Microsoft Graph 與 Teams、電子郵件、ICS 邀請和簽名管理連結支持完整預約流程。瀏覽器使用虛構日曆，讓排期決策可以互動探索。預留使用統一的 UTC 鍵，十分鐘後到期；資料庫的時間重疊約束提供第二層保護，防止並行預約衝突。"
+  "I built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The reservation uses a canonical UTC key with a ten-minute expiry; a database overlap constraint provides a second safeguard against simultaneous bookings.": [
+    "我构建了自托管预约产品，支持个人、加权轮询、集体和首位可用四种分配方式。主持人的本地工作时段、日历冲突、缓冲时间、提前通知和每日上限共同决定可选时间。UTC 预留和最终数据库冲突检查避免竞争预订。Microsoft Graph 与 Teams、电子邮件、ICS 邀请和签名管理链接支持完整预约流程。预留使用统一的 UTC 键，十分钟后到期；数据库的时间重叠约束提供第二层保护，防止并发预约冲突。",
+    "我建置了自代管預約產品，支持個人、加權輪詢、集體和首位可用四種分配方式。主持人的本地工作時段、日曆衝突、緩衝時間、提前通知和每日上限共同決定可選時間。UTC 預留和最終資料庫衝突檢查避免競爭預約。Microsoft Graph 與 Teams、電子郵件、ICS 邀請和簽名管理連結支持完整預約流程。預留使用統一的 UTC 鍵，十分鐘後到期；資料庫的時間重疊約束提供第二層保護，防止並行預約衝突。"
   ],
   "Microsoft Graph": [
     "Microsoft Graph",

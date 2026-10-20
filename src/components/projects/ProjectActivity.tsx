@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useId, useRef, useState } from "react";
-import { projects } from "@/data/projects";
+import { projects, hasEmbeddedProjectDemo } from "@/data/projects";
 import { localeSlug, type Locale } from "@/lib/i18n";
 import { projectActivitySearch } from "@/lib/projectActivity";
 import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
@@ -56,7 +56,7 @@ export default function ProjectActivity({ slug, locale, kind, artifactHref, acti
   const project = projects.find((item) => item.slug === slug);
   // A shared URL may only select a PDF authored in this project's catalogue.
   const artifact = kind === "pdf" ? project?.artifacts?.find((item) => item.kind === "PDF" && (!artifactHref || item.href === artifactHref)) : undefined;
-  const valid = Boolean(project && (kind === "demo" ? project.demo : artifact));
+  const valid = Boolean(project && (kind === "demo" ? hasEmbeddedProjectDemo(project) : artifact));
   const [copied, setCopied] = useState(false);
   const [fallbackUrl, setFallbackUrl] = useState("");
   const fallbackRef = useRef<HTMLInputElement>(null);
@@ -111,7 +111,7 @@ export default function ProjectActivity({ slug, locale, kind, artifactHref, acti
       </div>}
     </nav>
     {!valid ? <p className={styles.loading} role="status">{t("This project activity is unavailable.")}</p>
-      : kind === "demo" && project?.demo ? <div className={styles.demo}><ProjectDemoRouter key={project.slug} demoId={project.demo} locale={locale} active={active} /></div>
+      : kind === "demo" && project?.demo && hasEmbeddedProjectDemo(project) ? <div className={styles.demo}><ProjectDemoRouter key={project.slug} demoId={project.demo} locale={locale} active={active} /></div>
         : artifact && <div className={styles.reader}><PdfPreview key={artifact.href} src={artifact.href} title={documentTitle} locale={locale} /></div>}
   </article></ProjectLocaleProvider>;
 }

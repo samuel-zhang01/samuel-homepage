@@ -4,14 +4,13 @@ import { getProjectText } from "@/lib/projectNarrative";
 
 import dynamic from "next/dynamic";
 import { useContext, useState } from "react";
-import { projects, type Project } from "@/data/projects";
+import { projects, hasEmbeddedProjectDemo, type Project } from "@/data/projects";
 import { localeSlug, type Locale } from "@/lib/i18n";
 import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
 import { ProjectLocaleProvider } from "./ProjectTranslationBoundary";
 import { ProjectCaseBrief } from "./ProjectCaseBrief";
 import { ProjectWindowContext } from "./ProjectWindowContext";
 import { ProjectArtwork } from "./ProjectArtwork";
-import { ScheduleCallLink } from "../ScheduleCallLink";
 export { default as ProjectActivity } from "./ProjectActivity";
 
 import styles from "./ProjectDocument.module.css";
@@ -61,9 +60,10 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
   active?: boolean;
 }) {
   const project = projects.find((item) => item.slug === slug);
-  const hasLiveApp = Boolean(project?.systemApp && project.access === "public-demo");
-  const primaryPdf = !project?.demo ? project?.artifacts?.find(artifact => artifact.kind === "PDF") : undefined;
-  const hasReadingLinks = Boolean(project && (project.artifacts?.some(artifact => artifact !== primaryPdf) || (project.sourceUrl && project.access !== "proprietary") || (project.systemApp && !hasLiveApp)));
+  const hasDemo = Boolean(project && hasEmbeddedProjectDemo(project));
+  const hasLiveApp = Boolean(project?.systemApp && project.access === "public-demo" && !project.websiteUrl);
+  const primaryPdf = !project?.demo && !project?.websiteUrl ? project?.artifacts?.find(artifact => artifact.kind === "PDF") : undefined;
+  const hasReadingLinks = Boolean(project && (project.artifacts?.some(artifact => artifact !== primaryPdf) || (project.sourceUrl && project.access !== "proprietary") || (project.systemApp && !hasLiveApp && !project.websiteUrl)));
   const openActivity = useContext(ProjectWindowContext);
   const [shareStatus, setShareStatus] = useState("");
   const [shareFallback, setShareFallback] = useState("");
@@ -77,13 +77,12 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
   if (!project) return null;
   return <ProjectLocaleProvider locale={locale}><article className={`system7-project ${styles.document}`} data-embedded={embedded} lang={locale}>
     <nav className={`s7-toolbar ${styles.toolbar}`} aria-label={t("Project navigation")}>
-      {project.demo && <button className={`s7-button is-primary ${styles.launchAction}`} onClick={openDemo} title={t("Opens in a desktop window")}>{t("Open interactive demo")} ↗</button>}
-      {hasLiveApp && <button className={`s7-button is-primary ${project.demo ? "" : styles.launchAction}`} onClick={() => onOpenApp(project.systemApp!)} title={t("Opens in a desktop window")}>{t("Open application")} ↗</button>}
-      {project.websiteUrl && <a className={`s7-button is-primary ${project.demo || hasLiveApp ? "" : styles.launchAction}`} href={project.websiteUrl} target="_blank" rel="noopener noreferrer">{t("Open live website")} ↗</a>}
+      {project.websiteUrl && <a className={`s7-button is-primary ${styles.launchAction}`} href={project.websiteUrl} target="_blank" rel="noopener noreferrer">{t("Open live website")} ↗</a>}
+      {hasDemo && <button className={`s7-button is-primary ${styles.launchAction}`} onClick={openDemo} title={t("Opens in a desktop window")}>{t("Open interactive demo")} ↗</button>}
+      {hasLiveApp && <button className={`s7-button is-primary ${hasDemo ? "" : styles.launchAction}`} onClick={() => onOpenApp(project.systemApp!)} title={t("Opens in a desktop window")}>{t("Open application")} ↗</button>}
       {project.downloadUrl && <a className={`s7-button ${project.demo || hasLiveApp || project.websiteUrl ? "" : "is-primary"}`} href={project.downloadUrl} target="_blank" rel="noopener noreferrer">{project.downloadLabel ? getProjectText(locale, project.downloadLabel) : t("Download app")} ↗</a>}
       {primaryPdf && <button className="s7-button is-primary" onClick={() => openActivity?.({ slug, kind: "pdf", artifactHref: primaryPdf.href })} title={getProjectText(locale, primaryPdf.label)}>{t(slug === "growmat" ? "Open showcase PDF" : "Open PDF")} ↗</button>}
       <button className={`s7-button ${embedded ? styles.backToList : ""}`} onClick={onBack}>← {t(embedded ? "Back to list" : "All projects")}</button>
-      {project.slug === "coverd-yasa" && <ScheduleCallLink locale={locale} className={styles.scheduleButton} />}
       {shareStatus && <span role="status">{t(shareStatus)}</span>}
     </nav>
     {shareFallback && <label className={styles.shareFallback}>{t("Project link")}<input readOnly value={shareFallback} onFocus={event => event.target.select()} /></label>}
@@ -93,11 +92,11 @@ export default function ProjectDocument({ slug, locale, onOpenApp, onBack, onGra
         <p className={styles.summary}>{getProjectText(locale, project.summary)}</p>
     </header>
     <div className={styles.preview}><ProjectVisualShowcase key={slug} project={project} locale={locale} active={active} /></div>
-    <ProjectCaseBrief project={project} locale={locale} onExplore={openDemo} />
+    <ProjectCaseBrief project={project} locale={locale} onExplore={hasDemo ? openDemo : undefined} />
     {(hasReadingLinks || project.tools.length > 0) && <section className={styles.resources}>
       <h2>{t(hasReadingLinks ? "Read more" : "Built with")}</h2>
       {hasReadingLinks && <nav className={styles.materials} aria-label={t("Read more")}>
-        {project.systemApp && !hasLiveApp && <button className="s7-button" onClick={() => onOpenApp(project.systemApp!)}>{t("Open related application")} ↗</button>}
+        {project.systemApp && !hasLiveApp && !project.websiteUrl && <button className="s7-button" onClick={() => onOpenApp(project.systemApp!)}>{t("Open related application")} ↗</button>}
         {project.artifacts?.filter(artifact => artifact !== primaryPdf).map((artifact) => artifact.kind === "PDF" ? <button className={`s7-button ${project.demo ? "" : "is-primary"}`} key={artifact.href} onClick={() => openActivity?.({ slug, kind: "pdf", artifactHref: artifact.href })} title={t("Opens in a desktop window")}>{getProjectText(locale, artifact.label)} ↗</button> : <a className="s7-button" key={artifact.href} href={artifact.href} target="_blank" rel="noopener noreferrer">{getProjectText(locale, artifact.label)} ↗</a>)}
         {project.sourceUrl && project.access !== "proprietary" && <a className="s7-button" href={project.sourceUrl} target="_blank" rel="noopener noreferrer">{t("View repository")} ↗</a>}
       </nav>}

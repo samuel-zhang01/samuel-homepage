@@ -27,12 +27,13 @@ function load(file) {
   });
   return loaded.exports;
 }
-const { projects } = load('src/data/projects.ts');
+const { projects, hasEmbeddedProjectDemo } = load('src/data/projects.ts');
 const { localeOptions } = load('src/lib/i18n.ts');
 const locales = localeOptions.filter(locale => (process.env.PHONE_SPACE_LOCALES ?? 'en-gb,zh-tw').split(',').includes(locale.slug));
 const sizes = (process.env.PHONE_SPACE_SIZES ?? '320x568,390x844').split(',').map(size => size.split('x').map(Number));
 assert.ok(locales.length && sizes.every(([w,h]) => w >= 320 && h >= 240));
-const cases = projects.filter(project => project.demo).map(project => ({ group: 'demos', id: project.slug, app: 'projectActivity', route: `projects?project=${project.slug}&view=demo`, project }));
+const cases = projects.filter(hasEmbeddedProjectDemo).map(project => ({ group: 'demos', id: project.slug, app: 'projectActivity', route: `projects?project=${project.slug}&view=demo`, project }));
+cases.push(...projects.filter(project => project.websiteUrl).map(project => ({ group: 'websites', id: project.slug, app: 'project', route: `projects?project=${project.slug}&view=demo`, project })));
 cases.push({ group: 'pages', id: 'documents', app: 'documents', route: 'documents' }, { group: 'pages', id: 'desk', app: 'desk', route: 'desk' }, { group: 'pages', id: 'graph', app: 'projects', route: 'projects?view=map' }, { group: 'pages', id: 'orbitals', app: 'orbitals', route: 'orbitals' });
 const selected = cases.filter(item => (!process.env.PHONE_SPACE_GROUP || item.group === process.env.PHONE_SPACE_GROUP) && (!process.env.PHONE_SPACE_SLUGS || process.env.PHONE_SPACE_SLUGS.split(',').includes(item.id)));
 assert.ok(selected.length);
@@ -97,6 +98,16 @@ try {
         await page.waitForFunction(()=>!location.search.includes('view=demo'));
         assert.ok(await page.locator('[data-app-id="project"]').isVisible(),'Back restores the overview.');
         test.checks.push('keyboard Back restores overview');
+      } else if(item.group==='websites') {
+        const launch=window.locator(`a[href="${item.project.websiteUrl}"]`);
+        await launch.waitFor(); assert.equal(await launch.count(),1);
+        await launch.scrollIntoViewIfNeeded(); await launch.focus();
+        const rect=await bounds(launch);
+        assert.ok(rect.height>=44 && rect.width>=44,'Live-site launch retains a 44px target.');
+        assert.ok(rect.x>=test.pane.x && rect.x+rect.width<=test.pane.x+test.pane.width,'Live-site launch fits the phone pane.');
+        assert.equal(await page.locator('[data-app-id="projectActivity"]').count(),0);
+        test.checks.push('one live-site launch','44px keyboard target','legacy demo address opens overview');
+        await page.screenshot({path:resolve(output,stem+'-top.png')});
       } else if(item.id==='documents') {
         const reader=window.locator('.pdf-reader[data-status="ready"]');await reader.waitFor();
         const canvas=reader.locator('canvas').first();await page.waitForFunction(()=>document.querySelector('[data-app-id="documents"] .pdf-reader canvas')?.width>1);

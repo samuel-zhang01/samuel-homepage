@@ -85,6 +85,11 @@ export function isInteractiveProject(project: Pick<Project, "demo" | "systemApp"
   return Boolean(project.demo || (project.access === "public-demo" && project.systemApp));
 }
 
+/** A published website is the visitor destination; do not offer a reduced copy. */
+export function hasEmbeddedProjectDemo(project: Pick<Project, "demo" | "websiteUrl">) {
+  return Boolean(project.demo && !project.websiteUrl);
+}
+
 export const projects: Project[] = [
   {
     slug: "ultra-convert",
@@ -334,18 +339,18 @@ export const projects: Project[] = [
     area: "Systems",
     access: "proprietary",
     sourceVisibility: "private",
-    websiteUrl: "https://schedule.coverd.ai/",
+    websiteUrl: "https://schedule.coverd.ai/book/samuel/30mins-chat",
     status: "Shipped",
     featured: true,
     eyebrow: "TEAM SCHEDULING AND BOOKING",
     summary: "A self-hosted scheduling platform with four allocation modes, timezone-safe availability, calendar sync and race-resistant booking.",
-    detail: "I built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The browser uses fictional calendars to make those scheduling decisions explorable. The reservation uses a canonical UTC key with a ten-minute expiry; a database overlap constraint provides a second safeguard against simultaneous bookings.",
+    detail: "I built a self-hosted booking product with individual, weighted round-robin, collective and first-available allocation. Host-local working hours, calendar conflicts, buffers, notice periods and daily caps determine which times are offered. A UTC reservation and final database conflict check protect confirmation from competing bookings. Microsoft Graph and Teams integration, email, ICS invitations and signed management links support the wider booking lifecycle. The reservation uses a canonical UTC key with a ten-minute expiry; a database overlap constraint provides a second safeguard against simultaneous bookings.",
     tools: ["FastAPI", "PostgreSQL", "React", "Microsoft Graph", "Redis", "Docker"],
     highlights: ["Individual, round-robin, collective and first-available meetings", "Show the same meeting in each guest’s time zone", "Reserve a time, answer booking questions and recheck conflicts", "Download an ICS invitation, reschedule or cancel"],
     preview: {
       src: "/projects/product-showcases/yasa-booking.webp", width: 800, height: 705,
       alt: "YASA’s live booking page showing a meeting calendar and available times",
-      caption: "My live YASA booking page, captured on 11 October 2026. The playground below lets you explore the booking flow without sending a real booking.",
+      caption: "My live YASA booking page, captured on 11 October 2026.",
     },
     demo: "scheduling",
     privacyNote: "The interactive example uses fictional people and calendars and sends no bookings or messages.",

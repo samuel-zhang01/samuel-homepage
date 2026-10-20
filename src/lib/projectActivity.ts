@@ -1,4 +1,4 @@
-import { projects } from "../data/projects";
+import { projects, hasEmbeddedProjectDemo } from "../data/projects";
 
 export type ProjectActivityRequest = {
   slug: string;
@@ -14,7 +14,7 @@ export function resolveProjectActivity(
 ): ProjectActivityRequest | null {
   const project = projects.find((item) => item.slug === slug);
   if (!project) return null;
-  if (view === "demo" && project.demo) return { slug: project.slug, kind: "demo" };
+  if (view === "demo" && hasEmbeddedProjectDemo(project)) return { slug: project.slug, kind: "demo" };
   if (view === "pdf" && artifact && project.artifacts?.some((item) => item.kind === "PDF" && item.href === artifact)) {
     return { slug: project.slug, kind: "pdf", artifactHref: artifact };
   }

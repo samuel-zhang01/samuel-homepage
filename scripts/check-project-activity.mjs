@@ -25,16 +25,26 @@ function load(relative) {
   return compiledModule.exports;
 }
 
-const { projects } = load("src/data/projects.ts");
+const { projects, hasEmbeddedProjectDemo } = load("src/data/projects.ts");
 const { resolveProjectActivity, projectActivitySearch } = load("src/lib/projectActivity.ts");
 let checks = 0;
 function check(name, callback) { callback(); checks += 1; console.log(`PASS ${name}`); }
 const growmat = projects.find((project) => project.slug === "growmat");
 const showcase = growmat.artifacts.find((artifact) => artifact.kind === "PDF").href;
 
-check("Every catalogue demo resolves; projects without demos do not invent one", () => {
+check("Only embedded demos resolve; live websites and other projects open their overview", () => {
   for (const project of projects) {
-    assert.deepEqual(resolveProjectActivity(project.slug, "demo"), project.demo ? { slug: project.slug, kind: "demo" } : null);
+    assert.deepEqual(resolveProjectActivity(project.slug, "demo"), hasEmbeddedProjectDemo(project) ? { slug: project.slug, kind: "demo" } : null);
+  }
+});
+
+check("A live website replaces an embedded demo, including future catalogue additions", () => {
+  assert.equal(hasEmbeddedProjectDemo({ demo: "italian-learning" }), true);
+  assert.equal(hasEmbeddedProjectDemo({ demo: "italian-learning", websiteUrl: "https://example.com" }), false);
+  assert.equal(hasEmbeddedProjectDemo({ websiteUrl: "https://example.com" }), false);
+  for (const project of projects.filter(project => project.websiteUrl)) {
+    assert.equal(resolveProjectActivity(project.slug, "demo"), null);
+    assert.throws(() => projectActivitySearch({ slug: project.slug, kind: "demo" }), /Unknown project activity/);
   }
 });
 
@@ -63,7 +73,7 @@ check("Invalid projects and unrelated views fall back to the overview", () => {
 
 check("Shared demo and PDF links reopen the same activity in every locale", () => {
   const requests = projects.flatMap((project) => [
-    ...(project.demo ? [{ slug: project.slug, kind: "demo" }] : []),
+    ...(hasEmbeddedProjectDemo(project) ? [{ slug: project.slug, kind: "demo" }] : []),
     ...(project.artifacts ?? []).filter((artifact) => artifact.kind === "PDF")
       .map((artifact) => ({ slug: project.slug, kind: "pdf", artifactHref: artifact.href })),
   ]);

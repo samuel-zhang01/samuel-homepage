@@ -13,7 +13,7 @@ const axeDirectory = process.env.AXE_CORE_PATH ?? path.join(path.dirname(process
 const axePackage = require(path.join(axeDirectory, 'package.json'));
 const axeSource = await readFile(path.join(axeDirectory, 'axe.min.js'), 'utf8');
 const projectSource = ts.transpileModule(await readFile('src/data/projects.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
-const { projects } = await import(`data:text/javascript;base64,${Buffer.from(projectSource).toString('base64')}`);
+const { projects, hasEmbeddedProjectDemo } = await import(`data:text/javascript;base64,${Buffer.from(projectSource).toString('base64')}`);
 const sectionSource = ts.createSourceFile('sections.tsx', await readFile('src/app/[locale]/[section]/page.tsx', 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 let sections;
 const visit = node => {
@@ -22,7 +22,7 @@ const visit = node => {
 };
 visit(sectionSource); assert.ok(sections && ts.isObjectLiteralExpression(sections));
 const coreSections = ['', 'projects', ...sections.properties.map(property => property.name.text ?? property.name.getText(sectionSource))];
-const demoProjects = projects.filter(project => project.demo);
+const demoProjects = projects.filter(hasEmbeddedProjectDemo);
 assert.equal(new Set(demoProjects.map(project => project.demo)).size, demoProjects.length);
 const profiles = [
   { locale: 'en-gb', width: 1440, height: 1000, launch: 'Open interactive demo' },

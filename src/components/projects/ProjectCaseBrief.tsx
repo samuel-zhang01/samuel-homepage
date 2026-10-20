@@ -1,6 +1,6 @@
 import { getProjectText } from "@/lib/projectNarrative";
 import { ProjectOriginLinks } from "./ProjectOriginLinks";
-import type { Project } from "@/data/projects";
+import { hasEmbeddedProjectDemo, type Project } from "@/data/projects";
 import { type Locale } from "@/lib/i18n";
 import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
 import { getProjectStory } from "./projectStories";
@@ -28,7 +28,7 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
       <h2>{t("Core features")}</h2>
       <ul>{project.highlights.map(highlight => <li key={highlight}>{getProjectText(locale, highlight)}</li>)}</ul>
     </section>
-    {story && <section className={styles.productTry}>
+    {story && hasEmbeddedProjectDemo(project) && <section className={styles.productTry}>
       {onExplore && <button type="button" className="s7-button is-primary" onClick={onExplore}>{t("Try the playground")} ↗</button>}
       <p>{getProjectText(locale, story.walkthrough)}</p>
     </section>}
@@ -39,7 +39,7 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
       <h2 className={styles.productWhy}>{t("Why I built it")}</h2>
       <p>{getProjectText(locale, story.problem)}</p>
     </details>}
-    {project.privacyNote && <p className={styles.productNote}>{getProjectText(locale, project.privacyNote)}</p>}
+    {project.privacyNote && !project.websiteUrl && <p className={styles.productNote}>{getProjectText(locale, project.privacyNote)}</p>}
   </div>;
   return <div className={styles.brief}>
     <section className={styles.narrative} aria-label={t("What I built")}>
@@ -51,7 +51,7 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
       <h2>{t("Why I built it")}</h2>
       <p>{getProjectText(locale, story.problem)}</p>
     </section>}
-    {story && project.demo && <section className={styles.walkthrough}>
+    {story && hasEmbeddedProjectDemo(project) && <section className={styles.walkthrough}>
       <h2>{t("Try it")}</h2>
       <p>{getProjectText(locale, story.walkthrough)}</p>
       {onExplore && <button type="button" className="s7-button is-primary" onClick={onExplore}>{t("Open interactive demo")} ↗</button>}
@@ -67,7 +67,7 @@ export function ProjectCaseBrief({ project, locale, onExplore }: {
       <h2>{t("What it can do")}</h2>
       <ul>{project.highlights.map(highlight => <li key={highlight}>{getProjectText(locale, highlight)}</li>)}</ul>
     </section>}
-    {project.demo && project.privacyNote && <section className={styles.demoNote}>
+    {hasEmbeddedProjectDemo(project) && project.privacyNote && <section className={styles.demoNote}>
       <h2>{t("About this demo")}</h2><p>{getProjectText(locale, project.privacyNote)}</p>
     </section>}
     <ProjectOriginLinks slug={project.slug} locale={locale} />
