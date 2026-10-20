@@ -10,7 +10,9 @@ Lint and the full isolated production build pass, including the maintained profi
 
 Local compiled Chromium checks cover 32 project documents, 24 live-site launch journeys, eight retained VideoMate demo journeys and sixteen workbook journeys across four locales at 1440px and 320px. Two initial YASA launch checks sampled the server-rendered link before client hydration replaced the loading surface. The corrected check waits for the existing hydration and module-loading states; all 24 live-site launches pass on recheck. Both failed receipts are retained. All 24 additional phone profiles (three websites × four locales × 320/390px) pass for large reachable launch controls and legacy-address fallback. English COVERD/YASA and Traditional Chinese Parliamo screenshots were directly inspected. This is Chromium responsive-layout coverage, not a native-device or three-engine claim.
 
-Publication status: the reviewed candidate is ready for the existing protected main deployment workflow. Exact release and public verification results will follow.
+The first publication attempt, [workflow `39417729640`](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/39417729640), stopped before deployment. Its full crawl passed 966 journeys, including all 240 demo/live-site journeys, but eight independent COVERD application checks still expected the removed related-application button. The fixture now opens that retained desktop section through its declared route and still checks all six review dimensions, evidence editing, JSON export, reset and keyboard close. All eight affected compiled profiles pass, and the changed script passes lint. No application assertion or required check family was removed. The failed CI receipt remains in the runner’s verified archive and a bounded diagnostic is retained with this task.
+
+Publication status: the corrected candidate is ready for the existing protected main deployment workflow. Exact release and public verification results will follow.
 
 ## Parliamo academy refresh — 20 October 2026
 

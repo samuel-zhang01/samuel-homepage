@@ -74,7 +74,11 @@ for (const option of selectedLocales) for (const width of widths) {
   for (const project of selectedProjects.filter(project => project.demo || project.websiteUrl)) jobs.push({ group: "demos", project, option, width, route: `/${option.slug}/projects?project=${project.slug}` });
   for (const project of selectedProjects) for (const artifact of project.artifacts?.filter(artifact => artifact.kind === "PDF") ?? []) jobs.push({ group: "pdfs", project, artifact, option, width, route: `/${option.slug}/projects?project=${project.slug}` });
   for (const gameId of gameIds) jobs.push({ group: "games", gameId, option, width, appId: "games", route: `/${option.slug}/games` });
-  for (const project of systemProjects.filter(project => !slugFilter || slugFilter.includes(project.slug))) jobs.push({ group: "systemApps", project, option, width, appId: project.systemApp, route: `/${option.slug}/projects?project=${project.slug}` });
+  for (const project of systemProjects.filter(project => !slugFilter || slugFilter.includes(project.slug))) {
+    const nativeSection = project.websiteUrl ? Object.entries(sections).find(([, appId]) => appId === project.systemApp)?.[0] : undefined;
+    if (project.websiteUrl) assert.ok(nativeSection, `${project.slug}: an independent native section needs its declared route`);
+    jobs.push({ group: "systemApps", project, option, width, appId: project.systemApp, nativeSection, route: nativeSection ? `/${option.slug}/${nativeSection}` : `/${option.slug}/projects?project=${project.slug}` });
+  }
   jobs.push({ group: "nojs", option, width, route: `/${option.slug}/` });
   for (const javaScriptEnabled of [false, true]) jobs.push({ group: "missing", option, width, javaScriptEnabled, route: `/${option.slug}/audit-missing-item` });
 }
@@ -514,7 +518,8 @@ async function gameChecks(p, job, visit) {
 async function systemAppChecks(p, job, visit) {
   const related = job.project.access !== "public-demo";
   const document = app(p, "project"); const launchName = job.option.locale.startsWith("en") ? (related ? "Open related application" : "Open application") : job.option.locale === "zh-CN" ? (related ? "打开相关应用" : "打开应用") : (related ? "開啟相關應用程式" : "開啟應用程式");
-  const launch = document.getByRole("button", { name: launchName, exact: false }); await keyboardActivate(p, launch);
+  const launch = job.nativeSection ? null : document.getByRole("button", { name: launchName, exact: false });
+  if (launch) await keyboardActivate(p, launch);
   const window = app(p, job.appId); await window.waitFor();
   const t = text => translateText(job.option.locale, text);
   if (job.appId === "notepad") {
@@ -629,10 +634,16 @@ async function systemAppChecks(p, job, visit) {
   visit.links = await inspectLinks(window); visit.images = await inspectImages(p, window.locator(".mac-window__content")); visit.geometry = await geometry(p, job.appId);
   if (job.appId === "orbitals") await sampleScreenshot(p, job, visit, "orbital-tool");
   await keyboardActivate(p, window.locator(".window-close")); await window.waitFor({ state: "detached" });
-  await p.waitForFunction(() => Boolean(document.activeElement?.closest('[data-app-id="project"]')));
-  assert.equal(await launch.evaluate(button => button === document.activeElement), true, "Application close restores its originating document launch control");
-  assert.equal(new URL(p.url()).searchParams.get("project"), job.project.slug);
-  visit.checks.push("actual catalog application keyboard launch", "application-specific result/state or explicit informational-content fixture", "resource/semantic/width checks", "keyboard close and originating document focus/route");
+  if (launch) {
+    await p.waitForFunction(() => Boolean(document.activeElement?.closest('[data-app-id="project"]')));
+    assert.equal(await launch.evaluate(button => button === document.activeElement), true, "Application close restores its originating document launch control");
+    assert.equal(new URL(p.url()).searchParams.get("project"), job.project.slug);
+    visit.checks.push("actual catalog application keyboard launch", "keyboard close and originating document focus/route");
+  } else {
+    assert.notEqual(new URL(p.url()).pathname, `/${job.option.slug}/${job.nativeSection}`, "Closing an independently opened section leaves its route");
+    visit.checks.push("declared independent native section", "keyboard close leaves the section route");
+  }
+  visit.checks.push("application-specific result/state or explicit informational-content fixture", "resource/semantic/width checks");
 }
 async function missingChecks(p, job, visit) {
   const main = p.getByRole("main"); await main.waitFor();
