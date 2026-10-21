@@ -2,6 +2,51 @@
 
 The dated records below pin source revisions, file hashes and recorded outcomes. The September records preserve provenance after earlier UI reviews were consolidated; later refreshes identify their own source snapshots. Historical results do not claim new model training or current test counts. See [the current audit](VERIFICATION.md), [the artwork guide](PROJECT_ARTWORK.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
 
+
+## CV Studio public workspace — 21 October 2026
+
+The existing `cv-keyword-automator`, `project:cv-keyword-automator` and
+`archive:cv-keyword-automator` identities now present **CV Studio** at
+https://cv-studio.samuelzhang.co.uk. No duplicate project or graph was added.
+The source remains private: `samuel-zhang01/Jacques-Oeuf`, public deployment
+revision `3ef6956c84826c2376724685745e98244905b87b`.
+Original repository credits include Samuel and additional contributors; this
+refresh describes the integrated workflow and public deployment without claiming
+sole authorship of the original team project.
+
+The source paths behind the public claims are
+`web-react-integrate/src/features/keywords/` (local import, analysis and export),
+`src/context/WorkspaceContext.jsx` (shared draft), backend
+`api/routes/generation.py` and `services/public_templates.py` (isolated generation
+and eight neutral visitor-text styles), `api/public_workspace.py` and
+`services/workspace.py` (signed browser workspaces), and the existing profile,
+file and ATS services. `scripts/test_public_workspaces.py` supplies 12 synthetic
+security regressions; the existing generation, API and WebSocket suites supply
+53 contracts. The source frontend suite has 26 unit tests and 58 browser journeys.
+
+The public deployment starts with empty profiles and never copies the personal
+installation's inputs, templates, documents, storage or credentials. Reviewed
+keywords support CV generation without an AI call; optional AI extraction and
+cover letters require the visitor's own Anthropic key for that request. Text
+matching is not a hiring or ATS prediction. Server storage is browser-bound,
+expires after inactivity and has no account recovery or cross-device sync. AI
+provider calls were not purchased or exercised during publication acceptance.
+
+The portfolio's sole demo destination is the shared black **Open live website**
+button. The existing concept remains a small illustrative scene; the embedded
+reconstruction is not presented alongside the live app. Two original screenshots
+show local keyword review and a real synthetic PDF. Existing topic, capability
+and related-context relationships are retained through the shared builder.
+Catalogue, story, menu and gallery copy is reviewed in all four locales.
+
+Owned integration files are `src/data/projects.ts`,
+`src/components/projects/projectStories.ts`, their narrative/menu translation
+tables, `src/data/projectShowcaseImages.ts`, its translation table and the
+maintained media fixture. Media provenance is recorded in
+[VISUAL_SHOWCASE_SOURCES.md](VISUAL_SHOWCASE_SOURCES.md). Verification and release
+scope is recorded in [VERIFICATION.md](VERIFICATION.md) and `continue.md`.
+
+
 ## STUDY-RL teaching portal refresh — 20 October 2026
 
 The homepage integration reviewed public source [`382be343e6b3a656cffe6712b7671e535f58c73e`](https://github.com/samuel-zhang01/STUDY-RL/tree/382be343e6b3a656cffe6712b7671e535f58c73e), published under MIT. The [teaching portal](https://study-rl.samuelzhang.co.uk) is the single course entry point: 26 weeks of English explanations, interactive plots and downloadable Jupyter notebooks, Python projects and shared dependencies. The site explains the read → predict → experiment → implement workflow and offers both individual files and complete weekly bundles. Coding continues locally in Jupyter. Week 25 uses the public synthetic audit; Week 26 is a synthetic causal-learning extension with explicit limitations. These teaching examples do not establish clinical validation or learning efficacy in a user study.

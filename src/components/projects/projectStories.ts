@@ -31,9 +31,9 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
   },
   "cv-keywords": {
     problem: "Adapting a CV to each role takes time, and important experience can be overlooked when the job description uses different language.",
-    contribution: "I built a Python workflow that extracts job requirements, selects a pre-authored CV template and compiles a PDF with LaTeX. The browser demo uses fictional text to show which suggested changes the sample CV supports.",
-    pipeline: "job description → role language → template and relevant experience → reviewed wording → application document",
-    walkthrough: "Edit an example CV sentence, analyse the job description, and review a missing requirement before accepting a factual rewrite.",
+    contribution: "I connected local document imports and keyword review to CV generation, document history and application tracking. The same draft moves between tools. The public deployment uses neutral layouts and isolates each visitor’s profile, tracker, documents and progress stream.",
+    pipeline: "CV and job description → local keyword review → visitor-owned text and selected layout → PDF → application timeline",
+    walkthrough: "Open CV Studio, paste a CV and job description into Keyword studio, and review their keyword coverage. Send the reviewed draft to Document builder for a CV without an AI call, or track the application with its dates and notes.",
   },
   "finance": {
     problem: "Different bank formats, overlapping exports and transfers between accounts make it difficult to see what was actually earned or spent.",

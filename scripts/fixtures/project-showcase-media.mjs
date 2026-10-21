@@ -1,6 +1,23 @@
 /** Exact original-image outputs reviewed in docs/VISUAL_SHOWCASE_SOURCES.md. */
 export const projectShowcaseMedia = [
   [
+  "projects/project-showcases/cv-studio-analysis-20261021.webp",
+  {
+    "maximumBytes": 83968,
+    "sha256": "3f689556a549a4bfc0fdcc5d7c4db0e110e4b2fa942dabf30113e40446dd7639",
+    "type": "webp"
+  }
+],
+  [
+  "projects/project-showcases/cv-studio-pdf-20261021.webp",
+  {
+    "maximumBytes": 48128,
+    "sha256": "c3b6bde4435ececd810b93a580d5c7b2c6ba5e30ca22a119c88132e969a3f80a",
+    "type": "webp"
+  }
+],
+
+  [
   "projects/project-showcases/parliamo-programmes-20261020.webp",
   {
     "maximumBytes": 86016,

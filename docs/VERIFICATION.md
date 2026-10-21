@@ -1,5 +1,62 @@
 # Verification and maintenance
 
+
+## CV Studio public workspace — 21 October 2026
+
+The existing `cv-keyword-automator` project is refreshed as **CV Studio**, with
+https://cv-studio.samuelzhang.co.uk as its sole live-demo destination. The project,
+source and graph IDs remain stable. Its two original screenshots show synthetic
+keyword review and an actually rendered generated PDF. Source attribution,
+behaviour, limits, owned files and image hashes are pinned in
+[the source record](PROJECT_SOURCE_RECORD.md#cv-studio-public-workspace--21-october-2026)
+and [media provenance](VISUAL_SHOWCASE_SOURCES.md#cv-studio-public-workspace--21-october-2026).
+
+The separately deployed application's exact revision is
+`3ef6956c84826c2376724685745e98244905b87b`. Public Chromium acceptance verifies
+HTTPS, secure signed visitor cookies, independent profiles, ATS records and PDFs,
+cross-origin/body rejection, real analysis-to-generation handoff, a downloaded
+LuaLaTeX PDF, module MIME and actual PDF canvas pixels, and 390px layouts without
+application exceptions. Independent text extraction finds the fictional candidate
+and reviewed skills in the produced PDF. All eight neutral CV styles and the
+cover-letter layout compile using synthetic inputs in the installed runtime.
+No paid AI/provider call was made; visitor-owned AI keys are optional. Public
+mode never consumes an operator key. Data is browser-bound, with deletion,
+inactivity expiry and capacity limits; it has no account recovery or cross-device sync.
+
+Twelve public-mode security regressions and 53 existing generation/API/WebSocket
+contracts pass, alongside frontend lint, types, 26 unit tests and 58 shared-CDP
+Chromium browser journeys. The public runtime lock contains 30 exact packages with
+official PyPI hashes; the dated Python audit and frontend production audit report
+no known vulnerabilities. Docker inspection confirms separate unprivileged users,
+read-only roots, dropped capabilities, no-new-privileges and no published app ports.
+Origin TLS hostname verification and certificate-renewal dry run pass. The private
+stack map is refreshed and structurally PASS while retaining its broader PARTIAL
+coverage qualification. No private inputs, templates, outputs or stored profiles
+were transferred from the personal installation.
+
+Portfolio lint, the full isolated prebuild/build and final locale/copy/type/compile
+checks pass. Output remains within unchanged budgets: 128 browser files / 5.69 MiB,
+261.0 KiB initial JavaScript gzip and 5.34 MiB application runtime. Existing graph,
+profile, catalogue, navigation, artifact, icon, media and translation gates pass.
+A focused regression preserves the CV Studio brand in US English while ordinary
+CV references still localise to resume.
+
+Eight compiled Chromium project/gallery/concept/keyboard-launch journeys pass
+across four locales at 1440px and 320px. Four additional graph journeys verify the
+stable node, existing language-processing edge, JSON export, embedded project
+opening and Back. The launch button is black, at least 52px high and the only demo
+destination. External launch responses in these portfolio checks are intercepted;
+separate real public-application checks establish the destination's behaviour.
+Actual desktop and Traditional Chinese 320px screenshots were inspected. This
+scoped browser review does not claim physical devices or public Firefox/WebKit
+coverage. Temporary test selector/translation expectations and an earlier worker
+MIME failure are retained in private evidence.
+
+Publication proceeds through the existing protected VPS workflow after this
+reviewed content commit. Its exact release and public portfolio journeys are
+recorded in the publication follow-up below once complete.
+
+
 ## STUDY-RL teaching portal — 20 October 2026
 
 The existing [STUDY-RL project](https://me.samuelzhang.co.uk/en-gb/projects?project=study-rl) now points to the complete [teaching portal](https://study-rl.samuelzhang.co.uk), with the public GitHub repository and current syllabus alongside it. The [source record](PROJECT_SOURCE_RECORD.md#study-rl-teaching-portal-refresh--20-october-2026) pins public revision `382be343e6b3a656cffe6712b7671e535f58c73e`, contribution limits, graph provenance and PDF hash. All four homepage locales describe the 26-week English course, visual experiments, local Jupyter workflow and causal-learning extension. Existing project, source and graph identities remain stable.

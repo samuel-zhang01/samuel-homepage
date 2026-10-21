@@ -10,6 +10,27 @@ export type ProjectShowcaseImage = Readonly<{
 }>;
 
 export const projectShowcaseImages: Partial<Record<string, readonly ProjectShowcaseImage[]>> = {
+  "cv-keyword-automator": [
+  {
+    "src": "/projects/project-showcases/cv-studio-analysis-20261021.webp",
+    "alt": "CV Studio compares a fictional software role with example CV text and shows four reviewed keyword matches.",
+    "caption": "Keyword analysis runs in the browser. This synthetic example matches Python, SQL, Docker and React; coverage is a text-match aid, not a hiring prediction.",
+    "label": "Review role keywords",
+    "width": 1440,
+    "height": 1050,
+    "source": "https://cv-studio.samuelzhang.co.uk/keywords"
+  },
+  {
+    "src": "/projects/project-showcases/cv-studio-pdf-20261021.webp",
+    "alt": "CV Studio previews a PDF generated from Alex Example’s fictional CV text in a neutral public layout.",
+    "caption": "The reviewed draft becomes a real LuaLaTeX PDF using visitor-supplied text. This disposable example uses no personal template or AI provider call.",
+    "label": "Preview the generated CV",
+    "width": 1440,
+    "height": 1050,
+    "source": "https://cv-studio.samuelzhang.co.uk/start-now"
+  }
+],
+
   "parliamo-italian-learning": [
     {
         "src": "/projects/project-showcases/parliamo-programmes-20261020.webp",

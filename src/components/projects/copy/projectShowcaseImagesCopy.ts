@@ -1,6 +1,13 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectShowcaseImagesCopy = {
+  "CV Studio compares a fictional software role with example CV text and shows four reviewed keyword matches.": ["CV Studio 将虚构的软件工程岗位与示例简历文字进行比较，显示四个已审阅的关键词匹配。", "CV Studio 將虛構的軟體工程職位與範例履歷文字進行比較，顯示四個已審閱的關鍵詞匹配。"],
+  "Keyword analysis runs in the browser. This synthetic example matches Python, SQL, Docker and React; coverage is a text-match aid, not a hiring prediction.": ["关键词分析在浏览器中完成。这个虚构示例匹配 Python、SQL、Docker 和 React；覆盖率只是文字匹配参考，不是录用预测。", "關鍵詞分析在瀏覽器中完成。這個虛構範例匹配 Python、SQL、Docker 和 React；涵蓋率只是文字匹配參考，不是錄用預測。"],
+  "Review role keywords": ["审阅岗位关键词", "審閱職位關鍵詞"],
+  "CV Studio previews a PDF generated from Alex Example’s fictional CV text in a neutral public layout.": ["CV Studio 使用公开网站的中性版式，预览由 Alex Example 的虚构简历文字生成的 PDF。", "CV Studio 使用公開網站的中性版式，預覽由 Alex Example 的虛構履歷文字產生的 PDF。"],
+  "The reviewed draft becomes a real LuaLaTeX PDF using visitor-supplied text. This disposable example uses no personal template or AI provider call.": ["已审阅草稿使用访客提供的文字生成真实的 LuaLaTeX PDF。这个一次性示例没有使用个人模板，也没有调用 AI 服务。", "已審閱草稿使用訪客提供的文字產生真實的 LuaLaTeX PDF。這個一次性範例沒有使用個人範本，也沒有呼叫 AI 服務。"],
+  "Preview the generated CV": ["预览生成的简历", "預覽產生的履歷"],
+
   "Choose a study route": ["选一条学习路线", "選一條學習路線"],
   "Repair a grammar mistake": ["修正一个语法错误", "修正一個文法錯誤"],
   "Try a page companion": ["试做逐页配套练习", "試做逐頁配套練習"],

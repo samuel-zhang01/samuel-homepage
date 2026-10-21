@@ -1,5 +1,34 @@
 # Original showcase image sources
 
+
+## CV Studio public workspace — 21 October 2026
+
+Two direct Chromium captures show the original [CV Studio website](https://cv-studio.samuelzhang.co.uk),
+source `e6e8b70c7e9073a4813cde8328717ebb026fa603`. The final `3ef6956` deployment
+changes only backend capacity guards and their test/documentation; its frontend
+behaviour is identical. A fresh disposable visitor used fictional Alex Example
+text and an invented software role. No existing profile, personal CV template,
+application document, account or provider key was used. The PDF was compiled by
+real LuaLaTeX, independently checked for the synthetic candidate text, downloaded
+and rendered inside the original application's viewer. The record of an earlier
+worker-MIME failure is retained privately; the selected capture is the repaired,
+rendered state.
+
+Each screenshot is an uncropped 1440×1050 viewport at scale 1. Screens were
+visually inspected. Sharp converted PNG to lossless WebP without resizing or
+retouching; decoded RGBA buffers are exactly equal. The example's keyword
+coverage is a deterministic text-match result, not a hiring prediction. The
+public UI is English; reviewed portfolio captions and alt text cover all four
+locales. The original-media gallery retains full-size inspection.
+
+| Output under `public/` | Bytes | Ceiling | SHA-256 |
+| --- | --- | --- | --- |
+| `projects/project-showcases/cv-studio-analysis-20261021.webp` | 83718 | 83968 | `3f689556a549a4bfc0fdcc5d7c4db0e110e4b2fa942dabf30113e40446dd7639` |
+| `projects/project-showcases/cv-studio-pdf-20261021.webp` | 47712 | 48128 | `c3b6bde4435ececd810b93a580d5c7b2c6ba5e30ca22a119c88132e969a3f80a` |
+
+Each ceiling rounds this original capture up to the next KiB. No global media allowance changed.
+
+
 ## Parliamo academy refresh — 20 October 2026
 
 Three direct Chromium captures show the expanded [live Parliamo academy](https://italian.samuelzhang.co.uk), release `20261020T105743Z-academy`. The deployed academy is a reviewed working-tree build on source base `5fd6fdf259ee00fda07f8fc6501759d6695f19fb`; that base commit alone does not contain these additions. The gallery therefore links to the corresponding live routes. Capture-time public asset checks matched the deployment receipt: JavaScript `41018cd67ab57f4405915e3de0d0d71b5679ab046934e90267441ac051f969c7` and CSS `6d9148b4bc6db4d7f949db2254be77fad0c2657e4d9b34519f543ef7c52c4d0b`.

@@ -2246,7 +2246,7 @@ function toAmericanEnglish(value: string): string {
     .replaceAll("centre", "center")
     .replaceAll("programme", "program")
     .replace(/\bCVs\b/g, "resumes")
-    .replace(/\bCV\b/g, "resume")
+    .replace(/\bCV\b(?! Studio\b)/g, "resume")
     .replaceAll("Résumé", "Resume");
 }
 
