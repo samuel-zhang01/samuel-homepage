@@ -9,7 +9,7 @@ The existing `cv-keyword-automator`, `project:cv-keyword-automator` and
 `archive:cv-keyword-automator` identities now present **CV Studio** at
 https://cv-studio.samuelzhang.co.uk. No duplicate project or graph was added.
 The source remains private: `samuel-zhang01/Jacques-Oeuf`, public deployment
-revision `3ef6956c84826c2376724685745e98244905b87b`.
+revision `c37c3a29e9b0e321a660759c9ff74d28b433a704`.
 Original repository credits include Samuel and additional contributors; this
 refresh describes the integrated workflow and public deployment without claiming
 sole authorship of the original team project.
@@ -44,7 +44,9 @@ Owned integration files are `src/data/projects.ts`,
 tables, `src/data/projectShowcaseImages.ts`, its translation table and the
 maintained media fixture. Media provenance is recorded in
 [VISUAL_SHOWCASE_SOURCES.md](VISUAL_SHOWCASE_SOURCES.md). Verification and release
-scope is recorded in [VERIFICATION.md](VERIFICATION.md) and `continue.md`.
+scope is recorded in [VERIFICATION.md](VERIFICATION.md) and `continue.md`. Portfolio
+content revision `efb7ab5535b8f58144580792493f7ebfd2632afe` is live through protected
+workflow `39626832029`; its 12 scoped public visitor journeys pass.
 
 
 ## STUDY-RL teaching portal refresh — 20 October 2026

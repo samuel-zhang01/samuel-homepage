@@ -4,9 +4,9 @@
 ## CV Studio public workspace — 21 October 2026
 
 Two direct Chromium captures show the original [CV Studio website](https://cv-studio.samuelzhang.co.uk),
-source `e6e8b70c7e9073a4813cde8328717ebb026fa603`. The final `3ef6956` deployment
-changes only backend capacity guards and their test/documentation; its frontend
-behaviour is identical. A fresh disposable visitor used fictional Alex Example
+source `e6e8b70c7e9073a4813cde8328717ebb026fa603`. The final `c37c3a2` deployment adds
+backend capacity/compiler guards and clarifies the expanded privacy disclosure;
+the two selected views, with that disclosure collapsed, are unchanged. A fresh disposable visitor used fictional Alex Example
 text and an invented software role. No existing profile, personal CV template,
 application document, account or provider key was used. The PDF was compiled by
 real LuaLaTeX, independently checked for the synthetic candidate text, downloaded

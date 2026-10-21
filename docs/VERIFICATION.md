@@ -12,7 +12,7 @@ behaviour, limits, owned files and image hashes are pinned in
 and [media provenance](VISUAL_SHOWCASE_SOURCES.md#cv-studio-public-workspace--21-october-2026).
 
 The separately deployed application's exact revision is
-`3ef6956c84826c2376724685745e98244905b87b`. Public Chromium acceptance verifies
+`c37c3a29e9b0e321a660759c9ff74d28b433a704`. Public Chromium acceptance verifies
 HTTPS, secure signed visitor cookies, independent profiles, ATS records and PDFs,
 cross-origin/body rejection, real analysis-to-generation handoff, a downloaded
 LuaLaTeX PDF, module MIME and actual PDF canvas pixels, and 390px layouts without
@@ -52,9 +52,36 @@ scoped browser review does not claim physical devices or public Firefox/WebKit
 coverage. Temporary test selector/translation expectations and an earlier worker
 MIME failure are retained in private evidence.
 
-Publication proceeds through the existing protected VPS workflow after this
-reviewed content commit. Its exact release and public portfolio journeys are
-recorded in the publication follow-up below once complete.
+Homepage content revision `efb7ab5535b8f58144580792493f7ebfd2632afe` was
+published by successful protected [workflow 39626832029](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/39626832029).
+Both `verify-main` and `deploy` passed. The live release receipt and healthy
+container label match that exact revision; all seven canary and seven active
+release gates passed. The subsequent documentation-only publication does not
+change application or build inputs.
+
+Public Chromium verification passes **12 affected journeys**: eight project,
+translated gallery/concept and keyboard-launch/return cases across four locales
+at desktop and 320px, plus four stable graph/export/embedded-project/Back cases.
+All eight launches open the actual CV Studio application without request
+interception and verify its public branding. Public desktop and Traditional
+Chinese phone screenshots were inspected. The final application also passes its
+real synthetic analysis → PDF download → PDF canvas workflow with two independent
+visitors, and its expanded privacy disclosure accurately describes profile and
+application saving as well as generation.
+
+The final compiler hardening explicitly passes restrictive TeX file-access
+settings into the subprocess. Ten installed-runtime checks pass: all eight CV
+styles, the cover-letter layout, and rejection of a synthetic input file outside
+the template directory. This uses no real secret or stored visitor document. The
+source Local CI mount omission was corrected after an initial failed run; the
+repaired isolated ATS job passes. Source three-engine browser checks passed on
+the reviewed workspace code. These are distinct from the public Chromium scope.
+
+Completed scoped evidence, including failed development receipts, original
+screenshots, exact media hashes, exported public graph data and final public
+receipts, is retained in the private review archive with verified hashes.
+Provider calls, physical devices, saturation and an exhaustive OS/security audit
+are outside this acceptance scope.
 
 
 ## STUDY-RL teaching portal — 20 October 2026
