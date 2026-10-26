@@ -39,7 +39,9 @@ is inferred. All four locales explain the same purpose.
 
 [Media provenance](VISUAL_SHOWCASE_SOURCES.md#browser-view--26-october-2026) retains
 the source image hashes. The [removal receipt](VERIFICATION.md#browser-view-demo-removal-and-purpose-correction--26-october-2026)
-records verification and release status. Earlier integration and guided-demo
+records successful workflow `40330947375` for deployed application revision
+`c87affd251f292bd73765727f41682674fc4e1ce`, passing public checks and the verified
+evidence archive. Earlier integration and guided-demo
 receipts remain historical, superseded evidence; their passing state checks did
 not establish that those simulations represented the product correctly.
 

@@ -29,7 +29,19 @@ inspection and contained layout. English desktop/phone and Traditional Chinese
 phone screenshots were inspected. This is portfolio verification; it does not
 claim new extension-runtime or physical-monitor tests.
 
-Publication and public checks are recorded in the follow-up receipt.
+Application revision `c87affd251f292bd73765727f41682674fc4e1ce` is live through
+successful protected workflow [40330947375](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/40330947375).
+Full CI passes 982 Chromium journeys, 295 HTTP route groups, 296 asset groups and
+136 challenge groups. Public review passes all eight maintained overview journeys
+and all 16 normal/old-demo route profiles. The public phone old-demo URL was
+visually confirmed to show the corrected overview and VSIX action.
+
+All 50 evidence files are read-back verified in
+`~/.local/share/samuel-homepage/review-archive/browser-view-remove-demo-20261026-c87affd.tar.gz`,
+SHA-256 `a83a3fed0c56a24c8184ff675f75cd8467c13b403f88881830eb31a503b4d2ba`,
+with member hashes in the adjacent manifest. Owned preview/review files are cleaned
+up after verification. The user's shared browser is preserved. This follow-up
+receipt changes documentation only.
 
 ## Browser View guided demo revision — 26 October 2026
 

@@ -8,7 +8,11 @@ and real installation/source links. Old demo URLs fall back to the overview.
 See [the current removal receipt](docs/VERIFICATION.md#browser-view-demo-removal-and-purpose-correction--26-october-2026)
 for verification and release status. Local release gates, eight maintained
 overview journeys and 16 compiled normal/old-demo URL profiles pass. Earlier demo
-receipts below are superseded.
+receipts below are superseded. Application revision
+`c87affd251f292bd73765727f41682674fc4e1ce` is deployed by successful workflow
+`40330947375`; full CI passes 982 journeys. Public checks pass eight maintained
+overviews and 16 normal/old-demo URL profiles. The 50-file evidence archive is
+hash-verified and task previews/review files are cleaned up.
 
 Browser View demo revision (26 October): the owner found the previous demo
 confusing. A guided agent → visitor → agent handoff now uses one sample form,
