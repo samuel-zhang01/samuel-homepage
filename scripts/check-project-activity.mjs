@@ -38,6 +38,14 @@ check("Only embedded demos resolve; live websites and other projects open their 
   }
 });
 
+check("Browser View keeps installation and source destinations; obsolete demo links fall back to its overview", () => {
+  const project = projects.find(project => project.slug === "browser-view");
+  assert.equal(project.demo, undefined);
+  assert.ok(project.downloadUrl.endsWith("/browser-view/releases/tag/v0.3.0"));
+  assert.equal(resolveProjectActivity(project.slug, "demo"), null);
+  assert.throws(() => projectActivitySearch({ slug: project.slug, kind: "demo" }), /Unknown project activity/);
+});
+
 check("A live website replaces an embedded demo, including future catalogue additions", () => {
   assert.equal(hasEmbeddedProjectDemo({ demo: "italian-learning" }), true);
   assert.equal(hasEmbeddedProjectDemo({ demo: "italian-learning", websiteUrl: "https://example.com" }), false);

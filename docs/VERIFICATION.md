@@ -1,6 +1,36 @@
 # Verification and maintenance
 
 
+## Browser View demo removal and purpose correction — 26 October 2026
+
+The owner clarified that the extension gives headless Linux/code-server computer
+use a browser GUI for agents to inspect/control websites and humans to view and
+interact with them. The portfolio handoff simulation did not represent that core
+purpose, despite its passing behavior/layout checks. It and the animated sign-up
+concept are removed, together with their lazy module, model, copy and fixtures.
+
+The four-locale project description and case study now explain the virtual-display
+runtime, agent page/screenshot access and human GUI interaction. Original extension
+screenshots, source, VSIX and installation links remain. Old demo URLs use the
+existing overview fallback. The visual gate explicitly requires original media for
+this gallery-only project; all other concept requirements remain enforced. The
+browser-file budget decreases from 130 to 128 without changing byte budgets.
+
+Local `check:release` passes: deployment/security/dependency gates, lint, all
+prebuild checks, types, production build and output budgets. Output is 128 browser
+files, 261.8 KiB initial JavaScript gzip and 5.36 MiB application runtime. Repository
+ownership inventory passes. The build manifest has no Browser View demo module.
+
+Compiled Chromium 153 passes eight maintained overview journeys and 16 additional
+normal/old-demo URL journeys across en-GB, en-US, zh-CN and zh-TW at 1440/320px.
+They verify the corrected purpose, absent demo/concept controls, source/setup/VSIX
+links, all three decoded original images, keyboard gallery selection, full-size
+inspection and contained layout. English desktop/phone and Traditional Chinese
+phone screenshots were inspected. This is portfolio verification; it does not
+claim new extension-runtime or physical-monitor tests.
+
+Publication and public checks are recorded in the follow-up receipt.
+
 ## Browser View guided demo revision — 26 October 2026
 
 The owner rejected the initial interaction as poor and confusing. Its previous

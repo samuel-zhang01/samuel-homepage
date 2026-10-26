@@ -2,8 +2,8 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Desktop project names and summaries only; long narratives stay in the lazy project document. */
 export const projectMenuCopy = {
+  "Give agents and humans an interactive browser GUI on a headless Linux host, inside VS Code or code-server.": ["在 VS Code 或 code-server 内，为无显示器的 Linux 主机提供可供智能体与人共同使用的浏览器图形界面。", "在 VS Code 或 code-server 內，為無顯示器的 Linux 主機提供可供代理與人共同使用的瀏覽器圖形介面。"],
   "Browser View": ["Browser View · 共享浏览器", "Browser View · 共用瀏覽器"],
-  "Share one Chromium session with a coding agent inside VS Code or code-server.": ["在 VS Code 或 code-server 内，与编程智能体共用一个 Chromium 会话。", "在 VS Code 或 code-server 內，與程式設計代理共用一個 Chromium 工作階段。"],
 
   "CV Studio": ["CV Studio · 简历工作台", "CV Studio · 履歷工作台"],
   "Analyse a CV against a role, prepare application PDFs and track the next step in a private visitor workspace.": ["在独立访客工作区中对照岗位分析简历、生成申请 PDF，并跟进下一步。", "在獨立訪客工作區中對照職位分析履歷、產生申請 PDF，並追蹤下一步。"],

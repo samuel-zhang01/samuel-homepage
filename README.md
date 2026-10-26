@@ -135,7 +135,7 @@ uniqueness and SHA-256 before every production build.
 
 The Projects folder opens in **Selected work**: products I use, questions I studied and experiments you can try. Ultra Convert and VideoMate have separate product walkthroughs and links to their Mac/source previews. The catalogue has 43 projects and 18 curated experiences across six shelves. **All projects** offers a folder tree, text filter and keyboard navigation. Press `/` while the archive is active to open that view and focus search.
 
-Browser View offers a guided handoff on one sample sign-up page: let the scripted agent start, edit the form yourself, ask it to read your values, then close and reopen the panel while it finishes. An optional second viewer shows the same session. Original VS Code/code-server screenshots accompany the model. For real browsing, [download the VSIX and follow the Linux-host setup](https://github.com/samuel-zhang01/browser-view#install).
+Browser View gives a headless Linux host a browser GUI inside VS Code or code-server. Agents can inspect websites, take screenshots and control Chromium; humans can view and interact with the same browser through the editor. The project page shows actual extension screenshots and links to the [VSIX and Linux-host setup](https://github.com/samuel-zhang01/browser-view#install).
 
 The **Knowledge graph** remains available as a secondary view. Its 109 nodes and 406 edges connect projects, subjects, methods, experience, education, skills and documents. Select a node to follow those connections, open a project or read a document. Its comparison views preserve the chronology, matrices and model-family relationships.
 

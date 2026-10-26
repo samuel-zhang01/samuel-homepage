@@ -1,5 +1,15 @@
 # Continue here
 
+Browser View purpose correction (26 October): remove the interactive demo and
+animated form example at the owner's request. The extension provides a browser
+GUI on headless Linux/code-server for agent inspection/control and human visual
+interaction. The project now uses actual screenshots, a four-locale case study
+and real installation/source links. Old demo URLs fall back to the overview.
+See [the current removal receipt](docs/VERIFICATION.md#browser-view-demo-removal-and-purpose-correction--26-october-2026)
+for verification and release status. Local release gates, eight maintained
+overview journeys and 16 compiled normal/old-demo URL profiles pass. Earlier demo
+receipts below are superseded.
+
 Browser View demo revision (26 October): the owner found the previous demo
 confusing. A guided agent → visitor → agent handoff now uses one sample form,
 current-value readback, closing/reopening with retained details and an optional

@@ -12,13 +12,6 @@ export type ProjectStory = {
 // a dense workbench, while detailed method explanations remain reusable.
 export const projectStories: Record<ProjectDemoId, ProjectStory> = {
 
-  "browser-view": {
-    "problem": "A separate automation browser makes it hard to see what an agent clicked or continue from the same page.",
-    "contribution": "I connected a persistent Chromium desktop, a VS Code webview and agent control of the same browser. The extension handles bounded display traffic, viewer reconnection and process ownership. noVNC supplies the remote display client; Playwright supplies browser automation.",
-    "pipeline": "Linux browser → private display socket → bounded extension bridge → independent editor viewers; agent control uses the same browser",
-    "walkthrough": "Let the scripted agent fill a sample sign-up form, then change the name or reminder yourself. Ask the agent to read your edits. Close the panel, let the agent finish, and reopen it to find your chosen details still there."
-  }
-,
 
   "ultra-convert": {
   "problem": "Converting a photo, a recording and a document usually sends me through three different apps. I wanted one place to review the whole batch before creating the new files.",
@@ -197,6 +190,12 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
 };
 
 export const projectCaseStudies: Record<string, ProjectStory> = {
+  "browser-view": {
+  "problem": "A headless Linux server running code-server has no local screen for a browser. Agents need to inspect websites, and humans need a way to see and interact with that browser.",
+  "contribution": "I built a Linux browser runtime with a virtual display and an editor viewer. Agents can inspect pages, take screenshots and control Chromium through Playwright. Humans see the browser GUI through noVNC and can click and type in the same session. The extension manages the display connection and keeps the browser running when a viewer closes.",
+  "pipeline": "Headless Linux host → Chromium on a virtual display → browser GUI in code-server or VS Code; agents inspect and control the same browser",
+  "walkthrough": "View the actual editor screenshots, then follow the installation guide to run Browser View on a Linux host."
+},
 
   "coverd-ai": {
     problem: "Application evidence and interview context arrive in separate systems, making a shortlist difficult to explain.",

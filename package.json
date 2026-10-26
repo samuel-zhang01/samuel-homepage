@@ -35,7 +35,7 @@
     "start": "next start",
     "lint": "node scripts/check-next-lint-dependency.mjs && eslint",
     "check:learning": "node scripts/check-learning-experiments.mjs && node scripts/check-interactive-learning.mjs",
-    "check:experiments": "node scripts/check-source-experiments.mjs && node scripts/check-finance-import.mjs && node scripts/check-mri-uncertainty.mjs && node scripts/check-decision-experiments.mjs && node scripts/check-scientific-experiments.mjs && node scripts/check-ultra-convert-demo.mjs && node scripts/check-videomate-lab.mjs && node scripts/check-yasa-booking-demo.mjs && node scripts/check-browser-view-lab.mjs",
+    "check:experiments": "node scripts/check-source-experiments.mjs && node scripts/check-finance-import.mjs && node scripts/check-mri-uncertainty.mjs && node scripts/check-decision-experiments.mjs && node scripts/check-scientific-experiments.mjs && node scripts/check-ultra-convert-demo.mjs && node scripts/check-videomate-lab.mjs && node scripts/check-yasa-booking-demo.mjs",
     "check:graph": "node scripts/check-knowledge-graph.mjs",
     "check:project-navigation": "node scripts/check-project-navigation.mjs && node scripts/check-project-activity.mjs",
     "check:scientific-media": "node scripts/check-scientific-media.mjs",

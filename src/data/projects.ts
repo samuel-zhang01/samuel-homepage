@@ -13,7 +13,6 @@ export type ProjectArea =
   | "Education";
 
 export type ProjectDemoId =
-  | "browser-view"
   | "videomate"
   | "ultra-convert"
   | "cv-keywords"
@@ -101,9 +100,9 @@ export const projects: Project[] = [
   "sourceVisibility": "public",
   "status": "Shipped",
   "featured": true,
-  "eyebrow": "ONE BROWSER FOR HUMAN AND AGENT",
-  "summary": "Share one Chromium session with a coding agent inside VS Code or code-server.",
-  "detail": "I built an editor extension that streams a persistent Linux browser through the extension connection. Human input and agent automation use the same tabs and form values. Closing a panel leaves the browser running; reconnecting recovers the session. Each viewer chooses its own scaling and input mode, while the virtual desktop stays the same size.",
+  "eyebrow": "BROWSER GUI FOR HEADLESS LINUX",
+  "summary": "Give agents and humans an interactive browser GUI on a headless Linux host, inside VS Code or code-server.",
+  "detail": "I built an editor extension that runs Chromium on a virtual Linux display and streams its GUI into VS Code or code-server. Agents can view websites through screenshots and page inspection, then control the browser. Humans can see the same browser and interact with its mouse and keyboard controls through the editor. The Linux host needs no physical screen or desktop environment.",
   "tools": [
     "JavaScript",
     "Python",
@@ -116,11 +115,10 @@ export const projects: Project[] = [
     "recovery"
   ],
   "highlights": [
-    "Share tabs, form values and input across viewers",
-    "Reconnect without clearing the browser session",
-    "Keep display traffic bounded when a viewer stalls"
+    "Run a graphical browser on a headless Linux host",
+    "Let agents view and control websites",
+    "Let humans click and type in the same browser"
   ],
-  "demo": "browser-view",
   "sourceUrl": "https://github.com/samuel-zhang01/browser-view",
   "sourceLicence": "explicit-open-source",
   "downloadUrl": "https://github.com/samuel-zhang01/browser-view/releases/tag/v0.3.0",
@@ -137,7 +135,7 @@ export const projects: Project[] = [
       "kind": "SOURCE"
     }
   ],
-  "privacyNote": "This interactive model uses example data and does not run a remote browser. Install the extension on a Linux host for real browsing. Its canvas does not expose the remote page to a local screen reader.",
+  "privacyNote": "Runs on a Linux extension host. The screenshots show the installed extension. Its streamed canvas does not expose remote page content to a local screen reader.",
   "visual": "terminal"
 },
   {

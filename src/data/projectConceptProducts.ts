@@ -2,28 +2,6 @@ export type ProductConceptMetadata = { title: string; steps: readonly { name: st
 
 export const projectConceptProducts: Readonly<Record<string, ProductConceptMetadata>> = {
 
-  "browser-view": {
-  "title": "Hand the same page between you and your agent",
-  "steps": [
-    {
-      "name": "Agent fills",
-      "caption": "The agent enters Alex and turns reminders on in your browser."
-    },
-    {
-      "name": "You edit",
-      "caption": "You change the name to Riley and turn reminders off. The agent reads those values."
-    },
-    {
-      "name": "Close the panel",
-      "caption": "Your panel closes, but the browser stays alive. The agent creates the preview."
-    },
-    {
-      "name": "Come back",
-      "caption": "Reopening shows Riley and the reminder choice you left behind."
-    }
-  ],
-  "note": "Scripted sign-up example. The real extension shares a Linux Chromium session; no registration is made here."
-},
   "ultra-convert": {
     "title": "Files in, useful formats out",
     "steps": [

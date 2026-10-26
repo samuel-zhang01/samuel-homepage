@@ -44,15 +44,6 @@ function renderScene(slug: string, step: number, locale: Locale): ReactNode {
   const strip = (values: readonly string[], selected: number) => <div className={styles.strip}>{values.map((value, index) => <span key={value} data-selected={index === selected}>{t(value)}</span>)}</div>;
   const paper = (content: ReactNode) => <div className={styles.paper}>{content}</div>;
 
-  if (slug === "browser-view") return <>
-    {heading("One form, one browser session")}
-    <div className={styles.columns}>
-      {paper(<>{heading("Shared browser")}{pair("Name", <span data-copy-source>{step === 0 ? "Alex" : "Riley"}</span>)}{pair("Reminder", t(step === 0 ? "On" : "Off"))}{status(step < 2 ? "Form open" : "Preview created", step < 2 ? "normal" : "good")}</>)}
-      {paper(<>{heading("Your editor panel")}{status(step === 2 ? "Closed" : "Connected", step === 2 ? "wait" : "good")}<p>{t(step === 2 ? "The agent can keep working." : step === 3 ? "Your details are still here." : "You see the same page.")}</p></>)}
-    </div>
-    {pair("Browser session", t("Still running"), true)}
-  </>;
-
   if (slug === "ultra-convert") return <>
     {heading("A watched folder, a predictable result")}
     <div className={styles.columns}>

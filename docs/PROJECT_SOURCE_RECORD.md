@@ -5,60 +5,43 @@ The dated records below pin source revisions, file hashes and recorded outcomes.
 
 ## Browser View — 26 October 2026
 
-The new `browser-view`, `project:browser-view` and `archive:browser-view` records
-present [Browser View](https://github.com/samuel-zhang01/browser-view), reviewed at
-`32ac21b66ff153b1f5ead74a52bfa72d76bf55ee` (v0.3.0, MIT). The extension integrates
-noVNC (remote display) and Playwright (agent automation); their upstream work is
-credited in the source. The homepage adds a teaching simulation, not a hosted
-Chromium service. The VSIX release and setup guide are separate destinations.
+The stable `browser-view`, `project:browser-view` and `archive:browser-view`
+records present [Browser View](https://github.com/samuel-zhang01/browser-view),
+reviewed at `32ac21b66ff153b1f5ead74a52bfa72d76bf55ee` (v0.3.0, MIT).
+Its purpose is to give a headless Linux/code-server environment a browser GUI
+that agents can inspect and control and humans can view and interact with.
+Chromium runs graphically on a virtual display; the host needs no physical screen
+or installed desktop environment. noVNC supplies the human viewer; Playwright
+supplies agent page inspection, screenshots and browser control.
 
 | Public claim | Source at that revision | Qualification |
 | --- | --- | --- |
-| Same browser for human and agent | `src/extension.cjs`, `runtime/browser.cjs` | Cooperative trusted-host use, not a multi-user security boundary |
-| Persistent browser; viewer reconnect | `runtime/session.py`, `media/viewer.js`, `tests/e2e.cjs` | Panel disconnect preserves the running browser; stopping retains the profile |
-| Independent scaling/input | `media/viewer.js`, `media/viewer.css` | One fixed virtual desktop, not multiple OS displays |
-| Four 64 KiB pending display chunks | `src/bridge.cjs`, `tests/bridge.test.cjs` | At most 256 KiB pending in this bridge; not total browser or transport memory |
-| ACK resumes; stalled viewer disconnects | `src/bridge.cjs` | More than 15 seconds; supervisor/browser can continue |
-| Tested editor paths | `VALIDATION.md`, `docs/evidence/` | 54 recorded local Linux editor checks; no claim of physical mixed-DPI, WSL or native Windows/macOS hosting tests |
+| Graphical Chromium on a headless Linux host | `runtime/session.py`, `README.md` | Xvfb virtual display; Linux runtime dependencies required |
+| Agents can inspect websites and control the browser | `runtime/browser.cjs` | Screenshots, accessibility snapshots, navigation, clicks and keyboard input via Playwright/CDP |
+| Humans view and interact in code-server or VS Code | `src/extension.cjs`, `media/viewer.js` | Streamed GUI; trusted-host collaboration, not multi-user isolation |
+| Closing a viewer preserves the running browser | `runtime/session.py`, `tests/e2e.cjs` | Browser session and viewer lifetimes are separate |
+| Tested editor paths | `VALIDATION.md`, `docs/evidence/` | 54 recorded Linux editor checks; no new physical-monitor, WSL or native Windows/macOS qualification |
 
-The revised deterministic `browserViewLab.ts` models a guided handoff on one
-sample sign-up page: the scripted agent fills it, the visitor edits real fields,
-the agent reads the current values, and the visitor closes and reopens the panel
-after background completion. Further edits invalidate stale readback. An optional
-read-only second viewer mirrors the same state. The earlier duplicated forms and
-transport experiment were removed after the owner found the demo confusing.
-This adaptation does not decode VNC, run Chromium, make agent calls or submit
-registrations. It needs no background timer. The extension canvas accessibility
-and Linux-host limits remain in the expandable explanation.
+The owner rejected the portfolio simulations as misrepresenting this purpose.
+The full interactive demo and animated form concept have been removed. The page
+now provides a source-backed case study, the three original extension screenshots,
+the actual VSIX release and installation instructions. Old `view=demo` URLs resolve
+to the project overview. There is no portfolio browser service or replacement
+simulation. The extension's streamed-canvas screen-reader limitation remains stated.
 
-Owning files: `projects.ts`, `projectStories.ts`, `projectSuites.ts`,
-`BrowserViewStudio.tsx` and its CSS, `browserViewLab.ts`, `browserViewCopy.ts`,
-`ProjectDemoRouter.tsx`, product concept data/renderer/copy, showcase data/copy,
-`projectNarrativeCopy.ts`, `projectMenuCopy.ts`, `iconIdentity.ts`, `profile.ts`
-and `projectOrigins.ts` (under their existing source directories). The canonical
-computer PNG is reused unchanged, with its existing bounds/provenance.
-
-Graph relationships are declarative: independent technical projects,
+Owning files: `projects.ts`, `projectStories.ts`, `projectSuites.ts`, showcase
+image data/copy, `projectNarrativeCopy.ts`, `projectMenuCopy.ts`, `iconIdentity.ts`,
+`profile.ts` and `projectOrigins.ts`. The canonical computer icon, original image
+hashes and existing graph IDs remain. Graph relationships cover independent work,
 `topic:infrastructure`, `method:local-first`, `method:recovery`,
-`skill:python-services` and `skill:recovery`. The source record is derived from the
-catalogue; no employment or degree provenance is inferred. No new PDF/library
-record is needed for external Markdown documentation.
+`skill:python-services` and `skill:recovery`; no employment or degree provenance
+is inferred. All four locales explain the same purpose.
 
-Four locales include controls, accessibility names, dynamic states, story,
-concept and gallery. `check-browser-view-lab.mjs` and the maintained browser
-fixture verify the handoff, current-value readback, keyboard focus, blank-name
-recovery, second-view consistency, closed-panel completion and repeat/reset. Media hashes
-and transforms are in [the image provenance record](VISUAL_SHOWCASE_SOURCES.md#browser-view--26-october-2026).
-Homepage application revision `ce78c3426b093cd58f244e145044f45b14dd6d6c` was
-published by successful workflow `40314625281`. All 22 public affected profiles
-and all five served media/demo hashes pass. Publication, archived evidence and
-observed browser limits are recorded in [the original integration receipt](VERIFICATION.md#browser-view-portfolio-integration--26-october-2026).
-The later [guided-demo revision](VERIFICATION.md#browser-view-guided-demo-revision--26-october-2026)
-supersedes that presentation while preserving the source revision, public
-identities, original images and graph relationships. The guided demo is deployed
-as `380e07ba1d90f38baf5ea13189f6501c2e9151f9` through successful workflow
-`40321782754`; its 16 maintained and 18 additional public profiles pass, and both
-served demo files match the compiled candidate.
+[Media provenance](VISUAL_SHOWCASE_SOURCES.md#browser-view--26-october-2026) retains
+the source image hashes. The [removal receipt](VERIFICATION.md#browser-view-demo-removal-and-purpose-correction--26-october-2026)
+records verification and release status. Earlier integration and guided-demo
+receipts remain historical, superseded evidence; their passing state checks did
+not establish that those simulations represented the product correctly.
 
 ## CV Studio public workspace — 21 October 2026
 

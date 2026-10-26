@@ -46,8 +46,14 @@ const { projectShowcaseImagesCopy } = load("src/components/projects/copy/project
 const { projectVisualShowcaseCopy } = load("src/components/projects/copy/projectVisualShowcaseCopy.ts");
 const ids = new Set(projects.map(project => project.slug));
 const sceneIds = [...Object.keys(projectConceptScience), ...Object.keys(projectConceptProducts)];
+// The owner requires actual extension screenshots, with no simulated Browser View experience.
+const galleryOnlyIds = ["browser-view"];
 assert.equal(new Set(sceneIds).size, sceneIds.length, "Concept ownership must be disjoint");
-assert.deepEqual([...new Set(sceneIds)].sort(), [...ids].sort(), "Every catalogue project needs its own visual task");
+assert.deepEqual([...sceneIds, ...galleryOnlyIds].sort(), [...ids].sort(), "Every project has its declared concept or original gallery");
+for (const slug of galleryOnlyIds) {
+  assert.ok(projectShowcaseImages[slug]?.length, `${slug}: an original gallery is required`);
+  assert.equal(projects.find(project => project.slug === slug)?.demo, undefined, `${slug}: no simulated demo`);
+}
 let renderedStates = 0;
 for (const [registry, Component, copy] of [[projectConceptScience, ProjectConceptScience, projectConceptScienceCopy], [projectConceptProducts, ProjectConceptProducts, projectConceptProductsCopy]]) {
   for (const [slug, concept] of Object.entries(registry)) {
@@ -106,7 +112,11 @@ for (const project of projects) for (const locale of ["en-GB", "en-US", "zh-CN",
   assert.ok(!html.includes(projectText(locale, projectVisualShowcaseCopy, "Motion is reduced. Choose a step to explore.")), `${project.slug}: do not infer motion preference before hydration`);
   if (project.preview || projectShowcaseImages[project.slug]?.length) {
     assert.ok(html.includes(projectText(locale, projectVisualShowcaseCopy, "Inspect at full size")), `${project.slug}: even smaller pictures need original-pixel inspection on a phone`);
-    assert.ok(html.includes('role="tablist"') && html.includes('role="tabpanel"'), `${project.slug}: image and concept tab relationships`);
+    if (galleryOnlyIds.includes(project.slug)) {
+      assert.ok(!html.includes('role="tablist"') && !html.includes(projectText(locale, projectVisualShowcaseCopy, "Next step")), `${project.slug}: original screenshots without an interactive concept`);
+    } else {
+      assert.ok(html.includes('role="tablist"') && html.includes('role="tabpanel"'), `${project.slug}: image and concept tab relationships`);
+    }
   } else {
     assert.ok(html.includes(projectText(locale, projectVisualShowcaseCopy, "Next step")), `${project.slug}: default concept can be explored manually`);
   }
