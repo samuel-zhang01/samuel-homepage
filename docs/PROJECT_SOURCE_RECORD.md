@@ -45,7 +45,10 @@ Four locales include controls, accessibility names, dynamic states, story,
 concept and gallery. `check-browser-view-lab.mjs` and the maintained browser
 fixture verify model boundaries and the visible recovery journey. Media hashes
 and transforms are in [the image provenance record](VISUAL_SHOWCASE_SOURCES.md#browser-view--26-october-2026).
-Publication and observed browser scope are recorded in [verification](VERIFICATION.md).
+Homepage application revision `ce78c3426b093cd58f244e145044f45b14dd6d6c` was
+published by successful workflow `40314625281`. All 22 public affected profiles
+and all five served media/demo hashes pass. Publication, archived evidence and
+observed browser limits are recorded in [verification](VERIFICATION.md#browser-view-portfolio-integration--26-october-2026).
 
 ## CV Studio public workspace — 21 October 2026
 

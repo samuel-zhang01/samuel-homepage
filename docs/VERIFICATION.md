@@ -67,9 +67,31 @@ physical mixed-DPI, screen-reader or hardware testing. The extension's original
 Linux/WSL/Remote SSH qualifications remain in its validation document. CSS zoom
 is not browser-native zoom or device DPI.
 
-Publication: candidate prepared for the existing protected main workflow. Exact
-application revision, workflow result and public verification will be recorded
-after deployment succeeds.
+Application revision `ce78c3426b093cd58f244e145044f45b14dd6d6c` is published by
+successful [protected workflow 40314625281](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/40314625281).
+Both `verify-main` and production deployment passed. The full CI Chromium crawl
+passes **990 journeys** with no failures; HTTP checks pass 295 route groups,
+296 asset groups and 136 challenge groups. The CI build remains within the same
+byte budgets (5.41 MiB application runtime on its Node 24 toolchain).
+
+The [public Browser View project](https://me.samuelzhang.co.uk/en-gb/projects?project=browser-view)
+and [interactive model](https://me.samuelzhang.co.uk/en-gb/projects?project=browser-view&view=demo)
+pass all **22 public Chromium profiles** described above, with zero JavaScript
+errors or failed HTTP responses. Public desktop and Mandarin phone screenshots
+were inspected. All three served WebP files and both lazy demo JS/CSS files
+match the reviewed local SHA-256 values exactly. The four-language graph export
+and shared-node routes preserve the intended provenance. The new source remains
+public at [samuel-zhang01/browser-view](https://github.com/samuel-zhang01/browser-view);
+its release/setup destinations were independently opened without authentication.
+
+All 230 task-evidence files, including failed helper rounds and the initial
+advisory gate, are archived outside the checkout at
+`~/.local/share/samuel-homepage/review-archive/browser-view-20261026-ce78c34.tar.gz`.
+Every member was read back and compared with its original bytes and SHA-256;
+the adjacent `.manifest.json` records all members. Archive SHA-256:
+`752b1f7568e30e7524918e34e56bf5f036e4bb3fce7df342a7001793f197d218`.
+Task-owned compiled previews are stopped; the user's shared browser is preserved.
+The release-record commit changes documentation only and skips redundant CI.
 
 ## CV Studio public workspace — 21 October 2026
 

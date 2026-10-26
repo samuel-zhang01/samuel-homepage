@@ -9,7 +9,12 @@ pass; source links render anonymously. Next.js 15.5.28 clears the newly reported
 package advisories while preserving the existing lint override checks.
 See [verification](docs/VERIFICATION.md#browser-view-portfolio-integration--26-october-2026)
 for exact scope, retained failed helpers and remaining limits. Protected
-publication/public verification are the remaining steps.
+publication passed in workflow `40314625281` for application revision
+`ce78c3426b093cd58f244e145044f45b14dd6d6c`: 990 full-site browser journeys and all
+HTTP families pass. The public Browser View page passes all 22 affected profiles;
+three screenshot and two demo-file hashes match. All 230 task receipts are in
+the verified external archive recorded there. Owned previews are stopped and the
+user's shared browser remains running.
 
 
 The [CV Studio refresh](docs/VERIFICATION.md#cv-studio-public-workspace--21-october-2026) deploys the real application at https://cv-studio.samuelzhang.co.uk as revision `c37c3a2`, with isolated public visitor workspaces, neutral templates and visitor-owned optional AI credentials. The existing portfolio entry keeps its stable IDs and now has the sole live-site launch, original synthetic screenshots and four-locale copy. Application security, real PDFs, renewal and stack-map checks pass; compiled portfolio review passes eight project/launch/gallery journeys plus four graph/export/history journeys. Portfolio content revision `efb7ab5` is live through successful protected workflow [39626832029](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/39626832029). All 12 affected public project/real-launch/gallery/graph journeys pass across the four locales. The final compiler boundary, explicit privacy disclosure, exact source/site revisions and verification limits are recorded in the linked section.
