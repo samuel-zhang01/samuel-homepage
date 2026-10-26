@@ -4,5 +4,7 @@
   "sources": [
     "src/components/projects/BrowserViewStudio.tsx"
   ],
-  "identities": {}
+  "identities": {
+    "Browser View": "The extension product name, retained inside the simulated browser chrome."
+  }
 }

@@ -16,7 +16,7 @@ export const projectStories: Record<ProjectDemoId, ProjectStory> = {
     "problem": "A separate automation browser makes it hard to see what an agent clicked or continue from the same page.",
     "contribution": "I connected a persistent Chromium desktop, a VS Code webview and agent control of the same browser. The extension handles bounded display traffic, viewer reconnection and process ownership. noVNC supplies the remote display client; Playwright supplies browser automation.",
     "pipeline": "Linux browser → private display socket → bounded extension bridge → independent editor viewers; agent control uses the same browser",
-    "walkthrough": "Write a note, disconnect the second viewer and let the agent mark the task reviewed. Reconnect and compare the recovered page. Open the transport experiment to fill four slots, acknowledge a chunk or simulate a stall."
+    "walkthrough": "Let the scripted agent fill a sample sign-up form, then change the name or reminder yourself. Ask the agent to read your edits. Close the panel, let the agent finish, and reopen it to find your chosen details still there."
   }
 ,
 

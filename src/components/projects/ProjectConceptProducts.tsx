@@ -45,11 +45,10 @@ function renderScene(slug: string, step: number, locale: Locale): ReactNode {
   const paper = (content: ReactNode) => <div className={styles.paper}>{content}</div>;
 
   if (slug === "browser-view") return <>
-    {heading("One session stays alive")}
-    {pair("Shared task", t(step === 1 ? "Reviewed" : "Awaiting review"), true)}
+    {heading("One form, one browser session")}
     <div className={styles.columns}>
-      {paper(<>{heading("Editor viewer")}{status(step === 1 ? "Reviewed" : "Awaiting review")}</>)}
-      {paper(<>{heading("Second-screen viewer")}{status(step === 1 || step === 2 ? "Reviewed" : "Awaiting review")}{step === 2 ? status("Disconnected · last visible state", "wait") : status("Connected", "good")}</>)}
+      {paper(<>{heading("Shared browser")}{pair("Name", <span data-copy-source>{step === 0 ? "Alex" : "Riley"}</span>)}{pair("Reminder", t(step === 0 ? "On" : "Off"))}{status(step < 2 ? "Form open" : "Preview created", step < 2 ? "normal" : "good")}</>)}
+      {paper(<>{heading("Your editor panel")}{status(step === 2 ? "Closed" : "Connected", step === 2 ? "wait" : "good")}<p>{t(step === 2 ? "The agent can keep working." : step === 3 ? "Your details are still here." : "You see the same page.")}</p></>)}
     </div>
     {pair("Browser session", t("Still running"), true)}
   </>;

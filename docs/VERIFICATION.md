@@ -1,6 +1,53 @@
 # Verification and maintenance
 
 
+## Browser View guided demo revision — 26 October 2026
+
+The owner rejected the initial interaction as poor and confusing. Its previous
+passing control checks establish functional coverage, not visitor comprehension.
+The revised experience uses one recognizable sign-up page, a three-part progress
+indicator and one contextual next action. The scripted agent fills the form; the
+visitor changes its fields; the agent reads those exact values. Closing the panel
+then lets the agent create a preview before reopening with the same details.
+Second-screen viewing and implementation context are optional disclosures. The
+transport queue controls and duplicated editable forms have been removed. The
+overview concept, story, README and four-locale copy follow the same scenario.
+
+Keyboard focus moves from the first action to the name, through the reminder to
+the read action, and back to the visible readback/next step. Blank names receive
+inline feedback; edits invalidate stale readback; early reopen, repeat and reset
+remain usable. User-entered values are preserved verbatim in Mandarin.
+
+Local `check:release` passes: deployment/security checks, dependency and registry
+signature audits, lint, prebuild, types, production build and byte budgets. The
+final scroll/focus adjustment also passes fresh lint and the complete isolated
+build/prebuild. Output remains 130 browser files, 261.8 KiB initial JavaScript
+gzip and 5.38 MiB application runtime. Repository ownership inventory passes.
+
+The final compiled Chromium 153 candidate passes 16 maintained project/demo
+journeys in four locales at 1440/320px, plus 18 layout profiles: four locales at
+1440/320/390/768px, an actual keyboard-resized 320×240 window and CSS 200% zoom.
+They exercise blank-name recovery, exact user values in both Mandarin editions,
+Tab/Enter/Space order, focus restoration, stale-readback invalidation, optional
+second-view consistency, early reopening, completion while closed and reset.
+All four overview concept stages work manually under reduced motion. The regular
+and zoomed profiles verify the actual readback text and next button are on screen.
+The short resized window verifies reachability by scrolling, not simultaneous
+visibility of all content. Rendered start/edit/readback/return screenshots were
+reviewed, including phone and Mandarin views.
+
+Screenshot review exposed readback partly above the visible area after focus:
+the final version centers its instruction group and restores focus after early
+reopen. This finding was not detected by the earlier functional checks. Retained
+failed receipts also include two removed unused CSS references, a scratch root
+selector mistake, a missing phone-guide wait and unscoped/not-yet-hydrated concept
+tab helpers. The corrected helpers keep their behavioral assertions.
+
+This is a Chromium review, not a human usability study or new physical-monitor,
+Firefox/WebKit, assistive-technology or extension-runtime qualification. It starts
+no browser backend, makes no agent calls and sends no registration data.
+Publication and public checks are recorded in the follow-up receipt.
+
 ## Browser View portfolio integration — 26 October 2026
 
 The new `browser-view` project presents the public VS Code/code-server extension

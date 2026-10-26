@@ -21,12 +21,15 @@ Chromium service. The VSIX release and setup guide are separate destinations.
 | ACK resumes; stalled viewer disconnects | `src/bridge.cjs` | More than 15 seconds; supervisor/browser can continue |
 | Tested editor paths | `VALIDATION.md`, `docs/evidence/` | 54 recorded local Linux editor checks; no claim of physical mixed-DPI, WSL or native Windows/macOS hosting tests |
 
-The deterministic `browserViewLab.ts` models note/task state, independent
-view-only/disconnected snapshots and reconnection. A separate manual transport
-model uses full-size chunks and 16-second clock steps. It does not decode VNC,
-run Chromium, make agent calls or model bandwidth/latency. Manual interaction
-needs no background timer. Actual extension canvas accessibility and Linux-host
-requirements remain visible beside the experience.
+The revised deterministic `browserViewLab.ts` models a guided handoff on one
+sample sign-up page: the scripted agent fills it, the visitor edits real fields,
+the agent reads the current values, and the visitor closes and reopens the panel
+after background completion. Further edits invalidate stale readback. An optional
+read-only second viewer mirrors the same state. The earlier duplicated forms and
+transport experiment were removed after the owner found the demo confusing.
+This adaptation does not decode VNC, run Chromium, make agent calls or submit
+registrations. It needs no background timer. The extension canvas accessibility
+and Linux-host limits remain in the expandable explanation.
 
 Owning files: `projects.ts`, `projectStories.ts`, `projectSuites.ts`,
 `BrowserViewStudio.tsx` and its CSS, `browserViewLab.ts`, `browserViewCopy.ts`,
@@ -43,12 +46,16 @@ record is needed for external Markdown documentation.
 
 Four locales include controls, accessibility names, dynamic states, story,
 concept and gallery. `check-browser-view-lab.mjs` and the maintained browser
-fixture verify model boundaries and the visible recovery journey. Media hashes
+fixture verify the handoff, current-value readback, keyboard focus, blank-name
+recovery, second-view consistency, closed-panel completion and repeat/reset. Media hashes
 and transforms are in [the image provenance record](VISUAL_SHOWCASE_SOURCES.md#browser-view--26-october-2026).
 Homepage application revision `ce78c3426b093cd58f244e145044f45b14dd6d6c` was
 published by successful workflow `40314625281`. All 22 public affected profiles
 and all five served media/demo hashes pass. Publication, archived evidence and
-observed browser limits are recorded in [verification](VERIFICATION.md#browser-view-portfolio-integration--26-october-2026).
+observed browser limits are recorded in [the original integration receipt](VERIFICATION.md#browser-view-portfolio-integration--26-october-2026).
+The later [guided-demo revision](VERIFICATION.md#browser-view-guided-demo-revision--26-october-2026)
+supersedes that presentation while preserving the source revision, public
+identities, original images and graph relationships.
 
 ## CV Studio public workspace — 21 October 2026
 

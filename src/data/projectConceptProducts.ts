@@ -3,29 +3,27 @@ export type ProductConceptMetadata = { title: string; steps: readonly { name: st
 export const projectConceptProducts: Readonly<Record<string, ProductConceptMetadata>> = {
 
   "browser-view": {
-    "title": "A viewer can leave without ending the session",
-    "steps": [
-      {
-        "name": "Open one session",
-        "caption": "The editor and agent connect to the same Chromium browser."
-      },
-      {
-        "name": "Share a change",
-        "caption": "A reviewed task appears in both connected viewers."
-      },
-      {
-        "name": "Pause one viewer",
-        "caption": "The second viewer keeps its last image while the agent reopens the task."
-      },
-      {
-        "name": "Reconnect",
-        "caption": "The second viewer catches up. The browser session was never cleared."
-      }
-    ],
-    "note": "Illustrated session lifecycle. One fixed virtual desktop, with independent viewer controls."
-  }
-,
-
+  "title": "Hand the same page between you and your agent",
+  "steps": [
+    {
+      "name": "Agent fills",
+      "caption": "The agent enters Alex and turns reminders on in your browser."
+    },
+    {
+      "name": "You edit",
+      "caption": "You change the name to Riley and turn reminders off. The agent reads those values."
+    },
+    {
+      "name": "Close the panel",
+      "caption": "Your panel closes, but the browser stays alive. The agent creates the preview."
+    },
+    {
+      "name": "Come back",
+      "caption": "Reopening shows Riley and the reminder choice you left behind."
+    }
+  ],
+  "note": "Scripted sign-up example. The real extension shares a Linux Chromium session; no registration is made here."
+},
   "ultra-convert": {
     "title": "Files in, useful formats out",
     "steps": [

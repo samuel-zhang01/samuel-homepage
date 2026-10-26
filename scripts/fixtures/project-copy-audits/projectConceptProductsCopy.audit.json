@@ -22,6 +22,8 @@
     "Noi abbiamo lavorato ieri.": "Original Italian grammar example retained as target-language material; surrounding instructions are translated.",
     "Noi ___ lavorato ieri.": "Original Italian grammar example retained as target-language material; surrounding instructions are translated.",
     "Ieri ho…": "Original Italian grammar example retained as target-language material; surrounding instructions are translated.",
-    "Loro ___ lavorato ieri.": "Original Italian grammar example retained as target-language material; surrounding instructions are translated."
+    "Loro ___ lavorato ieri.": "Original Italian grammar example retained as target-language material; surrounding instructions are translated.",
+    "Alex": "Synthetic sign-up name; preserved as example form input.",
+    "Riley": "Synthetic visitor edit; preserved as example form input."
   }
 }

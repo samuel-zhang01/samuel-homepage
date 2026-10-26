@@ -1,40 +1,39 @@
-/** Deterministic teaching model; no browser, VNC connection or wall clock. */
-export type SharedPage = { note: string; reviewed: boolean };
-export type Viewer = { connected: boolean; readOnly: boolean; page: SharedPage };
-export type SessionLab = { page: SharedPage; viewers: [Viewer, Viewer] };
-export type SessionAction =
-  | { type: "edit"; viewer: 0 | 1; note: string }
-  | { type: "review"; viewer?: 0 | 1 }
-  | { type: "connection" | "read-only"; viewer: 0 | 1 }
-  | { type: "reset" };
+/** Scripted browser-sharing walkthrough. No Chromium, agent or network request. */
+export type SignupPage = { name: string; reminder: boolean; submitted: boolean };
+export type BrowserWalkthrough = {
+  page: SignupPage;
+  phase: "start" | "edit" | "return" | "complete";
+  panelOpen: boolean;
+  observed: SignupPage | null;
+  nameError: boolean;
+};
+export type BrowserAction =
+  | { type: "name"; value: string }
+  | { type: "reminder"; value: boolean }
+  | { type: "agent-fill" | "agent-read" | "close" | "agent-submit" | "open" | "edit-again" | "reset" };
 
-export function createSessionLab(): SessionLab {
-  const page = { note: "", reviewed: false };
-  return { page, viewers: [{ connected: true, readOnly: false, page }, { connected: true, readOnly: true, page }] };
+export function createBrowserWalkthrough(): BrowserWalkthrough {
+  return { page: { name: "", reminder: false, submitted: false }, phase: "start", panelOpen: true, observed: null, nameError: false };
 }
 
-export function sessionStep(state: SessionLab, action: SessionAction): SessionLab {
-  if (action.type === "reset") return createSessionLab();
-  if (action.type === "connection" || action.type === "read-only") {
-    return { ...state, viewers: state.viewers.map((viewer, index) => index !== action.viewer ? viewer : action.type === "read-only"
-      ? { ...viewer, readOnly: !viewer.readOnly }
-      : { ...viewer, connected: !viewer.connected, page: viewer.connected ? viewer.page : state.page }) as [Viewer, Viewer] };
+export function browserStep(state: BrowserWalkthrough, action: BrowserAction): BrowserWalkthrough {
+  if (action.type === "reset") return createBrowserWalkthrough();
+  if (action.type === "agent-fill" && state.phase === "start") {
+    return { ...state, page: { name: "Alex", reminder: true, submitted: false }, phase: "edit" };
   }
-  if (action.viewer !== undefined) {
-    const viewer = state.viewers[action.viewer];
-    if (!viewer.connected || viewer.readOnly) return state;
+  if ((action.type === "name" || action.type === "reminder") && state.panelOpen && (state.phase === "edit" || state.phase === "return")) {
+    const page = action.type === "name" ? { ...state.page, name: action.value.slice(0, 40) } : { ...state.page, reminder: action.value };
+    return { ...state, page, phase: "edit", observed: null, nameError: false };
   }
-  const page = action.type === "edit" ? { ...state.page, note: action.note.slice(0, 120) } : { ...state.page, reviewed: !state.page.reviewed };
-  return { page, viewers: state.viewers.map(viewer => viewer.connected ? { ...viewer, page } : viewer) as [Viewer, Viewer] };
-}
-
-export type TransportLab = { pending: number[]; next: number; time: number; connected: boolean };
-export function createTransportLab(): TransportLab { return { pending: [], next: 0, time: 0, connected: true }; }
-export function transportStep(state: TransportLab, action: "send" | "ack" | "expire" | "reconnect"): TransportLab {
-  if (action === "reconnect") return createTransportLab();
-  if (!state.connected) return state;
-  if (action === "send") return state.pending.length === 4 ? state : { ...state, pending: [...state.pending, state.time], next: state.next + 1 };
-  if (action === "ack") return { ...state, pending: state.pending.slice(1) };
-  const time = state.time + 16;
-  return state.pending.length && time - state.pending[0] > 15 ? { ...state, time, pending: [], connected: false } : { ...state, time };
+  if (action.type === "agent-read" && state.phase === "edit") {
+    if (!state.page.name.trim()) return { ...state, nameError: true };
+    return { ...state, phase: "return", observed: { ...state.page }, nameError: false };
+  }
+  if (action.type === "close" && state.phase === "return" && state.panelOpen) return { ...state, panelOpen: false };
+  if (action.type === "agent-submit" && state.phase === "return" && !state.panelOpen && state.observed && !state.page.submitted) {
+    return { ...state, page: { ...state.page, submitted: true } };
+  }
+  if (action.type === "open" && !state.panelOpen) return { ...state, panelOpen: true, phase: state.page.submitted ? "complete" : "return" };
+  if (action.type === "edit-again" && state.phase === "complete") return { ...state, page: { ...state.page, submitted: false }, phase: "edit", observed: null };
+  return state;
 }

@@ -1,5 +1,16 @@
 # Continue here
 
+Browser View demo revision (26 October): the owner found the previous demo
+confusing. A guided agent → visitor → agent handoff now uses one sample form,
+current-value readback, closing/reopening with retained details and an optional
+second viewer. The duplicate forms and packet-queue experiment are removed.
+All four locales, the overview concept and the maintained regression fixture
+follow the revised flow. Local release gates, the final isolated build, 16
+maintained journeys and 18 compiled layout profiles pass. Screenshot review also
+found and repaired an off-screen readback after focus. See [the current receipt](docs/VERIFICATION.md#browser-view-guided-demo-revision--26-october-2026)
+for verification and publication status. The earlier integration receipt below
+remains historical evidence; its mechanical checks did not establish clarity.
+
 Browser View integration (26 October): the new `browser-view` entry has original
 editor screenshots, four-locale session/transport experiments, independent-work
 graph connections and real VSIX/setup links. The source is the public v0.3.0
