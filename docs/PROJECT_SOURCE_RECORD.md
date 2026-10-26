@@ -55,7 +55,10 @@ and all five served media/demo hashes pass. Publication, archived evidence and
 observed browser limits are recorded in [the original integration receipt](VERIFICATION.md#browser-view-portfolio-integration--26-october-2026).
 The later [guided-demo revision](VERIFICATION.md#browser-view-guided-demo-revision--26-october-2026)
 supersedes that presentation while preserving the source revision, public
-identities, original images and graph relationships.
+identities, original images and graph relationships. The guided demo is deployed
+as `380e07ba1d90f38baf5ea13189f6501c2e9151f9` through successful workflow
+`40321782754`; its 16 maintained and 18 additional public profiles pass, and both
+served demo files match the compiled candidate.
 
 ## CV Studio public workspace — 21 October 2026
 

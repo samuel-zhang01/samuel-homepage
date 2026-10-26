@@ -46,7 +46,24 @@ tab helpers. The corrected helpers keep their behavioral assertions.
 This is a Chromium review, not a human usability study or new physical-monitor,
 Firefox/WebKit, assistive-technology or extension-runtime qualification. It starts
 no browser backend, makes no agent calls and sends no registration data.
-Publication and public checks are recorded in the follow-up receipt.
+Protected workflow [40321782754](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/40321782754)
+succeeded for application revision `380e07ba1d90f38baf5ea13189f6501c2e9151f9`.
+Full CI passes 990 Chromium journeys and HTTP families covering 295 route groups,
+296 asset groups and 136 challenge groups. All 16 maintained public project/demo
+journeys and all 18 public layout profiles pass. Both served demo files match the
+final compiled SHA-256 hashes. The initial public custom helper matched two demo
+roots; scoping to the intended activity window passes its original assertions.
+The failed helper receipt is retained. Final public phone screenshots were reviewed.
+
+All 365 task evidence files are read-back verified in
+`~/.local/share/samuel-homepage/review-archive/browser-view-redesign-20261026-380e07b-final.tar.gz`,
+SHA-256 `eb1d3d8cab042c1f20c4e0577e76222ca410869aa8cd50fc0e6577f4d6444cd3`.
+The adjacent manifest records member hashes. This preserves initial screenshots,
+failed checks, the discovered scroll issue, final compiled/public receipts and an
+archive-helper import-shadow failure with its restored working-copy side effect.
+Task-owned previews and temporary review files are removed after verification;
+the user's shared browser remains running. This documentation-only receipt does
+not alter the deployed application.
 
 ## Browser View portfolio integration — 26 October 2026
 

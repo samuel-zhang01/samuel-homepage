@@ -10,6 +10,11 @@ maintained journeys and 18 compiled layout profiles pass. Screenshot review also
 found and repaired an off-screen readback after focus. See [the current receipt](docs/VERIFICATION.md#browser-view-guided-demo-revision--26-october-2026)
 for verification and publication status. The earlier integration receipt below
 remains historical evidence; its mechanical checks did not establish clarity.
+Application revision `380e07ba1d90f38baf5ea13189f6501c2e9151f9` is live through
+successful protected workflow `40321782754`. Full CI passes 990 browser journeys;
+public checks pass all 16 maintained journeys and 18 layout profiles. Both served
+demo files match the tested build. The verification record links the hash-verified
+365-file evidence archive; task previews and temporary reviews are cleaned up.
 
 Browser View integration (26 October): the new `browser-view` entry has original
 editor screenshots, four-locale session/transport experiments, independent-work
