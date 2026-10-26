@@ -13,6 +13,7 @@ export type ProjectArea =
   | "Education";
 
 export type ProjectDemoId =
+  | "browser-view"
   | "videomate"
   | "ultra-convert"
   | "cv-keywords"
@@ -91,6 +92,54 @@ export function hasEmbeddedProjectDemo(project: Pick<Project, "demo" | "websiteU
 }
 
 export const projects: Project[] = [
+{
+  "slug": "browser-view",
+  "title": "Browser View",
+  "year": "2026",
+  "area": "Systems",
+  "access": "open-source",
+  "sourceVisibility": "public",
+  "status": "Shipped",
+  "featured": true,
+  "eyebrow": "ONE BROWSER FOR HUMAN AND AGENT",
+  "summary": "Share one Chromium session with a coding agent inside VS Code or code-server.",
+  "detail": "I built an editor extension that streams a persistent Linux browser through the extension connection. Human input and agent automation use the same tabs and form values. Closing a panel leaves the browser running; reconnecting recovers the session. Each viewer chooses its own scaling and input mode, while the virtual desktop stays the same size.",
+  "tools": [
+    "JavaScript",
+    "Python",
+    "noVNC",
+    "Playwright"
+  ],
+  "concepts": [
+    "infrastructure",
+    "local-first",
+    "recovery"
+  ],
+  "highlights": [
+    "Share tabs, form values and input across viewers",
+    "Reconnect without clearing the browser session",
+    "Keep display traffic bounded when a viewer stalls"
+  ],
+  "demo": "browser-view",
+  "sourceUrl": "https://github.com/samuel-zhang01/browser-view",
+  "sourceLicence": "explicit-open-source",
+  "downloadUrl": "https://github.com/samuel-zhang01/browser-view/releases/tag/v0.3.0",
+  "downloadLabel": "Download the VSIX",
+  "artifacts": [
+    {
+      "label": "Installation and setup",
+      "href": "https://github.com/samuel-zhang01/browser-view#install",
+      "kind": "SOURCE"
+    },
+    {
+      "label": "Validation and known limits",
+      "href": "https://github.com/samuel-zhang01/browser-view/blob/v0.3.0/VALIDATION.md",
+      "kind": "SOURCE"
+    }
+  ],
+  "privacyNote": "This interactive model uses example data and does not run a remote browser. Install the extension on a Linux host for real browsing. Its canvas does not expose the remote page to a local screen reader.",
+  "visual": "terminal"
+},
   {
     slug: "ultra-convert",
     title: "Ultra Convert",

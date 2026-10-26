@@ -1,0 +1,44 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import ts from "typescript";
+
+const file = new URL("../src/components/projects/browserViewLab.ts", import.meta.url);
+const compiled = ts.transpileModule(await readFile(file, "utf8"), {
+  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 }, fileName: file.pathname,
+}).outputText;
+const { createSessionLab, sessionStep, createTransportLab, transportStep } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
+let s = createSessionLab();
+s = sessionStep(s, { type: "edit", viewer: 0, note: "Keep this review" });
+assert.equal(s.viewers[1].page.note, "Keep this review");
+assert.equal(sessionStep(s, { type: "edit", viewer: 1, note: "Blocked" }), s);
+s = sessionStep(s, { type: "connection", viewer: 1 });
+s = sessionStep(s, { type: "review" });
+assert.equal(s.page.reviewed, true);
+assert.equal(s.viewers[0].page.reviewed, true);
+assert.equal(s.viewers[1].page.reviewed, false);
+assert.equal(sessionStep(s, { type: "review", viewer: 1 }), s);
+s = sessionStep(s, { type: "connection", viewer: 1 });
+assert.equal(s.viewers[1].page.reviewed, true);
+assert.equal(s.viewers[1].page.note, "Keep this review");
+s = sessionStep(s, { type: "read-only", viewer: 1 });
+s = sessionStep(s, { type: "edit", viewer: 1, note: "From screen two" });
+assert.equal(s.viewers[0].page.note, "From screen two");
+assert.equal(sessionStep(s, { type: "edit", viewer: 0, note: "x".repeat(121) }).page.note.length, 120);
+s = sessionStep(s, { type: "reset" });
+assert.deepEqual(s, createSessionLab());
+let t = createTransportLab();
+for (let i = 0; i < 4; i++) t = transportStep(t, "send");
+assert.equal(t.pending.length * 64, 256);
+assert.equal(transportStep(t, "send"), t);
+t = transportStep(t, "ack");
+assert.equal(t.pending.length, 3);
+t = transportStep(t, "send");
+assert.equal(t.pending.length, 4);
+t = transportStep(t, "expire");
+assert.equal(t.connected, false);
+assert.equal(t.pending.length, 0);
+assert.equal(transportStep(t, "send"), t);
+t = transportStep(t, "reconnect");
+assert.deepEqual(t, createTransportLab());
+assert.equal(transportStep(t, "expire").connected, true, "An idle connection has no pending ACK to expire");
+console.log("Browser View: shared edits, local input guards, stale snapshots, reconnect, reset, queue bound, ACK, stall and idle clock passed.");

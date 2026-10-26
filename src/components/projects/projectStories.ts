@@ -11,6 +11,15 @@ export type ProjectStory = {
 // catalogue card so the archive can explain the human problem before launching
 // a dense workbench, while detailed method explanations remain reusable.
 export const projectStories: Record<ProjectDemoId, ProjectStory> = {
+
+  "browser-view": {
+    "problem": "A separate automation browser makes it hard to see what an agent clicked or continue from the same page.",
+    "contribution": "I connected a persistent Chromium desktop, a VS Code webview and agent control of the same browser. The extension handles bounded display traffic, viewer reconnection and process ownership. noVNC supplies the remote display client; Playwright supplies browser automation.",
+    "pipeline": "Linux browser → private display socket → bounded extension bridge → independent editor viewers; agent control uses the same browser",
+    "walkthrough": "Write a note, disconnect the second viewer and let the agent mark the task reviewed. Reconnect and compare the recovered page. Open the transport experiment to fill four slots, acknowledge a chunk or simulate a stall."
+  }
+,
+
   "ultra-convert": {
   "problem": "Converting a photo, a recording and a document usually sends me through three different apps. I wanted one place to review the whole batch before creating the new files.",
   "contribution": "I built a Mac app that turns a Finder selection into one conversion queue. It recognises each file category, explains the available output formats and shows where the new files will be saved. Try the example batch to see a photo, recording and document prepared together.",

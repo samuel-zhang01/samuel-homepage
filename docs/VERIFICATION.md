@@ -1,6 +1,76 @@
 # Verification and maintenance
 
 
+## Browser View portfolio integration — 26 October 2026
+
+The new `browser-view` project presents the public VS Code/code-server extension
+with three original synthetic-test screenshots, a four-stage session explanation,
+a working shared-session model and a separate bounded-transport experiment.
+The catalogue, demo, gallery, accessibility labels and dynamic states cover
+en-GB, en-US, zh-CN and zh-TW. Installation, release and validation links point
+to the actual public source; no hosted Chromium service or Marketplace listing
+is implied. The [source record](PROJECT_SOURCE_RECORD.md#browser-view--26-october-2026)
+and [media provenance](VISUAL_SHOWCASE_SOURCES.md#browser-view--26-october-2026) pin
+revision `32ac21b66ff153b1f5ead74a52bfa72d76bf55ee`, claims and exact image hashes.
+
+Declarative graph additions connect independent technical projects, computing,
+local persistence and recovery, with Python-services/reliability capability
+evidence. They add no employment or degree provenance. The canonical computer
+PNG is reused unchanged. A dedicated state regression and a maintained deep
+browser fixture exercise shared edits, local view-only guards, disconnected
+snapshots, agent continuation, reconnect, reset, four-slot backpressure,
+acknowledgement and timeout recovery. No real agent or VNC traffic runs in the
+portfolio model.
+
+Local `check:release` passes: deployment/security checks, dependency audit,
+registry signatures/attestations, lint, full prebuild, types, optimized build
+and output budgets. The build has 130 browser files, 261.8 KiB initial JavaScript
+gzip and 5.37 MiB application runtime. Only the file-count inventory increases
+by the demo's deferred script/style pair; all byte limits remain unchanged.
+A separate clean locked install passes. Repository ownership inventory passes.
+
+Compiled Chromium 153 verification passes 16 maintained catalogue/demo journeys
+(all four locales at 1440px and 320px) and 22 additional affected profiles:
+four locales at 1440/320/390/768px, four graph journeys, a real keyboard-resized
+320×240 desktop window, and CSS 200% zoom. They cover all three decoded images,
+full-size inspection, keyboard tabs and concept stages, canonical icon sizing,
+shared session/transport behavior, keyboard launch/close focus restoration,
+contained layout, capability → project → independent-work navigation, JSON
+export, source destinations, clipboard sharing, Back/Forward and shared node URLs.
+Reduced-motion mode retains manual operation. Screenshots were inspected,
+including both Mandarin editions and narrow views; heading balancing repairs
+a one-character Mandarin orphan; eight final-build 320/390px profiles pass
+after that CSS adjustment. Public GitHub source, release and validation
+pages render anonymously with HTTP 200.
+
+Initial custom-audit failures are retained: ambiguous heading/scene selectors,
+missing first-visit guide dismissal, lazy-gallery readiness, an incorrect
+expectation that graph node changes push history, and a focus-restoration
+assertion made before the UI animation frame. The corrected tests retain their
+behavioral assertions. The existing 16-journey fixture passed throughout. These
+receipts are not presented as application regressions. The original failed
+dependency gate is retained separately.
+
+The dependency gate identified advisories against pinned Next.js 15.5.27.
+Next.js and its ESLint configuration now pin 15.5.28, the upstream fix for
+[image-optimization RCE](https://github.com/vercel/next.js/security/advisories/GHSA-2464-fhr4-w9xw)
+and [Server Action denial of service](https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r).
+The existing sharp 0.35.5 override already meets the image advisory's workaround;
+this finding is a package audit, not evidence of exploitation or a demonstrated
+application attack. All 52 ESLint plugin rule/helper files are byte-identical
+across the patch; the version pin and existing glob/rule regression remain
+enforced. The final audit reports zero vulnerabilities, 302 verified signatures
+and 55 verified attestations.
+
+Scope limits: this is Chromium viewport/window testing, not new Firefox/WebKit,
+physical mixed-DPI, screen-reader or hardware testing. The extension's original
+Linux/WSL/Remote SSH qualifications remain in its validation document. CSS zoom
+is not browser-native zoom or device DPI.
+
+Publication: candidate prepared for the existing protected main workflow. Exact
+application revision, workflow result and public verification will be recorded
+after deployment succeeds.
+
 ## CV Studio public workspace — 21 October 2026
 
 The existing `cv-keyword-automator` project is refreshed as **CV Studio**, with

@@ -1,6 +1,16 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectShowcaseImagesCopy = {
+  "Inside code-server": ["在 code-server 内", "在 code-server 內"],
+  "Browser View in code-server with a synthetic page, a shared text field and the extension toolbar.": ["code-server 内的 Browser View，显示示例网页、共享文本框和扩展工具栏。", "code-server 內的 Browser View，顯示範例網頁、共用文字欄和擴充套件工具列。"],
+  "The real code-server extension, displaying a disposable test page. The editor carries the display connection.": ["实际 code-server 扩展显示一次性测试页面。画面通过编辑器连接传输。", "實際 code-server 擴充套件顯示一次性測試頁面。畫面透過編輯器連線傳送。"],
+  "Inside VS Code": ["在 VS Code 内", "在 VS Code 內"],
+  "Browser View beside a source editor in native Linux VS Code, showing the same synthetic shared-page controls.": ["原生 Linux VS Code 的源码编辑器旁显示 Browser View，包含相同的示例共享页面控件。", "原生 Linux VS Code 的原始碼編輯器旁顯示 Browser View，包含相同的範例共用頁面控制項。"],
+  "The real Linux VS Code extension in a split editor. Closing its panel leaves Chromium running.": ["实际 Linux VS Code 扩展位于分栏编辑器中。关闭面板后 Chromium 继续运行。", "實際 Linux VS Code 擴充套件位於分割編輯器中。關閉面板後 Chromium 繼續執行。"],
+  "Narrow viewer at actual size": ["窄屏查看器的实际尺寸模式", "窄螢幕檢視器的實際大小模式"],
+  "A narrow Browser View viewport in actual-size mode, with readable browser text and scrollbars.": ["窄屏 Browser View 视口采用实际尺寸模式，浏览器文字可读，并提供滚动条。", "窄螢幕 Browser View 檢視區採用實際大小模式，瀏覽器文字可讀，並提供捲軸。"],
+  "The real viewer at 375 × 667 CSS pixels and device scale 2. Actual size preserves text size; scrollbars reach the rest of the fixed desktop.": ["实际查看器：375 × 667 CSS 像素，设备缩放比为 2。实际尺寸模式保留文字大小，通过滚动条查看固定桌面的其余区域。", "實際檢視器：375 × 667 CSS 像素，裝置縮放比為 2。實際大小模式保留文字大小，透過捲軸查看固定桌面的其餘區域。"],
+
   "CV Studio compares a fictional software role with example CV text and shows four reviewed keyword matches.": ["CV Studio 将虚构的软件工程岗位与示例简历文字进行比较，显示四个已审阅的关键词匹配。", "CV Studio 將虛構的軟體工程職位與範例履歷文字進行比較，顯示四個已審閱的關鍵詞匹配。"],
   "Keyword analysis runs in the browser. This synthetic example matches Python, SQL, Docker and React; coverage is a text-match aid, not a hiring prediction.": ["关键词分析在浏览器中完成。这个虚构示例匹配 Python、SQL、Docker 和 React；覆盖率只是文字匹配参考，不是录用预测。", "關鍵詞分析在瀏覽器中完成。這個虛構範例匹配 Python、SQL、Docker 和 React；涵蓋率只是文字匹配參考，不是錄用預測。"],
   "Review role keywords": ["审阅岗位关键词", "審閱職位關鍵詞"],

@@ -53,7 +53,7 @@ export const projectSuites: readonly ProjectSuite[] = [
     id: "systems-reproducibility",
     title: "Systems & Reproducibility",
     description: "Environment setup, operational evidence and recovery boundaries for private systems.",
-    slugs: ["deep-learning-environment-resolver", "home-automation-stack", "gromacs-hpc"],
+    slugs: ["browser-view", "deep-learning-environment-resolver", "home-automation-stack", "gromacs-hpc"],
   },
   {
     id: "air-quality",

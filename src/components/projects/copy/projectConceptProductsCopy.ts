@@ -1,6 +1,27 @@
 import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 export const projectConceptProductsCopy = {
+  "A viewer can leave without ending the session": ["查看器离开，会话仍继续", "檢視器離開，工作階段仍繼續"],
+  "Open one session": ["打开一个会话", "開啟一個工作階段"],
+  "Share a change": ["共享一次更改", "共用一次變更"],
+  "Pause one viewer": ["暂停一个查看器", "暫停一個檢視器"],
+  "Reconnect": ["重新连接", "重新連線"],
+  "The editor and agent connect to the same Chromium browser.": ["编辑器和智能体连接到同一个 Chromium 浏览器。", "編輯器和代理連接到同一個 Chromium 瀏覽器。"],
+  "A reviewed task appears in both connected viewers.": ["两个已连接的查看器都显示任务已审阅。", "兩個已連線的檢視器都顯示任務已檢閱。"],
+  "The second viewer keeps its last image while the agent reopens the task.": ["智能体重新打开任务时，第二个查看器保留最后的画面。", "代理重新開啟任務時，第二個檢視器保留最後的畫面。"],
+  "The second viewer catches up. The browser session was never cleared.": ["第二个查看器同步到最新状态。浏览器会话始终保留。", "第二個檢視器同步到最新狀態。瀏覽器工作階段始終保留。"],
+  "Illustrated session lifecycle. One fixed virtual desktop, with independent viewer controls.": ["会话生命周期示意。一个固定虚拟桌面，各查看器独立控制。", "工作階段生命週期示意。一個固定虛擬桌面，各檢視器獨立控制。"],
+  "One session stays alive": ["一个会话持续运行", "一個工作階段持續執行"],
+  "Shared task": ["共享任务", "共用任務"],
+  "Reviewed": ["已审阅", "已檢閱"],
+  "Awaiting review": ["待审阅", "待檢閱"],
+  "Editor viewer": ["编辑器查看器", "編輯器檢視器"],
+  "Second-screen viewer": ["第二屏幕查看器", "第二螢幕檢視器"],
+  "Disconnected · last visible state": ["已断开 · 最后可见状态", "已中斷 · 最後可見狀態"],
+  "Connected": ["已连接", "已連線"],
+  "Browser session": ["浏览器会话", "瀏覽器工作階段"],
+  "Still running": ["仍在运行", "仍在執行"],
+
   "Understand a pattern, use it, recall it": ["理解句型，运用，再回忆", "理解句型，運用，再回想"],
   "Read a worked example, then identify the subject and the auxiliary verb.": ["先读例题，再找出主语和助动词。", "先讀例題，再找出主詞和助動詞。"],
   "Check": ["检查", "檢查"],

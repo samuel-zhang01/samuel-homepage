@@ -29,7 +29,7 @@
     "Python + FastAPI": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
     "React + TypeScript": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
     "Node / Express": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
-    "Python": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
+    "Python": "Established implementation language or upstream library name; preserved for attribution.",
     "NLP": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
     "LaTeX": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
     "Am I Broke?": "Established software, product, architecture, algorithm or metric name; retained for technical recognition in both Mandarin editions.",
@@ -98,6 +98,9 @@
     "SwiftUI": "Apple framework name preserved in both language editions.",
     "Swift": "Programming language name retained in both Mandarin editions.",
     "AppKit": "Apple framework name retained in both Mandarin editions.",
-    "Vite": "Established build-tool name retained across all locales."
+    "Vite": "Established build-tool name retained across all locales.",
+    "JavaScript": "Established implementation language or upstream library name; preserved for attribution.",
+    "noVNC": "Established implementation language or upstream library name; preserved for attribution.",
+    "Playwright": "Established implementation language or upstream library name; preserved for attribution."
   }
 }

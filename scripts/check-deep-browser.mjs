@@ -1,3 +1,4 @@
+import { exerciseBrowserView } from "./fixtures/browser-view-journey.mjs";
 // Complete source-derived browser crawl. External Playwright; disposable contexts only.
 // PLAYWRIGHT_CORE_PATH=/path/to/playwright REVIEW_ORIGIN=http://127.0.0.1:5187 node scripts/check-deep-browser.mjs
 import assert from "node:assert/strict";
@@ -279,6 +280,7 @@ async function exerciseParliamo(p, demo, locale) {
   return { kind: "parliamo-daily-and-academy-journey", displayedContentChanged: true, firstCorrect: 1, total: 2, reviewDay: 3, nextDue: 6, programmeRecipes: true, hintedFirstAnswerPreserved: true, laterIndependentRecall: true, reset: true };
 }
 async function exerciseState(p, demo, job) {
+  if (job.project.demo === "browser-view") return exerciseBrowserView(p, demo);
   if (job.project.demo === "italian-learning") return exerciseParliamo(p, demo, job.option.locale);
   const before = await demo.innerText();
   const candidates = [

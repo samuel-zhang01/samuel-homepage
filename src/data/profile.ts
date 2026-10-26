@@ -204,7 +204,7 @@ export const profileSkills: ProfileSkill[] = [
   {
     id: "python-services", group: "engineering", title: "Python services & APIs",
     description: "Python powers applied-AI services and VideoMate’s native video inspection and migration workflow. The public insurance project documents a FastAPI-based prototype.",
-    projectSlugs: ["insurance-lead-matching", "videomate"], originIds: ["marsh", "personal-projects"], conceptIds: ["language-applications", "products"], sourceIds: ["cv", "archive:insurance-lead-matching", "archive:videomate"],
+    projectSlugs: ["browser-view", "insurance-lead-matching", "videomate"], originIds: ["marsh", "personal-projects"], conceptIds: ["language-applications", "products"], sourceIds: ["archive:browser-view", "cv", "archive:insurance-lead-matching", "archive:videomate"],
   },
   {
     id: "data-modelling", group: "engineering", title: "SQL, PostgreSQL & data modelling",
@@ -234,7 +234,7 @@ export const profileSkills: ProfileSkill[] = [
   {
     id: "recovery", group: "infrastructure", title: "Backups, reliability & recovery",
     description: "GROWMAT documents scheduled backups and retention. The home-lab audit exposes restore-testing and recovery-evidence gaps rather than treating a backup schedule as proof of recovery.",
-    projectSlugs: ["growmat", "home-automation-stack"], originIds: ["pfizer", "personal-projects"], conceptIds: ["recovery", "evaluation"], sourceIds: ["growmat-showcase", "archive:home-automation-stack"],
+    projectSlugs: ["browser-view", "growmat", "home-automation-stack"], originIds: ["pfizer", "personal-projects"], conceptIds: ["recovery", "evaluation"], sourceIds: ["archive:browser-view", "growmat-showcase", "archive:home-automation-stack"],
   },
   {
     id: "accelerators", group: "infrastructure", title: "Accelerator & scientific environments",

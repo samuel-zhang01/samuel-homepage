@@ -44,6 +44,16 @@ function renderScene(slug: string, step: number, locale: Locale): ReactNode {
   const strip = (values: readonly string[], selected: number) => <div className={styles.strip}>{values.map((value, index) => <span key={value} data-selected={index === selected}>{t(value)}</span>)}</div>;
   const paper = (content: ReactNode) => <div className={styles.paper}>{content}</div>;
 
+  if (slug === "browser-view") return <>
+    {heading("One session stays alive")}
+    {pair("Shared task", t(step === 1 ? "Reviewed" : "Awaiting review"), true)}
+    <div className={styles.columns}>
+      {paper(<>{heading("Editor viewer")}{status(step === 1 ? "Reviewed" : "Awaiting review")}</>)}
+      {paper(<>{heading("Second-screen viewer")}{status(step === 1 || step === 2 ? "Reviewed" : "Awaiting review")}{step === 2 ? status("Disconnected · last visible state", "wait") : status("Connected", "good")}</>)}
+    </div>
+    {pair("Browser session", t("Still running"), true)}
+  </>;
+
   if (slug === "ultra-convert") return <>
     {heading("A watched folder, a predictable result")}
     <div className={styles.columns}>

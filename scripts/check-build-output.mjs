@@ -8,7 +8,8 @@ const standaloneRoot = join(outputRoot, "standalone");
 // Ultra Convert, COVERD and the secret universe each add a lazy script/style pair.
 // The shared 42-project visual overview adds one lazy script/style pair.
 // The secret's two files load only on discovery; byte/initial-load limits stay fixed.
-const MAX_BROWSER_FILES = 128;
+// Browser View adds one independently loaded script/style pair.
+const MAX_BROWSER_FILES = 130;
 // Full CN/TW copy and the requested interactive product/ML tasks live in lazy
 // project chunks. Bound that content separately from the unchanged initial load.
 const MAX_BROWSER_BYTES = 5.5 * 1024 * 1024;

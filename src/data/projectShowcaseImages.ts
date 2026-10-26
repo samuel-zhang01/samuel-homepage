@@ -10,6 +10,36 @@ export type ProjectShowcaseImage = Readonly<{
 }>;
 
 export const projectShowcaseImages: Partial<Record<string, readonly ProjectShowcaseImage[]>> = {
+  "browser-view": [
+  {
+    "src": "/projects/project-showcases/browser-view-code-server.webp",
+    "label": "Inside code-server",
+    "alt": "Browser View in code-server with a synthetic page, a shared text field and the extension toolbar.",
+    "caption": "The real code-server extension, displaying a disposable test page. The editor carries the display connection.",
+    "width": 1800,
+    "height": 1200,
+    "source": "https://github.com/samuel-zhang01/browser-view/blob/v0.3.0/docs/screenshots/code-server.png"
+  },
+  {
+    "src": "/projects/project-showcases/browser-view-vscode-desktop.webp",
+    "label": "Inside VS Code",
+    "alt": "Browser View beside a source editor in native Linux VS Code, showing the same synthetic shared-page controls.",
+    "caption": "The real Linux VS Code extension in a split editor. Closing its panel leaves Chromium running.",
+    "width": 1920,
+    "height": 1080,
+    "source": "https://github.com/samuel-zhang01/browser-view/blob/v0.3.0/docs/screenshots/vscode-desktop.png"
+  },
+  {
+    "src": "/projects/project-showcases/browser-view-mobile-actual-size.webp",
+    "label": "Narrow viewer at actual size",
+    "alt": "A narrow Browser View viewport in actual-size mode, with readable browser text and scrollbars.",
+    "caption": "The real viewer at 375 × 667 CSS pixels and device scale 2. Actual size preserves text size; scrollbars reach the rest of the fixed desktop.",
+    "width": 750,
+    "height": 1334,
+    "source": "https://github.com/samuel-zhang01/browser-view/blob/v0.3.0/docs/screenshots/mobile-actual-size.png"
+  }
+],
+
   "cv-keyword-automator": [
   {
     "src": "/projects/project-showcases/cv-studio-analysis-20261021.webp",

@@ -1,5 +1,30 @@
 /** Exact original-image outputs reviewed in docs/VISUAL_SHOWCASE_SOURCES.md. */
 export const projectShowcaseMedia = [
+[
+  "projects/project-showcases/browser-view-code-server.webp",
+  {
+    "maximumBytes": 40960,
+    "sha256": "b53f08680e38f585b814a65151b514bf7739820b0e2e74d95009c309687b1456",
+    "type": "webp"
+  }
+],
+[
+  "projects/project-showcases/browser-view-vscode-desktop.webp",
+  {
+    "maximumBytes": 41984,
+    "sha256": "4bd719bfe363b79ed60291c3b0c79da5d892f465908a842230df2d2df62f9df7",
+    "type": "webp"
+  }
+],
+[
+  "projects/project-showcases/browser-view-mobile-actual-size.webp",
+  {
+    "maximumBytes": 48128,
+    "sha256": "f0cb2055a80520e0bbe424630a4ebd047a643e90e3340d9047f41ebc3a2c9b47",
+    "type": "webp"
+  }
+],
+
   [
   "projects/project-showcases/cv-studio-analysis-20261021.webp",
   {

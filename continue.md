@@ -1,5 +1,17 @@
 # Continue here
 
+Browser View integration (26 October): the new `browser-view` entry has original
+editor screenshots, four-locale session/transport experiments, independent-work
+graph connections and real VSIX/setup links. The source is the public v0.3.0
+revision recorded in `docs/PROJECT_SOURCE_RECORD.md`. Local release gates, clean
+locked installation, 16 maintained browser journeys and 22 affected profiles
+pass; source links render anonymously. Next.js 15.5.28 clears the newly reported
+package advisories while preserving the existing lint override checks.
+See [verification](docs/VERIFICATION.md#browser-view-portfolio-integration--26-october-2026)
+for exact scope, retained failed helpers and remaining limits. Protected
+publication/public verification are the remaining steps.
+
+
 The [CV Studio refresh](docs/VERIFICATION.md#cv-studio-public-workspace--21-october-2026) deploys the real application at https://cv-studio.samuelzhang.co.uk as revision `c37c3a2`, with isolated public visitor workspaces, neutral templates and visitor-owned optional AI credentials. The existing portfolio entry keeps its stable IDs and now has the sole live-site launch, original synthetic screenshots and four-locale copy. Application security, real PDFs, renewal and stack-map checks pass; compiled portfolio review passes eight project/launch/gallery journeys plus four graph/export/history journeys. Portfolio content revision `efb7ab5` is live through successful protected workflow [39626832029](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/39626832029). All 12 affected public project/real-launch/gallery/graph journeys pass across the four locales. The final compiler boundary, explicit privacy disclosure, exact source/site revisions and verification limits are recorded in the linked section.
 
 The [STUDY-RL portal refresh](docs/VERIFICATION.md#study-rl-teaching-portal--20-october-2026) is live as application revision `c64ea8b`, released by successful protected workflow [39420091646](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/39420091646). It follows the sole-live-website policy, links the complete 26-week course and public Jupyter materials, updates the syllabus and adds independently sourced teaching/causal graph relationships. The homepage source record pins reviewed course revision `382be34` and the separately published mobile-layout follow-up `878d1fa`, each with its own static artifact. All 24 affected public project/launch/PDF journeys pass across four locales at desktop and 320px, with eight additional real course launches and four graph/source/history/share/export journeys. The live release is healthy and the served syllabus matches its source hash. The portal's discovered 320px introduction clipping is repaired and independently rechecked in production. All 148 evidence files, including failure receipts, are hash-verified outside the checkout. This integration preserves concurrent homepage work through `5762f50`; the final documentation-only receipt changes no application or build inputs.

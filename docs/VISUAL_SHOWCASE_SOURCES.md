@@ -1,6 +1,32 @@
 # Original showcase image sources
 
 
+## Browser View — 26 October 2026
+
+Three original synthetic-test screenshots come from the public MIT Browser View
+v0.3.0 source at `32ac21b66ff153b1f5ead74a52bfa72d76bf55ee`,
+`docs/screenshots/`. They show code-server, native Linux VS Code and the narrow
+external viewer. They contain no authenticated account pages or session data.
+Sharp encodes the entire PNG to WebP at quality 88, with no crop, resize or
+retouching. Original English pixels are retained; captions and alt text are
+reviewed in all four locales. Lossy encoding is for delivery, not new evidence.
+The narrow image is an emulated 375×667 CSS-pixel viewport at DPR 2, not a
+physical-phone or mixed-monitor test.
+
+| Public output | Dimensions | Bytes / ceiling | SHA-256 |
+| --- | --- | --- | --- |
+| `projects/project-showcases/browser-view-code-server.webp` | 1800×1200 | 40892 / 40960 | `b53f08680e38f585b814a65151b514bf7739820b0e2e74d95009c309687b1456` |
+| `projects/project-showcases/browser-view-vscode-desktop.webp` | 1920×1080 | 41210 / 41984 | `4bd719bfe363b79ed60291c3b0c79da5d892f465908a842230df2d2df62f9df7` |
+| `projects/project-showcases/browser-view-mobile-actual-size.webp` | 750×1334 | 47940 / 48128 | `f0cb2055a80520e0bbe424630a4ebd047a643e90e3340d9047f41ebc3a2c9b47` |
+
+Original PNG SHA-256:
+
+- `docs/screenshots/code-server.png`: `02ac5b24ae4ecfb137c384df6a7b9ff6dc1d719416467f3457648202fab52758`
+- `docs/screenshots/vscode-desktop.png`: `05744a18d9e7e13c4d5b00a5b1ab62e4a735b16783c8cc475191a40b32502570`
+- `docs/screenshots/mobile-actual-size.png`: `2485f7d95bfc605719bef32c4ad2f39d6a7dc4977e7b72f09658a3eb1e731b07`
+
+Each ceiling rounds the reviewed output to the next KiB; global byte limits stay unchanged.
+
 ## CV Studio public workspace — 21 October 2026
 
 Two direct Chromium captures show the original [CV Studio website](https://cv-studio.samuelzhang.co.uk),

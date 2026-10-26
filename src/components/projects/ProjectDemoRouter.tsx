@@ -174,7 +174,10 @@ const UltraConvertStudio = dynamic(
 
 // Keep selection declarative and exhaustive while preserving each lazy import.
 // Search indexing reads this same registry, so routing and search cannot drift.
+const BrowserViewStudio = dynamic(() => import("./BrowserViewStudio").then(module => module.BrowserViewStudio), { loading: DemoLoading });
+
 const demoComponents: Record<ProjectDemoId, ComponentType<{ locale?: Locale }>> = {
+  "browser-view": BrowserViewStudio,
   "videomate": VideoMateStudio,
   "ultra-convert": UltraConvertStudio,
   "bandits": BanditStudio,

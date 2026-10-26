@@ -3,6 +3,50 @@
 The dated records below pin source revisions, file hashes and recorded outcomes. The September records preserve provenance after earlier UI reviews were consolidated; later refreshes identify their own source snapshots. Historical results do not claim new model training or current test counts. See [the current audit](VERIFICATION.md), [the artwork guide](PROJECT_ARTWORK.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
 
 
+## Browser View — 26 October 2026
+
+The new `browser-view`, `project:browser-view` and `archive:browser-view` records
+present [Browser View](https://github.com/samuel-zhang01/browser-view), reviewed at
+`32ac21b66ff153b1f5ead74a52bfa72d76bf55ee` (v0.3.0, MIT). The extension integrates
+noVNC (remote display) and Playwright (agent automation); their upstream work is
+credited in the source. The homepage adds a teaching simulation, not a hosted
+Chromium service. The VSIX release and setup guide are separate destinations.
+
+| Public claim | Source at that revision | Qualification |
+| --- | --- | --- |
+| Same browser for human and agent | `src/extension.cjs`, `runtime/browser.cjs` | Cooperative trusted-host use, not a multi-user security boundary |
+| Persistent browser; viewer reconnect | `runtime/session.py`, `media/viewer.js`, `tests/e2e.cjs` | Panel disconnect preserves the running browser; stopping retains the profile |
+| Independent scaling/input | `media/viewer.js`, `media/viewer.css` | One fixed virtual desktop, not multiple OS displays |
+| Four 64 KiB pending display chunks | `src/bridge.cjs`, `tests/bridge.test.cjs` | At most 256 KiB pending in this bridge; not total browser or transport memory |
+| ACK resumes; stalled viewer disconnects | `src/bridge.cjs` | More than 15 seconds; supervisor/browser can continue |
+| Tested editor paths | `VALIDATION.md`, `docs/evidence/` | 54 recorded local Linux editor checks; no claim of physical mixed-DPI, WSL or native Windows/macOS hosting tests |
+
+The deterministic `browserViewLab.ts` models note/task state, independent
+view-only/disconnected snapshots and reconnection. A separate manual transport
+model uses full-size chunks and 16-second clock steps. It does not decode VNC,
+run Chromium, make agent calls or model bandwidth/latency. Manual interaction
+needs no background timer. Actual extension canvas accessibility and Linux-host
+requirements remain visible beside the experience.
+
+Owning files: `projects.ts`, `projectStories.ts`, `projectSuites.ts`,
+`BrowserViewStudio.tsx` and its CSS, `browserViewLab.ts`, `browserViewCopy.ts`,
+`ProjectDemoRouter.tsx`, product concept data/renderer/copy, showcase data/copy,
+`projectNarrativeCopy.ts`, `projectMenuCopy.ts`, `iconIdentity.ts`, `profile.ts`
+and `projectOrigins.ts` (under their existing source directories). The canonical
+computer PNG is reused unchanged, with its existing bounds/provenance.
+
+Graph relationships are declarative: independent technical projects,
+`topic:infrastructure`, `method:local-first`, `method:recovery`,
+`skill:python-services` and `skill:recovery`. The source record is derived from the
+catalogue; no employment or degree provenance is inferred. No new PDF/library
+record is needed for external Markdown documentation.
+
+Four locales include controls, accessibility names, dynamic states, story,
+concept and gallery. `check-browser-view-lab.mjs` and the maintained browser
+fixture verify model boundaries and the visible recovery journey. Media hashes
+and transforms are in [the image provenance record](VISUAL_SHOWCASE_SOURCES.md#browser-view--26-october-2026).
+Publication and observed browser scope are recorded in [verification](VERIFICATION.md).
+
 ## CV Studio public workspace — 21 October 2026
 
 The existing `cv-keyword-automator`, `project:cv-keyword-automator` and

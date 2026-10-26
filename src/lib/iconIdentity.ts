@@ -15,6 +15,7 @@ export const applicationIconKinds = {
 // Explicit catalogue entries keep new projects from silently acquiring a folder
 // or an unrelated scientific icon through a slug/discipline heuristic.
 export const projectIconKinds = {
+  "browser-view": "computer",
   videomate: "videomate",
   "ultra-convert": "ultraconvert",
   "orbital-lab": applicationIconKinds.orbitals,

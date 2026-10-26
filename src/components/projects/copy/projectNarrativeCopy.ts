@@ -2,6 +2,25 @@ import type { ProjectCopyTable } from "@/lib/projectCopy";
 
 /** Reviewed project descriptions and career context; names and scientific quantities stay intact. */
 export const projectNarrativeCopy = {
+  "Browser View": ["Browser View · 共享浏览器", "Browser View · 共用瀏覽器"],
+  "Share one Chromium session with a coding agent inside VS Code or code-server.": ["在 VS Code 或 code-server 内，与编程智能体共用一个 Chromium 会话。", "在 VS Code 或 code-server 內，與程式設計代理共用一個 Chromium 工作階段。"],
+  "ONE BROWSER FOR HUMAN AND AGENT": ["人与智能体共用一个浏览器", "人與代理共用一個瀏覽器"],
+  "I built an editor extension that streams a persistent Linux browser through the extension connection. Human input and agent automation use the same tabs and form values. Closing a panel leaves the browser running; reconnecting recovers the session. Each viewer chooses its own scaling and input mode, while the virtual desktop stays the same size.": ["我开发了一个编辑器扩展，通过扩展连接传输持续运行的 Linux 浏览器画面。人工操作和智能体自动化使用相同的标签页与表单值。关闭面板后浏览器继续运行，重新连接即可恢复会话。各查看器独立选择缩放和输入模式，虚拟桌面的尺寸保持不变。", "我開發了一個編輯器擴充套件，透過擴充套件連線傳送持續執行的 Linux 瀏覽器畫面。人工操作和代理自動化使用相同的分頁與表單值。關閉面板後瀏覽器繼續執行，重新連線即可恢復工作階段。各檢視器獨立選擇縮放和輸入模式，虛擬桌面的尺寸保持不變。"],
+  "Share tabs, form values and input across viewers": ["各查看器共用标签页、表单值和输入", "各檢視器共用分頁、表單值和輸入"],
+  "Reconnect without clearing the browser session": ["重新连接时保留浏览器会话", "重新連線時保留瀏覽器工作階段"],
+  "Keep display traffic bounded when a viewer stalls": ["查看器停滞时限制画面传输量", "檢視器停滯時限制畫面傳輸量"],
+  "Download the VSIX": ["下载 VSIX 扩展包", "下載 VSIX 擴充套件"],
+  "Installation and setup": ["安装与设置", "安裝與設定"],
+  "Validation and known limits": ["验证范围与已知限制", "驗證範圍與已知限制"],
+  "This interactive model uses example data and does not run a remote browser. Install the extension on a Linux host for real browsing. Its canvas does not expose the remote page to a local screen reader.": ["此交互模型使用示例数据，不运行远程浏览器。实际浏览需在 Linux 主机安装扩展。其画布无法向本地屏幕阅读器提供远程网页内容。", "此互動模型使用範例資料，不會執行遠端瀏覽器。實際瀏覽需在 Linux 主機安裝擴充套件。其畫布無法向本機螢幕閱讀器提供遠端網頁內容。"],
+  "A separate automation browser makes it hard to see what an agent clicked or continue from the same page.": ["使用独立的自动化浏览器，很难看清智能体点了什么，也难以从同一页面继续操作。", "使用獨立的自動化瀏覽器，很難看清代理點了什麼，也難以從同一頁面繼續操作。"],
+  "I connected a persistent Chromium desktop, a VS Code webview and agent control of the same browser. The extension handles bounded display traffic, viewer reconnection and process ownership. noVNC supplies the remote display client; Playwright supplies browser automation.": ["我把持续运行的 Chromium 桌面、VS Code 网页视图和智能体控制连接到同一个浏览器。扩展负责限制画面传输、重新连接查看器和确认进程归属。noVNC 提供远程显示客户端，Playwright 提供浏览器自动化。", "我把持續執行的 Chromium 桌面、VS Code 網頁檢視和代理控制連接到同一個瀏覽器。擴充套件負責限制畫面傳輸、重新連接檢視器和確認程序歸屬。noVNC 提供遠端顯示用戶端，Playwright 提供瀏覽器自動化。"],
+  "Linux browser → private display socket → bounded extension bridge → independent editor viewers; agent control uses the same browser": ["Linux 浏览器 → 私有显示套接字 → 有界扩展传输桥 → 独立编辑器查看器；智能体控制同一个浏览器", "Linux 瀏覽器 → 私有顯示通訊端 → 有界擴充套件傳輸橋 → 獨立編輯器檢視器；代理控制同一個瀏覽器"],
+  "Write a note, disconnect the second viewer and let the agent mark the task reviewed. Reconnect and compare the recovered page. Open the transport experiment to fill four slots, acknowledge a chunk or simulate a stall.": ["写一条备注，断开第二个查看器，再让智能体标记任务已审阅。重新连接后比较恢复的页面。打开传输实验，填满四个槽位、确认一个数据块或模拟停滞。", "寫一條備註，中斷第二個檢視器，再讓代理標記任務已檢閱。重新連線後比較恢復的頁面。開啟傳輸實驗，填滿四個槽位、確認一個資料區塊或模擬停滯。"],
+  "JavaScript": ["JavaScript", "JavaScript"],
+  "noVNC": ["noVNC", "noVNC"],
+  "Playwright": ["Playwright", "Playwright"],
+
   "CV Studio": ["CV Studio · 简历工作台", "CV Studio · 履歷工作台"],
   "FROM JOB DESCRIPTION TO APPLICATION": ["从岗位描述到求职申请", "從職位描述到求職申請"],
   "Analyse a CV against a role, prepare application PDFs and track the next step in a private visitor workspace.": ["在独立访客工作区中对照岗位分析简历、生成申请 PDF，并跟进下一步。", "在獨立訪客工作區中對照職位分析履歷、產生申請 PDF，並追蹤下一步。"],

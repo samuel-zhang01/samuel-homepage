@@ -1,6 +1,31 @@
 export type ProductConceptMetadata = { title: string; steps: readonly { name: string; caption: string }[]; note?: string };
 
 export const projectConceptProducts: Readonly<Record<string, ProductConceptMetadata>> = {
+
+  "browser-view": {
+    "title": "A viewer can leave without ending the session",
+    "steps": [
+      {
+        "name": "Open one session",
+        "caption": "The editor and agent connect to the same Chromium browser."
+      },
+      {
+        "name": "Share a change",
+        "caption": "A reviewed task appears in both connected viewers."
+      },
+      {
+        "name": "Pause one viewer",
+        "caption": "The second viewer keeps its last image while the agent reopens the task."
+      },
+      {
+        "name": "Reconnect",
+        "caption": "The second viewer catches up. The browser session was never cleared."
+      }
+    ],
+    "note": "Illustrated session lifecycle. One fixed virtual desktop, with independent viewer controls."
+  }
+,
+
   "ultra-convert": {
     "title": "Files in, useful formats out",
     "steps": [

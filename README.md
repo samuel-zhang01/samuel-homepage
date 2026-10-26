@@ -11,7 +11,7 @@ server-side store of personal data.
 **[Browse the project archive](https://me.samuelzhang.co.uk/projects)** ·
 **[Explore Orbital Lab](https://me.samuelzhang.co.uk/orbitals)**
 
-**42 project files · 29 routed demos · 9 desk apps · 4 languages · no account required**
+**43 project files · 30 routed demos · 9 desk apps · 4 languages · no account required**
 
 [Tour](#a-quick-look) · [Apps](#the-desk-apps) · [Run locally](#local-development-on-port-5174) · [Deploy](#docker-deployment) · [Verification](#validation) · [Publication & licensing](#publication-and-licensing)
 
@@ -89,12 +89,12 @@ arithmetic, rather than arbitrary-precision decimal arithmetic.
 - One Documents app with six entries: the localised Applied AI CV, GROWMAT showcase, reinforcement-learning syllabus, two Italian workbooks and my four-model innovation diagram, with continuously scrolling reviewed PDF previews.
 - Shared CV-backed career and education records, expanded degree subjects and awards, and 18 capabilities linked to supporting work, records and public sources.
 - Eight browser-local desk accessories: Note Pad, Sketch Pad, Quick List, Focus Clock, Pocket Calendar, Calculator, Unit Converter and Colour Studio, with autosave plus portable backup and restore.
-- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches the apps and 42 project files. Optional Detailed search includes public project/demo text with matching excerpts; arrow keys choose a result, Return opens it and Escape closes Find.
+- A classic Find window (`⌘K` / `Ctrl+K`, or **File → Find…**) searches the apps and 43 project files. Optional Detailed search includes public project/demo text with matching excerpts; arrow keys choose a result, Return opens it and Escape closes Find.
 - A browser-native Orbital Lab: all 118 elements, real s/p/d/f orbital clouds in high-DPI ASCII, density points or smooth 3D, refresh-synchronised rotation, subshell inspection, radial curves, node counts and exports.
 - Shared System 7 pop-up menus throughout accessories, project filters and interactive labs, with keyboard/typeahead navigation and bounded touch-friendly lists.
 - Three persistent desktop patterns and a menu-bar clock that opens Pocket Calendar with one click.
 - A routed Settings panel, available from the main menu and Find, keeps Classic, Blue and Paper while offering language, 12/24-hour clock, startup and reduced-effects controls. A display reset preserves language and desk data; blocked storage keeps settings for the current visit.
-- A 42-record project archive organised into six shelves and 18 curated experiences: interactive chapters, entries for Orbital Lab and the desk apps, seven useful PDF or external links, a searchable file list and a portfolio map.
+- A 43-record project archive organised into six shelves and 18 curated experiences: interactive chapters, entries for Orbital Lab and the desk apps, seven useful PDF or external links, a searchable file list and a portfolio map.
 - Built-in PDF previews, seven local-only profile, decision and science games, plus desktop easter eggs.
 - A full RUN/HACK cabinet exhibit covering Samuel’s second-place SideQuest build, with an interactive Strava evidence reader, subsequent-run sandbox, challenge loop and privacy-safe live-room replay.
 - Keyboard focus states, reduced-motion support and small-screen guidance.
@@ -133,15 +133,17 @@ Small interactive evidence fixtures use reviewed local CSV files under
 third-party fetching and raw public downloads are disabled. `npm run check:data` pins their schema, size, row grain, domains,
 uniqueness and SHA-256 before every production build.
 
-The Projects folder opens in **Selected work**: products I use, questions I studied and experiments you can try. Ultra Convert and VideoMate have separate product walkthroughs and links to their Mac/source previews. The catalogue has 42 projects and 18 curated experiences across six shelves. **All projects** offers a folder tree, text filter and keyboard navigation. Press `/` while the archive is active to open that view and focus search.
+The Projects folder opens in **Selected work**: products I use, questions I studied and experiments you can try. Ultra Convert and VideoMate have separate product walkthroughs and links to their Mac/source previews. The catalogue has 43 projects and 18 curated experiences across six shelves. **All projects** offers a folder tree, text filter and keyboard navigation. Press `/` while the archive is active to open that view and focus search.
 
-The **Knowledge graph** remains available as a secondary view. Its 108 nodes and 392 edges connect projects, subjects, methods, experience, education, skills and documents. Select a node to follow those connections, open a project or read a document. Its comparison views preserve the chronology, matrices and model-family relationships.
+Browser View adds a shared-session experiment: edit a note from two viewers, disconnect one, let the agent change the task and reconnect without losing the note. Its transport experiment demonstrates a four-chunk queue, acknowledgements and stall recovery. Original VS Code/code-server screenshots accompany the model. For real browsing, [download the VSIX and follow the Linux-host setup](https://github.com/samuel-zhang01/browser-view#install).
+
+The **Knowledge graph** remains available as a secondary view. Its 109 nodes and 406 edges connect projects, subjects, methods, experience, education, skills and documents. Select a node to follow those connections, open a project or read a document. Its comparison views preserve the chronology, matrices and model-family relationships.
 
 Selecting a record updates the right-hand project document beside the searchable, filterable list. The purpose, one action to try, results and career/education context are immediately available; methods are optional. **Open interactive demo** uses a bold neutral beveled control and opens the experiment in its own movable, resizable desktop window; **Open in new tab** opens the complete document. **Share project**, **Share demo** and **Share PDF** copy links to the corresponding view, with a selectable address if clipboard access is unavailable. **Connections** returns to that project's graph neighbourhood. On phones, **Back to list** restores the selected row and keyboard focus. Browser Back/Forward preserves the selection and search. The native-app records launch their existing desktop windows.
 
 Project explanations focus on what the work does, why the method was chosen and how to explore it. Recorded measurements, illustrative calculations and their relevant limits remain distinguishable. Internal repository receipts, checkpoint reconciliation and file-by-file audit tables are developer material rather than visitor-facing project descriptions. GROWMAT’s **Open showcase PDF** action opens the original document in the same desktop window system, using the shared continuous PDF reader with zoom and download controls. Career showcase links and the other catalogue PDFs use this reader too. Compact mobile controls leave more room for the document; **Fit width**, zoom and resizing preserve the passage being read. The same reader serves the CVs in Documents. Closing an activity restores the originating window and keyboard focus; inactive demos preserve their working state while playback pauses.
 
-The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 42 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
+The graph's **Compare projects** disclosure retains dates, discipline/access comparisons, technologies, project relationships and model-family views. A reading guide explains the comparison without exposing implementation files. The graph connects all 43 projects to subjects, methods and dated CV contexts. Focus transitions retain 3D depth and respect reduced motion; rotation, pan, zoom, a flat view and a keyboard-accessible node list remain available.
 
 Descriptions, controls, feedback and accessible labels have explicit Simplified and Traditional Mandarin copy. Source code, software names, scientific notation, Italian lesson material and recorded English model/job/CV samples retain their necessary spelling; surrounding explanations are translated. All 118 element names are localized in both Mandarin editions, including accessible labels and orbital exports. See the [copy workflow](docs/PROJECT_COPY_WORKFLOW.md) and [current audit](docs/VERIFICATION.md) for the tested scope and intentional source-language exceptions.
 

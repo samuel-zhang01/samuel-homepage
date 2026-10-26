@@ -1,0 +1,8 @@
+{
+  "dictionary": "browserViewCopy.ts",
+  "exportName": "browserViewCopy",
+  "sources": [
+    "src/components/projects/BrowserViewStudio.tsx"
+  ],
+  "identities": {}
+}

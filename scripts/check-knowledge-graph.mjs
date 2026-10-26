@@ -160,6 +160,13 @@ check('STUDY-RL curriculum evidence retains independent provenance', () => {
   assert.ok(!related.some(edge => edge.target === 'experience:kcl-teaching' && edge.relation === 'developed-in'));
   assert.ok(graph.edges.some(edge => edge.source === 'skill:teaching' && edge.target === 'project:study-rl' && edge.relation === 'evidenced-by'));
 });
+check('Browser View retains independent provenance and implemented capabilities', () => {
+  const edges = graph.edges.filter(edge => edge.source === 'project:browser-view');
+  for (const id of ['method:local-first', 'method:recovery']) assert.ok(edges.some(edge => edge.target === id && edge.relation === 'uses'));
+  const origins = edges.filter(edge => edge.relation === 'developed-in').map(edge => edge.target);
+  assert.deepEqual(origins, ['experience:personal-projects']);
+  for (const skill of ['python-services', 'recovery']) assert.ok(graph.edges.some(edge => edge.source === `skill:${skill}` && edge.target === 'project:browser-view' && edge.relation === 'evidenced-by'));
+});
 check('New projects work with area fallback and optional explicit concepts', () => {
   const added = { ...projects[0], slug: 'new-project-fixture', area: 'Systems' };
   delete added.concepts;
