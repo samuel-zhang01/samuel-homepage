@@ -959,8 +959,9 @@ responses. Desktop and mobile screenshots were visually reviewed and archived
 outside the checkout with matching SHA-256 hashes.
 
 Both configured proxy paths were checked separately with hostname-correct TLS.
-Cloudflare currently uses Full mode; the token cannot edit zone settings (403),
-so the owner has been asked to enable Full (strict). Nginx enforces HTTPS.
-DNSSEC remains pending with no parent DS observed. These are outstanding provider
-settings, not failures of the verified homepage routes. Other service origins,
-OAuth callbacks and CORS policies remain outside this initial alias deployment.
+Cloudflare Full (strict) and Always Use HTTPS are now enabled and confirmed by
+API readback after the owner updated token permissions. Both public hostnames
+still return HTTP 200 with valid TLS. The earlier 403 restriction is resolved.
+DNSSEC remains pending with no parent DS observed; Cloudflare Registrar DS
+publication is asynchronous. Other service origins, OAuth callbacks and CORS
+policies remain outside this initial alias deployment.
