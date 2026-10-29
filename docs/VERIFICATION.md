@@ -948,7 +948,19 @@ URL during this additive migration. No broad CORS grant is required for the
 portfolio's same-origin resources.
 
 Local validation: 80 request-security regressions, profile, graph, locale checks
-and TypeScript pass. The protected VPS workflow must validate and deploy this
-revision before the new aliases can serve application routes. Public DNS,
-certificates and both proxy configurations are verified separately; source
-checks alone do not establish deployment or connectivity.
+and TypeScript pass. Application revision `34af4c559fe6793adf1b039790bd4c871259eb1a`
+is deployed by successful protected workflow
+[40861718596](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/40861718596).
+Both public aliases return 200 with valid TLS. Nine HTTP checks cover both aliases
+and the old domain, including HTTP-to-HTTPS and locale redirects with preserved
+paths and queries. Ten public browser journeys cover both aliases, all four
+locales, desktop and mobile; there are no page errors or failed first-party
+responses. Desktop and mobile screenshots were visually reviewed and archived
+outside the checkout with matching SHA-256 hashes.
+
+Both configured proxy paths were checked separately with hostname-correct TLS.
+Cloudflare currently uses Full mode; the token cannot edit zone settings (403),
+so the owner has been asked to enable Full (strict). Nginx enforces HTTPS.
+DNSSEC remains pending with no parent DS observed. These are outstanding provider
+settings, not failures of the verified homepage routes. Other service origins,
+OAuth callbacks and CORS policies remain outside this initial alias deployment.

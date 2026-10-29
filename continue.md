@@ -5,7 +5,10 @@ to the production Host guard and development-origin list. Locale redirects keep
 the alias and HTTPS. Canonical metadata stays on the old domain for this additive
 phase. Local request-security, profile, graph, locale and TypeScript checks pass.
 See [the verification scope](docs/VERIFICATION.md#additive-domain-aliases--29-october-2026);
-release and public routing checks are still pending.
+release workflow `40861718596` succeeded for `34af4c5`. Both aliases are live;
+ten public browser journeys and nine HTTP checks pass. Cloudflare Full (strict)
+is pending an owner dashboard change because zone-settings edits return 403.
+DNSSEC is also pending. Other service migrations have not been applied.
 
 Browser View purpose correction (26 October): remove the interactive demo and
 animated form example at the owner's request. The extension provides a browser
