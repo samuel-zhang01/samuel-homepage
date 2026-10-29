@@ -936,3 +936,19 @@ The second full local CI attempt (`38363077876`, `d383c1a`) retained 966 journey
 The third local run (`38365955745`, `a09a556`) passed 965 of 966 journeys; all 96 system-app fixtures passed. One layout assertion failed after four requested stylesheets were interrupted by host `ERR_NETWORK_CHANGED` events. Its failed archive remains retained. Linux CI now runs the preview and every HTTP/browser family together in a process-owned network namespace with loopback only, no external route, and the original runner UID restored before testing. Build/audit remain outside for dependency access. Transport retries were removed; every journey and resource/layout assertion remains mandatory. The namespace is temporary and changes no host interfaces, applications or routing.
 
 The fourth local run (`38368317670`, `55f8f83`) passed all 966 deep-browser journeys without retries, plus HTTP, recovery and resize. Its final phone family exposed a stale Study RL fixture that searched for curriculum filters while the current default workspace was the live agent lab. The fixture now uses the real keyboard workspace control before inspecting every filter. A complete 132-profile Chromium phone rehearsal (29 demos and four pages, two locales, two portrait sizes) passed in an owned loopback namespace with zero page/resource errors. The failed full-run archive remains retained; the subsequent exact-main workflow still must pass all families before deployment.
+
+## Additive domain aliases — 29 October 2026
+
+The production Host guard and development-origin allowlist accept exactly
+`samuelzhang.dev` and `www.samuelzhang.dev` alongside `me.samuelzhang.co.uk`.
+Locale redirects retain the validated alias and force HTTPS; both aliases receive
+the public transport headers. Arbitrary subdomains, suffix lookalikes and spoofed
+forwarded hosts remain rejected. SEO metadata retains the existing canonical
+URL during this additive migration. No broad CORS grant is required for the
+portfolio's same-origin resources.
+
+Local validation: 80 request-security regressions, profile, graph, locale checks
+and TypeScript pass. The protected VPS workflow must validate and deploy this
+revision before the new aliases can serve application routes. Public DNS,
+certificates and both proxy configurations are verified separately; source
+checks alone do not establish deployment or connectivity.

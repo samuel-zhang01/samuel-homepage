@@ -1,5 +1,12 @@
 # Continue here
 
+Domain aliases (29 October): add `samuelzhang.dev` and `www.samuelzhang.dev`
+to the production Host guard and development-origin list. Locale redirects keep
+the alias and HTTPS. Canonical metadata stays on the old domain for this additive
+phase. Local request-security, profile, graph, locale and TypeScript checks pass.
+See [the verification scope](docs/VERIFICATION.md#additive-domain-aliases--29-october-2026);
+release and public routing checks are still pending.
+
 Browser View purpose correction (26 October): remove the interactive demo and
 animated form example at the owner's request. The extension provides a browser
 GUI on headless Linux/code-server for agent inspection/control and human visual

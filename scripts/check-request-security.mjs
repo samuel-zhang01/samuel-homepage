@@ -51,10 +51,10 @@ function request(path = "/", { host = "me.samuelzhang.co.uk", method = "GET", he
 
 try {
   process.env.NODE_ENV = "production";
-  for (const host of ["me.samuelzhang.co.uk", "ME.SAMUELZHANG.CO.UK:443", "localhost:3000", "127.0.0.1:3000", "[::1]:3000", "10.0.0.8:5174", "172.16.0.1", "172.31.255.255", "192.168.1.2"]) {
+  for (const host of ["me.samuelzhang.co.uk", "ME.SAMUELZHANG.CO.UK:443", "samuelzhang.dev", "WWW.SAMUELZHANG.DEV:443", "localhost:3000", "127.0.0.1:3000", "[::1]:3000", "10.0.0.8:5174", "172.16.0.1", "172.31.255.255", "192.168.1.2"]) {
     check(`trusted authority ${host}`, () => assert.equal(middleware(request("/", { host })).status, 200));
   }
-  for (const host of [null, "evil.invalid", "me.samuelzhang.co.uk.evil.invalid", "172.15.1.1", "172.32.1.1", "192.168.256.1", "10.0.0.999", "010.0.0.1", "10.0.0.08", "192.168.001.2", "[::1]evil.invalid", "[::1]:evil", "me.samuelzhang.co.uk:evil", "localhost:65536"]) {
+  for (const host of [null, "evil.invalid", "me.samuelzhang.co.uk.evil.invalid", "samuelzhang.dev.evil.invalid", "www.samuelzhang.dev.evil.invalid", "evil.samuelzhang.dev", "172.15.1.1", "172.32.1.1", "192.168.256.1", "10.0.0.999", "010.0.0.1", "10.0.0.08", "192.168.001.2", "[::1]evil.invalid", "[::1]:evil", "me.samuelzhang.co.uk:evil", "samuelzhang.dev:evil", "localhost:65536"]) {
     check(`untrusted or malformed authority ${host}`, () => {
       const response = middleware(request("/", { host }));
       assert.equal(response.status, 421);
@@ -112,6 +112,21 @@ try {
     }));
     assert.equal(response.headers.get("location"), "http://192.168.1.2:5174/zh-tw/desk?view=notes");
   });
+  for (const host of ["samuelzhang.dev", "www.samuelzhang.dev"]) {
+    check(`public alias ${host} retains its HTTPS origin and transport headers`, () => {
+      const response = middleware(new NextRequest("http://127.0.0.1:3000/uk/projects?view=map", {
+        headers: { host, "x-forwarded-host": "evil.invalid" },
+      }));
+      assert.equal(response.status, 308);
+      assert.equal(response.headers.get("location"), `https://${host}/en-gb/projects?view=map`);
+      for (const result of [response, middleware(request("/", { host }))]) {
+        assert.equal(result.headers.get("cross-origin-opener-policy"), "same-origin");
+        assert.match(result.headers.get("strict-transport-security"), /^max-age=63072000/);
+      }
+      assert.equal(middleware(request("/", { host, method: "POST" })).status, 405);
+      assert.equal(middleware(request("/", { host, method: "OPTIONS" })).headers.get("access-control-allow-origin"), null);
+    });
+  }
   for (const [segment, canonical] of [["EN-GB", "en-gb"], ["En-US", "en-us"], ["ZH-CN", "zh-cn"], ["ZH-TW", "zh-tw"], ["%65n-us", "en-us"], ["%7ah-cn", "zh-cn"], ["%75k", "en-gb"]]) {
     check(`encoded or uppercase locale ${segment} has a canonical redirect`, () => {
       const response = middleware(request(`/${segment}/settings?view=display`));

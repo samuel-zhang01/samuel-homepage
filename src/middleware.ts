@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const ALLOWED_METHODS = "GET, HEAD, OPTIONS";
-const CANONICAL_PUBLIC_HOST = "me.samuelzhang.co.uk";
+const PUBLIC_HOSTS = new Set(["me.samuelzhang.co.uk", "samuelzhang.dev", "www.samuelzhang.dev"]);
 const CONTENT_LANGUAGES: Record<string, string> = {
   "en-gb": "en-GB",
   "en-us": "en-US",
@@ -74,7 +74,7 @@ function isPrivateLanIpv4(hostname: string) {
 
 function isTrustedProductionHost(request: NextRequest) {
   const hostname = requestHostname(request);
-  return hostname === CANONICAL_PUBLIC_HOST
+  return PUBLIC_HOSTS.has(hostname)
     || hostname === "localhost"
     || hostname === "127.0.0.1"
     || hostname === "::1"
@@ -84,9 +84,9 @@ function isTrustedProductionHost(request: NextRequest) {
 function applyCanonicalProductionHeaders(request: NextRequest, response: NextResponse) {
   // COOP is meaningful only on a trustworthy origin; sending it on a direct
   // HTTP LAN response makes browsers ignore it and emit a misleading warning.
-  // Keep both transport-scoped headers on the canonical TLS host while LAN
+  // Keep both transport-scoped headers on the public TLS hosts while LAN
   // troubleshooting retains the common security policy from next.config.ts.
-  if (process.env.NODE_ENV === "production" && requestHostname(request) === CANONICAL_PUBLIC_HOST) {
+  if (process.env.NODE_ENV === "production" && PUBLIC_HOSTS.has(requestHostname(request))) {
     response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
     // Match the edge policy so duplicate proxy/app headers cannot weaken the
     // browser's effective HSTS directive depending on header ordering.
@@ -97,7 +97,7 @@ function applyCanonicalProductionHeaders(request: NextRequest, response: NextRes
 
 export function middleware(request: NextRequest) {
   // The container is intentionally reachable from the private LAN so a TLS
-  // reverse proxy can forward the canonical hostname to it. Refuse arbitrary
+  // reverse proxy can forward a reviewed public hostname to it. Refuse arbitrary
   // Host headers in production while retaining local health checks and direct
   // LAN troubleshooting.
   if (process.env.NODE_ENV === "production" && !isTrustedProductionHost(request)) {
@@ -126,7 +126,7 @@ export function middleware(request: NextRequest) {
         // Next's URL may describe the upstream container or a forwarded
         // hostname. Build public redirects from the authority we validated
         // above, never from that unrelated origin or x-forwarded-host.
-        const protocol = requestHostname(request) === CANONICAL_PUBLIC_HOST ? "https:" : redirectUrl.protocol;
+        const protocol = PUBLIC_HOSTS.has(requestHostname(request)) ? "https:" : redirectUrl.protocol;
         const publicOrigin = new URL(`${protocol}//${request.headers.get("host")!.trim().toLowerCase()}`);
         redirectUrl.protocol = publicOrigin.protocol;
         redirectUrl.hostname = publicOrigin.hostname;

@@ -25,9 +25,9 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   ...(isolatedDistDir ? { distDir: isolatedDistDir } : {}),
-  // Permit the canonical HTTPS hostname as well as trusted LAN development
+  // Permit the public HTTPS hostnames as well as trusted LAN development
   // origins. Production requests are additionally host-checked in middleware.
-  allowedDevOrigins: ["127.0.0.1", "host.docker.internal", "192.168.*.*", "10.*.*.*", "me.samuelzhang.co.uk"],
+  allowedDevOrigins: ["127.0.0.1", "host.docker.internal", "192.168.*.*", "10.*.*.*", "me.samuelzhang.co.uk", "samuelzhang.dev", "www.samuelzhang.dev"],
   output: "standalone",
   poweredByHeader: false,
   reactStrictMode: true,

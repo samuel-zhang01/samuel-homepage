@@ -405,7 +405,7 @@ Configure the existing TLS reverse proxy / Nginx Proxy Manager host as follows:
 - Preserve the original `Host` header; enable force-HTTPS and a valid certificate.
 - Do not use Cloudflare Flexible TLS. Use Full (strict) TLS or an equivalent end-to-end certificate configuration.
 
-The application accepts only the canonical hostname, loopback health checks and RFC1918 LAN hosts in production. It sends CSP, no-sniff, same-origin isolation, permissions policy and HTTPS HSTS headers; the proxy remains responsible for TLS termination, certificate renewal, HTTP-to-HTTPS redirects and firewall exposure.
+The application accepts `me.samuelzhang.co.uk`, `samuelzhang.dev`, `www.samuelzhang.dev`, loopback health checks and RFC1918 LAN hosts in production. The two `.dev` names are additive aliases; SEO metadata retains the existing canonical URL. Locale redirects retain the hostname the visitor used. It sends CSP, no-sniff, same-origin isolation, permissions policy and HTTPS HSTS headers; the proxy remains responsible for TLS termination, certificate renewal, HTTP-to-HTTPS redirects and firewall exposure. The public portfolio uses same-origin assets and has no cross-origin API requirement, so these aliases do not add a general CORS grant.
 
 ## Browser support
 
