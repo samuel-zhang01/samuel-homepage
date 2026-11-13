@@ -50,12 +50,15 @@ uses display-timed animation, starts paused, and respects reduced-motion setting
 
 The desktop, project archive and mobile Note Pad were recaptured on 5 October
 2026 from a production build of that day's checkout. The orbital image and
-animation remain earlier reference captures. The last recorded production deployment is
-`cc3c03c`, verified on 11 October 2026 with container health, public HTTPS and
-four-locale desktop/phone innovation-PDF checks. It includes the current project,
-Secret, readability and navigation refinements, plus the Docker document and PDF
-reader repairs. Broader verification and earlier deployment scopes remain
-separate in the [verification guide](docs/VERIFICATION.md#docker-document-packaging-repair--11-october-2026).
+animation remain earlier reference captures. The latest production application is
+`fc517a8`, released on 13 November 2026 through the
+[protected workflow](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/43353293491).
+It retains the startup sequence while preparing useful assets, reduces phone
+image loading, improves window navigation and game layouts, and repairs game
+focus, first moves and session preservation. Public phone checks pass in all four
+languages across Chromium and WebKit; the exact healthy revision and served icon
+hashes are verified. See the dated scopes and qualifications in the
+[verification guide](docs/VERIFICATION.md#mobile-ux-release--13-november-2026).
 
 ## The desk apps
 

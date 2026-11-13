@@ -18,6 +18,35 @@ and 56 verified attestations. Existing native-package platform metadata was
 preserved when updating the lockfile. The original failed audit receipt is
 retained with the passing checks; it is not evidence of application exploitation.
 
+Application revision `fc517a8cf933a7f1839dc775657be546c507b7db` is deployed through
+successful protected workflow
+[43353293491](https://github.com/samuel-zhang01/samuel-homepage/actions/runs/43353293491).
+Both `verify-main` and `deploy` pass. The host receipt, immutable image identity,
+container revision label and healthy running container independently agree on
+that exact revision. All seven canary and seven release gates pass.
+
+Public HTTPS verification passes 27 journeys: 16 phone UI profiles in Chromium
+and WebKit across all four locales at 320/390px, four detailed game profiles,
+four 12-window navigation/focus journeys and one Projects/header/artwork journey
+on each of `samuelzhang.dev`, `www.samuelzhang.dev` and `me.samuelzhang.co.uk`.
+All 43 canonical icon responses on the primary alias match their reviewed
+SHA-256 values; three selected icons on each other hostname also match (49
+served-image checks). No JavaScript errors occurred. Actual public 320px Projects,
+390px Traditional Chinese paused Snake and the primary-domain Projects screenshots
+were inspected. The public game fixtures retain the source-derived scoring
+qualification in the implementation receipt below; this is not physical-device
+or field-performance testing.
+
+All 144 release/public-review evidence files, including the original failed
+dependency audit and corrected receipt-summary helper assumption, are read-back
+hash-verified in
+`~/.local/share/samuel-homepage/review-archive/uiux-release-20261113-fc517a8.tar.gz`.
+The adjacent manifest records each member hash. Archive SHA-256:
+`9d07a79219b42a07d569257366f33e8c50dc14a162ef66862e136fe3fa1d88d7`.
+Temporary QA files are removed after verification and the user's shared browser
+is preserved. The follow-up documentation-only publication does not change the
+deployed application revision.
+
 ## Mobile UX and performance implementation — 13 November 2026
 
 The owner's automatic implementation goal applies the audit below while retaining

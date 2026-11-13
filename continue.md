@@ -1,10 +1,15 @@
 # Continue here
 
-Mobile UX release (13 November): publication is authorized. Fresh release checks
-and the nine VPS helper regressions pass. A new lint-toolchain advisory is fixed
-with a scoped minimatch 11.0.1 override and 18 consumer-matching regressions;
-dependency audit/signatures pass. Release status and public verification are
-recorded in [the release receipt](docs/VERIFICATION.md#mobile-ux-release--13-november-2026).
+Mobile UX release (13 November): application `fc517a8` is live through successful
+protected workflow `43353293491`. CI and deployment pass; the host confirms the
+exact healthy revision and all 14 canary/release gates. Public checks pass 27
+journeys across four locales, phone Chromium/WebKit and all three HTTPS hostnames;
+49 served icon hashes match. Fresh release checks and nine VPS helper regressions
+pass. A new lint-toolchain advisory is fixed with scoped minimatch 11.0.1 and 18
+consumer-matching regressions; dependency audit/signatures pass. See
+[the release receipt](docs/VERIFICATION.md#mobile-ux-release--13-november-2026)
+for archive details and qualifications. Earlier no-deployment statements below
+describe the implementation/audit checkpoints, not the current release status.
 
 Mobile UX/performance implementation (13 November): the automatic goal is
 implemented and verified in the working tree; no commit/deployment was made.
