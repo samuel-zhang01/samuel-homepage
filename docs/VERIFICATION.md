@@ -1,5 +1,37 @@
 # Verification and maintenance
 
+## Symmetric public-domain verification — 13 November 2026
+
+Fresh independent checks pass for both `https://samuelzhang.dev` and
+`https://me.samuelzhang.co.uk`. Each hostname has a currently valid TLS 1.3
+connection, returns the expected security headers and upgrades HTTP to HTTPS with
+a 301 on the same hostname. All 12 initial JavaScript/CSS asset paths and body
+hashes agree between the domains. On each host, all 43 canonical icon PNGs plus
+the favicon and touch icon match the reviewed source bytes. The generated app
+manifest passes schema, same-host icon URL and cross-domain body-parity checks.
+
+Each domain passes the same 24 functional profiles: eight Chromium and eight
+WebKit phone UI journeys in four locales at 320/390px, four detailed game profiles
+and four 12-window navigation/focus journeys. Two additional origin journeys
+verify a fresh root startup/guide, actual Traditional Chinese PDF canvas rendering
+and a desktop Ultra Convert direct demo link. Total: 50 public journeys, with no
+JavaScript errors. Actual PDFs on both hosts, narrow Traditional Chinese Projects
+and the desktop interactive demo were visually reviewed. This is public browser
+emulation and served-byte verification, not a physical-device or field-performance
+qualification. Hosting and application changes were unnecessary.
+
+The initial parity helper incorrectly treated the generated manifest as a static
+`public/manifest.webmanifest`; its failed log/partial receipt are retained. The
+corrected helper checks the actual generated response rather than omitting it.
+
+All 261 evidence files are read-back hash-verified outside the checkout at
+`~/.local/share/samuel-homepage/review-archive/dual-domain-verification-20261113.tar.gz`,
+with member hashes in the adjacent manifest. Archive SHA-256:
+`6b8303fa7dffe519aaca13e2e7e774a112d8d7f4dba6185eb345c0985c4bd0c7`.
+Owned test browsers are closed, temporary QA files are removed after verification
+and the shared browser is preserved. The receipt-only publication changes no
+application or hosting inputs.
+
 ## Mobile UX release — 13 November 2026
 
 The owner authorized commit, push and production release after the implementation

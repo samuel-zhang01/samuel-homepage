@@ -1,5 +1,13 @@
 # Continue here
 
+Both public domains rechecked (13 November): `samuelzhang.dev` and
+`me.samuelzhang.co.uk` independently pass the same 24 functional phone/game/window
+profiles, plus startup/PDF/desktop origin journeys (50 total). TLS, same-host HTTP
+upgrades, security headers, all 43 canonical icons, site icons and generated
+manifest pass on both. The 12 initial JS/CSS assets have identical hashes across
+hosts. No app/hosting repair was needed. See
+[the symmetric domain receipt](docs/VERIFICATION.md#symmetric-public-domain-verification--13-november-2026).
+
 Mobile UX release (13 November): application `fc517a8` is live through successful
 protected workflow `43353293491`. CI and deployment pass; the host confirms the
 exact healthy revision and all 14 canary/release gates. Public checks pass 27
