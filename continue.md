@@ -1,5 +1,47 @@
 # Continue here
 
+Mobile UX release (13 November): publication is authorized. Fresh release checks
+and the nine VPS helper regressions pass. A new lint-toolchain advisory is fixed
+with a scoped minimatch 11.0.1 override and 18 consumer-matching regressions;
+dependency audit/signatures pass. Release status and public verification are
+recorded in [the release receipt](docs/VERIFICATION.md#mobile-ux-release--13-november-2026).
+
+Mobile UX/performance implementation (13 November): the automatic goal is
+implemented and verified in the working tree; no commit/deployment was made.
+See [the implementation receipt](docs/VERIFICATION.md#mobile-ux-and-performance-implementation--13-november-2026).
+The startup remains and prepares useful images; covered/offscreen icon requests
+defer, and native PNG reencoding saves 13.4% with identical pixels. Observed phone
+About/Projects resource transfers fall about 90%/74%. Dock/current-state/focus and
+Menu reachability are repaired; filters, mobile inputs, game layouts and button
+semantics are improved. Puzzle focus, Minefield first reveal, Brick mouse holds
+and game-switch sessions are fixed. Hidden Focus/SideQuest work is controlled,
+and Knowledge Graph code loads when visited. Final build/lint/types/static gates,
+982 Chromium journeys, 32 Chromium/WebKit phone UI journeys, 16 navigation profiles,
+12 detailed game profiles, 28 resize journeys and HTTP groups pass. The icon audit
+covers 752 identity states and 7,404 visible decodes. New maintained game/mobile
+regressions are wired into prebuild/browser CI. Exact scopes, failed receipts,
+pixel provenance and physical-phone/field-performance limits are preserved in
+verification. The earlier advice-only audit below is historical baseline context.
+
+Mobile UX/loading/games audit (13 November): three parallel reviews and a fresh
+compiled build establish a prioritized improvement plan in
+[verification](docs/VERIFICATION.md#mobile-ux-loading-and-games-audit--13-november-2026).
+Application source is unchanged; this is an advice pass. Keep the owner's
+anticipation startup and use it for selective first-screen preloading. Highest
+value follow-up: defer covered phone launcher images (observed About resource
+transfer about 7.9 MiB), apply pixel-checked native PNG recompression (measured
+13.4% family saving), reveal/announce the active phone dock item, reduce stacked
+mobile filters/game headers and keep game controls onscreen. Repair confirmed
+Puzzle focus loss, Minefield's deterministic first-cell trap, Brick Breaker's
+internal-focus mouse-hold cancellation and game-switch progress loss. Then unify
+button/input/motion primitives and optional-code/hidden-work behavior. Fresh
+prebuild/build/type/output checks, 982 maintained Chromium journeys, 28 WebKit
+phone game journeys, 25 rendered profiles and 16 phone working-area journeys pass;
+deeper diagnostics retain the known bugs and source-derived scoring qualifications.
+Peak Dock's three difficulties pass six Chromium/WebKit scoring/reset/new-sample
+journeys. No numerical 9.9/10 usability claim, physical-phone qualification or
+deployment is made. Evidence/archive details are recorded in verification.
+
 Domain aliases (29 October): add `samuelzhang.dev` and `www.samuelzhang.dev`
 to the production Host guard and development-origin list. Locale redirects keep
 the alias and HTTPS. Canonical metadata stays on the old domain for this additive

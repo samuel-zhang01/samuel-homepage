@@ -13,8 +13,11 @@
 .folderIcon { display: inline-flex; width: var(--s7-icon-inline); height: var(--s7-icon-inline); flex: 0 0 var(--s7-icon-inline); vertical-align: middle; }
 .listTitle > span:last-child { margin-left: auto; padding: 0 6px; border: 1px solid var(--s7-shadow); background: var(--s7-surface); box-shadow: var(--s7-relief-inset); font-variant-numeric: tabular-nums; font-size: var(--s7-small); }
 .filters { display: grid; gap: 10px; padding: 12px; border-bottom: 1px solid var(--s7-edge); background: var(--s7-raised); box-shadow: var(--s7-relief-raised); }
+.secondaryFilters { min-width: 0; }
+.filters .filtersToggle { display: none; }
+.filterBadge { display: inline-grid; min-width: 18px; place-items: center; padding: 0 3px; border: 1px solid currentColor; font-variant-numeric: tabular-nums; }
 .filters label { display: grid; min-width: 0; gap: 4px; font-size: var(--s7-small); }
-.filters input { width: 100%; min-width: 0; min-height: 34px; padding: 6px 8px; border: 1px solid var(--s7-edge); border-radius: 0; color: var(--s7-ink); background: var(--s7-paper); font: inherit; box-shadow: var(--s7-relief-inset); }
+.filters input { width: 100%; min-width: 0; min-height: 34px; padding: 6px 8px; border: 1px solid var(--s7-edge); border-radius: 0; color: var(--s7-ink); background: var(--s7-paper); font: inherit; font-size: var(--s7-input-text); box-shadow: var(--s7-relief-inset); }
 .filterStatus { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; min-height: 20px; font-size: var(--s7-small); color: var(--s7-muted); }
 .clearFilters { border: 0; padding: 2px 0; background: transparent; color: var(--s7-selection); text-decoration: underline; text-underline-offset: 3px; font: inherit; cursor: pointer; }
 .searchError { margin: 0; font-size: var(--s7-small); line-height: 1.5; }
@@ -55,19 +58,27 @@
   .graph { padding: 6px; }
   .workspace { grid-template-columns: minmax(0, 1fr); padding: 6px; }
   .workspace[data-detail-open="false"] .detailPane, .workspace[data-detail-open="true"] .listPane { display: none; }
-  .filters { grid-template-columns: minmax(0, 1fr) minmax(120px, .8fr); gap: 8px; padding: 10px; }
-  .filterStatus, .searchError { grid-column: 1 / -1; }
+  .filters { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; padding: 8px 10px; }
+  .filters > label { grid-column: 1 / -1; }
+  .secondaryFilters { display: none; grid-column: 1 / -1; grid-row: 3; padding-block: 4px; }
+  .secondaryFilters[data-expanded="true"] { display: block; }
+  .filters .filtersToggle { display: inline-flex; grid-column: 2; grid-row: 2; min-height: 44px; padding-inline: 8px; }
+  .filterStatus { grid-column: 1; grid-row: 2; justify-content: flex-start; gap: 4px 8px; }
+  .clearFilters { min-height: 44px; }
+  .searchError { grid-column: 1 / -1; }
   .filters input { min-height: 44px; }
-  .clearFilters { min-height: 32px; }
   .project { grid-template-columns: var(--s7-icon-document) minmax(0, 1fr) 12px; }
   .project > span > span { -webkit-line-clamp: 2; }
   .folder > summary { min-height: 36px; }
 }
 @container project-library (max-width: 360px) {
+  .header { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); border: 0; }
   .header p { display: none; }
-  .filters { grid-template-columns: minmax(0, 1fr); }
   .filters label { gap: 3px; }
   .listTitle { display: none; }
+  .project { min-height: 88px; padding: 10px 8px; }
+  .project > span:nth-child(2) { gap: 3px; }
+  .project > span > span { -webkit-line-clamp: 1; }
 }
 /* In a short resizable window, the filters must share the scrolling surface
    with the rows instead of consuming all the catalogue's available height. */

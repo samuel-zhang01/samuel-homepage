@@ -32,6 +32,7 @@ type ProductivityAppsProps = {
   app: ProductivityAppId;
   locale: Locale;
   openApp: (id: ProductivityAppId | "orbitals") => void;
+  active?: boolean;
 };
 
 type AccessoryKind = ProductivityAppId | "orbitals";
@@ -606,7 +607,7 @@ function focusStateFromStorage(raw: string | null): { state: FocusState; complet
   };
 }
 
-function FocusClock({ locale }: { locale: Locale }) {
+function FocusClock({ locale, active }: { locale: Locale; active: boolean }) {
   const t = (value: string) => translateText(locale, value);
   const [timer, setTimer] = useState<FocusState>(freshFocusState);
   const [storageReady, setStorageReady] = useState(false);
@@ -632,7 +633,9 @@ function FocusClock({ locale }: { locale: Locale }) {
   }, []);
 
   useEffect(() => {
+    let clockTimer: number | undefined;
     const updateNow = () => {
+      if (!active || document.hidden) return;
       const next = new Date();
       const today = localDateKey(next);
       setNow(next);
@@ -640,10 +643,19 @@ function FocusClock({ locale }: { locale: Locale }) {
         ? current
         : { ...current, completedDate: today, completedCount: 0 });
     };
-    updateNow();
-    const clockTimer = window.setInterval(updateNow, 1_000);
-    return () => window.clearInterval(clockTimer);
-  }, []);
+    const syncVisibility = () => {
+      window.clearInterval(clockTimer);
+      if (!active || document.hidden) return;
+      updateNow();
+      clockTimer = window.setInterval(updateNow, 1_000);
+    };
+    syncVisibility();
+    document.addEventListener("visibilitychange", syncVisibility);
+    return () => {
+      window.clearInterval(clockTimer);
+      document.removeEventListener("visibilitychange", syncVisibility);
+    };
+  }, [active]);
 
   useEffect(() => {
     if (!timer.running || timer.endsAt === null) return;
@@ -657,14 +669,23 @@ function FocusClock({ locale }: { locale: Locale }) {
       latestFocusRef.current = next;
       setTimer(next);
     };
-    tick();
-    const interval = window.setInterval(tick, 250);
-    document.addEventListener("visibilitychange", tick);
+    let interval: number | undefined;
+    const syncVisibility = () => {
+      // The deadline keeps running while another app or browser tab is shown.
+      // Only its display needs regular ticks; settling on wake catches up once.
+      tick();
+      window.clearInterval(interval);
+      if (active && !document.hidden) interval = window.setInterval(tick, 1_000);
+    };
+    syncVisibility();
+    const completionTimer = window.setTimeout(tick, Math.max(0, timer.endsAt - Date.now()));
+    document.addEventListener("visibilitychange", syncVisibility);
     return () => {
       window.clearInterval(interval);
-      document.removeEventListener("visibilitychange", tick);
+      window.clearTimeout(completionTimer);
+      document.removeEventListener("visibilitychange", syncVisibility);
     };
-  }, [timer.endsAt, timer.running]);
+  }, [active, timer.endsAt, timer.running]);
 
   useEffect(() => {
     if (!storageReady) return;
@@ -1156,10 +1177,10 @@ function DeskCalculator({ locale }: { locale: Locale }) {
   );
 }
 
-export default function ProductivityApps({ app, locale, openApp }: ProductivityAppsProps) {
+export default function ProductivityApps({ app, locale, openApp, active = true }: ProductivityAppsProps) {
   if (app === "desk") return <DeskAccessories locale={locale} openApp={openApp} />;
   if (app === "notepad") return <NotePad locale={locale} />;
-  if (app === "focus") return <FocusClock locale={locale} />;
+  if (app === "focus") return <FocusClock locale={locale} active={active} />;
   if (app === "calculator") return <DeskCalculator locale={locale} />;
   return <ProductivityExtras app={app} locale={locale} />;
 }

@@ -74,8 +74,8 @@ const allowlist = new Map([
     type: "pdf",
   }],
   ["system7-icons/secret.png", {
-    maximumBytes: 261_249,
-    sha256: "ec9557050830ecbf142c325f1cde8808944bcc806806a3ea1bc4ccb7199d71c2",
+    maximumBytes: 227_911,
+    sha256: "c550d7b9680dc0b33dfb56e7e7dcbf8b2c7970d27fc272329411c4c1b24bdc9c",
     type: "png",
   }],
   ...scientificMedia,

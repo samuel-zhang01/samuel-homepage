@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { useDesktopPreferences } from "@/hooks/useDesktopPreferences";
 import { readDesktopPreferences, type DesktopPattern } from "@/lib/desktopPreferences";
 import { WindowErrorBoundary } from "./WindowErrorBoundary";
@@ -39,6 +39,7 @@ import { projectText } from "@/lib/projectCopy";
 import { desktopCopy } from "./desktopCopy";
 import { homepageCopy } from "./homepageCopy";
 import { projectMenuCopy } from "./projectMenuCopy";
+import { SYSTEM7_ICONS } from "@/lib/system7Icons";
 import type { FinderApplication } from "./DesktopFinder";
 
 const desktopText = { ...projectMenuCopy, ...desktopCopy, ...profileCopy, ...homepageCopy };
@@ -1263,11 +1264,17 @@ function seededRandom(seed: number) {
   return () => ((value = (value * 16807) % 2147483647) - 1) / 2147483646;
 }
 
-function createMinefield(seed = 91): MineCell[] {
+function createMinefield(seed = 91, safeIndex?: number): MineCell[] {
   const size = 8;
-  const random = seededRandom(seed);
+  // Mix nearby field seeds before the generator's first draw. Small sequential
+  // seeds otherwise put their first mine in the same corner for many rounds.
+  const mixedSeed = Math.imul(seed ^ 0x9e3779b9, 0x85ebca6b) >>> 0;
+  const random = seededRandom(mixedSeed);
   const mines = new Set<number>();
-  while (mines.size < 10) mines.add(Math.floor(random() * size * size));
+  while (mines.size < 10) {
+    const index = Math.floor(random() * size * size);
+    if (index !== safeIndex) mines.add(index);
+  }
 
   return Array.from({ length: size * size }, (_, index) => {
     const row = Math.floor(index / size);
@@ -1423,6 +1430,7 @@ function describeWordGuess(
 
 function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; locale: Locale; active: boolean }) {
   const [game, setGame] = useState<ArcadeGameId>("minefield");
+  const [visitedGames, setVisitedGames] = useState<ReadonlySet<ArcadeGameId>>(() => new Set(["minefield"]));
   const [minefield, setMinefield] = useState(() => createMinefield());
   const [mineStatus, setMineStatus] = useState<"playing" | "won" | "lost">("playing");
   const [flagMode, setFlagMode] = useState(false);
@@ -1441,7 +1449,14 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
   const memoryTimer = useRef<number | null>(null);
   const gamesMenuRef = useRef<HTMLElement | null>(null);
   const gameStageRef = useRef<HTMLElement | null>(null);
+  const puzzleBoardRef = useRef<HTMLDivElement | null>(null);
+  const puzzleFocusRef = useRef<number | null>(null);
   useEffect(() => { if (gameStageRef.current) gameStageRef.current.scrollTop = 0; }, [game]);
+  useEffect(() => {
+    const tile = puzzleFocusRef.current;
+    puzzleFocusRef.current = null;
+    if (tile !== null) puzzleBoardRef.current?.querySelector<HTMLButtonElement>(`[data-puzzle-tile="${tile}"]`)?.focus({ preventScroll: true });
+  }, [puzzle]);
   const mineSeed = useRef(91);
   const puzzleSeed = useRef(1991);
   const memorySeed = useRef(1991);
@@ -1500,7 +1515,11 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
       return;
     }
     if (mineStatus !== "playing" || minefield[index].revealed || minefield[index].flagged) return;
-    const next = minefield.map((cell) => ({ ...cell }));
+    // No information has been revealed yet, so place this field around its
+    // first chosen square. Markers made before that first reveal stay put.
+    const next = minefield.some((cell) => cell.revealed)
+      ? minefield.map((cell) => ({ ...cell }))
+      : createMinefield(mineSeed.current, index).map((cell, cellIndex) => ({ ...cell, flagged: minefield[cellIndex].flagged }));
     if (next[index].mine) {
       next.forEach((cell) => { if (cell.mine) cell.revealed = true; });
       setMinefield(next);
@@ -1545,6 +1564,7 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
     const blankRow = Math.floor(blank / 4);
     const blankColumn = blank % 4;
     if (Math.abs(row - blankRow) + Math.abs(column - blankColumn) !== 1) return;
+    if (puzzleBoardRef.current?.contains(document.activeElement)) puzzleFocusRef.current = puzzle[index];
     setPuzzle((current) => {
       const next = [...current];
       [next[index], next[blank]] = [next[blank], next[index]];
@@ -1669,7 +1689,10 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
               type="button"
               data-game-id={item.id}
               className={game === item.id ? "is-active" : ""}
-              onClick={() => setGame(item.id)}
+              onClick={() => {
+                setGame(item.id);
+                setVisitedGames((current) => current.has(item.id) ? current : new Set(current).add(item.id));
+              }}
               aria-pressed={game === item.id}
             >
               <span className="game-mini-icon" aria-hidden="true"><System7Icon kind={arcadeIconKinds[item.id]} /></span>
@@ -1733,6 +1756,7 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
             </div>
             <div className="puzzle-message" role="status">{puzzleSolved ? "Solved. The Macintosh is impressed." : "Put the numbers back in order."}</div>
             <div
+              ref={puzzleBoardRef}
               className="puzzle-board"
               role="group"
               tabIndex={0}
@@ -1741,7 +1765,8 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
             >
               {puzzle.map((tile, index) => (
                 <button
-                  key={`${tile}-${index}`}
+                  key={tile}
+                  data-puzzle-tile={tile}
                   className={tile === 0 ? "is-empty" : ""}
                   onClick={() => moveTile(index)}
                   disabled={tile === 0 || !canMovePuzzleTile(index)}
@@ -1842,9 +1867,9 @@ function GamesApp({ openApp, locale, active }: { openApp: (id: AppId) => void; l
             )}
           </>
         )}
-        {game === "snake" && <SnakeGame locale={locale} active={active} />}
-        {game === "brickbreaker" && <BrickBreakerGame locale={locale} active={active} />}
-        {game === "spectrum" && <HplcPeakDock locale={locale} />}
+        {visitedGames.has("snake") && <div className="arcade-game-panel" hidden={game !== "snake"}><SnakeGame locale={locale} active={active && game === "snake"} /></div>}
+        {visitedGames.has("brickbreaker") && <div className="arcade-game-panel" hidden={game !== "brickbreaker"}><BrickBreakerGame locale={locale} active={active && game === "brickbreaker"} /></div>}
+        {visitedGames.has("spectrum") && <div className="arcade-game-panel" hidden={game !== "spectrum"}><HplcPeakDock locale={locale} /></div>}
       </section>
     </div></TranslationBoundary>
   );
@@ -2047,7 +2072,7 @@ function AppContent({
     case "projects": return <ProjectExplorer active={active} locale={locale} onOpenApp={openApp} />;
     case "project": return initialProjectSlug ? <ProjectDocument key={initialProjectSlug} slug={initialProjectSlug} locale={locale} onOpenApp={openApp} onBack={onProjectBack} onGraph={onProjectGraph} active={active} /> : null;
     case "projectActivity": return activity ? <ProjectActivity key={`${activity.slug}:${activity.kind}:${activity.artifactHref ?? ""}`} {...activity} locale={locale} active={active} onBack={onActivityBack} /> : null;
-    case "sidequest": return <SideQuestCabinetApp locale={locale} />;
+    case "sidequest": return <SideQuestCabinetApp locale={locale} active={active} />;
     case "skills": return <SkillsApp locale={locale} />;
     case "education": return <EducationApp locale={locale} />;
     case "documents": return <DocumentsApp locale={locale} />;
@@ -2056,7 +2081,7 @@ function AppContent({
     case "notepad": return <ProductivityApps app="notepad" openApp={openApp} locale={locale} />;
     case "sketch": return <ProductivityApps app="sketch" openApp={openApp} locale={locale} />;
     case "tasks": return <ProductivityApps app="tasks" openApp={openApp} locale={locale} />;
-    case "focus": return <ProductivityApps app="focus" openApp={openApp} locale={locale} />;
+    case "focus": return <ProductivityApps app="focus" openApp={openApp} locale={locale} active={active} />;
     case "calendar": return <ProductivityApps app="calendar" openApp={openApp} locale={locale} />;
     case "calculator": return <ProductivityApps app="calculator" openApp={openApp} locale={locale} />;
     case "converter": return <ProductivityApps app="converter" openApp={openApp} locale={locale} />;
@@ -2116,6 +2141,11 @@ export default function SystemSevenDesktop({
   const [memoryMagic, setMemoryMagic] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [mobileGuide, setMobileGuide] = useState(false);
+  // Start with covered launchers deferred until the actual viewport is known.
+  // This avoids requesting desktop artwork during phone hydration.
+  const [compactCanvas, setCompactCanvas] = useState(true);
+  const dockRef = useRef<HTMLDivElement>(null);
+  const [dockEdges, setDockEdges] = useState({ start: false, end: false });
   const zCounter = useRef(Math.max(...INITIAL_WINDOWS.map((item) => item.z)));
   const dragState = useRef<{ id: AppId; offsetX: number; offsetY: number } | null>(null);
   const resizeState = useRef<{
@@ -2171,6 +2201,7 @@ export default function SystemSevenDesktop({
 
   useEffect(() => {
     const clampWindowsToViewport = () => {
+      setCompactCanvas(isCompactCanvasViewport());
       setWindows((current) => {
         let changed = false;
         const next = current.map((item) => {
@@ -2209,6 +2240,38 @@ export default function SystemSevenDesktop({
       // Keep the normal startup sequence when storage is unavailable.
     }
   }, [skipBoot]);
+
+  useEffect(() => {
+    if (!booting) return;
+    let cancelled = false;
+    const warmImage = async (source: string, srcSet?: string, sizes?: string) => {
+      const image = new window.Image();
+      image.fetchPriority = "high";
+      if (sizes) image.sizes = sizes;
+      if (srcSet) image.srcset = srcSet;
+      await new Promise<void>(resolve => {
+        image.onload = image.onerror = () => resolve();
+        image.src = source;
+        if (image.complete) resolve();
+      });
+      try { await image.decode(); } catch { /* Visible images retain normal error handling. */ }
+    };
+    const critical = [warmImage(SYSTEM7_ICONS[getApplicationIcon(activeId)])];
+    if (activeId === "about") {
+      const { props } = getImageProps({ src: "/headshot.jpg", alt: "Samuel Zhang", fill: true, sizes: "170px" });
+      critical.push(warmImage(props.src, props.srcSet, props.sizes));
+    }
+    // The branded interval prepares the first destination, not every demo.
+    // Optional tools only warm after its images, with spare network capacity.
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    void Promise.all(critical).then(() => {
+      if (cancelled || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType ?? "")) return;
+      const warmTools = () => { if (!cancelled) void import("./DesktopTools").catch(() => {}); };
+      if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(warmTools, { timeout: 1200 });
+      else globalThis.setTimeout(warmTools, 300);
+    });
+    return () => { cancelled = true; };
+  }, [activeId, booting]);
 
   useEffect(() => {
     if (!booting) return;
@@ -2305,7 +2368,9 @@ export default function SystemSevenDesktop({
   }, [booting, mobileGuide]);
 
   useEffect(() => {
-    const move = (event: PointerEvent) => {
+    let frame: number | null = null;
+    let pending: { clientX: number; clientY: number } | null = null;
+    const applyMove = (event: { clientX: number; clientY: number }) => {
       const resize = resizeState.current;
       if (resize && !isCompactCanvasViewport()) {
         setWindows((current) => current.map((windowState) => {
@@ -2334,7 +2399,21 @@ export default function SystemSevenDesktop({
         ),
       );
     };
+    const move = (event: PointerEvent) => {
+      if (!dragState.current && !resizeState.current) return;
+      pending = { clientX: event.clientX, clientY: event.clientY };
+      if (frame !== null) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = null;
+        if (pending) applyMove(pending);
+        pending = null;
+      });
+    };
     const stop = () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      frame = null;
+      if (pending) applyMove(pending);
+      pending = null;
       dragState.current = null;
       resizeState.current = null;
     };
@@ -2342,6 +2421,7 @@ export default function SystemSevenDesktop({
     window.addEventListener("pointerup", stop);
     window.addEventListener("pointercancel", stop);
     return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", stop);
       window.removeEventListener("pointercancel", stop);
@@ -2360,6 +2440,31 @@ export default function SystemSevenDesktop({
   const activeTitle = activeWindow ? windowTitle(activeWindow) : "Finder";
   const activeLocaleOption = localeOptions.find((option) => option.locale === locale) ?? localeOptions[0];
   const openWindows = useMemo(() => windows.filter((item) => item.open), [windows]);
+  const desktopExposed = !compactCanvas || openWindows.length === 0;
+  const dockOrder = openWindows.map(item => item.id).join("|");
+  const updateDockEdges = useCallback(() => {
+    const dock = dockRef.current;
+    const next = { start: Boolean(dock && dock.scrollLeft > 2), end: Boolean(dock && dock.scrollLeft + dock.clientWidth < dock.scrollWidth - 2) };
+    setDockEdges(current => current.start === next.start && current.end === next.end ? current : next);
+  }, []);
+  useEffect(() => {
+    const dock = dockRef.current;
+    if (booting || !dock || !compactCanvas) return;
+    const revealActive = () => {
+      const active = dock.querySelector<HTMLButtonElement>('[aria-current="page"]');
+      if (active) {
+        const bounds = dock.getBoundingClientRect();
+        const target = active.getBoundingClientRect();
+        if (target.left < bounds.left + 4) dock.scrollLeft += target.left - bounds.left - 4;
+        else if (target.right > bounds.right - 4) dock.scrollLeft += target.right - bounds.right + 4;
+      }
+      updateDockEdges();
+    };
+    const frame = window.requestAnimationFrame(revealActive);
+    const observer = new ResizeObserver(revealActive);
+    observer.observe(dock);
+    return () => { window.cancelAnimationFrame(frame); observer.disconnect(); };
+  }, [activeId, booting, compactCanvas, dockOrder, locale, updateDockEdges]);
   const selectedDesktopItem = DESKTOP_ICONS.find((item) => item.id === selectedIcon);
 
   const syncAddress = useCallback((id: AppId, nextLocale = locale, forceLocalePrefix = false) => {
@@ -2737,7 +2842,10 @@ export default function SystemSevenDesktop({
     syncAddress(nextActiveId);
     window.requestAnimationFrame(() => {
       const returnTarget = returnFocusByApp.current[id];
-      if (returnTarget?.isConnected && returnTarget.closest(`[data-app-id="${nextActiveId}"]`)) returnTarget.focus();
+      if (!remaining.length) {
+        if (returnTarget?.isConnected && returnTarget.closest(".desktop-icon")) returnTarget.focus();
+        else menuButtonRefs.current.apple?.focus();
+      } else if (returnTarget?.isConnected && returnTarget.closest(`[data-app-id="${nextActiveId}"]`)) returnTarget.focus();
       else document.querySelector<HTMLButtonElement>(`[data-app-id="${nextActiveId}"] .window-close`)?.focus();
     });
   };
@@ -2909,7 +3017,7 @@ export default function SystemSevenDesktop({
   if (booting) {
     return (
       <TranslationBoundary locale={locale}><main className="boot-screen" data-locale={locale} onClick={completeBoot}>
-        <div className="boot-computer" aria-hidden="true"><System7Icon kind="computer" /></div>
+        <div className="boot-computer" aria-hidden="true"><System7Icon kind="computer" eager /></div>
         <h1>Welcome to Samuel System 7</h1>
         <p className="boot-status" key={bootMessageIndex} aria-live="polite">{BOOT_MESSAGES[bootMessageIndex]}</p>
         <div
@@ -3059,7 +3167,7 @@ export default function SystemSevenDesktop({
         </div>
       </nav>
 
-      <div inert={mobileGuide || finderOpen} className="desktop-icons" role="group" aria-label="Desktop items">
+      <div inert={mobileGuide || finderOpen || !desktopExposed} aria-hidden={!desktopExposed || undefined} className="desktop-icons" role="group" aria-label="Desktop items">
         {DESKTOP_ICONS.map((item) => (
           <button
             key={item.id}
@@ -3069,7 +3177,7 @@ export default function SystemSevenDesktop({
             aria-pressed={selectedIcon === item.id}
             onClick={() => { setSelectedIcon(item.id); openApp(item.id); }}
           >
-            <span className="desktop-icon__graphic"><PixelIcon kind={getApplicationIcon(item.id)} /></span>
+            <span className="desktop-icon__graphic">{desktopExposed && <PixelIcon kind={getApplicationIcon(item.id)} />}</span>
             <span className="desktop-icon__label">{item.label}</span>
           </button>
         ))}
@@ -3106,13 +3214,17 @@ export default function SystemSevenDesktop({
           <span>Click an icon to open it · Use the menu for every destination · Drag title bars to move · Drag lower-right corners to resize</span>
         )}
       </div>
-      <div inert={mobileGuide || finderOpen} className="window-switcher" role="navigation" aria-label="Open applications">
+      <div className="window-switcher-frame" data-overflow-start={dockEdges.start} data-overflow-end={dockEdges.end}>
+      <div ref={dockRef} onScroll={updateDockEdges} inert={mobileGuide || finderOpen} className="window-switcher" role="navigation" aria-label="Open applications">
         {openWindows.map((item) => (
-          <button key={item.id} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, windowTitle(item))}`}>
+          <button key={item.id} aria-current={activeId === item.id ? "page" : undefined} className={activeId === item.id ? "is-active" : ""} onClick={() => focusWindow(item.id)} aria-label={`${translateText(locale, "Show")} ${translateText(locale, windowTitle(item))}`}>
             <PixelIcon kind={windowIcon(item)} />
             <span>{windowTitle(item)}</span>
           </button>
         ))}
+      </div>
+      <span className="window-switcher-edge window-switcher-edge--start" aria-hidden="true" />
+      <span className="window-switcher-edge window-switcher-edge--end" aria-hidden="true" />
       </div>
       {mobileGuide && (
         <>

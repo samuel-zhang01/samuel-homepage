@@ -9,7 +9,9 @@ const standaloneRoot = join(outputRoot, "standalone");
 // The shared 42-project visual overview adds one lazy script/style pair.
 // The secret's two files load only on discovery; byte/initial-load limits stay fixed.
 // Browser View's removed simulation releases its lazy script/style allocation.
-const MAX_BROWSER_FILES = 128;
+// The knowledge graph now owns a deferred script/style pair instead of loading
+// with the project archive. Byte and initial-JavaScript budgets are unchanged.
+const MAX_BROWSER_FILES = 130;
 // Full CN/TW copy and the requested interactive product/ML tasks live in lazy
 // project chunks. Bound that content separately from the unchanged initial load.
 const MAX_BROWSER_BYTES = 5.5 * 1024 * 1024;

@@ -410,7 +410,7 @@ function BuildPanel({ locale, active }: { locale: Locale; active: boolean }) {
   </>)}</>;
 }
 
-export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
+export default function SideQuestCabinetApp({ locale, active = true }: { locale: Locale; active?: boolean }) {
   const [panel, setPanel] = useState<PanelId>("day");
 
   useEffect(() => {
@@ -481,7 +481,7 @@ export default function SideQuestCabinetApp({ locale }: { locale: Locale }) {
         <section className={styles.panel} id="runhack-panel-day" role="tabpanel" aria-labelledby="runhack-tab-day" hidden={panel !== "day"}><DayPanel locale={locale} /></section>
         <section className={styles.panel} id="runhack-panel-rules" role="tabpanel" aria-labelledby="runhack-tab-rules" hidden={panel !== "rules"}><RulesPanel locale={locale} /></section>
         <section className={styles.panel} id="runhack-panel-people" role="tabpanel" aria-labelledby="runhack-tab-people" hidden={panel !== "people"}><PeoplePanel locale={locale} /></section>
-        <section className={styles.panel} id="runhack-panel-build" role="tabpanel" aria-labelledby="runhack-tab-build" hidden={panel !== "build"}><BuildPanel locale={locale} active={panel === "build"} /></section>
+        <section className={styles.panel} id="runhack-panel-build" role="tabpanel" aria-labelledby="runhack-tab-build" hidden={panel !== "build"}><BuildPanel locale={locale} active={active && panel === "build"} /></section>
       </div>
 
       <footer className={styles.footer}>

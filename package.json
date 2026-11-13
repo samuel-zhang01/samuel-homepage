@@ -18,6 +18,10 @@
     "check:icons": "node scripts/check-system7-icons.mjs && node scripts/check-site-icons.mjs",
     "check:data": "node scripts/check-project-csv-fixtures.mjs",
     "check:desk": "node scripts/check-desk-behavior.mjs && node scripts/check-desk-persistence.mjs",
+    "check:games": "node scripts/check-arcade-games.mjs",
+    "check:games:browser": "node scripts/check-arcade-browser.mjs",
+    "check:mobile-ui": "node scripts/check-mobile-ui.mjs",
+    "check:mobile-navigation": "node scripts/check-mobile-navigation.mjs",
     "check:controls": "node scripts/check-classic-select.mjs",
     "check:orbitals": "node scripts/check-orbitals.mjs",
     "check:deploy": "node scripts/check-deploy.mjs",
@@ -27,7 +31,7 @@
     "check:locales": "node scripts/check-locales.mjs",
     "check:output": "node scripts/check-build-output.mjs",
     "audit:dependencies": "npm audit --audit-level=moderate && npm audit signatures",
-    "prebuild": "node scripts/check-next-lint-dependency.mjs && npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:icons && npm run check:data && npm run check:desk && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:visuals && npm run check:experiments && npm run check:catalogue && npm run check:profile && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
+    "prebuild": "node scripts/check-next-lint-dependency.mjs && npm run prepare:pdfjs && npm run prepare:math && npm run prepare:search && npm run check:search && npm run check:finder && npm run check:artifacts && npm run check:icons && npm run check:data && npm run check:desk && npm run check:games && npm run check:pdf && npm run check:controls && npm run check:orbitals && npm run check:learning && npm run check:scientific-media && npm run check:visuals && npm run check:experiments && npm run check:catalogue && npm run check:profile && npm run check:graph && npm run check:project-navigation && npm run check:math && npm run check:styles && npm run check:locales && npm run check:project-copy",
     "build": "next build",
     "postbuild": "npm run check:output",
     "build:isolated": "npm run prebuild && NEXT_DIST_DIR=.next-build next build && node scripts/check-build-output.mjs .next-build",
@@ -67,6 +71,9 @@
     "sharp": "0.35.5",
     "@typescript-eslint/eslint-plugin": "8.55.0",
     "@typescript-eslint/parser": "8.55.0",
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "11.0.1"
+    },
     "@next/eslint-plugin-next": {
       "fast-glob": "npm:tinyglobby@0.2.17"
     }

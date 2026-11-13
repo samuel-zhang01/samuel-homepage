@@ -263,7 +263,6 @@ export function SnakeGame({ locale, active = true }: GameProps) {
         <div>
           <span className="eyebrow">{t("DESK ARCADE · CLASSIC")}</span>
           <h3 id="snake-game-title">{t("Snake")}</h3>
-          <p>{t("Collect every byte. Avoid the edge of the desktop—and yourself.")}</p>
         </div>
         <dl className="arcade-game__scoreboard">
           <div><dt>{t("Score")}</dt><dd>{state.score}</dd></div>
@@ -312,7 +311,11 @@ export function SnakeGame({ locale, active = true }: GameProps) {
           <button type="button" onClick={() => dispatch({ type: "reset" })}>{t("Reset")}</button>
         </div>
       </div>
-      <p id="snake-game-keys" className="arcade-game__keys">{t("Keyboard: Arrow keys or WASD · P pause · R reset")}</p>
+      <details className="arcade-game__guide" onToggle={(event) => { if (event.currentTarget.open) dispatch({ type: "pause" }); }}>
+        <summary>{locale === "zh-CN" ? "玩法说明" : locale === "zh-TW" ? "玩法說明" : "How to play"}</summary>
+        <p>{t("Collect every byte. Avoid the edge of the desktop—and yourself.")}</p>
+        <p id="snake-game-keys" className="arcade-game__keys">{t("Keyboard: Arrow keys or WASD · P pause · R reset")}</p>
+      </details>
     </section>
   );
 }
@@ -555,7 +558,10 @@ export function BrickBreakerGame({ locale, active = true }: GameProps) {
   const t = useCallback((text: string) => translateText(locale, text), [locale]);
 
   useEffect(() => {
-    if (!active) dispatch({ type: "pause" });
+    if (!active) {
+      paddleDirectionRef.current = 0;
+      dispatch({ type: "pause" });
+    }
   }, [active]);
 
   useEffect(() => {
@@ -661,8 +667,8 @@ export function BrickBreakerGame({ locale, active = true }: GameProps) {
       aria-describedby="brick-game-keys"
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
-      onBlur={() => {
-        paddleDirectionRef.current = 0;
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) paddleDirectionRef.current = 0;
       }}
       tabIndex={0}
     >
@@ -670,7 +676,6 @@ export function BrickBreakerGame({ locale, active = true }: GameProps) {
         <div>
           <span className="eyebrow">{t("DESK ARCADE · CLASSIC")}</span>
           <h3 id="brick-game-title">{t("Brick Breaker")}</h3>
-          <p>{t("Keep the ball above the menu bar and clear every colourful brick.")}</p>
         </div>
         <dl className="arcade-game__scoreboard">
           <div><dt>{t("Score")}</dt><dd>{state.score}</dd></div>
@@ -748,7 +753,11 @@ export function BrickBreakerGame({ locale, active = true }: GameProps) {
           <button type="button" onClick={() => dispatch({ type: "reset" })}>{t("Reset")}</button>
         </div>
       </div>
-      <p id="brick-game-keys" className="arcade-game__keys">{t("Keyboard: Left/Right or A/D · P pause · R reset")}</p>
+      <details className="arcade-game__guide" onToggle={(event) => { if (event.currentTarget.open) dispatch({ type: "pause" }); }}>
+        <summary>{locale === "zh-CN" ? "玩法说明" : locale === "zh-TW" ? "玩法說明" : "How to play"}</summary>
+        <p>{t("Keep the ball above the menu bar and clear every colourful brick.")}</p>
+        <p id="brick-game-keys" className="arcade-game__keys">{t("Keyboard: Left/Right or A/D · P pause · R reset")}</p>
+      </details>
     </section>
   );
 }

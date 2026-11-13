@@ -85,7 +85,7 @@ export function MacButton({
     <button
       {...props}
       type={type}
-      className={`s7-button ${primary || variant === "default" ? "is-default" : ""} ${variant === "icon" ? "s7-button--icon" : ""} ${className}`}
+      className={`s7-button ${primary ? "is-primary" : ""} ${variant === "default" ? "is-default" : ""} ${variant === "icon" ? "s7-button--icon" : ""} ${className}`}
     >
       {children}
     </button>

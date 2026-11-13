@@ -17,8 +17,9 @@ const rgba = bytes => sharp(bytes).ensureAlpha().raw().toBuffer();
 const profileMetadata = await sharp(profile).metadata();
 assert.equal(profileMetadata.format, "png", "Profile source is PNG");
 assert.ok(profileMetadata.width > 512 && profileMetadata.width === profileMetadata.height && profileMetadata.hasAlpha, "Profile source retains its authentic native resolution and alpha");
-assert.equal(createHash("sha256").update(profile).digest("hex"), "6e495d0d9d64ed9c1086e133b5d7bbd1d6a5bfe34e8ed2629777a04decd1a71c", "Browser derivatives use the recovered native profile PNG");
+assert.equal(createHash("sha256").update(profile).digest("hex"), "2f58131ed014a38bc56bd829a8da7635809c541757805ee4031c926f45055c43", "Browser derivatives use the losslessly encoded native profile PNG");
 const nativePixels = await rgba(profile);
+assert.equal(createHash("sha256").update(nativePixels).digest("hex"), "cad0024c669bf275997c391047f00d46f44d3b513bcce592e3e8c23268e06b7f", "Recompressed profile preserves every original RGBA byte");
 const bounds = [profileMetadata.width, profileMetadata.height, -1, -1];
 for (let y = 0; y < profileMetadata.height; y++) for (let x = 0; x < profileMetadata.width; x++) {
   if (nativePixels[(y * profileMetadata.width + x) * 4 + 3] < 16) continue;

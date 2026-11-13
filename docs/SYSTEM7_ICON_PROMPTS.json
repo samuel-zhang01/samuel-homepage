@@ -1,19 +1,20 @@
 {
-  "mode": "Recovered unchanged native built-in image_gen outputs; no new generation or editing.",
-  "updated": "2026-10-11",
+  "mode": "Recovered native originals with lossless PNG delivery recompression; no generation or pixel editing.",
+  "updated": "2026-11-13",
   "styleReference": {
     "asset": "public/system7-icons/folder.png",
     "sha256": "8fa5ed299fff05df19d1173b9ccfefcb3b78b02da007b2955920f004515279ce",
-    "retired128pxGenerationInputSha256": "f5865b1629702d03305001a62c703395da80a8dfa693549da4a5feacf0d863aa"
+    "retired128pxGenerationInputSha256": "f5865b1629702d03305001a62c703395da80a8dfa693549da4a5feacf0d863aa",
+    "deliveredSha256": "56585730b17c9e9c1480586a2c3b165b4204fe80301919b4739a2b741f362e2c"
   },
   "delivery": {
     "subjects": 43,
     "newGenerations": 0,
     "recoveredNativeGenerations": 41,
     "preferredOriginalsRecovered": 11,
-    "totalBytes": 15588521,
+    "totalBytes": 13495209,
     "format": "41 authentic transparent 1254px generated originals, the original 512px COVERD brand and the original 1024px Ultra Convert app icon; one canonical image per subject",
-    "nativeSourcePreparation": "Unchanged source PNG bytes copied directly; no crop, resize, alpha rewrite, palette reduction, blur, smoothing or upscaling",
+    "nativeSourcePreparation": "Native canvas dimensions and every decoded RGBA byte preserved; PNG filtering/compression optimized for delivery. Source generation hashes remain recorded separately from delivered encoding hashes.",
     "originalBrandMarks": 2,
     "presentation": "Alpha >=16/255 measures optical bounds for 90% proportional CSS framing only; original PNG/RGBA pixels remain intact. Generated icons use pixelated rendering; the original brand retains white backing and its native logo.",
     "historicalPreparation": {
@@ -22,6 +23,15 @@
       "newSpritePreparation": "Retired: resized artwork to24px within32px logical canvas, then enlarged to128px. This discarded native detail.",
       "preferredSeedPreparation": "Retired: native1254px artwork reduced directly to128px using nearest-neighbour. Native sources recovered by exact RGBA correspondence.",
       "removedDetailLoss": true
+    },
+    "losslessRecompression": {
+      "updated": "2026-11-13",
+      "files": 42,
+      "sourceBytes": 15571635,
+      "deliveredBytes": 13478323,
+      "savedBytes": 2093312,
+      "decodedRgbaUnchanged": true,
+      "nativeDimensionsUnchanged": true
     }
   },
   "siteIcons": [
@@ -90,8 +100,8 @@
       "generatedFile": "exec-3ba65838-1488-4eff-8ea7-573e66640445.png",
       "sourceSha256": "e19a68187f3a8dfc3a859f44b45cce9391a439c2b182d95e78f6b92b7fc33015",
       "delivered": "public/system7-icons/accessories.png",
-      "deliveredSha256": "e19a68187f3a8dfc3a859f44b45cce9391a439c2b182d95e78f6b92b7fc33015",
-      "bytes": 278454,
+      "deliveredSha256": "166b6f39cadc80bdca9ba31ce2df1c01f6f04b2d7273b550d6ce5c10d5459652",
+      "bytes": 240085,
       "initialPrompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one small grey desktop accessory tray holding a white notepad on the left and a compact grey stopwatch on the right, tiny periwinkle edge and ochre clock hand; no enclosing tile. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
       "initialDraftSha256": "4c65ce9e5e96685bf24e72bd70c51f7b17fd235400c2249480f27e4530bf8770",
       "retired128pxDelivery": {
@@ -102,7 +112,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "da43b039647f08ab601101a101d204a9753e31a1a9ff7762ad152788f7f83069",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "e19a68187f3a8dfc3a859f44b45cce9391a439c2b182d95e78f6b92b7fc33015",
+        "sourceBytes": 278454,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "book",
@@ -111,8 +129,8 @@
       "generatedFile": "exec-617e6a17-64a2-4efc-9ea0-12a9af40bb3d.png",
       "sourceSha256": "b4154c299a5771a4c6e7339e45354db47a6f78045963a905e1fbd4c06ee6a56f",
       "delivered": "public/system7-icons/book.png",
-      "deliveredSha256": "b4154c299a5771a4c6e7339e45354db47a6f78045963a905e1fbd4c06ee6a56f",
-      "bytes": 419427,
+      "deliveredSha256": "9575fa079515391e5ff2ff43a29cff8a48e824aa1d909e0fad7fd16162e6658d",
+      "bytes": 369298,
       "initialPrompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG for a Macintosh System 7 inspired website. Input image: STYLE REFERENCE ONLY, match its palette, outline weight, shallow depth and square canvas placement; reference folder subject must NOT appear. Subject: one open study book, two white pages with three short grey ink strokes each, thick pale-grey page edges and muted-periwinkle blue cover visible at bottom; shallow perspective, no readable text. Style: expertly hand-pixelled early-1990s Macintosh icon with an exact logical 32-by-32 grid, enlarged with crisp square nearest-neighbor pixels. Hard charcoal stepped outline one logical pixel wide, white or light neutral top-left highlights, medium-grey lower-right edge, very tiny hard stepped shadow. Simple flat forms, shallow depth. Restrained white, light grey, dark grey, muted periwinkle #8799dc and muted ochre #c6ae76, about 8 flat colors. Strong readable silhouette when reduced to 16px and 32px. Single centred subject fills 76 percent of a square canvas, generous equal transparent margins. True RGBA transparent background, alpha zero outside artwork. NO painted checkerboard, solid background, backdrop, gradients, blur, antialiasing, photorealism, modern emoji shading, glossy 3D render, rounded app tile, border/frame around the entire artwork, labels, words, letters, logos or watermark. Exactly one icon only.",
       "initialDraftSha256": "e77f3f9a9186d2f63978d5745eba438eda20a7e1dee1b1aeeb84f2cc5bec5750",
       "retired128pxDelivery": {
@@ -123,7 +141,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "02e4198a72bca15e03898e22f339e08e3a85f3af938f527f554f444286e2b8e2",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "b4154c299a5771a4c6e7339e45354db47a6f78045963a905e1fbd4c06ee6a56f",
+        "sourceBytes": 419427,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "brickbreaker",
@@ -131,8 +157,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a small classic breakout scene isolated as an icon: two rows of three pale-grey and periwinkle bricks, a tiny ochre ball, and one grey horizontal paddle beneath, no surrounding screen or frame. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
       "sourceSha256": "31449a75b2277edd59d1001a4d1db4924328609864683e1e7ee6ca5aa748b679",
       "delivered": "public/system7-icons/brickbreaker.png",
-      "deliveredSha256": "31449a75b2277edd59d1001a4d1db4924328609864683e1e7ee6ca5aa748b679",
-      "bytes": 333242,
+      "deliveredSha256": "0b1cc3d7e5b24b9cec093218c6aa29ab866fba579237c7448c4a78e4b27720cc",
+      "bytes": 290294,
       "retired128pxDelivery": {
         "deliveredSha256": "b83c1158c3ec026ba0a57b57c182180f6a4b8466fcb89fb20e301d1187a3412d",
         "bytes": 7058,
@@ -143,7 +169,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "32c0eb1f7d978d4a95b861edc772758fce48d1cbdb7970c4c4764bd86006e2df",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "31449a75b2277edd59d1001a4d1db4924328609864683e1e7ee6ca5aa748b679",
+        "sourceBytes": 333242,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "briefcase",
@@ -152,8 +186,8 @@
       "generatedFile": "exec-3f6efbc6-0a88-45a4-a2ad-35523ec0595d.png",
       "sourceSha256": "6d9336753eef82ecf376b83665adcafec602b631541ac203ecaa12f103e20623",
       "delivered": "public/system7-icons/briefcase.png",
-      "deliveredSha256": "6d9336753eef82ecf376b83665adcafec602b631541ac203ecaa12f103e20623",
-      "bytes": 426936,
+      "deliveredSha256": "02b67664447a467c9fd03f38f4842e7b7a8f6adbbccc7deb247b86139b6d67a6",
+      "bytes": 373717,
       "retired128pxDelivery": {
         "deliveredSha256": "fe1cb119a15ae0392d663db8ccbf34a96722e76cafa742f886e69d261dab4327",
         "bytes": 1362,
@@ -162,7 +196,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "174c0efe7318988d5ab1f4bad5411a8d0bbbf7b73963b58c4ade22a6ae4313d0",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "6d9336753eef82ecf376b83665adcafec602b631541ac203ecaa12f103e20623",
+        "sourceBytes": 426936,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "calculator",
@@ -171,8 +213,8 @@
       "generatedFile": "exec-ec0df2ed-0702-43a0-acc1-93d1d14ac620.png",
       "sourceSha256": "5bb30a23b9ccaaba8492211511e2da450f74eeaeb450c967a68826fbe97d13a6",
       "delivered": "public/system7-icons/calculator.png",
-      "deliveredSha256": "5bb30a23b9ccaaba8492211511e2da450f74eeaeb450c967a68826fbe97d13a6",
-      "bytes": 358246,
+      "deliveredSha256": "f2f18825dd0a6d6ac2b1a5907170e64955c7f22271f413a612287f4e5ddc4126",
+      "bytes": 315934,
       "retired128pxDelivery": {
         "deliveredSha256": "7f35a4f6da6ccd7367b7ffeca8912d730254c864bf77a9b89ee55c5f797ac486",
         "bytes": 1719,
@@ -181,7 +223,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "d4ef0758dd6dee58bb6d12531e9463a938c813bcb50005c9b53dd64af4f37b3f",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "5bb30a23b9ccaaba8492211511e2da450f74eeaeb450c967a68826fbe97d13a6",
+        "sourceBytes": 358246,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "calendar",
@@ -190,8 +240,8 @@
       "generatedFile": "exec-3e5cb014-4d2b-4f92-af85-bc7fb12c7097.png",
       "sourceSha256": "383498d99388bde9c5f8086ff2a6cc694339528f30ab46ef05cee7e6856cb2fe",
       "delivered": "public/system7-icons/calendar.png",
-      "deliveredSha256": "383498d99388bde9c5f8086ff2a6cc694339528f30ab46ef05cee7e6856cb2fe",
-      "bytes": 355974,
+      "deliveredSha256": "debc3c09acb7a89ad57620e106e2b5961338c53f715d4f305b65f478178003a2",
+      "bytes": 312677,
       "retired128pxDelivery": {
         "deliveredSha256": "f1967a69f8ca53a8e899a875088fcb5426d9cbb8b128c7e561f3475335ca5ceb",
         "bytes": 1672,
@@ -200,7 +250,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "8eb0c685b12abecbe2bd4bdb953f8e2c0eff91b2973c0c912d4cbe47e3d84a1d",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "383498d99388bde9c5f8086ff2a6cc694339528f30ab46ef05cee7e6856cb2fe",
+        "sourceBytes": 355974,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "cards",
@@ -208,8 +266,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create two offset pale-grey playing cards with dark outlines, front card showing a single muted-periwinkle diamond and rear card a small ochre diamond, no numbers or letters. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
       "sourceSha256": "9b3e70a2dfbe4c779be08de7dec41c15e5cd1186a26981715eaec46144e68698",
       "delivered": "public/system7-icons/cards.png",
-      "deliveredSha256": "9b3e70a2dfbe4c779be08de7dec41c15e5cd1186a26981715eaec46144e68698",
-      "bytes": 474568,
+      "deliveredSha256": "92bfac6d0eae6280db887d5fc30dedf8342ee4f96b5ed2c21a7511d418285467",
+      "bytes": 418501,
       "retired128pxDelivery": {
         "deliveredSha256": "55afc3af8946e1e9636793039e8cccdde373f27f50df20c247516c45818d30a3",
         "bytes": 9219,
@@ -220,7 +278,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "2adc22275c823ff375fd17a05355cec41f14d5c2ba264fc774bcbba9dc5bba7e",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "9b3e70a2dfbe4c779be08de7dec41c15e5cd1186a26981715eaec46144e68698",
+        "sourceBytes": 474568,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "chart",
@@ -229,8 +295,8 @@
       "generatedFile": "exec-a69cb166-ff4c-4ecb-88ae-532920d09ff0.png",
       "sourceSha256": "a0d67ec342e9e48dc7c3a53d1804e39307884d69b5bef5ba5a0f7306b016c843",
       "delivered": "public/system7-icons/chart.png",
-      "deliveredSha256": "a0d67ec342e9e48dc7c3a53d1804e39307884d69b5bef5ba5a0f7306b016c843",
-      "bytes": 280781,
+      "deliveredSha256": "f10018e4286fc0acabc539724c34a43020552eef3c3002e7875b8c859337942b",
+      "bytes": 240740,
       "retired128pxDelivery": {
         "deliveredSha256": "eda608e4b57cc057c75592199c96289a189c093c0bda08a9c4bca3024284f510",
         "bytes": 1530,
@@ -239,7 +305,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "02572eb9e733e98e59199312fe31ae8c2ac8673fae0f29ce92c5118e7df4d28e",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "a0d67ec342e9e48dc7c3a53d1804e39307884d69b5bef5ba5a0f7306b016c843",
+        "sourceBytes": 280781,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "clock",
@@ -248,8 +322,8 @@
       "generatedFile": "exec-724218f1-3cf1-44e5-8b36-550fead7ad9c.png",
       "sourceSha256": "ab8ebe7a44150954ff7f9d0f913015f4c77c00a5935a355babe337c84db33327",
       "delivered": "public/system7-icons/clock.png",
-      "deliveredSha256": "ab8ebe7a44150954ff7f9d0f913015f4c77c00a5935a355babe337c84db33327",
-      "bytes": 361728,
+      "deliveredSha256": "19c4b102b0c5ccb812ec01cb645fca35d5cf3c9342002056909bc3617e2e1678",
+      "bytes": 320462,
       "retired128pxDelivery": {
         "deliveredSha256": "c628f943af57cdd48558bcadb665be39481071b0a7e3f0ead3ee1b64bc9640fe",
         "bytes": 1489,
@@ -258,7 +332,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "642550e2601ade9262b16a34ae6d01646b6fcba831df711af53dd9fc9b29b782",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "ab8ebe7a44150954ff7f9d0f913015f4c77c00a5935a355babe337c84db33327",
+        "sourceBytes": 361728,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "computer",
@@ -267,8 +349,8 @@
       "refinement": "Use case: background-extraction. Edit target is the provided icon. Remove ALL the grey-and-white checkerboard surrounding the icon. Output a transparent PNG with actual RGBA alpha=0 outside the icon, not a photograph of a transparency grid. Keep the icon silhouette, black stepped outline, solid white interior areas, periwinkle blue accent, original composition, dimensions, and tiny grey shadow unchanged. Do not replace the background with a solid color or with another checkerboard. The file must have true transparent pixels surrounding this single isolated pixel-art icon. No new objects, no text.",
       "sourceSha256": "3f18c4ce52327ce97b43c0d1fe6e59d110f5bad463842190caed2a482008e6a0",
       "delivered": "public/system7-icons/computer.png",
-      "deliveredSha256": "3f18c4ce52327ce97b43c0d1fe6e59d110f5bad463842190caed2a482008e6a0",
-      "bytes": 536072,
+      "deliveredSha256": "a2a07eb1f3ef29a5f3684113bf94b0b12fd1507a9a5e22a6b62dd4c44bf21a30",
+      "bytes": 472407,
       "retired128pxDelivery": {
         "deliveredSha256": "419954bcec712d896d2b965137f0a5b68fda083bccd8c405f28a3c05fab57637",
         "bytes": 11377,
@@ -279,7 +361,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "d94e7687f93261e19d4c2b9e7904784463d3e3b2cf1c2d695a6a2ee91ba8a5f3",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "3f18c4ce52327ce97b43c0d1fe6e59d110f5bad463842190caed2a482008e6a0",
+        "sourceBytes": 536072,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "controls",
@@ -288,8 +378,8 @@
       "generatedFile": "exec-623e3eca-2aaa-4592-8d7e-dc1e87143263.png",
       "sourceSha256": "48102dedad6712d100003f9161afb63aa6a1693a84a15a8c94ed996b7b266991",
       "delivered": "public/system7-icons/controls.png",
-      "deliveredSha256": "48102dedad6712d100003f9161afb63aa6a1693a84a15a8c94ed996b7b266991",
-      "bytes": 340373,
+      "deliveredSha256": "8c9c3ae74211c8c042332dcda843e9ff6f4e913af02aeee9e988f75fa839664d",
+      "bytes": 294472,
       "retired128pxDelivery": {
         "deliveredSha256": "dc157723a23c93598ea341b35974511612a6be1701e8225fea11aa5ab44547c4",
         "bytes": 1758,
@@ -298,7 +388,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "f11f6e5671039cf49385f1465c10b9055d1277893257f1c4522d96076646ef1c",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "48102dedad6712d100003f9161afb63aa6a1693a84a15a8c94ed996b7b266991",
+        "sourceBytes": 340373,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "converter",
@@ -307,8 +405,8 @@
       "generatedFile": "exec-6f838b0d-1611-499c-b5e6-ddeeada3916e.png",
       "sourceSha256": "aab77a5513ddb3dd4bcf4764740583b96042fb58beb95d9184b794a7816aa67f",
       "delivered": "public/system7-icons/converter.png",
-      "deliveredSha256": "aab77a5513ddb3dd4bcf4764740583b96042fb58beb95d9184b794a7816aa67f",
-      "bytes": 227814,
+      "deliveredSha256": "f93e8ea550abebf60c8f9f0e30ecdd416bcc1469e2198275f32d3ae3f0727e34",
+      "bytes": 192164,
       "retired128pxDelivery": {
         "deliveredSha256": "a855d0684505b18950a96ceb191e0b72e52d58732ba1b3c723f1a46998ab7eda",
         "bytes": 989,
@@ -317,7 +415,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "a9deea7a6d4f1da90eb9410407c49653ec5b106e6fedcace86dda5cc3a817e20",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "aab77a5513ddb3dd4bcf4764740583b96042fb58beb95d9184b794a7816aa67f",
+        "sourceBytes": 227814,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "coverd",
@@ -349,8 +455,8 @@
       "generatedFile": "exec-baabc3ba-9f84-4793-a846-55da509064c9.png",
       "sourceSha256": "2ce76f3eb7b4d3d320cf19719a92a38465b721cf2bc2a25caeb7852de8f02ea4",
       "delivered": "public/system7-icons/document.png",
-      "deliveredSha256": "2ce76f3eb7b4d3d320cf19719a92a38465b721cf2bc2a25caeb7852de8f02ea4",
-      "bytes": 326489,
+      "deliveredSha256": "4b633b88f430b1adf6ca77e05b62e081846dcbfbd8f3e4204f9bf8efb5e717b2",
+      "bytes": 286668,
       "retired128pxDelivery": {
         "deliveredSha256": "766c2bcd0680c4ec9688bce48c838ed2f565842f5254582762f5bc998b097236",
         "bytes": 1285,
@@ -359,7 +465,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "6af45e166ade4de2959a788e69cfd32d515bd951ee439adcdf81779154428fd4",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "2ce76f3eb7b4d3d320cf19719a92a38465b721cf2bc2a25caeb7852de8f02ea4",
+        "sourceBytes": 326489,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "finance",
@@ -368,8 +482,8 @@
       "refinement": "Use case: background-extraction. Edit target: the provided finance ledger icon. Remove the entire grey-and-white checkerboard background. Keep only the icon, preserving the black stepped outline, white paper, blue header, two gold coins and tiny dark-grey lower-right shadow exactly. Preserve its scale and position. Deliver a PNG cutout with a TRUE TRANSPARENT BACKGROUND: alpha channel zero outside the icon. The checkerboard is unwanted painted artwork and must be removed, not redrawn. Do not alter white regions inside the paper. Do not add texture, other objects, framing, text or a solid backdrop.",
       "sourceSha256": "5cada8d2900f09d58c0b316f331e91f816ac38942868a6ff10609d6fb856e60e",
       "delivered": "public/system7-icons/finance.png",
-      "deliveredSha256": "5cada8d2900f09d58c0b316f331e91f816ac38942868a6ff10609d6fb856e60e",
-      "bytes": 375155,
+      "deliveredSha256": "5a79da77edc68cb76d42f4a01889656353974f1237b896ef32e5cffdb49e4cd1",
+      "bytes": 327642,
       "retired128pxDelivery": {
         "deliveredSha256": "e7b320843a9fb8014da6f41f47b0c3914871ecf1da43401cf28592a2cb85f802",
         "bytes": 7708,
@@ -380,7 +494,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "4fc48d4efdebff84a3b9c7392f2280dc0e283c90808be1ba6cfcb7b865d8e7ad",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "5cada8d2900f09d58c0b316f331e91f816ac38942868a6ff10609d6fb856e60e",
+        "sourceBytes": 375155,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "finder",
@@ -389,8 +511,8 @@
       "generatedFile": "exec-ec178c14-3fa8-45e6-88e7-9cf8f81a293c.png",
       "sourceSha256": "f7f8b24774aaefd3f152fe7534873ac415edcbe4351bddf28a1e995f7d536cf5",
       "delivered": "public/system7-icons/finder.png",
-      "deliveredSha256": "f7f8b24774aaefd3f152fe7534873ac415edcbe4351bddf28a1e995f7d536cf5",
-      "bytes": 412191,
+      "deliveredSha256": "8545a0b182a26c703c8e93a32afd95938126f17c4588ef8a7b0eafce12e9627a",
+      "bytes": 367454,
       "retired128pxDelivery": {
         "deliveredSha256": "36ba8f4e4a871aa05c5b232b3a4e1a40e905ec1b5328ad38aef6e46ffc6602ef",
         "bytes": 1707,
@@ -399,7 +521,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "93f0e844a2b573645c99e8a577004d8edc1f16050619393db9e87f74fba61cf7",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "f7f8b24774aaefd3f152fe7534873ac415edcbe4351bddf28a1e995f7d536cf5",
+        "sourceBytes": 412191,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "flow",
@@ -408,8 +538,8 @@
       "generatedFile": "exec-d39a6b33-6f4c-4d48-927f-42446cd4f208.png",
       "sourceSha256": "9403069e8bdc8443419e3e57b1d22388f945880ef62d554af72a885e8aa1051b",
       "delivered": "public/system7-icons/flow.png",
-      "deliveredSha256": "9403069e8bdc8443419e3e57b1d22388f945880ef62d554af72a885e8aa1051b",
-      "bytes": 358424,
+      "deliveredSha256": "28a5162bdd2a9e698fdef94de8cca96c17c8a3090eba888fd9e1ef1c84399f63",
+      "bytes": 317413,
       "retired128pxDelivery": {
         "deliveredSha256": "3c5e92062afcfe30832791af43a1eafc4915ea05641e990bf9fa2410b7e2dc6b",
         "bytes": 1506,
@@ -418,7 +548,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "66856da83eefc3cef9fd04fa0a7875e9e500b6ab686c74da04b22d59013b3af9",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "9403069e8bdc8443419e3e57b1d22388f945880ef62d554af72a885e8aa1051b",
+        "sourceBytes": 358424,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "folder",
@@ -426,8 +564,8 @@
       "prompt": "Use case: stylized-concept. Asset type: a single production desktop icon PNG for a 1990s Macintosh System 7 inspired personal portfolio. Subject: one open project folder with three slightly offset paper sheets inside, no text or other symbols. Create one centered isolated icon only. Style: expertly hand-pixelled classic 32-by-32-pixel color Macintosh icon, enlarged perfectly with nearest-neighbor square pixels; hard one-pixel dark charcoal outline, restrained light-grey folder with a muted periwinkle blue front face, white top-left highlights, medium-gray lower-right edge, a tiny stepped hard drop shadow. Strong readable silhouette, simple early 1990s GUI pictogram, only 8 flat colors, selective checkerboard dithering on one shadow edge. No antialiasing or blur, no gradient, no modern glossy 3D, no rounded app tile, no surrounding frame, no emoji style. Composition: icon centered occupying about 80 percent of square canvas, equal margins; all pixels aligned to a consistent logical 32px grid. Background: genuinely transparent alpha, no checkerboard drawn into the image, no backdrop, no labels, no watermark. Output: a PNG icon.",
       "sourceSha256": "8fa5ed299fff05df19d1173b9ccfefcb3b78b02da007b2955920f004515279ce",
       "delivered": "public/system7-icons/folder.png",
-      "deliveredSha256": "8fa5ed299fff05df19d1173b9ccfefcb3b78b02da007b2955920f004515279ce",
-      "bytes": 567419,
+      "deliveredSha256": "56585730b17c9e9c1480586a2c3b165b4204fe80301919b4739a2b741f362e2c",
+      "bytes": 504309,
       "retired128pxDelivery": {
         "deliveredSha256": "f5865b1629702d03305001a62c703395da80a8dfa693549da4a5feacf0d863aa",
         "bytes": 11904,
@@ -438,7 +576,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "f42b495beda8972d9bc0c4f231a63f83e929fb4d64e84498e63ea32de9c73c53",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "8fa5ed299fff05df19d1173b9ccfefcb3b78b02da007b2955920f004515279ce",
+        "sourceBytes": 567419,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "game",
@@ -447,8 +593,8 @@
       "generatedFile": "exec-103521c8-ad18-4b26-a49e-ebf10b8661fa.png",
       "sourceSha256": "1e397a4563a45159751f7cbdf35a92fd148fc97ad9444cc71409dc34cb8d438a",
       "delivered": "public/system7-icons/game.png",
-      "deliveredSha256": "1e397a4563a45159751f7cbdf35a92fd148fc97ad9444cc71409dc34cb8d438a",
-      "bytes": 299867,
+      "deliveredSha256": "34bca84ed00af689cd25182885c4b6daf7f7e0be8a21da7779460d846310809f",
+      "bytes": 257921,
       "retired128pxDelivery": {
         "deliveredSha256": "d04ea0e5b71c7c857c7f2cdc92eb258e8f735caa3841a918a47544d0986cdec7",
         "bytes": 1120,
@@ -457,7 +603,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "0e8eec6e9fb12464e2e7f4054e200cc5c9a069b4448d33e0095bef3538250e9c",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "1e397a4563a45159751f7cbdf35a92fd148fc97ad9444cc71409dc34cb8d438a",
+        "sourceBytes": 299867,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "mail",
@@ -466,8 +620,8 @@
       "generatedFile": "exec-b8a4e965-fc55-4c95-a1d2-5145794b0e3c.png",
       "sourceSha256": "8f3bc103f54559304b4fc9034b2c86c069ac7b6bcc07b30209f818ec1b1f2fc1",
       "delivered": "public/system7-icons/mail.png",
-      "deliveredSha256": "8f3bc103f54559304b4fc9034b2c86c069ac7b6bcc07b30209f818ec1b1f2fc1",
-      "bytes": 329570,
+      "deliveredSha256": "2922afafe94cf2d356eb9640d31c0bb31ebc6298a8f150e7dd14f915f4bea351",
+      "bytes": 286387,
       "retired128pxDelivery": {
         "deliveredSha256": "a90f634dd75134740b7e577773331e3372d26c7976e89084f46d56527d9cf155",
         "bytes": 1177,
@@ -476,7 +630,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "db062f84a11c1e7b38b99e8ef92c5d2559527cd8d7b828b822414201e466b1c5",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "8f3bc103f54559304b4fc9034b2c86c069ac7b6bcc07b30209f818ec1b1f2fc1",
+        "sourceBytes": 329570,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "microscope",
@@ -484,8 +646,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE production desktop icon with actual transparent alpha. Input image is a STYLE REFERENCE ONLY: match its early-1990s Macintosh System 7 pixel icon family, its black stepped outlines, shallow edge depth, grey shadows and muted periwinkle accent. Replace the subject entirely with a single classic laboratory microscope with a broad grey foot, tilted dark eyepiece and simple stage; one tiny muted periwinkle blue sample slide, readable at 32 pixels. Create exactly one centered icon with generous equal transparent margins. Crisp logical 32-by-32-pixel design enlarged with square nearest-neighbor pixel edges, 1 logical pixel charcoal outlines, 8 flat colors, white top-left highlight, grey lower-right bevel and small hard stepped shadow. Keep forms simple and a recognizable silhouette at 32px. Sharpen the pixel discipline compared to the reference: no photographic texture, antialiasing, soft glow, gradients, rounded app tile or modern emoji rendering. No backdrop, no drawn checkerboard, no labels, letters, logos or watermark. Icon fills about 80 percent of the square transparent canvas. The reference folder itself must not appear.",
       "sourceSha256": "44e41cee86b080c786c0d69df8ce8ae918756b6b55902aa286a63c854c0e858e",
       "delivered": "public/system7-icons/microscope.png",
-      "deliveredSha256": "44e41cee86b080c786c0d69df8ce8ae918756b6b55902aa286a63c854c0e858e",
-      "bytes": 323900,
+      "deliveredSha256": "44b147ba7c7af97db1fcf309eb568e10641d2e32e924239d74b1823a05ef85f5",
+      "bytes": 288650,
       "retired128pxDelivery": {
         "deliveredSha256": "fe657a5e6a5929e9bb7b8af09a47aa9bc5cff9fc96e5333f4b978e9d73eb1f3d",
         "bytes": 8019,
@@ -496,7 +658,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "e95457f9dc49ca9b17010ae5d3824d97d66e16463f071a33b53933f253b0309a",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "44e41cee86b080c786c0d69df8ce8ae918756b6b55902aa286a63c854c0e858e",
+        "sourceBytes": 323900,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "minefield",
@@ -504,8 +674,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a tiny square minesweeper board: four raised grey tiles and one small ochre flag planted in an open tile, stepped dark outlines, no letters or numerals. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
       "sourceSha256": "3ef637097df4d20987af9c71fbe78b7cb71bf65752785f12c259ac998e8e64c8",
       "delivered": "public/system7-icons/minefield.png",
-      "deliveredSha256": "3ef637097df4d20987af9c71fbe78b7cb71bf65752785f12c259ac998e8e64c8",
-      "bytes": 389355,
+      "deliveredSha256": "b7a66f5903426a7d3be94c4b62d9c3919f83a135ec36bd1526cf6b7d7515f774",
+      "bytes": 337220,
       "retired128pxDelivery": {
         "deliveredSha256": "b822978569f5190b611c60536fc7224f3a54104d6c29e32d02212b8310258483",
         "bytes": 8639,
@@ -516,7 +686,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "e883d15b45ec8ecb824d2e9d24f78e2ea083b66ea5d81f4283e1cc19f3793b35",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "3ef637097df4d20987af9c71fbe78b7cb71bf65752785f12c259ac998e8e64c8",
+        "sourceBytes": 389355,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "molecule",
@@ -524,8 +702,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create a simple molecular ball-and-stick model: five square-edged octagonal atoms joined by dark straight rods, grey and muted periwinkle atoms and one ochre atom, legible asymmetrical silhouette. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
       "sourceSha256": "c0c3c5964879e8e4d07597535687167920b1d88ef814b0fa466df11b9975fe0c",
       "delivered": "public/system7-icons/molecule.png",
-      "deliveredSha256": "c0c3c5964879e8e4d07597535687167920b1d88ef814b0fa466df11b9975fe0c",
-      "bytes": 381058,
+      "deliveredSha256": "2d66c55fe5b3ec26e9d7eb347e9b2368c61a84a6885c5d7f649fb53d01307f06",
+      "bytes": 344708,
       "retired128pxDelivery": {
         "deliveredSha256": "23273caf24f2f376ba2972ccfd881a5369894caf5bfb13ec6c40c3b3301b306e",
         "bytes": 8512,
@@ -536,7 +714,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "24d3a5e5793860a0cff735846affdddc055205641bbba7ab75a5a75689302752",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "c0c3c5964879e8e4d07597535687167920b1d88ef814b0fa466df11b9975fe0c",
+        "sourceBytes": 381058,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "mri",
@@ -544,8 +730,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create a compact MRI scanner: pale grey square scanner body with a large black circular bore and short patient-free table extending toward the viewer; tiny periwinkle control panel. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
       "sourceSha256": "1de8bf50fbd05a403b42b4b2b094ed73aa8711c7a1e6bc10e39d65dff0a176de",
       "delivered": "public/system7-icons/mri.png",
-      "deliveredSha256": "1de8bf50fbd05a403b42b4b2b094ed73aa8711c7a1e6bc10e39d65dff0a176de",
-      "bytes": 588944,
+      "deliveredSha256": "779a667a6f9e39e0ea2a45cbf91abf22ab4d105131f7248281372c7c72948a27",
+      "bytes": 525223,
       "retired128pxDelivery": {
         "deliveredSha256": "f3b1703ab859359a39079bcc1b88e7daf9eaa6a5e43c1fb56bbca77f717ad7e1",
         "bytes": 12283,
@@ -556,7 +742,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "01afaa0c506e289a4d053df8ef138203e590ec5833d9c489f692730278a36797",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "1de8bf50fbd05a403b42b4b2b094ed73aa8711c7a1e6bc10e39d65dff0a176de",
+        "sourceBytes": 588944,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "network",
@@ -564,8 +758,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE isolated production desktop icon PNG. Reference image is STYLE ONLY, not the subject. Create three pale grey server boxes connected by an angular cable, one taller central server with two dark drive slots and tiny periwinkle indicator squares. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle blue and tiny ochre accents, top-left highlight, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels, extremely simple recognizable silhouette readable at 32px. Centered subject fills 85 percent of a square canvas. Deliver genuine transparent RGBA alpha outside the icon, NO painted checkerboard, NO solid background, NO label, letters, branding, watermark, app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
       "sourceSha256": "cb089244d9790657bcf4b4dd7c358d474d7890905063cd4bcce0da7fcb0b836c",
       "delivered": "public/system7-icons/network.png",
-      "deliveredSha256": "cb089244d9790657bcf4b4dd7c358d474d7890905063cd4bcce0da7fcb0b836c",
-      "bytes": 497495,
+      "deliveredSha256": "b9b020f5f50b08005949e426e8ad31f740c895e8eed7e772563cb6d7288a7e66",
+      "bytes": 439939,
       "retired128pxDelivery": {
         "deliveredSha256": "9a1dc7be99315b60aaaa6941031dcc663a56eaf29c0e8b4df34221cf759b3eb3",
         "bytes": 11514,
@@ -576,7 +770,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "6b8690c42847fcbb4420b0a64c4989f97230c41047aa7b4179ddb3761b033cdb",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "cb089244d9790657bcf4b4dd7c358d474d7890905063cd4bcce0da7fcb0b836c",
+        "sourceBytes": 497495,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "note",
@@ -585,8 +787,8 @@
       "generatedFile": "exec-5b68b8b4-0b15-4b94-98c8-b13a0871a490.png",
       "sourceSha256": "fbcd0949ce03e389cf300ff7146784b986ee8dfd68caeea3258fd7a48afb3206",
       "delivered": "public/system7-icons/note.png",
-      "deliveredSha256": "fbcd0949ce03e389cf300ff7146784b986ee8dfd68caeea3258fd7a48afb3206",
-      "bytes": 324856,
+      "deliveredSha256": "fafc04aa379c3b439928d145295f64a00af19cd48892477654d7754c26c490dd",
+      "bytes": 280494,
       "retired128pxDelivery": {
         "deliveredSha256": "0063735c61df9dec9356da51f3b8b1c8e4db2d48ae00b43f255a06a725a7c442",
         "bytes": 1805,
@@ -595,7 +797,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "51dfbc6ca935c570c312acffbd5c0f66d53b779f5fe60a9087ed60a9b794440b",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "fbcd0949ce03e389cf300ff7146784b986ee8dfd68caeea3258fd7a48afb3206",
+        "sourceBytes": 324856,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "orbital",
@@ -604,8 +814,8 @@
       "generatedFile": "exec-4f8af3c1-eb04-4cc8-8149-e100bba1e71d.png",
       "sourceSha256": "746dbabbb4d6db0f0bfaf13ce5bd16c32a0f3b7d0c3e9c1ccf9a7d0fa72af4b3",
       "delivered": "public/system7-icons/orbital.png",
-      "deliveredSha256": "746dbabbb4d6db0f0bfaf13ce5bd16c32a0f3b7d0c3e9c1ccf9a7d0fa72af4b3",
-      "bytes": 370470,
+      "deliveredSha256": "ada2ac44d5d4571270c1f56e0b5b9ce368aee6b5c513f3ad521aca527420a21d",
+      "bytes": 325420,
       "retired128pxDelivery": {
         "deliveredSha256": "a4836a9a47f7bfb6a109a0ef1c0a2fe48f2148043a05548c7ffa9300e9560af0",
         "bytes": 1882,
@@ -614,7 +824,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "6eeabac31e7b4a169d52c558c55839da77554f23906503fe607d02b2a416d6ec",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "746dbabbb4d6db0f0bfaf13ce5bd16c32a0f3b7d0c3e9c1ccf9a7d0fa72af4b3",
+        "sourceBytes": 370470,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "palette",
@@ -623,8 +841,8 @@
       "generatedFile": "exec-f863023e-0b72-4da6-9551-fe2431856339.png",
       "sourceSha256": "4baa9b6dd5cb39ac92e0cb18713707290b34c6b7ba1c3f42002eb7b76c01227b",
       "delivered": "public/system7-icons/palette.png",
-      "deliveredSha256": "4baa9b6dd5cb39ac92e0cb18713707290b34c6b7ba1c3f42002eb7b76c01227b",
-      "bytes": 340440,
+      "deliveredSha256": "2b58e2848d814ed83a78933b5d09615a93cd055216c825fbc4c43b47279aa17e",
+      "bytes": 300195,
       "retired128pxDelivery": {
         "deliveredSha256": "5bf1499d6906e0c46776ce3d0729681d2b40ed8989558c2d0848db7ff2bd56c2",
         "bytes": 1618,
@@ -633,7 +851,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "7b2f58e866b98a1264d8efabbc22d8c4fbaf86147a55a14113ee8cf2be88cab3",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "4baa9b6dd5cb39ac92e0cb18713707290b34c6b7ba1c3f42002eb7b76c01227b",
+        "sourceBytes": 340440,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "pdf",
@@ -642,8 +868,8 @@
       "generatedFile": "exec-ef6e990c-b441-4d87-abae-fd013775f56a.png",
       "sourceSha256": "c4bf8bfa04a8a5201dda735544b9dbfb85c3c6d2769315c157f1108f9124819f",
       "delivered": "public/system7-icons/pdf.png",
-      "deliveredSha256": "c4bf8bfa04a8a5201dda735544b9dbfb85c3c6d2769315c157f1108f9124819f",
-      "bytes": 333423,
+      "deliveredSha256": "7511df31be422924a473e21d9c305c0585fa5f818027ce55c9bc54259448b347",
+      "bytes": 291933,
       "retired128pxDelivery": {
         "deliveredSha256": "7f32fe9f37c1734ac0d73eff58d8a0a458ebb0713fe3d3849ec54623f6c6fe86",
         "bytes": 1413,
@@ -652,7 +878,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "b2fe65e03cec08ec9ea21785a38c0ebc62bdd3b83838166874dfd5b62012ca9e",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "c4bf8bfa04a8a5201dda735544b9dbfb85c3c6d2769315c157f1108f9124819f",
+        "sourceBytes": 333423,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "photos",
@@ -661,8 +895,8 @@
       "generatedFile": "exec-edce8baf-41b3-4666-a6f5-1d6b5d2459d7.png",
       "sourceSha256": "9a8ad44e725eeedeb412a6791cf231a2604993d64629b702f9145fdc6317a382",
       "delivered": "public/system7-icons/photos.png",
-      "deliveredSha256": "9a8ad44e725eeedeb412a6791cf231a2604993d64629b702f9145fdc6317a382",
-      "bytes": 355776,
+      "deliveredSha256": "bd85b57f2e0f6b73273ea74f7d181bf96bb885949ebcf530070a1308deddec35",
+      "bytes": 310630,
       "retired128pxDelivery": {
         "deliveredSha256": "68d7c9d80d72fce7fecde0ec75e70c8aeb27641577de2656584e22689decdc23",
         "bytes": 1677,
@@ -671,7 +905,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "51b78fc8f4202c56c5e1d37c9bfd9b1a0b42cc29d3d45de75030d6c426369960",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "9a8ad44e725eeedeb412a6791cf231a2604993d64629b702f9145fdc6317a382",
+        "sourceBytes": 355776,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "profile",
@@ -680,8 +922,8 @@
       "generatedFile": "exec-e32ba71d-2c82-439d-8e3a-131000fe7b26.png",
       "sourceSha256": "6e495d0d9d64ed9c1086e133b5d7bbd1d6a5bfe34e8ed2629777a04decd1a71c",
       "delivered": "public/system7-icons/profile.png",
-      "deliveredSha256": "6e495d0d9d64ed9c1086e133b5d7bbd1d6a5bfe34e8ed2629777a04decd1a71c",
-      "bytes": 225544,
+      "deliveredSha256": "2f58131ed014a38bc56bd829a8da7635809c541757805ee4031c926f45055c43",
+      "bytes": 188885,
       "retired128pxDelivery": {
         "deliveredSha256": "1605923d40f196cb83c0df28b40757dd5fd89b72abce5ffa33c4097a09205540",
         "bytes": 1410,
@@ -690,7 +932,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "cad0024c669bf275997c391047f00d46f44d3b513bcce592e3e8c23268e06b7f",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "6e495d0d9d64ed9c1086e133b5d7bbd1d6a5bfe34e8ed2629777a04decd1a71c",
+        "sourceBytes": 225544,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "puzzle",
@@ -699,8 +949,8 @@
       "generatedFile": "exec-f040400f-1471-445e-b059-0a9a5d69bc6a.png",
       "sourceSha256": "14a6b3eb6cdbf77473025c0557f1167829708c2862012b0db3ab9cd24268a77a",
       "delivered": "public/system7-icons/puzzle.png",
-      "deliveredSha256": "14a6b3eb6cdbf77473025c0557f1167829708c2862012b0db3ab9cd24268a77a",
-      "bytes": 358845,
+      "deliveredSha256": "7244ee667d81821e76c352b3e7e88b2bf9261e86cbca0807dbdbc9fc18741646",
+      "bytes": 313611,
       "retired128pxDelivery": {
         "deliveredSha256": "da1f4bc3b9f71e001c217d9b7468e34b685113e56e60167c76e31a728ec0ea7e",
         "bytes": 1883,
@@ -709,7 +959,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "4807429034e2b80d564066497654c70a2b375f0c9d61392086003c1deb8394ef",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "14a6b3eb6cdbf77473025c0557f1167829708c2862012b0db3ab9cd24268a77a",
+        "sourceBytes": 358845,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "runner",
@@ -718,8 +976,8 @@
       "generatedFile": "exec-3e9d876c-7568-4124-b446-2bc81fe9509f.png",
       "sourceSha256": "4782ca4045baf6b6be145833a593ab72e0b289b25d13869066d679a55064151f",
       "delivered": "public/system7-icons/runner.png",
-      "deliveredSha256": "4782ca4045baf6b6be145833a593ab72e0b289b25d13869066d679a55064151f",
-      "bytes": 278248,
+      "deliveredSha256": "c0bf07e3e31838d00c332ec61eb1b4032db1694bf806179dbec163b7267bd289",
+      "bytes": 246471,
       "retired128pxDelivery": {
         "deliveredSha256": "1421aa8b3f942e30fbe7425a0146f46d50bb003bbb05d67608ff8674453abe01",
         "bytes": 1181,
@@ -728,7 +986,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "610770c00d5137c2f5595d8531cec12e45cc97dc3a3f6e4fc875a34654666c00",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "4782ca4045baf6b6be145833a593ab72e0b289b25d13869066d679a55064151f",
+        "sourceBytes": 278248,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "secret",
@@ -737,8 +1003,8 @@
       "generatedFile": "exec-2c3b1de7-7fbc-4985-9b16-06b8b6afa062.png",
       "sourceSha256": "ec9557050830ecbf142c325f1cde8808944bcc806806a3ea1bc4ccb7199d71c2",
       "delivered": "public/system7-icons/secret.png",
-      "deliveredSha256": "ec9557050830ecbf142c325f1cde8808944bcc806806a3ea1bc4ccb7199d71c2",
-      "bytes": 261249,
+      "deliveredSha256": "c550d7b9680dc0b33dfb56e7e7dcbf8b2c7970d27fc272329411c4c1b24bdc9c",
+      "bytes": 227911,
       "retired128pxDelivery": {
         "deliveredSha256": "28a16470f13c376564f70897842f23087801db14ac053372dde986d0beed4dec",
         "bytes": 1236,
@@ -747,7 +1013,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "eaa0227a3807223daf9d1bf5cd0cb39a5b9d6edba93fb8ff66aced65846cd2ca",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "ec9557050830ecbf142c325f1cde8808944bcc806806a3ea1bc4ccb7199d71c2",
+        "sourceBytes": 261249,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "shield",
@@ -756,8 +1030,8 @@
       "generatedFile": "exec-2814f03a-e727-4824-8931-c9cd7d8e92fa.png",
       "sourceSha256": "1051f17146424ac55024607191ec3f5ffb8e97df13d518900fcd59a33b091871",
       "delivered": "public/system7-icons/shield.png",
-      "deliveredSha256": "1051f17146424ac55024607191ec3f5ffb8e97df13d518900fcd59a33b091871",
-      "bytes": 306319,
+      "deliveredSha256": "e479989b7a27c61c957e522ec9ae94e7f920ccb24c4c87b5f65685f59a6d2864",
+      "bytes": 266535,
       "retired128pxDelivery": {
         "deliveredSha256": "d599d5de9b78698dd0336353f011aa0fbb53164b181e2cb93b9446aefbe39cd3",
         "bytes": 1312,
@@ -766,7 +1040,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "7e8aca21852b5555acf11d6c351b3c11e48c38b3f5f2515094d7f604f1da844b",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "1051f17146424ac55024607191ec3f5ffb8e97df13d518900fcd59a33b091871",
+        "sourceBytes": 306319,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "sketch",
@@ -775,8 +1057,8 @@
       "generatedFile": "exec-a0142356-c872-450c-b72d-5114941483be.png",
       "sourceSha256": "3aa0f7128f1073165b0bcc6fbeecbf2a438ace54f8e0a6e79dc754f62cf913b2",
       "delivered": "public/system7-icons/sketch.png",
-      "deliveredSha256": "3aa0f7128f1073165b0bcc6fbeecbf2a438ace54f8e0a6e79dc754f62cf913b2",
-      "bytes": 432756,
+      "deliveredSha256": "ad99a56a972a5a6a03f0981c81080dd1ecd1dfb1c3a083aec78b592cbbfc0857",
+      "bytes": 386200,
       "retired128pxDelivery": {
         "deliveredSha256": "db6e30c70da09d18e69cfa451062758b093ce7e6eeabfa8a7a1028d34adb8cfd",
         "bytes": 1510,
@@ -785,7 +1067,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "96ca7c3517b9f066aebd4c677d078a98b6f508a3f5128489dd6d10646f7bde95",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "3aa0f7128f1073165b0bcc6fbeecbf2a438ace54f8e0a6e79dc754f62cf913b2",
+        "sourceBytes": 432756,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "snake",
@@ -793,8 +1083,8 @@
       "prompt": "Use case: stylized-concept. Asset type: ONE isolated production arcade icon PNG. Reference image is STYLE ONLY. Create a friendly short blocky periwinkle-blue snake bending in a right-angle S shape toward one small ochre pixel apple; dark square eyes and a simple stepped silhouette. Match the reference's early-1990s Macintosh System 7 pixel artwork family: hard stepped charcoal outlines, pale grey and white faces, muted periwinkle and tiny ochre accents, top-left highlights, shallow lower-right grey edge and very small hard shadow. Logical 32px grid enlarged with nearest-neighbor square pixels; flat small palette, simple silhouette readable at 32px. Centered subject fills 85 percent of square canvas. Deliver genuine transparent RGBA alpha outside the icon. NO painted checkerboard, solid background, caption, branding, watermark, rounded app tile, glossy modern emoji shading, gradients or soft shadow. Exactly one icon.",
       "sourceSha256": "a0306625296392ba16c4156eaca4b1e6880a80af31288fcaff6b89cd23940995",
       "delivered": "public/system7-icons/snake.png",
-      "deliveredSha256": "a0306625296392ba16c4156eaca4b1e6880a80af31288fcaff6b89cd23940995",
-      "bytes": 320847,
+      "deliveredSha256": "f8f28cc371938814feadb704438b37eef4ea42ab8ebd62a189addd5b339c3231",
+      "bytes": 280289,
       "retired128pxDelivery": {
         "deliveredSha256": "365b67211431d331382bbd259ef966cdea3b63319edf403d2630d8a3ee80659b",
         "bytes": 6931,
@@ -805,7 +1095,15 @@
       "nativeWidth": 1254,
       "nativeHeight": 1254,
       "sourcePixelsPreserved": true,
-      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384)."
+      "recoveryEvidence": "Native 1254px original nearest-sampled to the retired 128px delivery matches every RGBA pixel exactly (16,384 of 16,384).",
+      "decodedRgbaSha256": "b56a4f6733bef09a8ae7e9d7c6d76820b20635a321d9b66a4b4856b0ac8e6eb7",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "a0306625296392ba16c4156eaca4b1e6880a80af31288fcaff6b89cd23940995",
+        "sourceBytes": 320847,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "spectrum",
@@ -814,8 +1112,8 @@
       "generatedFile": "exec-a7d7a3a4-55c4-4c90-b801-7125671a20a1.png",
       "sourceSha256": "579aed2820a04c1d91987083c935db289e4ae00ac86e5028228580c5ccb35112",
       "delivered": "public/system7-icons/spectrum.png",
-      "deliveredSha256": "579aed2820a04c1d91987083c935db289e4ae00ac86e5028228580c5ccb35112",
-      "bytes": 388568,
+      "deliveredSha256": "ca35bf3501ec1fed3fc2b7ee9766296c29a852895804f64340f5ed546f8e1ddf",
+      "bytes": 342463,
       "retired128pxDelivery": {
         "deliveredSha256": "6fdcde8e2fb2dc27c193754070bea4c3b81acc2b1246f0b6b0cd68a96fd6b163",
         "bytes": 1834,
@@ -824,7 +1122,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "93a5819f108c7fd0bcbb40023b26e69e723a53872065d934591603d1e48bec70",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "579aed2820a04c1d91987083c935db289e4ae00ac86e5028228580c5ccb35112",
+        "sourceBytes": 388568,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "tasks",
@@ -833,8 +1139,8 @@
       "generatedFile": "exec-76e59c19-c4d6-4462-8a10-1dda65fdabf2.png",
       "sourceSha256": "d2a38196f582945f7c3ded433bede80ce75c36de5c71f0e65d7f14baebb8a873",
       "delivered": "public/system7-icons/tasks.png",
-      "deliveredSha256": "d2a38196f582945f7c3ded433bede80ce75c36de5c71f0e65d7f14baebb8a873",
-      "bytes": 358443,
+      "deliveredSha256": "af382b26557379a6f1bd3af5472260cf61b3330ac6ca5d08e72502287f7fe903",
+      "bytes": 318213,
       "retired128pxDelivery": {
         "deliveredSha256": "c8399fb015a23ad25ae6456a08e01f3c25a6a0be4b9919a52832bd78fa46a2f9",
         "bytes": 1673,
@@ -843,7 +1149,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "cd3f757ae1a93fc2630d8f5e6f4e90d40b19d838f8b45f6583062779a52798e4",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "d2a38196f582945f7c3ded433bede80ce75c36de5c71f0e65d7f14baebb8a873",
+        "sourceBytes": 358443,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "university",
@@ -852,8 +1166,8 @@
       "generatedFile": "exec-cbfdc0cf-e94d-474a-b5c7-f5186c792878.png",
       "sourceSha256": "cae95927abd856d99b2cd0c91d822e7184f52ba7be7c6a8d8c5819f7479026c0",
       "delivered": "public/system7-icons/university.png",
-      "deliveredSha256": "cae95927abd856d99b2cd0c91d822e7184f52ba7be7c6a8d8c5819f7479026c0",
-      "bytes": 378138,
+      "deliveredSha256": "92f35bd60aa0091d0f0d87a1ff548a9beeb75ea5cc4e901e0bcf19477cca6811",
+      "bytes": 336365,
       "retired128pxDelivery": {
         "deliveredSha256": "455f01143a96cd809b4fee7e1c30a8bf14c809bbd0ade583dd20bf7972f3725b",
         "bytes": 1740,
@@ -862,7 +1176,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "dec9c9f0ce6bb1ffaca25e79796ddaa2be9c64b4c6182b0691d2eefe55dae757",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "cae95927abd856d99b2cd0c91d822e7184f52ba7be7c6a8d8c5819f7479026c0",
+        "sourceBytes": 378138,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "videomate",
@@ -871,8 +1193,8 @@
       "generatedFile": "exec-f038d098-06a4-49e0-b138-02eacd1eb5e7.png",
       "sourceSha256": "4dad02e4fca14771b5336dbe3fe824d79d975899720506d5a2ad257b957aa2ef",
       "delivered": "public/system7-icons/videomate.png",
-      "deliveredSha256": "4dad02e4fca14771b5336dbe3fe824d79d975899720506d5a2ad257b957aa2ef",
-      "bytes": 322068,
+      "deliveredSha256": "c9c95d008fb5f37dbc3412b7eaf0346b0ab43f850bfd50182323c5ca51cd689e",
+      "bytes": 276034,
       "retired128pxDelivery": {
         "deliveredSha256": "ced5e61fa4bfd689ce5996d90f1c8b098ad931113805c50f71adeca1f8bc1bc0",
         "bytes": 1720,
@@ -881,7 +1203,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "4872ace2e5dab888b5ada8b0c8288f7912cd65bcb0506b62ab42cee2d71709a8",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "4dad02e4fca14771b5336dbe3fe824d79d975899720506d5a2ad257b957aa2ef",
+        "sourceBytes": 322068,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "word",
@@ -890,8 +1220,8 @@
       "generatedFile": "exec-577c01f4-322b-424b-ab56-9d902870c03a.png",
       "sourceSha256": "c2ded7508f8cadf6825edb85d5b37b07425a6faf8dce9193bcdaec1b46c92873",
       "delivered": "public/system7-icons/word.png",
-      "deliveredSha256": "c2ded7508f8cadf6825edb85d5b37b07425a6faf8dce9193bcdaec1b46c92873",
-      "bytes": 347972,
+      "deliveredSha256": "1a4391cebba423b7720be90790139aa9b391e25868e7d36517718bff942001d0",
+      "bytes": 305104,
       "retired128pxDelivery": {
         "deliveredSha256": "2afc734b264863d846ac2610cdc07cd6143acaf467a36ff6d0ec42de32ffed53",
         "bytes": 1433,
@@ -900,7 +1230,15 @@
       },
       "nativeWidth": 1254,
       "nativeHeight": 1254,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "dc5ddc9f0b50e0b6773625c3f62513046045f0a8756b89c01736f633adb70034",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "c2ded7508f8cadf6825edb85d5b37b07425a6faf8dce9193bcdaec1b46c92873",
+        "sourceBytes": 347972,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     },
     {
       "kind": "ultraconvert",
@@ -908,11 +1246,19 @@
       "prompt": "No new image generation or image editing. Reuse the app’s owned native icon for its portfolio identity.",
       "sourceSha256": "76f8c848c39349b285fe359138d0b5772f818a50e59d4937c017bde17e281239",
       "delivered": "public/system7-icons/ultraconvert.png",
-      "deliveredSha256": "76f8c848c39349b285fe359138d0b5772f818a50e59d4937c017bde17e281239",
-      "bytes": 624191,
+      "deliveredSha256": "26e39d42a39f0b178049e4e201b30d9422d88eff7dd27ab93f3c1c975aa4078d",
+      "bytes": 357285,
       "nativeWidth": 1024,
       "nativeHeight": 1024,
-      "sourcePixelsPreserved": true
+      "sourcePixelsPreserved": true,
+      "decodedRgbaSha256": "b2cbd6dae8a6372ffc39ed002dd9b0525e1c9f1d977b113ac5628f2a71fd458d",
+      "deliveryEncoding": {
+        "method": "Pillow PNG optimize=True, compress_level=9; PNG filtering/compression only",
+        "sourceSha256": "76f8c848c39349b285fe359138d0b5772f818a50e59d4937c017bde17e281239",
+        "sourceBytes": 624191,
+        "decodedRgbaUnchanged": true,
+        "nativeDimensionsUnchanged": true
+      }
     }
   ]
 }

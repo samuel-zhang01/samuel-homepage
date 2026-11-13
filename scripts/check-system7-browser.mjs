@@ -86,6 +86,23 @@ async function snapshot(page, profile, name) {
   profile.screenshots.push(filename); screenshots++;
 }
 async function inspectIcons(page, profile) {
+  // Deferred images must exist and decode for every frame actually on screen.
+  // Checking only existing <img> nodes could silently accept an empty frame.
+  await page.waitForFunction(() => [...document.querySelectorAll("[data-system7-frame]")].every(frame => {
+    const box = frame.getBoundingClientRect();
+    if (!box.width || !box.height || box.right <= 0 || box.bottom <= 0 || box.left >= innerWidth || box.top >= innerHeight) return true;
+    for (let parent = frame; parent; parent = parent.parentElement) {
+      const style = getComputedStyle(parent);
+      if (style.visibility === "hidden" || style.display === "none") return true;
+      if (parent === document.body || parent === document.documentElement) continue;
+      if (/(hidden|clip|auto|scroll)/.test(style.overflowX + style.overflowY)) {
+        const clip = parent.getBoundingClientRect();
+        if (box.right <= clip.left || box.left >= clip.right || box.bottom <= clip.top || box.top >= clip.bottom) return true;
+      }
+    }
+    const image = frame.querySelector("img[data-system7-icon]");
+    return image?.complete && image.naturalWidth > 0;
+  }), null, { timeout: 15000 });
   const images = await page.locator("img[data-system7-icon]").evaluateAll(nodes => nodes.map(image => ({ kind: image.dataset.system7Icon, source: image.getAttribute("src") })));
   for (const image of images) assert.equal(image.source, SYSTEM7_ICONS[image.kind], `Rendered ${image.kind} does not use its canonical PNG`);
   const legacy = await page.locator('img[src*="/system7-icons/"]:not([data-system7-icon])').count();
@@ -141,8 +158,8 @@ async function windowIdentity(page, id, kind) {
   const window = page.locator(`[data-app-id="${id}"]`);
   await window.waitFor();
   assert.equal(await window.locator(".mac-titlebar h2 img").count(), 0, `${id}: System7 titlebar contains only its centered title`);
-  assert.equal(await page.locator(".menu-status .active-application img").getAttribute("data-system7-icon"), kind, `${id}: active application menu identity`);
-  assert.equal(await page.locator(".window-switcher button.is-active img").getAttribute("data-system7-icon"), kind, `${id}: application switcher identity`);
+  assert.equal(await page.locator(".menu-status .active-application [data-system7-frame]").getAttribute("data-system7-frame"), kind, `${id}: active application menu identity`);
+  assert.equal(await page.locator(".window-switcher button.is-active [data-system7-frame]").getAttribute("data-system7-frame"), kind, `${id}: application switcher identity`);
   return window;
 }
 async function openFinder(page) {
@@ -193,10 +210,10 @@ try {
       if (width === 320) await page.getByRole("button", { name: /^(Got it|知道了|明白了|了解了)$/ }).click();
       await page.locator('[data-app-id="projects"] [data-project-slug]').first().waitFor();
       assert.equal(await page.locator("html").getAttribute("lang"), option.locale);
-      const desktop = await page.locator(".desktop-icon__graphic img").evaluateAll(nodes => nodes.map(image => image.dataset.system7Icon));
-      assert.deepEqual(desktop, desktopIds.map(id => applicationIconKinds[id]), "Desktop uses application identities");
+      const desktop = await page.locator(".desktop-icon__graphic [data-system7-frame]").evaluateAll(nodes => nodes.map(frame => frame.dataset.system7Frame));
+      assert.deepEqual(desktop, width === 320 ? [] : desktopIds.map(id => applicationIconKinds[id]), "Desktop identities mount when the desktop is exposed");
       await page.locator(".apple-menu").click();
-      const menu = await page.locator(".apple-dropdown img").evaluateAll(nodes => nodes.map(image => image.dataset.system7Icon));
+      const menu = await page.locator(".apple-dropdown [data-system7-frame]").evaluateAll(nodes => nodes.map(frame => frame.dataset.system7Frame));
       assert.ok(menu.includes("orbital") && menu.includes("finder") && menu.includes("coverd"), "Menu includes canonical Orbital, Find and COVERD identities");
       await inspectIcons(page, profile); await snapshot(page, profile, "desktop-menu");
       await page.keyboard.press("Escape");
@@ -204,10 +221,19 @@ try {
       await inspectIcons(page, profile); await geometry(page, "projects");
       profile.checks.push({ group: "desktop-menu-archive" });
       await closeWindow(page, "projects");
+      assert.deepEqual(await page.locator(".desktop-icon__graphic [data-system7-frame]").evaluateAll(nodes => nodes.map(frame => frame.dataset.system7Frame)), desktopIds.map(id => applicationIconKinds[id]), "Closing the phone window reveals the complete canonical desktop");
+      await inspectIcons(page, profile);
       await openFinder(page);
       assert.equal(await page.locator("#finder-results [role=option]").count(), finderIds.length + projects.length, "Find exposes the complete catalogue");
-      for (const id of finderIds) assert.equal(await page.locator(`#finder-app-${id} img`).getAttribute("data-system7-icon"), applicationIconKinds[id], `${id}: Find application identity`);
-      for (const project of projects) assert.equal(await page.locator(`#finder-project-${project.slug} img`).getAttribute("data-system7-icon"), projectIconKinds[project.slug], `${project.slug}: Find project identity`);
+      for (const [key, kind] of [...finderIds.map(id => [`app-${id}`, applicationIconKinds[id]]), ...projects.map(project => [`project-${project.slug}`, projectIconKinds[project.slug]])]) {
+        const row = page.locator(`#finder-${key}`);
+        await row.scrollIntoViewIfNeeded();
+        const image = row.locator("img[data-system7-icon]");
+        assert.equal(await image.getAttribute("data-system7-icon"), kind, `${key}: Find identity after scrolling into view`);
+        assert.equal(await image.getAttribute("src"), SYSTEM7_ICONS[kind], `${key}: canonical Find PNG`);
+        const width = await image.evaluate(async node => { await node.decode(); return node.naturalWidth; });
+        assert.equal(width, SYSTEM7_ICON_BOUNDS[kind][4], `${key}: visible Find artwork decodes at native dimensions`);
+      }
       assert.equal(await page.locator("#finder-app-orbitals img").getAttribute("src"), await page.locator("#finder-project-orbital-lab img").getAttribute("src"), "Both Orbital search results use one image");
       await inspectIcons(page, profile); await snapshot(page, profile, "finder");
       profile.checks.push({ group: "finder", applications: finderIds.length, projects: projects.length });
@@ -217,8 +243,34 @@ try {
         await openFound(page, `app-${id}`);
         const window = await windowIdentity(page, id, applicationIconKinds[id]);
         await window.locator(".classic-module-loading, .sidequest-app-loading").first().waitFor({ state: "hidden" });
-        if (id === "games") for (const [gameId, kind] of Object.entries(arcadeIconKinds)) assert.equal(await window.locator(`[data-game-id="${gameId}"] img`).getAttribute("data-system7-icon"), kind, `${gameId}: arcade launcher`);
-        if (id === "lab") assert.equal(await window.locator(".service-card img").count(), Object.keys(serviceIconKinds).length, "Every Home Lab service has an icon");
+        if (id === "games") for (const [gameId, kind] of Object.entries(arcadeIconKinds)) {
+          const launcher = window.locator(`[data-game-id="${gameId}"]`);
+          await launcher.scrollIntoViewIfNeeded();
+          const frame = launcher.locator("[data-system7-frame]");
+          assert.equal(await frame.getAttribute("data-system7-frame"), kind, `${gameId}: canonical arcade identity`);
+          if (!await frame.isVisible()) {
+            assert.equal(await frame.locator("img").count(), 0, `${gameId}: CSS-hidden phone miniature defers its PNG`);
+            (profile.intentionalHiddenIcons ??= []).push({ surface: "arcade-launcher", gameId, kind });
+            continue;
+          }
+          const image = launcher.locator("img[data-system7-icon]");
+          assert.equal(await image.getAttribute("data-system7-icon"), kind, `${gameId}: visible arcade launcher`);
+          assert.equal(await image.evaluate(async node => { await node.decode(); return node.naturalWidth; }), SYSTEM7_ICON_BOUNDS[kind][4], `${gameId}: launcher artwork decodes`);
+        }
+        if (id === "lab") {
+          const cards = window.locator(".service-card");
+          assert.equal(await cards.count(), Object.keys(serviceIconKinds).length, "Every Home Lab service has a card");
+          const identities = await cards.locator("[data-system7-frame]").evaluateAll(nodes => nodes.map(frame => frame.dataset.system7Frame).sort());
+          assert.deepEqual(identities, Object.values(serviceIconKinds).sort(), "Every Home Lab service keeps its canonical identity");
+          for (const card of await cards.all()) {
+            await card.scrollIntoViewIfNeeded();
+            const image = card.locator("img[data-system7-icon]");
+            const kind = await image.getAttribute("data-system7-icon");
+            assert.equal(await image.getAttribute("src"), SYSTEM7_ICONS[kind], "Visible Home Lab service uses canonical artwork");
+            assert.equal(await image.evaluate(async node => { await node.decode(); return node.naturalWidth; }), SYSTEM7_ICON_BOUNDS[kind][4], "Visible Home Lab service artwork decodes");
+          }
+          await window.locator(".mac-window__content").evaluate(node => { node.scrollTop = 0; });
+        }
         await inspectIcons(page, profile); const overflow = await geometry(page, id);
         if (["desk", "orbitals", "games", "lab", "contact"].includes(id)) await snapshot(page, profile, id);
         profile.checks.push({ group: "applications", id, kind: applicationIconKinds[id], overflow });
@@ -238,7 +290,10 @@ try {
           const demoLaunchLabel = option.locale === "zh-CN" ? demoLaunchCopy[0] : option.locale === "zh-TW" ? demoLaunchCopy[1] : translateText(option.locale, "Open interactive demo");
           await window.getByRole("button", { name: demoLaunchLabel, exact: false }).first().click();
           const activity = await windowIdentity(page, "projectActivity", projectIconKinds[project.slug]);
-          await activity.locator("[data-locale]").first().getByRole("heading").first().waitFor();
+          // Some demos scope locale through React context without a DOM data
+          // attribute. Require actual rendered demo content in its activity.
+          await activity.locator("article").first().getByRole("heading").first().waitFor();
+          assert.equal(await activity.getByRole("heading", { name: /^(This interactive demo could not open|无法打开此交互演示|無法開啟此互動示範)$/ }).count(), 0, `${project.slug}: real demo content opened without its error boundary`);
           await activity.locator(".classic-module-loading").waitFor({ state: "hidden" });
           await activity.getByText(translateText(option.locale, "OPENING INTERACTIVE FILE…"), { exact: true }).waitFor({ state: "hidden" });
           await inspectIcons(page, profile); const demoOverflow = await geometry(page, "projectActivity");

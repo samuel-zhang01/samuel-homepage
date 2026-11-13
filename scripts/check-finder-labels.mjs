@@ -91,15 +91,16 @@ async function visibleField(field, expected, label) {
   assert.ok(expected.trim().length > 0, `${label}: authored field must not be blank`);
   await visibleElement(field, label);
 }
-async function resultIcon(row, id) {
+async function resultIcon(row, id, kind = applicationIconKinds[id]) {
   const image = row.locator("img[data-system7-icon]");
+  await image.waitFor();
   assert.equal(await image.count(), 1, `${id}: one canonical result icon`);
   await visibleElement(image, `${id}: canonical icon`);
   const decoded = await image.evaluate(async node => {
     await node.decode();
     return { kind: node.dataset.system7Icon, source: node.getAttribute("src"), width: node.naturalWidth, height: node.naturalHeight, rendering: getComputedStyle(node).imageRendering };
   });
-  assert.equal(decoded.kind, applicationIconKinds[id], `${id}: canonical application kind`);
+  assert.equal(decoded.kind, kind, `${id}: canonical result kind`);
   assert.equal(decoded.source, SYSTEM7_ICONS[decoded.kind], `${id}: canonical PNG`);
   const canvas = SYSTEM7_ICON_BOUNDS[decoded.kind][4];
   assert.equal(decoded.width, canvas, `${id}: decoded width`);
@@ -158,7 +159,12 @@ try {
       await page.waitForFunction(() => document.activeElement === document.querySelector("#finder-search") && document.querySelector(".desktop-window-layer")?.inert === true);
       assert.equal(await dialog.locator("#finder-results [role=option]").count(), applications.length + projects.length, "Find contains its complete unchanged catalogue");
       assert.equal(await dialog.locator('header img[data-system7-icon]').count(), 0, "Find title is centered text without competing artwork");
-      assert.equal(await dialog.locator('img[data-system7-icon="finder"]').count(), 1, "Find introduction retains its canonical icon");
+      const introFrame = dialog.locator('[data-system7-frame="finder"]');
+      assert.equal(await introFrame.count(), 1, "Find introduction retains its canonical identity");
+      if (await introFrame.isVisible()) {
+        await introFrame.locator('img[data-system7-icon="finder"]').waitFor();
+        assert.equal(await introFrame.locator("img").count(), 1, "Visible Find introduction renders its artwork");
+      } else assert.equal(await introFrame.locator("img").count(), 0, "Compact Find omits its CSS-hidden introduction image");
       await visibleActions(dialog, "Complete catalogue", width);
       for (const app of applications) {
         const row = dialog.locator(`#finder-app-${app.id}`);
@@ -168,7 +174,12 @@ try {
         await resultIcon(row, app.id);
         profile.applicationRows++; profile.visibleFields += 2; profile.decodedIcons++;
       }
-      for (const project of projects) assert.equal(await dialog.locator(`#finder-project-${project.slug} img`).getAttribute("data-system7-icon"), projectIconKinds[project.slug], `${project.slug}: project identity remains intact`);
+      for (const project of projects) {
+        const row = dialog.locator(`#finder-project-${project.slug}`);
+        await row.scrollIntoViewIfNeeded();
+        await resultIcon(row, project.slug, projectIconKinds[project.slug]);
+        profile.decodedIcons++;
+      }
       assert.equal(await dialog.locator("#finder-app-orbitals img").getAttribute("src"), await dialog.locator("#finder-project-orbital-lab img").getAttribute("src"), "Both Orbital results still use one generated icon");
       for (const app of applications) {
         const localized = projectText(option.locale, desktopCopy, app.title);

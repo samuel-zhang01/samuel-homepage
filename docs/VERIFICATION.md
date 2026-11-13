@@ -1,5 +1,303 @@
 # Verification and maintenance
 
+## Mobile UX release — 13 November 2026
+
+The owner authorized commit, push and production release after the implementation
+review. Pre-push `check:release` passes, including deployment/security checks,
+registry signatures, lint, all prebuild families, types, optimized build and
+unchanged byte budgets. Nine VPS activation/rollback regressions also pass.
+
+The fresh dependency gate identified
+[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)
+in the lint parser's minimatch dependency. A scoped typescript-estree override
+pins the upstream fix, minimatch 11.0.1, without changing the application or
+unrelated ESLint/Next matchers. Eighteen parser-matching regressions exercise the
+actual consumer resolutions; all existing lint rule/root/glob checks still pass.
+The refreshed audit reports zero vulnerabilities, 306 verified registry signatures
+and 56 verified attestations. Existing native-package platform metadata was
+preserved when updating the lockfile. The original failed audit receipt is
+retained with the passing checks; it is not evidence of application exploitation.
+
+## Mobile UX and performance implementation — 13 November 2026
+
+The owner's automatic implementation goal applies the audit below while retaining
+the System 7 design and anticipation startup. Changes remain in the working tree;
+no commit or deployment was made. The earlier audit receipt describes the
+pre-change application and is preserved as baseline evidence.
+
+Startup now prepares the current destination's canonical icon and About portrait
+while its sequence runs, then optionally warms Find/Settings with spare capacity.
+It respects reduced motion, immediate skip and constrained-network preferences.
+Restart from a direct route prepares About rather than the original route.
+Covered phone desktop launchers do not mount image requests or accept hidden
+keyboard input. A shared IntersectionObserver defers other offscreen icon PNGs.
+The 42 native PNGs were reencoded without resizing or changing any decoded RGBA
+byte, saving 2,093,312 bytes (13.4%). Original provenance hashes remain recorded;
+delivery hashes, decoded-pixel pins and versioned URLs were updated. COVERD's
+owned image, white backing and all measured alpha bounds remain intact.
+
+Observed completed first-screen resource transfers at 390x844 in isolated Chromium
+contexts compare with the archived audit baseline:
+
+| Route | Before | After | Reduction |
+| --- | ---: | ---: | ---: |
+| About, returning/direct entry | 8,266,390 bytes | 834,475 bytes | 89.91% |
+| Projects | 9,462,323 bytes | 2,455,642 bytes | 74.05% |
+
+First-visit startup transfers 1,316,465 bytes in the same check, including its
+computer artwork and useful preparation. These are local resource measurements,
+not field loading times or claimed time-speedup percentages. First-open Menu and
+Finder can still fetch more of the authentic native artwork; hidden-image demand
+is deferred rather than converted into smaller alternate images. New maintained
+checks wait for visible images and enforce first-screen resource budgets.
+
+The phone dock reveals its active item after opening, switching, closing and
+resizing, exposes semantic current state and indicates overflow. Closing the last
+window restores usable focus. Menu height and stacking reserve the phone dock so
+its final action is reachable. Pointer drag/resize updates are coalesced to one
+animation frame without losing the final pointer position. Projects keeps search
+visible, places secondary filters behind a keyboard-accessible disclosure and
+defers Knowledge Graph code until it is visited. Shared primary/default button
+semantics and phone editable-text sizing now agree across app families.
+
+Arcade's repeated introductory chrome is compact on phones. Complete portrait
+boards and play controls fit together, including paused/Resume states; real-time
+boards and controls also fit short landscape views. Short landscape Minefield
+and Sliding Puzzle preserve readable grids with contained vertical scrolling.
+Toolbar and direction controls retain 44px targets; this is not a claim that
+every spatial grid cell is 44px. Localized How to play disclosures retain the
+instructions and pause live play. Minefield mixes nearby seeds and guarantees a
+safe first reveal while retaining preplaced flags. Sliding Puzzle keeps keyboard
+focus through moves. Snake, Brick Breaker and Peak Dock retain sessions when
+switching games; inactive real-time games pause. Brick Breaker mouse holds survive
+focus changes inside the game. SideQuest pauses on window changes. Focus Clock
+stops hidden periodic redraw/storage updates while its absolute deadline and
+exactly-once completion remain correct.
+
+Fresh full prebuild, production compilation, lint/types and output gates pass.
+The final layout candidate was built separately in `.next-ux-final`; its generated
+temporary TypeScript include was removed afterward, and standalone TypeScript
+validation passes. Output is 130 browser files, 263.4 KiB initial JavaScript gzip
+and 5.38 MiB application runtime. The file-count allowance rises by exactly the
+graph's deferred script/style pair; every byte and initial-JavaScript budget is
+unchanged. Initial JS is slightly larger than the baseline's 261.8 KiB; the large
+measured gains are image demand and deferred archive work. Security's 80 cases,
+27 deployment-helper cases and repository ownership inventory also pass.
+
+Compiled verification:
+
+- Final layout candidate: all 982 maintained Chromium journeys pass with no page
+  errors, covering four locales, desktop/phone routes, projects, demos, PDFs,
+  games, native apps, history-related navigation and recovery surfaces. HTTP
+  checks pass 295 route groups, 296 asset groups and 136 challenge groups.
+- New game regressions: nine pure groups and 12 compiled Chromium/WebKit profiles
+  pass across four locales, with 84 behavior groups and 36 exact Peak Dock fits.
+  They cover safe first reveals, completed games, continuous Puzzle keyboard
+  play, session preservation, internal-focus holds, Help pause and reset. These
+  run on the final game-logic candidate; the subsequent three-declaration fit
+  correction is independently covered by the final layout matrix and crawl.
+- Final phone UI: 32 compiled Chromium/WebKit journeys pass across four locales
+  at 320x568, 390x844, 844x390 and 568x320. This includes 128 board profiles and
+  64 paused profiles, filters/search/Tab order, lazy graph navigation and Help.
+  Two complete project rows are visible at 320px and three at 390px. English,
+  Simplified Chinese and Traditional Chinese screenshots were inspected.
+- Final navigation: 16 Chromium/WebKit profiles verify 1/3/6/12 windows, selected
+  dock visibility, viewport changes and close-last focus. Four Chromium loading
+  cases pass, including actual pre-reveal image preparation on first visit and
+  Restart. Twenty-eight real short-window keyboard-resize journeys and an actual
+  mouse drag/resize regression also pass.
+- Icon audit: eight unique locale/viewport profiles cover 752 identity states,
+  all 43 canonical kinds and 7,404 visible PNG decodes, with zero JavaScript/image
+  failures. It scrolls offscreen rows into view and requires visible frames to
+  contain decoded canonical images. The full icon matrix uses the preceding
+  candidate's unchanged icon code/art; final phone Menu/Finder/Arcade artwork was
+  independently rechecked after the last CSS corrections. Compiled Focus Clock
+  and SideQuest lifecycle checks pass against their unchanged final app logic.
+
+`check:games` is part of prebuild. The new `check:games:browser`, `check:mobile-ui`
+and `check:mobile-navigation` commands are wired into each configured CI browser
+phase, with isolated report paths and inherited narrowing filters cleared. Local
+equivalent checks and Python syntax validation pass; no new remote CI run is
+claimed. The HTTP runner now honors its existing caller's report-directory
+setting instead of overwriting an unrelated default report.
+
+Failed receipts are retained: an initial TypeScript fallback-narrowing error,
+test-helper syntax/readiness/order/breakpoint assumptions, and genuine phone
+Resume overflow/filter focus/Menu occlusion found and fixed during review. Icon
+fixtures were repaired for intentional deferred loading and a stale demo DOM
+assumption while strengthening visible-frame decoding assertions. Game solutions
+use production seeded generators; they establish attainable UI outcomes rather
+than independent scientific validation. Physical-phone keyboards, hardware
+performance, assistive-technology studies, field Core Web Vitals and a numerical
+9.9/10 visitor rating remain outside this qualification. The PDF reader's existing
+whole-fetch cancellation safeguard remains intact.
+
+All 522 task-evidence files, including failed receipts, screenshots, source/build
+fingerprints, the complete binary working-tree patch and five new maintained test
+files, are read-back hash-verified outside the checkout at
+`~/.local/share/samuel-homepage/review-archive/uiux-implementation-20261113-working-tree.tar.gz`.
+The adjacent manifest records each member's SHA-256. Archive SHA-256:
+`3e17f55e2f43697a522688538691f6df0e9a5d142bf8fa30649fbb97cbdd6496`.
+Owned previews are stopped and temporary QA files removed after verification;
+the shared browser and unrelated work remain intact. This implementation receipt
+adds no deployment or public-production qualification.
+
+## Mobile UX, loading and games audit — 13 November 2026
+
+Three parallel reviews covered performance, mobile interaction/consistency and
+games against application revision `497ef1b`. This is an investigation and advice
+pass: no application, icon, dependency or deployment changes were made. The owner
+explicitly wants to keep the anticipation startup and use its time for useful
+asynchronous preparation. Removing that sequence is not a recommendation.
+
+Fresh `npm run build:isolated` passes the full prebuild families, production
+compilation, lint/type validation and output gate: 128 browser files, 261.8 KiB
+initial JavaScript gzip and 5.36 MiB application runtime. The initial shared
+desktop chunk accounts for about 156 KiB gzip; initial CSS is 20.8 KiB gzip.
+These output budgets do not measure public-image loading.
+
+Compiled browser coverage comprises the maintained 982 Chromium 153 journeys
+(926 non-game and 56 game journeys), plus 28 WebKit 26.6 phone game journeys.
+The game matrices cover all seven games and four locales, with Chromium at
+1440/320px and WebKit at 320px. A separate 25-profile rendered review covers
+About, Projects, Contact and the initial Arcade screen in Chromium at
+320/390/768/1440px and WebKit at 390px, including Traditional Chinese Projects.
+It finds no JavaScript errors or document/main-pane horizontal overflow. Sixteen
+maintained phone working-area journeys pass for Documents, Desk, Knowledge Graph
+and Orbitals in English/Traditional Chinese at 320x568 and 390x844. Screenshots
+were inspected, including the narrow layouts and Snake/Brick Breaker play areas.
+Passing these checks does not establish excellent usability: the issues below
+were reproduced in deeper diagnostics.
+
+Game completion checks exercise Minefield win/loss/reset, an inverse-scramble
+Sliding Puzzle completion/reset, SamWord six-guess loss/next-answer win/secret
+launch and all eight Profile Pairs matches/reset. Source-derived reducer checks
+complete Snake's 100-point win and Brick Breaker's 350-point win, including
+collision, life-loss, pause and reset. Generated-state checks cover 1,000
+Minefields, 1,000 solvable puzzle shuffles, 1,000 matching decks and all 20
+SamWord answers. Six additional Peak Dock browser journeys cover Easy, Standard
+and Expert in Chromium/WebKit at 390px: attainable 100-point fits, edit
+invalidation, same-sample reset and new-sample controls. Those targets come from
+the application's generator; this verifies UI/scoring reachability, not an
+independent chromatography model. Both realtime games freeze when another app
+is active or the document is hidden and require manual resume. Document hiding
+in the custom lifecycle check is simulated.
+
+Prioritized findings and proposed work:
+
+1. **Make the retained startup prepare the destination.** The early boot return
+   in `SystemSevenDesktop.tsx:2909` renders only the startup, including its large
+   computer PNG. The main JavaScript loads, but About's priority headshot and most
+   app/icon elements are mounted afterward. Begin bounded, first-screen image
+   loading/decoding and selected shell preparation during startup. Warm Find or
+   Projects afterward when appropriate; leave demos, PDF.js and full-text indexes
+   demand-loaded. Keep immediate skip and reduced-motion behavior. The boot's
+   advertised Enter button is small, although tapping anywhere already skips it.
+   Avoid preloading every asset: that would compete with the intended reveal.
+
+2. **Reduce image demand before chasing small script savings.** The observed
+   returning-session 390px About profile transfers about 7.9 MiB of resources;
+   Projects transfers about 9.0 MiB. Images account for about 7.6/8.5 MiB
+   respectively. Covered desktop launchers and below-fold illustrations are
+   requested despite being of no immediate use. Defer these until their surface
+   is exposed, while preserving window state and canonical identities. All 42
+   original icon PNGs total 14.85 MiB. An in-memory Pillow recompression trial
+   preserves native dimensions and every decoded RGBA byte while saving
+   2,093,312 bytes (13.4%) across the family. This is a measured encoding saving,
+   not a measured page-speed improvement; no assets were changed. A smaller
+   Sharp result failed pixel equality and was rejected. Any implementation must
+   update hashes/version URLs and pass icon/browser audits. Add route-level
+   image/request and readiness budgets alongside the existing JS budget.
+
+3. **Fix phone navigation state.** At 390px, opening several apps leaves the
+   active Contact dock item entirely offscreen at x460-572 with scrollLeft zero;
+   closing another app does not reveal it. `SystemSevenDesktop.tsx:3109` has no
+   semantic current/pressed state on dock items. Automatically reveal the active
+   destination, expose its state and show overflow affordances. Test 1/3/6/12
+   open windows, all locales, history, opening and closing. Closing the final
+   window correctly restores the desktop, but keyboard focus falls to BODY;
+   return focus to a connected launcher or Menu. Prototype stable Home/Find
+   access only after these immediate repairs, preserving the System 7 shell.
+
+4. **Put useful content and game controls on the first phone screen.** At
+   320x568, Projects shows only one result below its tabs/filters. Keep search
+   visible and place secondary filters in a clear disclosure with a result count.
+   Arcade repeats the selected game name/introduction before the game's own
+   header. At 390x844, Snake controls occupy y811-899 and Brick Breaker controls
+   y894-938, below a content pane ending at y781; the Brick Breaker paddle is
+   initially clipped. Consolidate repeated introductions, size boards to the
+   available play area and keep play/direction controls visible. At 320px,
+   Minefield cells are 32x32px. This exceeds WCAG's 24px minimum but falls short
+   of its 44px enhanced target; consider magnification or a smaller-board mode,
+   rather than forcing eight 44px columns into a narrow viewport.
+
+5. **Repair the verified game behavior gaps.** Sliding Puzzle's
+   `${tile}-${index}` key at `SystemSevenDesktop.tsx:1744` replaces a focused tile
+   after Enter: focus becomes BODY and subsequent arrows do nothing. Use stable
+   identities and preserve focus. Minefield's deterministic initial seed and
+   following 1,905 fields all place a mine at cell zero; initial/reset first-cell
+   reveals reproduce instant loss. Improve seed mixing and ensure a safe first
+   reveal. Brick Breaker's bubbling section blur at `ArcadeClassicGames.tsx:664`
+   cancels a mouse hold when focus changes between controls inside the game;
+   repeated holds on the same control work and touch hold works. Stop on blur
+   when focus actually leaves the game. Switching away from Snake and back
+   silently resets score 10 to zero; the conditional unmount at
+   `SystemSevenDesktop.tsx:1845` also applies to Brick Breaker/Peak Dock. Preserve
+   per-game sessions and pause inactive games consistently.
+
+6. **Unify controls and restrained motion through existing primitives.**
+   `MacButton primary` uses `is-default`, while prominent project actions use
+   `is-primary`. Establish one button emphasis API with explicit default/toggle
+   states, shared field/label/feedback styles and shared short motion timings.
+   Preserve hard shadows, icon identities and scientific/game state colors.
+   Reuse the existing reduced-motion/effects preferences. Phone text inputs vary
+   between 12-15px while Finder explicitly uses 16px; standardize editable text
+   and verify actual iPhone keyboard/zoom behavior. Auto-zoom was not reproduced
+   on a physical iPhone in this review.
+
+7. **Then reduce optional code and hidden work.** Extract eager game/profile/
+   Lab/Interests modules and locale dictionaries from the desktop shell, and
+   defer the Knowledge Graph import until needed. Source review finds that
+   SideQuest receives no outer active-window state, allowing its replay to
+   continue behind another phone window. Share the existing inactive/hidden
+   lifecycle pattern; reduce hidden Focus Clock display updates while retaining
+   deadline/completion correctness. Consider shared search-index caching and
+   precomputed localized search metadata. Improve heavy PDF first-page readiness
+   separately, retaining the current whole-fetch cancellation safety and its
+   documented PDF.js teardown qualification.
+
+The recommended implementation order is startup/image demand, phone navigation
+and playable game layouts, game behavior repairs, then shared-control/motion and
+optional-code refinements. For acceptance, repeat these journeys and test real
+iPhone/Android keyboards, orientation, thumb use and interrupted sessions; observe
+visitors finding a project, opening its evidence/demo, returning, contacting and
+playing a game without coaching. A numerical 9.9/10 pleasantness claim is not
+established by automation. Track field loading, responsiveness and stability
+against [Core Web Vitals](https://web.dev/articles/vitals); the retained first-visit
+startup remains part of the visitor's actual loading experience. Use the
+[44px enhanced target guidance](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)
+for ordinary phone controls while distinguishing it from the
+[24px minimum and its exceptions](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html).
+
+Three initial exploratory load traces are retained, but they do not assert image
+readiness: a post-startup `networkidle` snapshot can omit unfinished lazy images.
+Their throttled byte totals/timings are not used as performance acceptance
+results. The resource totals above come from completed unthrottled rendered
+profiles. Initial custom game helper failures (lazy readiness, a nonexistent
+desktop control and pause-effect settling) are preserved alongside the corrected
+checks, rather than presented as application failures. This review does not
+qualify physical phones, assistive technology, field Core Web Vitals, every game
+completion on every browser/locale, or new public-production behavior.
+
+All 112 task-evidence files, including failed helpers, source-derived fixtures,
+raw load traces and inspected screenshots, are archived outside the checkout at
+`~/.local/share/samuel-homepage/review-archive/uiux-audit-20261113-497ef1b.tar.gz`.
+Every member was read back and verified against its original SHA-256; the
+adjacent manifest records all hashes. Archive SHA-256:
+`2746f1d92a2c5d50200e5bee90da98801bd47c8f23d69a3c22317e4b2ea6e204`.
+The owned loopback preview and temporary review files are removed after
+verification; the user's shared browser and unrelated work are preserved.
+
 
 ## Browser View demo removal and purpose correction — 26 October 2026
 

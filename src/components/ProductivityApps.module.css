@@ -1469,7 +1469,7 @@
   text-transform: uppercase;
 }
 
-.converterWorkbench input,
+.unitConverter .converterWorkbench input,
 .converterOutput strong {
   min-width: 0;
   align-self: center;

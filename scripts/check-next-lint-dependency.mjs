@@ -21,6 +21,32 @@ assert.equal(require("@next/eslint-plugin-next/package.json").version, "15.5.28"
 assert.equal(require("@next/eslint-plugin-next/package.json").version, require("next/package.json").version);
 assert.equal(require("eslint-config-next/package.json").version, require("next/package.json").version);
 
+// GHSA-g3hv-75wg-m249: keep the parser's named minimatch API on its patched
+// release without changing ESLint's unrelated v3 matcher or Next's glob adapter.
+const nextConfigRequire = createRequire(require.resolve("eslint-config-next"));
+const matcherCases = [
+  ["eslint.config.mjs", "*.mjs", true],
+  [".eslintrc.cjs", "*.cjs", true],
+  ["src/app/page.tsx", "src/**/*.tsx", true],
+  ["src/app/page.tsx", "src/**/*.ts", false],
+  ["src/.generated/page.ts", "src/**/*.{ts,tsx}", true],
+  ["src/app/page.tsx", "tests/**/*.tsx", false],
+];
+let parserMatcherChecks = 0;
+for (const consumer of [
+  createRequire(require.resolve("@typescript-eslint/parser")),
+  createRequire(nextConfigRequire.resolve("@typescript-eslint/parser")),
+  createRequire(createRequire(nextConfigRequire.resolve("@typescript-eslint/eslint-plugin")).resolve("@typescript-eslint/type-utils")),
+]) {
+  const estreeRequire = createRequire(consumer.resolve("@typescript-eslint/typescript-estree"));
+  assert.equal(estreeRequire("minimatch/package.json").version, "11.0.1", "Review a changed parser matcher override.");
+  const { minimatch } = estreeRequire("minimatch");
+  for (const [file, pattern, expected] of matcherCases) {
+    assert.equal(minimatch(file, pattern, { dot: true }), expected, `Parser default-project matching: ${file} / ${pattern}`);
+    parserMatcherChecks += 1;
+  }
+}
+
 function checkRootSettings(config, filename) {
   if (config?.settings?.next?.rootDir !== undefined) {
     throw new Error(`${filename}: configured settings.next.rootDir requires a new lint dependency review. The scoped tinyglobby override supports this app's default project root; symlink roots are not equivalent to fast-glob.`);
@@ -94,4 +120,4 @@ try {
   await rm(fixtureRoot, { recursive: true, force: true });
 }
 
-console.log(`Next lint dependency gate: ${configChecks} effective configurations, configured-root rejection, all ${Object.keys(nextPlugin.rules).length} Next rules, and ${routeChecks} App Router/link/deep-nesting regressions passed.`);
+console.log(`Next lint dependency gate: ${configChecks} effective configurations, configured-root rejection, all ${Object.keys(nextPlugin.rules).length} Next rules, ${routeChecks} App Router/link/deep-nesting and ${parserMatcherChecks} patched parser-matcher regressions passed.`);

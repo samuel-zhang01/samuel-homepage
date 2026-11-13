@@ -68,6 +68,8 @@ function imageProps(node) {
   if (Array.isArray(node)) return node.flatMap(imageProps);
   if (!React.isValidElement(node)) return [];
   if (node.type === "img") return [node.props];
+  // Inspect the real image branch while browser checks exercise when it mounts.
+  if (node.type === System7Icon) return imageProps(System7Icon({ ...node.props, eager: true }));
   if (typeof node.type === "function") return imageProps(node.type(node.props));
   return imageProps(node.props.children);
 }
@@ -112,7 +114,7 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   const url = new URL(path, "http://localhost");
   const pathname = url.pathname;
   assert.equal(pathname, kind === "coverd" ? "/coverd-logo-black-on-transparent.png" : `/system7-icons/${kind}.png`, `${kind}: canonical source path`);
-  assert.equal(path, kind === "coverd" ? pathname : `${pathname}?v=${record.sourceSha256.slice(0, 12)}`, `${kind}: cache revision matches the authentic native source`);
+  assert.equal(path, kind === "coverd" ? pathname : `${pathname}?v=${record.deliveredSha256.slice(0, 12)}`, `${kind}: cache revision matches the reviewed PNG delivery`);
   assert.ok(!assets.has(pathname), `${kind}: another kind already owns this asset`);
   assets.add(pathname);
   const file = resolve(root, "public", `.${pathname}`);
@@ -120,7 +122,14 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   const bytes = readFileSync(file);
   assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", `${kind}: invalid PNG signature`);
   const hash = createHash("sha256").update(bytes).digest("hex");
-  assert.equal(hash, record.sourceSha256, `${kind}: source PNG bytes must remain intact`);
+  if (!record.deliveryEncoding) assert.equal(hash, record.sourceSha256, `${kind}: unchanged source encoding`);
+  else {
+    assert.equal(record.deliveryEncoding.sourceSha256, record.sourceSha256, `${kind}: original generation hash is retained`);
+    assert.equal(record.deliveryEncoding.decodedRgbaUnchanged, true, `${kind}: lossless encoding is explicitly recorded`);
+    assert.equal(record.deliveryEncoding.nativeDimensionsUnchanged, true, `${kind}: native canvas is retained`);
+    assert.ok(bytes.length < record.deliveryEncoding.sourceBytes, `${kind}: recompression saves bytes`);
+    assert.match(record.decodedRgbaSha256, /^[a-f0-9]{64}$/, `${kind}: original decoded pixels have a pinned digest`);
+  }
   assert.equal(hash, record.deliveredSha256, `${kind}: reviewed delivery hash`);
   assert.equal(bytes.length, record.bytes, `${kind}: recorded native byte count`);
   assert.ok(!hashes.has(hash), `${kind}: duplicates another named icon's complete image`);
@@ -137,13 +146,14 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   assert.equal(metadata.pages ?? 1, 1, `${kind}: animated icon is unexpected`);
   const { data, info } = await sharp(bytes).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   assert.equal(info.channels, 4, `${kind}: RGBA decode`);
+  if (record.decodedRgbaSha256) assert.equal(createHash("sha256").update(data).digest("hex"), record.decodedRgbaSha256, `${kind}: every decoded RGBA byte matches the native source`);
   let transparent = 0, visible = 0;
   const bounds = [canvas, canvas, -1, -1];
   for (let y = 0; y < canvas; y++) for (let x = 0; x < canvas; x++) {
     const alpha = data[(y * canvas + x) * 4 + 3];
     if (alpha === 0) transparent++;
     // Measure optical framing only. No source pixels or alpha values are
-    // discarded: the exact native PNG hash above rejects image rewriting.
+    // discarded: exact delivery and decoded-RGBA hashes reject pixel changes.
     if (alpha >= 16) {
       visible++;
       bounds[0] = Math.min(bounds[0], x); bounds[1] = Math.min(bounds[1], y);
@@ -155,7 +165,7 @@ for (const [kind, path] of Object.entries(SYSTEM7_ICONS)) {
   assert.ok(bounds[0] >= 4 && bounds[1] >= 4 && bounds[2] <= canvas - 5 && bounds[3] <= canvas - 5, `${kind}: visible artwork touches its canvas edge (${bounds.join(", ")})`);
   assert.deepEqual(SYSTEM7_ICON_BOUNDS[kind], [...bounds, canvas], `${kind}: optical framing bounds must match the actual alpha pixels`);
   for (const miniature of [false, true]) {
-    const images = imageProps(System7Icon({ kind, miniature }));
+    const images = imageProps(System7Icon({ kind, miniature, eager: true }));
     assert.equal(images.length, 1, `${kind}: one image in ${miniature ? "miniature" : "normal"} mode`);
     const image = images[0];
     assert.equal(image.src, path, `${kind}: normal and miniature must use the same canonical asset`);
@@ -214,7 +224,8 @@ for (const { locale } of localeOptions) {
     assert.ok(row, `${locale}: missing ${app.id} result`);
     assert.match(row, /<strong>.+<\/strong>/, `${locale} ${app.id}: visible application title`);
     assert.match(row, /<small>.+<\/small>/, `${locale} ${app.id}: visible full application description`);
-    assert.ok(row.includes(`data-system7-icon="${applicationIconKinds[app.id]}"`), `${locale} ${app.id}: canonical result icon`);
+    assert.ok(row.includes(`data-system7-frame="${applicationIconKinds[app.id]}"`), `${locale} ${app.id}: canonical result icon frame`);
+    assert.ok(row.includes('data-system7-pending="true"'), `${locale} ${app.id}: server-rendered results defer artwork until visible`);
     for (const [tag, field] of [["strong", "title"], ["small", "description"]]) {
       const sourceText = app[field];
       if (locale === "en-GB" || locale === "en-US") {

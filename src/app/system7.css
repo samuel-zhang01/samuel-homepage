@@ -39,6 +39,7 @@
   --s7-heading: 18px;
   --s7-title: 22px;
   --s7-control-height: 32px;
+  --s7-input-text: var(--s7-ui);
   --s7-control-radius: 3px;
   --s7-icon-inline: 16px;
   --s7-icon-document: 32px;
@@ -257,7 +258,7 @@
   color: var(--s7-ink);
   background: var(--s7-paper);
   box-shadow: var(--s7-relief-inset);
-  font: 400 var(--s7-ui)/1.4 var(--s7-font-text);
+  font: 400 var(--s7-input-text)/1.4 var(--s7-font-text);
 }
 
 .s7-table {
@@ -276,7 +277,9 @@
 .s7-table :where(tr[aria-selected="true"]) { color: var(--s7-selection-text); background: var(--s7-selection); }
 
 @media (pointer: coarse), (max-width: 520px) {
-  :root { --s7-control-height: 44px; }
+  :root { --s7-control-height: 44px; --s7-input-text: 16px; }
+  html .system-desktop :is(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]), textarea),
+  html .system7-project :is(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]), textarea) { font-size: var(--s7-input-text); }
 }
 
 :root:lang(zh-CN) {

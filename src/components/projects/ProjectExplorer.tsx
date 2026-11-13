@@ -11,13 +11,13 @@ import { projectAreas, projects, type Project } from "@/data/projects";
 import { getProfileProjectOrigins as getProjectOrigins } from "@/data/profileProjectOrigins";
 import type { Locale } from "@/lib/i18n";
 import { projectText, type ProjectCopyTable } from "@/lib/projectCopy";
-import { ProjectLocaleProvider } from "./ProjectTranslationBoundary";
+import { ProjectLocaleProvider, useProjectLocale } from "./ProjectTranslationBoundary";
 import { getProjectArchiveCopy } from "./projectArchiveI18n";
 import { ProjectArtwork } from "./ProjectArtwork";
-import { KnowledgeGraph } from "./KnowledgeGraph";
 import styles from "./ProjectLibrary.module.css";
 
 const ProjectDocument = dynamic(() => import("./ProjectDocument"));
+const KnowledgeGraph = dynamic(() => import("./KnowledgeGraph").then(module => module.KnowledgeGraph), { loading: GraphLoading });
 type View = "map" | "guided" | "files";
 type SystemApp = NonNullable<Project["systemApp"]> | "sidequest";
 const copy = {
@@ -26,11 +26,13 @@ const copy = {
   "Browse the files. Take a closer look.": ["浏览项目，深入了解。", "瀏覽專案，深入瞭解。"],
   "Built systems, research and interactive experiments worth a closer look.": ["值得深入了解的系统、研究与交互实验。", "值得深入瞭解的系統、研究與互動實驗。"],
   "Apps I use, questions I studied, and experiments you can try.": ["我自己使用的应用、我研究的问题，以及你可以动手尝试的实验。", "我自己使用的應用程式、我研究的問題，以及你可以動手嘗試的實驗。"],
+  "Opening knowledge graph…": ["正在打开知识图谱…", "正在開啟知識圖譜…"],
   "Knowledge graph": ["知识图谱", "知識圖譜"], "Selected work": ["精选作品", "精選作品"], "All projects": ["全部项目", "全部專案"],
   "Project views": ["项目视图", "專案檢視"], "Search projects": ["搜索项目", "搜尋專案"],
   "Search titles, methods or experience…": ["搜索名称、方法或经历…", "搜尋名稱、方法或經歷…"],
   "Searching project text…": ["正在搜索项目正文…", "正在搜尋專案內文…"],
   "Detailed search is unavailable. Showing matches in project descriptions.": ["暂时无法搜索全文，当前显示项目简介中的匹配结果。", "暫時無法搜尋全文，目前顯示專案簡介中的符合結果。"],
+  "Filters": ["筛选", "篩選"],
   "Discipline": ["领域", "領域"], "All disciplines": ["全部领域", "全部領域"],
   "No projects match.": ["没有匹配的项目。", "沒有符合條件的專案。"], "Clear filters": ["清除筛选", "清除篩選"],
   "{count} projects": ["{count} 个项目", "{count} 個專案"], "1 project": ["1 个项目", "1 個專案"],
@@ -42,6 +44,11 @@ const copy = {
   "Read the RUN/HACK story": ["阅读 RUN/HACK 的故事", "閱讀 RUN/HACK 的故事"],
   "Ongoing": ["持续进行", "持續進行"],
 } satisfies ProjectCopyTable;
+
+function GraphLoading() {
+  const locale = useProjectLocale();
+  return <div className="classic-module-loading" role="status"><strong>{projectText(locale, copy, "Opening knowledge graph…")}</strong></div>;
+}
 
 const fold = (text: string) => text.normalize("NFKD").replace(/\p{M}/gu, "").toLocaleLowerCase();
 function viewFromAddress(): View {
@@ -61,6 +68,7 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [area, setArea] = useState("all");
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [searchIndexes, setSearchIndexes] = useState<Partial<Record<Locale, Record<string, string>>>>({});
   const [indexLoading, setIndexLoading] = useState(false);
   const [indexError, setIndexError] = useState(false);
@@ -233,8 +241,14 @@ function ProjectExplorer({ locale = "en-GB", active = true, onOpenApp }: {
         <div className={styles.listTitle}><span className={styles.folderIcon} aria-hidden="true"><System7Icon kind="folder" miniature /></span><strong>{t(labels[view])}</strong><span>{filtered.length}</span></div>
         <div className={styles.filters}>
           <label>{t("Search projects")}<input ref={searchRef} type="search" value={query} onChange={event => changeFilters(event.target.value, area)} onKeyDown={event => { if (event.key === "ArrowDown" || event.key === "Enter") { const first = listRef.current?.querySelector<HTMLButtonElement>("details[open] button[data-project-slug], ul[data-featured] button[data-project-slug]"); if (first) { event.preventDefault(); first.focus(); } } }} placeholder={t("Search titles, methods or experience…")} /></label>
-          <label>{t("Discipline")}<ClassicSelect value={area} onChange={event => changeFilters(query, event.target.value)}><option value="all">{t("All disciplines")}</option>{projectAreas.map(value => <option key={value} value={value}>{archiveCopy.areas[value]}</option>)}</ClassicSelect></label>
-          <div className={styles.filterStatus}><span role="status">{indexLoading ? t("Searching project text…") : filtered.length === 1 ? t("1 project") : projectText(locale, copy, "{count} projects", { count: filtered.length })}</span>{(query || area !== "all") && <button className={styles.clearFilters} onClick={() => changeFilters("", "all")}>{t("Clear filters")}</button>}</div>
+          <button type="button" className={`s7-button ${styles.filtersToggle}`} aria-expanded={filtersExpanded} aria-controls={`${id}-filters`} onClick={() => setFiltersExpanded(current => !current)}>{t("Filters")}{area !== "all" && <span className={styles.filterBadge}>1</span>}<span aria-hidden="true">{filtersExpanded ? "▴" : "▾"}</span></button>
+          <div className={styles.secondaryFilters} id={`${id}-filters`} data-expanded={filtersExpanded}>
+            <label>{t("Discipline")}<ClassicSelect value={area} onChange={event => changeFilters(query, event.target.value)}><option value="all">{t("All disciplines")}</option>{projectAreas.map(value => <option key={value} value={value}>{archiveCopy.areas[value]}</option>)}</ClassicSelect></label>
+          </div>
+          <div className={styles.filterStatus}>
+            <span role="status">{indexLoading ? t("Searching project text…") : filtered.length === 1 ? t("1 project") : projectText(locale, copy, "{count} projects", { count: filtered.length })}</span>
+            {(query || area !== "all") && <button type="button" className={styles.clearFilters} onClick={() => changeFilters("", "all")}>{t("Clear filters")}</button>}
+          </div>
           {indexError && query.trim() && <p className={styles.searchError} role="status">{t("Detailed search is unavailable. Showing matches in project descriptions.")}</p>}
         </div>
         <div ref={listRef} className={styles.catalogue}>

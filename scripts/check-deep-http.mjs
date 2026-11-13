@@ -8,7 +8,7 @@ import ts from "typescript";
 
 const origin = new URL(process.env.REVIEW_ORIGIN || "http://127.0.0.1:5188");
 const canonicalOrigin = "https://me.samuelzhang.co.uk";
-const reportDirectory = path.resolve(".codex/reports/deep-audit");
+const reportDirectory = path.resolve(process.env.DEEP_REPORT_DIR ?? ".codex/reports/deep-audit");
 const report = { started: new Date().toISOString(), origin: origin.origin, routes: [], assets: [], challenges: [], failures: [], wireRequests: 0 };
 const languageOptions = [
   ["", "en-GB"], ["en-gb", "en-GB"], ["en-us", "en-US"], ["zh-cn", "zh-CN"], ["zh-tw", "zh-TW"],

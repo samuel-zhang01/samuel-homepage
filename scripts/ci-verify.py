@@ -56,7 +56,7 @@ def main():
         parser.error("Provide external PLAYWRIGHT_CORE_PATH and ESBUILD_PATH")
     # A previous shell's coverage filters must never silently narrow CI scope.
     for key in list(env):
-        if key.startswith(("DEEP_", "PHONE_SPACE_", "PROJECT_RESIZE_", "ICON_", "AXE_")) or key in {"REVIEW_GROUP", "LOCALE_PATTERN", "BROWSER_EXECUTABLE_PATH", "REVIEW_ORIGIN"}:
+        if key.startswith(("DEEP_", "PHONE_SPACE_", "PROJECT_RESIZE_", "ICON_", "AXE_", "GAMES_", "MOBILE_")) or key in {"REVIEW_GROUP", "LOCALE_PATTERN", "BROWSER_EXECUTABLE_PATH", "REVIEW_ORIGIN", "BROWSER_ENGINES"}:
             env.pop(key)
     identifier = f"{env.get('GITHUB_SHA', 'local')}-{env.get('GITHUB_RUN_ID', str(time.time_ns()))}-{env.get('GITHUB_RUN_ATTEMPT', '1')}"
     reports = root / ".codex" / "reports" / ("ci-" + identifier)
@@ -134,8 +134,8 @@ def main():
                 env["DEEP_REPORT_DIR"] = str(reports / "http")
                 check("http", ["npm", "run", "check:deep:http"])
                 for engine in engines:
-                    env.update({"BROWSER_ENGINE": engine, "DEEP_REPORT_DIR": str(reports / engine), "REVIEW_SCREENSHOT_DIR": str(reports / engine / "screenshots"), "PHONE_SPACE_REPORT_DIR": str(reports / engine / "phone"), "PROJECT_RESIZE_REPORT_DIR": str(reports / engine / "resize"), "PROJECT_RESIZE_ENGINES": engine})
-                    for name in ["check:deep:browser", "check:deep:recovery", "check:resize", "check:phone-space"]:
+                    env.update({"BROWSER_ENGINE": engine, "BROWSER_ENGINES": engine, "DEEP_REPORT_DIR": str(reports / engine), "REVIEW_SCREENSHOT_DIR": str(reports / engine / "screenshots"), "PHONE_SPACE_REPORT_DIR": str(reports / engine / "phone"), "PROJECT_RESIZE_REPORT_DIR": str(reports / engine / "resize"), "PROJECT_RESIZE_ENGINES": engine, "GAMES_REPORT_DIR": str(reports / engine / "games"), "MOBILE_UI_REPORT_DIR": str(reports / engine / "mobile-ui"), "MOBILE_NAV_REPORT_DIR": str(reports / engine / "mobile-navigation")})
+                    for name in ["check:deep:browser", "check:deep:recovery", "check:resize", "check:phone-space", "check:games:browser", "check:mobile-ui", "check:mobile-navigation"]:
                         check(engine + "-" + name.replace(":", "-"), ["npm", "run", name])
                 server.terminate()
                 server.wait(timeout=10)
